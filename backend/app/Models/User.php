@@ -13,14 +13,46 @@ class User extends Authenticatable
     use HasApiTokens, HasFactory, Notifiable;
 
     /**
+     * The primary key associated with the table.
+     *
+     * @var string
+     */
+    protected $primaryKey = 'id';
+
+    /**
+     * The data type of the auto-incrementing ID.
+     *
+     * @var string
+     */
+    protected $keyType = 'int';
+
+    /**
+     * The foreign key associated with the table.
+     *
+     * @var string
+     */
+    protected $foreignKey = 'user_role_type_id';
+
+    /**
+     * The data type of the database table foreign key.
+     *
+     * @var string
+     */
+    protected $foreignKeyType = 'int';
+
+    /**
      * The attributes that are mass assignable.
      *
      * @var array<int, string>
      */
     protected $fillable = [
-        'name',
+        'full_name',
+        'first_name',
+        'last_name',
+        'nickname',
         'email',
         'password',
+        'user_role_type_id',
     ];
 
     /**
@@ -41,4 +73,24 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    /**
+     * The attributes that aren't mass assignable.
+     *
+     * @var array
+     */
+    protected $guarded = [
+        'id',
+        'created_at',
+        'updated_at'
+    ];
+
+    /**
+     * Eloquent relationship between users and user role types.
+     *
+     */
+    public function user_role_type()
+    {
+        return $this->belongsTo('App\Models\UserRoleType');
+    }
 }
