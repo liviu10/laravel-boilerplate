@@ -38,10 +38,17 @@
                                 </a>
                                 <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
                                     <li>
-                                        <a class="dropdown-item" href="{{ route('profile') }}">
+                                        <a class="dropdown-item" href="{{ url('/profile') }}">
                                             {{ __('Profile') }}
                                         </a>
                                     </li>
+                                    @if (Auth::user()->user_role_type_id === 1)
+                                    <li>
+                                        <a class="dropdown-item" href="{{ url('/users') }}">
+                                            {{ __('User list') }}
+                                        </a>
+                                    </li>
+                                    @endif
                                     <li>
                                         <a class="dropdown-item" href="{{ route('settings') }}">
                                             {{ __('Settings') }}

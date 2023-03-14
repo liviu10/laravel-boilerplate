@@ -19,5 +19,6 @@ Route::get('/', function () { return view('welcome'); });
 Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
-Route::get('/profile', [App\Http\Controllers\ProfileController::class, 'index'])->name('profile');
+Route::resource('/profile', App\Http\Controllers\ProfileController::class);
+Route::resource('/users', App\Http\Controllers\UsersController::class);
 Route::get('/settings', [App\Http\Controllers\SettingsController::class, 'index'])->name('settings');

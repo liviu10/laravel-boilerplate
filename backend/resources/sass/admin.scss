@@ -29,7 +29,7 @@
     & .row {
         & div {
             & h1 {
-                margin-bottom: 0;
+                margin-bottom: rem-convertor(32px);
                 text-align: center;
             }
         }
