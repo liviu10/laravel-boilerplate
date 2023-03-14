@@ -20,16 +20,9 @@
                 <form method="post" action="" enctype="multipart/form-data">
                     @csrf
                     <div class="form-group">
-                        <textarea class="ckeditor form-control" name="wysiwyg-editor"></textarea>
+                        <textarea id="mytextarea" class="ckeditor form-control" name="wysiwyg-editor"></textarea>
                     </div>
                 </form>
-                @push('scripts')
-                    <script>
-                        $(document).ready(function () {
-                            $('.ckeditor').ckeditor();
-                        });
-                    </script>
-                @endpush
             </div>
         </div>
     </div>
