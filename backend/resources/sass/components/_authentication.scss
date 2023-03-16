@@ -1,0 +1,83 @@
+.container-fluid {
+    & .auth {
+        min-height: 100vh;
+        @include flex-center();
+        & .card {
+            border-radius: 0;
+            border-color: #424743;
+            padding: 0;
+            width: 480px;
+            user-select: none;
+            color: #424743;
+            @media only screen and (max-width: 475px) and (min-width: 425px) {
+                width: rem-convertor(400px);
+            }
+            @media only screen and (max-width: 424px) and (min-width: 375px) {
+                width: rem-convertor(350px);
+            }
+            @media only screen and (max-width: 374px) and (min-width: 320px) {
+                width: rem-convertor(300px);
+            }
+            &-header {
+                @include flex-center();
+                border-top-left-radius: 0;
+                border-top-right-radius: 0;
+                height: rem-convertor(50px);
+                font-size: rem-convertor(20px);
+                font-weight: 700;
+                background-color: #424743;
+                color: #EAC11F;
+                @media only screen and (max-width: 475px) and (min-width: 320px) {
+                    height: auto;
+                    text-align: center;
+                }
+            }
+            &-body {
+                & form {
+                    margin-bottom: 0;
+                    & div {
+                        & .form-label {
+                            margin-bottom: 0;
+                        }
+                        & .form-label, & .form-check-label {
+                            font-weight: 700;
+                        }
+                        & .form-control, & .form-check-input {
+                            border-radius: 0;
+                            border-color: #424743;
+                            &:focus, &:focus-visible {
+                                box-shadow: none;
+                            }
+                            &:focus {
+                                border-color: #424743;
+                            }
+                        }
+                        & .form-check-input {
+                            &:checked {
+                                background-color: #424743;
+                            }
+                        }
+                    }
+                }
+            }
+            &-actions {
+                @include flex-center();
+                justify-content: space-around;
+                & .btn.btn-link {
+                    color: #424743;
+                    font-weight: 700;
+                }
+                & .btn.btn-primary {
+                    border-radius: 0;
+                    background-color: #424743;
+                    border-color: #424743;
+                    color: #EAC11F;
+                    font-weight: 700;
+                    &:focus-visible {
+                        box-shadow: none;
+                    }
+                }
+            }
+        }
+    }
+}
