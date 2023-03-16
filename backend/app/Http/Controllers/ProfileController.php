@@ -56,6 +56,6 @@ class ProfileController extends Controller
             'password'   => Hash::make($request->get('password')),
         ]);
 
-        return redirect()->route('profile.index')->with('success', 'Your profile information was successfully save!');
+        return redirect()->route('profile.index')->with('success', 'Your profile information was successfully saved!');
     }
 }

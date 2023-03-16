@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use App\Models\UserRoleType;
 use Illuminate\Http\Request;
 
 class UsersController extends Controller
@@ -27,11 +28,14 @@ class UsersController extends Controller
      */
     public function index()
     {
-        $displayAllRecords = User::with([
-            'user_role_type' => function ($query) {
-                $query->select('*');
-            }
-        ])->get();
+        $displayAllRecords = [
+            'users' => User::with([
+                'user_role_type' => function ($query) {
+                    $query->select('*');
+                }
+            ])->get(),
+            'user_role_types' => UserRoleType::select('id', 'user_role_name')->get()
+        ];
         return view('users', compact('displayAllRecords'));
     }
 
@@ -72,7 +76,16 @@ class UsersController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        dd([
+            'request' => $request->all(),
+            'id' => $id
+        ]);
+        $editSingleRecord = $this->modelName->find($id);
+        $editSingleRecord->update([
+            'user_role_type_id' => $request->get('id'),
+        ]);
+
+        return redirect()->route('users.index')->with('success', 'The user role was successfully saved!');
     }
 
     /**

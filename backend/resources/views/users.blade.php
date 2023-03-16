@@ -3,7 +3,7 @@
 @section('content')
 <div class="row justify-content-center">
     <div class="col-md-10">
-        <h1>{{ __('User\'s list') }}</h1>
+        <h1>{{ __('Users list') }}</h1>
 
         @if (session('status'))
             <div class="alert alert-success" role="alert">
@@ -13,6 +13,13 @@
     </div>
 
     <div class="col-md-10">
+        @if ($message = Session::get('success'))
+            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                <p class="my-0">{{ $message }}</p>
+                <button type="button" class="btn btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        @endif
+
         <table class="table table-bordered">
             <thead>
                 <tr>
@@ -25,7 +32,7 @@
                 </tr>
             </thead>
             <tbody>
-                @foreach ($displayAllRecords as $key => $data)
+                @foreach ($displayAllRecords['users'] as $key => $data)
                 <tr>
                     <th scope="row">{{ $data->id }}</th>
                     <td>{{ $data->full_name }}</td>
@@ -49,7 +56,7 @@
                                         <p>Full name: {{ $data->full_name }}</p>
                                         <p>First name: {{ $data->first_name }}</p>
                                         <p>Last name: {{ $data->last_name }}</p>
-                                        <p>Nickname: {{ $data->nickname }} ({{ $data->user_role_type->user_role_slug }})</p>
+                                        <p>Nickname: {{ $data->nickname }} (user role: {{ $data->user_role_type->user_role_slug }})</p>
                                         <p>Email: {{ $data->email }}</p>
                                         <p>Email verified at: {{ $data->email_verified_at }}</p>
                                     </div>
@@ -72,7 +79,14 @@
                                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                     </div>
                                     <div class="modal-body">
-                                        <form method="POST" action="{{ route('profile.update', $data->id) }}">
+                                        <p>Id: {{ $data->id }}</p>
+                                        <p>Full name: {{ $data->full_name }}</p>
+                                        <p>First name: {{ $data->first_name }}</p>
+                                        <p>Last name: {{ $data->last_name }}</p>
+                                        <p>Nickname: {{ $data->nickname }} (user role: {{ $data->user_role_type->user_role_slug }})</p>
+                                        <p>Email: {{ $data->email }}</p>
+                                        <p>Email verified at: {{ $data->email_verified_at }}</p>
+                                        <form method="POST" action="{{ route('users.update', $data->id) }}">
                                             @csrf
                                             @method('PUT')
 
@@ -80,72 +94,18 @@
 
                                             <!-- Full name -->
                                             <div class="row mb-3">
-                                                <label for="full_name" class="form-label">{{ __('Full Name') }}</label>
+                                                <label for="user_role_type_id" class="form-label">{{ __('Update the user role type') }}</label>
+
+                                                {{ $displayAllRecords['user_role_types'] }}
 
                                                 <div class="">
-                                                    <input id="full_name" type="text" class="form-control @error('full_name') is-invalid @enderror" disabled name="full_name" value="{{ $data->full_name }}" required autocomplete="name" autofocus>
-
-                                                    @error('full_name')
-                                                        <span class="invalid-feedback" role="alert">
-                                                            <strong>{{ $message }}</strong>
-                                                        </span>
-                                                    @enderror
-                                                </div>
-                                            </div>
-
-                                            <!-- First name -->
-                                            <div class="row mb-3">
-                                                <label for="first_name" class="form-label">{{ __('First Name') }}</label>
-
-                                                <div class="">
-                                                    <input id="first_name" type="text" class="form-control @error('first_name') is-invalid @enderror" disabled name="first_name" value="{{ $data->first_name }}" required autocomplete="name" autofocus>
-
-                                                    @error('first_name')
-                                                        <span class="invalid-feedback" role="alert">
-                                                            <strong>{{ $message }}</strong>
-                                                        </span>
-                                                    @enderror
-                                                </div>
-                                            </div>
-
-                                            <!-- Last name -->
-                                            <div class="row mb-3">
-                                                <label for="last_name" class="form-label">{{ __('Last Name') }}</label>
-
-                                                <div class="">
-                                                    <input id="last_name" type="text" class="form-control @error('last_name') is-invalid @enderror" disabled name="last_name" value="{{ $data->last_name }}" required autocomplete="name" autofocus>
-
-                                                    @error('last_name')
-                                                        <span class="invalid-feedback" role="alert">
-                                                            <strong>{{ $message }}</strong>
-                                                        </span>
-                                                    @enderror
-                                                </div>
-                                            </div>
-
-                                            <!-- Nickname -->
-                                            <div class="row mb-3">
-                                                <label for="nickname" class="form-label">{{ __('Nickname') }}</label>
-
-                                                <div class="">
-                                                    <input id="nickname" type="text" class="form-control @error('nickname') is-invalid @enderror" disabled name="nickname" value="{{ $data->nickname }}" required autocomplete="name" autofocus>
-
-                                                    @error('nickname')
-                                                        <span class="invalid-feedback" role="alert">
-                                                            <strong>{{ $message }}</strong>
-                                                        </span>
-                                                    @enderror
-                                                </div>
-                                            </div>
-
-                                            <!-- Email address -->
-                                            <div class="row mb-3">
-                                                <label for="email" class="form-label">{{ __('Email Address') }}</label>
-
-                                                <div class="">
-                                                    <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" disabled name="email" value="{{ $data->email }}" required autocomplete="email">
-
-                                                    @error('email')
+                                                    <select class="form-select" aria-label="Default select example">
+                                                        <option selected>Choose the user role name</option>
+                                                        @foreach ($displayAllRecords['user_role_types'] as $key => $item)
+                                                        <option value="{{ $item->id }}">{{ $item->id }} -> {{ $item->user_role_name }}</option>
+                                                        @endforeach
+                                                    </select>
+                                                    @error('user_role_type_id')
                                                         <span class="invalid-feedback" role="alert">
                                                             <strong>{{ $message }}</strong>
                                                         </span>
