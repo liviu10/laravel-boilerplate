@@ -4,7 +4,7 @@
     <div class="auth">
         <div class="card">
             <div class="card-header">
-                {{ __('Reset Password') }}
+                {{ __('auth.reset.title') }}
             </div>
 
             <div class="card-body">
@@ -15,7 +15,7 @@
 
                     <!-- Email address -->
                     <div class="mb-3">
-                        <label for="email" class="form-label">{{ __('Email Address') }}</label>
+                        <label for="email" class="form-label">{{ __('auth.reset.email') }}</label>
 
                         <div class="">
                             <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ $email ?? old('email') }}" required autocomplete="email" autofocus>
@@ -29,7 +29,7 @@
                     </div>
 
                     <div class="mb-3">
-                        <label for="password" class="form-label">{{ __('Password') }}</label>
+                        <label for="password" class="form-label">{{ __('auth.reset.password') }}</label>
 
                         <div class="">
                             <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="new-password">
@@ -43,7 +43,7 @@
                     </div>
 
                     <div class="mb-3">
-                        <label for="password-confirm" class="form-label">{{ __('Confirm Password') }}</label>
+                        <label for="password-confirm" class="form-label">{{ __('auth.reset.confirm_password') }}</label>
 
                         <div class="">
                             <input id="password-confirm" type="password" class="form-control" name="password_confirmation" required autocomplete="new-password">
@@ -52,7 +52,7 @@
 
                     <div class="card-actions">
                         <button type="submit" class="btn btn-primary">
-                            {{ __('Reset Password') }}
+                            {{ __('auth.reset.button') }}
                         </button>
                     </div>
                 </form>

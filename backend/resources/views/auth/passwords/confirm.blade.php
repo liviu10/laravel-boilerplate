@@ -4,18 +4,18 @@
     <div class="auth">
         <div class="card">
             <div class="card-header">
-                {{ __('Confirm Password') }}
+                {{ __('auth.confirm_password.title') }}
             </div>
 
             <div class="card-body">
-                {{ __('Please confirm your password before continuing.') }}
+                {{ __('auth.confirm_password.message') }}
 
                 <form method="POST" action="{{ route('password.confirm') }}">
                     @csrf
 
                     <!-- Password -->
                     <div class="mb-3">
-                        <label for="password" class="form-label">{{ __('Password') }}</label>
+                        <label for="password" class="form-label">{{ __('auth.confirm_password.password') }}</label>
 
                         <div class="">
                             <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="current-password">
@@ -32,13 +32,13 @@
                     <div class="mb-0 card-actions">
                         @if (Route::has('password.request'))
                             <a class="btn btn-link" href="{{ route('password.request') }}">
-                                {{ __('Forgot Your Password?') }}
+                                {{ __('auth.confirm_password.forgot') }}
                             </a>
                         @endif
 
                         <div class="d-flex justify-content-center">
                             <button type="submit" class="btn btn-primary">
-                                {{ __('Confirm Password') }}
+                                {{ __('auth.confirm_password.button') }}
                             </button>
                         </div>
                     </div>

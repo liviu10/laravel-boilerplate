@@ -4,7 +4,7 @@
     <div class="auth">
         <div class="card">
             <div class="card-header">
-                {{ __('Reset Password') }}
+                {{ __('auth.reset_email.title') }}
             </div>
 
             <div class="card-body">
@@ -19,7 +19,7 @@
 
                     <!-- Email address -->
                     <div class="mb-3">
-                        <label for="email" class="form-label">{{ __('Email Address') }}</label>
+                        <label for="email" class="form-label">{{ __('auth.reset_email.email') }}</label>
 
                         <div class="">
                             <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email" autofocus>
@@ -35,7 +35,7 @@
                     <div class="mb-0 card-actions">
                         <div class="d-flex justify-content-center">
                             <button type="submit" class="btn btn-primary">
-                                {{ __('Send Password Reset Link') }}
+                                {{ __('auth.reset_email.button') }}
                             </button>
                         </div>
                     </div>
