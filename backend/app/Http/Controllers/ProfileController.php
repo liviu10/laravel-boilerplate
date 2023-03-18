@@ -38,23 +38,33 @@ class ProfileController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        $request->validate([
-            'full_name'  => 'required|string|max:255',
-            'first_name' => 'required|string|max:255',
-            'last_name'  => 'required|string|max:255',
-            'nickname'   => 'required|string|max:255',
-            // 'email'      => 'required|string|email|max:255|unique:users',
-            'password'   => 'required|string|min:8|confirmed',
-        ]);
+        $validateRequest = [
+            'full_name'     => 'sometimes|string|max:255',
+            'first_name'    => 'sometimes|string|max:255',
+            'last_name'     => 'sometimes|string|max:255',
+            'nickname'      => 'sometimes|string|max:255',
+            'profile_image' => 'sometimes|image',
+        ];
+
+        $updateRecords = array_filter($request->all());
+
+        if ($request->get('password') !== null)
+        {
+            $validateRequest['password'] = 'required|string|min:8|confirmed';
+            $updateRecords['password'] = Hash::make($request->get('password'));
+        }
+
+        if ($request->hasFile('profile_image'))
+        {
+            $hashFilename = $request->file('profile_image')->hashName();
+            $request->profile_image->storeAs('images', $hashFilename, 'public');
+            $updateRecords['profile_image'] = 'storage/images/' . $request->profile_image->getClientOriginalName();
+        }
+
+        $request->validate($validateRequest);
         $editSingleRecord = $this->modelName->find($id);
-        $editSingleRecord->update([
-            'full_name'  => $request->get('full_name'),
-            'first_name' => $request->get('first_name'),
-            'last_name'  => $request->get('last_name'),
-            'nickname'   => $request->get('nickname'),
-            // 'email'      => $request->get('email'),
-            'password'   => Hash::make($request->get('password')),
-        ]);
+
+        $editSingleRecord->update($updateRecords);
 
         return redirect()->route('profile.index')->with('success', 'Your profile information was successfully saved!');
     }

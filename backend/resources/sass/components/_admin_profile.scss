@@ -23,6 +23,9 @@
                     padding-bottom: rem-convertor(8px);
                     color: #424743;
                     &-body {
+                        & .alert {
+                            border-radius: 0;
+                        }
                         & form {
                             margin-bottom: 0;
                             & .row {
@@ -31,6 +34,10 @@
                                 }
                                 & .form-label, & .form-check-label {
                                     font-weight: 700;
+                                }
+                                & .form-image {
+                                    @include flex-center();
+                                    justify-content: space-between;
                                 }
                                 & .form-control, & .form-check-input {
                                     border-radius: 0;

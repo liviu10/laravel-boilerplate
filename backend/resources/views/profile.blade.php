@@ -11,13 +11,13 @@
                 <div class="card col-lg-8 col-md-8 col-sm-8">
                     <div class="card-body">
                         @if ($message = Session::get('success'))
-                            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                            <div class="alert alert-success alert-dismissible fade show" role="alert" id="alertTest">
                                 <p class="my-0">{{ $message }}</p>
                                 <button type="button" class="btn btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                             </div>
                         @endif
 
-                        <form method="POST" action="{{ route('profile.update', $displayUserProfile->id) }}">
+                        <form method="POST" action="{{ route('profile.update', $displayUserProfile->id) }}" enctype="multipart/form-data">
                             @csrf
                             @method('PUT')
 
@@ -79,9 +79,15 @@
                                 <!-- Profile picture -->
                                 <div class="row mb-3">
                                     <label for="profile_image" class="form-label">{{ __('Profile Picture') }}</label>
+                                    @if ($displayUserProfile->profile_image)
+                                    <div class="form-image">
+                                        <a href="{{ asset($displayUserProfile->profile_image) }}" target="_blank">{{ __('View image') }}</a>
+                                    </div>
+                                    @endif
 
                                     <div class="">
-                                        <input class="form-control" type="file" id="profile_image">
+                                        {{ $displayUserProfile->profile_image }}
+                                        <input class="form-control" type="file" id="profile_image" name="profile_image" value="{{ old('profile_image') }}">
 
                                         @error('profile_image')
                                             <span class="invalid-feedback" role="alert">
@@ -144,7 +150,7 @@
                                     <label for="password" class="form-label">{{ __('Password') }}</label>
 
                                     <div class="">
-                                        <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="new-password">
+                                        <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" autocomplete="new-password">
 
                                         @error('password')
                                             <span class="invalid-feedback" role="alert">
@@ -159,7 +165,7 @@
                                     <label for="password-confirm" class="form-label">{{ __('Confirm Password') }}</label>
 
                                     <div class="">
-                                        <input id="password-confirm" type="password" class="form-control" name="password_confirmation" required autocomplete="new-password">
+                                        <input id="password-confirm" type="password" class="form-control" name="password_confirmation" autocomplete="new-password">
                                     </div>
                                 </div>
                             </div>
