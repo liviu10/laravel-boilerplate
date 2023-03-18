@@ -11,7 +11,7 @@
                 <div class="card col-lg-8 col-md-8 col-sm-8">
                     <div class="card-body">
                         @if ($message = Session::get('success'))
-                            <div class="alert alert-success alert-dismissible fade show" role="alert" id="alertTest">
+                            <div class="alert alert-success alert-dismissible fade show" role="alert" id="profile_alert">
                                 <p class="my-0">{{ $message }}</p>
                                 <button type="button" class="btn btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                             </div>
