@@ -86,7 +86,6 @@
                                     @endif
 
                                     <div class="">
-                                        {{ $displayUserProfile->profile_image }}
                                         <input class="form-control" type="file" id="profile_image" name="profile_image" value="{{ old('profile_image') }}">
 
                                         @error('profile_image')

@@ -6,6 +6,7 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Storage;
 
 class ProfileController extends Controller
 {
@@ -58,7 +59,7 @@ class ProfileController extends Controller
         {
             $hashFilename = $request->file('profile_image')->hashName();
             $request->profile_image->storeAs('images', $hashFilename, 'public');
-            $updateRecords['profile_image'] = 'storage/images/' . $request->profile_image->getClientOriginalName();
+            $updateRecords['profile_image'] = 'storage/images/' . $hashFilename;
         }
 
         $request->validate($validateRequest);
