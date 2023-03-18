@@ -34,7 +34,7 @@ class UsersController extends Controller
                     $query->select('*');
                 }
             ])->get(),
-            'user_role_types' => UserRoleType::select('id', 'user_role_name')->get()
+            'user_role_types' => UserRoleType::select('id', 'user_role_name', 'user_role_description', 'user_role_slug', 'user_role_is_active')->get()
         ];
         return view('users', compact('displayAllRecords'));
     }

@@ -1,32 +1,14 @@
 // Bootstrap
 @import 'bootstrap/scss/bootstrap';
 
-// Utilities
+// Import utilities
 @import 'utilities/_rem_convertor.scss';
+@import 'utilities/_flex.scss';
 
-.navbar {
-    margin-bottom: rem-convertor(32px);
-    &-brand {
-        @media only screen and (max-width: 425px) and (min-width: 320px) {
-            margin-right: 0 !important;
-            font-weight: 700;
-        }
-        @media only screen and (max-width: 425px) and (min-width: 375px) {
-            font-size: rem-convertor(16px);
-        }
-        @media only screen and (max-width: 374px) and (min-width: 320px) {
-            font-size: rem-convertor(14px);
-        }
-    }
-}
+// Import components
+@import 'components/_admin_home.scss';
+@import 'components/_admin_navbar.scss';
+@import 'components/_admin_profile.scss';
+@import 'components/_admin_settings.scss';
+@import 'components/_admin_users.scss';
 
-.container-fluid {
-    & .row {
-        & div {
-            & h1 {
-                margin-bottom: rem-convertor(32px);
-                text-align: center;
-            }
-        }
-    }
-}

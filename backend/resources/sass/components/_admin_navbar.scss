@@ -1,0 +1,54 @@
+.admin {
+    & .navbar {
+        margin-bottom: rem-convertor(32px);
+        background-color: #424743 !important;
+        &-brand {
+            color: #EAC11F !important;
+            @media only screen and (max-width: 425px) and (min-width: 320px) {
+                margin-right: 0 !important;
+                font-weight: 700;
+            }
+            @media only screen and (max-width: 425px) and (min-width: 375px) {
+                font-size: rem-convertor(16px);
+            }
+            @media only screen and (max-width: 374px) and (min-width: 320px) {
+                font-size: rem-convertor(14px);
+            }
+        }
+        &-nav {
+            & .nav-item {
+                & .nav-link {
+                    color: #EAC11F !important;
+                }
+            }
+            & .dropdown-menu {
+                border-radius: 0;
+                border-color: #424743 !important;
+                padding: 0 !important;
+            }
+            & .dropdown-item {
+                color: #424743 !important;
+                &:active {
+                    background-color: #FFFFFF;
+                }
+                & .fa-solid.fa-user, .fa-solid.fa-users, .fa-solid.fa-gear,
+                .fa-sharp.fa-solid.fa-arrow-right-from-bracket,
+                .fa-solid.fa-link {
+                    margin-right: rem-convertor(4px);
+                    width: 15%;
+                    color: #424743 !important;
+                    &::before {
+                        @include flex-center();
+                    }
+                }
+                & span {
+                    width: 85%;
+                }
+            }
+            & .dropdown-divider {
+                margin: 0 !important;
+                border-color: #424743 !important;
+            }
+        }
+    }
+}
