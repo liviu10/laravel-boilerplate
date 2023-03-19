@@ -6,14 +6,15 @@
             {{ __('All users') }}
         </h1>
 
-        <div class="menu">
-            @if ($message = Session::get('success'))
-                <div class="alert alert-success alert-dismissible fade show" role="alert">
-                    <p class="my-0">{{ $message }}</p>
-                    <button type="button" class="btn btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                </div>
-            @endif
 
+        @if ($message = Session::get('success'))
+            <div class="alert alert-success alert-dismissible fade show" role="alert" id="users_alert">
+                <p class="my-0">{{ $message }}</p>
+                <button type="button" class="btn btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        @endif
+
+        <div class="menu">
             <div class="table-responsive col-lg-8 col-md-8 col-sm-8">
                 <table class="table table-bordered">
                     <thead>
@@ -94,7 +95,11 @@
                                             </p>
                                             <p>
                                                 <span>Email verified at:</span>
-                                                {{ $data->email_verified_at }}
+                                                @if ($data->email_verified_at !== null)
+                                                    {{ $data->email_verified_at }}
+                                                @else
+                                                    —
+                                                @endif
                                             </p>
                                         </div>
                                         <div class="modal-footer">
@@ -138,7 +143,11 @@
                                             </p>
                                             <p>
                                                 <span>Email verified at:</span>
-                                                {{ $data->email_verified_at }}
+                                                @if ($data->email_verified_at !== null)
+                                                    {{ $data->email_verified_at }}
+                                                @else
+                                                    —
+                                                @endif
                                             </p>
                                             <form method="POST" action="{{ route('users.update', $data->id) }}">
                                                 @csrf
@@ -149,10 +158,10 @@
                                                 <!-- Role name -->
                                                 <div class="row my-3">
                                                     <div>
-                                                        <select class="form-select" aria-label="Default select example">
-                                                            <option selected>{{ __('Select a user role') }}</option>
+                                                        <select class="form-select" aria-label="Default select example" name="user_role_type_id">
+                                                            <option selected>{{ __('Choose the user role type') }}</option>
                                                             @foreach ($displayAllRecords['user_role_types'] as $key => $item)
-                                                            <option value="{{ $item->id }}">{{ $item->id }} -> {{ $item->user_role_name }}</option>
+                                                            <option value="{{ $item->id }}">{{ $item->user_role_name }}</option>
                                                             @endforeach
                                                         </select>
                                                         @error('user_role_type_id')
@@ -189,13 +198,6 @@
         </h1>
 
         <div class="menu">
-            @if ($message = Session::get('success'))
-                <div class="alert alert-success alert-dismissible fade show" role="alert">
-                    <p class="my-0">{{ $message }}</p>
-                    <button type="button" class="btn btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                </div>
-            @endif
-
             <div class="table-responsive col-lg-8 col-md-8 col-sm-8">
                 <table class="table table-bordered">
                     <thead>
@@ -228,9 +230,9 @@
                             </td>
                             <td>
                                 @if ($data->user_role_is_active === '1')
-                                    {{ __('Active') }}
+                                    {{ __('Yes') }}
                                 @else
-                                    {{ __('Inactive') }}
+                                    {{ __('No') }}
                                 @endif
                             </td>
                         </tr>

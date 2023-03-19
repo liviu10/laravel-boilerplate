@@ -15,6 +15,46 @@
                 font-size: rem-convertor(14px);
             }
         }
+        &-toggler, &-toggler:focus {
+            border: 0 !important;
+            box-shadow: none !important;
+        }
+        &-toggler {
+            & span {
+                display: block;
+                background-color: #EAC11F;
+                height: rem-convertor(3px);
+                width: rem-convertor(25px);
+                margin-top: rem-convertor(5px);
+                margin-bottom: rem-convertor(5px);
+                position: relative;
+                left: 0;
+                opacity: 1;
+                transition: all 0.35s ease-out;
+                transform-origin: center left;
+                &:nth-child(1) {
+                    transform: translate(0%, 0%) rotate(0deg);
+                    margin-top: 0.3em;
+                }
+                &:nth-child(2) {
+                    opacity: 1;
+                }
+                &:nth-child(3) {
+                    transform: translate(0%, 0%) rotate(0deg);
+                }
+            }
+            &:not(.collapsed) {
+                & span:nth-child(1) {
+                    transform: translate(15%, -33%) rotate(45deg);
+                }
+                & span:nth-child(2) {
+                    opacity: 0;
+                }
+                & span:nth-child(3) {
+                    transform: translate(15%, 33%) rotate(-45deg);
+                }
+            }
+        }
         &-nav {
             & .nav-item {
                 & .nav-link {

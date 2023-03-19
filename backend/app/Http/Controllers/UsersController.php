@@ -76,13 +76,9 @@ class UsersController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        dd([
-            'request' => $request->all(),
-            'id' => $id
-        ]);
         $editSingleRecord = $this->modelName->find($id);
         $editSingleRecord->update([
-            'user_role_type_id' => $request->get('id'),
+            'user_role_type_id' => $request->get('user_role_type_id'),
         ]);
 
         return redirect()->route('users.index')->with('success', 'The user role was successfully saved!');
