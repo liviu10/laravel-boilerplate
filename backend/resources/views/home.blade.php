@@ -57,7 +57,7 @@
             </div>
             @else
             <div class="row">
-                <div class="card col-lg-8 col-md-8 col-sm-8">
+                <div class="card col-lg-8 col-md-8 col-sm-8 mx-auto">
                     <div class="card-body">
                         <p class="lead">My account</p>
                         <p>Modify your profile information (name, nickname, email address and password)</p>
