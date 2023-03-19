@@ -47,7 +47,7 @@
                                 {{ $data->nickname }}
                             </td>
                             <td>
-                                {{ $data->user_role_type->user_role_slug }}
+                                {{ $data->user_role_type->user_role_name }}
                             </td>
                             <td>
                                 <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#showRecordModal{{ $key }}">
@@ -87,7 +87,7 @@
                                             </p>
                                             <p>
                                                 <span>Nickname:</span>
-                                                {{ $data->nickname }} (user role: {{ $data->user_role_type->user_role_slug }})
+                                                {{ $data->nickname }} (user role: {{ $data->user_role_type->user_role_name }})
                                             </p>
                                             <p>
                                                 <span>Email:</span>
@@ -135,7 +135,7 @@
                                             </p>
                                             <p>
                                                 <span>Nickname:</span>
-                                                {{ $data->nickname }} (user role: {{ $data->user_role_type->user_role_slug }})
+                                                {{ $data->nickname }} (user role: {{ $data->user_role_type->user_role_name }})
                                             </p>
                                             <p>
                                                 <span>Email:</span>
@@ -203,7 +203,6 @@
                     <thead>
                         <tr>
                             <th scope="col">ID</th>
-                            <th scope="col">Slug</th>
                             <th scope="col">Name & Description</th>
                             <th scope="col">Is active?</th>
                         </tr>
@@ -214,9 +213,6 @@
                             <th scope="row">
                                 {{ $data->id }}
                             </th>
-                            <td>
-                                {{ $data->user_role_slug }}
-                            </td>
                             <td>
                                 <span>
                                     Name:

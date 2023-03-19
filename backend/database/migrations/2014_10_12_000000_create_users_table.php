@@ -17,9 +17,8 @@ return new class extends Migration
             $table->string('first_name');
             $table->string('last_name');
             $table->string('nickname');
-            $table->string('email')->unique();
+            $table->string('email')->unique()->index();
             $table->timestamp('email_verified_at')->nullable();
-            $table->foreignId('user_role_type_id')->index('idx_user_role_type_id');
             $table->string('password')->nullable();
             $table->string('profile_image')->nullable();
             $table->rememberToken();

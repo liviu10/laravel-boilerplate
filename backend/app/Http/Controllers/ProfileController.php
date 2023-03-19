@@ -14,7 +14,6 @@ class ProfileController extends Controller
 
     /**
      * Create a new controller instance.
-     *
      * @return void
      */
     public function __construct()
@@ -24,8 +23,7 @@ class ProfileController extends Controller
     }
 
     /**
-     * Show the application dashboard.
-     *
+     * Show the authenticated user's profile.
      * @return \Illuminate\Contracts\Support\Renderable
      */
     public function index()
@@ -35,7 +33,10 @@ class ProfileController extends Controller
     }
 
     /**
-     * Update the specified resource in storage.
+     * Update the authenticated user's profile information.
+     * @param \Illuminate\Http\Request $request The HTTP request object containing the form data.
+     * @param string $id The ID of the user record to update.
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function update(Request $request, string $id)
     {

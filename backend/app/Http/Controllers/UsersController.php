@@ -8,67 +8,31 @@ use Illuminate\Http\Request;
 
 class UsersController extends Controller
 {
-    protected $modelName;
+    protected $modelUser;
+    protected $modelUserRoleType;
 
     /**
      * Create a new controller instance.
-     *
      * @return void
      */
     public function __construct()
     {
         $this->middleware('auth');
-        $this->modelName = new User();
+        $this->modelUser = new User();
+        $this->modelUserRoleType = new UserRoleType();
     }
 
     /**
-     * Show the application dashboard.
-     *
+     * Show the the list of all users and the user role types.
      * @return \Illuminate\Contracts\Support\Renderable
      */
     public function index()
     {
         $displayAllRecords = [
-            'users' => User::with([
-                'user_role_type' => function ($query) {
-                    $query->select('*');
-                }
-            ])->get(),
-            'user_role_types' => UserRoleType::select('id', 'user_role_name', 'user_role_description', 'user_role_slug', 'user_role_is_active')->get()
+            'users' => $this->modelUser->fetchAllUsers(),
+            'user_role_types' => $this->modelUserRoleType->fetchAllUserRoleTypes()
         ];
         return view('users', compact('displayAllRecords'));
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
-    {
-        //
     }
 
     /**
@@ -76,19 +40,11 @@ class UsersController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        $editSingleRecord = $this->modelName->find($id);
-        $editSingleRecord->update([
-            'user_role_type_id' => $request->get('user_role_type_id'),
-        ]);
+        $updateRecord = [
+            'user_role_type_id' => $request->get('user_role_type_id')
+        ];
+        $editSingleRecord = $this->modelUser->updateUserRole($updateRecord, $id);
 
         return redirect()->route('users.index')->with('success', 'The user role was successfully saved!');
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
-    {
-        //
     }
 }

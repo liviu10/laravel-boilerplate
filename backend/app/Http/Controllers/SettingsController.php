@@ -8,7 +8,6 @@ class SettingsController extends Controller
 {
     /**
      * Create a new controller instance.
-     *
      * @return void
      */
     public function __construct()
@@ -17,8 +16,7 @@ class SettingsController extends Controller
     }
 
     /**
-     * Show the application dashboard.
-     *
+     * Show the application's settings.
      * @return \Illuminate\Contracts\Support\Renderable
      */
     public function index()
