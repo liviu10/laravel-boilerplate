@@ -3,7 +3,7 @@
 @section('content')
     <div class="admin profile">
         <h1>
-            {{ __('Profile') }}
+            {{ __('profile.page_title') }}
         </h1>
 
         <div class="menu">
@@ -27,13 +27,15 @@
                             <div>
                                 <div class="row">
                                     <p class="lead">
-                                        {{ __('Contact details') }}
+                                        {{ __('profile.contact_details') }}
                                     </p>
                                 </div>
 
                                 <!-- Full name -->
                                 <div class="row mb-3">
-                                    <label for="full_name" class="form-label">{{ __('Full Name') }}</label>
+                                    <label for="full_name" class="form-label">
+                                        {{ __('profile.full_name_label') }}
+                                    </label>
 
                                     <div class="">
                                         <input id="full_name" type="text" class="form-control @error('full_name') is-invalid @enderror" name="full_name" value="{{ $displayUserProfile->full_name }}" required autocomplete="name" autofocus>
@@ -48,7 +50,9 @@
 
                                 <!-- First name -->
                                 <div class="row mb-3">
-                                    <label for="first_name" class="form-label">{{ __('First Name') }}</label>
+                                    <label for="first_name" class="form-label">
+                                        {{ __('profile.first_name_label') }}
+                                    </label>
 
                                     <div class="">
                                         <input id="first_name" type="text" class="form-control @error('first_name') is-invalid @enderror" name="first_name" value="{{ $displayUserProfile->first_name }}" required autocomplete="name" autofocus>
@@ -63,7 +67,9 @@
 
                                 <!-- Last name -->
                                 <div class="row mb-3">
-                                    <label for="last_name" class="form-label">{{ __('Last Name') }}</label>
+                                    <label for="last_name" class="form-label">
+                                        {{ __('profile.last_name_label') }}
+                                    </label>
 
                                     <div class="">
                                         <input id="last_name" type="text" class="form-control @error('last_name') is-invalid @enderror" name="last_name" value="{{ $displayUserProfile->last_name }}" required autocomplete="name" autofocus>
@@ -78,7 +84,9 @@
 
                                 <!-- Profile picture -->
                                 <div class="row mb-3">
-                                    <label for="profile_image" class="form-label">{{ __('Profile Picture') }}</label>
+                                    <label for="profile_image" class="form-label">
+                                        {{ __('profile.profile_picture_label') }}
+                                    </label>
                                     @if ($displayUserProfile->profile_image)
                                     <div class="form-image">
                                         <a href="{{ asset($displayUserProfile->profile_image) }}" target="_blank">{{ __('View image') }}</a>
@@ -101,13 +109,15 @@
                             <div>
                                 <div class="row">
                                     <p class="lead">
-                                        {{ __('Email details') }}
+                                        {{ __('profile.email_details') }}
                                     </p>
                                 </div>
 
                                 <!-- Nickname -->
                                 <div class="row mb-3">
-                                    <label for="nickname" class="form-label">{{ __('Nickname') }}</label>
+                                    <label for="nickname" class="form-label">
+                                        {{ __('profile.nickname_label') }}
+                                    </label>
 
                                     <div class="">
                                         <input id="nickname" type="text" class="form-control @error('nickname') is-invalid @enderror" name="nickname" value="{{ $displayUserProfile->nickname }}" required autocomplete="name" autofocus>
@@ -122,7 +132,9 @@
 
                                 <!-- Email address -->
                                 <div class="row mb-3">
-                                    <label for="email" class="form-label">{{ __('Email Address') }}</label>
+                                    <label for="email" class="form-label">
+                                        {{ __('profile.email_address_label') }}
+                                    </label>
 
                                     <div class="">
                                         <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" disabled name="email" value="{{ $displayUserProfile->email }}" required autocomplete="email">
@@ -140,13 +152,15 @@
                             <div>
                                 <div class="row">
                                     <p class="lead">
-                                        {{ __('Password details') }}
+                                        {{ __('profile.password_details') }}
                                     </p>
                                 </div>
 
                                 <!-- Password -->
                                 <div class="row mb-3">
-                                    <label for="password" class="form-label">{{ __('Password') }}</label>
+                                    <label for="password" class="form-label">
+                                        {{ __('profile.password_label') }}
+                                    </label>
 
                                     <div class="">
                                         <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" autocomplete="new-password">
@@ -161,7 +175,9 @@
 
                                 <!-- Password confirmation -->
                                 <div class="row mb-3">
-                                    <label for="password-confirm" class="form-label">{{ __('Confirm Password') }}</label>
+                                    <label for="password-confirm" class="form-label">
+                                        {{ __('profile.password_confirmation_label') }}
+                                    </label>
 
                                     <div class="">
                                         <input id="password-confirm" type="password" class="form-control" name="password_confirmation" autocomplete="new-password">
@@ -171,7 +187,7 @@
 
                             <div class="card-actions">
                                 <button type="submit" class="btn btn-primary">
-                                    {{ __('Update') }}
+                                    {{ __('profile.update_button') }}
                                 </button>
                             </div>
                         </form>

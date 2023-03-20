@@ -118,9 +118,9 @@ class User extends Authenticatable
      */
     public function fetchAllUsers()
     {
-        return $this->with([
+        return $this->select('id', 'full_name', 'first_name', 'last_name', 'nickname', 'email', 'email_verified_at', 'user_role_type_id')->with([
             'user_role_type' => function ($query) {
-                $query->select('*');
+                $query->select('id', 'user_role_name');
             }
         ])->get();
     }

@@ -42,12 +42,6 @@
                                         <span>{{ __('admin.navbar.users') }}</span>
                                     </a>
                                 </li>
-                                <li>
-                                    <a class="dropdown-item" href="{{ route('settings') }}">
-                                        <i class="fa-solid fa-gear"></i>
-                                        <span>{{ __('admin.navbar.settings') }}</span>
-                                    </a>
-                                </li>
                                 @endif
                                 <li>
                                     <a class="dropdown-item" href="{{ route('welcome') }}" target="_blank">

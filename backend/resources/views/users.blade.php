@@ -6,7 +6,6 @@
             {{ __('All users') }}
         </h1>
 
-
         @if ($message = Session::get('success'))
             <div class="alert alert-success alert-dismissible fade show" role="alert" id="users_alert">
                 <p class="my-0">{{ $message }}</p>
@@ -96,7 +95,7 @@
                                             <p>
                                                 <span>Email verified at:</span>
                                                 @if ($data->email_verified_at !== null)
-                                                    {{ $data->email_verified_at }}
+                                                    {{ DateTime::createFromFormat('Y-m-d H:i:s', $data->email_verified_at)->format('d.m.Y H:i a') }}
                                                 @else
                                                     —
                                                 @endif
@@ -225,7 +224,7 @@
                                 {{ $data->user_role_description }}
                             </td>
                             <td>
-                                @if ($data->user_role_is_active === '1')
+                                @if ($data->user_role_is_active === 1)
                                     {{ __('Yes') }}
                                 @else
                                     {{ __('No') }}
