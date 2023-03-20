@@ -3,10 +3,10 @@
 return [
     'navbar' => [
         'home' => 'Acasa',
-        'welcome' => 'Bun venit',
+        'welcome' => 'Bun venit, :userName',
         'profile' => 'Contul meu',
         'users' => 'Utilizatori si Roluri',
-        'settings' => 'Setari',
         'logout' => 'Iesire',
+        'view_website' => 'Vezi website'
     ],
 ];

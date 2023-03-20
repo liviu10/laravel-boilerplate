@@ -13,11 +13,12 @@ use Illuminate\Support\Facades\Route;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
+    // Guest routes
+    Route::get('/', function () { return view('welcome'); })->name('welcome');
 
-Route::get('/', function () { return view('welcome'); })->name('welcome');
-
-Auth::routes();
-
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
-Route::resource('/profile', App\Http\Controllers\ProfileController::class);
-Route::resource('/users', App\Http\Controllers\UsersController::class);
+    // Authentication routes
+    Auth::routes();
+    Route::get('lang/{lang}', ['as' => 'lang.switch', 'uses' => 'App\Http\Controllers\LanguageController@switchLang']);
+    Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+    Route::resource('/profile', App\Http\Controllers\ProfileController::class);
+    Route::resource('/users', App\Http\Controllers\UsersController::class);

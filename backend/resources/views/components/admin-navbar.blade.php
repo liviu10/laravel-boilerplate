@@ -25,6 +25,22 @@
                 <div>
                     <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                         <li class="nav-item dropdown">
+                            <a class="nav-link active dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                <span class="fi fi-{{ Config::get('languages')[App::getLocale()]['flag-icon'] }}"></span>
+                                {{ Config::get('languages')[App::getLocale()]['display'] }}
+                            </a>
+                            <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                            @foreach (Config::get('languages') as $lang => $language)
+                                @if ($lang != App::getLocale())
+                                    <a class="dropdown-item" href="{{ route('lang.switch', $lang) }}">
+                                        <span class="fi fi-{{ $language['flag-icon'] }}" style="width: 1.33333333em;"></span>
+                                        {{ $language['display'] }}
+                                    </a>
+                                @endif
+                            @endforeach
+                            </ul>
+                        </li>
+                        <li class="nav-item dropdown">
                             <a class="nav-link active dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                                 {{ __('admin.navbar.welcome', [ 'userName' => Auth::user()->full_name ]) }}
                             </a>
