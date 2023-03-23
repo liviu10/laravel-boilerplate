@@ -33,6 +33,9 @@
                             duplicate .env.example and rename the file to .env and configure your database connection variables
                         </li>
                         <li class="list-group-item">
+                            php artisan key:generate
+                        </li>
+                        <li class="list-group-item">
                             php artisan migrate
                         </li>
                         <li class="list-group-item">

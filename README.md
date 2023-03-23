@@ -22,6 +22,9 @@ To install and run this application you can follow the instructions below:
         duplicate .env.example and rename the file to .env and configure your database connection variables
     </li>
     <li>
+        php artisan key:generate
+    </li>
+    <li>
         php artisan migrate
     </li>
     <li>
