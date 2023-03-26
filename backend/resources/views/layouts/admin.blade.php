@@ -16,7 +16,7 @@
     </head>
     <body>
 
-        @include('components.admin-navbar')
+        <x-admin-navigation-bar />
 
         <div id="app">
             <main class="container-fluid">
