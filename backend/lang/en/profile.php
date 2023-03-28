@@ -7,6 +7,7 @@ return [
     'first_name_label' => 'First name',
     'last_name_label' => 'Last name',
     'profile_picture_label' => 'Profile picture',
+    'view_image_label' => 'View image',
     'email_details' => 'Email details',
     'nickname_label' => 'Nickname',
     'email_address_label' => 'Email address',

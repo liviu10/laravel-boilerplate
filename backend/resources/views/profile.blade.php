@@ -89,7 +89,7 @@
                                     </label>
                                     @if ($displayUserProfile['profile_image'])
                                     <div class="form-image">
-                                        <a href="{{ asset($displayUserProfile['profile_image']) }}" target="_blank">{{ __('View image') }}</a>
+                                        <a href="{{ asset($displayUserProfile['profile_image']) }}" target="_blank">{{ __('profile.view_image_label') }}</a>
                                     </div>
                                     @endif
 
