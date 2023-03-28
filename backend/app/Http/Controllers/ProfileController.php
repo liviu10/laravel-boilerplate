@@ -4,9 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Storage;
 
 class ProfileController extends Controller
 {
@@ -28,18 +26,23 @@ class ProfileController extends Controller
      */
     public function index()
     {
-        $displayUserProfile = Auth::user();
+        $errorMessage = __('profile.error_message_fetch');
+
+        $displayUserProfile = $this->modelName->fetchCurrentAuthUser() ? $this->modelName->fetchCurrentAuthUser() : $errorMessage;
         return view('profile', compact('displayUserProfile'));
     }
 
     /**
      * Update the authenticated user's profile information.
      * @param \Illuminate\Http\Request $request The HTTP request object containing the form data.
-     * @param string $id The ID of the user record to update.
+     * @param int $id The ID of the user record to update.
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, int $id)
     {
+        $successMessage = __('profile.success_message');
+        $errorMessage = __('profile.error_message_update');
+
         $validateRequest = [
             'full_name'     => 'sometimes|string|max:255',
             'first_name'    => 'sometimes|string|max:255',
@@ -64,10 +67,9 @@ class ProfileController extends Controller
         }
 
         $request->validate($validateRequest);
-        $editSingleRecord = $this->modelName->find($id);
 
-        $editSingleRecord->update($updateRecords);
+        $result = $this->modelName->updateUser($updateRecords, $id);
 
-        return redirect()->route('profile.index')->with('success', 'Your profile information was successfully saved!');
+        return redirect()->route('profile.index')->with('success', $result ? $successMessage : $errorMessage);
     }
 }

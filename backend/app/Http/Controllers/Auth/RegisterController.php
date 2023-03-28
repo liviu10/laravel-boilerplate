@@ -30,6 +30,7 @@ class RegisterController extends Controller
      * @var string
      */
     protected $redirectTo = RouteServiceProvider::HOME;
+    protected $modelUser;
 
     /**
      * Create a new controller instance.
@@ -39,6 +40,7 @@ class RegisterController extends Controller
     public function __construct()
     {
         $this->middleware('guest');
+        $this->modelUser = new User();
     }
 
     /**
@@ -67,14 +69,6 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
-        return User::create([
-            'full_name'         => $data['full_name'],
-            'first_name'        => $data['first_name'],
-            'last_name'         => $data['last_name'],
-            'nickname'          => $data['nickname'],
-            'email'             => $data['email'],
-            'password'          => Hash::make($data['password']),
-            'user_role_type_id' => 5,
-        ]);
+        return $this->modelUser->registerUser($data);
     }
 }

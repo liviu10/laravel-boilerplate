@@ -7,6 +7,9 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 
 /**
  * Class User
@@ -24,8 +27,10 @@ use Laravel\Sanctum\HasApiTokens;
  * @property \Carbon\Carbon $created_at
  * @property \Carbon\Carbon $updated_at
  * @property-read \App\Models\UserRoleType $user_role_type
+ * @method fetchCurrentAuthUser
  * @method fetchAllUsers
  * @method updateUserRole
+ * @method updateUser
  */
 class User extends Authenticatable
 {
@@ -113,24 +118,201 @@ class User extends Authenticatable
     }
 
     /**
+     * Fetches the current authenticated user from the Auth facade,
+     * excluding the password and email_verified_at fields.
+     * @return \Illuminate\Support\Collection|boolean Returns a collection
+     * of the authenticated user's attributes, excluding password and email_verified_at.
+     * @throws \Exception|\Illuminate\Database\QueryException
+     * Returns an boolean if there was a problem fetching
+     * the current authenticated user.
+     */
+    public function fetchCurrentAuthUser()
+    {
+        try
+        {
+            return collect(Auth::user())->except([ 'email_verified_at', 'password' ]);
+        }
+        catch (\Exception $exception)
+        {
+            $logError = [
+                'code'    => $exception->getCode(),
+                'message' => $exception->getMessage()
+            ];
+            Log::error($logError);
+            return false;
+        }
+        catch (\Illuminate\Database\QueryException $exception)
+        {
+            $logError = [
+                'query'    => $exception->getSql(),
+                'message'  => $exception->getMessage(),
+                'bindings' => $exception->getBindings()
+            ];
+            Log::error($logError);
+            return false;
+        }
+    }
+
+    /**
      * Get all users with their user role type information.
-     * @return \Illuminate\Database\Eloquent\Collection
+     * @return \Illuminate\Database\Eloquent\Collection|array|boolean
+     * Returns a collection of users with their associated user role type.
+     * If an error occurs during retrieval, an boolean will be returned.
      */
     public function fetchAllUsers()
     {
-        return $this->select('id', 'full_name', 'first_name', 'last_name', 'nickname', 'email', 'email_verified_at', 'user_role_type_id')->with([
-            'user_role_type' => function ($query) {
-                $query->select('id', 'user_role_name');
-            }
-        ])->get();
+        try
+        {
+            return $this->select(
+                'id',
+                'full_name',
+                'first_name',
+                'last_name',
+                'nickname',
+                'email',
+                'email_verified_at',
+                'user_role_type_id'
+            )->with([
+                'user_role_type' => function ($query) {
+                    $query->select(
+                        'id',
+                        'user_role_name'
+                    );
+                }
+            ])->get();
+        }
+        catch (\Exception $exception)
+        {
+            $logError = [
+                'code'    => $exception->getCode(),
+                'message' => $exception->getMessage()
+            ];
+            Log::error($logError);
+            return false;
+        }
+        catch (\Illuminate\Database\QueryException $exception)
+        {
+            $logError = [
+                'query'    => $exception->getSql(),
+                'message'  => $exception->getMessage(),
+                'bindings' => $exception->getBindings()
+            ];
+            Log::error($logError);
+            return false;
+        }
     }
 
-    public function updateUserRole($payload, $id)
+    /**
+     * Register a new user.
+     * @param array $payload An associative array of values to register the user.
+     * @return \App\Models\User|bool Returns a user object if the register was successful,
+     * or a boolean otherwise.
+     */
+    public function registerUser(array $payload)
     {
-        $this->find($id)->update([
-            'user_role_type_id' => $payload['user_role_type_id'],
-        ]);
+        try
+        {
+            $user = $this->create([
+                'full_name'         => $payload['full_name'],
+                'first_name'        => $payload['first_name'],
+                'last_name'         => $payload['last_name'],
+                'nickname'          => $payload['nickname'],
+                'email'             => $payload['email'],
+                'password'          => Hash::make($payload['password']),
+                'user_role_type_id' => 5,
+            ]);
+            return $user;
+        }
+        catch (\Exception $exception)
+        {
+            $logError = [
+                'code'    => $exception->getCode(),
+                'message' => $exception->getMessage()
+            ];
+            Log::error($logError);
+            return false;
+        }
+        catch (\Illuminate\Database\QueryException $exception)
+        {
+            $logError = [
+                'query'    => $exception->getSql(),
+                'message'  => $exception->getMessage(),
+                'bindings' => $exception->getBindings()
+            ];
+            Log::error($logError);
+            return false;
+        }
+    }
 
-        return True;
+    /**
+     * Update the user role of a specific user.
+     * @param array $payload An associative array of values to update the user role.
+     * @param int $id The ID of the user to update.
+     * @return bool Returns true if the update was successful,
+     * or an boolean otherwise.
+     */
+    public function updateUserRole(array $payload, int $id)
+    {
+        try
+        {
+            $this->find($id)->update([
+                'user_role_type_id' => $payload['user_role_type_id'],
+            ]);
+            return True;
+        }
+        catch (\Exception $exception)
+        {
+            $logError = [
+                'code'    => $exception->getCode(),
+                'message' => $exception->getMessage()
+            ];
+            Log::error($logError);
+            return false;
+        }
+        catch (\Illuminate\Database\QueryException $exception)
+        {
+            $logError = [
+                'query'    => $exception->getSql(),
+                'message'  => $exception->getMessage(),
+                'bindings' => $exception->getBindings()
+            ];
+            Log::error($logError);
+            return false;
+        }
+    }
+
+    /**
+     * Update the user profile information.
+     * @param array $payload An associative array of values to update the user.
+     * @param int $id The ID of the user to update.
+     * @return bool Returns true if the update was successful,
+     * or an boolean otherwise.
+     */
+    public function updateUser(array $payload, int $id)
+    {
+        try
+        {
+            $this->find($id)->update($payload);
+            return True;
+        }
+        catch (\Exception $exception)
+        {
+            $logError = [
+                'code'    => $exception->getCode(),
+                'message' => $exception->getMessage()
+            ];
+            Log::error($logError);
+            return false;
+        }
+        catch (\Illuminate\Database\QueryException $exception)
+        {
+            $logError = [
+                'query'    => $exception->getSql(),
+                'message'  => $exception->getMessage(),
+                'bindings' => $exception->getBindings()
+            ];
+            Log::error($logError);
+            return false;
+        }
     }
 }

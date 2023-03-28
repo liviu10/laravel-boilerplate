@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Log;
 
 /**
  * Class UserRoleType
@@ -12,7 +13,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property int $id
  * @property string $user_role_name
  * @property string|null $user_role_description
- * @property bool $user_role_is_active
+ * @property bool $is_active
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\User[] $users
@@ -58,7 +59,7 @@ class UserRoleType extends Model
     protected $fillable = [
         'user_role_name',
         'user_role_description',
-        'user_role_is_active',
+        'is_active',
     ];
 
     /**
@@ -66,7 +67,7 @@ class UserRoleType extends Model
      * @var array
      */
     protected $attributes = [
-        'user_role_is_active' => false,
+        'is_active' => false,
     ];
 
     /**
@@ -90,10 +91,39 @@ class UserRoleType extends Model
 
     /**
      * Get all user role types information.
-     * @return \Illuminate\Database\Eloquent\Collection
+     * @return \Illuminate\Database\Eloquent\Collection|array|boolean
+     * Returns a collection of users with their associated user role type.
+     * If an error occurs during retrieval, an boolean will be returned.
      */
     public function fetchAllUserRoleTypes()
     {
-        return $this->select('id', 'user_role_name', 'user_role_description', 'user_role_is_active')->get();
+        try
+        {
+            return $this->select(
+                'id',
+                'user_role_name',
+                'user_role_description',
+                'is_active'
+            )->get();
+        }
+        catch (\Exception $exception)
+        {
+            $logError = [
+                'code'    => $exception->getCode(),
+                'message' => $exception->getMessage()
+            ];
+            Log::error($logError);
+            return false;
+        }
+        catch (\Illuminate\Database\QueryException $exception)
+        {
+            $logError = [
+                'query'    => $exception->getSql(),
+                'message'  => $exception->getMessage(),
+                'bindings' => $exception->getBindings()
+            ];
+            Log::error($logError);
+            return false;
+        }
     }
 }

@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id()->index('idx_id');
             $table->string('user_role_name');
             $table->string('user_role_description');
-            $table->boolean('user_role_is_active')->default(false);
+            $table->boolean('is_active')->default(false);
             $table->timestamps();
         });
     }

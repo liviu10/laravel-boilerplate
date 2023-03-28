@@ -13,5 +13,8 @@ return [
     'password_details' => 'Detalii parola',
     'password_label' => 'Parola',
     'password_confirmation_label' => 'Confirma parola',
-    'update_button' => 'Modifica'
+    'update_button' => 'Modifica',
+    'error_message_fetch' => 'A aparut o eroare la preluarea informatiilor profilului utilizatorului! Te rog sa incerci din nou si, daca problema persista, contacteaza administratorul!',
+    'success_message' => 'Informatiile profilului au fost salvate cu succes!',
+    'error_message_update' => 'A aparut o eroare la actualizarea informatiilor profilului! Te rog sa incerci din nou si, daca problema persista, contacteaza administratorul!'
 ];

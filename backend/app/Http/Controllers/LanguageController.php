@@ -17,7 +17,7 @@ class LanguageController extends Controller
      * @param string $language The language code to set.
      * @return \Illuminate\Http\RedirectResponse A redirect response back to the previous page.
      */
-    public function switchLang($language)
+    public function switchLang(string $language)
     {
         if (array_key_exists($language, Config::get('languages')))
         {

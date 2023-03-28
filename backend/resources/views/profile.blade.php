@@ -17,11 +17,11 @@
                             </div>
                         @endif
 
-                        <form method="POST" action="{{ route('profile.update', $displayUserProfile->id) }}" enctype="multipart/form-data">
+                        <form method="POST" action="{{ route('profile.update', $displayUserProfile['id']) }}" enctype="multipart/form-data">
                             @csrf
                             @method('PUT')
 
-                            <input type="hidden" name="id" value="{{ $displayUserProfile->id }}">
+                            <input type="hidden" name="id" value="{{ $displayUserProfile['id'] }}">
 
                             <!-- Contact details -->
                             <div>
@@ -38,7 +38,7 @@
                                     </label>
 
                                     <div class="">
-                                        <input id="full_name" type="text" class="form-control @error('full_name') is-invalid @enderror" name="full_name" value="{{ $displayUserProfile->full_name }}" required autocomplete="name" autofocus>
+                                        <input id="full_name" type="text" class="form-control @error('full_name') is-invalid @enderror" name="full_name" value="{{ $displayUserProfile['full_name'] }}" required autocomplete="name" autofocus>
 
                                         @error('full_name')
                                             <span class="invalid-feedback" role="alert">
@@ -55,7 +55,7 @@
                                     </label>
 
                                     <div class="">
-                                        <input id="first_name" type="text" class="form-control @error('first_name') is-invalid @enderror" name="first_name" value="{{ $displayUserProfile->first_name }}" required autocomplete="name" autofocus>
+                                        <input id="first_name" type="text" class="form-control @error('first_name') is-invalid @enderror" name="first_name" value="{{ $displayUserProfile['first_name'] }}" required autocomplete="name" autofocus>
 
                                         @error('first_name')
                                             <span class="invalid-feedback" role="alert">
@@ -72,7 +72,7 @@
                                     </label>
 
                                     <div class="">
-                                        <input id="last_name" type="text" class="form-control @error('last_name') is-invalid @enderror" name="last_name" value="{{ $displayUserProfile->last_name }}" required autocomplete="name" autofocus>
+                                        <input id="last_name" type="text" class="form-control @error('last_name') is-invalid @enderror" name="last_name" value="{{ $displayUserProfile['last_name'] }}" required autocomplete="name" autofocus>
 
                                         @error('last_name')
                                             <span class="invalid-feedback" role="alert">
@@ -87,9 +87,9 @@
                                     <label for="profile_image" class="form-label">
                                         {{ __('profile.profile_picture_label') }}
                                     </label>
-                                    @if ($displayUserProfile->profile_image)
+                                    @if ($displayUserProfile['profile_image'])
                                     <div class="form-image">
-                                        <a href="{{ asset($displayUserProfile->profile_image) }}" target="_blank">{{ __('View image') }}</a>
+                                        <a href="{{ asset($displayUserProfile['profile_image']) }}" target="_blank">{{ __('View image') }}</a>
                                     </div>
                                     @endif
 
@@ -120,7 +120,7 @@
                                     </label>
 
                                     <div class="">
-                                        <input id="nickname" type="text" class="form-control @error('nickname') is-invalid @enderror" name="nickname" value="{{ $displayUserProfile->nickname }}" required autocomplete="name" autofocus>
+                                        <input id="nickname" type="text" class="form-control @error('nickname') is-invalid @enderror" name="nickname" value="{{ $displayUserProfile['nickname'] }}" required autocomplete="name" autofocus>
 
                                         @error('nickname')
                                             <span class="invalid-feedback" role="alert">
@@ -137,7 +137,7 @@
                                     </label>
 
                                     <div class="">
-                                        <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" disabled name="email" value="{{ $displayUserProfile->email }}" required autocomplete="email">
+                                        <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" disabled name="email" value="{{ $displayUserProfile['email'] }}" required autocomplete="email">
 
                                         @error('email')
                                             <span class="invalid-feedback" role="alert">
