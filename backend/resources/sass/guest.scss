@@ -8,3 +8,12 @@
 // Import components
 @import 'components/_authentication.scss';
 @import 'components/_hero.scss';
+
+// Import presentational components
+@import 'components/presentational/_accordion.scss';
+@import 'components/presentational/_alert.scss';
+@import 'components/presentational/_badge.scss';
+@import 'components/presentational/_button.scss';
+@import 'components/presentational/_card.scss';
+@import 'components/presentational/_dropdown.scss';
+@import 'components/presentational/_list.scss';
