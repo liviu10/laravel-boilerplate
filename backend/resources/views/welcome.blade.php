@@ -16,32 +16,18 @@
                     To install and run this application you can follow the instructions below:
                 </p>
                 <div class="mb-4 hero-body-instructions">
-                    <ul class="list-group">
-                        <li class="list-group-item">
-                            git clone https://github.com/liviu10/laravel-boilerplate.git
-                        </li>
-                        <li class="list-group-item">
-                            cd laravel-boilerplate/backend/
-                        </li>
-                        <li class="list-group-item">
-                            composer install
-                        </li>
-                        <li class="list-group-item">
-                            npm install && npm run dev
-                        </li>
-                        <li class="list-group-item">
-                            duplicate .env.example and rename the file to .env and configure your database connection variables
-                        </li>
-                        <li class="list-group-item">
-                            php artisan key:generate
-                        </li>
-                        <li class="list-group-item">
-                            php artisan migrate
-                        </li>
-                        <li class="list-group-item">
-                            php artisan db:seed
-                        </li>
-                    </ul>
+                    @include('components.presentational.list', [
+                        'listContent' => [
+                            'git clone https://github.com/liviu10/laravel-boilerplate.git',
+                            'cd laravel-boilerplate/backend/',
+                            'composer install',
+                            'npm install && npm run dev',
+                            'duplicate .env.example and rename the file to .env and configure your database connection variables',
+                            'php artisan key:generate',
+                            'php artisan migrate',
+                            'php artisan db:seed'
+                        ]
+                    ])
                 </div>
                 @if (!Auth::user())
                 <div class="hero-actions">
