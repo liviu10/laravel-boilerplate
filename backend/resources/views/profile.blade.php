@@ -32,77 +32,53 @@
                                 </div>
 
                                 <!-- Full name -->
-                                <div class="row mb-3">
-                                    <label for="full_name" class="form-label">
-                                        {{ __('profile.full_name_label') }}
-                                    </label>
-
-                                    <div class="">
-                                        <input id="full_name" type="text" class="form-control @error('full_name') is-invalid @enderror" name="full_name" value="{{ $displayUserProfile['full_name'] }}" required autocomplete="name" autofocus>
-
-                                        @error('full_name')
-                                            <span class="invalid-feedback" role="alert">
-                                                <strong>{{ $message }}</strong>
-                                            </span>
-                                        @enderror
-                                    </div>
-                                </div>
+                                @include('components.input', [
+                                    'input' => [
+                                        'label' => __('profile.full_name_label'),
+                                        'id' => 'full_name',
+                                        'type' => 'text',
+                                        'value' => $displayUserProfile['full_name'],
+                                        'autocomplete' => 'full_name',
+                                        'disabled' => false
+                                    ]
+                                ])
 
                                 <!-- First name -->
-                                <div class="row mb-3">
-                                    <label for="first_name" class="form-label">
-                                        {{ __('profile.first_name_label') }}
-                                    </label>
-
-                                    <div class="">
-                                        <input id="first_name" type="text" class="form-control @error('first_name') is-invalid @enderror" name="first_name" value="{{ $displayUserProfile['first_name'] }}" required autocomplete="name" autofocus>
-
-                                        @error('first_name')
-                                            <span class="invalid-feedback" role="alert">
-                                                <strong>{{ $message }}</strong>
-                                            </span>
-                                        @enderror
-                                    </div>
-                                </div>
+                                @include('components.input', [
+                                    'input' => [
+                                        'label' => __('profile.first_name_label'),
+                                        'id' => 'first_name',
+                                        'type' => 'text',
+                                        'value' => $displayUserProfile['first_name'],
+                                        'autocomplete' => 'first_name',
+                                        'disabled' => false
+                                    ]
+                                ])
 
                                 <!-- Last name -->
-                                <div class="row mb-3">
-                                    <label for="last_name" class="form-label">
-                                        {{ __('profile.last_name_label') }}
-                                    </label>
-
-                                    <div class="">
-                                        <input id="last_name" type="text" class="form-control @error('last_name') is-invalid @enderror" name="last_name" value="{{ $displayUserProfile['last_name'] }}" required autocomplete="name" autofocus>
-
-                                        @error('last_name')
-                                            <span class="invalid-feedback" role="alert">
-                                                <strong>{{ $message }}</strong>
-                                            </span>
-                                        @enderror
-                                    </div>
-                                </div>
+                                @include('components.input', [
+                                    'input' => [
+                                        'label' => __('profile.last_name_label'),
+                                        'id' => 'last_name',
+                                        'type' => 'text',
+                                        'value' => $displayUserProfile['last_name'],
+                                        'autocomplete' => 'last_name',
+                                        'disabled' => false
+                                    ]
+                                ])
 
                                 <!-- Profile picture -->
-                                <div class="row mb-3">
-                                    <label for="profile_image" class="form-label">
-                                        {{ __('profile.profile_picture_label') }}
-                                    </label>
-                                    @if ($displayUserProfile['profile_image'])
-                                    <div class="form-image">
-                                        <a href="{{ asset($displayUserProfile['profile_image']) }}" target="_blank">{{ __('profile.view_image_label') }}</a>
-                                    </div>
-                                    @endif
-
-                                    <div class="">
-                                        <input class="form-control" type="file" id="profile_image" name="profile_image" value="{{ old('profile_image') }}">
-
-                                        @error('profile_image')
-                                            <span class="invalid-feedback" role="alert">
-                                                <strong>{{ $message }}</strong>
-                                            </span>
-                                        @enderror
-                                    </div>
-                                </div>
+                                @include('components.input', [
+                                    'input' => [
+                                        'label' => __('profile.profile_picture_label'),
+                                        'id' => 'profile_image',
+                                        'type' => 'file',
+                                        'value' => $displayUserProfile['profile_image'],
+                                        'view_image_label' => __('profile.view_image_label'),
+                                        'autocomplete' => 'profile_image',
+                                        'disabled' => false
+                                    ]
+                                ])
                             </div>
 
                             <!-- Email & Nickname details -->
@@ -114,38 +90,28 @@
                                 </div>
 
                                 <!-- Nickname -->
-                                <div class="row mb-3">
-                                    <label for="nickname" class="form-label">
-                                        {{ __('profile.nickname_label') }}
-                                    </label>
-
-                                    <div class="">
-                                        <input id="nickname" type="text" class="form-control @error('nickname') is-invalid @enderror" name="nickname" value="{{ $displayUserProfile['nickname'] }}" required autocomplete="name" autofocus>
-
-                                        @error('nickname')
-                                            <span class="invalid-feedback" role="alert">
-                                                <strong>{{ $message }}</strong>
-                                            </span>
-                                        @enderror
-                                    </div>
-                                </div>
+                                @include('components.input', [
+                                    'input' => [
+                                        'label' => __('profile.nickname_label'),
+                                        'id' => 'nickname',
+                                        'type' => 'text',
+                                        'value' => $displayUserProfile['nickname'],
+                                        'autocomplete' => 'nickname',
+                                        'disabled' => false
+                                    ]
+                                ])
 
                                 <!-- Email address -->
-                                <div class="row mb-3">
-                                    <label for="email" class="form-label">
-                                        {{ __('profile.email_address_label') }}
-                                    </label>
-
-                                    <div class="">
-                                        <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" disabled name="email" value="{{ $displayUserProfile['email'] }}" required autocomplete="email">
-
-                                        @error('email')
-                                            <span class="invalid-feedback" role="alert">
-                                                <strong>{{ $message }}</strong>
-                                            </span>
-                                        @enderror
-                                    </div>
-                                </div>
+                                @include('components.input', [
+                                    'input' => [
+                                        'label' => __('profile.email_address_label'),
+                                        'id' => 'email',
+                                        'type' => 'email',
+                                        'value' => $displayUserProfile['email'],
+                                        'autocomplete' => 'email',
+                                        'disabled' => true
+                                    ]
+                                ])
                             </div>
 
                             <!-- Password details -->
@@ -157,32 +123,26 @@
                                 </div>
 
                                 <!-- Password -->
-                                <div class="row mb-3">
-                                    <label for="password" class="form-label">
-                                        {{ __('profile.password_label') }}
-                                    </label>
-
-                                    <div class="">
-                                        <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" autocomplete="new-password">
-
-                                        @error('password')
-                                            <span class="invalid-feedback" role="alert">
-                                                <strong>{{ $message }}</strong>
-                                            </span>
-                                        @enderror
-                                    </div>
-                                </div>
+                                @include('components.input', [
+                                    'input' => [
+                                        'label' => __('profile.password_label'),
+                                        'id' => 'password',
+                                        'type' => 'password',
+                                        'autocomplete' => 'new-password',
+                                        'disabled' => false
+                                    ]
+                                ])
 
                                 <!-- Password confirmation -->
-                                <div class="row mb-3">
-                                    <label for="password-confirm" class="form-label">
-                                        {{ __('profile.password_confirmation_label') }}
-                                    </label>
-
-                                    <div class="">
-                                        <input id="password-confirm" type="password" class="form-control" name="password_confirmation" autocomplete="new-password">
-                                    </div>
-                                </div>
+                                @include('components.input', [
+                                    'input' => [
+                                        'label' => __('profile.password_confirmation_label'),
+                                        'id' => 'password_confirmation',
+                                        'type' => 'password',
+                                        'autocomplete' => 'new-password',
+                                        'disabled' => false
+                                    ]
+                                ])
                             </div>
 
                             <div class="card-actions">

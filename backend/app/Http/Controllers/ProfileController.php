@@ -44,14 +44,15 @@ class ProfileController extends Controller
         $errorMessage = __('profile.error_message_update');
 
         $validateRequest = [
-            'full_name'     => 'sometimes|string|max:255',
-            'first_name'    => 'sometimes|string|max:255',
-            'last_name'     => 'sometimes|string|max:255',
-            'nickname'      => 'sometimes|string|max:255',
-            'profile_image' => 'sometimes|image',
+            'full_name'     => 'sometimes|string|min:3|max:100|regex:/^[a-zA-Z\s]+$/',
+            'first_name'    => 'sometimes|string|min:3|max:100|regex:/^[a-zA-Z\s]+$/',
+            'last_name'     => 'sometimes|string|min:3|max:100|regex:/^[a-zA-Z\s]+$/',
+            'nickname'      => 'sometimes|string|max:100',
+            'profile_image' => 'sometimes|image|mimes:jpeg,png,gif,webp,bmp,svg,tiff',
         ];
 
         $updateRecords = array_filter($request->all());
+        $request->validate($validateRequest);
 
         if ($request->get('password') !== null)
         {
@@ -65,8 +66,6 @@ class ProfileController extends Controller
             $request->profile_image->storeAs('images', $hashFilename, 'public');
             $updateRecords['profile_image'] = 'storage/images/' . $hashFilename;
         }
-
-        $request->validate($validateRequest);
 
         $result = $this->modelName->updateUser($updateRecords, $id);
 
