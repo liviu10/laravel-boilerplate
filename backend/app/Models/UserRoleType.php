@@ -29,6 +29,9 @@ use App\Traits\LogErrors;
  * @method static \Illuminate\Database\Eloquent\Builder|UserRoleType whereUserRoleName($value)
  * @mixin \Eloquent
  * @method fetchAllUserRoleTypes
+ * @method fetchAllUserRoleTypeNames
+ * @method saveUserRole
+ * @method updateUserRole
  */
 class UserRoleType extends Model
 {
@@ -160,7 +163,6 @@ class UserRoleType extends Model
      */
     public function saveUserRole(array $payload)
     {
-        // dd($payload);
         try
         {
             $userRole = $this->create([

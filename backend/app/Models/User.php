@@ -29,6 +29,7 @@ use App\Traits\LogErrors;
  * @property-read \App\Models\UserRoleType $user_role_type
  * @method fetchCurrentAuthUser
  * @method fetchAllUsers
+ * @method registerUser
  * @method updateUserRole
  * @method updateUser
  */
