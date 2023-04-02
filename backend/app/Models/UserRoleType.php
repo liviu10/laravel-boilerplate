@@ -16,18 +16,7 @@ use App\Traits\LogErrors;
  * @property bool $is_active
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
- * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\User[] $users
- * @property-read int|null $users_count
- * @method static \Illuminate\Database\Eloquent\Builder|UserRoleType newModelQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|UserRoleType newQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|UserRoleType query()
- * @method static \Illuminate\Database\Eloquent\Builder|UserRoleType whereCreatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|UserRoleType whereId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|UserRoleType whereUpdatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|UserRoleType whereUserRoleDescription($value)
- * @method static \Illuminate\Database\Eloquent\Builder|UserRoleType whereUserRoleIsActive($value)
- * @method static \Illuminate\Database\Eloquent\Builder|UserRoleType whereUserRoleName($value)
- * @mixin \Eloquent
+ * @property-read \App\Models\User $user
  * @method fetchAllUserRoleTypes
  * @method fetchAllUserRoleTypeNames
  * @method saveUserRole

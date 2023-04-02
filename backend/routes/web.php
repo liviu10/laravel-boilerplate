@@ -23,3 +23,4 @@ use Illuminate\Support\Facades\Route;
     Route::resource('/profile', App\Http\Controllers\ProfileController::class);
     Route::resource('/users', App\Http\Controllers\UsersController::class)->except('delete');
     Route::resource('/user-roles', App\Http\Controllers\UserRoleTypesController::class)->except('delete');
+    Route::resource('/contact', App\Http\Controllers\ContactController::class)->except('update', 'delete');

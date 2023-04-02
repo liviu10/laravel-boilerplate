@@ -30,7 +30,7 @@
                         </a>
                         <ul class="dropdown-menu">
                             <li>
-                                <a class="dropdown-item" href="{{ url('/contact-me') }}">
+                                <a class="dropdown-item" href="{{ url('/contact') }}">
                                     {{ $adminNavigationBar['contactPage'] }}
                                 </a>
                             </li>

@@ -16,7 +16,7 @@
 @import 'components/_admin_users.scss';
 
 .admin {
-    &.home, &.profile, &.users, &.user-roles {
+    &.home, &.contact, &.profile, &.users, &.user-roles {
         & h1 {
             margin-bottom: rem-convertor(32px);
             text-align: center;
@@ -63,7 +63,7 @@
             }
         }
     }
-    &.users, &.user-roles {
+    &.contact, &.users, &.user-roles {
         & .menu {
             & .table-responsive {
                 margin-left: auto;
