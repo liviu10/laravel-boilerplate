@@ -32,7 +32,7 @@ class UsersController extends Controller
 
         $displayAllRecords = [
             'users' => $this->modelUser->fetchAllUsers() ? $this->modelUser->fetchAllUsers() : $errorMessage,
-            'user_role_types' => $this->modelUserRoleType->fetchAllUserRoleTypes() ? $this->modelUserRoleType->fetchAllUserRoleTypes() : $errorMessage
+            'user_role_types' => $this->modelUserRoleType->fetchAllUserRoleTypeNames() ? $this->modelUserRoleType->fetchAllUserRoleTypeNames() : $errorMessage
         ];
         return view('users', compact('displayAllRecords'));
     }

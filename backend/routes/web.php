@@ -21,4 +21,5 @@ use Illuminate\Support\Facades\Route;
     Route::get('lang/{lang}', ['as' => 'lang.switch', 'uses' => 'App\Http\Controllers\LanguageController@switchLang']);
     Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
     Route::resource('/profile', App\Http\Controllers\ProfileController::class);
-    Route::resource('/users', App\Http\Controllers\UsersController::class);
+    Route::resource('/users', App\Http\Controllers\UsersController::class)->except('delete');
+    Route::resource('/user-roles', App\Http\Controllers\UserRoleTypesController::class)->except('delete');

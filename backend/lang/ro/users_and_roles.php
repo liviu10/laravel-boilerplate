@@ -27,12 +27,21 @@ return [
         'column_id' => 'ID',
         'column_name_and_description' => 'Nume & Descriere',
         'column_is_active' => 'Este activ?',
-        'show_label_name' => 'Nume',
-        'show_label_description' => 'Descriere',
+        'column_actions' => 'Actiuni',
+        'show_user_role_title' => 'Roluri utilizatori',
+        'show_label_id' => 'ID',
+        'show_label_user_role_name' => 'Nume rol',
+        'show_label_user_role_description' => 'Descriere rol',
         'show_label_is_active' => [
+            'title' => 'Este activ?',
             'yes' => 'Da',
             'no' => 'Nu'
-        ]
+        ],
+        'show_label_created_at' => 'Creat la',
+        'show_label_updated_at' => 'Modificat la',
+        'close_button' => 'Inchide',
+        'update_user_role_title' => 'Actualizeaza detalii roluri utilizatori',
+        'update_button' => 'Modifica'
     ],
     'error_message_fetch' => 'A aparut o eroare la preluarea listei cu toti utilizatorii! Te rog sa incerci din nou si, daca problema persista, contacteaza administratorul!',
     'success_message' => 'Utilizatorul a fost salvat cu succes!',

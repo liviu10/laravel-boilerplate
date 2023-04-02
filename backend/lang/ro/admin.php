@@ -5,13 +5,12 @@ return [
         'home' => 'Acasa',
         'sections' => [
             'title' => 'Sectiuni website',
-            'first_page' => 'Prima Pagina',
-            'second_page' => 'A doua Pagina',
-            'third_page' => 'A treia Pagina',
+            'contact_page' => 'Mesaje contact',
         ],
         'welcome' => 'Bun venit, :userName',
         'profile' => 'Contul meu',
-        'users' => 'Utilizatori si Roluri',
+        'users' => 'Utilizatori',
+        'roles' => 'Roluri',
         'logout' => 'Iesire',
         'view_website' => 'Vezi website'
     ],

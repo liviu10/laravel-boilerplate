@@ -30,18 +30,8 @@
                         </a>
                         <ul class="dropdown-menu">
                             <li>
-                                <a class="dropdown-item" href="{{ route('home') }}">
-                                    {{ $adminNavigationBar['firstPage'] }}
-                                </a>
-                            </li>
-                            <li>
-                                <a class="dropdown-item" href="{{ route('home') }}">
-                                    {{ $adminNavigationBar['secondPage'] }}
-                                </a>
-                            </li>
-                            <li>
-                                <a class="dropdown-item" href="{{ route('home') }}">
-                                    {{ $adminNavigationBar['thirdPage'] }}
+                                <a class="dropdown-item" href="{{ url('/contact-me') }}">
+                                    {{ $adminNavigationBar['contactPage'] }}
                                 </a>
                             </li>
                         </ul>
@@ -86,6 +76,12 @@
                                     <a class="dropdown-item" href="{{ url('/users') }}">
                                         <i class="fa-solid fa-users"></i>
                                         <span>{{ $adminNavigationBar['users'] }}</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item" href="{{ url('/user-roles') }}">
+                                        <i class="fa-solid fa-users-gear"></i>
+                                        <span>{{ $adminNavigationBar['roles'] }}</span>
                                     </a>
                                 </li>
                                 @endif

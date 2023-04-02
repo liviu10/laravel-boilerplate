@@ -12,6 +12,219 @@
 @import 'components/_admin_home.scss';
 @import 'components/_admin_navbar.scss';
 @import 'components/_admin_profile.scss';
-@import 'components/_admin_settings.scss';
+@import 'components/_admin_user_roles.scss';
 @import 'components/_admin_users.scss';
 
+.admin {
+    &.home, &.profile, &.users, &.user-roles {
+        & h1 {
+            margin-bottom: rem-convertor(32px);
+            text-align: center;
+            color: #424743;
+        }
+        & .menu {
+            margin-bottom: rem-convertor(32px);
+        }
+    }
+    &.home, &.profile {
+        & .menu {
+            & .row {
+                margin-bottom: rem-convertor(32px);
+                @media only screen and (max-width: 768px) and (min-width: 320px) {
+                    @include flex-center();
+                    flex-direction: column;
+                    margin-bottom: rem-convertor(16px);
+                }
+                & .card {
+                    border-radius: 0;
+                    border-color: #424743;
+                    padding-top: rem-convertor(8px);
+                    padding-bottom: rem-convertor(8px);
+                    color: #424743;
+                    &-body {
+                        & p, & form {
+                            margin-bottom: 0
+                        }
+                    }
+                    &-actions {
+                        @include flex-center();
+                        & .btn.btn-primary {
+                            border-radius: 0;
+                            background-color: #424743;
+                            border-color: #424743;
+                            color: #EAC11F;
+                            font-weight: 700;
+                            &:focus-visible {
+                                box-shadow: none;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+    &.users, &.user-roles {
+        & .menu {
+            & .table-responsive {
+                margin-left: auto;
+                margin-right: auto;
+            }
+            & .table {
+                margin-bottom: 0;
+                border-color: #424743;
+                color: #424743;
+                & thead, & tbody {
+                    & tr {
+                        & th, & td {
+                            vertical-align: middle;
+                            padding: rem-convertor(5px);
+                        }
+                        & th, & td:last-child {
+                            text-align: center;
+                        }
+                        & td {
+                            & span {
+                                font-weight: 700;
+                            }
+                        }
+                        & td:last-child {
+                            & div {
+                                @include flex-center();
+                                & .btn {
+                                    border-radius: 0;
+                                    width: rem-convertor(30px);
+                                    height: rem-convertor(30px);
+                                    & .fas.fa-info, & .fas.fa-edit {
+                                        @include flex-center();
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+    &.profile {
+        & .menu {
+            & .row {
+                & .card {
+                    margin-left: auto;
+                    margin-right: auto;
+                    &-body {
+                        & form {
+                            & .row {
+                                & .form-label {
+                                    margin-bottom: 0;
+                                }
+                                & .form-label, & .form-check-label {
+                                    font-weight: 700;
+                                }
+                                & .form-control, & .form-check-input {
+                                    border-radius: 0;
+                                    border-color: #424743;
+                                    &:focus, &:focus-visible {
+                                        box-shadow: none;
+                                    }
+                                    &:focus {
+                                        border-color: #424743;
+                                    }
+                                }
+                                & .form-control:disabled:hover {
+                                    cursor: not-allowed;
+                                }
+                                & .form-check-input {
+                                    &:checked {
+                                        background-color: #424743;
+                                    }
+                                }
+                            }
+                            & .row:first-child {
+                                margin-bottom: 0 !important;
+                                & .lead {
+                                    text-align: left;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+.modal {
+    color: #424743;
+    &-content {
+        border-radius: 0;
+    }
+    &-header {
+        @include flex-center();
+        border-bottom: 0 !important;
+        & .btn-close {
+            &:focus {
+                box-shadow: none;
+            }
+        }
+    }
+    &-title {
+        margin-bottom: 0 !important;
+    }
+    &-body {
+        & p {
+            margin-bottom: 0;
+            & span {
+                font-weight: 700;
+            }
+        }
+        & form {
+            margin-bottom: 0;
+        }
+    }
+    &-footer {
+        @include flex-center();
+        border-top: 0 !important;
+        & .btn.btn-primary {
+            border-radius: 0;
+            background-color: #424743;
+            border-color: #424743;
+            color: #EAC11F;
+            font-weight: 700;
+            &:focus-visible {
+                box-shadow: none;
+            }
+        }
+    }
+    &-actions {
+        & .btn.btn-primary {
+            border-radius: 0;
+            background-color: #424743;
+            border-color: #424743;
+            color: #EAC11F;
+            font-weight: 700;
+            &:focus-visible {
+                box-shadow: none;
+            }
+        }
+    }
+}
+.pagination {
+    margin-top: rem-convertor(16px);
+    & .page-item {
+        & .page-link {
+            border-radius: 0;
+            border-color: #424743;
+            color: #424743;
+            font-weight: 700;
+            &:focus {
+                box-shadow: none;
+            }
+        }
+        &.active {
+            & .page-link {
+                background-color: #424743;
+                color: #EAC11F;
+                font-weight: 700;
+            }
+        }
+    }
+}
