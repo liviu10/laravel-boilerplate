@@ -24,6 +24,7 @@ return [
     ],
     'user_roles' => [
         'page_title' => 'Roluri utilizatori',
+        'add_new' => 'Adauga un rol nou',
         'column_id' => 'ID',
         'column_name_and_description' => 'Nume & Descriere',
         'column_is_active' => 'Este activ?',

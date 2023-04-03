@@ -2,9 +2,9 @@
 
 @section('content')
     <div class="admin profile">
-        <h1>
-            {{ __('profile.page_title') }}
-        </h1>
+        @include('components.page-title', [
+            'title' => __('profile.page_title')
+        ])
 
         <div class="menu">
             <div class="row">

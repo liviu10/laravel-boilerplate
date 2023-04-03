@@ -7,22 +7,21 @@ use Illuminate\Database\Eloquent\Model;
 use App\Traits\LogErrors;
 
 /**
- * Class UserRoleType
+ * Class ContactSubject
  * @package App\Models
  *
  * @property int $id
- * @property string $user_role_name
- * @property string|null $user_role_description
- * @property bool $is_active
- * @property \Illuminate\Support\Carbon|null $created_at
- * @property \Illuminate\Support\Carbon|null $updated_at
- * @property-read \App\Models\User $user
- * @method fetchAllUserRoleTypes
- * @method fetchAllUserRoleTypeNames
- * @method saveUserRole
- * @method updateUserRole
+ * @property string $full_name
+ * @property string $email
+ * @property string $phone
+ * @property string $message
+ * @property boolean $privacy_policy
+ * @property \Carbon\Carbon $created_at
+ * @property \Carbon\Carbon $updated_at
+ * @method fetchAllContactSubjectMessage
+ * @method saveContactSubjectMessage
  */
-class UserRoleType extends Model
+class ContactSubject extends Model
 {
     use HasFactory, LogErrors;
 
@@ -30,7 +29,7 @@ class UserRoleType extends Model
      * The name of the database table associated with the model.
      * @var string
      */
-    protected $table = 'user_role_types';
+    protected $table = 'contact_subjects';
 
     /**
      * The name of the primary key column in the associated database table.
@@ -49,17 +48,7 @@ class UserRoleType extends Model
      * @var array<int, string>
      */
     protected $fillable = [
-        'user_role_name',
-        'user_role_description',
-        'is_active',
-    ];
-
-    /**
-     * The default attribute values for the model.
-     * @var array
-     */
-    protected $attributes = [
-        'is_active' => false,
+        'title',
     ];
 
     /**
@@ -73,12 +62,12 @@ class UserRoleType extends Model
     ];
 
     /**
-     * Get the users that belong to this user role type.
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     * Get the contact subject that have many contact me messages.
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
-    public function users()
+    public function contact()
     {
-        return $this->hasMany('App\Models\User');
+        return $this->hasMany('App\Models\Contact');
     }
 
     /**
@@ -89,18 +78,14 @@ class UserRoleType extends Model
      * @throws \Exception|\Illuminate\Database\QueryException
      * Throws an exception if an error occurs during the retrieval.
      */
-    public function fetchAllUserRoleTypes()
+    public function fetchAllContactSubjects()
     {
         try
         {
             return $this->select(
                 'id',
-                'user_role_name',
-                'user_role_description',
-                'is_active',
-                'created_at',
-                'updated_at'
-            )->paginate(15);
+                'title',
+            )->get();
         }
         catch (\Exception $exception)
         {
@@ -115,51 +100,21 @@ class UserRoleType extends Model
     }
 
     /**
-     * Get all user role type names information.
-     * @return \Illuminate\Database\Eloquent\Collection|array|boolean
-     * Returns a collection of user role type names with their associated information.
-     * @throws \Exception|\Illuminate\Database\QueryException
-     * Throws an exception if an error occurs during the retrieval.
-     */
-    public function fetchAllUserRoleTypeNames()
-    {
-        try
-        {
-            return $this->select(
-                'id',
-                'user_role_name'
-            )->where('is_active', true)->get();
-        }
-        catch (\Exception $exception)
-        {
-            $this->logError($exception);
-            return false;
-        }
-        catch (\Illuminate\Database\QueryException $exception)
-        {
-            $this->logQueryError($exception);
-            return false;
-        }
-    }
-
-    /**
-     * Create a new user role.
-     * @param array $payload An associative array of values to create a new user role.
-     * @return \App\Models\UserRoleType|bool Returns a user role object if the creation was successful,
+     * Save the contact subjects into the database.
+     * @param array $payload An associative array of values to create a new contact subjects.
+     * @return \App\Models\Contact|bool Returns a contact subjects object if the creation was successful,
      * or a boolean otherwise.
      * @throws \Exception|\Illuminate\Database\QueryException
      * Throws an exception if an error occurs during registration.
      */
-    public function saveUserRole(array $payload)
+    public function saveContactSubjects(array $payload)
     {
         try
         {
-            $userRole = $this->create([
-                'user_role_name'        => $payload['user_role_name'],
-                'user_role_description' => $payload['user_role_description'],
-                'is_active'             => $payload['is_active'],
+            $contactSubjects = $this->create([
+                'title' => $payload['title'],
             ]);
-            return $userRole;
+            return $contactSubjects;
         }
         catch (\Exception $exception)
         {
@@ -174,9 +129,9 @@ class UserRoleType extends Model
     }
 
     /**
-     * Update the user role.
-     * @param array $payload An associative array of values to update the user role.
-     * @param int $id The ID of the user role to update.
+     * Update the contact subjects.
+     * @param array $payload An associative array of values to update the contact subjects.
+     * @param int $id The ID of the contact subjects to update.
      * @return bool Returns true if the update was successful,
      * or a boolean otherwise.
      * @throws \Exception|\Illuminate\Database\QueryException
@@ -187,9 +142,7 @@ class UserRoleType extends Model
         try
         {
             $this->find($id)->update([
-                'user_role_name'        => $payload['user_role_name'],
-                'user_role_description' => $payload['user_role_description'],
-                'is_active'             => $payload['is_active'],
+                'title' => $payload['title'],
             ]);
             return True;
         }

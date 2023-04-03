@@ -42,11 +42,21 @@ class UserRoleTypesController extends Controller
         $errorMessage = __('users_and_roles.error_message_update');
 
         $validateRequest = [
-            'user_role_name'        => 'required|string|min:3|max:255',
-            'user_role_description' => 'required|string|min:3|max:255',
-            'is_active'             => 'boolean',
+            'user_role_name'        => 'required|string|min:3|max:100',
+            'user_role_description' => 'required|string|min:3',
+            'is_active'             => [
+                'required',
+                function ($attribute, $value, $fail) {
+                    if (!is_bool($value)) {
+                        $value = filter_var($value, FILTER_VALIDATE_BOOLEAN);
+                    }
+                    if (!is_bool($value)) {
+                        $fail($attribute . ' must be a boolean.');
+                    }
+                }
+            ],
         ];
-        $saveRecords = array_filter($request->all());
+        $saveRecords = $request->all();
         $request->validate($validateRequest);
 
         $result = $this->modelUserRoleType->saveUserRole($saveRecords);
@@ -66,9 +76,19 @@ class UserRoleTypesController extends Controller
         $errorMessage = __('users_and_roles.error_message_update');
 
         $request->validate([
-            'user_role_name'        => 'sometimes|string|min:3|max:255',
-            'user_role_description' => 'sometimes|string|min:3|max:255',
-            'is_active'             => 'boolean',
+            'user_role_name'        => 'sometimes|string|min:3|max:100',
+            'user_role_description' => 'sometimes|string|min:3',
+            'is_active'             => [
+                'required',
+                function ($attribute, $value, $fail) {
+                    if (!is_bool($value)) {
+                        $value = filter_var($value, FILTER_VALIDATE_BOOLEAN);
+                    }
+                    if (!is_bool($value)) {
+                        $fail($attribute . ' must be a boolean.');
+                    }
+                }
+            ],
         ]);
         $updateRecord = [
             'user_role_name'        => $request->get('user_role_name'),

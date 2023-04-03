@@ -2,9 +2,9 @@
 
 @section('content')
     <div class="admin home">
-        <h1>
-            {{ __('home.page_title') }}
-        </h1>
+        @include('components.page-title', [
+            'title' => __('home.page_title')
+        ])
 
         <div class="hero">
             <div class="card col-lg-8 col-md-8 col-sm-8">

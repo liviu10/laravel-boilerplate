@@ -24,6 +24,7 @@ return [
     ],
     'user_roles' => [
         'page_title' => 'User roles',
+        'add_new' => 'Add new user role',
         'column_id' => 'ID',
         'column_name_and_description' => 'Name & Description',
         'column_is_active' => 'Is active?',

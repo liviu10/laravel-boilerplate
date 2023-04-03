@@ -170,7 +170,7 @@ class User extends Authenticatable
                     $query->select(
                         'id',
                         'user_role_name'
-                    );
+                    )->where('is_active', true);
                 }
             ])->paginate(15);
         }

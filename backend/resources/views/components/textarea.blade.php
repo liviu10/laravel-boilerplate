@@ -14,7 +14,7 @@
                 autocomplete="{{ $input['id'] }}"
                 autofocus
                 {{ isset($input['disabled']) && $input['disabled'] ? 'disabled' : '' }}
-            ></textarea>
+            >{{ isset($input['value']) ? $input['value'] : '' }}</textarea>
 
             @error($input['id'])
                 <span class="invalid-feedback" role="alert">

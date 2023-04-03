@@ -2,9 +2,9 @@
 
 @section('content')
     <div class="admin user-roles">
-        <h1>
-            {{ __('users_and_roles.user_roles.page_title') }}
-        </h1>
+        @include('components.page-title', [
+            'title' => __('users_and_roles.user_roles.page_title')
+        ])
 
         <div class="menu">
             <div class="table-responsive col-lg-8 col-md-8 col-sm-8">
@@ -15,14 +15,16 @@
                 @else
                 <button id="newRecord" type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#newRecordModal">
                     <i class="fa-sharp fa-solid fa-pencil"></i>
-                    Add a new record
+                    {{ __('users_and_roles.user_roles.add_new') }}
                 </button>
                 <!-- New record modal -->
                 <div class="modal fade" id="newRecordModal" tabindex="-1" aria-labelledby="newRecordModal" aria-hidden="true" data-bs-backdrop="static">
                     <div class="modal-dialog">
                         <div class="modal-content">
                             <div class="modal-header">
-                                <h1 class="modal-title fs-5" id="newRecordModalLabel">New User Role</h1>
+                                <h1 class="modal-title fs-5" id="newRecordModalLabel">
+                                    {{ __('users_and_roles.user_roles.add_new') }}
+                                </h1>
                                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                             </div>
                             <div class="modal-body">
@@ -32,7 +34,7 @@
                                     <!-- User role name -->
                                     @include('components.input', [
                                         'input' => [
-                                            'label' => __('User role name'),
+                                            'label' => __('users_and_roles.user_roles.show_label_user_role_name'),
                                             'id' => 'user_role_name',
                                             'type' => 'text',
                                             'value' => '',
@@ -50,23 +52,13 @@
                                     ])
 
                                     <!-- User role is active -->
-                                    <div class="row my-3">
-                                        <div>
-                                            <label for="is_active" class="form-label">{{ __('users_and_roles.user_roles.show_label_is_active.title') }}</label>
-
-                                            <div class="">
-                                                <select class="form-select" aria-label="Default select example" name="is_active">
-                                                    <option value="false">No</option>
-                                                    <option value="true">Yes</option>
-                                                </select>
-                                                @error('is_active')
-                                                    <span class="invalid-feedback" role="alert">
-                                                        <strong>{{ $message }}</strong>
-                                                    </span>
-                                                @enderror
-                                            </div>
-                                        </div>
-                                    </div>
+                                    @include('components.select', [
+                                        'input' => [
+                                            'id' => 'is_active',
+                                            'label' => __('users_and_roles.user_roles.show_label_is_active.title'),
+                                            'options' => [ 'No', 'Yes' ]
+                                        ]
+                                    ])
 
                                     <div class="modal-actions">
                                         <div class="d-flex justify-content-center">
@@ -211,6 +203,7 @@
                                                 <span>{{ __('users_and_roles.user_roles.show_label_updated_at') }}:</span>
                                                 {{ DateTime::createFromFormat('Y-m-d H:i:s', $data->updated_at)->format('d.m.Y H:i a') }}
                                             </p>
+                                            <hr>
                                             <form method="POST" action="{{ route('user-roles.update', $data->id) }}">
                                                 @csrf
                                                 @method('PUT')
@@ -232,17 +225,18 @@
                                                 <!-- User role description -->
                                                 @include('components.textarea', [
                                                     'input' => [
-                                                        'id' => 'user_role_name',
-                                                        'label' => __('users_and_roles.user_roles.show_label_user_role_description')
+                                                        'id' => 'user_role_description',
+                                                        'label' => __('users_and_roles.user_roles.show_label_user_role_description'),
+                                                        'value' => $data->user_role_description,
                                                     ]
                                                 ])
 
                                                 <!-- Role name -->
                                                 @include('components.select', [
                                                     'input' => [
-                                                        'id' => 'user_role_name',
+                                                        'id' => 'is_active',
                                                         'label' => __('users_and_roles.user_roles.show_label_is_active.title'),
-                                                        'options' => $displayAllRecords
+                                                        'options' => [ 'No', 'Yes' ]
                                                     ]
                                                 ])
 

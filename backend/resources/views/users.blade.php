@@ -2,9 +2,9 @@
 
 @section('content')
     <div class="admin users">
-        <h1>
-            {{ __('users_and_roles.users.page_title') }}
-        </h1>
+        @include('components.page-title', [
+            'title' => __('users_and_roles.users.page_title')
+        ])
 
         <div class="menu">
             <div class="table-responsive col-lg-8 col-md-8 col-sm-8">
@@ -158,6 +158,7 @@
                                                     —
                                                 @endif
                                             </p>
+                                            <hr>
                                             <form method="POST" action="{{ route('users.update', $data->id) }}">
                                                 @csrf
                                                 @method('PUT')
