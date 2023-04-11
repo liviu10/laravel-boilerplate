@@ -55,7 +55,7 @@ class UserRoleTypeSeeder extends Seeder
                 'id'                    => 5,
                 'user_role_name'        => 'Client',
                 'user_role_description' => 'Assigned to new customers when they create an account on your website. This role is basically equivalent to that of a normal blog subscriber, but customers can edit their own account information and view past or current orders.',
-                'is_active'             => false,
+                'is_active'             => true,
                 'created_at'            => Carbon::now(),
                 'updated_at'            => Carbon::now(),
             ],

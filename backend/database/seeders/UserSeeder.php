@@ -32,6 +32,20 @@ class UserSeeder extends Seeder
                 'profile_image'     => null,
                 'created_at'        => Carbon::now(),
                 'updated_at'        => Carbon::now(),
+            ],
+            [
+                'id'                => 2,
+                'full_name'         => 'User Client',
+                'first_name'        => 'User',
+                'last_name'         => 'Client',
+                'nickname'          => 'client',
+                'email'             => 'client@' . config('app.domain_name'),
+                'email_verified_at' => Carbon::now(),
+                'user_role_type_id' => 5,
+                'password'          => bcrypt('123@UserClient'),
+                'profile_image'     => null,
+                'created_at'        => Carbon::now(),
+                'updated_at'        => Carbon::now(),
             ]
         ];
 

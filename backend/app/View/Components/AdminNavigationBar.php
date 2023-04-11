@@ -16,6 +16,14 @@ class AdminNavigationBar extends Component
      */
     public function __construct()
     {
+        $usersIsVisible = true;
+        $userRolesIsVisible = true;
+
+        if (Auth::user()->user_role_type_id === 5)
+        {
+            $usersIsVisible = false;
+            $userRolesIsVisible = false;
+        }
         $this->adminNavigationBar = [
             'applicationName' => config('app.name'),
             'homePage' => __('admin.navbar.home'),
@@ -26,7 +34,9 @@ class AdminNavigationBar extends Component
             'profile' => __('admin.navbar.profile'),
             'users' => __('admin.navbar.users'),
             'roles' => __('admin.navbar.roles'),
-            'logout' => __('admin.navbar.logout')
+            'logout' => __('admin.navbar.logout'),
+            'users_is_visible' => $usersIsVisible,
+            'user_roles_is_visible' => $userRolesIsVisible
         ];
     }
 

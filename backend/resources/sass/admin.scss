@@ -69,6 +69,31 @@
                 margin-left: auto;
                 margin-right: auto;
             }
+            &-filters {
+                & #filterRecords.btn.btn-primary {
+                    margin-bottom: rem-convertor(16px);
+                    border-radius: 0;
+                    &:focus-visible {
+                        box-shadow: none;
+                    }
+                }
+                & .collapse, & .collapsing, & .collapse.show {
+                    & .card {
+                        border-radius: 0 !important;
+                        border-color: #424743;
+                        &-actions {
+                            & div {
+                                & .btn.btn-primary {
+                                    border-radius: 0;
+                                    &:focus-visible {
+                                        box-shadow: none;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
             & .table {
                 margin-bottom: 0;
                 border-color: #424743;

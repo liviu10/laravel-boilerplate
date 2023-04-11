@@ -19,6 +19,75 @@
                         {{ $displayAllRecords['users'] }}
                     </div>
                 @else
+                @if (Auth::user()->user_role_type_id !== 5)
+                <div class="menu-filters mb-3">
+                    <button id="filterRecords" class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+                        <i class="fa-solid fa-filter"></i>
+                        Filter table
+                    </button>
+                    <div class="collapse" id="collapseExample">
+                        <div class="card card-body">
+                            <form method="POST" action="{{ route('users.filter') }}">
+                                @csrf
+                                @include('components.input', [
+                                    'input' => [
+                                        'label' => __('User ID'),
+                                        'id' => 'id',
+                                        'type' => 'text',
+                                        'value' => '',
+                                        'autocomplete' => 'id',
+                                        'disabled' => false
+                                    ]
+                                ])
+                                @include('components.input', [
+                                    'input' => [
+                                        'label' => __('User name'),
+                                        'id' => 'full_name',
+                                        'type' => 'text',
+                                        'value' => '',
+                                        'autocomplete' => 'full_name',
+                                        'disabled' => false
+                                    ]
+                                ])
+                                @include('components.input', [
+                                    'input' => [
+                                        'label' => __('User email'),
+                                        'id' => 'email',
+                                        'type' => 'text',
+                                        'value' => '',
+                                        'autocomplete' => 'email',
+                                        'disabled' => false
+                                    ]
+                                ])
+                                @include('components.input', [
+                                    'input' => [
+                                        'label' => __('User nickname'),
+                                        'id' => 'nickname',
+                                        'type' => 'text',
+                                        'value' => '',
+                                        'autocomplete' => 'nickname',
+                                        'disabled' => false
+                                    ]
+                                ])
+                                @include('components.select', [
+                                    'input' => [
+                                        'id' => 'user_role_type_id',
+                                        'label' => __('User role'),
+                                        'options' => $displayAllRecords['user_role_types']
+                                    ]
+                                ])
+                                <div class="card-actions">
+                                    <div class="d-flex justify-content-center">
+                                        <button type="submit" class="btn btn-primary">
+                                            {{ __('Save') }}
+                                        </button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                @endif
                 <table class="table table-bordered">
                     <thead>
                         <tr>
@@ -58,9 +127,11 @@
                                         <i class="fas fa-info"></i>
                                     </button>
 
+                                    @if (Auth::user()->user_role_type_id === 1 || Auth::user()->user_role_type_id === 2)
                                     <button type="button" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#editRecordModal{{ $key }}">
                                         <i class="fas fa-edit"></i>
                                     </button>
+                                    @endif
                                 </div>
                             </td>
                             <!-- Show record modal -->
@@ -115,6 +186,7 @@
                                     </div>
                                 </div>
                             </div>
+                            @if (Auth::user()->user_role_type_id === 1 || Auth::user()->user_role_type_id === 2)
                             <!-- Edit record modal -->
                             <div class="modal fade" id="editRecordModal{{ $key }}" tabindex="-1" aria-labelledby="editRecordModalLabel{{ $key }}" aria-hidden="true" data-bs-backdrop="static">
                                 <div class="modal-dialog">
@@ -186,6 +258,7 @@
                                     </div>
                                 </div>
                             </div>
+                            @endif
                         </tr>
                         @endforeach
                     </tbody>

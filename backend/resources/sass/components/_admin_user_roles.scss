@@ -2,8 +2,6 @@
     &.user-roles {
         & .menu {
             & .table-responsive {
-                margin-left: auto;
-                margin-right: auto;
                 & #newRecord.btn.btn-primary {
                     margin-bottom: rem-convertor(16px);
                     border-radius: 0;

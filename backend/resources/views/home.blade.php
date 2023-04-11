@@ -75,7 +75,7 @@
                         </p>
                     </div>
                     <div class="card-actions">
-                        <a href="{{ url('/profile') }}" class="btn btn-primary">
+                        <a href="{{ url('/admin/profile') }}" class="btn btn-primary">
                             {{ __('home.account_section.button') }}
                         </a>
                     </div>

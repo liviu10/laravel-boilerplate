@@ -99,4 +99,15 @@ class UserRoleTypesController extends Controller
 
         return redirect()->route('user-roles.index')->with('success', $result ? $successMessage : $errorMessage);
     }
+
+    /**
+     * Filter the specified user role type.
+     * @param Request $request The HTTP request object containing the filter information.
+     * @return RedirectResponse The HTTP redirect response after the filter is complete.
+     */
+    public function filter(Request $request)
+    {
+        dd($request->all());
+        return redirect()->route('contact.index');
+    }
 }

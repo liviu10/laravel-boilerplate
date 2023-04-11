@@ -8,11 +8,18 @@
 
         <div class="menu">
             <div class="table-responsive col-lg-8 col-md-8 col-sm-8">
+                @if ($message = Session::get('success'))
+                <div class="alert alert-success alert-dismissible fade show" role="alert" id="users_alert">
+                    <p class="my-0">{{ $message }}</p>
+                    <button type="button" class="btn btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+                @endif
                 @if (gettype($displayAllRecords) === 'string')
                     <div class="alert alert-danger" role="alert">
                         {{ $displayAllRecords }}
                     </div>
                 @else
+                @if (Auth::user()->user_role_type_id === 1)
                 <button id="newRecord" type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#newRecordModal">
                     <i class="fa-sharp fa-solid fa-pencil"></i>
                     {{ __('users_and_roles.user_roles.add_new') }}
@@ -72,6 +79,7 @@
                         </div>
                     </div>
                 </div>
+                @endif
                 <table class="table table-bordered">
                     <thead>
                         <tr>
@@ -114,10 +122,11 @@
                                     <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#showRecordModal{{ $key }}">
                                         <i class="fas fa-info"></i>
                                     </button>
-
+                                    @if (Auth::user()->user_role_type_id === 1)
                                     <button type="button" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#editRecordModal{{ $key }}">
                                         <i class="fas fa-edit"></i>
                                     </button>
+                                    @endif
                                 </div>
                             </td>
                             <!-- Show record modal -->
@@ -166,6 +175,7 @@
                                     </div>
                                 </div>
                             </div>
+                            @if (Auth::user()->user_role_type_id === 1)
                             <!-- Edit record modal -->
                             <div class="modal fade" id="editRecordModal{{ $key }}" tabindex="-1" aria-labelledby="editRecordModalLabel{{ $key }}" aria-hidden="true" data-bs-backdrop="static">
                                 <div class="modal-dialog">
@@ -252,6 +262,7 @@
                                     </div>
                                 </div>
                             </div>
+                            @endif
                         </tr>
                         @endforeach
                     </tbody>

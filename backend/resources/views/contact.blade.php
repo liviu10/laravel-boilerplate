@@ -29,7 +29,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach ($displayAllRecords as $key => $data)
+                        @foreach ($displayAllRecords['contact'] as $key => $data)
                         <tr>
                             <th scope="row">
                                 {{ $data->id }}
@@ -106,7 +106,9 @@
                                             </p>
                                             <p>
                                                 <span>{{ __('contact.show_label_message') }}:</span>
-                                                {{ $data->message }}
+                                                <div style="overflow-y: scroll; height: 200px">
+                                                    {{ $data->message }}
+                                                </div>
                                             </p>
                                             <p>
                                                 <span>{{ __('contact.show_label_created_at') }}:</span>
@@ -152,7 +154,9 @@
                                             </p>
                                             <p>
                                                 <span>{{ __('contact.show_label_message') }}:</span>
-                                                {{ $data->message }}
+                                                <div style="overflow-y: scroll; height: 200px">
+                                                    {{ $data->message }}
+                                                </div>
                                             </p>
                                             <p>
                                                 <span>{{ __('contact.show_label_created_at') }}:</span>
@@ -162,6 +166,7 @@
                                                 <span>{{ __('contact.show_label_updated_at') }}:</span>
                                                 {{ DateTime::createFromFormat('Y-m-d H:i:s', $data->updated_at)->format('d.m.Y H:i a') }}
                                             </p>
+                                            <hr>
                                             <form method="POST" action="{{ route('contact.update', $data->id) }}">
                                                 @csrf
                                                 @method('PUT')
@@ -184,7 +189,7 @@
                         @endforeach
                     </tbody>
                 </table>
-                {{ $displayAllRecords->links('pagination::bootstrap-5') }}
+                {{ $displayAllRecords['contact']->links('pagination::bootstrap-5') }}
                 @endif
             </div>
         </div>
