@@ -27,7 +27,8 @@ class CheckUserRole
         ];
         $clientResources = [
             'users.index', 'users.update', 'users.filter',
-            'user-roles.index', 'user-roles.store', 'user-roles.update'
+            'user-roles.index', 'user-roles.store', 'user-roles.update',
+            'contact.index', 'contact.filter', 'contact.update'
         ];
 
         $user = $request->user();

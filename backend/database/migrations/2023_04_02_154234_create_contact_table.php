@@ -15,9 +15,9 @@ return new class extends Migration
             $table->id()->index('idx_id');
             $table->string('full_name');
             $table->string('email')->index();
-            $table->string('phone');
+            $table->string('phone')->nullable(true);
             $table->longText('message');
-            $table->boolean('privacy_policy')->default(false);
+            $table->boolean('privacy_policy')->nullable(true)->default(false);
             $table->timestamps();
         });
     }

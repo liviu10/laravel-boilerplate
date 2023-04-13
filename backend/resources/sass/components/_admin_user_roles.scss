@@ -13,19 +13,3 @@
         }
     }
 }
-
-.form-control, .form-select {
-    border-radius: 0;
-    border-color: #424743;
-    color: #424743;
-    &:focus, &:focus-visible {
-        box-shadow: none;
-    }
-    &:focus {
-        border-color: #424743;
-    }
-    &:last-of-type {
-        resize: vertical;
-        max-height: rem-convertor(300px);
-    }
-}

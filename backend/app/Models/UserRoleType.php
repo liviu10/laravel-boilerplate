@@ -150,28 +150,28 @@ class UserRoleType extends Model
      * @throws \Exception|\Illuminate\Database\QueryException
      * Throws an exception if an error occurs during registration.
      */
-    public function saveUserRole(array $payload)
-    {
-        try
-        {
-            $userRole = $this->create([
-                'user_role_name'        => $payload['user_role_name'],
-                'user_role_description' => $payload['user_role_description'],
-                'is_active'             => $payload['is_active'],
-            ]);
-            return $userRole;
-        }
-        catch (\Exception $exception)
-        {
-            $this->logError($exception);
-            return false;
-        }
-        catch (\Illuminate\Database\QueryException $exception)
-        {
-            $this->logQueryError($exception);
-            return false;
-        }
-    }
+    // public function saveUserRole(array $payload)
+    // {
+    //     try
+    //     {
+    //         $userRole = $this->create([
+    //             'user_role_name'        => $payload['user_role_name'],
+    //             'user_role_description' => $payload['user_role_description'],
+    //             'is_active'             => $payload['is_active'],
+    //         ]);
+    //         return $userRole;
+    //     }
+    //     catch (\Exception $exception)
+    //     {
+    //         $this->logError($exception);
+    //         return false;
+    //     }
+    //     catch (\Illuminate\Database\QueryException $exception)
+    //     {
+    //         $this->logQueryError($exception);
+    //         return false;
+    //     }
+    // }
 
     /**
      * Update the user role.

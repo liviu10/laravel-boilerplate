@@ -2,7 +2,7 @@
 
 @section('content')
     <div class="admin users">
-        @include('components.page-title', [
+        @include('components.generic.page-title', [
             'title' => __('users_and_roles.users.page_title')
         ])
 
@@ -20,73 +20,45 @@
                     </div>
                 @else
                 @if (Auth::user()->user_role_type_id !== 5)
-                <div class="menu-filters mb-3">
-                    <button id="filterRecords" class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
-                        <i class="fa-solid fa-filter"></i>
-                        Filter table
-                    </button>
-                    <div class="collapse" id="collapseExample">
-                        <div class="card card-body">
-                            <form method="POST" action="{{ route('users.filter') }}">
-                                @csrf
-                                @include('components.input', [
-                                    'input' => [
-                                        'label' => __('User ID'),
-                                        'id' => 'id',
-                                        'type' => 'text',
-                                        'value' => '',
-                                        'autocomplete' => 'id',
-                                        'disabled' => false
-                                    ]
-                                ])
-                                @include('components.input', [
-                                    'input' => [
-                                        'label' => __('User name'),
-                                        'id' => 'full_name',
-                                        'type' => 'text',
-                                        'value' => '',
-                                        'autocomplete' => 'full_name',
-                                        'disabled' => false
-                                    ]
-                                ])
-                                @include('components.input', [
-                                    'input' => [
-                                        'label' => __('User email'),
-                                        'id' => 'email',
-                                        'type' => 'text',
-                                        'value' => '',
-                                        'autocomplete' => 'email',
-                                        'disabled' => false
-                                    ]
-                                ])
-                                @include('components.input', [
-                                    'input' => [
-                                        'label' => __('User nickname'),
-                                        'id' => 'nickname',
-                                        'type' => 'text',
-                                        'value' => '',
-                                        'autocomplete' => 'nickname',
-                                        'disabled' => false
-                                    ]
-                                ])
-                                @include('components.select', [
-                                    'input' => [
-                                        'id' => 'user_role_type_id',
-                                        'label' => __('User role'),
-                                        'options' => $displayAllRecords['user_role_types']
-                                    ]
-                                ])
-                                <div class="card-actions">
-                                    <div class="d-flex justify-content-center">
-                                        <button type="submit" class="btn btn-primary">
-                                            {{ __('Save') }}
-                                        </button>
-                                    </div>
-                                </div>
-                            </form>
-                        </div>
-                    </div>
-                </div>
+                @include('components.filter-record', [
+                    'filter' => [
+                        'button_label' => __('Filter table'),
+                        'action_route' => route('users.filter'),
+                        'settings' => [
+                            [
+                                'id' => 1,
+                                'label' => __('users_and_roles.users.column_id'),
+                                'filter_id' => 'id',
+                                'component_type' => 'input'
+                            ],
+                            [
+                                'id' => 2,
+                                'label' => __('users_and_roles.users.column_full_name'),
+                                'filter_id' => 'full_name',
+                                'component_type' => 'input'
+                            ],
+                            [
+                                'id' => 3,
+                                'label' => __('Email'),
+                                'filter_id' => 'email',
+                                'component_type' => 'input'
+                            ],
+                            [
+                                'id' => 4,
+                                'label' => __('Nickname'),
+                                'filter_id' => 'nickname',
+                                'component_type' => 'input'
+                            ],
+                            [
+                                'id' => 5,
+                                'label' => __('users_and_roles.users.column_role'),
+                                'component_type' => 'select',
+                                'filter_id' => 'user_role_type_id',
+                                'options' => $displayAllRecords['user_role_types']
+                            ]
+                        ]
+                    ]
+                ])
                 @endif
                 <table class="table table-bordered">
                     <thead>
@@ -135,53 +107,74 @@
                                 </div>
                             </td>
                             <!-- Show record modal -->
-                            <div class="modal fade" id="showRecordModal{{ $key }}" tabindex="-1" aria-labelledby="showRecordModalLabel{{ $key }}" aria-hidden="true" data-bs-backdrop="static">
+                            <div
+                                class="modal fade"
+                                id="showRecordModal{{ $key }}"
+                                tabindex="-1"
+                                aria-labelledby="showRecordModalLabel{{ $key }}"
+                                aria-hidden="true"
+                                data-bs-backdrop="static"
+                            >
                                 <div class="modal-dialog">
                                     <div class="modal-content">
                                         <div class="modal-header">
                                             <h1 class="modal-title fs-5" id="showRecordModalLabel{{ $key }}">
-                                                {{  __('users_and_roles.users.show_user_title') }}
+                                                {{ __('users_and_roles.user_roles.show_user_role_title') }}
                                             </h1>
                                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                         </div>
                                         <div class="modal-body">
-                                            <p>
-                                                <span>{{ __('users_and_roles.users.show_label_id') }}:</span>
-                                                {{ $data->id }}
-                                            </p>
-                                            <p>
-                                                <span>{{ __('users_and_roles.users.show_label_full_name') }}:</span>
-                                                {{ $data->full_name }}
-                                            </p>
-                                            <p>
-                                                <span>{{ __('users_and_roles.users.show_label_first_name') }}:</span>
-                                                {{ $data->first_name }}
-                                            </p>
-                                            <p>
-                                                <span>{{ __('users_and_roles.users.show_label_last_name') }}:</span>
-                                                {{ $data->last_name }}
-                                            </p>
-                                            <p>
-                                                <span>{{ __('users_and_roles.users.show_label_nickname') }}:</span>
-                                                {{ $data->nickname }} ({{ __('users_and_roles.users.show_label_role') }}: {{ $data->user_role_type->user_role_name }})
-                                            </p>
-                                            <p>
-                                                <span>{{ __('users_and_roles.users.show_label_email') }}:</span>
-                                                <a href="mailto:{{ $data->email }}">
-                                                    {{ $data->email }}
-                                                </a>
-                                            </p>
-                                            <p>
-                                                <span>{{ __('users_and_roles.users.show_label_email_verified_at') }}:</span>
-                                                @if ($data->email_verified_at !== null)
-                                                    {{ DateTime::createFromFormat('Y-m-d H:i:s', $data->email_verified_at)->format('d.m.Y H:i a') }}
-                                                @else
-                                                    —
-                                                @endif
-                                            </p>
+                                            @include('components.show-record-modal', [
+                                                'modal' => [
+                                                    'settings' => [
+                                                        [
+                                                            'id' => 1,
+                                                            'label' => __('users_and_roles.users.show_label_id'),
+                                                            'value' => $data->id,
+                                                            'label_id' => 'id'
+                                                        ],
+                                                        [
+                                                            'id' => 2,
+                                                            'label' => __('users_and_roles.users.show_label_full_name'),
+                                                            'value' => $data->full_name,
+                                                            'label_id' => 'full_name'
+                                                        ],
+                                                        [
+                                                            'id' => 3,
+                                                            'label' => __('users_and_roles.users.show_label_first_name'),
+                                                            'value' => $data->first_name,
+                                                            'label_id' => 'first_name'
+                                                        ],
+                                                        [
+                                                            'id' => 4,
+                                                            'label' => __('users_and_roles.users.show_label_last_name'),
+                                                            'value' => $data->last_name,
+                                                            'label_id' => 'last_name'
+                                                        ],
+                                                        [
+                                                            'id' => 5,
+                                                            'label' => __('users_and_roles.users.show_label_nickname'),
+                                                            'value' => $data->nickname . ' (' . __('users_and_roles.users.show_label_role') . ': ' . $data->user_role_type->user_role_name . ')',
+                                                            'label_id' => 'nickname'
+                                                        ],
+                                                        [
+                                                            'id' => 6,
+                                                            'label' => __('users_and_roles.users.show_label_email'),
+                                                            'value' => $data->email,
+                                                            'label_id' => 'email'
+                                                        ],
+                                                        [
+                                                            'id' => 7,
+                                                            'label' => __('users_and_roles.users.show_label_email_verified_at'),
+                                                            'value' => $data->email_verified_at,
+                                                            'label_id' => 'email_verified_at'
+                                                        ],
+                                                    ]
+                                                ]
+                                            ])
                                         </div>
                                         <div class="modal-footer">
-                                            <button type="button" class="btn btn-primary" data-bs-dismiss="modal">{{ __('users_and_roles.users.close_button') }}</button>
+                                            <button type="button" class="btn btn-primary" data-bs-dismiss="modal">{{ __('Close') }}</button>
                                         </div>
                                     </div>
                                 </div>
@@ -196,40 +189,54 @@
                                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                         </div>
                                         <div class="modal-body">
-                                            <p>
-                                                <span>{{ __('users_and_roles.users.show_label_id') }}:</span>
-                                                {{ $data->id }}
-                                            </p>
-                                            <p>
-                                                <span>{{ __('users_and_roles.users.show_label_full_name') }}:</span>
-                                                {{ $data->full_name }}
-                                            </p>
-                                            <p>
-                                                <span>{{ __('users_and_roles.users.show_label_first_name') }}:</span>
-                                                {{ $data->first_name }}
-                                            </p>
-                                            <p>
-                                                <span>{{ __('users_and_roles.users.show_label_last_name') }}:</span>
-                                                {{ $data->last_name }}
-                                            </p>
-                                            <p>
-                                                <span>{{ __('users_and_roles.users.show_label_nickname') }}:</span>
-                                                {{ $data->nickname }} ({{ __('users_and_roles.users.show_label_role') }}: {{ $data->user_role_type->user_role_name }})
-                                            </p>
-                                            <p>
-                                                <span>{{ __('users_and_roles.users.show_label_email') }}:</span>
-                                                <a href="mailto:{{ $data->email }}">
-                                                    {{ $data->email }}
-                                                </a>
-                                            </p>
-                                            <p>
-                                                <span>{{ __('users_and_roles.users.show_label_email_verified_at') }}:</span>
-                                                @if ($data->email_verified_at !== null)
-                                                    {{ $data->email_verified_at }}
-                                                @else
-                                                    —
-                                                @endif
-                                            </p>
+                                            @include('components.show-record-modal', [
+                                                'modal' => [
+                                                    'settings' => [
+                                                        [
+                                                            'id' => 1,
+                                                            'label' => __('users_and_roles.users.show_label_id'),
+                                                            'value' => $data->id,
+                                                            'label_id' => 'id'
+                                                        ],
+                                                        [
+                                                            'id' => 2,
+                                                            'label' => __('users_and_roles.users.show_label_full_name'),
+                                                            'value' => $data->full_name,
+                                                            'label_id' => 'full_name'
+                                                        ],
+                                                        [
+                                                            'id' => 3,
+                                                            'label' => __('users_and_roles.users.show_label_first_name'),
+                                                            'value' => $data->first_name,
+                                                            'label_id' => 'first_name'
+                                                        ],
+                                                        [
+                                                            'id' => 4,
+                                                            'label' => __('users_and_roles.users.show_label_last_name'),
+                                                            'value' => $data->last_name,
+                                                            'label_id' => 'last_name'
+                                                        ],
+                                                        [
+                                                            'id' => 5,
+                                                            'label' => __('users_and_roles.users.show_label_nickname'),
+                                                            'value' => $data->nickname . ' (' . __('users_and_roles.users.show_label_role') . ': ' . $data->user_role_type->user_role_name . ')',
+                                                            'label_id' => 'nickname'
+                                                        ],
+                                                        [
+                                                            'id' => 6,
+                                                            'label' => __('users_and_roles.users.show_label_email'),
+                                                            'value' => $data->email,
+                                                            'label_id' => 'email'
+                                                        ],
+                                                        [
+                                                            'id' => 7,
+                                                            'label' => __('users_and_roles.users.show_label_email_verified_at'),
+                                                            'value' => $data->email_verified_at,
+                                                            'label_id' => 'email_verified_at'
+                                                        ],
+                                                    ]
+                                                ]
+                                            ])
                                             <hr>
                                             <form method="POST" action="{{ route('users.update', $data->id) }}">
                                                 @csrf
@@ -238,7 +245,7 @@
                                                 <input type="hidden" name="id" value="{{ $data->id }}">
 
                                                 <!-- Role name -->
-                                                @include('components.select', [
+                                                @include('components.generic.select', [
                                                     'input' => [
                                                         'id' => 'user_role_type_id',
                                                         'label' => __('users_and_roles.users.show_label_user_role'),

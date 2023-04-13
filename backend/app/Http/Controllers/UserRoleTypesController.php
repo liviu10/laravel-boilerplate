@@ -36,33 +36,33 @@ class UserRoleTypesController extends Controller
      * @param Request $request The HTTP request object containing the user role type data to store.
      * @return RedirectResponse The HTTP redirect response after the store is complete.
      */
-    public function store(Request $request)
-    {
-        $successMessage = __('users_and_roles.success_message');
-        $errorMessage = __('users_and_roles.error_message_update');
+    // public function store(Request $request)
+    // {
+    //     $successMessage = __('users_and_roles.success_message');
+    //     $errorMessage = __('users_and_roles.error_message_update');
 
-        $validateRequest = [
-            'user_role_name'        => 'required|string|min:3|max:100',
-            'user_role_description' => 'required|string|min:3',
-            'is_active'             => [
-                'required',
-                function ($attribute, $value, $fail) {
-                    if (!is_bool($value)) {
-                        $value = filter_var($value, FILTER_VALIDATE_BOOLEAN);
-                    }
-                    if (!is_bool($value)) {
-                        $fail($attribute . ' must be a boolean.');
-                    }
-                }
-            ],
-        ];
-        $saveRecords = $request->all();
-        $request->validate($validateRequest);
+    //     $validateRequest = [
+    //         'user_role_name'        => 'required|string|min:3|max:100',
+    //         'user_role_description' => 'required|string|min:3',
+    //         'is_active'             => [
+    //             'required',
+    //             function ($attribute, $value, $fail) {
+    //                 if (!is_bool($value)) {
+    //                     $value = filter_var($value, FILTER_VALIDATE_BOOLEAN);
+    //                 }
+    //                 if (!is_bool($value)) {
+    //                     $fail($attribute . ' must be a boolean.');
+    //                 }
+    //             }
+    //         ],
+    //     ];
+    //     $saveRecords = $request->all();
+    //     $request->validate($validateRequest);
 
-        $result = $this->modelUserRoleType->saveUserRole($saveRecords);
+    //     $result = $this->modelUserRoleType->saveUserRole($saveRecords);
 
-        return redirect()->route('user-roles.index')->with('success', $result ? $successMessage : $errorMessage);
-    }
+    //     return redirect()->route('user-roles.index')->with('success', $result ? $successMessage : $errorMessage);
+    // }
 
     /**
      * Update the user role type in storage.

@@ -2,7 +2,7 @@
 
 @section('content')
     <div class="admin home">
-        @include('components.page-title', [
+        @include('components.generic.page-title', [
             'title' => __('home.page_title')
         ])
 

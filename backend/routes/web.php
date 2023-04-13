@@ -41,7 +41,7 @@ use Illuminate\Support\Facades\Route;
 
         // User roles web routes [GET], [POST] and [PUT]
         Route::post('/user-roles/filter', [UserRoleTypesController::class, 'filter'])->name('user-roles.filter');
-        Route::resource('/user-roles', UserRoleTypesController::class)->only('index', 'store', 'update');
+        Route::resource('/user-roles', UserRoleTypesController::class)->only('index', 'update');
 
         // Contact messages web routes [GET] and [POST]
         Route::post('/contact/filter', [ContactController::class, 'filter'])->name('contact.filter');

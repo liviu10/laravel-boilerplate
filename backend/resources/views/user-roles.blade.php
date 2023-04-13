@@ -2,7 +2,7 @@
 
 @section('content')
     <div class="admin user-roles">
-        @include('components.page-title', [
+        @include('components.generic.page-title', [
             'title' => __('users_and_roles.user_roles.page_title')
         ])
 
@@ -20,65 +20,33 @@
                     </div>
                 @else
                 @if (Auth::user()->user_role_type_id === 1)
-                <button id="newRecord" type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#newRecordModal">
-                    <i class="fa-sharp fa-solid fa-pencil"></i>
-                    {{ __('users_and_roles.user_roles.add_new') }}
-                </button>
-                <!-- New record modal -->
-                <div class="modal fade" id="newRecordModal" tabindex="-1" aria-labelledby="newRecordModal" aria-hidden="true" data-bs-backdrop="static">
-                    <div class="modal-dialog">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h1 class="modal-title fs-5" id="newRecordModalLabel">
-                                    {{ __('users_and_roles.user_roles.add_new') }}
-                                </h1>
-                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                            </div>
-                            <div class="modal-body">
-                                <form method="POST" action="{{ route('user-roles.store') }}">
-                                    @csrf
-
-                                    <!-- User role name -->
-                                    @include('components.input', [
-                                        'input' => [
-                                            'label' => __('users_and_roles.user_roles.show_label_user_role_name'),
-                                            'id' => 'user_role_name',
-                                            'type' => 'text',
-                                            'value' => '',
-                                            'autocomplete' => 'user_role_name',
-                                            'disabled' => false
-                                        ]
-                                    ])
-
-                                    <!-- User role description -->
-                                    @include('components.textarea', [
-                                        'input' => [
-                                            'id' => 'user_role_description',
-                                            'label' => __('users_and_roles.user_roles.show_label_user_role_description')
-                                        ]
-                                    ])
-
-                                    <!-- User role is active -->
-                                    @include('components.select', [
-                                        'input' => [
-                                            'id' => 'is_active',
-                                            'label' => __('users_and_roles.user_roles.show_label_is_active.title'),
-                                            'options' => [ 'No', 'Yes' ]
-                                        ]
-                                    ])
-
-                                    <div class="modal-actions">
-                                        <div class="d-flex justify-content-center">
-                                            <button type="submit" class="btn btn-primary">
-                                                {{ __('Save') }}
-                                            </button>
-                                        </div>
-                                    </div>
-                                </form>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                @include('components.filter-record', [
+                    'filter' => [
+                        'button_label' => __('Filter table'),
+                        'action_route' => route('user-roles.filter'),
+                        'settings' => [
+                            [
+                                'id' => 1,
+                                'label' => __('users_and_roles.user_roles.column_id'),
+                                'filter_id' => 'id',
+                                'component_type' => 'input'
+                            ],
+                            [
+                                'id' => 2,
+                                'label' => __('User role name'),
+                                'filter_id' => 'user_role_name',
+                                'component_type' => 'input'
+                            ],
+                            [
+                                'id' => 3,
+                                'label' => __('users_and_roles.users.column_role'),
+                                'component_type' => 'select',
+                                'filter_id' => 'is_Active',
+                                'options' => [ 'No', 'Yes' ]
+                            ]
+                        ]
+                    ]
+                ])
                 @endif
                 <table class="table table-bordered">
                     <thead>
@@ -130,47 +98,68 @@
                                 </div>
                             </td>
                             <!-- Show record modal -->
-                            <div class="modal fade" id="showRecordModal{{ $key }}" tabindex="-1" aria-labelledby="showRecordModalLabel{{ $key }}" aria-hidden="true" data-bs-backdrop="static">
+                            <div
+                                class="modal fade"
+                                id="showRecordModal{{ $key }}"
+                                tabindex="-1"
+                                aria-labelledby="showRecordModalLabel{{ $key }}"
+                                aria-hidden="true"
+                                data-bs-backdrop="static"
+                            >
                                 <div class="modal-dialog">
                                     <div class="modal-content">
                                         <div class="modal-header">
                                             <h1 class="modal-title fs-5" id="showRecordModalLabel{{ $key }}">
-                                                {{  __('users_and_roles.user_roles.show_user_role_title') }}
+                                                {{ __('users_and_roles.user_roles.show_user_role_title') }}
                                             </h1>
                                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                         </div>
                                         <div class="modal-body">
-                                            <p>
-                                                <span>{{ __('users_and_roles.user_roles.show_label_id') }}:</span>
-                                                {{ $data->id }}
-                                            </p>
-                                            <p>
-                                                <span>{{ __('users_and_roles.user_roles.show_label_user_role_name') }}:</span>
-                                                {{ $data->user_role_name }}
-                                            </p>
-                                            <p>
-                                                <span>{{ __('users_and_roles.user_roles.show_label_user_role_description') }}:</span>
-                                                {{ $data->user_role_description }}
-                                            </p>
-                                            <p>
-                                                <span>{{ __('users_and_roles.user_roles.show_label_is_active.title') }}:</span>
-                                                @if ($data->is_active === 1)
-                                                    {{ __('users_and_roles.user_roles.show_label_is_active.yes') }}
-                                                @else
-                                                    {{ __('users_and_roles.user_roles.show_label_is_active.no') }}
-                                                @endif
-                                            </p>
-                                            <p>
-                                                <span>{{ __('users_and_roles.user_roles.show_label_created_at') }}:</span>
-                                                {{ DateTime::createFromFormat('Y-m-d H:i:s', $data->created_at)->format('d.m.Y H:i a') }}
-                                            </p>
-                                            <p>
-                                                <span>{{ __('users_and_roles.user_roles.show_label_updated_at') }}:</span>
-                                                {{ DateTime::createFromFormat('Y-m-d H:i:s', $data->updated_at)->format('d.m.Y H:i a') }}
-                                            </p>
+                                            @include('components.show-record-modal', [
+                                                'modal' => [
+                                                    'settings' => [
+                                                        [
+                                                            'id' => 1,
+                                                            'label' => __('users_and_roles.user_roles.show_label_id'),
+                                                            'value' => $data->id,
+                                                            'label_id' => 'id'
+                                                        ],
+                                                        [
+                                                            'id' => 2,
+                                                            'label' => __('users_and_roles.user_roles.show_label_user_role_name'),
+                                                            'value' => $data->user_role_name,
+                                                            'label_id' => 'user_role_name'
+                                                        ],
+                                                        [
+                                                            'id' => 3,
+                                                            'label' => __('users_and_roles.user_roles.show_label_user_role_description'),
+                                                            'value' => $data->user_role_description,
+                                                            'label_id' => 'user_role_description'
+                                                        ],
+                                                        [
+                                                            'id' => 4,
+                                                            'label' => __('users_and_roles.user_roles.show_label_is_active.title'),
+                                                            'value' => $data->is_active,
+                                                            'label_id' => 'is_active'
+                                                        ],
+                                                        [
+                                                            'id' => 5,
+                                                            'label' => __('users_and_roles.user_roles.show_label_created_at'),
+                                                            'value' => $data->created_at,
+                                                            'label_id' => 'created_at'
+                                                        ],
+                                                        [
+                                                            'id' => 6,
+                                                            'label' => __('users_and_roles.user_roles.show_label_updated_at'),
+                                                            'value' => $data->updated_at,
+                                                            'label_id' => 'updated_at'
+                                                        ],
+                                                    ]
+                                                ]
+                                            ])
                                         </div>
                                         <div class="modal-footer">
-                                            <button type="button" class="btn btn-primary" data-bs-dismiss="modal">{{ __('users_and_roles.user_roles.close_button') }}</button>
+                                            <button type="button" class="btn btn-primary" data-bs-dismiss="modal">{{ __('Close') }}</button>
                                         </div>
                                     </div>
                                 </div>
@@ -185,34 +174,48 @@
                                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                         </div>
                                         <div class="modal-body">
-                                            <p>
-                                                <span>{{ __('users_and_roles.user_roles.show_label_id') }}:</span>
-                                                {{ $data->id }}
-                                            </p>
-                                            <p>
-                                                <span>{{ __('users_and_roles.user_roles.show_label_user_role_name') }}:</span>
-                                                {{ $data->user_role_name }}
-                                            </p>
-                                            <p>
-                                                <span>{{ __('users_and_roles.user_roles.show_label_user_role_description') }}:</span>
-                                                {{ $data->user_role_description }}
-                                            </p>
-                                            <p>
-                                                <span>{{ __('users_and_roles.user_roles.show_label_is_active.title') }}:</span>
-                                                @if ($data->is_active === 1)
-                                                    {{ __('users_and_roles.user_roles.show_label_is_active.yes') }}
-                                                @else
-                                                    {{ __('users_and_roles.user_roles.show_label_is_active.no') }}
-                                                @endif
-                                            </p>
-                                            <p>
-                                                <span>{{ __('users_and_roles.user_roles.show_label_created_at') }}:</span>
-                                                {{ DateTime::createFromFormat('Y-m-d H:i:s', $data->created_at)->format('d.m.Y H:i a') }}
-                                            </p>
-                                            <p>
-                                                <span>{{ __('users_and_roles.user_roles.show_label_updated_at') }}:</span>
-                                                {{ DateTime::createFromFormat('Y-m-d H:i:s', $data->updated_at)->format('d.m.Y H:i a') }}
-                                            </p>
+                                            @include('components.show-record-modal', [
+                                                'modal' => [
+                                                    'settings' => [
+                                                        [
+                                                            'id' => 1,
+                                                            'label' => __('users_and_roles.user_roles.show_label_id'),
+                                                            'value' => $data->id,
+                                                            'label_id' => 'id'
+                                                        ],
+                                                        [
+                                                            'id' => 2,
+                                                            'label' => __('users_and_roles.user_roles.show_label_user_role_name'),
+                                                            'value' => $data->user_role_name,
+                                                            'label_id' => 'user_role_name'
+                                                        ],
+                                                        [
+                                                            'id' => 3,
+                                                            'label' => __('users_and_roles.user_roles.show_label_user_role_description'),
+                                                            'value' => $data->user_role_description,
+                                                            'label_id' => 'user_role_description'
+                                                        ],
+                                                        [
+                                                            'id' => 4,
+                                                            'label' => __('users_and_roles.user_roles.show_label_is_active.title'),
+                                                            'value' => $data->is_active,
+                                                            'label_id' => 'is_active'
+                                                        ],
+                                                        [
+                                                            'id' => 5,
+                                                            'label' => __('users_and_roles.user_roles.show_label_created_at'),
+                                                            'value' => $data->created_at,
+                                                            'label_id' => 'created_at'
+                                                        ],
+                                                        [
+                                                            'id' => 6,
+                                                            'label' => __('users_and_roles.user_roles.show_label_updated_at'),
+                                                            'value' => $data->updated_at,
+                                                            'label_id' => 'updated_at'
+                                                        ],
+                                                    ]
+                                                ]
+                                            ])
                                             <hr>
                                             <form method="POST" action="{{ route('user-roles.update', $data->id) }}">
                                                 @csrf
@@ -221,7 +224,7 @@
                                                 <input type="hidden" name="id" value="{{ $data->id }}">
 
                                                 <!-- User role name -->
-                                                @include('components.input', [
+                                                @include('components.generic.input', [
                                                     'input' => [
                                                         'label' => __('users_and_roles.user_roles.show_label_user_role_name'),
                                                         'id' => 'user_role_name',
@@ -233,7 +236,7 @@
                                                 ])
 
                                                 <!-- User role description -->
-                                                @include('components.textarea', [
+                                                @include('components.generic.textarea', [
                                                     'input' => [
                                                         'id' => 'user_role_description',
                                                         'label' => __('users_and_roles.user_roles.show_label_user_role_description'),
@@ -242,7 +245,7 @@
                                                 ])
 
                                                 <!-- Role name -->
-                                                @include('components.select', [
+                                                @include('components.generic.select', [
                                                     'input' => [
                                                         'id' => 'is_active',
                                                         'label' => __('users_and_roles.user_roles.show_label_is_active.title'),

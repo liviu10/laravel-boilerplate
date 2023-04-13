@@ -14,6 +14,7 @@
                 autocomplete="{{ $input['id'] }}"
                 autofocus
                 {{ isset($input['disabled']) && $input['disabled'] ? 'disabled' : '' }}
+                style="resize: vertical; min-height: 100px; max-height: 300px;"
             >{{ isset($input['value']) ? $input['value'] : '' }}</textarea>
 
             @error($input['id'])

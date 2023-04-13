@@ -71,7 +71,6 @@
             }
             &-filters {
                 & #filterRecords.btn.btn-primary {
-                    margin-bottom: rem-convertor(16px);
                     border-radius: 0;
                     &:focus-visible {
                         box-shadow: none;
@@ -83,7 +82,7 @@
                         border-color: #424743;
                         &-actions {
                             & div {
-                                & .btn.btn-primary {
+                                & .btn.btn-warning, & .btn.btn-primary {
                                     border-radius: 0;
                                     &:focus-visible {
                                         box-shadow: none;
@@ -233,6 +232,17 @@
                 box-shadow: none;
             }
         }
+    }
+}
+.form-control, .form-select {
+    border-radius: 0;
+    border-color: #424743;
+    color: #424743;
+    &:focus, &:focus-visible {
+        box-shadow: none;
+    }
+    &:focus {
+        border-color: #424743;
     }
 }
 .pagination {
