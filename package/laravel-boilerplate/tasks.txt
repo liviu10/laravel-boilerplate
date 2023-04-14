@@ -1,0 +1,29 @@
+Ok. I've created the following:
+- laravel-boilerplate/package/laravel-boilerplate
+- composer.json inside laravel-boilerplate/package/laravel-boilerplate with the following configurations: {
+    "name": "liviu/laravel-boilerplate",
+    "type": "library",
+    "description": "A Laravel package for example purposes",
+    "keywords": ["laravel", "package", "example"],
+    "authors": [
+        {
+            "name": "Liviu Voica",
+            "email": "voica.liviu10@gmail.com"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {
+        "php": "^8.0",
+        "illuminate/support": "^8.0",
+        "illuminate/filesystem": "^8.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "LaravelBoilerplate\\ExamplePackage\\": "src/"
+        }
+    }
+}
+- laravel-boilerplate/package/laravel-boilerplate/src
+- run composer install in laravel-boilerplate/package/laravel-boilerplate
+- added a .gitignore file to ignore the /vendor
+What now?
