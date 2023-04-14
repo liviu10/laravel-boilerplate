@@ -16,7 +16,7 @@
                     To install and run this application you can follow the instructions below:
                 </p>
                 <div class="mb-4 hero-body-instructions">
-                    @include('components.list', [
+                    @include('components.generic.list', [
                         'listContent' => [
                             'git clone https://github.com/liviu10/laravel-boilerplate.git',
                             'cd laravel-boilerplate/backend/',
