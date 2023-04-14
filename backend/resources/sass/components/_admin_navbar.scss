@@ -71,8 +71,10 @@
                 &:active {
                     background-color: #FFFFFF;
                 }
-                & .fa-solid.fa-user, .fa-solid.fa-users, .fa-solid.fa-gear,
-                .fa-sharp.fa-solid.fa-arrow-up-right-from-square {
+                & .fa-solid.fa-user, & .fa-solid.fa-users, & .fa-solid.fa-gear,
+                & .fa-solid.fa-users-gear,
+                & .fa-sharp.fa-solid.fa-arrow-up-right-from-square,
+                & .fa-sharp.fa-solid.fa-arrow-right-from-bracket {
                     margin-right: rem-convertor(4px);
                     width: 15%;
                     color: #424743 !important;

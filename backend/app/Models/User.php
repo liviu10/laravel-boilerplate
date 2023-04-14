@@ -7,9 +7,9 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
-use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use App\Traits\LogErrors;
 
 /**
  * Class User
@@ -29,12 +29,13 @@ use Illuminate\Support\Facades\Hash;
  * @property-read \App\Models\UserRoleType $user_role_type
  * @method fetchCurrentAuthUser
  * @method fetchAllUsers
+ * @method registerUser
  * @method updateUserRole
  * @method updateUser
  */
 class User extends Authenticatable
 {
-    use HasApiTokens, HasFactory, Notifiable;
+    use HasApiTokens, HasFactory, Notifiable, LogErrors;
 
     /**
      * The name of the database table associated with the model.
@@ -122,8 +123,7 @@ class User extends Authenticatable
      * excluding the password and email_verified_at fields.
      * @return \Illuminate\Support\Collection|boolean Returns a collection
      * of the authenticated user's attributes, excluding password and email_verified_at.
-     * @throws \Exception|\Illuminate\Database\QueryException
-     * Returns an boolean if there was a problem fetching
+     * @throws \Exception|\Illuminate\Database\QueryException Returns an boolean if there was a problem fetching
      * the current authenticated user.
      */
     public function fetchCurrentAuthUser()
@@ -134,21 +134,12 @@ class User extends Authenticatable
         }
         catch (\Exception $exception)
         {
-            $logError = [
-                'code'    => $exception->getCode(),
-                'message' => $exception->getMessage()
-            ];
-            Log::error($logError);
+            $this->logError($exception);
             return false;
         }
         catch (\Illuminate\Database\QueryException $exception)
         {
-            $logError = [
-                'query'    => $exception->getSql(),
-                'message'  => $exception->getMessage(),
-                'bindings' => $exception->getBindings()
-            ];
-            Log::error($logError);
+            $this->logQueryError($exception);
             return false;
         }
     }
@@ -157,7 +148,9 @@ class User extends Authenticatable
      * Get all users with their user role type information.
      * @return \Illuminate\Database\Eloquent\Collection|array|boolean
      * Returns a collection of users with their associated user role type.
-     * If an error occurs during retrieval, an boolean will be returned.
+     * If an error occurs during retrieval, a boolean will be returned.
+     * @throws \Exception|\Illuminate\Database\QueryException
+     * Throws an exception if an error occurs during retrieval.
      */
     public function fetchAllUsers()
     {
@@ -177,27 +170,18 @@ class User extends Authenticatable
                     $query->select(
                         'id',
                         'user_role_name'
-                    );
+                    )->where('is_active', true);
                 }
-            ])->get();
+            ])->paginate(15);
         }
         catch (\Exception $exception)
         {
-            $logError = [
-                'code'    => $exception->getCode(),
-                'message' => $exception->getMessage()
-            ];
-            Log::error($logError);
+            $this->logError($exception);
             return false;
         }
         catch (\Illuminate\Database\QueryException $exception)
         {
-            $logError = [
-                'query'    => $exception->getSql(),
-                'message'  => $exception->getMessage(),
-                'bindings' => $exception->getBindings()
-            ];
-            Log::error($logError);
+            $this->logQueryError($exception);
             return false;
         }
     }
@@ -207,6 +191,8 @@ class User extends Authenticatable
      * @param array $payload An associative array of values to register the user.
      * @return \App\Models\User|bool Returns a user object if the register was successful,
      * or a boolean otherwise.
+     * @throws \Exception|\Illuminate\Database\QueryException
+     * Throws an exception if an error occurs during registration.
      */
     public function registerUser(array $payload)
     {
@@ -225,21 +211,12 @@ class User extends Authenticatable
         }
         catch (\Exception $exception)
         {
-            $logError = [
-                'code'    => $exception->getCode(),
-                'message' => $exception->getMessage()
-            ];
-            Log::error($logError);
+            $this->logError($exception);
             return false;
         }
         catch (\Illuminate\Database\QueryException $exception)
         {
-            $logError = [
-                'query'    => $exception->getSql(),
-                'message'  => $exception->getMessage(),
-                'bindings' => $exception->getBindings()
-            ];
-            Log::error($logError);
+            $this->logQueryError($exception);
             return false;
         }
     }
@@ -250,6 +227,8 @@ class User extends Authenticatable
      * @param int $id The ID of the user to update.
      * @return bool Returns true if the update was successful,
      * or an boolean otherwise.
+     * @throws \Exception|\Illuminate\Database\QueryException
+     * Throws an exception if an error occurs during the update.
      */
     public function updateUserRole(array $payload, int $id)
     {
@@ -262,21 +241,12 @@ class User extends Authenticatable
         }
         catch (\Exception $exception)
         {
-            $logError = [
-                'code'    => $exception->getCode(),
-                'message' => $exception->getMessage()
-            ];
-            Log::error($logError);
+            $this->logError($exception);
             return false;
         }
         catch (\Illuminate\Database\QueryException $exception)
         {
-            $logError = [
-                'query'    => $exception->getSql(),
-                'message'  => $exception->getMessage(),
-                'bindings' => $exception->getBindings()
-            ];
-            Log::error($logError);
+            $this->logQueryError($exception);
             return false;
         }
     }
@@ -287,6 +257,8 @@ class User extends Authenticatable
      * @param int $id The ID of the user to update.
      * @return bool Returns true if the update was successful,
      * or an boolean otherwise.
+     * @throws \Exception|\Illuminate\Database\QueryException
+     * Throws an exception if an error occurs during the update.
      */
     public function updateUser(array $payload, int $id)
     {
@@ -297,21 +269,12 @@ class User extends Authenticatable
         }
         catch (\Exception $exception)
         {
-            $logError = [
-                'code'    => $exception->getCode(),
-                'message' => $exception->getMessage()
-            ];
-            Log::error($logError);
+            $this->logError($exception);
             return false;
         }
         catch (\Illuminate\Database\QueryException $exception)
         {
-            $logError = [
-                'query'    => $exception->getSql(),
-                'message'  => $exception->getMessage(),
-                'bindings' => $exception->getBindings()
-            ];
-            Log::error($logError);
+            $this->logQueryError($exception);
             return false;
         }
     }

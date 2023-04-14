@@ -47,7 +47,7 @@ class ProfileController extends Controller
             'full_name'     => 'sometimes|string|min:3|max:100|regex:/^[a-zA-Z\s]+$/',
             'first_name'    => 'sometimes|string|min:3|max:100|regex:/^[a-zA-Z\s]+$/',
             'last_name'     => 'sometimes|string|min:3|max:100|regex:/^[a-zA-Z\s]+$/',
-            'nickname'      => 'sometimes|string|max:100',
+            'nickname'      => 'sometimes|string|min:3|max:100',
             'profile_image' => 'sometimes|image|mimes:jpeg,png,gif,webp,bmp,svg,tiff',
         ];
 

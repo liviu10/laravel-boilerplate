@@ -24,15 +24,25 @@ return [
     ],
     'user_roles' => [
         'page_title' => 'User roles',
+        'add_new' => 'Add new user role',
         'column_id' => 'ID',
         'column_name_and_description' => 'Name & Description',
         'column_is_active' => 'Is active?',
-        'show_label_name' => 'Name',
-        'show_label_description' => 'Description',
+        'column_actions' => 'Actions',
+        'show_user_role_title' => 'User roles',
+        'show_label_id' => 'ID',
+        'show_label_user_role_name' => 'Role name',
+        'show_label_user_role_description' => 'Role description',
         'show_label_is_active' => [
+            'title' => 'Is active?',
             'yes' => 'Yes',
             'no' => 'No'
-        ]
+        ],
+        'show_label_created_at' => 'Created at',
+        'show_label_updated_at' => 'Updated at',
+        'close_button' => 'Close',
+        'update_user_role_title' => 'Update user role details',
+        'update_button' => 'Update'
     ],
     'error_message_fetch' => 'There was an error when fetching the list of all users! Please try again and if the problem persist contact the administrator!',
     'success_message' => 'The user was successfully saved!',

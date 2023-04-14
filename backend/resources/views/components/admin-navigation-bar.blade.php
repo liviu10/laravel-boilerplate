@@ -30,18 +30,8 @@
                         </a>
                         <ul class="dropdown-menu">
                             <li>
-                                <a class="dropdown-item" href="{{ route('home') }}">
-                                    {{ $adminNavigationBar['firstPage'] }}
-                                </a>
-                            </li>
-                            <li>
-                                <a class="dropdown-item" href="{{ route('home') }}">
-                                    {{ $adminNavigationBar['secondPage'] }}
-                                </a>
-                            </li>
-                            <li>
-                                <a class="dropdown-item" href="{{ route('home') }}">
-                                    {{ $adminNavigationBar['thirdPage'] }}
+                                <a class="dropdown-item" href="{{ url('/admin/contact') }}">
+                                    {{ $adminNavigationBar['contactPage'] }}
                                 </a>
                             </li>
                         </ul>
@@ -76,16 +66,24 @@
                             </a>
                             <ul class="dropdown-menu">
                                 <li>
-                                    <a class="dropdown-item" href="{{ url('/profile') }}">
+                                    <a class="dropdown-item" href="{{ url('/admin/profile') }}">
                                         <i class="fa-solid fa-user"></i>
                                         <span>{{ $adminNavigationBar['profile'] }}</span>
                                     </a>
                                 </li>
-                                @if (Auth::user()->user_role_type_id === 1)
+                                @if ($adminNavigationBar['users_is_visible'])
                                 <li>
-                                    <a class="dropdown-item" href="{{ url('/users') }}">
+                                    <a class="dropdown-item" href="{{ url('/admin/users') }}">
                                         <i class="fa-solid fa-users"></i>
                                         <span>{{ $adminNavigationBar['users'] }}</span>
+                                    </a>
+                                </li>
+                                @endif
+                                @if ($adminNavigationBar['users_is_visible'])
+                                <li>
+                                    <a class="dropdown-item" href="{{ url('/admin/user-roles') }}">
+                                        <i class="fa-solid fa-users-gear"></i>
+                                        <span>{{ $adminNavigationBar['roles'] }}</span>
                                     </a>
                                 </li>
                                 @endif

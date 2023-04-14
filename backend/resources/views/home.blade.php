@@ -2,9 +2,9 @@
 
 @section('content')
     <div class="admin home">
-        <h1>
-            {{ __('home.page_title') }}
-        </h1>
+        @include('components.generic.page-title', [
+            'title' => __('home.page_title')
+        ])
 
         <div class="hero">
             <div class="card col-lg-8 col-md-8 col-sm-8">
@@ -42,7 +42,7 @@
                         </p>
                     </div>
                     <div class="card-actions">
-                        <a href="{{ url('/profile') }}" class="btn btn-primary">
+                        <a href="{{ url('admin/profile') }}" class="btn btn-primary">
                             {{ __('home.account_section.button') }}
                         </a>
                     </div>
@@ -57,7 +57,7 @@
                         </p>
                     </div>
                     <div class="card-actions">
-                        <a href="{{ url('/users') }}" class="btn btn-primary">
+                        <a href="{{ url('admin/users') }}" class="btn btn-primary">
                             {{ __('home.account_section.button') }}
                         </a>
                     </div>
@@ -75,7 +75,7 @@
                         </p>
                     </div>
                     <div class="card-actions">
-                        <a href="{{ url('/profile') }}" class="btn btn-primary">
+                        <a href="{{ url('/admin/profile') }}" class="btn btn-primary">
                             {{ __('home.account_section.button') }}
                         </a>
                     </div>

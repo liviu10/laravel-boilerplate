@@ -1,4 +1,4 @@
-<div class="row mb-3">
+<div class="row {{ isset($input['class']) && $input['class'] ? $input['class'] : 'my-3' }}">
     <label for="{{ $input['id'] }}" class="form-label">
         {{ $input['label'] }}
     </label>
@@ -19,7 +19,7 @@
             @if($input['id'] !== 'password_confirmation') @error($input['id']) is-invalid @enderror @endif"
             name="{{ $input['id'] }}"
             @if($input['id'] !== 'password' && $input['id'] !== 'password_confirmation') value="{{ $input['value'] }}" @endif
-            @if($input['id'] !== 'password' && $input['id'] !== 'password_confirmation') required @endif
+            {{ isset($input['required']) && $input['required'] ? 'required' : '' }}
             @if($input['id'] !== 'password' && $input['id'] !== 'password_confirmation') autocomplete="{{ $input['autocomplete'] }}" @endif
             autofocus
             {{ isset($input['disabled']) && $input['disabled'] ? 'disabled' : '' }}

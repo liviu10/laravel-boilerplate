@@ -32,7 +32,7 @@ class UsersController extends Controller
 
         $displayAllRecords = [
             'users' => $this->modelUser->fetchAllUsers() ? $this->modelUser->fetchAllUsers() : $errorMessage,
-            'user_role_types' => $this->modelUserRoleType->fetchAllUserRoleTypes() ? $this->modelUserRoleType->fetchAllUserRoleTypes() : $errorMessage
+            'user_role_types' => $this->modelUserRoleType->fetchAllUserRoleTypeNames() ? $this->modelUserRoleType->fetchAllUserRoleTypeNames() : $errorMessage
         ];
         return view('users', compact('displayAllRecords'));
     }
@@ -57,5 +57,16 @@ class UsersController extends Controller
         $result = $this->modelUser->updateUserRole($updateRecord, $id);
 
         return redirect()->route('users.index')->with('success', $result ? $successMessage : $errorMessage);
+    }
+
+    /**
+     * Filter the specified user.
+     * @param Request $request The HTTP request object containing the filter information.
+     * @return RedirectResponse The HTTP redirect response after the filter is complete.
+     */
+    public function filter(Request $request)
+    {
+        dd($request->all());
+        return redirect()->route('users.index');
     }
 }

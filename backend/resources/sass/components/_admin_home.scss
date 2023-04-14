@@ -1,10 +1,5 @@
 .admin {
     &.home {
-        & h1 {
-            margin-bottom: rem-convertor(32px);
-            text-align: center;
-            color: #424743;
-        }
         & .hero {
             margin-bottom: rem-convertor(32px);
             & .card {
@@ -36,42 +31,16 @@
             }
         }
         & .menu {
-            margin-bottom: rem-convertor(32px);
             & .row {
-                margin-bottom: rem-convertor(32px);
-                @media only screen and (max-width: 768px) and (min-width: 320px) {
-                    @include flex-center();
-                    flex-direction: column;
-                    margin-bottom: rem-convertor(16px);
-                }
                 & .card {
-                    border-radius: 0;
-                    border-color: #424743;
-                    padding-top: rem-convertor(8px);
-                    padding-bottom: rem-convertor(8px);
-                    color: #424743;
                     &-body {
                         & .lead {
                             margin-bottom: rem-convertor(16px);
                             text-align: center;
                         }
                         & p {
-                            margin-bottom: 0;
                             & a {
                                 color: #424743;
-                            }
-                        }
-                    }
-                    &-actions {
-                        @include flex-center();
-                        & .btn.btn-primary {
-                            border-radius: 0;
-                            background-color: #424743;
-                            border-color: #424743;
-                            color: #EAC11F;
-                            font-weight: 700;
-                            &:focus-visible {
-                                box-shadow: none;
                             }
                         }
                     }

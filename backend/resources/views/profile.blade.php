@@ -2,9 +2,9 @@
 
 @section('content')
     <div class="admin profile">
-        <h1>
-            {{ __('profile.page_title') }}
-        </h1>
+        @include('components.generic.page-title', [
+            'title' => __('profile.page_title')
+        ])
 
         <div class="menu">
             <div class="row">
@@ -32,7 +32,7 @@
                                 </div>
 
                                 <!-- Full name -->
-                                @include('components.input', [
+                                @include('components.generic.input', [
                                     'input' => [
                                         'label' => __('profile.full_name_label'),
                                         'id' => 'full_name',
@@ -44,7 +44,7 @@
                                 ])
 
                                 <!-- First name -->
-                                @include('components.input', [
+                                @include('components.generic.input', [
                                     'input' => [
                                         'label' => __('profile.first_name_label'),
                                         'id' => 'first_name',
@@ -56,7 +56,7 @@
                                 ])
 
                                 <!-- Last name -->
-                                @include('components.input', [
+                                @include('components.generic.input', [
                                     'input' => [
                                         'label' => __('profile.last_name_label'),
                                         'id' => 'last_name',
@@ -68,7 +68,7 @@
                                 ])
 
                                 <!-- Profile picture -->
-                                @include('components.input', [
+                                @include('components.generic.input', [
                                     'input' => [
                                         'label' => __('profile.profile_picture_label'),
                                         'id' => 'profile_image',
@@ -90,7 +90,7 @@
                                 </div>
 
                                 <!-- Nickname -->
-                                @include('components.input', [
+                                @include('components.generic.input', [
                                     'input' => [
                                         'label' => __('profile.nickname_label'),
                                         'id' => 'nickname',
@@ -102,7 +102,7 @@
                                 ])
 
                                 <!-- Email address -->
-                                @include('components.input', [
+                                @include('components.generic.input', [
                                     'input' => [
                                         'label' => __('profile.email_address_label'),
                                         'id' => 'email',
@@ -123,7 +123,7 @@
                                 </div>
 
                                 <!-- Password -->
-                                @include('components.input', [
+                                @include('components.generic.input', [
                                     'input' => [
                                         'label' => __('profile.password_label'),
                                         'id' => 'password',
@@ -134,7 +134,7 @@
                                 ])
 
                                 <!-- Password confirmation -->
-                                @include('components.input', [
+                                @include('components.generic.input', [
                                     'input' => [
                                         'label' => __('profile.password_confirmation_label'),
                                         'id' => 'password_confirmation',

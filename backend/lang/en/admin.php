@@ -5,13 +5,12 @@ return [
         'home' => 'Home',
         'sections' => [
             'title' => 'Website Sections',
-            'first_page' => 'First Page',
-            'second_page' => 'Second Page',
-            'third_page' => 'Third Page',
+            'contact_page' => 'Contact messages',
         ],
         'welcome' => 'Welcome, :userName',
         'profile' => 'My Account',
-        'users' => 'Users & Roles',
+        'users' => 'Users',
+        'roles' => 'Roles',
         'logout' => 'Logout',
         'view_website' => 'View website'
     ],

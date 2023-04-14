@@ -1,0 +1,23 @@
+{
+    "name": "liviu/laravel-boilerplate",
+    "type": "library",
+    "description": "A Laravel package for example purposes",
+    "keywords": ["laravel", "package", "example"],
+    "authors": [
+        {
+            "name": "Liviu Voica",
+            "email": "voica.liviu10@gmail.com"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {
+        "php": "^8.0",
+        "illuminate/support": "^8.0",
+        "illuminate/filesystem": "^8.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "LaravelBoilerplate\\ExamplePackage\\": "src/"
+        }
+    }
+}
