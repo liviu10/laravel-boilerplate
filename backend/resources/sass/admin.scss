@@ -7,6 +7,7 @@
 // Import utilities
 @import 'utilities/_rem_convertor.scss';
 @import 'utilities/_flex.scss';
+@import 'utilities/_theme.scss';
 
 // Import components
 @import 'components/_admin_home.scss';
@@ -20,7 +21,7 @@
         & h1 {
             margin-bottom: rem-convertor(32px);
             text-align: center;
-            color: #424743;
+            color: $text-color;
         }
         & .menu {
             margin-bottom: rem-convertor(32px);
@@ -37,10 +38,10 @@
                 }
                 & .card {
                     border-radius: 0;
-                    border-color: #424743;
+                    border-color: $border-color;
                     padding-top: rem-convertor(8px);
                     padding-bottom: rem-convertor(8px);
-                    color: #424743;
+                    color: $text-color;
                     &-body {
                         & p, & form {
                             margin-bottom: 0
@@ -50,9 +51,9 @@
                         @include flex-center();
                         & .btn.btn-primary {
                             border-radius: 0;
-                            background-color: #424743;
-                            border-color: #424743;
-                            color: #EAC11F;
+                            background-color: $background-color;
+                            border-color: $border-color;
+                            color: $special-color;
                             font-weight: 700;
                             &:focus-visible {
                                 box-shadow: none;
@@ -79,7 +80,7 @@
                 & .collapse, & .collapsing, & .collapse.show {
                     & .card {
                         border-radius: 0 !important;
-                        border-color: #424743;
+                        border-color: $border-color;
                         &-actions {
                             & div {
                                 & .btn.btn-warning, & .btn.btn-primary {
@@ -95,8 +96,8 @@
             }
             & .table {
                 margin-bottom: 0;
-                border-color: #424743;
-                color: #424743;
+                border-color: $border-color;
+                color: $text-color;
                 & thead, & tbody {
                     & tr {
                         & th, & td {
@@ -146,12 +147,12 @@
                                 }
                                 & .form-control, & .form-check-input {
                                     border-radius: 0;
-                                    border-color: #424743;
+                                    border-color: $border-color;
                                     &:focus, &:focus-visible {
                                         box-shadow: none;
                                     }
                                     &:focus {
-                                        border-color: #424743;
+                                        border-color: $border-color;
                                     }
                                 }
                                 & .form-control:disabled:hover {
@@ -159,7 +160,7 @@
                                 }
                                 & .form-check-input {
                                     &:checked {
-                                        background-color: #424743;
+                                        background-color: $background-color;
                                     }
                                 }
                             }
@@ -177,7 +178,7 @@
     }
 }
 .modal {
-    color: #424743;
+    color: $text-color;
     &-content {
         border-radius: 0;
     }
@@ -201,7 +202,7 @@
             }
         }
         hr {
-            color: #424743;
+            color: $text-color;
         }
         & form {
             margin-bottom: 0;
@@ -212,9 +213,9 @@
         border-top: 0 !important;
         & .btn.btn-primary {
             border-radius: 0;
-            background-color: #424743;
-            border-color: #424743;
-            color: #EAC11F;
+            background-color: $background-color;
+            border-color: $border-color;
+            color: $special-color;
             font-weight: 700;
             &:focus-visible {
                 box-shadow: none;
@@ -224,9 +225,9 @@
     &-actions {
         & .btn.btn-primary {
             border-radius: 0;
-            background-color: #424743;
-            border-color: #424743;
-            color: #EAC11F;
+            background-color: $background-color;
+            border-color: $border-color;
+            color: $special-color;
             font-weight: 700;
             &:focus-visible {
                 box-shadow: none;
@@ -236,13 +237,13 @@
 }
 .form-control, .form-select {
     border-radius: 0;
-    border-color: #424743;
-    color: #424743;
+    border-color: $border-color;
+    color: $text-color;
     &:focus, &:focus-visible {
         box-shadow: none;
     }
     &:focus {
-        border-color: #424743;
+        border-color: $border-color;
     }
 }
 .pagination {
@@ -250,8 +251,8 @@
     & .page-item {
         & .page-link {
             border-radius: 0;
-            border-color: #424743;
-            color: #424743;
+            border-color: $border-color;
+            color: $text-color;
             font-weight: 700;
             &:focus {
                 box-shadow: none;
@@ -259,8 +260,8 @@
         }
         &.active {
             & .page-link {
-                background-color: #424743;
-                color: #EAC11F;
+                background-color: $background-color;
+                color: $special-color;
                 font-weight: 700;
             }
         }

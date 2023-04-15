@@ -13,8 +13,7 @@
     </button>
     <div class="collapse" id="collapseExample">
         <div class="card card-body">
-            <form method="POST" action="{{ $filter['action_route'] }}">
-                @csrf
+            <form method="GET" action="{{ $filter['action_route'] }}">
                 @foreach ($filter['settings'] as $key => $data)
                     @if ($data['component_type'] === 'input')
                         @include('components.generic.input', [
@@ -22,8 +21,7 @@
                                 'label' => $data['label'],
                                 'id' => $data['filter_id'],
                                 'type' => 'text',
-                                'value' => '',
-                                'autocomplete' => $data['filter_id'],
+                                'autocomplete' => $data['filter_id']
                             ]
                         ])
                     @elseif ($data['component_type'] === 'select')
@@ -38,9 +36,9 @@
                 @endforeach
                 <div class="card-actions">
                     <div class="d-flex justify-content-evenly">
-                        <button type="submit" class="btn btn-warning">
+                        <a href="{{ $filter['action_route'] }}" class="btn btn-warning">
                             {{ __('Clear filter') }}
-                        </button>
+                        </a>
                         <button type="submit" class="btn btn-primary">
                             {{ __('Apply filter') }}
                         </button>

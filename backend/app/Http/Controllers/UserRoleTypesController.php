@@ -20,15 +20,36 @@ class UserRoleTypesController extends Controller
     }
 
     /**
-     * Show the the list of all user role types.
-     * @return \Illuminate\Contracts\Support\Renderable
+     * Display a list of all user role types.
+     * @param \Illuminate\Http\Request $request The incoming HTTP request.
+     * @return \Illuminate\Contracts\Support\Renderable A renderable view.
      */
-    public function index()
+    public function index(Request $request)
     {
         $errorMessage = __('users_and_roles.error_message_fetch');
 
-        $displayAllRecords = $this->modelUserRoleType->fetchAllUserRoleTypes() ? $this->modelUserRoleType->fetchAllUserRoleTypes() : $errorMessage;
-        return view('user-roles', compact('displayAllRecords'));
+        $searchTerms = array_filter($request->all());
+        $results = $this->modelUserRoleType->fetchAllUserRoleTypes($searchTerms);
+
+        $searchMessage = 'Search results (';
+        foreach ($searchTerms as $key => $value) {
+            if ($key === 'is_active')
+            {
+                if ($value === '1')
+                {
+                    $value = 'yes';
+                }
+                else
+                {
+                    $value = 'no';
+                }
+            }
+            $searchMessage .= "$key: $value, ";
+        }
+        $searchMessage = rtrim($searchMessage, ', ') . '):';
+        $displayAllRecords = $results ?: $errorMessage;
+
+        return view('user-roles', compact('displayAllRecords', 'searchTerms', 'searchMessage'));
     }
 
     /**
@@ -98,16 +119,5 @@ class UserRoleTypesController extends Controller
         $result = $this->modelUserRoleType->updateUserRole($updateRecord, $id);
 
         return redirect()->route('user-roles.index')->with('success', $result ? $successMessage : $errorMessage);
-    }
-
-    /**
-     * Filter the specified user role type.
-     * @param Request $request The HTTP request object containing the filter information.
-     * @return RedirectResponse The HTTP redirect response after the filter is complete.
-     */
-    public function filter(Request $request)
-    {
-        dd($request->all());
-        return redirect()->route('contact.index');
     }
 }

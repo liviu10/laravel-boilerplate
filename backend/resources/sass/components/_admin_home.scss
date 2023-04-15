@@ -6,8 +6,8 @@
                 margin-left: auto;
                 margin-right: auto;
                 border-radius: 0;
-                border-color: #424743;
-                color: #424743;
+                border-color: $border-color;
+                color: $text-color;
                 @media only screen and (max-width: 575px) and (min-width: 475px) {
                     width: rem-convertor(450px);
                 }
@@ -24,7 +24,7 @@
                     & p {
                         margin-bottom: 0;
                         & a {
-                            color: #424743;
+                            color: $text-color;
                         }
                     }
                 }
@@ -40,7 +40,7 @@
                         }
                         & p {
                             & a {
-                                color: #424743;
+                                color: $text-color;
                             }
                         }
                     }

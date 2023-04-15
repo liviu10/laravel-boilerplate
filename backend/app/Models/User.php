@@ -152,11 +152,11 @@ class User extends Authenticatable
      * @throws \Exception|\Illuminate\Database\QueryException
      * Throws an exception if an error occurs during retrieval.
      */
-    public function fetchAllUsers()
+    public function fetchAllUsers($searchTerms = null)
     {
         try
         {
-            return $this->select(
+            $query = $this->select(
                 'id',
                 'full_name',
                 'first_name',
@@ -172,7 +172,25 @@ class User extends Authenticatable
                         'user_role_name'
                     )->where('is_active', true);
                 }
-            ])->paginate(15);
+            ]);
+
+            if ($searchTerms)
+            {
+                $searchTerms = collect($searchTerms)->except('page')->toArray();
+                foreach ($searchTerms as $key => $value)
+                {
+                    if ($key === 'user_role_type_id')
+                    {
+                        
+                    }
+                    else
+                    {
+                        $query->where($key, 'LIKE', '%' . $value . '%');
+                    }
+                }
+            }
+
+            return $query->paginate(15);
         }
         catch (\Exception $exception)
         {

@@ -23,15 +23,20 @@ class ContactController extends Controller
     }
 
     /**
-     * Display a listing of the resource.
+     * Show the the list of all users and the user role types.
+     * @param \Illuminate\Http\Request $request The incoming HTTP request.
+     * @return \Illuminate\Contracts\Support\Renderable
      */
-    public function index()
+    public function index(Request $request)
     {
         $errorMessage = __('contact.error_message_fetch');
-        $displayAllRecords = [
-            'contact' => $this->modelContact->fetchAllContactMessage() ? $this->modelContact->fetchAllContactMessage() : $errorMessage,
+
+        $results = [
+            'contact' => $this->modelContact->fetchAllContactMessage($request->all()),
             'contact_subjects' => $this->modelContactSubject->fetchAllContactSubjects()
         ];
+        $displayAllRecords = $results ?: $errorMessage;
+
         return view('contact', compact('displayAllRecords'));
     }
 
@@ -57,16 +62,5 @@ class ContactController extends Controller
         $result = $this->modelContact->saveContactMessage($saveRecords);
 
         return redirect()->route('contact.index')->with('success', $result ? $successMessage : $errorMessage);
-    }
-
-    /**
-     * Filter the specified contact message.
-     * @param Request $request The HTTP request object containing the filter information.
-     * @return RedirectResponse The HTTP redirect response after the filter is complete.
-     */
-    public function filter(Request $request)
-    {
-        dd($request->all());
-        return redirect()->route('contact.index');
     }
 }

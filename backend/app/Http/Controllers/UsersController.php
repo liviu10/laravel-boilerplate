@@ -24,17 +24,37 @@ class UsersController extends Controller
 
     /**
      * Show the the list of all users and the user role types.
+     * @param \Illuminate\Http\Request $request The incoming HTTP request.
      * @return \Illuminate\Contracts\Support\Renderable
      */
-    public function index()
+    public function index(Request $request)
     {
         $errorMessage = __('users_and_roles.error_message_fetch');
 
-        $displayAllRecords = [
-            'users' => $this->modelUser->fetchAllUsers() ? $this->modelUser->fetchAllUsers() : $errorMessage,
-            'user_role_types' => $this->modelUserRoleType->fetchAllUserRoleTypeNames() ? $this->modelUserRoleType->fetchAllUserRoleTypeNames() : $errorMessage
+        $searchTerms = array_filter($request->all());
+        $results = [
+            'users' => $this->modelUser->fetchAllUsers($searchTerms),
+            'user_role_types' => $this->modelUserRoleType->fetchAllUserRoleTypeNames()
         ];
-        return view('users', compact('displayAllRecords'));
+        $searchMessage = 'Search results (';
+        foreach ($searchTerms as $key => $value) {
+            // if ($key === 'user_role_type_id')
+            // {
+            //     if ($value === '1')
+            //     {
+            //         $value = 'yes';
+            //     }
+            //     else
+            //     {
+            //         $value = 'no';
+            //     }
+            // }
+            $searchMessage .= "$key: $value, ";
+        }
+        $searchMessage = rtrim($searchMessage, ', ') . '):';
+        $displayAllRecords = $results ?: $errorMessage;
+
+        return view('users', compact('displayAllRecords', 'searchTerms', 'searchMessage'));
     }
 
     /**
@@ -57,16 +77,5 @@ class UsersController extends Controller
         $result = $this->modelUser->updateUserRole($updateRecord, $id);
 
         return redirect()->route('users.index')->with('success', $result ? $successMessage : $errorMessage);
-    }
-
-    /**
-     * Filter the specified user.
-     * @param Request $request The HTTP request object containing the filter information.
-     * @return RedirectResponse The HTTP redirect response after the filter is complete.
-     */
-    public function filter(Request $request)
-    {
-        dd($request->all());
-        return redirect()->route('users.index');
     }
 }

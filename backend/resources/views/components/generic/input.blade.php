@@ -18,7 +18,7 @@
             class="form-control
             @if($input['id'] !== 'password_confirmation') @error($input['id']) is-invalid @enderror @endif"
             name="{{ $input['id'] }}"
-            @if($input['id'] !== 'password' && $input['id'] !== 'password_confirmation') value="{{ $input['value'] }}" @endif
+            @if($input['id'] !== 'password' && $input['id'] !== 'password_confirmation') value="{{ isset($input['value']) }}" @endif
             {{ isset($input['required']) && $input['required'] ? 'required' : '' }}
             @if($input['id'] !== 'password' && $input['id'] !== 'password_confirmation') autocomplete="{{ $input['autocomplete'] }}" @endif
             autofocus

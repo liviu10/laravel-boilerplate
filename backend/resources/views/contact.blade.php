@@ -23,7 +23,7 @@
                 @include('components.filter-record', [
                     'filter' => [
                         'button_label' => __('Filter table'),
-                        'action_route' => route('contact.filter'),
+                        'action_route' => route('contact.index'),
                         'settings' => [
                             [
                                 'id' => 1,
@@ -51,6 +51,13 @@
                             ],
                             [
                                 'id' => 5,
+                                'label' => __('Subject'),
+                                'component_type' => 'select',
+                                'filter_id' => 'contact_subject_id',
+                                'options' => $displayAllRecords['contact_subjects']
+                            ],
+                            [
+                                'id' => 6,
                                 'label' => __('Privacy Policy'),
                                 'component_type' => 'select',
                                 'filter_id' => 'privacy_policy',
@@ -78,6 +85,9 @@
                             <td>
                                 <span>{{ __('contact.show_label_full_name') }}:</span>
                                 {{ $data->full_name }}
+                                <br>
+                                <span>{{ __('contact.show_label_contact_subject') }}:</span>
+                                {{ $data->contact_subject->title }}
                                 <br>
                                 <span>{{ __('contact.show_label_email') }}:</span>
                                 <a href="mailto:{{ $data->email }}">
@@ -281,7 +291,7 @@
                         @endforeach
                     </tbody>
                 </table>
-                {{ $displayAllRecords['contact']->links('pagination::bootstrap-5') }}
+                {{ $displayAllRecords['contact']->appends(request()->query())->links('pagination::bootstrap-5') }}
                 @endif
             </div>
         </div>

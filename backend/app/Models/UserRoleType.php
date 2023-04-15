@@ -89,18 +89,36 @@ class UserRoleType extends Model
      * @throws \Exception|\Illuminate\Database\QueryException
      * Throws an exception if an error occurs during the retrieval.
      */
-    public function fetchAllUserRoleTypes()
+    public function fetchAllUserRoleTypes($searchTerms = null)
     {
         try
         {
-            return $this->select(
+            $query = $this->select(
                 'id',
                 'user_role_name',
                 'user_role_description',
                 'is_active',
                 'created_at',
                 'updated_at'
-            )->paginate(15);
+            );
+
+            if ($searchTerms)
+            {
+                $searchTerms = collect($searchTerms)->except('page')->toArray();
+                foreach ($searchTerms as $key => $value)
+                {
+                    if ($key === 'id' || $key === 'is_active')
+                    {
+                        $query->where($key, $value);
+                    }
+                    else
+                    {
+                        $query->where($key, 'LIKE', '%' . $value . '%');
+                    }
+                }
+            }
+
+            return $query->paginate(15);
         }
         catch (\Exception $exception)
         {

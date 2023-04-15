@@ -23,7 +23,7 @@
                 @include('components.filter-record', [
                     'filter' => [
                         'button_label' => __('Filter table'),
-                        'action_route' => route('user-roles.filter'),
+                        'action_route' => route('user-roles.index'),
                         'settings' => [
                             [
                                 'id' => 1,
@@ -39,14 +39,17 @@
                             ],
                             [
                                 'id' => 3,
-                                'label' => __('users_and_roles.users.column_role'),
+                                'label' => __('users_and_roles.user_roles.column_is_active'),
                                 'component_type' => 'select',
-                                'filter_id' => 'is_Active',
+                                'filter_id' => 'is_active',
                                 'options' => [ 'No', 'Yes' ]
                             ]
                         ]
                     ]
                 ])
+                @if ($searchTerms)
+                    {{ $searchMessage }}
+                @endif
                 @endif
                 <table class="table table-bordered">
                     <thead>
@@ -270,7 +273,7 @@
                         @endforeach
                     </tbody>
                 </table>
-                {{ $displayAllRecords->links('pagination::bootstrap-5') }}
+                {{ $displayAllRecords->appends(request()->query())->links('pagination::bootstrap-5') }}
                 @endif
             </div>
         </div>

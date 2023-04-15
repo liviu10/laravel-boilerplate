@@ -112,11 +112,11 @@ class Contact extends Model
      * @throws \Exception|\Illuminate\Database\QueryException
      * Throws an exception if an error occurs during the retrieval.
      */
-    public function fetchAllContactMessage()
+    public function fetchAllContactMessage($searchTerms = null)
     {
         try
         {
-            return $this->select(
+            $query = $this->select(
                 'id',
                 'full_name',
                 'email',
@@ -133,7 +133,25 @@ class Contact extends Model
                 'contact_responses' => function ($query) {
                     $query->select('id', 'message');
                 }
-            ])->paginate(15);
+            ]);
+
+            if ($searchTerms)
+            {
+                $searchTerms = collect($searchTerms)->except('page')->toArray();
+                foreach ($searchTerms as $key => $value)
+                {
+                    if ($key === 'contact_subject_id' || $key === 'privacy_policy')
+                    {
+                        $query->where($key, $value);
+                    }
+                    else
+                    {
+                        $query->where($key, 'LIKE', '%' . $value . '%');
+                    }
+                }
+            }
+
+            return $query->paginate(15);
         }
         catch (\Exception $exception)
         {

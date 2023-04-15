@@ -23,7 +23,7 @@
                 @include('components.filter-record', [
                     'filter' => [
                         'button_label' => __('Filter table'),
-                        'action_route' => route('users.filter'),
+                        'action_route' => route('users.index'),
                         'settings' => [
                             [
                                 'id' => 1,
@@ -59,6 +59,9 @@
                         ]
                     ]
                 ])
+                @if ($searchTerms)
+                    {{ $searchMessage }}
+                @endif
                 @endif
                 <table class="table table-bordered">
                     <thead>
@@ -270,7 +273,7 @@
                         @endforeach
                     </tbody>
                 </table>
-                {{ $displayAllRecords['users']->links('pagination::bootstrap-5') }}
+                {{ $displayAllRecords['users']->appends(request()->query())->links('pagination::bootstrap-5') }}
                 @endif
             </div>
         </div>

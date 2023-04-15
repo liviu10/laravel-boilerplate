@@ -36,15 +36,22 @@ use Illuminate\Support\Facades\Route;
         Route::resource('/profile', ProfileController::class)->only('index', 'update');
 
         // Users web routes [GET] and [PUT]
-        Route::post('/users/filter', [UsersController::class, 'filter'])->name('users.filter');
-        Route::resource('/users', UsersController::class)->only('index', 'update');
+        Route::group([ 'prefix' => '/' ], function () {
+            Route::get('/users/{id?}/{full_name?}/{email?}/{nickname?}/{user_role_type_id?}', [UsersController::class, 'index'])->name('users.index');
+            Route::put('/users/{user}', [UsersController::class, 'update'])->name('users.update');
+        });
 
-        // User roles web routes [GET], [POST] and [PUT]
-        Route::post('/user-roles/filter', [UserRoleTypesController::class, 'filter'])->name('user-roles.filter');
-        Route::resource('/user-roles', UserRoleTypesController::class)->only('index', 'update');
+        // User roles web routes [GET] and [PUT]
+        Route::group([ 'prefix' => '/' ], function () {
+            Route::get('/user-roles/{id?}/{user_role_name?}/{is_active?}', [UserRoleTypesController::class, 'index'])->name('user-roles.index');
+            Route::put('/user-roles/{user-role}', [UserRoleTypesController::class, 'update'])->name('user-roles.update');
+        });
 
-        // Contact messages web routes [GET] and [POST]
-        Route::post('/contact/filter', [ContactController::class, 'filter'])->name('contact.filter');
-        Route::resource('/contact', ContactController::class)->only('index', 'store', 'update');
+        // Contact messages web routes [GET], [POST] and [PUT]
+        Route::group([ 'prefix' => '/' ], function () {
+            Route::get('/contact/{id?}/{full_name?}/{email?}/{phone?}/{contact_subject_id?}/{privacy_policy?}', [ContactController::class, 'index'])->name('contact.index');
+            Route::post('/contact', [ContactController::class, 'store'])->name('contact.store');
+            Route::put('/contact/{contact}', [ContactController::class, 'update'])->name('contact.update');
+        });
     });
 

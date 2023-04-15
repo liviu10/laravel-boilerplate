@@ -9,6 +9,7 @@ return [
     'show_user_title' => 'Detalii user',
     'show_label_id' => 'ID',
     'show_label_full_name' => 'Nume si prenume',
+    'show_label_contact_subject' => 'Subiect',
     'show_label_email' => 'Email',
     'show_label_phone_number' => 'Numar telefon',
     'show_label_message' => 'Mesaj',
