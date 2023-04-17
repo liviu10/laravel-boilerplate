@@ -30,7 +30,7 @@ class AdminNavigationBar extends Component
             'sections' => __('admin.navbar.sections.title'),
             'contactPage' => __('admin.navbar.sections.contact_page'),
             'viewWebsite' => __('admin.navbar.view_website'),
-            'welcome' => __('admin.navbar.welcome', [ 'userName' => Auth::user()->full_name ]),
+            'welcome' => __('admin.general.welcome_message', [ 'userName' => Auth::user()->full_name ]),
             'profile' => __('admin.navbar.profile'),
             'users' => __('admin.navbar.users'),
             'roles' => __('admin.navbar.roles'),

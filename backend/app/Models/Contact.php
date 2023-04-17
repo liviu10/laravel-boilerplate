@@ -20,6 +20,7 @@ use App\Traits\LogErrors;
  * @property \Carbon\Carbon $updated_at
  * @method fetchAllContactMessage
  * @method saveContactMessage
+ * @method deleteContactMessage
  */
 class Contact extends Model
 {
@@ -151,7 +152,7 @@ class Contact extends Model
                 }
             }
 
-            return $query->paginate(15);
+            return $query->paginate(15)->onEachSide(2);
         }
         catch (\Exception $exception)
         {
@@ -186,6 +187,32 @@ class Contact extends Model
                 'privacy_policy' => 0,
             ]);
             return $contactMessage;
+        }
+        catch (\Exception $exception)
+        {
+            $this->logError($exception);
+            return false;
+        }
+        catch (\Illuminate\Database\QueryException $exception)
+        {
+            $this->logQueryError($exception);
+            return false;
+        }
+    }
+
+    /**
+     * Delete a contact message by ID.
+     * @param int $id The ID of the contact message to delete.
+     * @return bool Whether the contact message was successfully deleted.
+     * @throws \Throwable If an error occurs while deleting the contact message.
+     */
+    public function deleteContactMessage(int $id)
+    {
+        try
+        {
+            $this->find($id)->delete();
+
+            return true;
         }
         catch (\Exception $exception)
         {

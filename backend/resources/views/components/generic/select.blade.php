@@ -11,7 +11,7 @@
             name="{{ $input['id'] }}"
         >
             @if (gettype($input['options']) === 'object')
-                <option value="">--Please choose an option--</option>
+                <option value="">{{ __('admin.general.choose_an_option_label') }}</option>
                 @foreach ($input['options'] as $key => $item)
                     <option value="{{ $item->id }}">
                         @foreach ($item->getAttributes() as $property => $value)
@@ -22,7 +22,7 @@
                     </option>
                 @endforeach
             @else
-                <option value="">--Please choose an option--</option>
+                <option value="">{{ __('admin.general.choose_an_option_label') }}</option>
                 @foreach ($input['options'] as $key => $item)
                     <option value="{{ $key }}">{{ $item }}</option>
                 @endforeach

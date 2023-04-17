@@ -29,15 +29,42 @@ class ContactController extends Controller
      */
     public function index(Request $request)
     {
-        $errorMessage = __('contact.error_message_fetch');
+        $errorMessage = __('admin.general.error_message_fetch');
 
+        $searchTerms = array_filter($request->except('page'));
         $results = [
-            'contact' => $this->modelContact->fetchAllContactMessage($request->all()),
+            'contact' => $this->modelContact->fetchAllContactMessage($searchTerms),
             'contact_subjects' => $this->modelContactSubject->fetchAllContactSubjects()
         ];
+
+        $searchMessage = __('admin.general.search_results_label') . ' (';
+        $keyNames = [
+            'contact_subject_id' => 'contact_subject'
+        ];
+        foreach ($searchTerms as $key => $value) {
+            if (array_key_exists($key, $keyNames)) {
+                $key = $keyNames[$key];
+                if ($key === 'contact_subject') {
+                    $value = $results['contact_subjects']->firstWhere('id', $value)?->toArray()['title'];
+                }
+            }
+            if ($key === 'privacy_policy')
+            {
+                if ($value === '1')
+                {
+                    $value = __('admin.general.yes_label');
+                }
+                else
+                {
+                    $value = __('admin.general.no_label');
+                }
+            }
+            $searchMessage .= "$key: $value, ";
+        }
+        $searchMessage = rtrim($searchMessage, ', ') . ')';
         $displayAllRecords = $results ?: $errorMessage;
 
-        return view('contact', compact('displayAllRecords'));
+        return view('contact', compact('displayAllRecords', 'searchTerms', 'searchMessage'));
     }
 
     /**
@@ -45,8 +72,8 @@ class ContactController extends Controller
      */
     public function store(Request $request)
     {
-        $successMessage = __('contact.success_message');
-        $errorMessage = __('contact.error_message_update');
+        $successMessage = __('admin.general.success_message');
+        $errorMessage = __('admin.general.error_message_update');
 
         $validateRequest = [
             'full_name'          => 'required|string|min:3|max:100|regex:/^[a-zA-Z\s]+$/',
@@ -60,6 +87,21 @@ class ContactController extends Controller
         $request->validate($validateRequest);
 
         $result = $this->modelContact->saveContactMessage($saveRecords);
+
+        return redirect()->route('contact.index')->with('success', $result ? $successMessage : $errorMessage);
+    }
+
+    /**
+     * Delete a contact message.
+     * @param string $id The ID of the contact message to delete.
+     * @return \Illuminate\Http\RedirectResponse A redirect to the index page with a success or error message.
+     */
+    public function destroy(string $id)
+    {
+        $successMessage = __('admin.general.success_message');
+        $errorMessage = __('admin.general.error_message_delete');
+
+        $result = $this->modelContact->deleteContactMessage($id);
 
         return redirect()->route('contact.index')->with('success', $result ? $successMessage : $errorMessage);
     }

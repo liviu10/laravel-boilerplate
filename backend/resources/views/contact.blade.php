@@ -3,7 +3,7 @@
 @section('content')
     <div class="admin contact">
         @include('components.generic.page-title', [
-            'title' => __('contact.page_title')
+            'title' => __('admin.contact.page_title')
         ])
 
         <div class="menu">
@@ -19,61 +19,64 @@
                         {{ $displayAllRecords }}
                     </div>
                 @else
-                @if (Auth::user()->user_role_type_id !== 5)
+                @if (Auth::user()->user_role_type_id !== 5 && count($displayAllRecords['contact']) !== 0)
                 @include('components.filter-record', [
                     'filter' => [
-                        'button_label' => __('Filter table'),
+                        'button_label' => __('admin.general.filter_button_label'),
                         'action_route' => route('contact.index'),
                         'settings' => [
                             [
                                 'id' => 1,
-                                'label' => __('contact.column_id'),
+                                'label' => __('admin.general.id_column_label'),
                                 'filter_id' => 'id',
                                 'component_type' => 'input'
                             ],
                             [
                                 'id' => 2,
-                                'label' => __('Full Name'),
+                                'label' => __('admin.contact.full_name_column_label'),
                                 'filter_id' => 'full_name',
                                 'component_type' => 'input'
                             ],
                             [
                                 'id' => 3,
-                                'label' => __('Email'),
+                                'label' => __('admin.contact.email_column_label'),
                                 'filter_id' => 'email',
                                 'component_type' => 'input'
                             ],
                             [
                                 'id' => 4,
-                                'label' => __('Phone'),
+                                'label' => __('admin.contact.phone_number_column_label'),
                                 'filter_id' => 'phone',
                                 'component_type' => 'input'
                             ],
                             [
                                 'id' => 5,
-                                'label' => __('Subject'),
+                                'label' => __('admin.contact.contact_subject_column_label'),
                                 'component_type' => 'select',
                                 'filter_id' => 'contact_subject_id',
                                 'options' => $displayAllRecords['contact_subjects']
                             ],
                             [
                                 'id' => 6,
-                                'label' => __('Privacy Policy'),
+                                'label' => __('admin.general.privacy_policy_column_label'),
                                 'component_type' => 'select',
                                 'filter_id' => 'privacy_policy',
-                                'options' => [ 'No', 'Yes' ]
+                                'options' => [ __('admin.general.no_label'), __('admin.general.yes_label') ]
                             ]
                         ]
                     ]
                 ])
+                @if ($searchTerms)
+                    {{ $searchMessage }}
+                @endif
                 @endif
                 <table class="table table-bordered">
                     <thead>
                         <tr>
-                            <th scope="col">{{ __('contact.column_id') }}</th>
-                            <th scope="col">{{ __('contact.column_contact_details') }}</th>
-                            <th scope="col">{{ __('contact.column_message') }}</th>
-                            <th scope="col">{{ __('contact.column_actions') }}</th>
+                            <th scope="col">{{ __('admin.general.id_column_label') }}</th>
+                            <th scope="col">{{ __('admin.contact.contact_details_column_label') }}</th>
+                            <th scope="col">{{ __('admin.contact.message_column_label') }}</th>
+                            <th scope="col">{{ __('admin.general.actions_column_label') }}</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -83,29 +86,29 @@
                                 {{ $data->id }}
                             </th>
                             <td>
-                                <span>{{ __('contact.show_label_full_name') }}:</span>
+                                <span>{{ __('admin.contact.full_name_column_label') }}:</span>
                                 {{ $data->full_name }}
                                 <br>
-                                <span>{{ __('contact.show_label_contact_subject') }}:</span>
+                                <span>{{ __('admin.contact.contact_subject_column_label') }}:</span>
                                 {{ $data->contact_subject->title }}
                                 <br>
-                                <span>{{ __('contact.show_label_email') }}:</span>
+                                <span>{{ __('admin.contact.email_column_label') }}:</span>
                                 <a href="mailto:{{ $data->email }}">
                                     {{ $data->email }}
                                 </a>
                                 <br>
                                 <span>
-                                    {{ __('contact.show_label_phone_number') }}:
+                                    {{ __('admin.contact.phone_number_column_label') }}:
                                 </span>
                                 {{ $data->phone }}
                                 <br>
                                 <span>
-                                    {{ __('contact.show_label_privacy_policy.title') }}:
+                                    {{ __('admin.general.privacy_policy_column_label') }}:
                                 </span>
                                 @if ($data->privacy_policy === 1)
-                                    {{ __('contact.show_label_privacy_policy.yes') }}
+                                    {{ __('admin.general.yes_label') }}
                                 @else
-                                    {{ __('contact.show_label_privacy_policy.no') }}
+                                    {{ __('admin.general.no_label') }}
                                 @endif
                             </td>
                             <td>
@@ -124,6 +127,14 @@
                                     <button type="button" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#editRecordModal{{ $key }}">
                                         <i class="fas fa-edit"></i>
                                     </button>
+
+                                    <form id="delete-record" action="{{ route('contact.destroy', $data->id) }}" method="POST">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button type="submit" class="btn btn-danger">
+                                            <i class="fas fa-trash"></i>
+                                        </button>
+                                    </form>
                                 </div>
                             </td>
                             <!-- Show record modal -->
@@ -139,7 +150,7 @@
                                     <div class="modal-content">
                                         <div class="modal-header">
                                             <h1 class="modal-title fs-5" id="showRecordModalLabel{{ $key }}">
-                                                {{ __('users_and_roles.user_roles.show_user_role_title') }}
+                                                {{ __('admin.general.modal_show_details_title') }}
                                             </h1>
                                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                         </div>
@@ -147,47 +158,53 @@
                                             @include('components.show-record-modal', [
                                                 'modal' => [
                                                     'key' => $key,
-                                                    'title' => __('contact.show_user_title'),
+                                                    'title' => __('admin.contact.show_user_title'),
                                                     'settings' => [
                                                         [
                                                             'id' => 1,
-                                                            'label' => __('contact.show_label_id'),
+                                                            'label' => __('admin.general.id_column_label'),
                                                             'value' => $data->id,
                                                             'label_id' => 'id'
                                                         ],
                                                         [
                                                             'id' => 2,
-                                                            'label' => __('contact.show_label_full_name'),
+                                                            'label' => __('admin.contact.full_name_column_label'),
                                                             'value' => $data->full_name,
                                                             'label_id' => 'full_name'
                                                         ],
                                                         [
                                                             'id' => 3,
-                                                            'label' => __('contact.show_label_email'),
+                                                            'label' => __('admin.contact.email_column_label'),
                                                             'value' => $data->email,
                                                             'label_id' => 'email'
                                                         ],
                                                         [
                                                             'id' => 4,
-                                                            'label' => __('contact.show_label_phone_number'),
+                                                            'label' => __('admin.contact.phone_number_column_label'),
                                                             'value' => $data->phone,
                                                             'label_id' => 'phone'
                                                         ],
                                                         [
                                                             'id' => 5,
-                                                            'label' => __('contact.show_label_message'),
+                                                            'label' => __('admin.contact.message_column_label'),
                                                             'value' => $data->message,
                                                             'label_id' => 'message'
                                                         ],
                                                         [
                                                             'id' => 6,
-                                                            'label' => __('contact.show_label_created_at'),
+                                                            'label' => __('admin.general.privacy_policy_column_label'),
+                                                            'value' => $data->privacy_policy,
+                                                            'label_id' => 'privacy_policy'
+                                                        ],
+                                                        [
+                                                            'id' => 7,
+                                                            'label' => __('admin.general.created_at_label'),
                                                             'value' => $data->created_at,
                                                             'label_id' => 'created_at'
                                                         ],
                                                         [
-                                                            'id' => 7,
-                                                            'label' => __('contact.show_label_updated_at'),
+                                                            'id' => 8,
+                                                            'label' => __('admin.general.updated_at_label'),
                                                             'value' => $data->updated_at,
                                                             'label_id' => 'updated_at'
                                                         ],
@@ -196,7 +213,9 @@
                                             ])
                                         </div>
                                         <div class="modal-footer">
-                                            <button type="button" class="btn btn-primary" data-bs-dismiss="modal">{{ __('Close') }}</button>
+                                            <button type="button" class="btn btn-primary" data-bs-dismiss="modal">
+                                                {{ __('admin.general.close_button_label') }}
+                                            </button>
                                         </div>
                                     </div>
                                 </div>
@@ -206,54 +225,62 @@
                                 <div class="modal-dialog">
                                     <div class="modal-content">
                                         <div class="modal-header">
-                                            <h1 class="modal-title fs-5" id="editRecordModalLabel{{ $key }}">{{ __('contact.update_user_role_title') }}</h1>
+                                            <h1 class="modal-title fs-5" id="editRecordModalLabel{{ $key }}">
+                                                {{ __('admin.contact.reply_message_title') }}
+                                            </h1>
                                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                         </div>
                                         <div class="modal-body">
                                             @include('components.show-record-modal', [
                                                 'modal' => [
                                                     'key' => $key,
-                                                    'title' => __('contact.show_user_title'),
+                                                    'title' => __('admin.contact.show_user_title'),
                                                     'settings' => [
                                                         [
                                                             'id' => 1,
-                                                            'label' => __('contact.show_label_id'),
+                                                            'label' => __('admin.general.id_column_label'),
                                                             'value' => $data->id,
                                                             'label_id' => 'id'
                                                         ],
                                                         [
                                                             'id' => 2,
-                                                            'label' => __('contact.show_label_full_name'),
+                                                            'label' => __('admin.contact.full_name_column_label'),
                                                             'value' => $data->full_name,
                                                             'label_id' => 'full_name'
                                                         ],
                                                         [
                                                             'id' => 3,
-                                                            'label' => __('contact.show_label_email'),
+                                                            'label' => __('admin.contact.email_column_label'),
                                                             'value' => $data->email,
                                                             'label_id' => 'email'
                                                         ],
                                                         [
                                                             'id' => 4,
-                                                            'label' => __('contact.show_label_phone_number'),
+                                                            'label' => __('admin.contact.phone_number_column_label'),
                                                             'value' => $data->phone,
                                                             'label_id' => 'phone'
                                                         ],
                                                         [
                                                             'id' => 5,
-                                                            'label' => __('contact.show_label_message'),
+                                                            'label' => __('admin.contact.message_column_label'),
                                                             'value' => $data->message,
                                                             'label_id' => 'message'
                                                         ],
                                                         [
                                                             'id' => 6,
-                                                            'label' => __('contact.show_label_created_at'),
+                                                            'label' => __('admin.general.privacy_policy_column_label'),
+                                                            'value' => $data->privacy_policy,
+                                                            'label_id' => 'privacy_policy'
+                                                        ],
+                                                        [
+                                                            'id' => 7,
+                                                            'label' => __('admin.general.created_at_label'),
                                                             'value' => $data->created_at,
                                                             'label_id' => 'created_at'
                                                         ],
                                                         [
-                                                            'id' => 7,
-                                                            'label' => __('contact.show_label_updated_at'),
+                                                            'id' => 8,
+                                                            'label' => __('admin.general.updated_at_label'),
                                                             'value' => $data->updated_at,
                                                             'label_id' => 'updated_at'
                                                         ],
@@ -271,14 +298,14 @@
                                                 @include('components.generic.textarea', [
                                                     'input' => [
                                                         'id' => 'message',
-                                                        'label' => __('Message'),
+                                                        'label' => __('admin.contact.reply_message_label'),
                                                     ]
                                                 ])
 
                                                 <div class="modal-actions">
                                                     <div class="d-flex justify-content-center">
                                                         <button type="submit" class="btn btn-primary">
-                                                            {{ __('contact.update_button') }}
+                                                            {{ __('admin.contact.reply_button_label') }}
                                                         </button>
                                                     </div>
                                                 </div>

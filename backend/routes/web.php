@@ -5,6 +5,7 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\UserRoleTypesController;
 use App\Http\Controllers\UsersController;
 use App\Http\Controllers\ContactController;
+use App\Http\Controllers\SettingsController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -47,11 +48,11 @@ use Illuminate\Support\Facades\Route;
             Route::put('/user-roles/{user-role}', [UserRoleTypesController::class, 'update'])->name('user-roles.update');
         });
 
-        // Contact messages web routes [GET], [POST] and [PUT]
+        // Contact messages web routes [GET], [POST], [PUT] and [DELETE]
         Route::group([ 'prefix' => '/' ], function () {
             Route::get('/contact/{id?}/{full_name?}/{email?}/{phone?}/{contact_subject_id?}/{privacy_policy?}', [ContactController::class, 'index'])->name('contact.index');
             Route::post('/contact', [ContactController::class, 'store'])->name('contact.store');
             Route::put('/contact/{contact}', [ContactController::class, 'update'])->name('contact.update');
+            Route::delete('/contact/{contact}', [ContactController::class, 'destroy'])->name('contact.destroy');
         });
     });
-

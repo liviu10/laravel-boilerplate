@@ -1,11 +1,11 @@
 @foreach ($modal['settings'] as $key => $data)
 <p>
     <span>{{ $data['label'] }}:</span>
-    @if ($data['label_id'] === 'is_active')
+    @if ($data['label_id'] === 'is_active' || $data['label_id'] === 'privacy_policy')
         @if ($data['value'] === 1)
-            {{ __('users_and_roles.user_roles.show_label_is_active.yes') }}
+            {{ __('admin.general.yes_label') }}
         @else
-            {{ __('users_and_roles.user_roles.show_label_is_active.no') }}
+            {{ __('admin.general.no_label') }}
         @endif
     @elseif (in_array('email', $data) && $data['label_id'] === 'email')
         <a href="mailto:{{ $data['value'] }}">

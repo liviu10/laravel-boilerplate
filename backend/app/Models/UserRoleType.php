@@ -118,7 +118,7 @@ class UserRoleType extends Model
                 }
             }
 
-            return $query->paginate(15);
+            return $query->paginate(15)->onEachSide(2);
         }
         catch (\Exception $exception)
         {

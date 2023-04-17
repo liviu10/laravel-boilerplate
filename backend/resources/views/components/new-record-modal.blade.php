@@ -63,7 +63,7 @@
                     <div class="modal-actions">
                         <div class="d-flex justify-content-center">
                             <button type="submit" class="btn btn-primary">
-                                {{ __('Save') }}
+                                {{ __('admin.general.save_new_record_label') }}
                             </button>
                         </div>
                     </div>

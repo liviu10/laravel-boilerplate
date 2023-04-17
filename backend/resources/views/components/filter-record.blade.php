@@ -37,10 +37,10 @@
                 <div class="card-actions">
                     <div class="d-flex justify-content-evenly">
                         <a href="{{ $filter['action_route'] }}" class="btn btn-warning">
-                            {{ __('Clear filter') }}
+                            {{ __('admin.general.clear_filter_label') }}
                         </a>
                         <button type="submit" class="btn btn-primary">
-                            {{ __('Apply filter') }}
+                            {{ __('admin.general.apply_filter_label') }}
                         </button>
                     </div>
                 </div>

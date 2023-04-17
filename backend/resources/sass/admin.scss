@@ -119,7 +119,7 @@
                                     border-radius: 0;
                                     width: rem-convertor(30px);
                                     height: rem-convertor(30px);
-                                    & .fas.fa-info, & .fas.fa-edit {
+                                    & .fas.fa-info, & .fas.fa-edit, & .fas.fa-trash {
                                         @include flex-center();
                                     }
                                 }

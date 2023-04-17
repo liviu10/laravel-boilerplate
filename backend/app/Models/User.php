@@ -179,9 +179,9 @@ class User extends Authenticatable
                 $searchTerms = collect($searchTerms)->except('page')->toArray();
                 foreach ($searchTerms as $key => $value)
                 {
-                    if ($key === 'user_role_type_id')
+                    if ($key === 'id' || $key === 'user_role_type_id')
                     {
-                        
+                        $query->where($key, $value);
                     }
                     else
                     {
@@ -190,7 +190,7 @@ class User extends Authenticatable
                 }
             }
 
-            return $query->paginate(15);
+            return $query->paginate(15)->onEachSide(2);
         }
         catch (\Exception $exception)
         {

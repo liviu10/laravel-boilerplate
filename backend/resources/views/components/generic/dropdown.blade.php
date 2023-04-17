@@ -1,5 +1,10 @@
 <div class="dropdown">
-    <button type="{{ $buttonType }}" class="{{ $buttonClass }} dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+    <button
+        type="{{ $buttonType }}"
+        class="{{ $buttonClass }} dropdown-toggle"
+        data-bs-toggle="dropdown"
+        aria-expanded="false"
+    >
         {{ $buttonLabel }}
     </button>
     <ul class="dropdown-menu">

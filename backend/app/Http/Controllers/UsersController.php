@@ -29,29 +29,27 @@ class UsersController extends Controller
      */
     public function index(Request $request)
     {
-        $errorMessage = __('users_and_roles.error_message_fetch');
+        $errorMessage = __('admin.general.error_message_fetch');
 
-        $searchTerms = array_filter($request->all());
+        $searchTerms = array_filter($request->except('page'));
         $results = [
             'users' => $this->modelUser->fetchAllUsers($searchTerms),
             'user_role_types' => $this->modelUserRoleType->fetchAllUserRoleTypeNames()
         ];
-        $searchMessage = 'Search results (';
+        $searchMessage = __('admin.general.search_results_label') . ' (';
+        $keyNames = [
+            'user_role_type_id' => 'user_role_type'
+        ];
         foreach ($searchTerms as $key => $value) {
-            // if ($key === 'user_role_type_id')
-            // {
-            //     if ($value === '1')
-            //     {
-            //         $value = 'yes';
-            //     }
-            //     else
-            //     {
-            //         $value = 'no';
-            //     }
-            // }
+            if (array_key_exists($key, $keyNames)) {
+                $key = $keyNames[$key];
+                if ($key === 'user_role_type') {
+                    $value = $results['user_role_types']->firstWhere('id', $value)?->toArray()['user_role_name'];
+                }
+            }
             $searchMessage .= "$key: $value, ";
         }
-        $searchMessage = rtrim($searchMessage, ', ') . '):';
+        $searchMessage = rtrim($searchMessage, ', ') . ')';
         $displayAllRecords = $results ?: $errorMessage;
 
         return view('users', compact('displayAllRecords', 'searchTerms', 'searchMessage'));
@@ -65,8 +63,8 @@ class UsersController extends Controller
      */
     public function update(Request $request, int $id)
     {
-        $successMessage = __('users_and_roles.success_message');
-        $errorMessage = __('users_and_roles.error_message_update');
+        $successMessage = __('admin.general.success_message');
+        $errorMessage = __('admin.general.error_message_update');
 
         $request->validate([
             'user_role_type_id' => 'required',

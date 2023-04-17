@@ -3,7 +3,7 @@
 @section('content')
     <div class="admin users">
         @include('components.generic.page-title', [
-            'title' => __('users_and_roles.users.page_title')
+            'title' => __('admin.users.page_title')
         ])
 
         <div class="menu">
@@ -19,39 +19,39 @@
                         {{ $displayAllRecords['users'] }}
                     </div>
                 @else
-                @if (Auth::user()->user_role_type_id !== 5)
+                @if (Auth::user()->user_role_type_id !== 5 && count($displayAllRecords['users']) !== 0)
                 @include('components.filter-record', [
                     'filter' => [
-                        'button_label' => __('Filter table'),
+                        'button_label' => __('admin.general.filter_button_label'),
                         'action_route' => route('users.index'),
                         'settings' => [
                             [
                                 'id' => 1,
-                                'label' => __('users_and_roles.users.column_id'),
+                                'label' => __('admin.general.id_column_label'),
                                 'filter_id' => 'id',
                                 'component_type' => 'input'
                             ],
                             [
                                 'id' => 2,
-                                'label' => __('users_and_roles.users.column_full_name'),
+                                'label' => __('admin.users.full_name_column_label'),
                                 'filter_id' => 'full_name',
                                 'component_type' => 'input'
                             ],
                             [
                                 'id' => 3,
-                                'label' => __('Email'),
+                                'label' => __('admin.users.email_column_label'),
                                 'filter_id' => 'email',
                                 'component_type' => 'input'
                             ],
                             [
                                 'id' => 4,
-                                'label' => __('Nickname'),
+                                'label' => __('admin.users.nickname_column_label'),
                                 'filter_id' => 'nickname',
                                 'component_type' => 'input'
                             ],
                             [
                                 'id' => 5,
-                                'label' => __('users_and_roles.users.column_role'),
+                                'label' => __('admin.users.column_role'),
                                 'component_type' => 'select',
                                 'filter_id' => 'user_role_type_id',
                                 'options' => $displayAllRecords['user_role_types']
@@ -66,11 +66,11 @@
                 <table class="table table-bordered">
                     <thead>
                         <tr>
-                            <th scope="col">{{ __('users_and_roles.users.column_id') }}</th>
-                            <th scope="col">{{ __('users_and_roles.users.column_full_name') }}</th>
-                            <th scope="col">{{ __('users_and_roles.users.column_email_and_nickname') }}</th>
-                            <th scope="col">{{ __('users_and_roles.users.column_role') }}</th>
-                            <th scope="col">{{ __('users_and_roles.users.column_actions') }}</th>
+                            <th scope="col">{{ __('admin.general.id_column_label') }}</th>
+                            <th scope="col">{{ __('admin.users.full_name_column_label') }}</th>
+                            <th scope="col">{{ __('admin.users.email_and_nickname_column_label') }}</th>
+                            <th scope="col">{{ __('admin.users.role_column_label') }}</th>
+                            <th scope="col">{{ __('admin.general.actions_column_label') }}</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -83,13 +83,13 @@
                                 {{ $data->full_name }}
                             </td>
                             <td>
-                                <span>{{ __('users_and_roles.users.show_label_email') }}:</span>
+                                <span>{{ __('admin.users.email_column_label') }}:</span>
                                 <a href="mailto:{{ $data->email }}">
                                     {{ $data->email }}
                                 </a>
                                 <br>
                                 <span>
-                                    {{ __('users_and_roles.users.show_label_nickname') }}:
+                                    {{ __('admin.users.nickname_column_label') }}:
                                 </span>
                                 {{ $data->nickname }}
                             </td>
@@ -122,7 +122,7 @@
                                     <div class="modal-content">
                                         <div class="modal-header">
                                             <h1 class="modal-title fs-5" id="showRecordModalLabel{{ $key }}">
-                                                {{ __('users_and_roles.user_roles.show_user_role_title') }}
+                                                {{ __('admin.general.modal_show_details_title') }}
                                             </h1>
                                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                         </div>
@@ -132,43 +132,43 @@
                                                     'settings' => [
                                                         [
                                                             'id' => 1,
-                                                            'label' => __('users_and_roles.users.show_label_id'),
+                                                            'label' => __('admin.general.id_column_label'),
                                                             'value' => $data->id,
                                                             'label_id' => 'id'
                                                         ],
                                                         [
                                                             'id' => 2,
-                                                            'label' => __('users_and_roles.users.show_label_full_name'),
+                                                            'label' => __('admin.users.full_name_column_label'),
                                                             'value' => $data->full_name,
                                                             'label_id' => 'full_name'
                                                         ],
                                                         [
                                                             'id' => 3,
-                                                            'label' => __('users_and_roles.users.show_label_first_name'),
+                                                            'label' => __('admin.users.first_name_column_label'),
                                                             'value' => $data->first_name,
                                                             'label_id' => 'first_name'
                                                         ],
                                                         [
                                                             'id' => 4,
-                                                            'label' => __('users_and_roles.users.show_label_last_name'),
+                                                            'label' => __('admin.users.last_name_column_label'),
                                                             'value' => $data->last_name,
                                                             'label_id' => 'last_name'
                                                         ],
                                                         [
                                                             'id' => 5,
-                                                            'label' => __('users_and_roles.users.show_label_nickname'),
-                                                            'value' => $data->nickname . ' (' . __('users_and_roles.users.show_label_role') . ': ' . $data->user_role_type->user_role_name . ')',
+                                                            'label' => __('admin.users.nickname_column_label'),
+                                                            'value' => $data->nickname . ' (' . __('admin.users.user_role_label') . ': ' . $data->user_role_type->user_role_name . ')',
                                                             'label_id' => 'nickname'
                                                         ],
                                                         [
                                                             'id' => 6,
-                                                            'label' => __('users_and_roles.users.show_label_email'),
+                                                            'label' => __('admin.users.email_column_label'),
                                                             'value' => $data->email,
                                                             'label_id' => 'email'
                                                         ],
                                                         [
                                                             'id' => 7,
-                                                            'label' => __('users_and_roles.users.show_label_email_verified_at'),
+                                                            'label' => __('admin.users.email_verified_at_column_label'),
                                                             'value' => $data->email_verified_at,
                                                             'label_id' => 'email_verified_at'
                                                         ],
@@ -177,7 +177,9 @@
                                             ])
                                         </div>
                                         <div class="modal-footer">
-                                            <button type="button" class="btn btn-primary" data-bs-dismiss="modal">{{ __('Close') }}</button>
+                                            <button type="button" class="btn btn-primary" data-bs-dismiss="modal">
+                                                {{ __('admin.general.close_button_label') }}
+                                            </button>
                                         </div>
                                     </div>
                                 </div>
@@ -188,7 +190,9 @@
                                 <div class="modal-dialog">
                                     <div class="modal-content">
                                         <div class="modal-header">
-                                            <h1 class="modal-title fs-5" id="editRecordModalLabel{{ $key }}">{{ __('users_and_roles.users.update_user_role_title') }}</h1>
+                                            <h1 class="modal-title fs-5" id="editRecordModalLabel{{ $key }}">
+                                                {{ __('admin.general.modal_update_details_title') }}
+                                            </h1>
                                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                         </div>
                                         <div class="modal-body">
@@ -197,43 +201,43 @@
                                                     'settings' => [
                                                         [
                                                             'id' => 1,
-                                                            'label' => __('users_and_roles.users.show_label_id'),
+                                                            'label' => __('admin.general.id_column_label'),
                                                             'value' => $data->id,
                                                             'label_id' => 'id'
                                                         ],
                                                         [
                                                             'id' => 2,
-                                                            'label' => __('users_and_roles.users.show_label_full_name'),
+                                                            'label' => __('admin.users.full_name_column_label'),
                                                             'value' => $data->full_name,
                                                             'label_id' => 'full_name'
                                                         ],
                                                         [
                                                             'id' => 3,
-                                                            'label' => __('users_and_roles.users.show_label_first_name'),
+                                                            'label' => __('admin.users.first_name_column_label'),
                                                             'value' => $data->first_name,
                                                             'label_id' => 'first_name'
                                                         ],
                                                         [
                                                             'id' => 4,
-                                                            'label' => __('users_and_roles.users.show_label_last_name'),
+                                                            'label' => __('admin.users.last_name_column_label'),
                                                             'value' => $data->last_name,
                                                             'label_id' => 'last_name'
                                                         ],
                                                         [
                                                             'id' => 5,
-                                                            'label' => __('users_and_roles.users.show_label_nickname'),
-                                                            'value' => $data->nickname . ' (' . __('users_and_roles.users.show_label_role') . ': ' . $data->user_role_type->user_role_name . ')',
+                                                            'label' => __('admin.users.nickname_column_label'),
+                                                            'value' => $data->nickname . ' (' . __('admin.users.user_role_label') . ': ' . $data->user_role_type->user_role_name . ')',
                                                             'label_id' => 'nickname'
                                                         ],
                                                         [
                                                             'id' => 6,
-                                                            'label' => __('users_and_roles.users.show_label_email'),
+                                                            'label' => __('admin.users.email_column_label'),
                                                             'value' => $data->email,
                                                             'label_id' => 'email'
                                                         ],
                                                         [
                                                             'id' => 7,
-                                                            'label' => __('users_and_roles.users.show_label_email_verified_at'),
+                                                            'label' => __('admin.users.email_verified_at_column_label'),
                                                             'value' => $data->email_verified_at,
                                                             'label_id' => 'email_verified_at'
                                                         ],
@@ -251,7 +255,7 @@
                                                 @include('components.generic.select', [
                                                     'input' => [
                                                         'id' => 'user_role_type_id',
-                                                        'label' => __('users_and_roles.users.show_label_user_role'),
+                                                        'label' => __('admin.users.choose_user_role_type_label'),
                                                         'options' => $displayAllRecords['user_role_types']
                                                     ]
                                                 ])
@@ -259,7 +263,7 @@
                                                 <div class="modal-actions">
                                                     <div class="d-flex justify-content-center">
                                                         <button type="submit" class="btn btn-primary">
-                                                            {{ __('users_and_roles.users.update_button') }}
+                                                            {{ __('admin.general.update_button_label') }}
                                                         </button>
                                                     </div>
                                                 </div>

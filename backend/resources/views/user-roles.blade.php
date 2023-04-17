@@ -3,7 +3,7 @@
 @section('content')
     <div class="admin user-roles">
         @include('components.generic.page-title', [
-            'title' => __('users_and_roles.user_roles.page_title')
+            'title' => __('admin.user_roles.page_title')
         ])
 
         <div class="menu">
@@ -19,30 +19,30 @@
                         {{ $displayAllRecords }}
                     </div>
                 @else
-                @if (Auth::user()->user_role_type_id === 1)
+                @if (Auth::user()->user_role_type_id === 1 && count($displayAllRecords) !== 0)
                 @include('components.filter-record', [
                     'filter' => [
-                        'button_label' => __('Filter table'),
+                        'button_label' => __('admin.general.filter_button_label'),
                         'action_route' => route('user-roles.index'),
                         'settings' => [
                             [
                                 'id' => 1,
-                                'label' => __('users_and_roles.user_roles.column_id'),
+                                'label' => __('admin.general.id_column_label'),
                                 'filter_id' => 'id',
                                 'component_type' => 'input'
                             ],
                             [
                                 'id' => 2,
-                                'label' => __('User role name'),
+                                'label' => __('admin.user_roles.user_role_name_column_label'),
                                 'filter_id' => 'user_role_name',
                                 'component_type' => 'input'
                             ],
                             [
                                 'id' => 3,
-                                'label' => __('users_and_roles.user_roles.column_is_active'),
+                                'label' => __('admin.general.is_active_column_label'),
                                 'component_type' => 'select',
                                 'filter_id' => 'is_active',
-                                'options' => [ 'No', 'Yes' ]
+                                'options' => [ __('admin.general.no_label'), __('admin.general.yes_label') ]
                             ]
                         ]
                     ]
@@ -54,10 +54,10 @@
                 <table class="table table-bordered">
                     <thead>
                         <tr>
-                            <th scope="col">{{ __('users_and_roles.user_roles.column_id') }}</th>
-                            <th scope="col">{{ __('users_and_roles.user_roles.column_name_and_description') }}</th>
-                            <th scope="col">{{ __('users_and_roles.user_roles.column_is_active') }}</th>
-                            <th scope="col">{{ __('users_and_roles.user_roles.column_actions') }}</th>
+                            <th scope="col">{{ __('admin.general.id_column_label') }}</th>
+                            <th scope="col">{{ __('admin.user_roles.name_and_description_column_label') }}</th>
+                            <th scope="col">{{ __('admin.general.is_active_column_label') }}</th>
+                            <th scope="col">{{ __('admin.general.actions_column_label') }}</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -68,12 +68,12 @@
                             </th>
                             <td>
                                 <span>
-                                    {{ __('users_and_roles.user_roles.show_label_user_role_name') }}:
+                                    {{ __('admin.user_roles.user_role_name_column_label') }}:
                                 </span>
                                 {{ $data->user_role_name }}
                                 <br>
                                 <span>
-                                    {{ __('users_and_roles.user_roles.show_label_user_role_description') }}:
+                                    {{ __('admin.user_roles.user_role_description_column_label') }}:
                                 </span>
                                 @if (strlen($data->user_role_description) >= 100)
                                     {{ substr($data->user_role_description, 0, 100) . '...' }}
@@ -83,9 +83,9 @@
                             </td>
                             <td>
                                 @if ($data->is_active === 1)
-                                    {{ __('users_and_roles.user_roles.show_label_is_active.yes') }}
+                                    {{ __('admin.general.yes_label') }}
                                 @else
-                                    {{ __('users_and_roles.user_roles.show_label_is_active.no') }}
+                                    {{ __('admin.general.no_label') }}
                                 @endif
                             </td>
                             <td>
@@ -113,7 +113,7 @@
                                     <div class="modal-content">
                                         <div class="modal-header">
                                             <h1 class="modal-title fs-5" id="showRecordModalLabel{{ $key }}">
-                                                {{ __('users_and_roles.user_roles.show_user_role_title') }}
+                                                {{ __('admin.general.modal_show_details_title') }}
                                             </h1>
                                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                         </div>
@@ -123,37 +123,37 @@
                                                     'settings' => [
                                                         [
                                                             'id' => 1,
-                                                            'label' => __('users_and_roles.user_roles.show_label_id'),
+                                                            'label' => __('admin.general.id_column_label'),
                                                             'value' => $data->id,
                                                             'label_id' => 'id'
                                                         ],
                                                         [
                                                             'id' => 2,
-                                                            'label' => __('users_and_roles.user_roles.show_label_user_role_name'),
+                                                            'label' => __('admin.user_roles.user_role_name_column_label'),
                                                             'value' => $data->user_role_name,
                                                             'label_id' => 'user_role_name'
                                                         ],
                                                         [
                                                             'id' => 3,
-                                                            'label' => __('users_and_roles.user_roles.show_label_user_role_description'),
+                                                            'label' => __('admin.user_roles.user_role_description_column_label'),
                                                             'value' => $data->user_role_description,
                                                             'label_id' => 'user_role_description'
                                                         ],
                                                         [
                                                             'id' => 4,
-                                                            'label' => __('users_and_roles.user_roles.show_label_is_active.title'),
+                                                            'label' => __('admin.general.is_active_column_label'),
                                                             'value' => $data->is_active,
                                                             'label_id' => 'is_active'
                                                         ],
                                                         [
                                                             'id' => 5,
-                                                            'label' => __('users_and_roles.user_roles.show_label_created_at'),
+                                                            'label' => __('admin.general.created_at_label'),
                                                             'value' => $data->created_at,
                                                             'label_id' => 'created_at'
                                                         ],
                                                         [
                                                             'id' => 6,
-                                                            'label' => __('users_and_roles.user_roles.show_label_updated_at'),
+                                                            'label' => __('admin.general.updated_at_label'),
                                                             'value' => $data->updated_at,
                                                             'label_id' => 'updated_at'
                                                         ],
@@ -162,7 +162,9 @@
                                             ])
                                         </div>
                                         <div class="modal-footer">
-                                            <button type="button" class="btn btn-primary" data-bs-dismiss="modal">{{ __('Close') }}</button>
+                                            <button type="button" class="btn btn-primary" data-bs-dismiss="modal">
+                                                {{ __('admin.general.close_button_label') }}
+                                            </button>
                                         </div>
                                     </div>
                                 </div>
@@ -173,7 +175,9 @@
                                 <div class="modal-dialog">
                                     <div class="modal-content">
                                         <div class="modal-header">
-                                            <h1 class="modal-title fs-5" id="editRecordModalLabel{{ $key }}">{{ __('users_and_roles.user_roles.update_user_role_title') }}</h1>
+                                            <h1 class="modal-title fs-5" id="editRecordModalLabel{{ $key }}">
+                                                {{ __('admin.general.modal_update_details_title') }}
+                                            </h1>
                                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                         </div>
                                         <div class="modal-body">
@@ -182,37 +186,37 @@
                                                     'settings' => [
                                                         [
                                                             'id' => 1,
-                                                            'label' => __('users_and_roles.user_roles.show_label_id'),
+                                                            'label' => __('admin.general.id_column_label'),
                                                             'value' => $data->id,
                                                             'label_id' => 'id'
                                                         ],
                                                         [
                                                             'id' => 2,
-                                                            'label' => __('users_and_roles.user_roles.show_label_user_role_name'),
+                                                            'label' => __('admin.user_roles.user_role_name_column_label'),
                                                             'value' => $data->user_role_name,
                                                             'label_id' => 'user_role_name'
                                                         ],
                                                         [
                                                             'id' => 3,
-                                                            'label' => __('users_and_roles.user_roles.show_label_user_role_description'),
+                                                            'label' => __('admin.user_roles.user_role_description_column_label'),
                                                             'value' => $data->user_role_description,
                                                             'label_id' => 'user_role_description'
                                                         ],
                                                         [
                                                             'id' => 4,
-                                                            'label' => __('users_and_roles.user_roles.show_label_is_active.title'),
+                                                            'label' => __('admin.general.is_active_column_label'),
                                                             'value' => $data->is_active,
                                                             'label_id' => 'is_active'
                                                         ],
                                                         [
                                                             'id' => 5,
-                                                            'label' => __('users_and_roles.user_roles.show_label_created_at'),
+                                                            'label' => __('admin.general.created_at_label'),
                                                             'value' => $data->created_at,
                                                             'label_id' => 'created_at'
                                                         ],
                                                         [
                                                             'id' => 6,
-                                                            'label' => __('users_and_roles.user_roles.show_label_updated_at'),
+                                                            'label' => __('admin.general.updated_at_label'),
                                                             'value' => $data->updated_at,
                                                             'label_id' => 'updated_at'
                                                         ],
@@ -229,7 +233,7 @@
                                                 <!-- User role name -->
                                                 @include('components.generic.input', [
                                                     'input' => [
-                                                        'label' => __('users_and_roles.user_roles.show_label_user_role_name'),
+                                                        'label' => __('admin.user_roles.user_role_name_column_label'),
                                                         'id' => 'user_role_name',
                                                         'type' => 'text',
                                                         'value' => $data->user_role_name,
@@ -242,7 +246,7 @@
                                                 @include('components.generic.textarea', [
                                                     'input' => [
                                                         'id' => 'user_role_description',
-                                                        'label' => __('users_and_roles.user_roles.show_label_user_role_description'),
+                                                        'label' => __('admin.user_roles.user_role_description_column_label'),
                                                         'value' => $data->user_role_description,
                                                     ]
                                                 ])
@@ -251,15 +255,15 @@
                                                 @include('components.generic.select', [
                                                     'input' => [
                                                         'id' => 'is_active',
-                                                        'label' => __('users_and_roles.user_roles.show_label_is_active.title'),
-                                                        'options' => [ 'No', 'Yes' ]
+                                                        'label' => __('admin.general.is_active_column_label'),
+                                                        'options' => [ __('admin.general.no_label'), __('admin.general.yes_label') ]
                                                     ]
                                                 ])
 
                                                 <div class="modal-actions">
                                                     <div class="d-flex justify-content-center">
                                                         <button type="submit" class="btn btn-primary">
-                                                            {{ __('users_and_roles.users.update_button') }}
+                                                            {{ __('admin.general.update_button_label') }}
                                                         </button>
                                                     </div>
                                                 </div>

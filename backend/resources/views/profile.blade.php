@@ -3,7 +3,7 @@
 @section('content')
     <div class="admin profile">
         @include('components.generic.page-title', [
-            'title' => __('profile.page_title')
+            'title' => __('admin.profile.page_title')
         ])
 
         <div class="menu">
@@ -27,14 +27,14 @@
                             <div>
                                 <div class="row">
                                     <p class="lead">
-                                        {{ __('profile.contact_details') }}
+                                        {{ __('admin.profile.contact_details') }}
                                     </p>
                                 </div>
 
                                 <!-- Full name -->
                                 @include('components.generic.input', [
                                     'input' => [
-                                        'label' => __('profile.full_name_label'),
+                                        'label' => __('admin.profile.full_name_label'),
                                         'id' => 'full_name',
                                         'type' => 'text',
                                         'value' => $displayUserProfile['full_name'],
@@ -46,7 +46,7 @@
                                 <!-- First name -->
                                 @include('components.generic.input', [
                                     'input' => [
-                                        'label' => __('profile.first_name_label'),
+                                        'label' => __('admin.profile.first_name_label'),
                                         'id' => 'first_name',
                                         'type' => 'text',
                                         'value' => $displayUserProfile['first_name'],
@@ -58,7 +58,7 @@
                                 <!-- Last name -->
                                 @include('components.generic.input', [
                                     'input' => [
-                                        'label' => __('profile.last_name_label'),
+                                        'label' => __('admin.profile.last_name_label'),
                                         'id' => 'last_name',
                                         'type' => 'text',
                                         'value' => $displayUserProfile['last_name'],
@@ -70,11 +70,11 @@
                                 <!-- Profile picture -->
                                 @include('components.generic.input', [
                                     'input' => [
-                                        'label' => __('profile.profile_picture_label'),
+                                        'label' => __('admin.profile.profile_picture_label'),
                                         'id' => 'profile_image',
                                         'type' => 'file',
                                         'value' => $displayUserProfile['profile_image'],
-                                        'view_image_label' => __('profile.view_image_label'),
+                                        'view_image_label' => __('admin.profile.view_image_label'),
                                         'autocomplete' => 'profile_image',
                                         'disabled' => false
                                     ]
@@ -85,14 +85,14 @@
                             <div>
                                 <div class="row">
                                     <p class="lead">
-                                        {{ __('profile.email_details') }}
+                                        {{ __('admin.profile.email_details') }}
                                     </p>
                                 </div>
 
                                 <!-- Nickname -->
                                 @include('components.generic.input', [
                                     'input' => [
-                                        'label' => __('profile.nickname_label'),
+                                        'label' => __('admin.profile.nickname_label'),
                                         'id' => 'nickname',
                                         'type' => 'text',
                                         'value' => $displayUserProfile['nickname'],
@@ -104,7 +104,7 @@
                                 <!-- Email address -->
                                 @include('components.generic.input', [
                                     'input' => [
-                                        'label' => __('profile.email_address_label'),
+                                        'label' => __('admin.profile.email_address_label'),
                                         'id' => 'email',
                                         'type' => 'email',
                                         'value' => $displayUserProfile['email'],
@@ -118,14 +118,14 @@
                             <div>
                                 <div class="row">
                                     <p class="lead">
-                                        {{ __('profile.password_details') }}
+                                        {{ __('admin.profile.password_details') }}
                                     </p>
                                 </div>
 
                                 <!-- Password -->
                                 @include('components.generic.input', [
                                     'input' => [
-                                        'label' => __('profile.password_label'),
+                                        'label' => __('admin.profile.password_label'),
                                         'id' => 'password',
                                         'type' => 'password',
                                         'autocomplete' => 'new-password',
@@ -136,7 +136,7 @@
                                 <!-- Password confirmation -->
                                 @include('components.generic.input', [
                                     'input' => [
-                                        'label' => __('profile.password_confirmation_label'),
+                                        'label' => __('admin.profile.password_confirmation_label'),
                                         'id' => 'password_confirmation',
                                         'type' => 'password',
                                         'autocomplete' => 'new-password',
@@ -147,7 +147,7 @@
 
                             <div class="card-actions">
                                 <button type="submit" class="btn btn-primary">
-                                    {{ __('profile.update_button') }}
+                                    {{ __('admin.general.update_button_label') }}
                                 </button>
                             </div>
                         </form>

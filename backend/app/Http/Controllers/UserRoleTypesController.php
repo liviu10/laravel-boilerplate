@@ -26,27 +26,27 @@ class UserRoleTypesController extends Controller
      */
     public function index(Request $request)
     {
-        $errorMessage = __('users_and_roles.error_message_fetch');
+        $errorMessage = __('admin.general.error_message_fetch');
 
-        $searchTerms = array_filter($request->all());
+        $searchTerms = array_filter($request->except('page'));
         $results = $this->modelUserRoleType->fetchAllUserRoleTypes($searchTerms);
 
-        $searchMessage = 'Search results (';
+        $searchMessage = __('admin.general.search_results_label') . ' (';
         foreach ($searchTerms as $key => $value) {
             if ($key === 'is_active')
             {
                 if ($value === '1')
                 {
-                    $value = 'yes';
+                    $value = __('admin.general.yes_label');
                 }
                 else
                 {
-                    $value = 'no';
+                    $value = __('admin.general.no_label');
                 }
             }
             $searchMessage .= "$key: $value, ";
         }
-        $searchMessage = rtrim($searchMessage, ', ') . '):';
+        $searchMessage = rtrim($searchMessage, ', ') . ')';
         $displayAllRecords = $results ?: $errorMessage;
 
         return view('user-roles', compact('displayAllRecords', 'searchTerms', 'searchMessage'));
@@ -93,8 +93,8 @@ class UserRoleTypesController extends Controller
      */
     public function update(Request $request, int $id)
     {
-        $successMessage = __('users_and_roles.success_message');
-        $errorMessage = __('users_and_roles.error_message_update');
+        $successMessage = __('admin.general.success_message');
+        $errorMessage = __('admin.general.error_message_update');
 
         $request->validate([
             'user_role_name'        => 'sometimes|string|min:3|max:100',
