@@ -2,13 +2,17 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\ContactResponseMail;
 use App\Models\Contact;
+use App\Models\ContactResponse;
 use App\Models\ContactSubject;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
 
 class ContactController extends Controller
 {
     protected $modelContact;
+    protected $modelContactResponse;
     protected $modelContactSubject;
 
     /**
@@ -19,6 +23,7 @@ class ContactController extends Controller
     {
         $this->middleware('auth');
         $this->modelContact = new Contact();
+        $this->modelContactResponse = new ContactResponse();
         $this->modelContactSubject = new ContactSubject();
     }
 
@@ -104,5 +109,40 @@ class ContactController extends Controller
         $result = $this->modelContact->deleteContactMessage($id);
 
         return redirect()->route('contact.index')->with('success', $result ? $successMessage : $errorMessage);
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     */
+    public function replyToMessage(Request $request)
+    {
+        $successMessage = __('admin.general.success_message_reply');
+        $errorMessage = __('admin.general.error_message_reply');
+
+        $validateRequest = [
+            'message' => 'required|string|min:10',
+        ];
+        $saveRecords = array_filter($request->all());
+        $request->validate($validateRequest);
+
+        $result = $this->modelContactResponse->saveContactResponse($saveRecords);
+
+        if ($result)
+        {
+            $contactMessageDetail = $this->modelContact->fetchSingleContactMessage($request->get('id'));
+            $contactMailDetails = [
+                'email_from' => config('app.email'),
+                'email_to' => $contactMessageDetail->toArray()[0]['email'],
+                'subject_message' => $contactMessageDetail->toArray()[0]['contact_subject']['title'],
+                'full_name' => $contactMessageDetail->toArray()[0]['full_name'],
+                'contact_message' => $contactMessageDetail->toArray()[0]['message'],
+                'message_date' => $contactMessageDetail->toArray()[0]['created_at'],
+                'reply_message' => $request->get('message')
+            ];
+
+            Mail::to($contactMailDetails['email_to'])->send(new ContactResponseMail($contactMailDetails));
+
+            return redirect()->route('contact.index')->with('success', $result ? $successMessage : $errorMessage);
+        }
     }
 }

@@ -167,6 +167,53 @@ class Contact extends Model
     }
 
     /**
+     * Get all user role types information.
+     * @return \Illuminate\Database\Eloquent\Collection|array|boolean
+     * Returns a collection of user role types with their associated information.
+     * If an error occurs during retrieval, an boolean will be returned.
+     * @throws \Exception|\Illuminate\Database\QueryException
+     * Throws an exception if an error occurs during the retrieval.
+     */
+    public function fetchSingleContactMessage($contactId)
+    {
+        try
+        {
+            $query = $this->select(
+                'id',
+                'full_name',
+                'email',
+                'phone',
+                'contact_subject_id',
+                'message',
+                'privacy_policy',
+                'created_at',
+                'updated_at'
+            )
+            ->where('id', $contactId)
+            ->with([
+                'contact_subject' => function ($query) {
+                    $query->select('id', 'title');
+                },
+                'contact_responses' => function ($query) {
+                    $query->select('id', 'message');
+                }
+            ]);
+
+            return $query->get();
+        }
+        catch (\Exception $exception)
+        {
+            $this->logError($exception);
+            return false;
+        }
+        catch (\Illuminate\Database\QueryException $exception)
+        {
+            $this->logQueryError($exception);
+            return false;
+        }
+    }
+
+    /**
      * Save the contact message into the database.
      * @param array $payload An associative array of values to create a new contact message.
      * @return \App\Models\Contact|bool Returns a contact message object if the creation was successful,

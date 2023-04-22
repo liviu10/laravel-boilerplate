@@ -45,6 +45,8 @@ return [
         'privacy_policy_column_label' => 'Privacy policy',
         'error_message_fetch' => 'There was an error when fetching the records! Please try again and if the problem persist contact the administrator!',
         'success_message' => 'The record was successfully updated!',
+        'success_message_reply' => 'You have successfully reply to this contact message!',
+        'error_message_reply' => 'There was an error when sending this message! Please try again and if the problem persist contact the administrator!',
         'error_message_update' => 'There was an error when updating the record! Please try again and if the problem persist contact the administrator!',
         'error_message_delete' => 'There was an error when deleting the record! Please try again and if the problem persist contact the administrator!',
         'search_results_label' => 'Search results',

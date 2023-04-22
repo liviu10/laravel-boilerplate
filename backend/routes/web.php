@@ -5,7 +5,6 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\UserRoleTypesController;
 use App\Http\Controllers\UsersController;
 use App\Http\Controllers\ContactController;
-use App\Http\Controllers\SettingsController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -52,7 +51,7 @@ use Illuminate\Support\Facades\Route;
         Route::group([ 'prefix' => '/' ], function () {
             Route::get('/contact/{id?}/{full_name?}/{email?}/{phone?}/{contact_subject_id?}/{privacy_policy?}', [ContactController::class, 'index'])->name('contact.index');
             Route::post('/contact', [ContactController::class, 'store'])->name('contact.store');
-            Route::put('/contact/{contact}', [ContactController::class, 'update'])->name('contact.update');
             Route::delete('/contact/{contact}', [ContactController::class, 'destroy'])->name('contact.destroy');
+            Route::post('/contact/reply', [ContactController::class, 'replyToMessage'])->name('contact.reply-to-message');
         });
     });

@@ -47,7 +47,7 @@ class ContactResponse extends Model
      * The name of the foreign key column in the associated database table.
      * @var string
      */
-    protected $foreignKey = 'contact_response_id';
+    protected $foreignKey = 'contact_id';
 
     /**
      * The data type of the foreign key column in the associated database table.
@@ -61,7 +61,7 @@ class ContactResponse extends Model
      */
     protected $fillable = [
         'message',
-        'contact_response_id'
+        'contact_id'
     ];
 
     /**
@@ -91,12 +91,13 @@ class ContactResponse extends Model
      * @throws \Exception|\Illuminate\Database\QueryException
      * Throws an exception if an error occurs during registration.
      */
-    public function saveContactResponses(array $payload)
+    public function saveContactResponse(array $payload)
     {
         try
         {
             $contactResponses = $this->create([
                 'message' => $payload['message'],
+                'contact_id' => $payload['id']
             ]);
             return $contactResponses;
         }

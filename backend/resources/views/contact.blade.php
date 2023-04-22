@@ -120,10 +120,6 @@
                             </td>
                             <td>
                                 <div>
-                                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#showRecordModal{{ $key }}">
-                                        <i class="fas fa-info"></i>
-                                    </button>
-
                                     <button type="button" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#editRecordModal{{ $key }}">
                                         <i class="fas fa-edit"></i>
                                     </button>
@@ -137,89 +133,6 @@
                                     </form>
                                 </div>
                             </td>
-                            <!-- Show record modal -->
-                            <div
-                                class="modal fade"
-                                id="showRecordModal{{ $key }}"
-                                tabindex="-1"
-                                aria-labelledby="showRecordModalLabel{{ $key }}"
-                                aria-hidden="true"
-                                data-bs-backdrop="static"
-                            >
-                                <div class="modal-dialog">
-                                    <div class="modal-content">
-                                        <div class="modal-header">
-                                            <h1 class="modal-title fs-5" id="showRecordModalLabel{{ $key }}">
-                                                {{ __('admin.general.modal_show_details_title') }}
-                                            </h1>
-                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                        </div>
-                                        <div class="modal-body">
-                                            @include('components.show-record-modal', [
-                                                'modal' => [
-                                                    'key' => $key,
-                                                    'title' => __('admin.contact.show_user_title'),
-                                                    'settings' => [
-                                                        [
-                                                            'id' => 1,
-                                                            'label' => __('admin.general.id_column_label'),
-                                                            'value' => $data->id,
-                                                            'label_id' => 'id'
-                                                        ],
-                                                        [
-                                                            'id' => 2,
-                                                            'label' => __('admin.contact.full_name_column_label'),
-                                                            'value' => $data->full_name,
-                                                            'label_id' => 'full_name'
-                                                        ],
-                                                        [
-                                                            'id' => 3,
-                                                            'label' => __('admin.contact.email_column_label'),
-                                                            'value' => $data->email,
-                                                            'label_id' => 'email'
-                                                        ],
-                                                        [
-                                                            'id' => 4,
-                                                            'label' => __('admin.contact.phone_number_column_label'),
-                                                            'value' => $data->phone,
-                                                            'label_id' => 'phone'
-                                                        ],
-                                                        [
-                                                            'id' => 5,
-                                                            'label' => __('admin.contact.message_column_label'),
-                                                            'value' => $data->message,
-                                                            'label_id' => 'message'
-                                                        ],
-                                                        [
-                                                            'id' => 6,
-                                                            'label' => __('admin.general.privacy_policy_column_label'),
-                                                            'value' => $data->privacy_policy,
-                                                            'label_id' => 'privacy_policy'
-                                                        ],
-                                                        [
-                                                            'id' => 7,
-                                                            'label' => __('admin.general.created_at_label'),
-                                                            'value' => $data->created_at,
-                                                            'label_id' => 'created_at'
-                                                        ],
-                                                        [
-                                                            'id' => 8,
-                                                            'label' => __('admin.general.updated_at_label'),
-                                                            'value' => $data->updated_at,
-                                                            'label_id' => 'updated_at'
-                                                        ],
-                                                    ]
-                                                ]
-                                            ])
-                                        </div>
-                                        <div class="modal-footer">
-                                            <button type="button" class="btn btn-primary" data-bs-dismiss="modal">
-                                                {{ __('admin.general.close_button_label') }}
-                                            </button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
                             <!-- Edit record modal -->
                             <div class="modal fade" id="editRecordModal{{ $key }}" tabindex="-1" aria-labelledby="editRecordModalLabel{{ $key }}" aria-hidden="true" data-bs-backdrop="static">
                                 <div class="modal-dialog">
@@ -288,9 +201,8 @@
                                                 ]
                                             ])
                                             <hr>
-                                            <form method="POST" action="{{ route('contact.update', $data->id) }}">
+                                            <form method="POST" action="{{ route('contact.reply-to-message') }}">
                                                 @csrf
-                                                @method('PUT')
 
                                                 <input type="hidden" name="id" value="{{ $data->id }}">
 

@@ -45,6 +45,8 @@ return [
         'privacy_policy_column_label' => 'Politica de confidentialitate',
         'error_message_fetch' => 'A aparut o eroare la preluarea inregistrarilor! Va rugam sa incercati din nou si daca problema persista contactati administratorul!',
         'success_message' => 'Inregistrarea a fost actualizata cu succes!',
+        'success_message_reply' => 'Ai raspuns cu succes la acest mesaj de contact!',
+        'error_message_reply' => 'A aparut o eroare la trimiterea acestui mesaj! Va rugam sa incercati din nou si daca problema persista contactati administratorul!',
         'error_message_update' => 'A aparut o eroare la actualizarea inregistrarii! Va rugam sa incercati din nou si daca problema persista contactati administratorul!',
         'error_message_delete' => 'A aparut o eroare la stergerea inregistrarii! Va rugam sa incercati din nou si daca problema persista contactati administratorul!',
         'search_results_label' => 'Rezultatele cautarii',

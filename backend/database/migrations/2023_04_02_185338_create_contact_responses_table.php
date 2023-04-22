@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('contact_responses', function (Blueprint $table) {
             $table->id()->index('idx_id');
-            $table->string('message');
+            $table->longText('message');
             $table->timestamps();
         });
     }
