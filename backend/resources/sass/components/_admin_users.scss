@@ -1,11 +1,11 @@
 .form-select {
     border-radius: 0;
-    border-color: $border-color;
-    color: $text-color;
+    border-color: $basic-border-color;
+    color: $basic-text-color;
     &:focus, &:focus-visible {
         box-shadow: none;
     }
     &:focus {
-        border-color: $border-color;
+        border-color: $basic-border-color;
     }
 }

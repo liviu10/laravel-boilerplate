@@ -21,7 +21,7 @@
         & h1 {
             margin-bottom: rem-convertor(32px);
             text-align: center;
-            color: $text-color;
+            color: $basic-text-color;
         }
         & .menu {
             margin-bottom: rem-convertor(32px);
@@ -38,10 +38,10 @@
                 }
                 & .card {
                     border-radius: 0;
-                    border-color: $border-color;
+                    border-color: $basic-border-color;
                     padding-top: rem-convertor(8px);
                     padding-bottom: rem-convertor(8px);
-                    color: $text-color;
+                    color: $basic-text-color;
                     &-body {
                         & p, & form {
                             margin-bottom: 0
@@ -51,8 +51,8 @@
                         @include flex-center();
                         & .btn.btn-primary {
                             border-radius: 0;
-                            background-color: $background-color;
-                            border-color: $border-color;
+                            background-color: $basic-background-color;
+                            border-color: $basic-border-color;
                             color: $special-color;
                             font-weight: 700;
                             &:focus-visible {
@@ -73,6 +73,10 @@
             &-filters {
                 & #filterRecords.btn.btn-primary {
                     border-radius: 0;
+                    background-color: $basic-background-color;
+                    border-color: $basic-border-color;
+                    color: $special-color;
+                    font-weight: 700;
                     &:focus-visible {
                         box-shadow: none;
                     }
@@ -80,14 +84,20 @@
                 & .collapse, & .collapsing, & .collapse.show {
                     & .card {
                         border-radius: 0 !important;
-                        border-color: $border-color;
+                        border-color: $basic-border-color;
                         &-actions {
                             & div {
                                 & .btn.btn-warning, & .btn.btn-primary {
                                     border-radius: 0;
+                                    border-color: $basic-border-color;
+                                    color: $basic-text-color;
+                                    font-weight: 700;
                                     &:focus-visible {
                                         box-shadow: none;
                                     }
+                                }
+                                & .btn.btn-primary {
+                                    background-color: $special-bg-color-positive;
                                 }
                             }
                         }
@@ -96,8 +106,8 @@
             }
             & .table {
                 margin-bottom: 0;
-                border-color: $border-color;
-                color: $text-color;
+                border-color: $basic-border-color;
+                color: $basic-text-color;
                 & thead, & tbody {
                     & tr {
                         & th, & td {
@@ -117,10 +127,21 @@
                                 @include flex-center();
                                 & .btn {
                                     border-radius: 0;
+                                    border-color: $basic-border-color;
+                                    color: $basic-text-color;
+                                    font-weight: 700;
                                     width: rem-convertor(30px);
                                     height: rem-convertor(30px);
                                     & .fas.fa-info, & .fas.fa-edit, & .fas.fa-trash {
                                         @include flex-center();
+                                    }
+                                }
+                                & .btn.btn-primary {
+                                    background-color: $special-bg-color-positive;
+                                }
+                                & form {
+                                    & .btn.btn-danger {
+                                        background-color: $special-bg-color-danger;
                                     }
                                 }
                             }
@@ -147,12 +168,12 @@
                                 }
                                 & .form-control, & .form-check-input {
                                     border-radius: 0;
-                                    border-color: $border-color;
+                                    border-color: $basic-border-color;
                                     &:focus, &:focus-visible {
                                         box-shadow: none;
                                     }
                                     &:focus {
-                                        border-color: $border-color;
+                                        border-color: $basic-border-color;
                                     }
                                 }
                                 & .form-control:disabled:hover {
@@ -160,7 +181,7 @@
                                 }
                                 & .form-check-input {
                                     &:checked {
-                                        background-color: $background-color;
+                                        background-color: $basic-background-color;
                                     }
                                 }
                             }
@@ -178,7 +199,7 @@
     }
 }
 .modal {
-    color: $text-color;
+    color: $basic-text-color;
     &-content {
         border-radius: 0;
     }
@@ -202,7 +223,7 @@
             }
         }
         hr {
-            color: $text-color;
+            color: $basic-text-color;
         }
         & form {
             margin-bottom: 0;
@@ -213,8 +234,8 @@
         border-top: 0 !important;
         & .btn.btn-primary {
             border-radius: 0;
-            background-color: $background-color;
-            border-color: $border-color;
+            background-color: $basic-background-color;
+            border-color: $basic-border-color;
             color: $special-color;
             font-weight: 700;
             &:focus-visible {
@@ -225,8 +246,8 @@
     &-actions {
         & .btn.btn-primary {
             border-radius: 0;
-            background-color: $background-color;
-            border-color: $border-color;
+            background-color: $basic-background-color;
+            border-color: $basic-border-color;
             color: $special-color;
             font-weight: 700;
             &:focus-visible {
@@ -237,13 +258,13 @@
 }
 .form-control, .form-select {
     border-radius: 0;
-    border-color: $border-color;
-    color: $text-color;
+    border-color: $basic-border-color;
+    color: $basic-text-color;
     &:focus, &:focus-visible {
         box-shadow: none;
     }
     &:focus {
-        border-color: $border-color;
+        border-color: $basic-border-color;
     }
 }
 .pagination {
@@ -251,8 +272,8 @@
     & .page-item {
         & .page-link {
             border-radius: 0;
-            border-color: $border-color;
-            color: $text-color;
+            border-color: $basic-border-color;
+            color: $basic-text-color;
             font-weight: 700;
             &:focus {
                 box-shadow: none;
@@ -260,7 +281,7 @@
         }
         &.active {
             & .page-link {
-                background-color: $background-color;
+                background-color: $basic-background-color;
                 color: $special-color;
                 font-weight: 700;
             }
