@@ -1,0 +1,24 @@
+Smart components:
+- admin-navigation-bar;
+- filter-resource;
+- table;
+
+Dumb components:
+- accordion;
+- alert;
+- badge;
+- button;
+- card;
+- card;
+- dropdown;
+- input;
+- list;
+- page-title;
+- select;
+- textarea;
+
+1. Study how to store permissions in the database and link them to the user_role_types table
+2. When you create a new user role select which permissions do you give to that user role
+3. Idem for updating a user role
+4. Possibility to revoke permissions from a user role
+5. Check if you update a user role by setting is_active to false weather or not there are users on that role

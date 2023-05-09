@@ -76,7 +76,7 @@
                                     {{ __('admin.user_roles.user_role_description_column_label') }}:
                                 </span>
                                 @if (strlen($data->user_role_description) >= 100)
-                                    {{ substr($data->user_role_description, 0, 100) . '...' }}
+                                    {{ mb_substr($data->user_role_description, 0, 100, 'UTF-8') . '...' }}
                                 @else
                                     {{ $data->user_role_description }}
                                 @endif

@@ -113,7 +113,7 @@
                             </td>
                             <td>
                                 @if (strlen($data->message) >= 100)
-                                    {{ substr($data->message, 0, 100) . '...' }}
+                                    {{ mb_substr($data->message, 0, 100, 'UTF-8') . '...' }}
                                 @else
                                     {{ $data->message }}
                                 @endif

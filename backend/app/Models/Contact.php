@@ -231,7 +231,7 @@ class Contact extends Model
                 'phone'          => $payload['phone'],
                 'subject'        => $payload['subject'],
                 'message'        => $payload['message'],
-                'privacy_policy' => 0,
+                'privacy_policy' => in_array('privacy_policy', $payload) ? $payload['privacy_policy'] : false,
             ]);
             return $contactMessage;
         }
