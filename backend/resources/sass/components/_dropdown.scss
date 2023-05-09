@@ -1,0 +1,11 @@
+.dropdown {
+    &-menu {
+        &.show {
+            transform: translate(0px, 38px) !important;
+            border-radius: 0;
+            padding-top: 0;
+            padding-bottom: 0;
+        }
+    }
+}
+
