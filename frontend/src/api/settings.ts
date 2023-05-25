@@ -1,5 +1,6 @@
 enum ApiSettingsEndpoints {
-  ADMIN_MENU = 'settings/menu',
+  ADMIN_MENU = '/admin/settings/menu',
+  ADMIN_ACCEPTED_DOMAINS = '/admin/settings/accepted-domains',
 }
 
 export { ApiSettingsEndpoints };
