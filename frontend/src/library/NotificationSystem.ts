@@ -2,40 +2,40 @@ import { Notify } from 'quasar';
 
 /**
  * Creates a notification using the Quasar Notify component
- * @param notificationTitle - The title (string) of the error message (optional)
- * @param notificationDescription - The error message (string or array of strings)
+ * @param title - The title (string) of the error message (optional)
+ * @param description - The error message (string or array of strings)
  * or a map of error messages with their respective keys (optional)
- * @param notificationType - The type of the notification to display.
+ * @param type - The type of the notification to display.
  * The acceptable values are: positive, negative, warning, info and ongoing
- * @param notificationAdditionalMessage - Additional notification message (optional)
+ * @param additionalMessage - Additional notification message (optional)
  * that is returned by the api response
  * @returns void
  */
 const notificationSystem = (
-  notificationTitle: string | undefined,
-  notificationDescription: string | undefined,
-  notificationType: 'positive' | 'negative' | 'warning' | 'info' | 'ongoing',
-  notificationAdditionalMessage?: { error: string } | undefined,
+  title: string | undefined,
+  description: string | undefined,
+  type: 'positive' | 'negative' | 'warning' | 'info' | 'ongoing',
+  additionalMessage?: { [key: string]: string } | undefined,
 ) =>
   Notify.create({
     html: true,
-    icon: displayNotificationIcon(notificationType),
-    message: displayNotificationMessage(notificationTitle, notificationDescription, notificationType, notificationAdditionalMessage),
+    icon: displayNotificationIcon(type),
+    message: displayNotificationMessage(title, description, type, additionalMessage),
     position: 'bottom',
     progress: true,
-    textColor: displayNotificationColor(notificationType),
-    type: notificationType,
-    timeout: notificationType !== 'positive' && notificationType !== 'info' ? 10000 : 5000,
-    classes: notificationType !== 'positive' && notificationType !== 'info' ? 'q-notification-error' : ''
+    textColor: displayNotificationColor(type),
+    type: type,
+    timeout: type !== 'positive' && type !== 'info' ? 10000 : 5000,
+    classes: type !== 'positive' && type !== 'info' ? 'q-notification-error' : ''
   })
 
   /**
    * Returns the icon to display for the given notification type
-   * @param notificationType - The type of the notification (string)
+   * @param type - The type of the notification (string)
    * @returns string
    */
-  function displayNotificationIcon(notificationType: string): string {
-    switch (notificationType) {
+  function displayNotificationIcon(type: string): string {
+    switch (type) {
       case 'positive':
         return 'done';
       case 'info':
@@ -51,45 +51,45 @@ const notificationSystem = (
 
   /**
    * Returns the message to display for the given error title and description
-   * @param notificationTitle - The title (string) of the error message (optional)
-   * @param notificationDescription - The error message (string or array of strings)
+   * @param title - The title (string) of the error message (optional)
+   * @param description - The error message (string or array of strings)
    * or a map of error messages with their respective keys (optional)
-   * @param notificationType - The type of the notification to display.
+   * @param type - The type of the notification to display.
    * The acceptable values are: positive, negative, warning, info and ongoing
-   * @param notificationAdditionalMessage - Additional message information (string)
+   * @param additionalMessage - Additional message information (string)
    * that is returned by the backend (optional)
    * @returns string
    */
   function displayNotificationMessage(
-    notificationTitle: string | undefined,
-    notificationDescription: { [key: string]: string } | string | undefined,
-    notificationType: 'positive' | 'negative' | 'warning' | 'info' | 'ongoing',
-    notificationAdditionalMessage?: { error: string } | undefined,
+    title: string | undefined,
+    description: { [key: string]: string } | string | undefined,
+    type: 'positive' | 'negative' | 'warning' | 'info' | 'ongoing',
+    additionalMessage?: { [key: string]: string } | undefined,
   ): string {
-    if (notificationDescription && typeof notificationDescription !== 'string') {
+    if (description && typeof description !== 'string') {
       let listItems = '';
-      for (const key in notificationDescription) {
-        listItems += `<p class="q-mb-none">${notificationDescription[key][0].replace(/</g, '&lt;').replace(/>/g, '&gt;')}</p>`;
+      for (const key in description) {
+        listItems += `<p class="q-mb-none">${description[key][0].replace(/</g, '&lt;').replace(/>/g, '&gt;')}</p>`;
       }
       return `
-        <p class="q-mb-none">${notificationTitle}</p>
+        <p class="q-mb-none">${title}</p>
         ${listItems}
       `;
-    } else if (typeof notificationDescription === 'string') {
+    } else if (typeof description === 'string') {
       const commonMessage = `
-        <p class="q-mb-none">${notificationTitle}! ${notificationDescription}!</p>
-        <p class="q-mb-none">${notificationAdditionalMessage ? notificationAdditionalMessage?.error : ''}</p>
+        <p class="q-mb-none">${title}! ${description}!</p>
+        <p class="q-mb-none">${additionalMessage?.message}</p>
       `;
-      if (notificationType === 'positive' || notificationType === 'info') {
+      if (type === 'positive' || type === 'info') {
         return commonMessage;
       } else {
         return commonMessage + `
           <p class="q-mb-none">Please try again and if the problem persist contact the administrator!</p>
         `;
       }
-    } else if (notificationTitle) {
+    } else if (title) {
       return `
-        <p class="q-mb-none">${notificationTitle}</p>
+        <p class="q-mb-none">${title}</p>
       `;
     } else {
       return 'Something went wrong! Please try again!';
@@ -98,11 +98,11 @@ const notificationSystem = (
 
   /**
    * Returns the color to use for the text of the notification based on the notification type
-   * @param notificationType - The type of the notification (string)
+   * @param type - The type of the notification (string)
    * @returns string
    */
-  function displayNotificationColor(notificationType: string): string {
-    switch (notificationType) {
+  function displayNotificationColor(type: string): string {
+    switch (type) {
       case 'positive':
       case 'warning':
       case 'info':

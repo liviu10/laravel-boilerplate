@@ -1,0 +1,99 @@
+import { defineStore } from 'pinia';
+import { api } from 'src/boot/axios';
+
+// Import: interfaces, notification system and other settings
+import ApiResponseInterface from 'src/interfaces/ApiResponseInterface';
+import { notificationSystem } from 'src/library/NotificationSystem';
+
+/**
+ * Object containing settings for API resources.
+ * @type Object.<string, { resource_name: string; resource_endpoint: string }>
+ */
+const apiSettingsResources: { [key: string]: { resource_name: string; resource_endpoint: string } } = {
+  'accepted-domains': {
+    resource_name: 'accepted-domains',
+    resource_endpoint: '/admin/settings/accepted-domains'
+  },
+  'errors-and-notifications': {
+    resource_name: 'errors-and-notifications',
+    resource_endpoint: '/admin/settings/errors-and-notifications'
+  },
+  'users': {
+    resource_name: 'users',
+    resource_endpoint: '/admin/settings/users'
+  },
+  'user-role-types': {
+    resource_name: 'user-role-types',
+    resource_endpoint: '/admin/settings/user-role-types'
+  }
+}
+
+const adminSettingsStore = defineStore('adminSettings', {
+  state: () => ({
+    allRecords: {} as ApiResponseInterface,
+  }),
+  getters: {
+    getAllRecords: (state) => state.allRecords,
+  },
+  actions: {
+    /**
+     * Fetches all records for a given resource name.
+     * @param string resourceName - The name of the resource.
+     * @returns Promise<void | ApiResponseInterface> -
+     * A promise that resolves with the API response or void.
+     */
+    async fetchAllRecords(resourceName: string): Promise<void | ApiResponseInterface> {
+      if (apiSettingsResources.hasOwnProperty(resourceName)) {
+        const selectedResourceEndpoint = apiSettingsResources[resourceName].resource_endpoint;
+        const apiEndpoint: string = selectedResourceEndpoint;
+        const fullApiUrl: string = apiEndpoint;
+
+        /**
+         * Fetches data from the API endpoint.
+         * @type ApiResponseInterface | void
+         */
+        const apiResponse: ApiResponseInterface | void = await api
+          .get(fullApiUrl)
+          .then((response) => {
+            if (response.data.count === 0) {
+              const notificationTitle = 'Warning';
+              const notificationMessage = `There are no records to display for this resource: ${resourceName}`;
+              notificationSystem(notificationTitle, notificationMessage, 'warning');
+            } else {
+              this.allRecords = response.data;
+              return this.allRecords;
+            }
+          })
+          .catch((error) => {
+            console.log(`--> Error response ${resourceName}: `, error.message, error.response?.data);
+            console.log(`--> Error request ${resourceName}: `, error.request);
+            console.log(`--> Error general ${resourceName}: `, error.message);
+            notificationSystem(error.name, error.message, 'negative', error.response.data);
+          });
+
+        return apiResponse;
+      } else {
+        let appendedString = '';
+        let isFirst = true;
+        // Loop through available resources to create the appended string
+        for (const key in apiSettingsResources) {
+          if (apiSettingsResources.hasOwnProperty(key)) {
+            const resource = apiSettingsResources[key];
+            if (isFirst) {
+              appendedString += '<b>' + resource.resource_name + '</b>';
+              isFirst = false;
+            } else {
+              appendedString += ', ' + '<b>' + resource.resource_name + '</b>';
+            }
+          }
+        }
+        // Display notification for unavailable resource
+        const notificationTitle = 'Warning';
+        const notificationMessage = `The resource you are requesting: <b>${resourceName}</b> does not exist! <br> Available resources: ${appendedString}`;
+        notificationSystem(notificationTitle, notificationMessage, 'warning');
+      }
+    }
+  },
+});
+
+export { adminSettingsStore };
