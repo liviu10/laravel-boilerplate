@@ -13,5 +13,10 @@ export default {
     show_details_tooltip: 'Apasa aici pentru a vedea detaliile inregistrari!',
     edit_tooltip: 'Apasa aici pentru modifica inregistrarea!',
     delete_tooltip: 'Apasa aici pentru a sterge inregistrarea!',
+    close_dialog: 'Inchide',
+    save_new_record: 'Salveaza',
+    update_existing_record: 'Actualizeaza',
+    delete_existing_record: 'Sterge',
+    button: 'Button'
   }
 };

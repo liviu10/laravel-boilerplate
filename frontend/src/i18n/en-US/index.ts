@@ -13,5 +13,10 @@ export default {
     show_details_tooltip: 'Click here to view records details!',
     edit_tooltip: 'Click here to edit record!',
     delete_tooltip: 'Click here to delete record!',
+    close_dialog: 'Close',
+    save_new_record: 'Save',
+    update_existing_record: 'Update',
+    delete_existing_record: 'Delete',
+    button: 'Button'
   }
 };

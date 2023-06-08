@@ -77,7 +77,7 @@ function buttonLabel(
     if (icon) {
       return undefined;
     } else {
-      return t('generic_messages.button');
+      return t('generic_table.button');
     }
   } else {
     if (noCaps) {

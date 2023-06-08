@@ -52,14 +52,19 @@
         </q-tr>
       </template>
     </q-table>
-    <generic-table-dialog :open-dialog="openDialog" :dialog-name="dialogName" @closeDialog="closeDialog" />
+    <generic-table-dialog
+      :open-dialog="openDialog"
+      :dialog-name="dialogName"
+      @closeDialog="closeDialog"
+      @saveDialog="saveDialog"
+    />
   </div>
 </template>
 
 <script setup lang="ts">
 // Import framework related utilities
 import { useI18n } from 'vue-i18n';
-import { Ref, ref } from 'vue';
+import { Ref, onMounted, onUnmounted, ref } from 'vue';
 
 // Import generic components
 import GenericTableOptions from './GenericTableOptions.vue';
@@ -146,27 +151,68 @@ function addNewRecord(): void {
 
 function downloadRecords(): void {
   debugger;
+  dialogName.value = 'download-records'
 }
 
 function uploadRecords(): void {
   debugger;
+  dialogName.value = 'upload-records'
 }
 
 function showRecord(): void {
   debugger;
+  dialogName.value = 'show-record'
 }
 
 function editRecord(): void {
   debugger;
+  dialogName.value = 'edit-record'
 }
 
 function deleteRecord(): void {
   debugger;
+  dialogName.value = 'delete-record'
 }
 
 function closeDialog(): void {
   openDialog.value = false;
+  dialogName.value = undefined
 }
+
+function saveDialog(): void {
+  openDialog.value = false;
+  dialogName.value = undefined
+}
+
+// Define the key combination you want to use to open the dialog
+const dialogKeyCombination = 'Shift+Alt+D';
+
+// Define the key combination to close the dialog
+const closeDialogKeyCombination = 'Shift+Alt+C';
+
+// Define the event handler function
+function handleKeyDown(event: KeyboardEvent) {
+  // Check if the key combination is pressed
+  if (event.key === 'D' && event.shiftKey && event.altKey) {
+    // Open the dialog
+    openDialog.value = true;
+  }
+    // Check if the key combination to close the dialog is pressed
+  if (event.key === 'C' && event.shiftKey && event.altKey) {
+    // Close the dialog
+    openDialog.value = false;
+  }
+}
+
+// Add the event listener when the component is mounted
+onMounted(() => {
+  document.addEventListener('keydown', handleKeyDown);
+});
+
+// Remove the event listener when the component is unmounted
+onUnmounted(() => {
+  document.removeEventListener('keydown', handleKeyDown);
+});
 </script>
 
 <style lang="scss" scoped>

@@ -9,7 +9,7 @@
     :label="item.label"
     :square="item.square"
     :tooltip-message="item.tooltipMessage"
-    :type="'button'"
+    :type="item.type"
     :class="item.class"
     @click="item.function"
   />
@@ -51,7 +51,7 @@ const tableOptions = [
     label: t('generic_table.add_new'),
     square: true,
     tooltipMessage: t('generic_table.add_new_tooltip', { resourceName: props.resourceName }),
-    type: 'button',
+    type: 'button' as 'button' | 'submit' | 'reset' | undefined,
     function: openAddNewRecordDialog
   },
   {
@@ -63,7 +63,7 @@ const tableOptions = [
     label: t('generic_table.file_download'),
     square: true,
     tooltipMessage: t('generic_table.file_download_tooltip', { resourceName: props.resourceName }),
-    type: 'button',
+    type: 'button' as 'button' | 'submit' | 'reset' | undefined,
     class: 'q-mx-sm',
     function: downloadRecords
   },
@@ -76,7 +76,7 @@ const tableOptions = [
     label: t('generic_table.file_upload'),
     square: true,
     tooltipMessage: t('generic_table.file_upload_tooltip', { resourceName: props.resourceName }),
-    type: 'button',
+    type: 'button' as 'button' | 'submit' | 'reset' | undefined,
     function: uploadRecords
   }
 ]
