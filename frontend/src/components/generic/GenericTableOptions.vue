@@ -37,7 +37,6 @@ const props = defineProps<{
   resourceName: string | undefined;
 }>();
 
-
 /**
  * Represents an array of table options (add and filter buttons),
  * each defining a specific action or configuration for the table.

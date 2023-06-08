@@ -18,9 +18,8 @@
             {{ displayTableTitle($props.title) }}
           </div>
           <div v-if="displayTableOptions" class="table__top-options">
-            {{ title }}
             <generic-table-options
-              :resource-name="title"
+              :resource-name="$props.title && $props.title !== undefined ? $props.title : t('generic_table.title')"
               @openAddNewRecordDialog="addNewRecord()"
               @downloadRecords="downloadRecords()"
               @uploadRecords="uploadRecords()"
@@ -53,16 +52,19 @@
         </q-tr>
       </template>
     </q-table>
+    <generic-table-dialog :open-dialog="openDialog" :dialog-name="dialogName" @closeDialog="closeDialog" />
   </div>
 </template>
 
 <script setup lang="ts">
 // Import framework related utilities
 import { useI18n } from 'vue-i18n';
+import { Ref, ref } from 'vue';
 
 // Import generic components
 import GenericTableOptions from './GenericTableOptions.vue';
 import GenericTableActions from './GenericTableActions.vue';
+import GenericTableDialog from './GenericTableDialog.vue';
 
 interface GenericTableProps {
   fullscreen?: boolean,
@@ -126,28 +128,44 @@ function displayTableTitle(tableTitle: string | undefined): string {
   }
 }
 
-function addNewRecord() {
+let openDialog: Ref<boolean> = ref(false)
+let dialogName: Ref<
+  'new-record' |
+  'download-records' |
+  'upload-records' |
+  'show-record' |
+  'edit-record' |
+  'delete-record' |
+  undefined
+> = ref(undefined)
+
+function addNewRecord(): void {
+  openDialog.value = true
+  dialogName.value = 'new-record'
+}
+
+function downloadRecords(): void {
   debugger;
 }
 
-function downloadRecords() {
+function uploadRecords(): void {
   debugger;
 }
 
-function uploadRecords() {
+function showRecord(): void {
   debugger;
 }
 
-function showRecord() {
+function editRecord(): void {
   debugger;
 }
 
-function editRecord() {
+function deleteRecord(): void {
   debugger;
 }
 
-function deleteRecord() {
-  debugger;
+function closeDialog(): void {
+  openDialog.value = false;
 }
 </script>
 
