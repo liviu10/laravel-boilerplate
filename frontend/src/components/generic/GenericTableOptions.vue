@@ -11,7 +11,7 @@
     :tooltip-message="item.tooltipMessage"
     :type="item.type"
     :class="item.class"
-    @click="item.function"
+    @click="() => item.function(item.dialogType)"
   />
 </template>
 
@@ -27,9 +27,7 @@ const { t } = useI18n({});
 
 // Defines the event emitters for the component.
 const emit = defineEmits([
-  'openAddNewDialog',
-  'downloadRecords',
-  'uploadRecords',
+  'openGenericTableDialog',
 ]);
 
 // Defines the props for the component.
@@ -52,7 +50,8 @@ const tableOptions = [
     square: true,
     tooltipMessage: t('generic_table.add_new_dialog.button_tooltip', { resourceName: props.resourceName }),
     type: 'button' as 'button' | 'submit' | 'reset' | undefined,
-    function: openAddNewDialog
+    function: openGenericTableDialog,
+    dialogType: 'new-record' as 'new-record' | 'download-records' | 'upload-records' | null
   },
   {
     id: 2,
@@ -65,7 +64,8 @@ const tableOptions = [
     tooltipMessage: t('generic_table.download_dialog.button_tooltip', { resourceName: props.resourceName }),
     type: 'button' as 'button' | 'submit' | 'reset' | undefined,
     class: 'q-mx-sm',
-    function: downloadRecords
+    function: openGenericTableDialog,
+    dialogType: 'download-record' as 'new-record' | 'download-records' | 'upload-records' | null
   },
   {
     id: 3,
@@ -77,7 +77,8 @@ const tableOptions = [
     square: true,
     tooltipMessage: t('generic_table.upload_dialog.button_tooltip', { resourceName: props.resourceName }),
     type: 'button' as 'button' | 'submit' | 'reset' | undefined,
-    function: uploadRecords
+    function: openGenericTableDialog,
+    dialogType: 'upload-record' as 'new-record' | 'download-records' | 'upload-records' | null
   }
 ]
 
@@ -85,24 +86,8 @@ const tableOptions = [
  * Opens the dialog to add a new record by emitting the 'openAddNewDialog' event.
  * @returns void
  */
-function openAddNewDialog(): void {
-  emit('openAddNewDialog');
-}
-
-/**
- * Initiates the download of records by emitting the 'downloadRecords' event.
- * @returns void
- */
-function downloadRecords(): void {
-  emit('downloadRecords');
-}
-
-/**
- * Initiates the upload of records by emitting the 'uploadRecords' event.
- * @returns void
- */
-function uploadRecords(): void {
-  emit('uploadRecords');
+function openGenericTableDialog(type: 'new-record' | 'download-records' | 'upload-records' | null): void {
+  emit('openGenericTableDialog', type);
 }
 </script>
 

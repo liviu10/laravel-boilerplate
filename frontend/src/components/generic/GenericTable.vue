@@ -20,9 +20,7 @@
           <div v-if="displayTableOptions" class="table__top-options">
             <generic-table-options
               :resource-name="$props.title && $props.title !== undefined ? $props.title : t('generic_table.title')"
-              @openAddNewDialog="addNewRecord()"
-              @downloadRecords="downloadRecords()"
-              @uploadRecords="uploadRecords()"
+              @openGenericTableDialog="openGenericTableDialog"
             />
           </div>
         </div>
@@ -57,7 +55,7 @@
       :open-dialog="openDialog"
       :dialog-name="dialogName"
       @closeDialog="closeDialog"
-      @saveDialog="saveDialog"
+      @submitDialog="submitDialog"
     />
   </div>
 </template>
@@ -71,6 +69,7 @@ import { Ref, ref } from 'vue';
 import GenericTableOptions from './GenericTableOptions.vue';
 import GenericTableActions from './GenericTableActions.vue';
 import GenericTableDialog from './GenericTableDialog.vue';
+import { notificationSystem } from 'src/library/NotificationSystem';
 
 interface GenericTableProps {
   fullscreen?: boolean,
@@ -149,27 +148,16 @@ let dialogName: Ref<
  * Adds a new record by opening the dialog and setting the dialog name to 'new-record'.
  * @returns void
  */
-function addNewRecord(): void {
+function openGenericTableDialog(type: 'new-record' | 'download-records' | 'upload-records' | 'show-record' | 'edit-record' | 'delete-record' | null): void {
   openDialog.value = true;
-  dialogName.value = 'new-record';
-}
-
-/**
- * Initiates the download of records by setting the dialog name to 'download-records'.
- * @returns void
- */
-function downloadRecords(): void {
-  openDialog.value = true;
-  dialogName.value = 'download-records';
-}
-
-/**
- * Initiates the upload of records by setting the dialog name to 'upload-records'.
- * @returns void
- */
-function uploadRecords(): void {
-  openDialog.value = true;
-  dialogName.value = 'upload-records';
+  if (type && type !== null) {
+    dialogName.value = type;
+  } else {
+    const notificationTitle = 'Warning';
+    const notificationMessage = 'Unable to open the dialog window';
+    notificationSystem(notificationTitle, notificationMessage, 'warning');
+    console.log(`--> Unable to open the dialog window because the dialog type is: ${type}!`)
+  }
 }
 
 /**
@@ -212,7 +200,7 @@ function closeDialog(): void {
  * Saves the dialog by setting the openDialog value to false and resetting the dialog name.
  * @returns void
  */
-function saveDialog(): void {
+function submitDialog(): void {
   openDialog.value = false;
   dialogName.value = null;
 }

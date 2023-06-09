@@ -41,7 +41,7 @@ const { t } = useI18n({});
 // Defines the event emitters for the component.
 const emit = defineEmits([
   'closeDialog',
-  'saveDialog'
+  'submitDialog'
 ]);
 
 // Defines the props for the component.
@@ -97,7 +97,7 @@ const tableDialogOptions = [
     square: true,
     type: 'button' as 'button' | 'submit' | 'reset' | undefined,
     class: props.dialogName === 'show-record' ? 'hidden' : '',
-    function: saveDialog
+    function: submitDialog
   }
 ]
 
@@ -163,11 +163,11 @@ function closeDialog(): void {
 }
 
 /**
- * Saves the dialog by emitting the 'saveDialog' event.
+ * Saves the dialog by emitting the 'submitDialog' event.
  * @returns void
  */
-function saveDialog(): void {
-  emit('saveDialog');
+function submitDialog(): void {
+  emit('submitDialog');
 }
 </script>
 
