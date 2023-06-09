@@ -2,21 +2,43 @@
 
 export default {
   generic_table: {
-    title: 'Titlu implicit al tabelului',
-    add_new: 'Adauga nou',
-    add_new_tooltip: 'Apasa aici pentru a adauga o noua {resourceName}!',
-    file_download: 'Descarca',
-    file_download_tooltip: 'Apasa aici pentru a descarca {resourceName}!',
-    file_upload: 'Incarca',
-    file_upload_tooltip: 'Apasa aici pentru a incarca {resourceName}!',
-    actions_column: 'Actiuni',
-    show_details_tooltip: 'Apasa aici pentru a vedea detaliile inregistrari!',
-    edit_tooltip: 'Apasa aici pentru modifica inregistrarea!',
-    delete_tooltip: 'Apasa aici pentru a sterge inregistrarea!',
-    close_dialog: 'Inchide',
-    save_new_record: 'Salveaza',
-    update_existing_record: 'Actualizeaza',
-    delete_existing_record: 'Sterge',
-    button: 'Button'
+    title: 'Default table title',
+    add_new_dialog: {
+      button_label: 'Add new',
+      button_tooltip: 'Click here to add a new {resourceName}!',
+      title: 'Add a new record',
+      button_ok_label: 'Save',
+    },
+    download_dialog: {
+      button_label: 'Download',
+      button_tooltip: 'Click here to download {resourceName}!',
+      title: 'Download all records',
+      button_ok_label: 'Download',
+    },
+    upload_dialog: {
+      button_label: 'Upload',
+      button_tooltip: 'Click here to upload {resourceName}!',
+      title: 'Upload records',
+      button_ok_label: 'Upload',
+    },
+    show_dialog: {
+      button_tooltip: 'Click here to show record details!',
+      title: 'Show record details',
+    },
+    edit_dialog: {
+      button_tooltip: 'Click here to edit record details!',
+      title: 'Edit record details',
+      button_ok_label: 'Update',
+    },
+    delete_dialog: {
+      button_tooltip: 'Click here to delete record!',
+      title: 'Delete record',
+      button_ok_label: 'Delete',
+    },
+    actions_column_title: 'Actions',
+    button_cancel_label: 'Cancel',
+    button_close_label: 'Close',
+    default_button_label: 'Default button',
+    default_dialog_title: 'Default dialog title'
   }
 };

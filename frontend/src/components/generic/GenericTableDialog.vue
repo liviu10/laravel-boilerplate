@@ -2,11 +2,13 @@
   <q-dialog v-model="$props.openDialog" persistent>
     <q-card>
       <q-card-section>
-        <div class="text-h6">Alert</div>
+        <div class="text-h6">
+          {{ displayDialogTitle() }}
+        </div>
       </q-card-section>
 
       <q-card-section class="q-pt-none">
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Rerum repellendus sit voluptate voluptas eveniet porro. Rerum blanditiis perferendis totam, ea at omnis vel numquam exercitationem aut, natus minima, porro labore.
+
       </q-card-section>
 
       <q-card-actions align="center">
@@ -45,8 +47,33 @@ const emit = defineEmits([
 // Defines the props for the component.
 const props = defineProps<{
   openDialog: boolean;
-  dialogName: 'new-record' | 'download-records' | 'upload-records' | 'show-record' | 'edit-record' | 'delete-record' | undefined;
+  dialogName: 'new-record' | 'download-records' | 'upload-records' | 'show-record' | 'edit-record' | 'delete-record' | null;
 }>();
+
+function displayDialogTitle() {
+  if (props.dialogName) {
+    if (props.dialogName === 'new-record') {
+      return t('generic_table.add_new_dialog.title');
+    }
+    if (props.dialogName === 'download-records') {
+      return t('generic_table.download_dialog.title');
+    }
+    if (props.dialogName === 'upload-records') {
+      return t('generic_table.upload_dialog.title');
+    }
+    if (props.dialogName === 'show-record') {
+      return t('generic_table.show_dialog.title');
+    }
+    if (props.dialogName === 'edit-record') {
+      return t('generic_table.edit_dialog.title');
+    }
+    if (props.dialogName === 'delete-record') {
+      return t('generic_table.delete_dialog.title');
+    }
+  } else {
+    return t('generic_table.default_dialog_title');
+  }
+}
 
 /**
  * Represents an array of table dialog options.
@@ -56,7 +83,7 @@ const tableDialogOptions = [
     id: 1,
     color: 'primary',
     dense: false,
-    label: t('generic_table.close_dialog'),
+    label: displayCloseActionLabel(),
     square: true,
     type: 'button' as 'button' | 'submit' | 'reset' | undefined,
     class: props.dialogName === 'show-record' ? '' : 'q-mr-sm',
@@ -69,40 +96,76 @@ const tableDialogOptions = [
     label: displayOkActionLabel(),
     square: true,
     type: 'button' as 'button' | 'submit' | 'reset' | undefined,
+    class: props.dialogName === 'show-record' ? 'hidden' : '',
     function: saveDialog
   }
 ]
 
-function displayOkActionColor(): string {
-  if (props.dialogName === 'edit-record') {
-    return 'warning'
-  } else if (props.dialogName === 'delete-record') {
-    return 'negative'
+function displayCloseActionLabel() {
+  if (props.dialogName) {
+    if (props.dialogName === 'show-record') {
+      return t('generic_table.button_close_label');
+    } else {
+      return t('generic_table.button_cancel_label')
+    }
   } else {
-    return 'positive'
+    return t('generic_table.button_close_label');
   }
 }
 
-function displayOkActionLabel(): string {
-  if (props.dialogName === 'new-record') {
-    return t('generic_table.save_new_record')
-  } else if (props.dialogName === 'download-records') {
-    return t('generic_table.file_download')
-  } else if (props.dialogName === 'upload-records') {
-    return t('generic_table.file_upload')
-  } else if (props.dialogName === 'edit-record') {
-    return t('generic_table.update_existing_record')
-  } else if (props.dialogName === 'delete-record') {
-    return t('generic_table.delete_existing_record')
-  } else {
-    return t('generic_table.button')
+/**
+ * Returns the color for the OK action based on the dialog name.
+ * @returns The color for the OK action ('warning', 'negative', or 'positive').
+ */
+function displayOkActionColor(): 'warning' | 'negative' | 'positive' {
+  switch (props.dialogName) {
+    case 'edit-record':
+      return 'warning';
+    case 'delete-record':
+      return 'negative';
+    default:
+      return 'positive';
   }
 }
 
+/**
+ * Returns the label for the OK action based on the dialog name.
+ * @returns The label for the OK action.
+ */
+function displayOkActionLabel() {
+  if (props.dialogName) {
+    if (props.dialogName === 'new-record') {
+      return t('generic_table.add_new_dialog.button_ok_label');
+    }
+    if (props.dialogName === 'download-records') {
+      return t('generic_table.download_dialog.button_ok_label');
+    }
+    if (props.dialogName === 'upload-records') {
+      return t('generic_table.upload_dialog.button_ok_label');
+    }
+    if (props.dialogName === 'edit-record') {
+      return t('generic_table.edit_dialog.button_ok_label');
+    }
+    if (props.dialogName === 'delete-record') {
+      return t('generic_table.delete_dialog.button_ok_label');
+    }
+  } else {
+    return t('generic_table.default_button_label');
+  }
+}
+
+/**
+ * Closes the dialog by emitting the 'closeDialog' event.
+ * @returns void
+ */
 function closeDialog(): void {
   emit('closeDialog');
 }
 
+/**
+ * Saves the dialog by emitting the 'saveDialog' event.
+ * @returns void
+ */
 function saveDialog(): void {
   emit('saveDialog');
 }

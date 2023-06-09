@@ -3,20 +3,42 @@
 export default {
   generic_table: {
     title: 'Default table title',
-    add_new: 'Add new',
-    add_new_tooltip: 'Click here to add a new {resourceName}!',
-    file_download: 'Download',
-    file_download_tooltip: 'Click here to download the {resourceName}!',
-    file_upload: 'Upload',
-    file_upload_tooltip: 'Click here to upload {resourceName}!',
-    actions_column: 'Actions',
-    show_details_tooltip: 'Click here to view records details!',
-    edit_tooltip: 'Click here to edit record!',
-    delete_tooltip: 'Click here to delete record!',
-    close_dialog: 'Close',
-    save_new_record: 'Save',
-    update_existing_record: 'Update',
-    delete_existing_record: 'Delete',
-    button: 'Button'
+    add_new_dialog: {
+      button_label: 'Add new',
+      button_tooltip: 'Click here to add a new {resourceName}!',
+      title: 'Add a new record',
+      button_ok_label: 'Save',
+    },
+    download_dialog: {
+      button_label: 'Download',
+      button_tooltip: 'Click here to download {resourceName}!',
+      title: 'Download all records',
+      button_ok_label: 'Download',
+    },
+    upload_dialog: {
+      button_label: 'Upload',
+      button_tooltip: 'Click here to upload {resourceName}!',
+      title: 'Upload records',
+      button_ok_label: 'Upload',
+    },
+    show_dialog: {
+      button_tooltip: 'Click here to show record details!',
+      title: 'Show record details',
+    },
+    edit_dialog: {
+      button_tooltip: 'Click here to edit record details!',
+      title: 'Edit record details',
+      button_ok_label: 'Update',
+    },
+    delete_dialog: {
+      button_tooltip: 'Click here to delete record!',
+      title: 'Delete record',
+      button_ok_label: 'Delete',
+    },
+    actions_column_title: 'Actions',
+    button_cancel_label: 'Cancel',
+    button_close_label: 'Close',
+    default_button_label: 'Default button',
+    default_dialog_title: 'Default dialog title'
   }
 };

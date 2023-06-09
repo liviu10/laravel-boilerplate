@@ -20,7 +20,7 @@
           <div v-if="displayTableOptions" class="table__top-options">
             <generic-table-options
               :resource-name="$props.title && $props.title !== undefined ? $props.title : t('generic_table.title')"
-              @openAddNewRecordDialog="addNewRecord()"
+              @openAddNewDialog="addNewRecord()"
               @downloadRecords="downloadRecords()"
               @uploadRecords="uploadRecords()"
             />
@@ -33,7 +33,7 @@
             {{ col.label }}
           </q-th>
           <q-th v-if="displayTableActions">
-            {{ $t('generic_table.actions_column') }}
+            {{ $t('generic_table.actions_column_title') }}
           </q-th>
         </q-tr>
       </template>
@@ -44,7 +44,7 @@
           </q-td>
           <q-td v-if="displayTableActions">
             <generic-table-actions
-              @openShowDetailsDialog="showRecord()"
+              @openShowDialog="showRecord()"
               @openEditDialog="editRecord()"
               @openDeleteDialog="deleteRecord()"
             />
@@ -53,6 +53,7 @@
       </template>
     </q-table>
     <generic-table-dialog
+      v-if="openDialog"
       :open-dialog="openDialog"
       :dialog-name="dialogName"
       @closeDialog="closeDialog"
@@ -64,7 +65,7 @@
 <script setup lang="ts">
 // Import framework related utilities
 import { useI18n } from 'vue-i18n';
-import { Ref, onMounted, onUnmounted, ref } from 'vue';
+import { Ref, ref } from 'vue';
 
 // Import generic components
 import GenericTableOptions from './GenericTableOptions.vue';
@@ -141,85 +142,87 @@ let dialogName: Ref<
   'show-record' |
   'edit-record' |
   'delete-record' |
-  undefined
-> = ref(undefined)
+  null
+> = ref(null)
 
+/**
+ * Adds a new record by opening the dialog and setting the dialog name to 'new-record'.
+ * @returns void
+ */
 function addNewRecord(): void {
-  openDialog.value = true
-  dialogName.value = 'new-record'
+  openDialog.value = true;
+  dialogName.value = 'new-record';
 }
 
+/**
+ * Initiates the download of records by setting the dialog name to 'download-records'.
+ * @returns void
+ */
 function downloadRecords(): void {
-  debugger;
-  dialogName.value = 'download-records'
+  openDialog.value = true;
+  dialogName.value = 'download-records';
 }
 
+/**
+ * Initiates the upload of records by setting the dialog name to 'upload-records'.
+ * @returns void
+ */
 function uploadRecords(): void {
-  debugger;
-  dialogName.value = 'upload-records'
+  openDialog.value = true;
+  dialogName.value = 'upload-records';
 }
 
+/**
+ * Shows a specific record by setting the dialog name to 'show-record'.
+ * @returns void
+ */
 function showRecord(): void {
-  debugger;
-  dialogName.value = 'show-record'
+  openDialog.value = true;
+  dialogName.value = 'show-record';
 }
 
+/**
+ * Initiates the editing of a record by setting the dialog name to 'edit-record'.
+ * @returns void
+ */
 function editRecord(): void {
-  debugger;
-  dialogName.value = 'edit-record'
+  openDialog.value = true;
+  dialogName.value = 'edit-record';
 }
 
+/**
+ * Initiates the deletion of a record by setting the dialog name to 'delete-record'.
+ * @returns void
+ */
 function deleteRecord(): void {
-  debugger;
-  dialogName.value = 'delete-record'
+  openDialog.value = true;
+  dialogName.value = 'delete-record';
 }
 
+/**
+ * Closes the dialog by setting the openDialog value to false and resetting the dialog name.
+ * @returns void
+ */
 function closeDialog(): void {
   openDialog.value = false;
-  dialogName.value = undefined
+  dialogName.value = null;
 }
 
+/**
+ * Saves the dialog by setting the openDialog value to false and resetting the dialog name.
+ * @returns void
+ */
 function saveDialog(): void {
   openDialog.value = false;
-  dialogName.value = undefined
+  dialogName.value = null;
 }
-
-// Define the key combination you want to use to open the dialog
-const dialogKeyCombination = 'Shift+Alt+D';
-
-// Define the key combination to close the dialog
-const closeDialogKeyCombination = 'Shift+Alt+C';
-
-// Define the event handler function
-function handleKeyDown(event: KeyboardEvent) {
-  // Check if the key combination is pressed
-  if (event.key === 'D' && event.shiftKey && event.altKey) {
-    // Open the dialog
-    openDialog.value = true;
-  }
-    // Check if the key combination to close the dialog is pressed
-  if (event.key === 'C' && event.shiftKey && event.altKey) {
-    // Close the dialog
-    openDialog.value = false;
-  }
-}
-
-// Add the event listener when the component is mounted
-onMounted(() => {
-  document.addEventListener('keydown', handleKeyDown);
-});
-
-// Remove the event listener when the component is unmounted
-onUnmounted(() => {
-  document.removeEventListener('keydown', handleKeyDown);
-});
 </script>
 
 <style lang="scss" scoped>
 @import 'src/css/utilities/rem_convertor';
 
 .table {
-  &--generic {}
+  // &--generic {}
   &__top {
     width: 100%;
     &-title {

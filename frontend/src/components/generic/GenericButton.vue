@@ -77,7 +77,7 @@ function buttonLabel(
     if (icon) {
       return undefined;
     } else {
-      return t('generic_table.button');
+      return t('generic_table.default_button_label');
     }
   } else {
     if (noCaps) {
@@ -105,6 +105,7 @@ const emit = defineEmits<{
   (event: 'onOkClickButton', value: boolean): void;
 }>();
 
+// Defines the event emitters for the component.
 withDefaults(defineProps<ButtonProps>(), {});
 </script>
 

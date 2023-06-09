@@ -27,7 +27,7 @@ const { t } = useI18n({});
 
 // Defines the event emitters for the component.
 const emit = defineEmits([
-  'openAddNewRecordDialog',
+  'openAddNewDialog',
   'downloadRecords',
   'uploadRecords',
 ]);
@@ -48,11 +48,11 @@ const tableOptions = [
     dense: false,
     displayTooltip: true,
     icon: 'add',
-    label: t('generic_table.add_new'),
+    label: t('generic_table.add_new_dialog.button_label'),
     square: true,
-    tooltipMessage: t('generic_table.add_new_tooltip', { resourceName: props.resourceName }),
+    tooltipMessage: t('generic_table.add_new_dialog.button_tooltip', { resourceName: props.resourceName }),
     type: 'button' as 'button' | 'submit' | 'reset' | undefined,
-    function: openAddNewRecordDialog
+    function: openAddNewDialog
   },
   {
     id: 2,
@@ -60,9 +60,9 @@ const tableOptions = [
     dense: false,
     displayTooltip: true,
     icon: 'file_download',
-    label: t('generic_table.file_download'),
+    label: t('generic_table.download_dialog.button_label'),
     square: true,
-    tooltipMessage: t('generic_table.file_download_tooltip', { resourceName: props.resourceName }),
+    tooltipMessage: t('generic_table.download_dialog.button_tooltip', { resourceName: props.resourceName }),
     type: 'button' as 'button' | 'submit' | 'reset' | undefined,
     class: 'q-mx-sm',
     function: downloadRecords
@@ -73,22 +73,34 @@ const tableOptions = [
     dense: false,
     displayTooltip: true,
     icon: 'file_upload',
-    label: t('generic_table.file_upload'),
+    label: t('generic_table.upload_dialog.button_label'),
     square: true,
-    tooltipMessage: t('generic_table.file_upload_tooltip', { resourceName: props.resourceName }),
+    tooltipMessage: t('generic_table.upload_dialog.button_tooltip', { resourceName: props.resourceName }),
     type: 'button' as 'button' | 'submit' | 'reset' | undefined,
     function: uploadRecords
   }
 ]
 
-function openAddNewRecordDialog(): void {
-  emit('openAddNewRecordDialog');
+/**
+ * Opens the dialog to add a new record by emitting the 'openAddNewDialog' event.
+ * @returns void
+ */
+function openAddNewDialog(): void {
+  emit('openAddNewDialog');
 }
 
+/**
+ * Initiates the download of records by emitting the 'downloadRecords' event.
+ * @returns void
+ */
 function downloadRecords(): void {
   emit('downloadRecords');
 }
 
+/**
+ * Initiates the upload of records by emitting the 'uploadRecords' event.
+ * @returns void
+ */
 function uploadRecords(): void {
   emit('uploadRecords');
 }

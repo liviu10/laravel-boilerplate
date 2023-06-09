@@ -10,6 +10,7 @@
     :tooltip-message="item.tooltipMessage"
     :type="'button'"
     :class="item.id === 2 ? 'q-mx-sm' : ''"
+    @click="item.function"
   />
 </template>
 
@@ -25,7 +26,7 @@ const { t } = useI18n({});
 
 // Defines the event emitters for the component.
 const emit = defineEmits([
-  'openShowDetailsDialog',
+  'openShowDialog',
   'openEditDialog',
   'openDeleteDialog'
 ]);
@@ -42,9 +43,9 @@ const tableActions = [
     displayTooltip: true,
     icon: 'visibility',
     square: true,
-    tooltipMessage: t('generic_table.show_details_tooltip'),
+    tooltipMessage: t('generic_table.show_dialog.button_tooltip'),
     type: 'button',
-    function: openShowDetailsDialog
+    function: openShowDialog
   },
   {
     id: 2,
@@ -53,7 +54,7 @@ const tableActions = [
     displayTooltip: true,
     icon: 'edit',
     square: true,
-    tooltipMessage: t('generic_table.edit_tooltip'),
+    tooltipMessage: t('generic_table.edit_dialog.button_tooltip'),
     type: 'button',
     class: 'q-ms-sm',
     function: openEditDialog
@@ -65,20 +66,32 @@ const tableActions = [
     displayTooltip: true,
     icon: 'delete',
     square: true,
-    tooltipMessage: t('generic_table.delete_tooltip'),
+    tooltipMessage: t('generic_table.delete_dialog.button_tooltip'),
     type: 'button',
     function: openDeleteDialog
   }
 ]
 
-function openShowDetailsDialog(): void {
-  emit('openShowDetailsDialog');
+/**
+ * Opens the dialog to show details by emitting the 'openShowDialog' event.
+ * @returns void
+ */
+function openShowDialog(): void {
+  emit('openShowDialog');
 }
 
+/**
+ * Opens the dialog to edit by emitting the 'openEditDialog' event.
+ * @returns void
+ */
 function openEditDialog(): void {
   emit('openEditDialog');
 }
 
+/**
+ * Opens the dialog to delete by emitting the 'openDeleteDialog' event.
+ * @returns void
+ */
 function openDeleteDialog(): void {
   emit('openDeleteDialog');
 }
