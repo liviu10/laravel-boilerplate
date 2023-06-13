@@ -19,7 +19,7 @@
 // Import framework related utilities
 import { useI18n } from 'vue-i18n';
 
-// Import generic components
+// Import generic components, libraries and interfaces
 import GenericButton from './GenericButton.vue';
 
 // Defined the translation variable
@@ -27,7 +27,7 @@ const { t } = useI18n({});
 
 // Defines the event emitters for the component.
 const emit = defineEmits([
-  'openGenericTableDialog',
+  'openGenericTableDialog'
 ]);
 
 // Defines the props for the component.
@@ -35,9 +35,21 @@ const props = defineProps<{
   resourceName: string | undefined;
 }>();
 
+type DialogName = 'new-record' | 'download-records' | 'upload-records';
+
 /**
- * Represents an array of table options (add and filter buttons),
- * each defining a specific action or configuration for the table.
+ * Represents an array of table options.
+ * @property number id - The ID of the table option.
+ * @property string color - The color of the table option.
+ * @property boolean dense - Indicates whether the table option should have dense styling.
+ * @property boolean displayTooltip - Indicates whether the tooltip should be displayed for the table option.
+ * @property string icon - The icon name for the table option.
+ * @property string label - The label of the table option.
+ * @property boolean square - Indicates whether the table option should have square styling.
+ * @property string tooltipMessage - The tooltip message for the table option.
+ * @property ('button' | 'submit' | 'reset' | undefined) type - The type of the table option.
+ * @property Function function - The function to be executed when the table option is clicked.
+ * @property DialogName | null dialogType - The type of the dialog associated with the table option.
  */
 const tableOptions = [
   {
@@ -51,7 +63,7 @@ const tableOptions = [
     tooltipMessage: t('generic_table.add_new_dialog.button_tooltip', { resourceName: props.resourceName }),
     type: 'button' as 'button' | 'submit' | 'reset' | undefined,
     function: openGenericTableDialog,
-    dialogType: 'new-record' as 'new-record' | 'download-records' | 'upload-records' | null
+    dialogType: 'new-record' as DialogName | null
   },
   {
     id: 2,
@@ -65,7 +77,7 @@ const tableOptions = [
     type: 'button' as 'button' | 'submit' | 'reset' | undefined,
     class: 'q-mx-sm',
     function: openGenericTableDialog,
-    dialogType: 'download-record' as 'new-record' | 'download-records' | 'upload-records' | null
+    dialogType: 'download-records' as DialogName | null
   },
   {
     id: 3,
@@ -78,7 +90,7 @@ const tableOptions = [
     tooltipMessage: t('generic_table.upload_dialog.button_tooltip', { resourceName: props.resourceName }),
     type: 'button' as 'button' | 'submit' | 'reset' | undefined,
     function: openGenericTableDialog,
-    dialogType: 'upload-record' as 'new-record' | 'download-records' | 'upload-records' | null
+    dialogType: 'upload-records' as DialogName | null
   }
 ]
 
@@ -86,7 +98,7 @@ const tableOptions = [
  * Opens the dialog to add a new record by emitting the 'openAddNewDialog' event.
  * @returns void
  */
-function openGenericTableDialog(type: 'new-record' | 'download-records' | 'upload-records' | null): void {
+function openGenericTableDialog(type: DialogName | null): void {
   emit('openGenericTableDialog', type);
 }
 </script>

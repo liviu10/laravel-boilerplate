@@ -10,7 +10,7 @@
     :tooltip-message="item.tooltipMessage"
     :type="'button'"
     :class="item.id === 2 ? 'q-mx-sm' : ''"
-    @click="item.function"
+    @click="() => item.function(item.dialogType, props.rowId)"
   />
 </template>
 
@@ -26,14 +26,28 @@ const { t } = useI18n({});
 
 // Defines the event emitters for the component.
 const emit = defineEmits([
-  'openShowDialog',
-  'openEditDialog',
-  'openDeleteDialog'
+  'openGenericTableDialog'
 ]);
 
+// Defines the props for the component.
+const props = defineProps<{
+  rowId: number
+}>();
+
+type DialogName = 'show-record' | 'edit-record' | 'delete-record';
+
 /**
- * Represents an array of table action buttons (view, edit and delete buttons),
- * each defining a specific action or configuration for the table.
+ * Represents an array of table actions.
+ * @property number id - The ID of the table action.
+ * @property string color - The color of the table action.
+ * @property boolean dense - Indicates whether the table action should have dense styling.
+ * @property boolean displayTooltip - Indicates whether the tooltip should be displayed for the table action.
+ * @property string icon - The icon name for the table action.
+ * @property boolean square - Indicates whether the table action should have square styling.
+ * @property string tooltipMessage - The tooltip message for the table action.
+ * @property ('button' | 'submit' | 'reset' | undefined) type - The type of the table action.
+ * @property Function function - The function to be executed when the table action is clicked.
+ * @property DialogName | null dialogType - The type of the dialog associated with the table action.
  */
 const tableActions = [
   {
@@ -45,7 +59,8 @@ const tableActions = [
     square: true,
     tooltipMessage: t('generic_table.show_dialog.button_tooltip'),
     type: 'button',
-    function: openShowDialog
+    function: openGenericTableDialog,
+    dialogType: 'show-record' as DialogName | null
   },
   {
     id: 2,
@@ -57,7 +72,8 @@ const tableActions = [
     tooltipMessage: t('generic_table.edit_dialog.button_tooltip'),
     type: 'button',
     class: 'q-ms-sm',
-    function: openEditDialog
+    function: openGenericTableDialog,
+    dialogType: 'edit-record' as DialogName | null
   },
   {
     id: 3,
@@ -68,32 +84,17 @@ const tableActions = [
     square: true,
     tooltipMessage: t('generic_table.delete_dialog.button_tooltip'),
     type: 'button',
-    function: openDeleteDialog
+    function: openGenericTableDialog,
+    dialogType: 'delete-record' as DialogName | null
   }
 ]
 
 /**
- * Opens the dialog to show details by emitting the 'openShowDialog' event.
+ * Opens the dialog to add a new record by emitting the 'openAddNewDialog' event.
  * @returns void
  */
-function openShowDialog(): void {
-  emit('openShowDialog');
-}
-
-/**
- * Opens the dialog to edit by emitting the 'openEditDialog' event.
- * @returns void
- */
-function openEditDialog(): void {
-  emit('openEditDialog');
-}
-
-/**
- * Opens the dialog to delete by emitting the 'openDeleteDialog' event.
- * @returns void
- */
-function openDeleteDialog(): void {
-  emit('openDeleteDialog');
+function openGenericTableDialog(type: DialogName | null, rowId: number | null): void {
+  emit('openGenericTableDialog', type, rowId);
 }
 </script>
 

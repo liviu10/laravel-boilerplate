@@ -34,6 +34,7 @@ export default {
       button_tooltip: 'Click here to delete record!',
       title: 'Delete record',
       button_ok_label: 'Delete',
+      prompt_message: 'Are you sure you want to delete this record?',
     },
     actions_column_title: 'Actions',
     button_cancel_label: 'Cancel',

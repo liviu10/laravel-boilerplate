@@ -78,7 +78,12 @@ const notificationSystem = (
     } else if (typeof description === 'string') {
       const commonMessage = `
         <p class="q-mb-none">${title}! ${description}!</p>
-        <p class="q-mb-none">${additionalMessage?.message}</p>
+        <p class="q-mb-none">${
+          additionalMessage && additionalMessage !== undefined &&
+          (additionalMessage.hasOwnProperty('description') || additionalMessage.hasOwnProperty('message'))
+            ? (additionalMessage.description || additionalMessage.message) :
+            'There was a problem in processing your request!'
+        }</p>
       `;
       if (type === 'positive' || type === 'info') {
         return commonMessage;

@@ -1,4 +1,4 @@
-export default interface ApiResponseInterface {
+interface ApiResponseInterface {
   title: string
   description: string
   results: {
@@ -20,4 +20,17 @@ export default interface ApiResponseInterface {
     to: number,
     total: number
   }
+}
+
+interface ApiResponseSingleRecordInterface {
+  title: string,
+  description: string,
+  results: {
+    [key: string]: number | string | null
+  }[]
+}
+
+export {
+  ApiResponseInterface,
+  ApiResponseSingleRecordInterface
 }

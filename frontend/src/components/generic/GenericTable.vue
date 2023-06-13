@@ -41,19 +41,18 @@
             {{ col.value }}
           </q-td>
           <q-td v-if="displayTableActions">
-            <generic-table-actions
-              @openShowDialog="showRecord()"
-              @openEditDialog="editRecord()"
-              @openDeleteDialog="deleteRecord()"
-            />
+            <generic-table-actions :rowId="props.row.id" @openGenericTableDialog="openGenericTableDialog" />
           </q-td>
         </q-tr>
       </template>
     </q-table>
+    <!-- TODO:: Open dialog only if $props.singleRecord exist and it's not empty -->
     <generic-table-dialog
       v-if="openDialog"
       :open-dialog="openDialog"
       :dialog-name="dialogName"
+      :singleRecord="$props.singleRecord && $props.singleRecord.length ? $props.singleRecord : []"
+      :data-model="$props.dataModel"
       @closeDialog="closeDialog"
       @submitDialog="submitDialog"
     />
@@ -65,7 +64,7 @@
 import { useI18n } from 'vue-i18n';
 import { Ref, ref } from 'vue';
 
-// Import generic components
+// Import generic components, libraries and interfaces
 import GenericTableOptions from './GenericTableOptions.vue';
 import GenericTableActions from './GenericTableActions.vue';
 import GenericTableDialog from './GenericTableDialog.vue';
@@ -90,6 +89,8 @@ interface GenericTableProps {
   square?: boolean,
   displayTableOptions: boolean,
   displayTableActions: boolean,
+  singleRecord?: { [key: string]: number | string | null }[] | undefined,
+  dataModel: { [key: string]: string }[]
 }
 
 // Defined the translation variable
@@ -101,6 +102,12 @@ withDefaults(defineProps<GenericTableProps>(), {
   bordered: true,
   square: true,
 });
+
+// Defines the event emitters for the component.
+const emit = defineEmits([
+  'fetchSelectedRecord',
+  'submitDialog',
+]);
 
 /**
  * Returns an array of rows per page options to be
@@ -134,57 +141,40 @@ function displayTableTitle(tableTitle: string | undefined): string {
 }
 
 let openDialog: Ref<boolean> = ref(false)
-let dialogName: Ref<
-  'new-record' |
-  'download-records' |
-  'upload-records' |
-  'show-record' |
-  'edit-record' |
-  'delete-record' |
-  null
-> = ref(null)
+type DialogName = 'new-record' | 'download-records' | 'upload-records' | 'show-record' | 'edit-record' | 'delete-record';
+let dialogName: Ref<DialogName | null> = ref(null)
+const dialogNames = ['new-record', 'download-records', 'upload-records', 'show-record', 'edit-record', 'delete-record'];
 
 /**
- * Adds a new record by opening the dialog and setting the dialog name to 'new-record'.
+ * Opens a generic table dialog with the specified type and row ID.
+ * @param type - The type of dialog to open.
+ * @param rowId - The ID of the row associated with the dialog.
  * @returns void
  */
-function openGenericTableDialog(type: 'new-record' | 'download-records' | 'upload-records' | 'show-record' | 'edit-record' | 'delete-record' | null): void {
-  openDialog.value = true;
-  if (type && type !== null) {
-    dialogName.value = type;
-  } else {
+function openGenericTableDialog(type: DialogName | null, rowId: number | null): void {
+  if (type === null || typeof type !== 'string' || !dialogNames.includes(type)) {
     const notificationTitle = 'Warning';
-    const notificationMessage = 'Unable to open the dialog window';
+    const notificationMessage = 'Unable to open the dialog window! Check the console for more details';
     notificationSystem(notificationTitle, notificationMessage, 'warning');
-    console.log(`--> Unable to open the dialog window because the dialog type is: ${type}!`)
+    console.log(`--> Unable to open the dialog window because the dialog type you provided is: ${type} and this does not exist in the available dialog types: ${dialogNames.join(', ')}!`);
+    return;
   }
-}
 
-/**
- * Shows a specific record by setting the dialog name to 'show-record'.
- * @returns void
- */
-function showRecord(): void {
   openDialog.value = true;
-  dialogName.value = 'show-record';
-}
+  dialogName.value = type;
 
-/**
- * Initiates the editing of a record by setting the dialog name to 'edit-record'.
- * @returns void
- */
-function editRecord(): void {
-  openDialog.value = true;
-  dialogName.value = 'edit-record';
-}
-
-/**
- * Initiates the deletion of a record by setting the dialog name to 'delete-record'.
- * @returns void
- */
-function deleteRecord(): void {
-  openDialog.value = true;
-  dialogName.value = 'delete-record';
+  if (['show-record', 'edit-record', 'delete-record'].includes(type)) {
+    if (rowId === null) {
+      openDialog.value = false;
+      const notificationTitle = 'Warning';
+      const notificationMessage = 'Unable to open the dialog window! Check the console for more details';
+      notificationSystem(notificationTitle, notificationMessage, 'warning');
+      console.log(`--> Unable to open the dialog window because the record id you provided is: ${rowId}!`);
+      return;
+    } else {
+      emit('fetchSelectedRecord', rowId);
+    }
+  }
 }
 
 /**
@@ -200,9 +190,27 @@ function closeDialog(): void {
  * Saves the dialog by setting the openDialog value to false and resetting the dialog name.
  * @returns void
  */
-function submitDialog(): void {
-  openDialog.value = false;
-  dialogName.value = null;
+function submitDialog(type: DialogName | null, rowId: number | null): void {
+  if (type === null || typeof type !== 'string' || !dialogNames.includes(type)) {
+    const notificationTitle = 'Warning';
+    const notificationMessage = 'Unable to process the request! Check the console for more details';
+    notificationSystem(notificationTitle, notificationMessage, 'warning');
+    console.log(`--> Unable to process the request because the dialog type you provided is: ${type} and this does not exist in the available dialog types: ${dialogNames.join(', ')}!`);
+  } else {
+    openDialog.value = false;
+    dialogName.value = null;
+    if (rowId === null) {
+      openDialog.value = false;
+      const notificationTitle = 'Warning';
+      const notificationMessage = 'Unable to process the request! Check the console for more details';
+      notificationSystem(notificationTitle, notificationMessage, 'warning');
+      console.log(`--> Unable to process the request because the record id you provided is: ${rowId}!`);
+      return;
+    } else {
+      emit('submitDialog', type, rowId);
+    }
+    emit('submitDialog', type);
+  }
 }
 </script>
 

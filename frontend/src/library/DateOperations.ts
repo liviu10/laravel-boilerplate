@@ -14,7 +14,7 @@ enum DateOption {
  * This function will format the date based on the date type and date options.
  */
 function dateFormat(
-  date: string,
+  date: string | null,
   localDate: string,
   localDateOption: string
 ): string {

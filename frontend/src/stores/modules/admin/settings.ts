@@ -2,7 +2,7 @@ import { defineStore } from 'pinia';
 import { api } from 'src/boot/axios';
 
 // Import: interfaces, notification system and other settings
-import ApiResponseInterface from 'src/interfaces/ApiResponseInterface';
+import { ApiResponseInterface, ApiResponseSingleRecordInterface } from 'src/interfaces/ApiResponseInterface';
 import { notificationSystem } from 'src/library/NotificationSystem';
 
 /**
@@ -31,9 +31,25 @@ const apiSettingsResources: { [key: string]: { resource_name: string; resource_e
 const adminSettingsStore = defineStore('adminSettings', {
   state: () => ({
     allRecords: {} as ApiResponseInterface,
+    singleRecord: {} as ApiResponseSingleRecordInterface,
+    acceptedDomains: {
+      domain: {
+        key: 'domain',
+        name: 'Domain',
+        value: '',
+        type: 'q-input'
+      },
+      type: {
+        key: 'type',
+        name: 'Type',
+        value: '',
+        type: 'q-input'
+      }
+    }
   }),
   getters: {
     getAllRecords: (state) => state.allRecords,
+    getSingleRecord: (state) => state.singleRecord,
   },
   actions: {
     /**
@@ -42,26 +58,31 @@ const adminSettingsStore = defineStore('adminSettings', {
      * @returns Promise<void | ApiResponseInterface> -
      * A promise that resolves with the API response or void.
      */
-    async fetchAllRecords(resourceName: string): Promise<void | ApiResponseInterface> {
+    async fetchAllOrSingleRecords(resourceName: string, recordId?: number): Promise<void | ApiResponseInterface | ApiResponseSingleRecordInterface> {
       if (apiSettingsResources.hasOwnProperty(resourceName)) {
         const selectedResourceEndpoint = apiSettingsResources[resourceName].resource_endpoint;
         const apiEndpoint: string = selectedResourceEndpoint;
-        const fullApiUrl: string = apiEndpoint;
+        const fullApiUrl: string = recordId ? apiEndpoint + '/' + recordId : apiEndpoint;
 
         /**
          * Fetches data from the API endpoint.
          * @type ApiResponseInterface | void
          */
-        const apiResponse: ApiResponseInterface | void = await api
+        const apiResponse: ApiResponseInterface | ApiResponseSingleRecordInterface | void = await api
           .get(fullApiUrl)
           .then((response) => {
             if (response.data.count === 0) {
               const notificationTitle = 'Warning';
-              const notificationMessage = `There are no records to display for this resource: ${resourceName}`;
+              const notificationMessage = `There are no record(s) to display for this resource: ${resourceName}`;
               notificationSystem(notificationTitle, notificationMessage, 'warning');
             } else {
-              this.allRecords = response.data;
-              return this.allRecords;
+              if (recordId) {
+                this.singleRecord = response.data;
+                return this.singleRecord;
+              } else {
+                this.allRecords = response.data;
+                return this.allRecords;
+              }
             }
           })
           .catch((error) => {
@@ -92,6 +113,26 @@ const adminSettingsStore = defineStore('adminSettings', {
         const notificationMessage = `The resource you are requesting: <b>${resourceName}</b> does not exist! <br> Available resources: ${appendedString}`;
         notificationSystem(notificationTitle, notificationMessage, 'warning');
       }
+    },
+
+    async createRecord(resourceName: string, payload: object) {
+      debugger;
+    },
+
+    async downloadRecords(resourceName: string, payload: object) {
+      debugger;
+    },
+
+    async uploadRecords(resourceName: string, payload: object) {
+      debugger;
+    },
+
+    async editRecord(resourceName: string, recordId: number, payload: object) {
+      debugger;
+    },
+
+    async deleteRecord(resourceName: string, recordId: number) {
+      debugger;
     }
   },
 });
