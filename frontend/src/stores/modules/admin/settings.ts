@@ -14,10 +14,6 @@ const apiSettingsResources: { [key: string]: { resource_name: string; resource_e
     resource_name: 'accepted-domains',
     resource_endpoint: '/admin/settings/accepted-domains'
   },
-  'errors-and-notifications': {
-    resource_name: 'errors-and-notifications',
-    resource_endpoint: '/admin/settings/errors-and-notifications'
-  },
   'users': {
     resource_name: 'users',
     resource_endpoint: '/admin/settings/users'

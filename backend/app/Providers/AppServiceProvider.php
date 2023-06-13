@@ -7,6 +7,8 @@ use Illuminate\Support\ServiceProvider;
 
 // Import application's settings
 use App\BusinessLogic\Interfaces\Admin\Settings\AcceptedDomainInterface;
+use App\BusinessLogic\Interfaces\Admin\Settings\UserInterface;
+use App\BusinessLogic\Interfaces\Admin\Settings\UserRoleTypeInterface;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -17,6 +19,8 @@ class AppServiceProvider extends ServiceProvider
     {
         // Register application's settings interfaces and services
         $this->app->bind( AcceptedDomainInterface::class, AcceptedDomainService::class );
+        $this->app->bind( UserInterface::class, UserService::class );
+        $this->app->bind( UserRoleTypeInterface::class, UserRoleTypeService::class );
 
         // Register laravel telescope
         if ($this->app->environment('local')) {
