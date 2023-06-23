@@ -12,23 +12,24 @@
         <div v-if="displayDialogRecordDetails()">
           <q-list bordered separator>
             <q-item v-for="(item, index) in props.singleRecord" :key="index">
-              <q-item-section  v-if="typeof item === 'object'">
+              <q-item-section v-if="typeof item === 'object'">
                 <div v-for="(subItem, key) in item" :key="key">
                   <span class="text-bold">
                     {{ displayLabel(key) }}
                   </span>:
                   <span v-if="key === 'created_at' || key === 'updated_at' || key === 'deleted_at'">
-                    {{ dateFormat(subItem && subItem !== null && typeof subItem === 'string' ? subItem : null, 'ro-RO', 'full_date_and_time') }}
+                    {{ dateFormat(subItem && subItem !== null && typeof subItem === 'string' ? subItem : null, 'ro-RO',
+                      'full_date_and_time') }}
                   </span>
                   <div v-else-if="typeof subItem === 'object'">
                     <span v-for="(i, k) in subItem" :key="k">
                       {{ displayLabel(k) }}: {{ i }}
                     </span>
                   </div>
-                  <div v-else-if="key === 'is_active'">
+                  <span v-else-if="key === 'is_active'">
                     <q-badge v-if="subItem === 0" rounded color="negative" label="No" />
                     <q-badge v-if="subItem === 1" rounded color="positive" label="Yes" />
-                  </div>
+                  </span>
                   <span v-else>{{ subItem }}</span>
                 </div>
               </q-item-section>
@@ -40,16 +41,8 @@
       <q-card-section>
         <div v-if="displayDialogDataModel()">
           <div v-for="(model, index) in props.dataModel" :key="model.key">
-            <component
-              :is="model.type"
-              square
-              outlined
-              v-model="model.value"
-              :label="model.name"
-              :dense="true"
-              stack-label
-              :class="index === 1 ? 'q-mb-sm' : ''"
-            />
+            <component :is="model.type" square outlined v-model="model.value" :label="model.name" :dense="true"
+              stack-label :class="index === 1 ? 'q-mb-sm' : ''" />
           </div>
         </div>
 
@@ -60,15 +53,8 @@
 
       <q-card-actions align="center">
         <div v-for="(item, index) in filteredDialogOptions" :key="index">
-          <generic-button
-            :color="item.color"
-            :dense="item.dense"
-            :label="item.label"
-            :square="item.square"
-            :type="item.type"
-            :class="item.class"
-            @click="() => item.function()"
-          />
+          <generic-button :color="item.color" :dense="item.dense" :label="item.label" :square="item.square"
+            :type="item.type" :class="item.class" @click="() => item.function()" />
         </div>
       </q-card-actions>
     </q-card>
