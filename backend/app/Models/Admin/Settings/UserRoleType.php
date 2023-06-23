@@ -39,7 +39,7 @@ class UserRoleType extends Model
         'user_role_name',
         'user_role_description',
         'user_role_slug',
-        'user_role_is_active',
+        'is_active',
     ];
 
     /**
@@ -48,7 +48,7 @@ class UserRoleType extends Model
     * @var string
     */
     protected $attributes = [
-        'user_role_is_active' => false,
+        'is_active' => false,
     ];
 
     /**
@@ -79,7 +79,7 @@ class UserRoleType extends Model
     {
         try
         {
-            return $this->select('id', 'user_role_name', 'user_role_description', 'user_role_slug', 'user_role_is_active')->paginate(15);
+            return $this->select('id', 'user_role_name', 'user_role_description', 'user_role_slug', 'is_active')->paginate(15);
         }
         catch (\Illuminate\Database\QueryException $mysqlError)
         {
@@ -117,7 +117,7 @@ class UserRoleType extends Model
     {
         try
         {
-            return $this->select('id', 'user_role_name', 'user_role_description', 'user_role_slug', 'user_role_is_active')
+            return $this->select('id', 'user_role_name', 'user_role_description', 'user_role_slug', 'is_active')
                         ->orderBy($payload['column_name'], $payload['order_type'])
                         ->get();
         }
@@ -139,13 +139,13 @@ class UserRoleType extends Model
         {
             if ($payload['column_name'] === 'user_role_name')
             {
-                return $this->select('id', 'user_role_name', 'user_role_description', 'user_role_slug', 'user_role_is_active')
+                return $this->select('id', 'user_role_name', 'user_role_description', 'user_role_slug', 'is_active')
                             ->where($payload['column_name'], 'LIKE', $payload['filter_value'])
                             ->get();
             }
             else
             {
-                return $this->select('id', 'user_role_name', 'user_role_description', 'user_role_slug', 'user_role_is_active')
+                return $this->select('id', 'user_role_name', 'user_role_description', 'user_role_slug', 'is_active')
                             ->where($payload['column_name'], 'LIKE', '%' . $payload['filter_value'] . '%')
                             ->get();
             }

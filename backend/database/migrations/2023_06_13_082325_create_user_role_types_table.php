@@ -19,7 +19,7 @@ class CreateUserRoleTypesTable extends Migration
             $table->string('user_role_name');
             $table->string('user_role_description');
             $table->string('user_role_slug');
-            $table->string('user_role_is_active', 3);
+            $table->string('is_active', 3);
             $table->foreignId('user_id')->index('idx_user_id')->comment('The id of the user who added this record');
             $table->timestamps();
         });
