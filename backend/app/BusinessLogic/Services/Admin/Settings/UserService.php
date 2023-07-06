@@ -27,6 +27,31 @@ class UserService implements UserInterface
     }
 
     /**
+     * Fetch current authenticate user from the database.
+     * @return \Illuminate\Http\Response
+     */
+    public function handleFetchCurrentAuthUser()
+    {
+        $apiDisplayAllRecords = $this->modelName->fetchCurrentAuthUser();
+
+        if ($apiDisplayAllRecords instanceof \Illuminate\Pagination\LengthAwarePaginator)
+        {
+            if ($apiDisplayAllRecords->isEmpty())
+            {
+                return response($this->handleResponse('not_found'), 404);
+            }
+            else
+            {
+                return response($this->handleResponse('success', $apiDisplayAllRecords), 200);
+            }
+        }
+        else
+        {
+            return response($this->handleResponse('error_message'), 500);
+        }
+    }
+
+    /**
      * Fetch all the records from the database.
      * @return \Illuminate\Http\Response
      */
@@ -63,7 +88,9 @@ class UserService implements UserInterface
             'last_name'         => $request->get('last_name'),
             'nickname'          => $request->get('nickname'),
             'email'             => $request->get('email'),
+            'phone'             => $request->get('phone'),
             'password'          => $request->get('password'),
+            'profile_image'     => $request->get('profile_image'),
             'user_role_type_id' => 1
         ];
         $apiInsertRecord['full_name'] = $request->get('first_name') . ' ' . $request->get('last_name');
@@ -118,7 +145,9 @@ class UserService implements UserInterface
             'last_name'         => $request->get('last_name'),
             'nickname'          => $request->get('nickname'),
             'email'             => $request->get('email'),
+            'phone'             => $request->get('phone'),
             'password'          => $request->get('password'),
+            'profile_image'     => $request->get('profile_image'),
             'user_role_type_id' => 1
         ];
         $apiUpdateRecord['full_name'] = $request->get('first_name') . ' ' . $request->get('last_name');
@@ -135,57 +164,24 @@ class UserService implements UserInterface
     }
 
     /**
-     * Order all the records from the database.
-     * @param  \Illuminate\Http\Request  $request
+     * Delete a single record from the database
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function handleOrderTableColumn($request)
+    public function handleDestroy($id)
     {
-        $orderTableColumnPayload = [
-            'column_name' => $request->get('column_name'),
-            'order_type'  => $request->get('order_type')
-        ];
-        $apiOrderAllRecords = $this->modelName->orderTableColumn($orderTableColumnPayload);
+        $apiDisplaySingleRecord = $this->modelName->fetchSingleRecord($id);
 
-        if ($apiOrderAllRecords instanceof Collection)
+        if ($apiDisplaySingleRecord instanceof Collection)
         {
-            if ($apiOrderAllRecords->isEmpty())
+            if ($apiDisplaySingleRecord->isEmpty())
             {
                 return response($this->handleResponse('not_found'), 404);
             }
             else
             {
-                return response($this->handleResponse('success', $apiOrderAllRecords), 200);
-            }
-        }
-        else
-        {
-            return response($this->handleResponse('error_message'), 500);
-        }
-    }
-
-    /**
-     * Filter all the records from the database.
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function handleFilterTableColumn($request)
-    {
-        $filterTableColumnPayload = [
-            'column_name'  => $request->get('column_name'),
-            'filter_value' => $request->get('filter_value')
-        ];
-        $apiFilterAllRecords = $this->modelName->filterTableColumn($filterTableColumnPayload);
-
-        if ($apiFilterAllRecords instanceof Collection)
-        {
-            if ($apiFilterAllRecords->isEmpty())
-            {
-                return response($this->handleResponse('not_found'), 404);
-            }
-            else
-            {
-                return response($this->handleResponse('success', $apiFilterAllRecords), 200);
+                $this->modelName->deleteRecord($id);
+                return response($this->handleResponse('success'), 200);
             }
         }
         else

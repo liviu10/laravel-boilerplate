@@ -14,7 +14,6 @@ use Illuminate\Support\Facades\Route;
 |
 */
 // Import application's settings
-    use App\Http\Controllers\Admin\Settings\AcceptedDomainController;
     use App\Http\Controllers\Admin\Settings\UserController;
     use App\Http\Controllers\Admin\Settings\UserRoleTypeController;
 
@@ -27,19 +26,9 @@ Route::group([ 'prefix' => config('app.version') ], function () {
     Route::group([ 'prefix' => '/admin' ], function () {
         // Application's settings api endpoints
         Route::group([ 'prefix' => '/settings' ], function () {
-            // Accepted domains
-            Route::group([ 'prefix' => '/accepted-domains' ], function () {
-                Route::get('/restore/{id}', [AcceptedDomainController::class, 'restoreRecord']);
-                Route::get('/order/{columnName?}/{orderType?}', [AcceptedDomainController::class, 'orderTableColumn']);
-                Route::get('/filter/{columnName?}/{columnValue?}', [AcceptedDomainController::class, 'filterTableColumn']);
-            });
-            Route::apiResource('/accepted-domains', AcceptedDomainController::class);
             // Users
-            Route::group([ 'prefix' => '/users' ], function () {
-                Route::get('/order', [UserController::class, 'orderTableColumn']);
-                Route::get('/filter', [UserController::class, 'filterTableColumn']);
-            });
-            Route::apiResource('/users', UserController::class)->except('destroy');
+            Route::get('/users/current-auth', [UserController::class, 'currentAuthUser']);
+            Route::apiResource('/users', UserController::class);
             // User role types
             Route::group([ 'prefix' => '/user-role-types' ], function () {
                 Route::get('/order', [UserRoleTypeController::class, 'orderTableColumn']);

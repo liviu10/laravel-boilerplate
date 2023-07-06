@@ -17,6 +17,12 @@ use App\Http\Requests\Admin\Settings\UserRequest;
 interface UserInterface
 {
     /**
+     * Fetch current authenticated user.
+     * @return \Illuminate\Http\Response
+     */
+    public function handleFetchCurrentAuthUser();
+
+    /**
      * Fetch all the records from the database.
      * @return \Illuminate\Http\Response
      */
@@ -45,16 +51,9 @@ interface UserInterface
     public function handleUpdate(UserRequest $request, $id);
 
     /**
-     * Order all the records from the database.
-     * @param  \Illuminate\Http\Request  $request
+     * Delete a single record from the database
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
-    public function handleOrderTableColumn($request);
-
-    /**
-     * Filter all the records from the database.
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function handleFilterTableColumn($request);
+    public function handleDestroy($id);
 }

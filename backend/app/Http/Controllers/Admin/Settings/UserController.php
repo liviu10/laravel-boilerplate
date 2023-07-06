@@ -20,6 +20,15 @@ class UserController extends Controller
     }
 
     /**
+     * Fetch current authenticated user from the database. HTTP request [GET].
+     * @return \Illuminate\Http\Response
+     */
+    public function currentAuthUser()
+    {
+        return $this->userService->handleFetchCurrentAuthUser();
+    }
+
+    /**
      * Fetch all the records from the database. HTTP request [GET].
      * @return \Illuminate\Http\Response
      */
@@ -60,22 +69,12 @@ class UserController extends Controller
     }
 
     /**
-     * Order all the records from the database. HTTP request [GET]
-     * @param  \Illuminate\Http\Request  $request
+     * Delete a single record from the database. HTTP request [DELETE].
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function orderTableColumn(Request $request)
+    public function destroy($id)
     {
-        return $this->userService->handleOrderTableColumn($request);
-    }
-
-    /**
-     * Filter all the records from the database. HTTP request [GET]
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function filterTableColumn(Request $request)
-    {
-        return $this->userService->handleFilterTableColumn($request);
+        return $this->userService->handleDestroy($id);
     }
 }

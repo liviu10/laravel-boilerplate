@@ -6,9 +6,34 @@ use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Facades\Auth;
 use Laravel\Sanctum\HasApiTokens;
 use App\Traits\ApiLogError;
 
+/**
+ * Class User
+ * @package App\Models\Admin\Settings
+ *
+ * @property int $id
+ * @property string $full_name
+ * @property string $first_name
+ * @property string $last_name
+ * @property string $nickname
+ * @property string $email
+ * @property string $phone
+ * @property string $email_verified_at
+ * @property string $password
+ * @property string $profile_image
+ * @property int $user_role_type_id
+ * @property \Carbon\Carbon $created_at
+ * @property \Carbon\Carbon $updated_at
+ * @method fetchCurrentAuthUser
+ * @method fetchAllRecords
+ * @method createRecord
+ * @method fetchSingleRecord
+ * @method updateRecord
+ * @method deleteRecord
+ */
 class User extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable, ApiLogError;
@@ -52,7 +77,9 @@ class User extends Authenticatable
         'last_name',
         'nickname',
         'email',
+        'phone',
         'password',
+        'profile_image',
         'user_role_type_id',
     ];
 
@@ -72,7 +99,11 @@ class User extends Authenticatable
      * @var array<string, string>
      */
     protected $casts = [
+        'id' => 'integer',
         'email_verified_at' => 'datetime',
+        'created_at' => 'datetime',
+        'updated_at' => 'datetime',
+        'user_role_type_id' => 'integer',
     ];
 
     /**
@@ -87,24 +118,6 @@ class User extends Authenticatable
     ];
 
     /**
-     * Eloquent relationship between users and accepted domains.
-     *
-     */
-    public function accepted_domains()
-    {
-        return $this->hasMany('App\Models\Admin\Settings\AcceptedDomain');
-    }
-
-    /**
-     * Eloquent relationship between users and errors and notifications.
-     *
-     */
-    public function errors_and_notifications()
-    {
-        return $this->hasMany('App\Models\Admin\Settings\ErrorAndNotification');
-    }
-
-    /**
      * Eloquent relationship between users and user role types.
      *
      */
@@ -114,8 +127,38 @@ class User extends Authenticatable
     }
 
     /**
-     * SQL query to fetch all records.
-     * @return  Collection|Bool
+     * Fetches the current authenticated user from the Auth facade,
+     * excluding the password and email_verified_at fields.
+     * @return \Illuminate\Support\Collection|boolean Returns a collection
+     * of the authenticated user's attributes, excluding password and email_verified_at.
+     * @throws \Exception|\Illuminate\Database\QueryException Returns an boolean if there was a problem fetching
+     * the current authenticated user.
+     */
+    public function fetchCurrentAuthUser()
+    {
+        try
+        {
+            return collect(Auth::user())->except([ 'email_verified_at', 'password' ]);
+        }
+        catch (\Exception $exception)
+        {
+            $this->handleApiLogError($exception);
+            return false;
+        }
+        catch (\Illuminate\Database\QueryException $exception)
+        {
+            $this->handleApiLogError($exception);
+            return false;
+        }
+    }
+
+    /**
+     * Get all users with their user role type information.
+     * @return \Illuminate\Database\Eloquent\Collection|array|boolean
+     * Returns a collection of users with their associated user role type.
+     * If an error occurs during retrieval, a boolean will be returned.
+     * @throws \Exception|\Illuminate\Database\QueryException
+     * Throws an exception if an error occurs during retrieval.
      */
     public function fetchAllRecords()
     {
@@ -123,17 +166,25 @@ class User extends Authenticatable
         {
             return $this->select('id', 'full_name', 'nickname', 'email')->paginate(15);
         }
-        catch (\Illuminate\Database\QueryException $mysqlError)
+        catch (\Exception $exception)
         {
-            $this->handleApiLogError($mysqlError);
-            return False;
+            $this->handleApiLogError($exception);
+            return false;
+        }
+        catch (\Illuminate\Database\QueryException $exception)
+        {
+            $this->handleApiLogError($exception);
+            return false;
         }
     }
 
     /**
-     * SQL query to save a single record in the database.
-     * @param  array  $payload
-     * @return  Bool
+     * Register a new user.
+     * @param array $payload An associative array of values to register the user.
+     * @return \App\Models\User|bool Returns a user object if the register was successful,
+     * or a boolean otherwise.
+     * @throws \Exception|\Illuminate\Database\QueryException
+     * Throws an exception if an error occurs during registration.
      */
     public function createRecord($payload)
     {
@@ -145,23 +196,33 @@ class User extends Authenticatable
                 'last_name'         => $payload['last_name'],
                 'nickname'          => $payload['nickname'],
                 'email'             => $payload['email'],
+                'phone'             => $payload['phone'],
                 'password'          => bcrypt($payload['password']),
+                'profile_image'     => $payload['profile_image'],
                 'user_role_type_id' => $payload['user_role_type_id'],
             ]);
 
             return True;
         }
-        catch (\Illuminate\Database\QueryException $mysqlError)
+        catch (\Exception $exception)
         {
-            $this->handleApiLogError($mysqlError);
-            return False;
+            $this->handleApiLogError($exception);
+            return false;
+        }
+        catch (\Illuminate\Database\QueryException $exception)
+        {
+            $this->handleApiLogError($exception);
+            return false;
         }
     }
 
     /**
-     * SQL query to fetch a single record from the database.
-     * @param  int  $id
-     * @return  Collection|Bool
+     * Get user details with their user role type information.
+     * @return \Illuminate\Database\Eloquent\Collection|array|boolean
+     * Returns a collection of users with their associated user role type.
+     * If an error occurs during retrieval, a boolean will be returned.
+     * @throws \Exception|\Illuminate\Database\QueryException
+     * Throws an exception if an error occurs during retrieval.
      */
     public function fetchSingleRecord($id)
     {
@@ -171,23 +232,31 @@ class User extends Authenticatable
                         ->where('id', '=', $id)
                         ->with([
                             'user_role_type' => function ($query) {
-                                $query->select('id', 'user_role_name', 'user_role_description', 'user_role_slug', 'is_active');
+                                $query->select('id', 'user_role_name', 'is_active')->where('is_active', true);
                             }
                         ])
                         ->get();
         }
-        catch (\Illuminate\Database\QueryException $mysqlError)
+        catch (\Exception $exception)
         {
-            $this->handleApiLogError($mysqlError);
-            return False;
+            $this->handleApiLogError($exception);
+            return false;
+        }
+        catch (\Illuminate\Database\QueryException $exception)
+        {
+            $this->handleApiLogError($exception);
+            return false;
         }
     }
 
     /**
-     * SQL query to update a single record in the database.
-     * @param  array  $payload
-     * @param  int  $id
-     * @return  Bool
+     * Update the user profile information.
+     * @param array $payload An associative array of values to update the user.
+     * @param int $id The ID of the user to update.
+     * @return bool Returns true if the update was successful,
+     * or an boolean otherwise.
+     * @throws \Exception|\Illuminate\Database\QueryException
+     * Throws an exception if an error occurs during the update.
      */
     public function updateRecord($payload, $id)
     {
@@ -199,65 +268,50 @@ class User extends Authenticatable
                 'last_name'         => $payload['last_name'],
                 'nickname'          => $payload['nickname'],
                 'email'             => $payload['email'],
+                'phone'             => $payload['phone'],
                 'password'          => bcrypt($payload['password']),
+                'profile_image'     => $payload['profile_image'],
                 'user_role_type_id' => $payload['user_role_type_id'],
             ]);
 
             return True;
         }
-        catch (\Illuminate\Database\QueryException $mysqlError)
+        catch (\Exception $exception)
         {
-            $this->handleApiLogError($mysqlError);
-            return False;
+            $this->handleApiLogError($exception);
+            return false;
+        }
+        catch (\Illuminate\Database\QueryException $exception)
+        {
+            $this->handleApiLogError($exception);
+            return false;
         }
     }
 
     /**
-     * SQL query to order records in ascending or descending order.
-     * @param  array  $payload
-     * @return  Collection|Bool
+     * Deletes a user from the database.
+     * @param int $id The ID of the user to delete.
+     * @return bool Whether the user was successfully deleted.
+     * @throws \Exception|\Illuminate\Database\QueryException
+     * Throws an exception if an error occurs during deletion.
      */
-    public function orderTableColumn($payload)
+    public function deleteRecord(int $id)
     {
         try
         {
-            return $this->select('id', 'full_name', 'nickname', 'email')
-                        ->orderBy($payload['column_name'], $payload['order_type'])
-                        ->get();
-        }
-        catch (\Illuminate\Database\QueryException $mysqlError)
-        {
-            $this->handleApiLogError($mysqlError);
-            return False;
-        }
-    }
+            $this->find($id)->delete();
 
-    /**
-     * SQL query to filter the database table.
-     * @param  array  $payload
-     * @return  Collection|Bool
-     */
-    public function filterTableColumn($payload)
-    {
-        try
-        {
-            if ($payload['column_name'] === 'type')
-            {
-                return $this->select('id', 'full_name', 'nickname', 'email')
-                            ->where($payload['column_name'], 'LIKE', $payload['filter_value'])
-                            ->get();
-            }
-            else
-            {
-                return $this->select('id', 'full_name', 'nickname', 'email')
-                            ->where($payload['column_name'], 'LIKE', '%' . $payload['filter_value'] . '%')
-                            ->get();
-            }
+            return true;
         }
-        catch (\Illuminate\Database\QueryException $mysqlError)
+        catch (\Exception $exception)
         {
-            $this->handleApiLogError($mysqlError);
-            return False;
+            $this->handleApiLogError($exception);
+            return false;
+        }
+        catch (\Illuminate\Database\QueryException $exception)
+        {
+            $this->handleApiLogError($exception);
+            return false;
         }
     }
 }
