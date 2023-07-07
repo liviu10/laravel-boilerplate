@@ -11,9 +11,14 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('migration_operations', function (Blueprint $table) {
+        Schema::create('filters', function (Blueprint $table) {
             $table->id()->index('idx_id');
-            $table->string('name');
+            $table->unsignedBigInteger('filterable_id')->nullable();
+            $table->string('filterable_type')->nullable();
+            $table->string('key');
+            $table->string('type');
+            $table->string('label');
+            $table->boolean('is_active')->default(false);
             $table->timestamps();
         });
     }
@@ -23,6 +28,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('migration_operations');
+        Schema::dropIfExists('filters');
     }
 };

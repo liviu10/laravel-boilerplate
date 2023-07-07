@@ -100,9 +100,9 @@ class User extends Authenticatable
      */
     protected $casts = [
         'id' => 'integer',
-        'email_verified_at' => 'datetime',
-        'created_at' => 'datetime',
-        'updated_at' => 'datetime',
+        'email_verified_at' => 'datetime:d.m.Y H:i',
+        'created_at' => 'datetime:d.m.Y H:i',
+        'updated_at' => 'datetime:d.m.Y H:i',
         'user_role_type_id' => 'integer',
     ];
 
@@ -124,6 +124,15 @@ class User extends Authenticatable
     public function user_role_type()
     {
         return $this->belongsTo('App\Models\Admin\Settings\UserRoleType');
+    }
+
+    /**
+     * Get all the filters associated with the model.
+     *
+     */
+    public function filter()
+    {
+        return $this->morphMany(Filter::class, 'filterable');
     }
 
     /**
@@ -153,9 +162,9 @@ class User extends Authenticatable
     }
 
     /**
-     * Get all users with their user role type information.
+     * Get all the records from the database.
      * @return \Illuminate\Database\Eloquent\Collection|array|boolean
-     * Returns a collection of users with their associated user role type.
+     * Returns a collection of records.
      * If an error occurs during retrieval, a boolean will be returned.
      * @throws \Exception|\Illuminate\Database\QueryException
      * Throws an exception if an error occurs during retrieval.
@@ -179,12 +188,12 @@ class User extends Authenticatable
     }
 
     /**
-     * Register a new user.
-     * @param array $payload An associative array of values to register the user.
-     * @return \App\Models\User|bool Returns a user object if the register was successful,
+     * Create a new record.
+     * @param array $payload An associative array of values to create a new record.
+     * @return \App\Models\User|bool Returns a record object if the creation was successful,
      * or a boolean otherwise.
      * @throws \Exception|\Illuminate\Database\QueryException
-     * Throws an exception if an error occurs during registration.
+     * Throws an exception if an error occurs during creation.
      */
     public function createRecord($payload)
     {
@@ -217,9 +226,9 @@ class User extends Authenticatable
     }
 
     /**
-     * Get user details with their user role type information.
+     * Get record details from the database.
      * @return \Illuminate\Database\Eloquent\Collection|array|boolean
-     * Returns a collection of users with their associated user role type.
+     * Returns a collection of record with their associated relation.
      * If an error occurs during retrieval, a boolean will be returned.
      * @throws \Exception|\Illuminate\Database\QueryException
      * Throws an exception if an error occurs during retrieval.
@@ -250,9 +259,9 @@ class User extends Authenticatable
     }
 
     /**
-     * Update the user profile information.
-     * @param array $payload An associative array of values to update the user.
-     * @param int $id The ID of the user to update.
+     * Update an existing record.
+     * @param array $payload An associative array of values to update the record.
+     * @param int $id The ID of the record to update.
      * @return bool Returns true if the update was successful,
      * or an boolean otherwise.
      * @throws \Exception|\Illuminate\Database\QueryException
@@ -289,9 +298,9 @@ class User extends Authenticatable
     }
 
     /**
-     * Deletes a user from the database.
-     * @param int $id The ID of the user to delete.
-     * @return bool Whether the user was successfully deleted.
+     * Deletes a a record from the database.
+     * @param int $id The ID of the record to delete.
+     * @return bool Whether the record was successfully deleted.
      * @throws \Exception|\Illuminate\Database\QueryException
      * Throws an exception if an error occurs during deletion.
      */
