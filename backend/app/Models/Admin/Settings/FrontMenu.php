@@ -4,34 +4,36 @@ namespace App\Models\Admin\Settings;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use App\Traits\ApiLogError;
 
 /**
- * Class UserRoleType
+ * Class FrontMenu
  * @package App\Models\Admin\Settings
 
  * @property int $id
- * @property string $user_role_name
- * @property string $user_role_description
- * @property string $user_role_slug
+ * @property string $path
+ * @property string $name
+ * @property string $component
+ * @property string $title
+ * @property string $caption
+ * @property string $icon
  * @property boolean $is_active
  * @property \Carbon\Carbon $created_at
  * @property \Carbon\Carbon $updated_at
  * @method fetchAllRecords
  * @method createRecord
- * @method fetchSingleRecord
  * @method updateRecord
- * @method deleteRecord
  */
-class UserRoleType extends Model
+class FrontMenu extends Model
 {
-    use HasFactory;
+    use HasFactory, ApiLogError;
 
     /**
      * The table associated with the model.
      *
      * @var string
      */
-    protected $table = 'user_role_types';
+    protected $table = 'front_menus';
 
     /**
      * The primary key associated with the table.
@@ -53,9 +55,12 @@ class UserRoleType extends Model
      * @var string
      */
     protected $fillable = [
-        'user_role_name',
-        'user_role_description',
-        'user_role_slug',
+        'path',
+        'name',
+        'component',
+        'title',
+        'caption',
+        'icon',
         'is_active',
     ];
 
@@ -92,12 +97,12 @@ class UserRoleType extends Model
     ];
 
     /**
-     * Eloquent relationship between user role types and users.
+     * Eloquent relationship between front menus and users.
      *
      */
     public function users()
     {
-        return $this->hasMany('App\Models\Admin\Settings\User');
+        return $this->belongsTo('App\Models\Admin\Settings\User');
     }
 
     /**
@@ -109,7 +114,7 @@ class UserRoleType extends Model
     {
         try
         {
-            return $this->select('id', 'user_role_name', 'user_role_description', 'user_role_slug', 'is_active')->paginate(15);
+            return $this->select('id', 'path', 'name')->get();
         }
         catch (\Illuminate\Database\QueryException $mysqlError)
         {
@@ -131,10 +136,13 @@ class UserRoleType extends Model
         try
         {
             $this->create([
-                'user_role_name'         => $payload['user_role_name'],
-                'user_role_description'  => $payload['user_role_description'],
-                'user_role_slug'         => $payload['user_role_slug'],
-                'is_active'              => $payload['is_active'],
+                'path'      => $payload['path'],
+                'name'      => $payload['name'],
+                'component' => $payload['component'],
+                'title'     => $payload['title'],
+                'caption'   => $payload['caption'],
+                'icon'      => $payload['icon'],
+                'is_active' => $payload['is_active'],
             ]);
 
             return True;
@@ -152,9 +160,12 @@ class UserRoleType extends Model
     }
 
     /**
-     * SQL query to fetch a single record from the database.
-     * @param  int  $id
-     * @return  Collection|Bool
+     * Get record details from the database.
+     * @return \Illuminate\Database\Eloquent\Collection|array|boolean
+     * Returns a collection of record with their associated relation.
+     * If an error occurs during retrieval, a boolean will be returned.
+     * @throws \Exception|\Illuminate\Database\QueryException
+     * Throws an exception if an error occurs during retrieval.
      */
     public function fetchSingleRecord($id)
     {
@@ -164,17 +175,22 @@ class UserRoleType extends Model
                         ->where('id', '=', $id)
                         ->get();
         }
-        catch (\Illuminate\Database\QueryException $mysqlError)
+        catch (\Exception $exception)
         {
-            $this->handleApiLogError($mysqlError);
-            return False;
+            $this->handleApiLogError($exception);
+            return false;
+        }
+        catch (\Illuminate\Database\QueryException $exception)
+        {
+            $this->handleApiLogError($exception);
+            return false;
         }
     }
 
     /**
      * Update the record.
      * @param array $payload An associative array of values to update the record.
-     * @param int $id The ID of the user to update.
+     * @param int $id The ID of the record to update.
      * @return bool Returns true if the update was successful,
      * or an boolean otherwise.
      * @throws \Exception|\Illuminate\Database\QueryException
@@ -185,40 +201,16 @@ class UserRoleType extends Model
         try
         {
             $this->find($id)->update([
-                'user_role_name'         => $payload['user_role_name'],
-                'user_role_description'  => $payload['user_role_description'],
-                'user_role_slug'         => $payload['user_role_slug'],
-                'is_active'              => $payload['is_active'],
+                'path'      => $payload['path'],
+                'name'      => $payload['name'],
+                'component' => $payload['component'],
+                'title'     => $payload['title'],
+                'caption'   => $payload['caption'],
+                'icon'      => $payload['icon'],
+                'is_active' => $payload['is_active'],
             ]);
 
             return True;
-        }
-        catch (\Exception $exception)
-        {
-            $this->handleApiLogError($exception);
-            return false;
-        }
-        catch (\Illuminate\Database\QueryException $exception)
-        {
-            $this->handleApiLogError($exception);
-            return false;
-        }
-    }
-
-    /**
-     * Deletes a record from the database.
-     * @param int $id The ID of the user to delete.
-     * @return bool Whether the user was successfully deleted.
-     * @throws \Exception|\Illuminate\Database\QueryException
-     * Throws an exception if an error occurs during deletion.
-     */
-    public function deleteRecord(int $id)
-    {
-        try
-        {
-            $this->find($id)->delete();
-
-            return true;
         }
         catch (\Exception $exception)
         {
