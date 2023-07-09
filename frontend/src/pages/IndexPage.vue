@@ -8,7 +8,6 @@
       :display-table-options="true"
       :display-table-actions="true"
       :single-record="getSingleRecord.results ? getSingleRecord.results : []"
-      :data-model="Object.values(adminSettings.acceptedDomains)"
       @fetchSelectedRecord="fetchSelectedRecord"
       @submitDialog="submitDialog"
     />
@@ -25,13 +24,14 @@ import { adminSettingsStore } from 'src/stores/modules/admin/settings';
 
 // Import generic components, libraries and interfaces
 import AdminPageTitle from 'src/components/AdminPageTitle.vue';
+import UserColumns from 'src/columns/userColumns';
 import GenericTable from 'src/components/generic/GenericTable.vue';
 
 // Defined the quasar variable
 const $q = useQuasar();
 
 // Defined the resource name
-const resourceName = ref('accepted-domains')
+const resourceName = ref('users')
 
 // Instantiate the pinia store
 const adminSettings = adminSettingsStore();

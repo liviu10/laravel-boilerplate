@@ -10,10 +10,6 @@ import { notificationSystem } from 'src/library/NotificationSystem';
  * @type Object.<string, { resource_name: string; resource_endpoint: string }>
  */
 const apiSettingsResources: { [key: string]: { resource_name: string; resource_endpoint: string } } = {
-  'accepted-domains': {
-    resource_name: 'accepted-domains',
-    resource_endpoint: '/admin/settings/accepted-domains'
-  },
   'users': {
     resource_name: 'users',
     resource_endpoint: '/admin/settings/users'
@@ -28,20 +24,6 @@ const adminSettingsStore = defineStore('adminSettings', {
   state: () => ({
     allRecords: {} as ApiResponseInterface,
     singleRecord: {} as ApiResponseSingleRecordInterface,
-    acceptedDomains: {
-      domain: {
-        key: 'domain',
-        name: 'Domain',
-        value: '',
-        type: 'q-input'
-      },
-      type: {
-        key: 'type',
-        name: 'Type',
-        value: '',
-        type: 'q-input'
-      }
-    }
   }),
   getters: {
     getAllRecords: (state) => state.allRecords,

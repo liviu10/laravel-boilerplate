@@ -127,15 +127,6 @@ class User extends Authenticatable
     }
 
     /**
-     * Get all the filters associated with the model.
-     *
-     */
-    public function filter()
-    {
-        return $this->morphMany(Filter::class, 'filterable');
-    }
-
-    /**
      * Fetches the current authenticated user from the Auth facade,
      * excluding the password and email_verified_at fields.
      * @return \Illuminate\Support\Collection|boolean Returns a collection
