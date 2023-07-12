@@ -100,6 +100,7 @@ module.exports = configure(function (ctx) {
 
       // Quasar plugins
       plugins: [
+        'Meta',
         'Notify',
         'Loading'
       ],
@@ -142,7 +143,7 @@ module.exports = configure(function (ctx) {
       manifest: {
         name: 'Generic Dashboard',
         short_name: 'Generic Dashboard',
-        description: '',
+        description: 'Generic Dashboard Administration Panel',
         display: 'standalone',
         orientation: 'portrait',
         background_color: '#ffffff',

@@ -1,45 +1,29 @@
 // English translations
 
 export default {
-  generic_table: {
-    title: 'Default table title',
-    add_new_dialog: {
-      button_label: 'Add new',
-      button_tooltip: 'Click here to add a new {resourceName}!',
-      title: 'Add a new record',
-      button_ok_label: 'Save',
-    },
-    download_dialog: {
-      button_label: 'Download',
-      button_tooltip: 'Click here to download {resourceName}!',
-      title: 'Download all records',
-      button_ok_label: 'Download',
-    },
-    upload_dialog: {
-      button_label: 'Upload',
-      button_tooltip: 'Click here to upload {resourceName}!',
-      title: 'Upload records',
-      button_ok_label: 'Upload',
-    },
-    show_dialog: {
-      button_tooltip: 'Click here to show record details!',
-      title: 'Show record details',
-    },
-    edit_dialog: {
-      button_tooltip: 'Click here to edit record details!',
-      title: 'Edit record details',
-      button_ok_label: 'Update',
-    },
-    delete_dialog: {
-      button_tooltip: 'Click here to delete record!',
-      title: 'Delete record',
-      button_ok_label: 'Delete',
-      prompt_message: 'Are you sure you want to delete this record?',
-    },
-    actions_column_title: 'Actions',
-    button_cancel_label: 'Cancel',
-    button_close_label: 'Close',
-    default_button_label: 'Default button',
-    default_dialog_title: 'Default dialog title'
+  admin: {
+    generic: {
+      application_name: 'Generic boilerplate',
+      page_title: 'Admin page title',
+      welcome: 'Welcome {authUserName}',
+      page_description: `
+        {applicationName} dashboard application is a feature-rich and customizable
+        platform that provides users with an extensive range of capabilities.
+        Built with the combination of Vue.js and TypeScript, it offers a visually
+        appealing and intuitive user interface. Users can effortlessly modify their profiles,
+        including personal information and preferences, while also having control over
+        user roles and permissions. This application empowers users to create dynamic
+        and engaging pages and articles, enabling seamless content management.
+        Additionally, the dashboard facilitates convenient media file uploads,
+        ensuring smooth integration of multimedia elements. With its powerful tools
+        and flexibility, this application serves as a comprehensive solution for efficient
+        management and customization.
+      `,
+      documentation: `
+        For a more comprehensive understanding and detailed insights into the
+        {applicationName}, I recommend consulting the accompanying <a href="{documentationPageUrl}">documentation</a>,
+        which provides in-depth information and visuals.
+      `
+    }
   }
 };

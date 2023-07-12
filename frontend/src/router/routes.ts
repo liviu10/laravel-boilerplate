@@ -1,20 +1,24 @@
 import { RouteRecordRaw } from 'vue-router';
+import adminSettings from 'src/router/adminSettings';
 
 const routes: RouteRecordRaw[] = [
   {
-    path: '/',
+    path: '/admin',
     component: () => import('src/layouts/MainLayout.vue'),
     children: [
       {
-        path: '',
+        path: '/admin',
         name: 'HomePage',
-        component: () => import('pages/IndexPage.vue'),
+        component: () => import('pages/admin/HomePage.vue'),
         meta: {
-          title: 'Home',
+          title: 'Dashboard',
           caption: 'Lorem ipsum dolor sit amet consectetur adipisicing elit.',
           icon: 'home'
         },
-      }
+      },
+
+      // Admin settings urls
+      ...adminSettings,
     ],
   },
 

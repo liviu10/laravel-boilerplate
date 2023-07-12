@@ -93,25 +93,25 @@ const adminSettingsStore = defineStore('adminSettings', {
       }
     },
 
-    async createRecord(resourceName: string, payload: object) {
-      debugger;
-    },
+    // async createRecord(resourceName: string, payload: object) {
+    //   debugger;
+    // },
 
-    async downloadRecords(resourceName: string, payload: object) {
-      debugger;
-    },
+    // async downloadRecords(resourceName: string, payload: object) {
+    //   debugger;
+    // },
 
-    async uploadRecords(resourceName: string, payload: object) {
-      debugger;
-    },
+    // async uploadRecords(resourceName: string, payload: object) {
+    //   debugger;
+    // },
 
-    async editRecord(resourceName: string, recordId: number, payload: object) {
-      debugger;
-    },
+    // async editRecord(resourceName: string, recordId: number, payload: object) {
+    //   debugger;
+    // },
 
-    async deleteRecord(resourceName: string, recordId: number) {
-      debugger;
-    }
+    // async deleteRecord(resourceName: string, recordId: number) {
+    //   debugger;
+    // }
   },
 });
 
