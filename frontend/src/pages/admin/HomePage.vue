@@ -4,19 +4,7 @@
 
     <admin-page-description :admin-application-name="applicationName" />
 
-    <admin-page-container :admin-route-name="currentRouteName">
-      <template v-slot:content>
-        <q-card>
-          <q-card-section>
-            <div class="text-h6">Card title</div>
-          </q-card-section>
-
-          <q-card-section class="q-pt-none">
-            Card description
-          </q-card-section>
-        </q-card>
-      </template>
-    </admin-page-container>
+    <admin-page-container :admin-route-name="currentRouteName" />
   </q-page>
 </template>
 

@@ -4,6 +4,8 @@ export default {
   admin: {
     generic: {
       application_name: 'Generic boilerplate',
+      designed_by: 'Designed by',
+      all_rights_reserved: 'All rights reserved',
       page_title: 'Admin page title',
       welcome: 'Welcome {authUserName}',
       page_description: `

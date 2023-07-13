@@ -4,7 +4,7 @@ import adminSettings from 'src/router/adminSettings';
 const routes: RouteRecordRaw[] = [
   {
     path: '/admin',
-    component: () => import('src/layouts/MainLayout.vue'),
+    component: () => import('src/layouts/AdminLayout.vue'),
     children: [
       {
         path: '/admin',

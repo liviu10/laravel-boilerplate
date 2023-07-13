@@ -1,5 +1,5 @@
 <template>
-  <q-header elevated class="main main__header">
+  <q-header elevated class="admin-layout admin-layout__header">
     <q-toolbar>
       <q-btn
         flat
@@ -9,8 +9,8 @@
         aria-label="Menu"
         @click="emit('toggleLeftDrawer', true)"
       />
-      <q-toolbar-title class="main main__header__title">
-        {{ applicationTitle }}
+      <q-toolbar-title class="admin-layout admin-layout__header__title">
+        {{ adminApplicationName }}
       </q-toolbar-title>
     </q-toolbar>
   </q-header>
@@ -20,11 +20,11 @@
 // Import framework related utilities
 import { defineEmits } from 'vue';
 
-interface HeaderProps {
-  applicationTitle: string;
+interface AdminHeaderProps {
+  adminApplicationName: string;
 }
 const emit = defineEmits<{
   (event: 'toggleLeftDrawer', value: boolean): void;
 }>();
-withDefaults(defineProps<HeaderProps>(), {});
+withDefaults(defineProps<AdminHeaderProps>(), {});
 </script>

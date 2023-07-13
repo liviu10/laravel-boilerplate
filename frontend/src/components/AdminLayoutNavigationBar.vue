@@ -52,7 +52,7 @@
 
 <script setup lang="ts">
 import type { RouteRecordRaw } from 'vue-router';
-export interface NavigationBarProps {
+export interface AdminNavigationBarProps {
   routerConfig: RouteRecordRaw;
 }
 
@@ -73,5 +73,5 @@ function displayNavigationCaption(navigationCaption: string | unknown): string {
   return String(navigationCaption);
 }
 
-withDefaults(defineProps<NavigationBarProps>(), {});
+withDefaults(defineProps<AdminNavigationBarProps>(), {});
 </script>
