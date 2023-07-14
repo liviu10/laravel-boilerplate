@@ -1,6 +1,6 @@
 <template>
   <div class="row admin-section admin-section--header">
-    <div class="col-xs-12 col-sm-12 col-md-10 col-lg-8 col-xl-8 admin-section__title">
+    <div class="col-xs-10 col-sm-10 col-md-10 col-lg-8 col-xl-8 admin-section__title">
       {{ displayAdminPageTitle(adminPageTitle) }}
     </div>
   </div>

@@ -1,7 +1,7 @@
 <template>
   <div class="row admin-section admin-section--container">
-    <div class="col-xs-12 col-sm-12 col-md-10 col-lg-8 col-xl-8">
-      <slot name="content"></slot>
+    <div class="col-xs-10 col-sm-10 col-md-10 col-lg-8 col-xl-8">
+      <slot name="admin-content"></slot>
     </div>
   </div>
 </template>
