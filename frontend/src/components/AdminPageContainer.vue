@@ -8,11 +8,7 @@
 
 <script setup lang="ts">
 // Import vue related utilities
-import { useI18n } from 'vue-i18n';
 import { RouteRecordName } from 'vue-router';
-
-// Defined the translation variable
-const { t } = useI18n({});
 
 interface AdminPageContainerInterface {
   adminRouteName?: RouteRecordName | null | undefined;
@@ -28,7 +24,6 @@ withDefaults(defineProps<AdminPageContainerInterface>(), {});
   @include flex-center();
   margin: rem-convertor(16px) 0;
   &--container {
-    border: 1px solid green;
     padding: rem-convertor(16px) 0;
   }
 }

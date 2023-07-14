@@ -1,50 +1,77 @@
 <template>
-  <q-card class="">
+  <q-card
+    :dark="dark"
+    :square="square"
+    :flat="flat"
+    :bordered="bordered"
+    :style="cssStyle"
+  >
     <q-card-section>
-      <div class="">My account</div>
+      <p class="card-title">
+        {{ cardTitle }}
+      </p>
     </q-card-section>
 
     <q-card-section>
-      The profile page allows users to update their personal information such as first name, last name, nickname, phone number, password, and profile image.
+      <p class="card-body">
+        {{ cardBody }}
+      </p>
     </q-card-section>
 
-    <q-card-actions>
-      <q-btn>View more</q-btn>
+    <q-card-actions v-if="cardAction.visible">
+      <generic-button :color="cardAction.color" :label="cardAction.label" />
     </q-card-actions>
   </q-card>
 </template>
 
 <script setup lang="ts">
 // Import framework related utilities
-import { useI18n } from 'vue-i18n';
 
-// interface GenericCardProps {
-//   color?: string;
-//   dense?: boolean;
-//   disable?: boolean;
-//   displayTooltip?: boolean;
-//   flat?: boolean;
-//   icon?: string;
-//   label?: string | number;
-//   noCaps?: boolean;
-//   noWrap?: boolean;
-//   outline?: boolean;
-//   padding?: string;
-//   round?: boolean;
-//   rounded?: boolean;
-//   size?: string;
-//   square?: boolean;
-//   stack?: boolean;
-//   textColor?: string;
-//   tooltipMessage?: string;
-//   type?: 'button' | 'submit' | 'reset' | undefined;
-// }
+// Import generic components, libraries and interfaces
+import GenericButton from 'src/components/generic/GenericButton.vue';
 
-// Defined the translation variable
-const { t } = useI18n({});
+interface GenericCardProps {
+  dark?: boolean,
+  square?: boolean,
+  flat?: boolean,
+  bordered?: boolean,
+  cssStyle?: string,
+  cardTitle: string,
+  cardBody: string,
+  cardAction: {
+    visible: boolean,
+    label: string,
+    color: string
+  }
+}
 
 // Defines the event emitters for the component.
-// withDefaults(defineProps<GenericCardProps>(), {});
+withDefaults(defineProps<GenericCardProps>(), {});
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+@import 'src/css/utilities/_rem_convertor.scss';
+
+.q-card {
+  border: rem-convertor(1px) solid #000000;
+  box-shadow: none;
+  &__section {
+    & .card-title, & .card-body {
+      margin-bottom: 0;
+    }
+    & .card-title {
+      font-size: rem-convertor(20px);
+      font-weight: 700;
+      text-transform: uppercase;
+      text-align: center;
+    }
+  }
+  &__actions {
+    & .q-btn {
+      margin-left: auto;
+      margin-right: auto;
+      border-radius: 0;
+    }
+  }
+}
+</style>

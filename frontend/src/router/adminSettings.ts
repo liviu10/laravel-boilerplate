@@ -4,8 +4,8 @@ const routes: RouteRecordRaw[] = [
   {
     path: '/admin',
     meta: {
-      title: 'Settings',
-      caption: 'Lorem ipsum dolor sit amet consectetur adipisicing elit.',
+      title: 'admin.settings.title',
+      caption: 'admin.settings.description',
       icon: 'settings'
     },
     children: [
@@ -14,8 +14,8 @@ const routes: RouteRecordRaw[] = [
         name: 'UsersPage',
         component: () => import('pages/admin/settings/UsersPage.vue'),
         meta: {
-          title: 'All users',
-          caption: 'Lorem ipsum dolor sit amet consectetur adipisicing elit.'
+          title: 'admin.settings.users.title',
+          caption: 'admin.settings.users.description'
         },
       },
       {
@@ -23,8 +23,8 @@ const routes: RouteRecordRaw[] = [
         name: 'UserRolesPage',
         component: () => import('pages/admin/settings/UserRolesPage.vue'),
         meta: {
-          title: 'User roles and permissions',
-          caption: 'Lorem ipsum dolor sit amet consectetur adipisicing elit.'
+          title: 'admin.settings.roles_and_permissions.title',
+          caption: 'admin.settings.roles_and_permissions.description'
         },
       },
     ],

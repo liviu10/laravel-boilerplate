@@ -81,7 +81,6 @@ function displayAdminDocMessage(adminApplicationName: string | undefined): strin
   @include flex-center();
   margin: rem-convertor(16px) 0;
   &--description {
-    border: 1px solid green;
     padding: rem-convertor(16px) 0;
   }
   &__title {

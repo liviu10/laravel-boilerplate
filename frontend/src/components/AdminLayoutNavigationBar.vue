@@ -5,8 +5,8 @@
         <q-icon :name="displayNavigationIcon(routerConfig.meta?.icon)" />
       </q-item-section>
       <q-item-section>
-        <q-item-label>{{ displayNavigationLabel(routerConfig.meta?.title) }}</q-item-label>
-        <q-item-label caption>{{ displayNavigationCaption(routerConfig.meta?.caption) }}</q-item-label>
+        <q-item-label>{{ displayNavigationLabel(t(routerConfig.meta?.title as string)) }}</q-item-label>
+        <q-item-label caption>{{ displayNavigationCaption(t(routerConfig.meta?.caption as string)) }}</q-item-label>
       </q-item-section>
     </q-item>
   </div>
@@ -14,8 +14,8 @@
   <div v-else>
     <q-expansion-item
       :icon="displayNavigationIcon(routerConfig.meta?.icon)"
-      :label="displayNavigationLabel(routerConfig.meta?.title)"
-      :caption="displayNavigationCaption(routerConfig.meta?.caption)"
+      :label="displayNavigationLabel(t(routerConfig.meta?.title as string))"
+      :caption="displayNavigationCaption(t(routerConfig.meta?.caption as string))"
     >
       <q-item
         v-for="(item, index) in routerConfig.children"
@@ -28,11 +28,11 @@
         :class="item.children ? 'navbar-submenu' : ''"
       >
         <q-item-section>
-          <q-item-label v-if="!item.children">{{ displayNavigationLabel(item.meta?.title) }}</q-item-label>
+          <q-item-label v-if="!item.children">{{ displayNavigationLabel(t(item.meta?.title as string)) }}</q-item-label>
           <q-expansion-item
             v-else
             dense
-            :label="displayNavigationLabel(item.meta?.title)"
+            :label="displayNavigationLabel(t(item.meta?.title as string))"
           >
             <q-item
               v-for="(subItem, index) in item.children"
@@ -41,7 +41,7 @@
               :href="subItem.path"
               dense
             >
-              <q-item-section>{{ displayNavigationLabel(subItem.meta?.title) }}</q-item-section>
+              <q-item-section>{{ displayNavigationLabel(t(subItem.meta?.title as string)) }}</q-item-section>
             </q-item>
           </q-expansion-item>
         </q-item-section>
@@ -51,10 +51,16 @@
 </template>
 
 <script setup lang="ts">
+// Import vue related utilities
 import type { RouteRecordRaw } from 'vue-router';
+import { useI18n } from 'vue-i18n';
+
 export interface AdminNavigationBarProps {
   routerConfig: RouteRecordRaw;
 }
+
+// Defined the translation variable
+const { t } = useI18n({});
 
 // Display the navigation icon name
 function displayNavigationIcon(

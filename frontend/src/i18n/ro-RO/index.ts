@@ -26,7 +26,29 @@ export default {
         Pentru o intelegere mai cuprinzatoare si pentru informatii detaliate despre
         {applicationName}, recomand consultarea <a href="{documentationPageUrl}">documentatiei</a>
         insotitoare, care ofera informatii in profunzime si vizualizari.
-      `
+      `,
+    },
+    settings: {
+      title: 'Settings',
+      description: 'Lorem ipsum dolor sit amet consectetur adipisicing elit.',
+      users: {
+        title: 'Lista utilizatori',
+        description: `
+          Pagina utilizatori prezinta o lista a tuturor utilizatorilor,
+          iar administratorul poate efectua operatiuni de baza asupra listei,
+          cum ar fi afisarea, actualizarea si gestionarea detaliilor utilizatorilor.
+        `
+      },
+      roles_and_permissions: {
+        title: 'Roluri utilizatori si permisiuni',
+        description: `
+          Rolurile si permisiunile utilizatorului definesc nivelul de acces si
+          actiunile pe care un utilizator le poate efectua in cadrul unui sistem.
+          Ele asigura securitatea si controlul corespunzator prin atribuirea unor privilegii
+          specifice in functie de roluri precum webmaster, administrator, contabil, vanzari si
+          client.
+        `
+      },
     }
   }
 };

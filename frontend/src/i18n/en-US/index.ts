@@ -25,7 +25,28 @@ export default {
         For a more comprehensive understanding and detailed insights into the
         {applicationName}, I recommend consulting the accompanying <a href="{documentationPageUrl}">documentation</a>,
         which provides in-depth information and visuals.
-      `
+      `,
+    },
+    settings: {
+      title: 'Settings',
+      description: 'Lorem ipsum dolor sit amet consectetur adipisicing elit.',
+      users: {
+        title: 'All users',
+        description: `
+          The users page displays a list of all users, and the administrator
+          can perform basic operations on the list, such as listing,
+          displaying details, and updating user information.
+        `
+      },
+      roles_and_permissions: {
+        title: 'User profile and permissions',
+        description: `
+          User roles and permissions define the level of access and actions a
+          user can perform within a system. They ensure proper security and control
+          by assigning specific privileges based on roles like webmaster,
+          administrator, accountant, sales, client.
+        `
+      },
     }
   }
 };
