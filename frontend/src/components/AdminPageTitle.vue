@@ -1,6 +1,6 @@
 <template>
   <div class="row admin-section admin-section--header">
-    <div class="col-xs-10 col-sm-10 col-md-10 col-lg-8 col-xl-8 admin-section__title">
+    <div class="col-xs-10 col-sm-10 col-md-8 col-lg-8 col-xl-6 admin-section__title">
       {{ displayAdminPageTitle(adminPageTitle) }}
     </div>
   </div>
@@ -10,6 +10,7 @@
 // Import vue related utilities
 import { useI18n } from 'vue-i18n';
 import { RouteRecordName } from 'vue-router';
+import { computed } from 'vue';
 
 // Import other utilities
 import { displayLabel } from 'src/library/TextOperations';
@@ -27,30 +28,27 @@ withDefaults(defineProps<AdminPageTitleInterface>(), {});
  * @param adminPageTitle - The title of the admin page.
  * @returns string The formatted admin page title.
  */
-function displayAdminPageTitle(adminPageTitle: RouteRecordName | null | undefined | unknown): string {
-  if (adminPageTitle && typeof adminPageTitle === 'string') {
-    return displayLabel(adminPageTitle);
-  } else {
-    return t('admin.generic.page_title');
+const displayAdminPageTitle = computed(() => {
+  return (adminPageTitle: RouteRecordName | null | undefined | unknown): string => {
+    if (adminPageTitle && typeof adminPageTitle === 'string') {
+      return displayLabel(adminPageTitle);
+    } else {
+      return t('admin.generic.page_title');
+    }
   }
-}
+})
 </script>
 
 <style lang="scss" scoped>
 @import 'src/css/utilities/_rem_convertor.scss';
-@import 'src/css/utilities/_flexbox.scss';
 
-.admin-section {
-  @include flex-center();
-  margin: rem-convertor(16px) 0;
-  &--header {
-    padding: rem-convertor(24px) 0;
-  }
-  &__title {
-    font-size: rem-convertor(24px);
-    font-weight: 700;
-    text-transform: uppercase;
-    text-align: center;
-  }
+.admin-section--header {
+  padding: rem-convertor(24px) 0;
+}
+.admin-section__title {
+  font-size: rem-convertor(24px);
+  font-weight: 700;
+  text-transform: uppercase;
+  text-align: center;
 }
 </style>

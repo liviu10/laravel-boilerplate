@@ -28,11 +28,32 @@ export default {
         insotitoare, care ofera informatii in profunzime si vizualizari.
       `,
     },
+    home: {
+      title: 'Dashboard',
+      description: `
+        {applicationName}: personalizabil, interfata intuitiva, continut dinamic, integrare multimedia, management eficient.
+      `
+    },
+    menu: {
+      my_account: 'Contul meu',
+      sign_out: 'Deconectare'
+    },
     settings: {
       title: 'Settings',
-      description: 'Lorem ipsum dolor sit amet consectetur adipisicing elit.',
+      description: `
+        {applicationName} setari: utilizatori, roluri, permisiuni si altele.
+      `,
+      notifications: {
+        title: 'Notificari',
+        description: `
+          Pagina de notificari permite utilizatorilor sa administreze si sa
+          urmareasca diverse notificari. Utilizatorii pot efectua operatiuni
+          precum adaugarea, editarea si stergerea inregistrarilor, asigurand
+          o gestionare eficienta a notificarilor si o comunicare adecvata.
+        `
+      },
       users: {
-        title: 'Lista utilizatori',
+        title: 'Utilizatori',
         description: `
           Pagina utilizatori prezinta o lista a tuturor utilizatorilor,
           iar administratorul poate efectua operatiuni de baza asupra listei,
@@ -40,7 +61,7 @@ export default {
         `
       },
       roles_and_permissions: {
-        title: 'Roluri utilizatori si permisiuni',
+        title: 'Roluri si permisiuni',
         description: `
           Rolurile si permisiunile utilizatorului definesc nivelul de acces si
           actiunile pe care un utilizator le poate efectua in cadrul unui sistem.

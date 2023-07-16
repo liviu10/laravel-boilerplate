@@ -1,0 +1,7 @@
+@import 'src/css/utilities/_rem_convertor.scss';
+@import 'src/css/utilities/_flexbox.scss';
+
+.admin-section {
+  @include flex-center();
+  margin: rem-convertor(16px) 0;
+}

@@ -1,7 +1,7 @@
 <template>
-  <q-footer elevated class="admin-layout admin-layout__footer">
+  <q-footer elevated class="admin-layout-section admin-layout-section--footer">
     <q-toolbar>
-      <div class="admin-layout admin-layout__footer__title">
+      <div class="admin-layout-section__footer-title">
         <p>
           <span>{{ adminApplicationName }}</span>
           {{ copyrightInfo }}
@@ -9,7 +9,7 @@
       </div>
     </q-toolbar>
     <q-toolbar>
-      <div class="admin-layout admin-layout__footer__designer">
+      <div class="admin-layout-section__footer-designer">
         <p>
           {{ t('admin.generic.designed_by') }}
           <a :href="designerContactUrl" target="_blank">{{ designerName }}</a>

@@ -1,5 +1,5 @@
 <template>
-  <q-layout view="lHh Lpr lFf" class="admin-layout">
+  <q-layout view="lHh Lpr lFf" class="admin admin--layout">
     <admin-layout-header
       :admin-application-name="applicationName"
       @toggleLeftDrawer="toggleLeftDrawer()"
@@ -9,14 +9,15 @@
       v-model="leftDrawerOpen"
       :show-if-above="false"
       bordered
-      class="admin-layout admin-layout__drawer"
+      class="admin__drawer"
     >
-      <q-list class="admin-layout admin-layout__drawer__list">
+      <q-list class="admin__drawer-list">
         <admin-layout-navigation-bar
           v-for="(link, index) in navigationBarLinks"
           :key="index"
           :router-config="link"
-          class="admin-layout admin-layout__drawer__list__item"
+          :application-name="applicationName"
+          class="admin__drawer-list-item"
         />
       </q-list>
     </q-drawer>
@@ -27,7 +28,7 @@
 
     <admin-layout-footer
       :admin-application-name="applicationName"
-      :copyright-info="displayCopyrightInfo()"
+      :copyright-info="displayCopyrightInfo"
       :designer-contact-url="designerContactUrl"
       :designer-name="designerName"
     />
@@ -36,11 +37,11 @@
 
 <script setup lang="ts">
 // Import framework related utilities
-import { Ref, ref } from 'vue';
+import { Ref, computed, ref } from 'vue';
 import { useRouter } from 'vue-router';
 import { useI18n } from 'vue-i18n';
 
-// Import necessary components
+// Import generic components, libraries and interfaces
 import AdminLayoutHeader from 'src/components/AdminLayoutHeader.vue';
 import AdminLayoutNavigationBar from 'src/components/AdminLayoutNavigationBar.vue';
 import AdminLayoutFooter from 'src/components/AdminLayoutFooter.vue';
@@ -60,10 +61,14 @@ function toggleLeftDrawer() {
 }
 
 // Footer related functions and utilities
-function displayCopyrightInfo(): string {
+const displayCopyrightInfo = computed(() => {
   const currentYear: number = new Date().getFullYear();
-  return 'Copyright © ' + currentYear + ' ' + t('admin.generic.all_rights_reserved');
-}
+  if (currentYear && typeof currentYear === 'number') {
+    return 'Copyright © ' + currentYear + ' ' + t('admin.generic.all_rights_reserved');
+  } else {
+    return `Copyright © 2023 ${t('admin.generic.all_rights_reserved')}`;
+  }
+});
 let designerName = ref(process.env.APP_DESIGNER ?? 'John Doe');
 let designerContactUrl = ref(process.env.APP_DESIGNER_URL ?? '#');
 </script>

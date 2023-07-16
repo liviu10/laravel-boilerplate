@@ -6,7 +6,7 @@
       </q-item-section>
       <q-item-section>
         <q-item-label>{{ displayNavigationLabel(t(routerConfig.meta?.title as string)) }}</q-item-label>
-        <q-item-label caption>{{ displayNavigationCaption(t(routerConfig.meta?.caption as string)) }}</q-item-label>
+        <q-item-label caption>{{ displayNavigationCaption(t(routerConfig.meta?.caption as string, { applicationName: applicationName })) }}</q-item-label>
       </q-item-section>
     </q-item>
   </div>
@@ -15,7 +15,7 @@
     <q-expansion-item
       :icon="displayNavigationIcon(routerConfig.meta?.icon)"
       :label="displayNavigationLabel(t(routerConfig.meta?.title as string))"
-      :caption="displayNavigationCaption(t(routerConfig.meta?.caption as string))"
+      :caption="displayNavigationCaption(t(routerConfig.meta?.caption as string, { applicationName: applicationName }))"
     >
       <q-item
         v-for="(item, index) in routerConfig.children"
@@ -52,32 +52,62 @@
 
 <script setup lang="ts">
 // Import vue related utilities
+import { computed } from 'vue';
 import type { RouteRecordRaw } from 'vue-router';
 import { useI18n } from 'vue-i18n';
 
-export interface AdminNavigationBarProps {
+interface AdminNavigationBarProps {
   routerConfig: RouteRecordRaw;
+  applicationName: string | undefined;
 }
 
 // Defined the translation variable
 const { t } = useI18n({});
 
-// Display the navigation icon name
-function displayNavigationIcon(
-  navigationIcon: string | object | unknown
-): string {
-  return String(navigationIcon);
-}
+/**
+ * Returns a string representation of the navigation icon if it is a valid string.
+ * @param navigationIcon - The navigation icon to be displayed.
+ * @returns The string representation of the navigation icon, or undefined if it is not a valid string.
+ */
+const displayNavigationIcon = computed(() => {
+  return (navigationIcon: string | unknown): string | undefined => {
+    if (navigationIcon && typeof navigationIcon === 'string') {
+      return String(navigationIcon);
+    } else {
+      return undefined
+    }
+  }
+})
 
-// Display the navigation label
-function displayNavigationLabel(navigationLabel: string | unknown): string {
-  return String(navigationLabel);
-}
+/**
+ * Returns a string representation of the navigation label; if it is a valid string.
+ * @param navigationLabel - The navigation label to be displayed.
+ * @returns The string representation of the navigation label, or undefined if it is not a valid string.
+ */
+const displayNavigationLabel = computed(() => {
+  return (navigationLabel: string | unknown): string | undefined => {
+    if (navigationLabel && typeof navigationLabel === 'string') {
+      return String(navigationLabel);
+    } else {
+      return undefined
+    }
+  }
+})
 
-// Display the navigation caption
-function displayNavigationCaption(navigationCaption: string | unknown): string {
-  return String(navigationCaption);
-}
+/**
+ * Returns a string representation of the navigation caption; if it is a valid string.
+ * @param navigationCaption - The navigation caption to be displayed.
+ * @returns The string representation of the navigation caption, or undefined if it is not a valid string.
+ */
+const displayNavigationCaption = computed(() => {
+  return (navigationCaption: string | unknown): string | undefined => {
+    if (navigationCaption && typeof navigationCaption === 'string') {
+      return String(navigationCaption);
+    } else {
+      return undefined
+    }
+  }
+})
 
 withDefaults(defineProps<AdminNavigationBarProps>(), {});
 </script>

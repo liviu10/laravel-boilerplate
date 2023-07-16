@@ -10,6 +10,15 @@ const routes: RouteRecordRaw[] = [
     },
     children: [
       {
+        path: '/admin/settings/notifications',
+        name: 'NotificationsPage',
+        component: () => import('pages/admin/settings/NotificationsPage.vue'),
+        meta: {
+          title: 'admin.settings.notifications.title',
+          caption: 'admin.settings.notifications.description'
+        },
+      },
+      {
         path: '/admin/settings/users',
         name: 'UsersPage',
         component: () => import('pages/admin/settings/UsersPage.vue'),
@@ -19,9 +28,9 @@ const routes: RouteRecordRaw[] = [
         },
       },
       {
-        path: '/admin/settings/user-roles',
-        name: 'UserRolesPage',
-        component: () => import('pages/admin/settings/UserRolesPage.vue'),
+        path: '/admin/settings/roles-and-permissions',
+        name: 'RolesAndPermissionsPage',
+        component: () => import('pages/admin/settings/RolesAndPermissionsPage.vue'),
         meta: {
           title: 'admin.settings.roles_and_permissions.title',
           caption: 'admin.settings.roles_and_permissions.description'

@@ -27,11 +27,31 @@ export default {
         which provides in-depth information and visuals.
       `,
     },
+    menu: {
+      my_account: 'My account',
+      sign_out: 'Sign out'
+    },
+    home: {
+      title: 'Dashboard',
+      description: `
+        {applicationName}: customizable, intuitive UI, dynamic content, media integration, efficient management.
+      `
+    },
     settings: {
       title: 'Settings',
-      description: 'Lorem ipsum dolor sit amet consectetur adipisicing elit.',
+      description: `
+        {applicationName} settings: users, roles, permissions and more.
+      `,
+      notifications: {
+        title: 'Notifications',
+        description: `
+          The notifications page allows users to manage and track
+          various notifications. Users can perform operations like adding,
+          editing, and deleting records, ensuring efficient error handling and communication.
+        `
+      },
       users: {
-        title: 'All users',
+        title: 'Users',
         description: `
           The users page displays a list of all users, and the administrator
           can perform basic operations on the list, such as listing,
@@ -39,9 +59,9 @@ export default {
         `
       },
       roles_and_permissions: {
-        title: 'User profile and permissions',
+        title: 'Roles and permissions',
         description: `
-          User roles and permissions define the level of access and actions a
+          Roles and permissions define the level of access and actions a
           user can perform within a system. They ensure proper security and control
           by assigning specific privileges based on roles like webmaster,
           administrator, accountant, sales, client.

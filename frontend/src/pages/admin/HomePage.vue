@@ -2,7 +2,7 @@
   <q-page class="admin admin--page">
     <admin-page-title :admin-page-title="currentRouteTitle" />
 
-    <admin-page-description :admin-application-name="applicationName" />
+    <admin-page-description :admin-application-name="applicationName" :admin-route-name="currentRouteName" />
 
     <admin-page-container :admin-route-name="currentRouteName">
       <template v-slot:admin-content>
@@ -21,7 +21,7 @@
             </q-card-section>
             <q-card-section>
               <div v-if="resource.meta" class="card-body">
-                <p>{{ t(resource.meta.caption as string) }}</p>
+                <p>{{ t(resource.meta.caption as string, { applicationName: applicationName }) }}</p>
                 <q-list v-if="resource.children && resource.children.length" bordered separator>
                   <q-item v-for="(children, index) in resource.children" :key="index" clickable v-ripple>
                     <q-item-section v-if="children.meta">
@@ -59,14 +59,14 @@ const { t } = useI18n({});
 
 // Get current route title and route name
 const router = useRouter();
-let currentRouteTitle = ref(router.currentRoute.value.meta.title)
+let currentRouteTitle = ref(t(router.currentRoute.value.meta.title as string))
 let currentRouteName = ref(router.currentRoute.value.name);
 
 // Get application name
 const applicationName: string | undefined = process.env.APP_NAME
 
 // Get all available resources
-let availableResources: Ref<RouteRecordRaw[] | undefined> = computed(() => {
+const availableResources: Ref<RouteRecordRaw[] | undefined> = computed(() => {
   const allResources = router.options.routes[0].children;
   const displayResources: RouteRecordRaw[] | undefined = []
   allResources?.forEach((resource) => {
@@ -76,13 +76,15 @@ let availableResources: Ref<RouteRecordRaw[] | undefined> = computed(() => {
   })
   return displayResources
 });
-function cardMargins(cardIndex: number): string | void {
-  if (cardIndex % 2 === 0) {
-    return 'q-mr-sm'
-  } else if (cardIndex === 1) {
-    return 'q-mr-none'
+const cardMargins = computed(() => {
+  return (cardIndex: number): string | void => {
+    if (cardIndex % 2 === 0) {
+      return 'q-mr-sm'
+    } else if (cardIndex === 1) {
+      return 'q-mr-none'
+    }
   }
-}
+});
 </script>
 
 <style lang="scss" scoped>

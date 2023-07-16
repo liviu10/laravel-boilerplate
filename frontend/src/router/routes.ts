@@ -11,8 +11,8 @@ const routes: RouteRecordRaw[] = [
         name: 'HomePage',
         component: () => import('pages/admin/HomePage.vue'),
         meta: {
-          title: 'Dashboard',
-          caption: 'Lorem ipsum dolor sit amet consectetur adipisicing elit.',
+          title: 'admin.home.title',
+          caption: 'admin.home.description',
           icon: 'home'
         },
       },
