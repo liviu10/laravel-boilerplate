@@ -4,4 +4,33 @@
 .admin-section {
   @include flex-center();
   margin: rem-convertor(16px) 0;
+  &--home-content {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    & .q-card {
+      width: 45%;
+      box-shadow: none;
+      &__section {
+        padding: rem-convertor(8px);
+        & .card-title {
+          margin-bottom: 0;
+          font-size: rem-convertor(20px);
+          font-weight: 700;
+          text-transform: uppercase;
+          text-align: center;
+        }
+        & .card-body {
+          & p {
+            margin: rem-convertor(8px) 0
+          }
+          & .q-list {
+            & .q-item {
+              padding: rem-convertor(8px);
+            }
+          }
+        }
+      }
+    }
+  }
 }

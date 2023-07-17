@@ -16,6 +16,16 @@ const routes: RouteRecordRaw[] = [
           icon: 'home'
         },
       },
+      {
+        path: '/admin/documentation',
+        name: 'DocumentationPage',
+        component: () => import('pages/admin/DocumentationPage.vue'),
+        meta: {
+          title: 'admin.documentation.title',
+          caption: 'admin.documentation.description',
+          icon: 'help'
+        },
+      },
 
       // Admin settings urls
       ...adminSettings,

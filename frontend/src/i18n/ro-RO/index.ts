@@ -22,16 +22,26 @@ export default {
         Cu instrumentele sale puternice si flexibilitate, aceasta aplicatie servește
         ca o solutie cuprinzatoare pentru gestionarea eficienta si personalizarea eficienta.
       `,
-      documentation: `
-        Pentru o intelegere mai cuprinzatoare si pentru informatii detaliate despre
-        {applicationName}, recomand consultarea <a href="{documentationPageUrl}">documentatiei</a>
-        insotitoare, care ofera informatii in profunzime si vizualizari.
-      `,
+      documentation: {
+        first_part: `
+          Pentru o intelegere mai cuprinzatoare si pentru informatii detaliate despre
+          {applicationName}, recomand consultarea
+        `,
+        second_part: 'documentatiei',
+        third_part: 'insotitoare, care ofera informatii in profunzime si vizualizari.'
+      }
     },
     home: {
       title: 'Dashboard',
       description: `
         {applicationName}: personalizabil, interfata intuitiva, continut dinamic, integrare multimedia, management eficient.
+      `
+    },
+    documentation: {
+      title: 'Documentatie',
+      description: `
+        Ghid exhaustiv cu informatii detaliate si vizuale utile pentru dezvoltatori,
+        oferind o ghidare cuprinzatoare in procesul de dezvoltare.
       `
     },
     menu: {

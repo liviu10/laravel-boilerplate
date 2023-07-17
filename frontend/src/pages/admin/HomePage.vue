@@ -6,7 +6,7 @@
 
     <admin-page-container :admin-route-name="currentRouteName">
       <template v-slot:admin-content>
-        <div class="admin-section admin-section--content">
+        <div class="admin-section admin-section--home-content">
           <q-card
             v-for="(resource, index) in availableResources"
             :key="index"
@@ -87,39 +87,4 @@ const cardMargins = computed(() => {
 });
 </script>
 
-<style lang="scss" scoped>
-@import 'src/css/utilities/rem_convertor';
-@import 'src/css/utilities/_flexbox.scss';
-
-.admin-section {
-  &--content {
-    display: flex;
-    justify-content: center;
-    flex-wrap: wrap;
-    & .q-card {
-      width: 45%;
-      box-shadow: none;
-      &__section {
-        padding: rem-convertor(8px);
-        & .card-title {
-          margin-bottom: 0;
-          font-size: rem-convertor(20px);
-          font-weight: 700;
-          text-transform: uppercase;
-          text-align: center;
-        }
-        & .card-body {
-          & p {
-            margin: rem-convertor(8px) 0
-          }
-          & .q-list {
-            & .q-item {
-              padding: rem-convertor(8px);
-            }
-          }
-        }
-      }
-    }
-  }
-}
-</style>
+<style lang="scss" scoped></style>

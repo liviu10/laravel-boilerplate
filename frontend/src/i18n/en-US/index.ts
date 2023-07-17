@@ -21,11 +21,14 @@ export default {
         and flexibility, this application serves as a comprehensive solution for efficient
         management and customization.
       `,
-      documentation: `
-        For a more comprehensive understanding and detailed insights into the
-        {applicationName}, I recommend consulting the accompanying <a href="{documentationPageUrl}">documentation</a>,
-        which provides in-depth information and visuals.
-      `,
+      documentation: {
+        first_part: `
+          For a more comprehensive understanding and detailed insights into the
+          {applicationName}, I recommend consulting the accompanying
+        `,
+        second_part: 'documentation',
+        third_part: ', which provides in-depth information and visuals'
+      }
     },
     menu: {
       my_account: 'My account',
@@ -35,6 +38,13 @@ export default {
       title: 'Dashboard',
       description: `
         {applicationName}: customizable, intuitive UI, dynamic content, media integration, efficient management.
+      `
+    },
+    documentation: {
+      title: 'Documentation',
+      description: `
+        Comprehensive guide with detailed information and helpful visuals for developers,
+        providing comprehensive guidance in the development process.
       `
     },
     settings: {

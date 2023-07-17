@@ -16,7 +16,7 @@
 // Import vue related utilities
 import { useI18n } from 'vue-i18n';
 import { RouteRecordName } from 'vue-router';
-import { computed } from 'vue';
+import { computed, ref } from 'vue';
 
 // Import other utilities
 import { checkCurrentRouteName } from 'src/library/CheckRouter';
@@ -75,11 +75,20 @@ const displayAdminPageDescription = computed(() => {
  */
 const displayAdminDocMessage = computed(() => {
   return (adminApplicationName: string | undefined): string => {
-    const documentationPageUrl = '';
+    const documentationPageUrl = '/admin/documentation';
+    let firstPart = ref('')
+    let secondPart = ref('')
+    let thirdPart = ref('')
     if (adminApplicationName && typeof adminApplicationName === 'string') {
-      return t('admin.generic.documentation', { applicationName: adminApplicationName, documentationPageUrl: documentationPageUrl });
+      firstPart.value = t('admin.generic.documentation.first_part', { applicationName: adminApplicationName })
+      secondPart.value = `<a href="${documentationPageUrl}">${t('admin.generic.documentation.second_part')}</a>`
+      thirdPart.value = t('admin.generic.documentation.third_part')
+      return firstPart.value + secondPart.value + thirdPart.value;
     } else {
-      return t('admin.generic.documentation', { applicationName: t('admin.generic.application_name'), documentationPageUrl: documentationPageUrl });
+      firstPart.value = t('admin.generic.documentation.first_part', { applicationName: t('admin.generic.application_name') })
+      secondPart.value = `<a href="${documentationPageUrl}">${t('admin.generic.documentation.second_part')}</a>`
+      thirdPart.value = t('admin.generic.documentation.third_part')
+      return firstPart.value + secondPart.value + thirdPart.value;
     }
   }
 })
