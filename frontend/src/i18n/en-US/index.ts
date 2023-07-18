@@ -39,7 +39,7 @@ export default {
     home: {
       title: 'Dashboard',
       description: `
-        {applicationName}: customizable, intuitive UI, dynamic content, media integration, efficient management.
+        TEXT HERE.
       `,
     },
     management: {
@@ -65,12 +65,24 @@ export default {
           TEXT HERE.
         `,
       },
+      media: {
+        title: 'Media',
+        description: `
+          TEXT HERE.
+        `,
+      },
       comments: {
         title: 'Comments',
         description: `
           TEXT HERE.
         `,
       },
+    },
+    communication: {
+      title: 'Communication',
+      description: `
+        TEXT HERE.
+      `,
       contact: {
         title: 'Contact me',
         description: `
@@ -79,12 +91,6 @@ export default {
       },
       newsletter: {
         title: 'Newsletter',
-        description: `
-          TEXT HERE.
-        `,
-      },
-      media: {
-        title: 'Media',
         description: `
           TEXT HERE.
         `,
@@ -99,52 +105,66 @@ export default {
     documentation: {
       title: 'Documentation',
       description: `
-        Comprehensive guide with detailed information and helpful visuals for developers,
-        providing comprehensive guidance in the development process.
+        TEXT HERE.
       `,
     },
-    settings: {
-      title: 'Settings',
+    user_settings: {
+      title: 'User settings',
       description: `
-        {applicationName} settings: users, roles, permissions and more.
+        TEXT HERE.
       `,
-      notifications: {
-        title: 'Notifications',
+      user_profile: {
+        title: 'User profile',
         description: `
-          The notifications page allows users to manage and track
-          various notifications. Users can perform operations like adding,
-          editing, and deleting records, ensuring efficient error handling and communication.
+          TEXT HERE.
         `,
       },
       users: {
         title: 'Users',
         description: `
-          The users page displays a list of all users, and the administrator
-          can perform basic operations on the list, such as listing,
-          displaying details, and updating user information.
+          TEXT HERE.
         `,
       },
       roles_and_permissions: {
         title: 'Roles and permissions',
         description: `
-          Roles and permissions define the level of access and actions a
-          user can perform within a system. They ensure proper security and control
-          by assigning specific privileges based on roles like webmaster,
-          administrator, accountant, sales, client.
+          TEXT HERE.
         `,
       },
-      user_profile: {
-        title: 'User profile',
+    },
+    application_settings: {
+      title: 'Application settings',
+      description: `
+        TEXT HERE.
+      `,
+      general: {
+        title: 'General',
         description: `
-          The user profile page allows users to view and modify personal information and settings,
-          including fields like name, email, phone, and profile image,
-          ensuring a personalized and secure experience within the system.
+          TEXT HERE.
+        `,
+      },
+      performance: {
+        title: 'Performance',
+        description: `
+          TEXT HERE.
         `,
       },
       accepted_domains: {
         title: 'Accepted domains',
         description: `
-          TEXT HERE
+          TEXT HERE.
+        `,
+      },
+      notifications: {
+        title: 'Notifications',
+        description: `
+          TEXT HERE.
+        `,
+      },
+      emails: {
+        title: 'Emails',
+        description: `
+          TEXT HERE.
         `,
       },
     },

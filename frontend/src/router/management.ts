@@ -6,7 +6,7 @@ const routes: RouteRecordRaw[] = [
     meta: {
       title: 'admin.management.title',
       caption: 'admin.management.description',
-      icon: 'description',
+      icon: 'group_work',
     },
     children: [
       {
@@ -37,39 +37,21 @@ const routes: RouteRecordRaw[] = [
         },
       },
       {
-        path: '/admin/management/comments',
-        name: 'CommentsPage',
-        component: () => import('pages/admin/management/CommentsPage.vue'),
-        meta: {
-          title: 'admin.management.comments.title',
-          caption: 'admin.management.comments.description',
-        },
-      },
-      {
-        path: '/admin/management/contact-me',
-        name: 'ContactMePage',
-        component: () => import('pages/admin/management/ContactMePage.vue'),
-        meta: {
-          title: 'admin.management.contact.title',
-          caption: 'admin.management.contact.description',
-        },
-      },
-      {
-        path: '/admin/management/newsletter',
-        name: 'NewsletterPage',
-        component: () => import('pages/admin/management/NewsletterPage.vue'),
-        meta: {
-          title: 'admin.management.newsletter.title',
-          caption: 'admin.management.newsletter.description',
-        },
-      },
-      {
         path: '/admin/management/media',
         name: 'MediaPage',
         component: () => import('pages/admin/management/MediaPage.vue'),
         meta: {
           title: 'admin.management.media.title',
           caption: 'admin.management.media.description',
+        },
+      },
+      {
+        path: '/admin/management/comments',
+        name: 'CommentsPage',
+        component: () => import('pages/admin/management/CommentsPage.vue'),
+        meta: {
+          title: 'admin.management.comments.title',
+          caption: 'admin.management.comments.description',
         },
       },
     ],

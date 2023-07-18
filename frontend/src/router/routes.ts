@@ -1,6 +1,8 @@
 import { RouteRecordRaw } from 'vue-router';
 import management from 'src/router/management';
-import settings from 'src/router/settings';
+import communication from 'src/router/communication';
+import userSettings from 'src/router/userSettings';
+import applicationSettings from 'src/router/applicationSettings';
 
 const routes: RouteRecordRaw[] = [
   {
@@ -21,6 +23,9 @@ const routes: RouteRecordRaw[] = [
       // Admin management urls,
       ...management,
 
+      // Admin communication urls,
+      ...communication,
+
       {
         path: '/admin/reports',
         name: 'MonitoringPage',
@@ -32,9 +37,6 @@ const routes: RouteRecordRaw[] = [
         },
       },
 
-      // Admin settings urls
-      ...settings,
-
       {
         path: '/admin/documentation',
         name: 'DocumentationPage',
@@ -45,6 +47,12 @@ const routes: RouteRecordRaw[] = [
           icon: 'help',
         },
       },
+
+      // Admin user settings urls
+      ...userSettings,
+
+      // Admin application settings urls
+      ...applicationSettings,
     ],
   },
 
