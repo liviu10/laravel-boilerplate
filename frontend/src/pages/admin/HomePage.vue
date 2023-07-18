@@ -6,11 +6,11 @@
 
     <admin-page-container :admin-route-name="currentRouteName">
       <template v-slot:admin-content>
-        <div class="admin-section admin-section--home-content">
+        <div class="admin-section__home-content">
           <q-card
             v-for="(resource, index) in availableResources"
             :key="index"
-            :class="cardMargins(index) + ' q-my-sm'"
+            class="q-my-sm"
             square
             bordered
           >
@@ -22,18 +22,13 @@
             <q-card-section>
               <div v-if="resource.meta" class="card-body">
                 <p>{{ t(resource.meta.caption as string, { applicationName: applicationName }) }}</p>
-                <q-list v-if="resource.children && resource.children.length" bordered separator>
-                  <q-item v-for="(children, index) in resource.children" :key="index" clickable v-ripple>
-                    <q-item-section v-if="children.meta">
-                      <q-item-label>
-                        <a :href="children.path">{{ t(children.meta.title as string) }}</a>
-                      </q-item-label>
-                      <q-item-label>
-                        {{ t(children.meta.caption as string) }}
-                      </q-item-label>
-                    </q-item-section>
-                  </q-item>
-                </q-list>
+                <div v-if="resource.children && resource.children.length" class="link-list">
+                  <template v-for="(link, index) in getChildrenLinks(resource.children)" :key="index">
+                    <span v-if="index > 0">, </span>
+                    <span v-html="link.outerHTML"></span>
+                  </template>
+                </div>
+                <a v-else :href="resource.path"> {{ t('admin.generic.view_resource') }} </a>
               </div>
             </q-card-section>
           </q-card>
@@ -76,15 +71,16 @@ const availableResources: Ref<RouteRecordRaw[] | undefined> = computed(() => {
   })
   return displayResources
 });
-const cardMargins = computed(() => {
-  return (cardIndex: number): string | void => {
-    if (cardIndex % 2 === 0) {
-      return 'q-mr-sm'
-    } else if (cardIndex === 1) {
-      return 'q-mr-none'
-    }
-  }
-});
+
+// Generates an array of HTMLAnchorElement objects for the provided children routes.
+const getChildrenLinks = (children: RouteRecordRaw[]): HTMLAnchorElement[] => {
+  return children.map((child) => {
+    const link = document.createElement('a');
+    link.setAttribute('href', child.path);
+    link.textContent = t(child.meta?.title as string);
+    return link;
+  });
+};
 </script>
 
 <style lang="scss" scoped></style>

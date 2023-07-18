@@ -17,6 +17,16 @@ const routes: RouteRecordRaw[] = [
         },
       },
       {
+        path: '/admin/page-configurations',
+        name: 'PageConfigurationPage',
+        component: () => import('pages/admin/PageConfigurationPage.vue'),
+        meta: {
+          title: 'admin.page_configuration.title',
+          caption: 'admin.page_configuration.description',
+          icon: 'description'
+        },
+      },
+      {
         path: '/admin/documentation',
         name: 'DocumentationPage',
         component: () => import('pages/admin/DocumentationPage.vue'),

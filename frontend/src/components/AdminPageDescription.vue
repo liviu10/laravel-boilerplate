@@ -1,7 +1,7 @@
 <template>
   <div class="row admin-section admin-section--description">
     <div class="col-xs-10 col-sm-10 col-md-8 col-lg-8 col-xl-6">
-      <div v-if="checkCurrentRouteName(adminRouteName)" class="admin-section__title">
+      <div v-if="checkCurrentRouteName(adminRouteName)" class="admin-section__description-title">
         {{ displayAdminWelcomeMessage(currentAuthenticatedUser) }}
       </div>
       <div class="admin-section__content">
@@ -93,22 +93,3 @@ const displayAdminDocMessage = computed(() => {
   }
 })
 </script>
-
-<style lang="scss" scoped>
-@import 'src/css/utilities/rem_convertor';
-
-.admin-section--description {
-  padding: rem-convertor(16px) 0;
-}
-.admin-section__title {
-  margin-bottom: rem-convertor(16px);
-  font-size: rem-convertor(18px);
-  font-weight: 700;
-}
-.admin-section__content {
-  font-size: rem-convertor(16px);
-  &:last-child {
-    margin-top: rem-convertor(16px);
-  }
-}
-</style>

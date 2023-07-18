@@ -36,6 +36,15 @@ const routes: RouteRecordRaw[] = [
           caption: 'admin.settings.roles_and_permissions.description'
         },
       },
+      {
+        path: '/admin/settings/user-profile',
+        name: 'UserProfilePage',
+        component: () => import('pages/admin/settings/UserProfilePage.vue'),
+        meta: {
+          title: 'admin.settings.user_profile.title',
+          caption: 'admin.settings.user_profile.description'
+        },
+      },
     ],
   },
 ];

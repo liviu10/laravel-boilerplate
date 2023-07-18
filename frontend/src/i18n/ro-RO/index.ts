@@ -29,12 +29,19 @@ export default {
         `,
         second_part: 'documentatiei',
         third_part: 'insotitoare, care ofera informatii in profunzime si vizualizari.'
-      }
+      },
+      view_resource: 'Vizualizeaza'
     },
     home: {
       title: 'Dashboard',
       description: `
         {applicationName}: personalizabil, interfata intuitiva, continut dinamic, integrare multimedia, management eficient.
+      `
+    },
+    page_configuration: {
+      title: 'Page configuration',
+      description: `
+        Aceasta pagina permite utilizatorilor sa creeze si sa configureze pagini pentru panoul de administrare si pentru oaspeti.
       `
     },
     documentation: {
@@ -78,6 +85,14 @@ export default {
           Ele asigura securitatea si controlul corespunzator prin atribuirea unor privilegii
           specifice in functie de roluri precum webmaster, administrator, contabil, vanzari si
           client.
+        `
+      },
+      user_profile: {
+        title: 'Contul meu',
+        description: `
+          Pagina de profil a utilizatorului permite utilizatorilor sa vizualizeze si
+          sa modifice informatiile personale si setarile, inclusiv campuri precum nume, email,
+          telefon si imagine de profil, asigurand o experienta personalizata si sigura in cadrul sistemului.
         `
       },
     }

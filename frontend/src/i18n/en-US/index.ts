@@ -28,7 +28,8 @@ export default {
         `,
         second_part: 'documentation',
         third_part: ', which provides in-depth information and visuals'
-      }
+      },
+      view_resource: 'View'
     },
     menu: {
       my_account: 'My account',
@@ -38,6 +39,12 @@ export default {
       title: 'Dashboard',
       description: `
         {applicationName}: customizable, intuitive UI, dynamic content, media integration, efficient management.
+      `
+    },
+    page_configuration: {
+      title: 'Page configuration',
+      description: `
+        This page allows users to create and configure pages for the admin panel and guest website.
       `
     },
     documentation: {
@@ -75,6 +82,14 @@ export default {
           user can perform within a system. They ensure proper security and control
           by assigning specific privileges based on roles like webmaster,
           administrator, accountant, sales, client.
+        `
+      },
+      user_profile: {
+        title: 'My account',
+        description: `
+          The user profile page allows users to view and modify personal information and settings,
+          including fields like name, email, phone, and profile image,
+          ensuring a personalized and secure experience within the system.
         `
       },
     }

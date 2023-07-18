@@ -38,17 +38,3 @@ const displayAdminPageTitle = computed(() => {
   }
 })
 </script>
-
-<style lang="scss" scoped>
-@import 'src/css/utilities/_rem_convertor.scss';
-
-.admin-section--header {
-  padding: rem-convertor(24px) 0;
-}
-.admin-section__title {
-  font-size: rem-convertor(24px);
-  font-weight: 700;
-  text-transform: uppercase;
-  text-align: center;
-}
-</style>
