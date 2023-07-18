@@ -6,7 +6,7 @@ const routes: RouteRecordRaw[] = [
     meta: {
       title: 'admin.settings.title',
       caption: 'admin.settings.description',
-      icon: 'settings'
+      icon: 'settings',
     },
     children: [
       {
@@ -15,7 +15,7 @@ const routes: RouteRecordRaw[] = [
         component: () => import('pages/admin/settings/NotificationsPage.vue'),
         meta: {
           title: 'admin.settings.notifications.title',
-          caption: 'admin.settings.notifications.description'
+          caption: 'admin.settings.notifications.description',
         },
       },
       {
@@ -24,16 +24,17 @@ const routes: RouteRecordRaw[] = [
         component: () => import('pages/admin/settings/UsersPage.vue'),
         meta: {
           title: 'admin.settings.users.title',
-          caption: 'admin.settings.users.description'
+          caption: 'admin.settings.users.description',
         },
       },
       {
         path: '/admin/settings/roles-and-permissions',
         name: 'RolesAndPermissionsPage',
-        component: () => import('pages/admin/settings/RolesAndPermissionsPage.vue'),
+        component: () =>
+          import('pages/admin/settings/RolesAndPermissionsPage.vue'),
         meta: {
           title: 'admin.settings.roles_and_permissions.title',
-          caption: 'admin.settings.roles_and_permissions.description'
+          caption: 'admin.settings.roles_and_permissions.description',
         },
       },
       {
@@ -42,7 +43,16 @@ const routes: RouteRecordRaw[] = [
         component: () => import('pages/admin/settings/UserProfilePage.vue'),
         meta: {
           title: 'admin.settings.user_profile.title',
-          caption: 'admin.settings.user_profile.description'
+          caption: 'admin.settings.user_profile.description',
+        },
+      },
+      {
+        path: '/admin/settings/accepted-domains',
+        name: 'AcceptedDomainsPage',
+        component: () => import('pages/admin/settings/AcceptedDomainsPage.vue'),
+        meta: {
+          title: 'admin.settings.accepted_domains.title',
+          caption: 'admin.settings.accepted_domains.description',
         },
       },
     ],

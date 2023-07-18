@@ -45,7 +45,7 @@ import { useI18n } from 'vue-i18n';
 
 interface AdminHeaderProps {
   adminApplicationName: string;
-  currentAuthenticatedUser?: unknown
+  currentAuthenticatedUser?: unknown;
 }
 const emit = defineEmits<{
   (event: 'toggleLeftDrawer', value: boolean): void;
@@ -61,11 +61,16 @@ const { t } = useI18n({});
  * @returns A string of the formatted admin page welcome message.
  */
 function displayAdminWelcomeMessage(currentAuthenticatedUser: unknown): string {
-  if (currentAuthenticatedUser && Object.keys(currentAuthenticatedUser).length) {
+  if (
+    currentAuthenticatedUser &&
+    Object.keys(currentAuthenticatedUser).length
+  ) {
     // TODO: when finished with login the user add currentAuthenticatedUser.full_name to have something like: 'Welcome, User Webmaster'
-    return t('admin.generic.welcome', { authUserName: ', ' + currentAuthenticatedUser })
+    return t('admin.generic.welcome', {
+      authUserName: ', ' + currentAuthenticatedUser,
+    });
   } else {
-    return t('admin.generic.welcome')
+    return t('admin.generic.welcome');
   }
 }
 
@@ -79,11 +84,17 @@ const adminNavigationMenu = [
   },
   {
     id: 2,
+    icon: 'help',
+    name: t('admin.menu.documentation'),
+    separator: false,
+  },
+  {
+    id: 3,
     icon: 'logout',
     name: t('admin.menu.sign_out'),
     separator: true,
-  }
-]
+  },
+];
 </script>
 
 <style lang="scss" scoped>
@@ -96,7 +107,7 @@ const adminNavigationMenu = [
       min-height: 0;
       user-select: none;
       &:last-child {
-        border-top: rem-convertor(1px) solid #0000001F;
+        border-top: rem-convertor(1px) solid #000000;
       }
     }
   }

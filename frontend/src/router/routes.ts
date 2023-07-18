@@ -1,5 +1,6 @@
 import { RouteRecordRaw } from 'vue-router';
-import adminSettings from 'src/router/adminSettings';
+import management from 'src/router/management';
+import settings from 'src/router/settings';
 
 const routes: RouteRecordRaw[] = [
   {
@@ -13,19 +14,27 @@ const routes: RouteRecordRaw[] = [
         meta: {
           title: 'admin.home.title',
           caption: 'admin.home.description',
-          icon: 'home'
+          icon: 'home',
         },
       },
+
+      // Admin management urls,
+      ...management,
+
       {
-        path: '/admin/page-configurations',
-        name: 'PageConfigurationPage',
-        component: () => import('pages/admin/PageConfigurationPage.vue'),
+        path: '/admin/reports',
+        name: 'MonitoringPage',
+        component: () => import('pages/admin/MonitoringPage.vue'),
         meta: {
-          title: 'admin.page_configuration.title',
-          caption: 'admin.page_configuration.description',
-          icon: 'description'
+          title: 'admin.reports.title',
+          caption: 'admin.reports.description',
+          icon: 'analytics',
         },
       },
+
+      // Admin settings urls
+      ...settings,
+
       {
         path: '/admin/documentation',
         name: 'DocumentationPage',
@@ -33,12 +42,9 @@ const routes: RouteRecordRaw[] = [
         meta: {
           title: 'admin.documentation.title',
           caption: 'admin.documentation.description',
-          icon: 'help'
+          icon: 'help',
         },
       },
-
-      // Admin settings urls
-      ...adminSettings,
     ],
   },
 

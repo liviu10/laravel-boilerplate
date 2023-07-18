@@ -5,8 +5,9 @@
         <q-icon :name="displayNavigationIcon(routerConfig.meta?.icon)" />
       </q-item-section>
       <q-item-section>
-        <q-item-label>{{ displayNavigationLabel(t(routerConfig.meta?.title as string)) }}</q-item-label>
-        <q-item-label caption>{{ displayNavigationCaption(t(routerConfig.meta?.caption as string, { applicationName: applicationName })) }}</q-item-label>
+        <q-item-label>
+          {{ displayNavigationLabel(t(routerConfig.meta?.title as string)) }}
+        </q-item-label>
       </q-item-section>
     </q-item>
   </div>
@@ -15,7 +16,6 @@
     <q-expansion-item
       :icon="displayNavigationIcon(routerConfig.meta?.icon)"
       :label="displayNavigationLabel(t(routerConfig.meta?.title as string))"
-      :caption="displayNavigationCaption(t(routerConfig.meta?.caption as string, { applicationName: applicationName }))"
     >
       <q-item
         v-for="(item, index) in routerConfig.children"
@@ -28,7 +28,9 @@
         :class="item.children ? 'navbar-submenu' : ''"
       >
         <q-item-section>
-          <q-item-label v-if="!item.children">{{ displayNavigationLabel(t(item.meta?.title as string)) }}</q-item-label>
+          <q-item-label v-if="!item.children">
+            {{ displayNavigationLabel(t(item.meta?.title as string)) }}
+          </q-item-label>
           <q-expansion-item
             v-else
             dense
@@ -41,7 +43,9 @@
               :href="subItem.path"
               dense
             >
-              <q-item-section>{{ displayNavigationLabel(t(subItem.meta?.title as string)) }}</q-item-section>
+              <q-item-section>
+                {{ displayNavigationLabel(t(subItem.meta?.title as string)) }}
+              </q-item-section>
             </q-item>
           </q-expansion-item>
         </q-item-section>
@@ -74,10 +78,10 @@ const displayNavigationIcon = computed(() => {
     if (navigationIcon && typeof navigationIcon === 'string') {
       return String(navigationIcon);
     } else {
-      return undefined
+      return undefined;
     }
-  }
-})
+  };
+});
 
 /**
  * Returns a string representation of the navigation label; if it is a valid string.
@@ -89,25 +93,10 @@ const displayNavigationLabel = computed(() => {
     if (navigationLabel && typeof navigationLabel === 'string') {
       return String(navigationLabel);
     } else {
-      return undefined
+      return undefined;
     }
-  }
-})
-
-/**
- * Returns a string representation of the navigation caption; if it is a valid string.
- * @param navigationCaption - The navigation caption to be displayed.
- * @returns The string representation of the navigation caption, or undefined if it is not a valid string.
- */
-const displayNavigationCaption = computed(() => {
-  return (navigationCaption: string | unknown): string | undefined => {
-    if (navigationCaption && typeof navigationCaption === 'string') {
-      return String(navigationCaption);
-    } else {
-      return undefined
-    }
-  }
-})
+  };
+});
 
 withDefaults(defineProps<AdminNavigationBarProps>(), {});
 </script>

@@ -28,32 +28,82 @@ export default {
           {applicationName}, recomand consultarea
         `,
         second_part: 'documentatiei',
-        third_part: 'insotitoare, care ofera informatii in profunzime si vizualizari.'
+        third_part:
+          'insotitoare, care ofera informatii in profunzime si vizualizari.',
       },
-      view_resource: 'Vizualizeaza'
+      view_resource: 'Vizualizeaza',
     },
     home: {
       title: 'Dashboard',
       description: `
         {applicationName}: personalizabil, interfata intuitiva, continut dinamic, integrare multimedia, management eficient.
-      `
+      `,
     },
-    page_configuration: {
-      title: 'Page configuration',
+    management: {
+      title: 'Management',
       description: `
-        Aceasta pagina permite utilizatorilor sa creeze si sa configureze pagini pentru panoul de administrare si pentru oaspeti.
-      `
+      TEXT HERE
+      `,
+      pages: {
+        title: 'Pagini',
+        description: `
+          TEXT HERE.
+        `,
+      },
+      tags: {
+        title: 'Etichete',
+        description: `
+          TEXT HERE.
+        `,
+      },
+      articles: {
+        title: 'Articole',
+        description: `
+          TEXT HERE.
+        `,
+      },
+      comments: {
+        title: 'Comentarii',
+        description: `
+          TEXT HERE.
+        `,
+      },
+      contact: {
+        title: 'Contacteaza-ma',
+        description: `
+          TEXT HERE.
+        `,
+      },
+      newsletter: {
+        title: 'Newsletter',
+        description: `
+          TEXT HERE.
+        `,
+      },
+      media: {
+        title: 'Media',
+        description: `
+          TEXT HERE.
+        `,
+      },
+    },
+    reports: {
+      title: 'Rapoarte',
+      description: `
+        TEXT HERE.
+      `,
     },
     documentation: {
       title: 'Documentatie',
       description: `
         Ghid exhaustiv cu informatii detaliate si vizuale utile pentru dezvoltatori,
         oferind o ghidare cuprinzatoare in procesul de dezvoltare.
-      `
+      `,
     },
     menu: {
-      my_account: 'Contul meu',
-      sign_out: 'Deconectare'
+      my_account: 'Profil utilizator',
+      documentation: 'Documentatie',
+      sign_out: 'Deconectare',
     },
     settings: {
       title: 'Settings',
@@ -67,7 +117,7 @@ export default {
           urmareasca diverse notificari. Utilizatorii pot efectua operatiuni
           precum adaugarea, editarea si stergerea inregistrarilor, asigurand
           o gestionare eficienta a notificarilor si o comunicare adecvata.
-        `
+        `,
       },
       users: {
         title: 'Utilizatori',
@@ -75,7 +125,7 @@ export default {
           Pagina utilizatori prezinta o lista a tuturor utilizatorilor,
           iar administratorul poate efectua operatiuni de baza asupra listei,
           cum ar fi afisarea, actualizarea si gestionarea detaliilor utilizatorilor.
-        `
+        `,
       },
       roles_and_permissions: {
         title: 'Roluri si permisiuni',
@@ -85,16 +135,22 @@ export default {
           Ele asigura securitatea si controlul corespunzator prin atribuirea unor privilegii
           specifice in functie de roluri precum webmaster, administrator, contabil, vanzari si
           client.
-        `
+        `,
       },
       user_profile: {
-        title: 'Contul meu',
+        title: 'Profil utilizator',
         description: `
           Pagina de profil a utilizatorului permite utilizatorilor sa vizualizeze si
           sa modifice informatiile personale si setarile, inclusiv campuri precum nume, email,
           telefon si imagine de profil, asigurand o experienta personalizata si sigura in cadrul sistemului.
-        `
+        `,
       },
-    }
-  }
+      accepted_domains: {
+        title: 'Domenii acceptate',
+        description: `
+          TEXT HERE
+        `,
+      },
+    },
+  },
 };

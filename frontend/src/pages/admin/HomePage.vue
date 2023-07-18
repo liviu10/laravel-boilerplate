@@ -2,7 +2,10 @@
   <q-page class="admin admin--page">
     <admin-page-title :admin-page-title="currentRouteTitle" />
 
-    <admin-page-description :admin-application-name="applicationName" :admin-route-name="currentRouteName" />
+    <admin-page-description
+      :admin-application-name="applicationName"
+      :admin-route-name="currentRouteName"
+    />
 
     <admin-page-container :admin-route-name="currentRouteName">
       <template v-slot:admin-content>
@@ -21,14 +24,28 @@
             </q-card-section>
             <q-card-section>
               <div v-if="resource.meta" class="card-body">
-                <p>{{ t(resource.meta.caption as string, { applicationName: applicationName }) }}</p>
-                <div v-if="resource.children && resource.children.length" class="link-list">
-                  <template v-for="(link, index) in getChildrenLinks(resource.children)" :key="index">
+                <p>
+                  {{
+                    t(resource.meta.caption as string, {
+                      applicationName: applicationName,
+                    })
+                  }}
+                </p>
+                <div
+                  v-if="resource.children && resource.children.length"
+                  class="link-list"
+                >
+                  <template
+                    v-for="(link, index) in getChildrenLinks(resource.children)"
+                    :key="index"
+                  >
                     <span v-if="index > 0">, </span>
                     <span v-html="link.outerHTML"></span>
                   </template>
                 </div>
-                <a v-else :href="resource.path"> {{ t('admin.generic.view_resource') }} </a>
+                <a v-else :href="resource.path">
+                  {{ t('admin.generic.view_resource') }}
+                </a>
               </div>
             </q-card-section>
           </q-card>
@@ -54,22 +71,22 @@ const { t } = useI18n({});
 
 // Get current route title and route name
 const router = useRouter();
-let currentRouteTitle = ref(t(router.currentRoute.value.meta.title as string))
+let currentRouteTitle = ref(t(router.currentRoute.value.meta.title as string));
 let currentRouteName = ref(router.currentRoute.value.name);
 
 // Get application name
-const applicationName: string | undefined = process.env.APP_NAME
+const applicationName: string | undefined = process.env.APP_NAME;
 
 // Get all available resources
 const availableResources: Ref<RouteRecordRaw[] | undefined> = computed(() => {
   const allResources = router.options.routes[0].children;
-  const displayResources: RouteRecordRaw[] | undefined = []
+  const displayResources: RouteRecordRaw[] | undefined = [];
   allResources?.forEach((resource) => {
-    if (resource.name !== 'HomePage') {
-      displayResources.push(resource)
+    if (resource.name !== 'HomePage' && resource.name !== 'DocumentationPage') {
+      displayResources.push(resource);
     }
-  })
-  return displayResources
+  });
+  return displayResources;
 });
 
 // Generates an array of HTMLAnchorElement objects for the provided children routes.
