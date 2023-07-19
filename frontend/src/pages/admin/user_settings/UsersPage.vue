@@ -13,12 +13,18 @@
 <script setup lang="ts">
 // Import vue related utilities
 import { useRouter } from 'vue-router';
-import { ref } from 'vue';
+import { onMounted, ref } from 'vue';
 import { useI18n } from 'vue-i18n';
 
 // Import generic components, libraries and interfaces
 import AdminPageTitle from 'src/components/AdminPageTitle.vue';
 import AdminPageDescription from 'src/components/AdminPageDescription.vue';
+
+// Import Pinia's related utilities
+import { useUserStore } from 'src/stores/admin/userSettings/users';
+
+// Instantiate the pinia store
+const userStore = useUserStore();
 
 // Defined the translation variable
 const { t } = useI18n({});
@@ -31,6 +37,10 @@ let currentRouteDescription = ref(t(router.currentRoute.value.meta.caption as st
 
 // Get application name
 const applicationName: string | undefined = process.env.APP_NAME
+
+onMounted(async () => {
+  await userStore.findRecord()
+})
 </script>
 
 <style lang="scss" scoped></style>
