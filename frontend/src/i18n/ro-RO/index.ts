@@ -32,6 +32,12 @@ export default {
           'insotitoare, care ofera informatii in profunzime si vizualizari.',
       },
       view_resource: 'Vizualizeaza',
+      table: {
+        id: 'Id',
+        actions: 'Actiuni',
+        no_data_label: 'Nu exista inregistrari',
+        new_record_label: 'Inregistrare noua',
+      },
     },
     menu: {
       my_account: 'Profil utilizator',
@@ -54,6 +60,11 @@ export default {
         description: `
           TEXT HERE.
         `,
+        table: {
+          field_1: 'Field 1',
+          field_2: 'Field 2',
+          field_3: 'Field 3',
+        },
       },
       tags: {
         title: 'Etichete',

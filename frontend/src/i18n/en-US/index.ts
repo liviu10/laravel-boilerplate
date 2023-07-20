@@ -30,6 +30,12 @@ export default {
         third_part: ', which provides in-depth information and visuals',
       },
       view_resource: 'View',
+      table: {
+        id: 'Id',
+        actions: 'Actions',
+        no_data_label: 'No data available!',
+        new_record_label: 'New record',
+      },
     },
     menu: {
       my_account: 'User profile',
@@ -52,6 +58,11 @@ export default {
         description: `
           TEXT HERE.
         `,
+        table: {
+          field_1: 'Field 1',
+          field_2: 'Field 2',
+          field_3: 'Field 3',
+        },
       },
       tags: {
         title: 'Tags',
