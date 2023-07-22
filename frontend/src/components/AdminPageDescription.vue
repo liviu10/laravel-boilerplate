@@ -1,6 +1,6 @@
 <template>
   <div class="row admin-section admin-section--description">
-    <div class="col-xs-10 col-sm-10 col-md-8 col-lg-8 col-xl-6">
+    <div class="col-xs-10 col-sm-10 col-md-8 col-lg-8 col-xl-8">
       <div v-if="checkCurrentRouteName(adminRouteName)" class="admin-section__description-title">
         {{ displayAdminWelcomeMessage(currentAuthenticatedUser) }}
       </div>

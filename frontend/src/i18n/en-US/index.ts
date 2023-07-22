@@ -35,7 +35,10 @@ export default {
         actions: 'Actions',
         no_data_label: 'No data available!',
         new_record_label: 'New record',
+        default_column_name: 'Default label',
       },
+      notification_warning_title: 'Warning',
+      notification_warning_message: 'The operation could not be performed. Invalid record id: {recordId}'
     },
     menu: {
       my_account: 'User profile',
@@ -135,12 +138,22 @@ export default {
         description: `
           TEXT HERE.
         `,
+        table: {
+          full_name: 'Full name',
+          email: 'Email address',
+          nickname: 'Nickname',
+          created_at: 'Joined date',
+        },
       },
       roles_and_permissions: {
         title: 'Roles and permissions',
         description: `
           TEXT HERE.
         `,
+        table: {
+          user_role_name: 'Role name',
+          user_role_description: 'Role description'
+        },
       },
     },
     application_settings: {

@@ -37,7 +37,10 @@ export default {
         actions: 'Actiuni',
         no_data_label: 'Nu exista inregistrari',
         new_record_label: 'Inregistrare noua',
+        default_column_name: 'Eticheta implicita',
       },
+      notification_warning_title: 'Atentionare',
+      notification_warning_message: 'Operatia nu a putut fi efectuata. Id-ul inregistrarii este invalid: {recordId}'
     },
     menu: {
       my_account: 'Profil utilizator',
@@ -137,12 +140,22 @@ export default {
         description: `
           TEXT HERE.
         `,
+        table: {
+          full_name: 'Nume si prenume',
+          email: 'Adresa email',
+          nickname: 'Nickname',
+          created_at: 'Data aderarii',
+        },
       },
       roles_and_permissions: {
         title: 'Roluri si permisiuni',
         description: `
           TEXT HERE.
         `,
+        table: {
+          user_role_name: 'Nume rol',
+          user_role_description: 'Descriere rol'
+        },
       },
     },
     application_settings: {

@@ -1,10 +1,6 @@
 <template>
-  <div class="admin-section__container-table-top-left">
-    <q-btn
-      :color="color ? color : 'primary'"
-      :dense="dense ? dense : undefined"
-      :square="square ? square : undefined"
-    >
+  <div v-if="topLeftSlot" class="admin-section__container-table-top-left">
+    <q-btn v-if="createNewRecord" color="primary" dense square>
       <q-icon name="add" />
       <span>
         {{ t('admin.generic.table.new_record_label') }}
@@ -21,9 +17,8 @@ import { useI18n } from 'vue-i18n';
 const { t } = useI18n({});
 
 interface AdminPageContainerTableTopLeftInterface {
-  color?: string;
-  dense?: boolean;
-  square?: boolean;
+  createNewRecord?: boolean;
+  topLeftSlot?: boolean;
 }
 withDefaults(defineProps<AdminPageContainerTableTopLeftInterface>(), {});
 </script>

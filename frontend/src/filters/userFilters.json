@@ -1,0 +1,32 @@
+[
+  {
+    "id": 1,
+    "label": "Filter by ID",
+    "type": "q-input",
+    "value": ""
+  },
+  {
+    "id": 2,
+    "label": "Filter by full name",
+    "type": "q-input",
+    "value": ""
+  },
+  {
+    "id": 3,
+    "label": "Filter by email",
+    "type": "q-input",
+    "value": ""
+  },
+  {
+    "id": 4,
+    "label": "Filter by nickname",
+    "type": "q-input",
+    "value": ""
+  },
+  {
+    "id": 5,
+    "label": "Filter by join date",
+    "type": "q-input",
+    "value": ""
+  }
+]

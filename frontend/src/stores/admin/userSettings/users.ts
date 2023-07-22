@@ -1,5 +1,4 @@
 import { defineStore } from 'pinia';
-import { $users } from 'src/api';
 
 const useUserStore = defineStore('userStore', {
   state: () => ({
@@ -18,7 +17,6 @@ const useUserStore = defineStore('userStore', {
   },
   actions: {
     async getRecords() {
-      await $users.users.get(1)
       debugger;
     },
 
@@ -27,7 +25,6 @@ const useUserStore = defineStore('userStore', {
     },
 
     async findRecord() {
-      await $users.users.find()
       debugger;
     },
 

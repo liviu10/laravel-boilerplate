@@ -1,52 +1,52 @@
 <template>
   <q-table
-    :bordered="bordered ? bordered : undefined"
+    :bordered="bordered"
     :columns="columns"
-    :dense="dense ? dense : undefined"
+    :dense="dense"
     :no-data-label="t('admin.generic.table.no_data_label')"
     :rows="rows"
     row-key="id"
-    :square="square ? square : undefined"
-    :separator="separator ? separator : undefined"
-    :rows-per-page-options="setDefaultPagination"
+    :square="square"
+    :separator="separator"
+    :rows-per-page-options="rowsPerPageOptions"
     class="admin-section__container-table"
   >
     <template v-slot:loading>
-      <q-inner-loading showing>
+      <q-inner-loading showing v-if="customLoader">
         <q-spinner-gears size="60px" color="primary" />
       </q-inner-loading>
+      <q-inner-loading showing v-else size="60px" color="primary" />
     </template>
 
     <template v-slot:top-left>
       <admin-page-container-table-top-left
-        :color="'primary'"
-        :dense="true"
-        :square="true"
+        :create-new-record="createNewRecord"
+        :top-left-slot="topLeftSlot"
       />
     </template>
 
-    <template v-slot:top-right>
-      <div>TOP RIGHT</div>
-    </template>
-
-    <template v-slot:top-row>
-      <div>TOP ROW</div>
+    <template v-slot:top-right="props">
+      <admin-page-container-table-top-right
+        :fullscreen-button="fullscreenButton"
+        :props="props"
+        :top-right-slot="topRightSlot"
+      />
     </template>
 
     <template v-slot:header="props">
-      <q-tr :props="props">
-        <q-th v-for="col in props.cols" :key="col.name" :props="props">
-          {{ displayLabel(t(col.label)) }}
-        </q-th>
-      </q-tr>
+      <admin-page-container-table-header :props="props" />
     </template>
 
     <template v-slot:body="props">
-      <q-tr :props="props">
-        <q-td v-for="col in props.cols" :key="col.name" :props="props">
-          {{ col.value }}
-        </q-td>
-      </q-tr>
+      <admin-page-container-table-body
+        :action-buttons="actionButtons"
+        :delete-record-button="deleteRecordButton"
+        :edit-record-button="editRecordButton"
+        :show-record-button="showRecordButton"
+        :props="props"
+        :record-id="props.row.id"
+        @action-method-dialog="actionMethodDialog"
+      />
     </template>
   </q-table>
 </template>
@@ -54,51 +54,73 @@
 <script setup lang="ts">
 // Import vue related utilities
 import { useI18n } from 'vue-i18n';
-import { computed } from 'vue';
 import { QTableProps } from 'quasar';
-import { displayLabel } from 'src/library/TextOperations';
 
 // Import generic components, libraries and interfaces
 import AdminPageContainerTableTopLeft from 'src/components/AdminPageContainerTableTopLeft.vue';
+import AdminPageContainerTableTopRight from 'src/components/AdminPageContainerTableTopRight.vue';
+import AdminPageContainerTableHeader from 'src/components/AdminPageContainerTableHeader.vue';
+import AdminPageContainerTableBody from 'src/components/AdminPageContainerTableBody.vue';
 
 // Defined the translation variable
 const { t } = useI18n({});
 
+interface TableFilterInterface {
+  id: number;
+  label: string;
+  type: string; // TODO: after linking to the api the type should be: 'q-input' | 'q-select' instead of string
+  value: string;
+  options?: {
+    value: string;
+    label: string;
+  }[];
+}
+
 interface AdminPageContainerTableInterface {
   bordered?: boolean;
   columns?: QTableProps['columns'];
+  createNewRecord?: boolean;
+  customLoader?: boolean;
+  deleteRecordButton?: boolean;
   dense?: boolean;
+  editRecordButton?: boolean;
+  filters?: TableFilterInterface[];
+  fullscreenButton?: boolean;
   rows?: QTableProps['rows'];
-  rowId?: QTableProps['rowKey'];
   square?: boolean;
+  showRecordButton?: boolean;
   separator?: QTableProps['separator'];
   rowsPerPageOptions?: QTableProps['rowsPerPageOptions'];
+  topLeftSlot?: boolean;
+  topRightSlot?: boolean;
+  topRowSlot?: boolean;
 }
-withDefaults(defineProps<AdminPageContainerTableInterface>(), {});
+withDefaults(defineProps<AdminPageContainerTableInterface>(), {
+  bordered: true,
+  customLoader: true,
+  dense: true,
+  square: true,
+  separator: 'cell',
+});
+
+// Action buttons properties
+const actionButtons = [
+  { id: 1, color: 'info', icon: 'visibility', event: 'showRecord' },
+  { id: 2, color: 'warning', icon: 'edit', event: 'editRecord' },
+  { id: 3, color: 'negative', icon: 'delete', event: 'deleteRecord' },
+];
+
+const emit = defineEmits<{
+  (event: 'actionMethodDialog', action: 'show' | 'edit' | 'delete', recordId: number): void;
+}>();
 
 /**
- * Computed function to generate a default pagination options array for QTable.
- * @returns A function that takes in custom pagination options and
- * returns either the custom options if provided and valid,
- * or the default pagination options.
- * @param rowsPerPageOptions - Optional. An array of numbers representing
- * the available rows per page options. If provided and valid,
- * this array will be returned. If not provided or invalid
- * (e.g., undefined or not an array), the default pagination
- * options will be returned.
+ * Function triggers event for executing action method in dialog interactions.
+ * @param action - The name of the action method to be executed for the dialog.
+ * Available option: show, edit, delete
+ * @param recordId - The unique identifier of the record associated with the dialog.
  */
-const setDefaultPagination = computed(() => {
-  const defaultPagination: QTableProps['rowsPerPageOptions'] = [
-    10, 20, 50, 100, 0,
-  ];
-  return (
-    rowsPerPageOptions: QTableProps['rowsPerPageOptions'] | undefined
-  ): QTableProps['rowsPerPageOptions'] => {
-    if (rowsPerPageOptions && typeof rowsPerPageOptions !== undefined) {
-      return rowsPerPageOptions;
-    } else {
-      return defaultPagination;
-    }
-  };
-});
+function actionMethodDialog(action: 'show' | 'edit' | 'delete', recordId: number) {
+  emit('actionMethodDialog', action, recordId)
+}
 </script>
