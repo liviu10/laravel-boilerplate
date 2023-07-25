@@ -40,7 +40,18 @@ export default {
         default_column_name: 'Eticheta implicita',
       },
       notification_warning_title: 'Atentionare',
-      notification_warning_message: 'Operatia nu a putut fi efectuata. Id-ul inregistrarii este invalid: {recordId}'
+      notification_warning_message: 'Operatia nu a putut fi efectuata. Id-ul inregistrarii este invalid: {recordId}',
+      view_image_label: 'Vezi imagine',
+      ok_label: 'OK',
+      cancel_label: 'Anuleaza',
+      close_label: 'Inchide',
+      update_label: 'Modifica',
+      delete_label: 'Sterge',
+      default_dialog_title: 'Titlu implicit',
+      show_dialog_title: 'Afiseaza detalii inregistrare',
+      edit_dialog_title: 'Modifica inregistrarea',
+      delete_dialog_title: 'Sterge inregistrarea',
+      delete_confirmation_message: 'Esti sigur ca vrei sa stergi aceasta inregistrare?'
     },
     menu: {
       my_account: 'Profil utilizator',

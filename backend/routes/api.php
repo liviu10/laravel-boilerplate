@@ -14,7 +14,6 @@ use Illuminate\Support\Facades\Route;
 |
 */
 // Import application's settings
-    use App\Http\Controllers\Admin\Settings\FrontMenuController;
     use App\Http\Controllers\Admin\Settings\UserController;
     use App\Http\Controllers\Admin\Settings\UserRoleTypeController;
 
@@ -27,8 +26,6 @@ Route::group([ 'prefix' => config('app.version') ], function () {
     Route::group([ 'prefix' => '/admin' ], function () {
         // Application's settings api endpoints
         Route::group([ 'prefix' => '/settings' ], function () {
-            // Front menu
-            Route::apiResource('/menu', FrontMenuController::class);
             // Users
             Route::get('/users/current-auth', [UserController::class, 'currentAuthUser']);
             Route::apiResource('/users', UserController::class);

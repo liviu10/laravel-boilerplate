@@ -1,36 +1,33 @@
-interface ApiResponseInterface {
-  title: string
-  description: string
-  results: {
-    current_page: number,
-    data: {
-      [key: string]: string
-    }[],
-    first_page_url: string,
-    from: number,
-    last_page: number,
-    last_page_url: string,
-    links: {
-      [key: string]: null | string | boolean
-    }[],
-    next_page_url: string,
-    path: string,
-    per_page: number,
-    prev_page_url: null,
-    to: number,
-    total: number
-  }
+interface RootObjectInterface {
+  title: string;
+  description: string;
+  results: PaginatedResultsInterface;
 }
 
-interface ApiResponseSingleRecordInterface {
-  title: string,
-  description: string,
-  results: {
-    [key: string]: number | string | null
-  }[]
+interface PaginatedResultsInterface {
+  current_page: number;
+  data: unknown[];
+  first_page_url: string | null;
+  from: number;
+  last_page: number;
+  last_page_url: string | null;
+  links: PaginationLinksInterface[];
+  next_page_url?: string | null;
+  path: string | null;
+  per_page: number;
+  prev_page_url?: string | null;
+  to: number;
+  total: number;
+}
+
+interface PaginationLinksInterface {
+  url?: string | null;
+  label: string;
+  active: boolean;
 }
 
 export {
-  ApiResponseInterface,
-  ApiResponseSingleRecordInterface
+  RootObjectInterface,
+  PaginatedResultsInterface,
+  PaginationLinksInterface
 }

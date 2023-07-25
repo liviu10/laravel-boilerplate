@@ -8,8 +8,6 @@
       :admin-page-description="currentRouteDescription"
     />
 
-    <pre>{{ getAllRecords }}</pre>
-
     <admin-page-container :admin-route-name="currentRouteName">
       <template v-slot:admin-content>
         <admin-page-container-table
@@ -19,7 +17,8 @@
           :edit-record-button="true"
           :filters="TableFilters"
           :fullscreen-button="true"
-          :rows="TableRows"
+          :loading="loadData"
+          :rows="getAllRecords.data"
           :show-record-button="true"
           :rows-per-page-options="[10, 20, 50, 100, 0]"
           :top-left-slot="true"
@@ -29,13 +28,61 @@
         />
       </template>
     </admin-page-container>
+
+    <admin-page-container-dialog
+      v-if="displayActionDialog"
+      :action-name="actionName"
+      :display-action-dialog="displayActionDialog"
+      :record-id="selectedRecordId"
+      @closeDialog="() => displayActionDialog = false"
+      @editDialog="editRecord"
+      @deleteDialog="deleteRecord"
+    >
+      <template v-slot:record-details>
+        <div class="admin-section__container-dialog-content">
+          <p v-for="(record, index) in getSingleRecord" :key="index" class="q-mb-none">
+            <span class="text-bold">{{ displayLabel(index) }}</span>:
+            <template v-if="record !== null && (typeof record === 'object')">
+              <div v-for="(item, key) in record" :key="key" class="q-ml-md">
+                <span class="text-bold">
+                  {{ displayLabel(key) }}
+                </span>:
+                <q-badge
+                  v-if="key.toString() === 'is_active' && item"
+                  :color="(item as unknown as boolean) === true ? 'positive' : 'negative'"
+                  text-color="black"
+                  :label="item.toString()"
+                />
+                <span v-else>
+                  {{ item ?? '—' }}
+                </span>
+              </div>
+            </template>
+            <template v-else>
+              <a v-if="index.toString() === 'email' && record" :href="'mailto:' + record">
+                {{ record }}
+              </a>
+              <a v-else-if="index.toString() === 'phone' && record" :href="'tel:' + record">
+                {{ record }}
+              </a>
+              <a v-else-if="index.toString() === 'profile_image' && record" :href="record.toString()">
+                {{ t('admin.generic.view_image_label') }}
+              </a>
+              <span v-else>
+                {{ record ?? '—' }}
+              </span>
+            </template>
+          </p>
+        </div>
+      </template>
+    </admin-page-container-dialog>
   </q-page>
 </template>
 
 <script setup lang="ts">
 // Import vue related utilities
 import { useRouter } from 'vue-router';
-import { ref, onMounted, computed } from 'vue';
+import { ref, onMounted, computed, Ref } from 'vue';
 import { useI18n } from 'vue-i18n';
 
 // Import generic components, libraries and interfaces
@@ -43,9 +90,11 @@ import AdminPageTitle from 'src/components/AdminPageTitle.vue';
 import AdminPageDescription from 'src/components/AdminPageDescription.vue';
 import AdminPageContainer from 'src/components/AdminPageContainer.vue';
 import AdminPageContainerTable from 'src/components/AdminPageContainerTable.vue';
+import AdminPageContainerDialog from 'src/components/AdminPageContainerDialog.vue';
 import TableColumns from 'src/columns/userColumns';
-import TableRows from 'src/rows/userRows.json';
 import TableFilters from 'src/filters/userFilters.json';
+import { displayLabel } from 'src/library/TextOperations';
+import { notificationSystem } from 'src/library/NotificationSystem';
 
 // Import Pinia's related utilities
 import { useUserStore } from 'src/stores/admin/userSettings/users';
@@ -65,27 +114,91 @@ let currentRouteDescription = ref(t(router.currentRoute.value.meta.caption as st
 // Get application name
 const applicationName: string | undefined = process.env.APP_NAME
 
-//
-function actionMethodDialog(action: 'show' | 'edit' | 'delete', recordId: number) {
-  if (action === 'show') {
+// Load table data
+const loadData = ref(false)
 
-  }
+// Fetch all users
+const getAllRecords = computed(() => userStore.getAllRecords);
 
-  if (action === 'edit') {
+// Display the action name & dialog
+const actionName: Ref<'show' | 'edit' | 'delete' | undefined> = ref(undefined)
+const displayActionDialog = ref(false)
 
-  }
+// Fetch single user details
+const getSingleRecord = computed(() => userStore.getSingleRecord);
 
-  if (action === 'delete') {
+/**
+ * Perform an action (show, edit, or delete) on a
+ * specific record with the given record ID.
+ * @param action - The type of action to perform
+ * on the record. It can be 'show', 'edit', or 'delete'.
+ * @param recordId - The ID of the record on
+ * which the action will be performed.
+ * @returns - A promise that resolves when
+ * the action is completed or rejects if an error occurs.
+ */
+async function actionMethodDialog(action: 'show' | 'edit' | 'delete', recordId: number) {
+  loadData.value = true
+  userStore.findRecord(recordId).then(() => {
+    loadData.value = false
+    actionName.value = action
+    getSingleRecord.value
+    displayActionDialog.value = true
+  })
+}
 
+/**
+ * Computed property to get the 'id'
+ * of the selected record from 'getSingleRecord' array.
+ * @returns The 'id' of the selected record if available,
+ * or null if the array is empty.
+ */
+const selectedRecordId = computed(() => {
+  const recordId = getSingleRecord.value && Object.keys(getSingleRecord.value).length > 0 ? getSingleRecord.value.id : null;
+  return recordId
+});
+
+function editRecord() {
+  const recordId = getSingleRecord.value && Object.keys(getSingleRecord.value).length > 0 ? getSingleRecord.value.id : null;
+  if (recordId) {
+    loadData.value = true
+    displayActionDialog.value = false
+    userStore.updateRecord(recordId).then(() => {
+      loadData.value = false
+    })
+  } else {
+    const notificationTitle = t('admin.generic.notification_warning_title');
+    const notificationMessage = t('admin.generic.notification_warning_message', { recordId: `${recordId}` });
+    console.log(
+      `The operation could not be performed. Invalid record id: ${recordId}!`
+    );
+    notificationSystem(notificationTitle, notificationMessage, 'warning');
   }
 }
 
-const getAllRecords = computed(() => {
-  return userStore.getAllRecords;
-});
+function deleteRecord() {
+  const recordId = getSingleRecord.value && Object.keys(getSingleRecord.value).length > 0 ? getSingleRecord.value.id : null;
+  if (recordId) {
+    loadData.value = true
+    displayActionDialog.value = false
+    userStore.deleteRecord(recordId).then(() => {
+      loadData.value = false
+    })
+  } else {
+    const notificationTitle = t('admin.generic.notification_warning_title');
+    const notificationMessage = t('admin.generic.notification_warning_message', { recordId: `${recordId}` });
+    console.log(
+      `The operation could not be performed. Invalid record id: ${recordId}!`
+    );
+    notificationSystem(notificationTitle, notificationMessage, 'warning');
+  }
+}
 
 onMounted(async () => {
-  await userStore.getRecords()
+  loadData.value = true
+  await userStore.getRecords().then(() => {
+    loadData.value = false
+  })
 })
 </script>
 

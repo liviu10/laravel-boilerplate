@@ -30,6 +30,9 @@
           <q-icon name="delete" />
         </q-btn>
       </div>
+      <div v-else-if="col.name === 'email'">
+        <a :href="'mailto:' + col.value">{{ col.value }}</a>
+      </div>
       <div v-else>
         {{ col.value }}
       </div>

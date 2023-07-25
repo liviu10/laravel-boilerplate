@@ -38,7 +38,18 @@ export default {
         default_column_name: 'Default label',
       },
       notification_warning_title: 'Warning',
-      notification_warning_message: 'The operation could not be performed. Invalid record id: {recordId}'
+      notification_warning_message: 'The operation could not be performed. Invalid record id: {recordId}',
+      view_image_label: 'View image',
+      ok_label: 'OK',
+      cancel_label: 'Cancel',
+      close_label: 'Close',
+      update_label: 'Update',
+      delete_label: 'Delete',
+      default_dialog_title: 'Default title',
+      show_dialog_title: 'Show record details',
+      edit_dialog_title: 'Edit record',
+      delete_dialog_title: 'Delete record',
+      delete_confirmation_message: 'Are you sure you want delete this record?'
     },
     menu: {
       my_account: 'User profile',

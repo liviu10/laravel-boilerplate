@@ -3,6 +3,7 @@
     :bordered="bordered"
     :columns="columns"
     :dense="dense"
+    :loading="loading"
     :no-data-label="t('admin.generic.table.no_data_label')"
     :rows="rows"
     row-key="id"
@@ -86,6 +87,7 @@ interface AdminPageContainerTableInterface {
   editRecordButton?: boolean;
   filters?: TableFilterInterface[];
   fullscreenButton?: boolean;
+  loading?: boolean;
   rows?: QTableProps['rows'];
   square?: boolean;
   showRecordButton?: boolean;

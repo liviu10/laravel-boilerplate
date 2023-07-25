@@ -164,7 +164,7 @@ class User extends Authenticatable
     {
         try
         {
-            return $this->select('id', 'full_name', 'nickname', 'email')->paginate(15);
+            return $this->select('id', 'full_name', 'nickname', 'email', 'created_at')->paginate(15);
         }
         catch (\Exception $exception)
         {
