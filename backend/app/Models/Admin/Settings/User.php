@@ -134,7 +134,7 @@ class User extends Authenticatable
      * @throws \Exception|\Illuminate\Database\QueryException Returns an boolean if there was a problem fetching
      * the current authenticated user.
      */
-    public function fetchCurrentAuthUser()
+    public function currentAuthUser()
     {
         try
         {

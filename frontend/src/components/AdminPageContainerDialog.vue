@@ -10,7 +10,7 @@
           </q-card-section>
 
           <q-card-section class="q-pt-none">
-            <slot name="record-details"></slot>
+            <slot v-if="actionName !== 'create'" name="record-details"></slot>
 
             <div v-if="actionName === 'delete'" class="admin-section__container-dialog-content">
               {{ t('admin.generic.delete_confirmation_message') }}
@@ -40,8 +40,11 @@
 import { Ref, computed } from 'vue';
 import { useI18n } from 'vue-i18n';
 
+// Import generic components, libraries and interfaces
+import { ActionMethodDialogType } from 'src/types/ActionMethodDialogType';
+
 interface AdminPageContainerDialogInterface {
-  actionName?: 'show' | 'edit' | 'delete';
+  actionName?: ActionMethodDialogType;
   displayActionDialog?: boolean;
   recordId: number | null;
 }
@@ -49,7 +52,7 @@ interface AdminPageContainerDialogInterface {
 const props = defineProps<AdminPageContainerDialogInterface>();
 
 // Defines the event emitters for the component.
-const emit = defineEmits(['closeDialog', 'editDialog', 'deleteDialog']);
+const emit = defineEmits(['saveDialog', 'closeDialog', 'editDialog', 'deleteDialog']);
 
 // Defined the translation variable
 const { t } = useI18n({});
@@ -74,6 +77,8 @@ const displayDialog: Ref<boolean> = computed(() => {
  */
 const dialogTitle = computed(() => {
   switch (props.actionName) {
+    case 'create':
+      return t('admin.generic.create_dialog_title');
     case 'show':
       return t('admin.generic.show_dialog_title');
     case 'edit':
@@ -111,9 +116,9 @@ const filteredDialogActionButtons = computed(() => {
       class: 'q-mx-sm',
       color: actionName === 'edit' ? 'warning' : actionName === 'delete' ? 'negative' : 'positive',
       dense: true,
-      label: actionName === 'edit' ? 'admin.generic.update_label' : actionName === 'delete' ? 'admin.generic.delete_label' : 'admin.generic.ok_label',
+      label: actionName === 'create' ? 'admin.generic.save_label' : actionName === 'edit' ? 'admin.generic.update_label' : actionName === 'delete' ? 'admin.generic.delete_label' : 'admin.generic.ok_label',
       square: true,
-      clickEvent: actionName === 'edit' ? () => editActionDialog() : actionName === 'delete' ? () => deleteActionDialog() : null
+      clickEvent: actionName === 'create' ? () => saveActionDialog() : actionName === 'edit' ? () => editActionDialog() : actionName === 'delete' ? () => deleteActionDialog() : null
     },
   ];
 
@@ -121,15 +126,11 @@ const filteredDialogActionButtons = computed(() => {
   return actionName === 'show' ? [dialogActionButtons[0]] : dialogActionButtons;
 });
 
-function closeActionDialog() {
-  emit('closeDialog')
-}
+const closeActionDialog = () => emit('closeDialog');
 
-function editActionDialog() {
-  emit('editDialog')
-}
+const saveActionDialog = () => emit('saveDialog');
 
-function deleteActionDialog() {
-  emit('deleteDialog')
-}
+const editActionDialog = () => emit('editDialog');
+
+const deleteActionDialog = () => emit('deleteDialog');
 </script>

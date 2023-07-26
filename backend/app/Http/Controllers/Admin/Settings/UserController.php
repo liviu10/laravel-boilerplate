@@ -25,7 +25,7 @@ class UserController extends Controller
      */
     public function currentAuthUser()
     {
-        return $this->userService->handleFetchCurrentAuthUser();
+        return $this->userService->handleCurrentAuthUser();
     }
 
     /**

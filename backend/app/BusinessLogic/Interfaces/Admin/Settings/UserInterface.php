@@ -8,6 +8,7 @@ use App\Http\Requests\Admin\Settings\UserRequest;
  * UserInterface is a contract for what methods will be used in the UserService class.
  * This consists of the following CRUD operations methods:
  * - handleCurrentAuthUser();
+ * - handleCurrentAuthUserProfile();
  * - handleIndex();
  * - handleStore();
  * - handleShow();
@@ -20,7 +21,7 @@ interface UserInterface
      * Fetch current authenticated user.
      * @return \Illuminate\Http\Response
      */
-    public function handleFetchCurrentAuthUser();
+    public function handleCurrentAuthUser();
 
     /**
      * Fetch all the records from the database.

@@ -34,6 +34,7 @@
       :display-action-dialog="displayActionDialog"
       :record-id="selectedRecordId"
       @closeDialog="() => displayActionDialog = false"
+      @saveDialog="saveRecord"
       @editDialog="editRecord"
       @deleteDialog="deleteRecord"
     >
@@ -90,6 +91,7 @@ import AdminPageContainerDialog from 'src/components/AdminPageContainerDialog.vu
 import TableColumns from 'src/columns/mediaColumns';
 import { displayLabel } from 'src/library/TextOperations';
 import { notificationSystem } from 'src/library/NotificationSystem';
+import { ActionMethodDialogType } from 'src/types/ActionMethodDialogType';
 
 // Import Pinia's related utilities
 import { useMediaStore } from 'src/stores/admin/management/media';
@@ -118,7 +120,7 @@ const loadData = ref(false)
 const getAllRecords = computed(() => mediaStore.getAllRecords);
 
 // Display the action name & dialog
-const actionName: Ref<'show' | 'edit' | 'delete' | undefined> = ref(undefined)
+const actionName: Ref<ActionMethodDialogType | undefined> = ref(undefined)
 const displayActionDialog = ref(false)
 
 // Fetch single user details
@@ -134,14 +136,31 @@ const getSingleRecord = computed(() => mediaStore.getSingleRecord);
  * @returns - A promise that resolves when
  * the action is completed or rejects if an error occurs.
  */
-async function actionMethodDialog(action: 'show' | 'edit' | 'delete', recordId: number) {
+async function actionMethodDialog(action: ActionMethodDialogType, recordId?: number) {
   loadData.value = true
-  mediaStore.findRecord(recordId).then(() => {
+  if (action === 'create') {
     loadData.value = false
     actionName.value = action
-    getSingleRecord.value
     displayActionDialog.value = true
-  })
+  } else {
+    const isInvalidRecordId = !recordId || typeof recordId !== 'number' || recordId === null || recordId === undefined;
+    if (isInvalidRecordId) {
+      const notificationTitle = t('admin.generic.notification_warning_title');
+      const notificationMessage = t('admin.generic.notification_warning_message', { recordId: `${recordId}` });
+      console.log(
+        `The operation could not be performed. Invalid record id: ${recordId}!`
+      );
+      loadData.value = false
+      notificationSystem(notificationTitle, notificationMessage, 'warning');
+    } else {
+      mediaStore.findRecord(recordId).then(() => {
+        loadData.value = false
+        actionName.value = action
+        getSingleRecord.value
+        displayActionDialog.value = true
+      })
+    }
+  }
 }
 
 /**
@@ -154,6 +173,14 @@ const selectedRecordId = computed(() => {
   const recordId = getSingleRecord.value && Object.keys(getSingleRecord.value).length > 0 ? getSingleRecord.value.id : null;
   return recordId
 });
+
+function saveRecord() {
+  loadData.value = true
+  displayActionDialog.value = false
+  mediaStore.createRecord().then(() => {
+    loadData.value = false
+  })
+}
 
 function editRecord() {
   const recordId = getSingleRecord.value && Object.keys(getSingleRecord.value).length > 0 ? getSingleRecord.value.id : null;

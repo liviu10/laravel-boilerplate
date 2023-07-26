@@ -7,27 +7,36 @@
           color="info"
           dense
           square
-          @click="openDialog(actionMethods[0], recordId)"
+          @click="openDialog(actionMethods[1], recordId)"
         >
           <q-icon name="visibility" />
+          <q-tooltip>
+            {{ t('admin.generic.show_dialog_title') }}
+          </q-tooltip>
         </q-btn>
         <q-btn
           v-if="editRecordButton"
           color="warning"
           dense
           square
-          @click="openDialog(actionMethods[1], recordId)"
+          @click="openDialog(actionMethods[2], recordId)"
         >
           <q-icon name="edit" />
+          <q-tooltip>
+            {{ t('admin.generic.edit_dialog_title') }}
+          </q-tooltip>
         </q-btn>
         <q-btn
           v-if="showRecordButton"
           color="negative"
           dense
           square
-          @click="openDialog(actionMethods[2], recordId)"
+          @click="openDialog(actionMethods[3], recordId)"
         >
           <q-icon name="delete" />
+          <q-tooltip>
+            {{ t('admin.generic.delete_dialog_title') }}
+          </q-tooltip>
         </q-btn>
       </div>
       <div v-else-if="col.name === 'email'">
@@ -46,7 +55,7 @@ import { QTrProps } from 'quasar';
 import { useI18n } from 'vue-i18n';
 
 // Import generic components, libraries and interfaces
-import { notificationSystem } from 'src/library/NotificationSystem';
+import { ActionMethodDialogType } from 'src/types/ActionMethodDialogType';
 
 // Defined the translation variable
 const { t } = useI18n({});
@@ -61,25 +70,16 @@ interface AdminPageContainerTableHeaderInterface {
 withDefaults(defineProps<AdminPageContainerTableHeaderInterface>(), {});
 
 const emit = defineEmits<{
-  (event: 'actionMethodDialog', action: 'show' | 'edit' | 'delete', recordId: number): void;
+  (event: 'actionMethodDialog', action: ActionMethodDialogType, recordId: number): void;
 }>();
 
-const actionMethods: { [key: number]: 'show' | 'edit' | 'delete' } = {
-  0: 'show',
-  1: 'edit',
-  2: 'delete',
+const actionMethods: { [key: number]: ActionMethodDialogType } = {
+  0: 'create',
+  1: 'show',
+  2: 'edit',
+  3: 'delete',
 };
-function openDialog(action: 'show' | 'edit' | 'delete', recordId: number) {
-  const isInvalidRecordId = !recordId || typeof recordId !== 'number' || recordId === null;
-  if (isInvalidRecordId) {
-    const notificationTitle = t('admin.generic.notification_warning_title');
-    const notificationMessage = t('admin.generic.notification_warning_message', { recordId: `${recordId}` });
-    console.log(
-      `The operation could not be performed. Invalid record id: ${recordId}!`
-    );
-    notificationSystem(notificationTitle, notificationMessage, 'warning');
-  } else {
-    emit('actionMethodDialog', action, recordId)
-  }
+function openDialog(action: ActionMethodDialogType, recordId: number) {
+  emit('actionMethodDialog', action, recordId)
 }
 </script>

@@ -30,9 +30,9 @@ class UserService implements UserInterface
      * Fetch current authenticate user from the database.
      * @return \Illuminate\Http\Response
      */
-    public function handleFetchCurrentAuthUser()
+    public function handleCurrentAuthUser()
     {
-        $apiDisplayAllRecords = $this->modelName->fetchCurrentAuthUser();
+        $apiDisplayAllRecords = $this->modelName->currentAuthUser();
 
         if ($apiDisplayAllRecords instanceof \Illuminate\Pagination\LengthAwarePaginator)
         {
