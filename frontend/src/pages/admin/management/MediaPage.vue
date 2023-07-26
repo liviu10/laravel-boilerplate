@@ -91,7 +91,7 @@ import AdminPageContainerDialog from 'src/components/AdminPageContainerDialog.vu
 import TableColumns from 'src/columns/mediaColumns';
 import { displayLabel } from 'src/library/TextOperations';
 import { notificationSystem } from 'src/library/NotificationSystem';
-import { ActionMethodDialogType } from 'src/types/ActionMethodDialogType';
+import { DialogType } from 'src/types/DialogType';
 
 // Import Pinia's related utilities
 import { useMediaStore } from 'src/stores/admin/management/media';
@@ -120,7 +120,7 @@ const loadData = ref(false)
 const getAllRecords = computed(() => mediaStore.getAllRecords);
 
 // Display the action name & dialog
-const actionName: Ref<ActionMethodDialogType | undefined> = ref(undefined)
+const actionName: Ref<DialogType | undefined> = ref(undefined)
 const displayActionDialog = ref(false)
 
 // Fetch single user details
@@ -136,7 +136,7 @@ const getSingleRecord = computed(() => mediaStore.getSingleRecord);
  * @returns - A promise that resolves when
  * the action is completed or rejects if an error occurs.
  */
-async function actionMethodDialog(action: ActionMethodDialogType, recordId?: number) {
+async function actionMethodDialog(action: DialogType, recordId?: number) {
   loadData.value = true
   if (action === 'create') {
     loadData.value = false
@@ -227,3 +227,4 @@ onMounted(async () => {
 </script>
 
 <style lang="scss" scoped></style>
+src/types/DialogType

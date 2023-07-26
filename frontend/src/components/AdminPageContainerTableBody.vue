@@ -55,7 +55,7 @@ import { QTrProps } from 'quasar';
 import { useI18n } from 'vue-i18n';
 
 // Import generic components, libraries and interfaces
-import { ActionMethodDialogType } from 'src/types/ActionMethodDialogType';
+import { DialogType } from 'src/types/DialogType';
 
 // Defined the translation variable
 const { t } = useI18n({});
@@ -70,16 +70,16 @@ interface AdminPageContainerTableHeaderInterface {
 withDefaults(defineProps<AdminPageContainerTableHeaderInterface>(), {});
 
 const emit = defineEmits<{
-  (event: 'actionMethodDialog', action: ActionMethodDialogType, recordId: number): void;
+  (event: 'actionMethodDialog', action: DialogType, recordId: number): void;
 }>();
 
-const actionMethods: { [key: number]: ActionMethodDialogType } = {
+const actionMethods: { [key: number]: DialogType } = {
   0: 'create',
   1: 'show',
   2: 'edit',
   3: 'delete',
 };
-function openDialog(action: ActionMethodDialogType, recordId: number) {
+function openDialog(action: DialogType, recordId: number) {
   emit('actionMethodDialog', action, recordId)
 }
 </script>

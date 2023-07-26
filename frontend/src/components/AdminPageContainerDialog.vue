@@ -41,10 +41,10 @@ import { Ref, computed } from 'vue';
 import { useI18n } from 'vue-i18n';
 
 // Import generic components, libraries and interfaces
-import { ActionMethodDialogType } from 'src/types/ActionMethodDialogType';
+import { DialogType } from 'src/types/DialogType';
 
 interface AdminPageContainerDialogInterface {
-  actionName?: ActionMethodDialogType;
+  actionName?: DialogType;
   displayActionDialog?: boolean;
   recordId: number | null;
 }

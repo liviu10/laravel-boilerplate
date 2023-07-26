@@ -63,7 +63,7 @@ import AdminPageContainerTableTopLeft from 'src/components/AdminPageContainerTab
 import AdminPageContainerTableTopRight from 'src/components/AdminPageContainerTableTopRight.vue';
 import AdminPageContainerTableHeader from 'src/components/AdminPageContainerTableHeader.vue';
 import AdminPageContainerTableBody from 'src/components/AdminPageContainerTableBody.vue';
-import { ActionMethodDialogType } from 'src/types/ActionMethodDialogType';
+import { DialogType } from 'src/types/DialogType';
 
 // Defined the translation variable
 const { t } = useI18n({});
@@ -115,7 +115,7 @@ const actionButtons = [
 ];
 
 const emit = defineEmits<{
-  (event: 'actionMethodDialog', action: ActionMethodDialogType, recordId?: number): void;
+  (event: 'actionMethodDialog', action: DialogType, recordId?: number): void;
 }>();
 
 /**
@@ -124,7 +124,7 @@ const emit = defineEmits<{
  * Available option: show, edit, delete
  * @param recordId - The unique identifier of the record associated with the dialog.
  */
-function actionMethodDialog(action: ActionMethodDialogType, recordId?: number) {
+function actionMethodDialog(action: DialogType, recordId?: number) {
   emit('actionMethodDialog', action, recordId)
 }
 </script>
