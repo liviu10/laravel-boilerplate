@@ -24,13 +24,13 @@ class UserRequest extends FormRequest
     public function rules()
     {
         $rules = [
-            'first_name'        => 'required|string|min:3|max:100|regex:/^[a-zA-Z\s]+$/',
-            'last_name'         => 'required|string|min:3|max:100|regex:/^[a-zA-Z\s]+$/',
-            'nickname'          => 'required|string|min:3|max:100',
-            'phone'             => 'required|string|min:10|max:255|regex:/^\+?(?:[0-9][ .-]?){6,14}[0-9]$/',
-            'password'          => 'required|string|min:8|confirmed',
-            'profile_image'     => 'required|image|mimes:jpeg,jpg,png,gif,webp,bmp,svg,tiff',
-            'user_role_type_id' => 'required',
+            'first_name'               => 'required|string|min:3|max:100|regex:/^[a-zA-Z\s]+$/',
+            'last_name'                => 'required|string|min:3|max:100|regex:/^[a-zA-Z\s]+$/',
+            'nickname'                 => 'required|string|min:3|max:100',
+            'phone'                    => 'required|string|min:10|max:255|regex:/^\+?(?:[0-9][ .-]?){6,14}[0-9]$/',
+            'password'                 => 'required|string|min:8|confirmed',
+            'profile_image'            => 'required|image|mimes:jpeg,jpg,png,gif,webp,bmp,svg,tiff',
+            'roles_and_permissions_id' => 'required',
         ];
 
         if ($this->isMethod('PUT')) {
@@ -77,7 +77,7 @@ class UserRequest extends FormRequest
             'profile_image.required' => 'The profile image field is required.',
             'profile_image.image' => 'The profile image must be an image file.',
             'profile_image.mimes' => 'The profile image must be a file of type: :values.',
-            'user_role_type_id.required' => 'The user role type field is required.',
+            'roles_and_permissions_id.required' => 'The roles and permissions field is required.',
         ];
     }
 }

@@ -6,23 +6,22 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 /**
- * Class UserRoleType
+ * Class RoleAndPermission
  * @package App\Models\Admin\Settings
 
  * @property int $id
- * @property string $user_role_name
- * @property string $user_role_description
- * @property string $user_role_slug
+ * @property string $name
+ * @property string $description
+ * @property string $color
+ * @property string $text_color
+ * @property string $slug
  * @property boolean $is_active
  * @property \Carbon\Carbon $created_at
  * @property \Carbon\Carbon $updated_at
  * @method fetchAllRecords
- * @method createRecord
  * @method fetchSingleRecord
- * @method updateRecord
- * @method deleteRecord
  */
-class UserRoleType extends Model
+class RoleAndPermission extends Model
 {
     use HasFactory;
 
@@ -31,7 +30,7 @@ class UserRoleType extends Model
      *
      * @var string
      */
-    protected $table = 'user_role_types';
+    protected $table = 'roles_and_permissions';
 
     /**
      * The primary key associated with the table.
@@ -53,9 +52,11 @@ class UserRoleType extends Model
      * @var string
      */
     protected $fillable = [
-        'user_role_name',
-        'user_role_description',
-        'user_role_slug',
+        'name',
+        'description',
+        'bg_color',
+        'text_color',
+        'slug',
         'is_active',
     ];
 
@@ -74,8 +75,8 @@ class UserRoleType extends Model
      * @var array<string, string>
      */
     protected $casts = [
-        'id' => 'integer',
-        'is_active' => 'boolean',
+        'id'         => 'integer',
+        'is_active'  => 'boolean',
         'created_at' => 'datetime:d.m.Y H:i',
         'updated_at' => 'datetime:d.m.Y H:i',
     ];
@@ -92,7 +93,7 @@ class UserRoleType extends Model
     ];
 
     /**
-     * Eloquent relationship between user role types and users.
+     * Eloquent relationship between roles and permissions and users.
      *
      */
     public function users()
@@ -109,7 +110,7 @@ class UserRoleType extends Model
     {
         try
         {
-            return $this->select('id', 'user_role_name', 'user_role_description', 'user_role_slug', 'is_active')->paginate(15);
+            return $this->select('id', 'name', 'slug', 'is_active')->paginate(15);
         }
         catch (\Illuminate\Database\QueryException $mysqlError)
         {
@@ -121,7 +122,7 @@ class UserRoleType extends Model
     /**
      * Create a new record.
      * @param array $payload An associative array of values to create a new record.
-     * @return \App\Models\UserRoleType|bool Returns a user object if the creation was successful,
+     * @return \App\Models\RoleAndPermission|bool Returns a user object if the creation was successful,
      * or a boolean otherwise.
      * @throws \Exception|\Illuminate\Database\QueryException
      * Throws an exception if an error occurs during creation.
@@ -131,10 +132,12 @@ class UserRoleType extends Model
         try
         {
             $this->create([
-                'user_role_name'         => $payload['user_role_name'],
-                'user_role_description'  => $payload['user_role_description'],
-                'user_role_slug'         => $payload['user_role_slug'],
-                'is_active'              => $payload['is_active'],
+                'name'         => $payload['name'],
+                'description'  => $payload['description'],
+                'bg_color'     => $payload['bg_color'],
+                'text_color'   => $payload['text_color'],
+                'slug'         => $payload['slug'],
+                'is_active'    => $payload['is_active'],
             ]);
 
             return True;
@@ -185,10 +188,12 @@ class UserRoleType extends Model
         try
         {
             $this->find($id)->update([
-                'user_role_name'         => $payload['user_role_name'],
-                'user_role_description'  => $payload['user_role_description'],
-                'user_role_slug'         => $payload['user_role_slug'],
-                'is_active'              => $payload['is_active'],
+                'name'         => $payload['name'],
+                'description'  => $payload['description'],
+                'bg_color'     => $payload['bg_color'],
+                'text_color'   => $payload['text_color'],
+                'slug'         => $payload['slug'],
+                'is_active'    => $payload['is_active'],
             ]);
 
             return True;

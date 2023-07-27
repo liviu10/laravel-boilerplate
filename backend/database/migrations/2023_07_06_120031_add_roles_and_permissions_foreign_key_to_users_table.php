@@ -12,7 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->foreignId('user_role_type_id')->constrained()->onDelete('cascade')->onUpdate('cascade')->index('idx_user_role_type_id');
+            $table->foreignId('roles_and_permissions_id')->constrained()->onDelete('cascade')->onUpdate('cascade')->index('idx_roles_and_permissions_id');
         });
     }
 
@@ -22,8 +22,8 @@ return new class extends Migration
     public function down(): void
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->dropForeign(['user_role_type_id']);
-            $table->dropColumn('user_role_type_id');
+            $table->dropForeign(['roles_and_permissions_id']);
+            $table->dropColumn('roles_and_permissions_id');
         });
     }
 };

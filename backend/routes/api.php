@@ -28,7 +28,7 @@ use Illuminate\Support\Facades\Route;
     use App\Http\Controllers\Admin\Documentation\DocumentationController;
 // Import application's user settings
     use App\Http\Controllers\Admin\Settings\UserController;
-    use App\Http\Controllers\Admin\Settings\UserRoleTypeController;
+    use App\Http\Controllers\Admin\Settings\RoleAndPermissionController;
 // Import application's settings
     use App\Http\Controllers\Admin\ApplicationSettings\GeneralController;
     use App\Http\Controllers\Admin\ApplicationSettings\PerformanceController;
@@ -79,11 +79,7 @@ Route::group([ 'prefix' => config('app.version') ], function () {
             Route::get('/users/current-auth', [UserController::class, 'currentAuthUser']);
             Route::apiResource('/users', UserController::class);
             // User role types
-            Route::group([ 'prefix' => '/user-role-types' ], function () {
-                Route::get('/order', [UserRoleTypeController::class, 'orderTableColumn']);
-                Route::get('/filter', [UserRoleTypeController::class, 'filterTableColumn']);
-            });
-            Route::apiResource('/user-role-types', UserRoleTypeController::class)->only(['index', 'show']);
+            Route::apiResource('/roles-and-permissions', RoleAndPermissionController::class);
         });
         // Application's settings endpoints
         Route::group([ 'prefix' => '/application-settings' ], function () {

@@ -3,15 +3,15 @@
 namespace App\BusinessLogic\Services\Admin\Settings;
 
 use App\Traits\ApiResponseMessage;
-use App\BusinessLogic\Interfaces\Admin\Settings\UserInterface;
-use App\Http\Requests\Admin\Settings\UserRequest;
-use App\Models\Admin\Settings\User;
+use App\BusinessLogic\Interfaces\Admin\Settings\RoleAndPermissionInterface;
+use App\Http\Requests\Admin\Settings\RoleAndPermissionRequest;
+use App\Models\Admin\Settings\RoleAndPermission;
 use Illuminate\Database\Eloquent\Collection;
 
 /**
- * UserService is a service class the will implement all the methods from the UserInterface contract and will handle the business logic.
+ * RoleAndPermissionService is a service class the will implement all the methods from the RoleAndPermissionInterface contract and will handle the business logic.
  */
-class UserService implements UserInterface
+class RoleAndPermissionService implements RoleAndPermissionInterface
 {
     use ApiResponseMessage;
 
@@ -23,32 +23,7 @@ class UserService implements UserInterface
      */
     public function __construct()
     {
-        $this->modelName = new User();
-    }
-
-    /**
-     * Fetch current authenticate user from the database.
-     * @return \Illuminate\Http\Response
-     */
-    public function handleCurrentAuthUser()
-    {
-        $apiDisplayAllRecords = $this->modelName->currentAuthUser();
-
-        if ($apiDisplayAllRecords instanceof \Illuminate\Pagination\LengthAwarePaginator)
-        {
-            if ($apiDisplayAllRecords->isEmpty())
-            {
-                return response($this->handleResponse('not_found'), 404);
-            }
-            else
-            {
-                return response($this->handleResponse('success', $apiDisplayAllRecords), 200);
-            }
-        }
-        else
-        {
-            return response($this->handleResponse('error_message'), 500);
-        }
+        $this->modelName = new RoleAndPermission();
     }
 
     /**
@@ -78,22 +53,19 @@ class UserService implements UserInterface
 
     /**
      * Store a new record in the database.
-     * @param  UserRequest  $request
+     * @param  RoleAndPermissionRequest  $request
      * @return \Illuminate\Http\Response
      */
-    public function handleStore(UserRequest $request)
+    public function handleStore(RoleAndPermissionRequest $request)
     {
         $apiInsertRecord = [
-            'first_name'               => $request->get('first_name'),
-            'last_name'                => $request->get('last_name'),
-            'nickname'                 => $request->get('nickname'),
-            'email'                    => $request->get('email'),
-            'phone'                    => $request->get('phone'),
-            'password'                 => $request->get('password'),
-            'profile_image'            => $request->get('profile_image'),
-            'roles_and_permissions_id' => 1
+            'name'        => $request->get('name'),
+            'description' => $request->get('description'),
+            'bg_color'    => $request->get('bg_color') !== null ? $request->get('bg_color') : null,
+            'text_color'  => $request->get('text_color') !== null ? $request->get('text_color') : null,
+            'is_active'   => $request->get('is_active'),
         ];
-        $apiInsertRecord['full_name'] = $request->get('first_name') . ' ' . $request->get('last_name');
+        $apiInsertRecord['slug'] = strtolower($request->get('name'));
         $saveRecord = $this->modelName->createRecord($apiInsertRecord);
 
         if ($saveRecord === true)
@@ -134,28 +106,25 @@ class UserService implements UserInterface
 
     /**
      * Update the specified resource in storage.
-     * @param  UserRequest  $request
+     * @param  RoleAndPermissionRequest  $request
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function handleUpdate(UserRequest $request, $id)
+    public function handleUpdate(RoleAndPermissionRequest $request, $id)
     {
         $apiUpdateRecord = [
-            'first_name'               => $request->get('first_name'),
-            'last_name'                => $request->get('last_name'),
-            'nickname'                 => $request->get('nickname'),
-            'email'                    => $request->get('email'),
-            'phone'                    => $request->get('phone'),
-            'password'                 => $request->get('password'),
-            'profile_image'            => $request->get('profile_image'),
-            'roles_and_permissions_id' => 1
+            'name'        => $request->get('name'),
+            'description' => $request->get('description'),
+            'bg_color'    => $request->get('bg_color') !== null ? $request->get('bg_color') : null,
+            'text_color'  => $request->get('text_color') !== null ? $request->get('text_color') : null,
+            'is_active'   => $request->get('is_active'),
         ];
-        $apiUpdateRecord['full_name'] = $request->get('first_name') . ' ' . $request->get('last_name');
-        $updateRecord = $this->modelName->updateRecord($apiUpdateRecord, $id);
+        $apiUpdateRecord['slug'] = strtolower($request->get('name'));
+        $updateRecord = $this->modelName->createRecord($apiUpdateRecord, $id);
 
         if ($updateRecord === true)
         {
-            return response($this->handleResponse('success'), 200);
+            return response($this->handleResponse('success'), 201);
         }
         else
         {

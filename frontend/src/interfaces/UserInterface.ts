@@ -10,12 +10,12 @@ interface UserInterface {
   phone: string | null,
   profile_image: null,
   updated_at: string,
-  user_role_type: {
+  roles_and_permissions: {
     id: number,
     is_active: boolean,
-    user_role_name: string,
+    name: string,
   },
-  user_role_type_id: number,
+  roles_and_permissions_id: number,
 }
 
 export { UserInterface }

@@ -39,29 +39,18 @@
       <template v-slot:record-details>
         <div class="admin-section__container-dialog-content">
           <p v-for="(record, index) in getSingleRecord" :key="index" class="q-mb-none">
-            <span class="text-bold">{{ displayLabel(index) }}</span>:
-            <template v-if="record !== null && (typeof record === 'object')">
-              <div v-for="(item, key) in record" :key="key" class="q-ml-md">
-                <span class="text-bold">
-                  {{ displayLabel(key) }}
-                </span>:
-                <q-badge
-                  v-if="key.toString() === 'is_active' && item"
-                  :color="(item as unknown as boolean) === true ? 'positive' : 'negative'"
-                  text-color="black"
-                  :label="item.toString()"
-                />
-                <span v-else>
-                  {{ item ?? '—' }}
-                </span>
-              </div>
-            </template>
-            <template v-else>
+            <template v-if="index.toString() !== 'bg_color' && index.toString() !== 'text_color'">
+              <span class="text-bold">{{ displayLabel(index) }}</span>:
               <q-badge
-                v-if="index.toString() === 'is_active' && index"
-                :color="(index as unknown as boolean) === true ? 'positive' : 'negative'"
+                v-if="index.toString() === 'slug' && record"
+                :style="'background-color: #' + getSingleRecord.bg_color + '; color: #' + getSingleRecord.text_color"
+                :label="record.toString()"
+              />
+              <q-badge
+                v-else-if="index.toString() === 'is_active' && record"
+                :color="(record as unknown as boolean) === true ? 'positive' : 'negative'"
                 text-color="black"
-                :label="index.toString()"
+                :label="record.toString()"
               />
               <span v-else>
                 {{ record ?? '—' }}

@@ -166,8 +166,8 @@ export default {
           TEXT HERE.
         `,
         table: {
-          user_role_name: 'Nume rol',
-          user_role_description: 'Descriere rol'
+          name: 'Nume',
+          slug: 'Eticheta'
         },
       },
     },

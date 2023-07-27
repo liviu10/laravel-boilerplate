@@ -1,8 +1,10 @@
 interface UserRolesAndPermissionsInterface {
   id: number,
-  user_role_name: string,
-  user_role_description: string,
-  user_role_slug: string | null,
+  name: string,
+  description: string,
+  bg_color: string,
+  text_color: string,
+  slug: string | null,
   is_active: boolean,
   created_at: string,
   updated_at: string,

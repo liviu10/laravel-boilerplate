@@ -164,8 +164,8 @@ export default {
           TEXT HERE.
         `,
         table: {
-          user_role_name: 'Role name',
-          user_role_description: 'Role description'
+          name: 'Name',
+          slug: 'Slug'
         },
       },
     },
