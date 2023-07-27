@@ -9,8 +9,10 @@
             </div>
           </q-card-section>
 
-          <q-card-section class="q-pt-none">
+          <q-card-section class="q-py-none">
             <slot v-if="actionName !== 'create'" name="record-details"></slot>
+
+            <q-separator v-if="actionName === 'edit' || actionName === 'delete'" class="q-my-md" />
 
             <div v-if="actionName === 'delete'" class="admin-section__container-dialog-content">
               {{ t('admin.generic.delete_confirmation_message') }}
