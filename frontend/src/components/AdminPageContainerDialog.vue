@@ -52,7 +52,7 @@ interface AdminPageContainerDialogInterface {
 const props = defineProps<AdminPageContainerDialogInterface>();
 
 // Defines the event emitters for the component.
-const emit = defineEmits(['saveDialog', 'closeDialog', 'editDialog', 'deleteDialog']);
+const emit = defineEmits(['handleActionMethod', 'closeDialog']);
 
 // Defined the translation variable
 const { t } = useI18n({});
@@ -118,7 +118,7 @@ const filteredDialogActionButtons = computed(() => {
       dense: true,
       label: actionName === 'create' ? 'admin.generic.save_label' : actionName === 'edit' ? 'admin.generic.update_label' : actionName === 'delete' ? 'admin.generic.delete_label' : 'admin.generic.ok_label',
       square: true,
-      clickEvent: actionName === 'create' ? () => saveActionDialog() : actionName === 'edit' ? () => editActionDialog() : actionName === 'delete' ? () => deleteActionDialog() : null
+      clickEvent: () => handleDialogAction(actionName)
     },
   ];
 
@@ -128,9 +128,5 @@ const filteredDialogActionButtons = computed(() => {
 
 const closeActionDialog = () => emit('closeDialog');
 
-const saveActionDialog = () => emit('saveDialog');
-
-const editActionDialog = () => emit('editDialog');
-
-const deleteActionDialog = () => emit('deleteDialog');
+const handleDialogAction = (actionName: DialogType) => emit('handleActionMethod', actionName);
 </script>

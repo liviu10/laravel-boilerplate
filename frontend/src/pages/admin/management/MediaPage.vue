@@ -34,9 +34,7 @@
       :display-action-dialog="displayActionDialog"
       :record-id="selectedRecordId"
       @closeDialog="() => displayActionDialog = false"
-      @saveDialog="saveRecord"
-      @editDialog="editRecord"
-      @deleteDialog="deleteRecord"
+      @handle-action-method="handleActionMethod"
     >
       <template v-slot:record-details>
         <div class="admin-section__container-dialog-content">
@@ -174,47 +172,40 @@ const selectedRecordId = computed(() => {
   return recordId
 });
 
-function saveRecord() {
-  loadData.value = true
+/**
+ * Performs an action based on the provided DialogType.
+ * Example: If the action is 'create' than 'createRecord'
+ * will be called from the pinia store.
+ * @param action - The type of action to be performed
+ * ('create', 'edit', 'delete').
+ */
+function handleActionMethod(action: DialogType) {
   displayActionDialog.value = false
-  mediaStore.createRecord().then(() => {
-    loadData.value = false
-  })
-}
-
-function editRecord() {
-  const recordId = getSingleRecord.value && Object.keys(getSingleRecord.value).length > 0 ? getSingleRecord.value.id : null;
-  if (recordId) {
-    loadData.value = true
-    displayActionDialog.value = false
-    mediaStore.updateRecord(recordId).then(() => {
+  loadData.value = true
+  if (action === 'create') {
+    mediaStore.createRecord().then(() => {
       loadData.value = false
     })
   } else {
-    const notificationTitle = t('admin.generic.notification_warning_title');
-    const notificationMessage = t('admin.generic.notification_warning_message', { recordId: `${recordId}` });
-    console.log(
-      `The operation could not be performed. Invalid record id: ${recordId}!`
-    );
-    notificationSystem(notificationTitle, notificationMessage, 'warning');
-  }
-}
-
-function deleteRecord() {
-  const recordId = getSingleRecord.value && Object.keys(getSingleRecord.value).length > 0 ? getSingleRecord.value.id : null;
-  if (recordId) {
-    loadData.value = true
-    displayActionDialog.value = false
-    mediaStore.deleteRecord(recordId).then(() => {
-      loadData.value = false
-    })
-  } else {
-    const notificationTitle = t('admin.generic.notification_warning_title');
-    const notificationMessage = t('admin.generic.notification_warning_message', { recordId: `${recordId}` });
-    console.log(
-      `The operation could not be performed. Invalid record id: ${recordId}!`
-    );
-    notificationSystem(notificationTitle, notificationMessage, 'warning');
+    const recordId = getSingleRecord.value && Object.keys(getSingleRecord.value).length > 0 ? getSingleRecord.value.id : null;
+    if (recordId) {
+      if (action === 'edit') {
+        mediaStore.updateRecord(recordId).then(() => {
+          loadData.value = false
+        })
+      } else if (action === 'delete') {
+        mediaStore.deleteRecord(recordId).then(() => {
+          loadData.value = false
+        })
+      }
+    } else {
+      const notificationTitle = t('admin.generic.notification_warning_title');
+      const notificationMessage = t('admin.generic.notification_warning_message', { recordId: `${recordId}` });
+      console.log(
+        `The operation could not be performed. Invalid record id: ${recordId}!`
+      );
+      notificationSystem(notificationTitle, notificationMessage, 'warning');
+    }
   }
 }
 
@@ -227,4 +218,3 @@ onMounted(async () => {
 </script>
 
 <style lang="scss" scoped></style>
-src/types/DialogType
