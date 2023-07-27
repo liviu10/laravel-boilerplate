@@ -127,6 +127,15 @@ class User extends Authenticatable
     }
 
     /**
+     * Eloquent relationship between users and accepted domains.
+     *
+     */
+    public function accepted_domains()
+    {
+        return $this->hasMany('App\Models\Admin\ApplicationSettings\AcceptedDomains');
+    }
+
+    /**
      * Fetches the current authenticated user from the Auth facade,
      * excluding the password and email_verified_at fields.
      * @return \Illuminate\Support\Collection|boolean Returns a collection

@@ -193,6 +193,10 @@ export default {
         description: `
           TEXT HERE
         `,
+        table: {
+          domain: 'Domeniu',
+          type: 'Tip'
+        },
       },
       notifications: {
         title: 'Notificari',

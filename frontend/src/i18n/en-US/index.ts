@@ -191,6 +191,10 @@ export default {
         description: `
           TEXT HERE.
         `,
+        table: {
+          domain: 'Domain',
+          type: 'Type'
+        },
       },
       notifications: {
         title: 'Notifications',

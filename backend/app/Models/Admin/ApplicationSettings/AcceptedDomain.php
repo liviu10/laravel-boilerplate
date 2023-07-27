@@ -1,21 +1,19 @@
 <?php
 
-namespace App\Models\Admin\Settings;
+namespace App\Models\Admin\ApplicationSettings;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Traits\ApiLogError;
 
 /**
- * Class RoleAndPermission
- * @package App\Models\Admin\Settings
+ * Class AcceptedDomain
+ * @package App\Models\Admin\ApplicationSettings
 
  * @property int $id
- * @property string $name
- * @property string $description
- * @property string $color
- * @property string $text_color
- * @property string $slug
+ * @property string $domain
+ * @property string $type
+ * @property int $user_id
  * @property boolean $is_active
  * @property \Carbon\Carbon $created_at
  * @property \Carbon\Carbon $updated_at
@@ -25,7 +23,7 @@ use App\Traits\ApiLogError;
  * @method updateRecord
  * @method deleteRecord
  */
-class RoleAndPermission extends Model
+class AcceptedDomain extends Model
 {
     use HasFactory, ApiLogError;
 
@@ -34,7 +32,7 @@ class RoleAndPermission extends Model
      *
      * @var string
      */
-    protected $table = 'roles_and_permissions';
+    protected $table = 'accepted_domains';
 
     /**
      * The primary key associated with the table.
@@ -51,16 +49,28 @@ class RoleAndPermission extends Model
     protected $keyType = 'int';
 
     /**
+     * The foreign key associated with the table.
+     *
+     * @var string
+     */
+    protected $foreignKey = 'user_id';
+
+    /**
+     * The data type of the database table foreign key.
+     *
+     * @var string
+     */
+    protected $foreignKeyType = 'int';
+
+    /**
      * The attributes that are mass assignable.
      *
      * @var string
      */
     protected $fillable = [
-        'name',
-        'description',
-        'bg_color',
-        'text_color',
-        'slug',
+        'domain',
+        'type',
+        'user_id',
         'is_active',
     ];
 
@@ -97,12 +107,12 @@ class RoleAndPermission extends Model
     ];
 
     /**
-     * Eloquent relationship between roles and permissions and users.
+     * Eloquent relationship between accepted domains and users.
      *
      */
-    public function users()
+    public function user()
     {
-        return $this->hasMany('App\Models\Admin\Settings\User');
+        return $this->belongsTo('App\Models\Admin\Settings\User');
     }
 
     /**
@@ -114,7 +124,7 @@ class RoleAndPermission extends Model
     {
         try
         {
-            return $this->select('id', 'name', 'slug')->paginate(15);
+            return $this->select('id', 'domain', 'type')->paginate(15);
         }
         catch (\Illuminate\Database\QueryException $mysqlError)
         {
@@ -126,7 +136,7 @@ class RoleAndPermission extends Model
     /**
      * Create a new record.
      * @param array $payload An associative array of values to create a new record.
-     * @return \App\Models\RoleAndPermission|bool Returns a user object if the creation was successful,
+     * @return \App\Models\AcceptedDomain|bool Returns a user object if the creation was successful,
      * or a boolean otherwise.
      * @throws \Exception|\Illuminate\Database\QueryException
      * Throws an exception if an error occurs during creation.
@@ -136,12 +146,10 @@ class RoleAndPermission extends Model
         try
         {
             $this->create([
-                'name'         => $payload['name'],
-                'description'  => $payload['description'],
-                'bg_color'     => $payload['bg_color'],
-                'text_color'   => $payload['text_color'],
-                'slug'         => $payload['slug'],
-                'is_active'    => $payload['is_active'],
+                'domain'    => $payload['domain'],
+                'type'      => $payload['type'],
+                'user_id'   => $payload['user_id'],
+                'is_active' => $payload['is_active'],
             ]);
 
             return True;
@@ -169,6 +177,11 @@ class RoleAndPermission extends Model
         {
             return $this->select('*')
                         ->where('id', '=', $id)
+                        ->with([
+                            'user' => function ($query) {
+                                $query->select('id', 'full_name');
+                            }
+                        ])
                         ->get();
         }
         catch (\Illuminate\Database\QueryException $mysqlError)
@@ -192,12 +205,10 @@ class RoleAndPermission extends Model
         try
         {
             $this->find($id)->update([
-                'name'         => $payload['name'],
-                'description'  => $payload['description'],
-                'bg_color'     => $payload['bg_color'],
-                'text_color'   => $payload['text_color'],
-                'slug'         => $payload['slug'],
-                'is_active'    => $payload['is_active'],
+                'domain'    => $payload['domain'],
+                'type'      => $payload['type'],
+                'user_id'   => $payload['user_id'],
+                'is_active' => $payload['is_active'],
             ]);
 
             return True;

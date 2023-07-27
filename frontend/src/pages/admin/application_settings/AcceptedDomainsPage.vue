@@ -45,23 +45,17 @@
                 <span class="text-bold">
                   {{ displayLabel(key) }}
                 </span>:
-                <q-badge
-                  v-if="key.toString() === 'is_active' && item"
-                  :color="(item as unknown as boolean) === true ? 'positive' : 'negative'"
-                  text-color="black"
-                  :label="item.toString()"
-                />
-                <span v-else>
+                <span>
                   {{ item ?? '—' }}
                 </span>
               </div>
             </template>
             <template v-else>
               <q-badge
-                v-if="index.toString() === 'is_active' && index"
-                :color="(index as unknown as boolean) === true ? 'positive' : 'negative'"
+                v-if="index.toString() === 'is_active' && record"
+                :color="(record as unknown as boolean) === true ? 'positive' : 'negative'"
                 text-color="black"
-                :label="index.toString()"
+                :label="record.toString()"
               />
               <span v-else>
                 {{ record ?? '—' }}
