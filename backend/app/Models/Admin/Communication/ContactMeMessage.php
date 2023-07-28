@@ -1,20 +1,22 @@
 <?php
 
-namespace App\Models\Admin\ApplicationSettings;
+namespace App\Models\Admin\Communication;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Traits\ApiLogError;
 
 /**
- * Class AcceptedDomain
- * @package App\Models\Admin\ApplicationSettings
+ * Class ContactMe
+ * @package App\Models\Admin\Communication
 
  * @property int $id
- * @property string $domain
- * @property string $type
+ * @property string $full_name
+ * @property string $email
+ * @property string $message
+ * @property boolean $privacy_policy
  * @property int $user_id
- * @property boolean $is_active
+ * @property int $contact_me_subject_id
  * @property \Carbon\Carbon $created_at
  * @property \Carbon\Carbon $updated_at
  * @method fetchAllRecords
@@ -23,7 +25,7 @@ use App\Traits\ApiLogError;
  * @method updateRecord
  * @method deleteRecord
  */
-class AcceptedDomain extends Model
+class ContactMeMessage extends Model
 {
     use HasFactory, ApiLogError;
 
@@ -32,7 +34,7 @@ class AcceptedDomain extends Model
      *
      * @var string
      */
-    protected $table = 'accepted_domains';
+    protected $table = 'contact_me_messages';
 
     /**
      * The primary key associated with the table.
@@ -63,15 +65,31 @@ class AcceptedDomain extends Model
     protected $foreignKeyType = 'int';
 
     /**
+     * The foreign key associated with the table.
+     *
+     * @var string
+     */
+    protected $foreignKeyContactMeSubject = 'contact_me_subject_id';
+
+    /**
+     * The data type of the database table foreign key.
+     *
+     * @var string
+     */
+    protected $foreignKeyTypeContactMeSubject = 'int';
+
+    /**
      * The attributes that are mass assignable.
      *
      * @var string
      */
     protected $fillable = [
-        'domain',
-        'type',
+        'full_name',
+        'email',
+        'message',
+        'privacy_policy',
         'user_id',
-        'is_active',
+        'contact_me_subject_id',
     ];
 
     /**
@@ -80,7 +98,7 @@ class AcceptedDomain extends Model
     * @var string
     */
     protected $attributes = [
-        'is_active' => false,
+        'privacy_policy' => false,
     ];
 
     /**
@@ -89,11 +107,12 @@ class AcceptedDomain extends Model
      * @var array<string, string>
      */
     protected $casts = [
-        'id'         => 'integer',
-        'is_active'  => 'boolean',
-        'created_at' => 'datetime:d.m.Y H:i',
-        'updated_at' => 'datetime:d.m.Y H:i',
-        'user_id'    => 'integer',
+        'id'                    => 'integer',
+        'privacy_policy'        => 'boolean',
+        'created_at'            => 'datetime:d.m.Y H:i',
+        'updated_at'            => 'datetime:d.m.Y H:i',
+        'user_id'               => 'integer',
+        'contact_me_subject_id' => 'integer',
     ];
 
     /**
@@ -108,12 +127,21 @@ class AcceptedDomain extends Model
     ];
 
     /**
-     * Eloquent relationship between accepted domains and users.
+     * Eloquent relationship between contact me messages and users.
      *
      */
     public function user()
     {
         return $this->belongsTo('App\Models\Admin\Settings\User');
+    }
+
+    /**
+     * Eloquent relationship between contact me messages and contact me subjects.
+     *
+     */
+    public function contact_me_subject()
+    {
+        return $this->belongsTo('App\Models\Admin\Communication\ContactMeSubject');
     }
 
     /**
@@ -125,7 +153,15 @@ class AcceptedDomain extends Model
     {
         try
         {
-            return $this->select('id', 'domain', 'type')->paginate(15);
+            return $this->select(
+                'id', 'full_name', 'email', 'contact_me_subject_id'
+            )
+            ->with([
+                'contact_me_subject' => function ($query) {
+                    $query->select('id', 'name');
+                }
+            ])
+            ->paginate(15);
         }
         catch (\Illuminate\Database\QueryException $mysqlError)
         {
@@ -137,7 +173,7 @@ class AcceptedDomain extends Model
     /**
      * Create a new record.
      * @param array $payload An associative array of values to create a new record.
-     * @return \App\Models\AcceptedDomain|bool Returns a user object if the creation was successful,
+     * @return \App\Models\ContactMe|bool Returns a user object if the creation was successful,
      * or a boolean otherwise.
      * @throws \Exception|\Illuminate\Database\QueryException
      * Throws an exception if an error occurs during creation.
@@ -147,10 +183,12 @@ class AcceptedDomain extends Model
         try
         {
             $this->create([
-                'domain'    => $payload['domain'],
-                'type'      => $payload['type'],
-                'user_id'   => $payload['user_id'],
-                'is_active' => $payload['is_active'],
+                'full_name'             => $payload['full_name'],
+                'email'                 => $payload['email'],
+                'message'               => $payload['message'],
+                'privacy_policy'        => $payload['privacy_policy'],
+                'user_id'               => $payload['user_id'],
+                'contact_me_subject_id' => $payload['contact_me_subject_id'],
             ]);
 
             return True;
@@ -179,6 +217,9 @@ class AcceptedDomain extends Model
             return $this->select('*')
                         ->where('id', '=', $id)
                         ->with([
+                            'contact_me_subject' => function ($query) {
+                                $query->select('id', 'name');
+                            },
                             'user' => function ($query) {
                                 $query->select('id', 'full_name');
                             }
@@ -206,10 +247,12 @@ class AcceptedDomain extends Model
         try
         {
             $this->find($id)->update([
-                'domain'    => $payload['domain'],
-                'type'      => $payload['type'],
-                'user_id'   => $payload['user_id'],
-                'is_active' => $payload['is_active'],
+                'full_name'             => $payload['full_name'],
+                'email'                 => $payload['email'],
+                'message'               => $payload['message'],
+                'privacy_policy'        => $payload['privacy_policy'],
+                'user_id'               => $payload['user_id'],
+                'contact_me_subject_id' => $payload['contact_me_subject_id'],
             ]);
 
             return True;

@@ -27,7 +27,7 @@ class UserRequest extends FormRequest
             'first_name'               => 'required|string|min:3|max:100|regex:/^[a-zA-Z\s]+$/',
             'last_name'                => 'required|string|min:3|max:100|regex:/^[a-zA-Z\s]+$/',
             'nickname'                 => 'required|string|min:3|max:100',
-            'phone'                    => 'required|string|min:10|max:255|regex:/^\+?(?:[0-9][ .-]?){6,14}[0-9]$/',
+            'phone'                    => 'required|string|min:7|max:15|regex:/^\+?(?:[0-9][ .-]?){6,14}[0-9]$/',
             'password'                 => 'required|string|min:8|confirmed',
             'profile_image'            => 'required|image|mimes:jpeg,jpg,png,gif,webp,bmp,svg,tiff',
             'roles_and_permissions_id' => 'required',

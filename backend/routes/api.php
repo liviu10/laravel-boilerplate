@@ -15,12 +15,13 @@ use Illuminate\Support\Facades\Route;
 */
 // Import application's management
     use App\Http\Controllers\Admin\Management\PageController;
-    use App\Http\Controllers\Admin\Management\TagsController;
+    use App\Http\Controllers\Admin\Management\TagController;
     use App\Http\Controllers\Admin\Management\ArticleController;
     use App\Http\Controllers\Admin\Management\MediaController;
     use App\Http\Controllers\Admin\Management\CommentController;
 // Import application's communication
-    use App\Http\Controllers\Admin\Communication\ContactMeController;
+    use App\Http\Controllers\Admin\Communication\ContactMeMessageController;
+    use App\Http\Controllers\Admin\Communication\ContactMeSubjectController;
     use App\Http\Controllers\Admin\Communication\NewsletterController;
 // Import application's reports
     use App\Http\Controllers\Admin\Report\ReportController;
@@ -54,12 +55,14 @@ Route::group([ 'prefix' => config('app.version') ], function () {
             // Media
             Route::apiResource('/media', MediaController::class);
             // Comments
-            Route::apiResource('/comments', CommentsController::class);
+            Route::apiResource('/comments', CommentController::class);
         });
         // Application's communication endpoints
         Route::group([ 'prefix' => '/communication' ], function () {
-            // Contact me
-            Route::apiResource('/contact-me', ContactMeController::class);
+            // Contact me subjects
+            Route::apiResource('/contact-me-subjects', ContactMeSubjectController::class);
+            // Contact me messages
+            Route::apiResource('/contact-me-messages', ContactMeMessageController::class);
             // Newsletter
             Route::apiResource('/newsletter', NewsletterController::class);
         });

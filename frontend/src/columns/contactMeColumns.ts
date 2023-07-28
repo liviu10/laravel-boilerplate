@@ -1,5 +1,3 @@
-// TODO: after finishing pages api
-
 export default [
   {
     name: 'id',
@@ -9,6 +7,39 @@ export default [
     align: 'center' as 'left' | 'right' | 'center',
     style: 'width: 75px',
     headerStyle: 'width: 75px',
+  },
+  {
+    name: 'full_name',
+    label: 'admin.communication.contact.table.full_name',
+    field: 'full_name',
+    format: (val: string) => `${val}`,
+    sortable: true,
+    align: 'center' as 'left' | 'right' | 'center',
+    style: 'width: 100px',
+    headerStyle: 'width: 100px',
+    sort: (a: string, b: string) => parseInt(a, 10) - parseInt(b, 10),
+  },
+  {
+    name: 'email',
+    label: 'admin.communication.contact.table.email',
+    field: 'email',
+    format: (val: string) => `${val}`,
+    sortable: true,
+    align: 'center' as 'left' | 'right' | 'center',
+    style: 'width: 100px',
+    headerStyle: 'width: 100px',
+    sort: (a: string, b: string) => parseInt(a, 10) - parseInt(b, 10),
+  },
+  {
+    name: 'subject',
+    label: 'admin.communication.contact.table.subject',
+    field: 'subject',
+    format: (val: string) => `${val}`,
+    sortable: true,
+    align: 'center' as 'left' | 'right' | 'center',
+    style: 'width: 100px',
+    headerStyle: 'width: 100px',
+    sort: (a: string, b: string) => parseInt(a, 10) - parseInt(b, 10),
   },
   {
     name: 'actions',

@@ -115,6 +115,11 @@ export default {
         description: `
           TEXT HERE.
         `,
+        table: {
+          full_name: 'Full name',
+          email: 'Email address',
+          subject: 'Subject',
+        },
       },
       newsletter: {
         title: 'Newsletter',

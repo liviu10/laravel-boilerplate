@@ -132,7 +132,16 @@ class User extends Authenticatable
      */
     public function accepted_domains()
     {
-        return $this->hasMany('App\Models\Admin\ApplicationSettings\AcceptedDomains');
+        return $this->hasMany('App\Models\Admin\ApplicationSettings\AcceptedDomain');
+    }
+
+    /**
+     * Eloquent relationship between users and contact me messages.
+     *
+     */
+    public function contact_me()
+    {
+        return $this->hasMany('App\Models\Admin\Communication\ContactMe');
     }
 
     /**

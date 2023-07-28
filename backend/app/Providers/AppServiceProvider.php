@@ -5,6 +5,10 @@ namespace App\Providers;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\ServiceProvider;
 
+// Import application's communication settings
+use App\BusinessLogic\Interfaces\Admin\Communication\ContactMeMessageInterface;
+use App\BusinessLogic\Interfaces\Admin\Communication\ContactMeSubjectInterface;
+
 // Import application's user settings
 use App\BusinessLogic\Interfaces\Admin\Settings\UserInterface;
 use App\BusinessLogic\Interfaces\Admin\Settings\RoleAndPermissionInterface;
@@ -19,6 +23,10 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register(): void
     {
+        // Register application's communication settings interfaces and services
+        $this->app->bind( ContactMeMessageInterface::class, ContactMeMessageService::class );
+        $this->app->bind( ContactMeSubjectInterface::class, ContactMeSubjectService::class );
+
         // Register application's user settings interfaces and services
         $this->app->bind( UserInterface::class, UserService::class );
         $this->app->bind( RoleAndPermissionInterface::class, RoleAndPermissionService::class );

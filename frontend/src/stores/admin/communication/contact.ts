@@ -1,11 +1,11 @@
 import { defineStore } from 'pinia';
 import { api } from 'src/boot/axios'
-import { applicationCommunication, contactMeEndpoint } from 'src/api/communication';
+import { applicationCommunication, contactMeMessageEndpoint } from 'src/api/communication';
 import { PaginatedResultsInterface } from 'src/interfaces/ApiResponseInterface';
 import { notificationSystem } from 'src/library/NotificationSystem';
 import { ContactMeInterface } from 'src/interfaces/ContactMeInterface';
 
-const fullApiUrl = applicationCommunication + contactMeEndpoint
+const fullApiUrl = applicationCommunication + contactMeMessageEndpoint
 
 const useContactStore = defineStore('contactStore', {
   state: () => ({

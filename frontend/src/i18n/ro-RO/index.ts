@@ -117,6 +117,11 @@ export default {
         description: `
           TEXT HERE.
         `,
+        table: {
+          full_name: 'Nume si prenume',
+          email: 'Adresa email',
+          subject: 'Subiect',
+        },
       },
       newsletter: {
         title: 'Newsletter',
