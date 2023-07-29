@@ -14,7 +14,7 @@ trait ApiResponseMessage
      * @param  Array|null  $records
      * @return  Array
      */
-    public function handleResponse($responseType = null, $records = null)
+    public function handleResponse($responseType = null, $records = null, $filters = null)
     {
         if ($responseType === 'success')
         {
@@ -25,6 +25,10 @@ trait ApiResponseMessage
             if ($records)
             {
                 $responseMessage['results'] = $records;
+            }
+            if ($filters)
+            {
+                $responseMessage['filters'] = $filters;
             }
         }
         elseif ($responseType === 'not_found')

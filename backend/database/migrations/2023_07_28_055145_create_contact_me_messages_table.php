@@ -14,9 +14,8 @@ return new class extends Migration
         Schema::create('contact_me_messages', function (Blueprint $table) {
             $table->id()->index('idx_id');
             $table->string('full_name');
-            $table->string('email_address');
+            $table->string('email');
             $table->string('phone')->nullable();
-            $table->string('subject');
             $table->string('message');
             $table->boolean('privacy_policy')->default(false);
             $table->timestamps();

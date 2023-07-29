@@ -295,4 +295,53 @@ class ContactMeMessage extends Model
             return false;
         }
     }
+
+    /**
+     * Get the filters that can be applied to the records.
+     * The method returns an array of filter options
+     * that can be used to filter the records.
+     * @return array An array of filter options.
+     */
+    public function getFilters()
+    {
+        $contactMeSubjectModel = new ContactMeSubject();
+        $subjectRecords = $contactMeSubjectModel->fetchAllRecords();
+        $options = [];
+        foreach ($subjectRecords as $record) {
+            $options[] = [
+                'value' => $record['id'],
+                'label' => $record['name'],
+            ];
+        }
+
+        $availableFilters = [
+            [
+                'id' => 1,
+                'key' => 'id',
+                'name' => 'Filter by ID',
+                'type' => 'number'
+            ],
+            [
+                'id' => 2,
+                'key' => 'full_name',
+                'name' => 'Filter by full name',
+                'type' => 'text'
+            ],
+            [
+                'id' => 3,
+                'key' => 'email',
+                'name' => 'Filter by email',
+                'type' => 'text'
+            ],
+            [
+                'id' => 3,
+                'key' => 'contact_me_subject_id',
+                'name' => 'Filter by subject',
+                'type' => 'select',
+                'options' => $options
+            ]
+        ];
+
+        return $availableFilters;
+    }
 }

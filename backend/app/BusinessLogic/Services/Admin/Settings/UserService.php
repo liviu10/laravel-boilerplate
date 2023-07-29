@@ -58,6 +58,7 @@ class UserService implements UserInterface
     public function handleIndex()
     {
         $apiDisplayAllRecords = $this->modelName->fetchAllRecords();
+        $apiFilters = $this->modelName->getFilters();
 
         if ($apiDisplayAllRecords instanceof \Illuminate\Pagination\LengthAwarePaginator)
         {
@@ -67,7 +68,7 @@ class UserService implements UserInterface
             }
             else
             {
-                return response($this->handleResponse('success', $apiDisplayAllRecords), 200);
+                return response($this->handleResponse('success', $apiDisplayAllRecords, $apiFilters), 200);
             }
         }
         else

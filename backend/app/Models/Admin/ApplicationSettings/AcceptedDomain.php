@@ -252,4 +252,44 @@ class AcceptedDomain extends Model
             return false;
         }
     }
+
+    /**
+     * Get the filters that can be applied to the records.
+     * The method returns an array of filter options
+     * that can be used to filter the records.
+     * @return array An array of filter options.
+     */
+    public function getFilters()
+    {
+        $availableFilters = [
+            [
+                'id' => 1,
+                'key' => 'id',
+                'name' => 'Filter by ID',
+                'type' => 'number'
+            ],
+            [
+                'id' => 2,
+                'key' => 'domain',
+                'name' => 'Filter by domain',
+                'type' => 'text'
+            ],
+            [
+                'id' => 3,
+                'key' => 'type',
+                'name' => 'Filter by type',
+                'type' => 'select',
+                'options' => [
+                    [ 'value' => 1, 'label' => 'generic' ],
+                    [ 'value' => 2, 'label' => 'country-code' ],
+                    [ 'value' => 3, 'label' => 'sponsored' ],
+                    [ 'value' => 4, 'label' => 'infrastructure' ],
+                    [ 'value' => 5, 'label' => 'generic-restricted' ],
+                    [ 'value' => 6, 'label' => 'local-environment' ],
+                ]
+            ]
+        ];
+
+        return $availableFilters;
+    }
 }

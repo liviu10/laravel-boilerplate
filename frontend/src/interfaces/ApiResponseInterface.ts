@@ -2,6 +2,18 @@ interface RootObjectInterface {
   title: string;
   description: string;
   results: PaginatedResultsInterface;
+  filters: FilterInterface;
+}
+
+interface FilterInterface {
+  id: number;
+  key: string;
+  name: string;
+  type: string;
+  options?: {
+    value: number;
+    label: string;
+  }[];
 }
 
 interface PaginatedResultsInterface {

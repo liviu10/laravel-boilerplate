@@ -33,6 +33,7 @@ use App\Traits\ApiLogError;
  * @method fetchSingleRecord
  * @method updateRecord
  * @method deleteRecord
+ * @method getFilters
  */
 class User extends Authenticatable
 {
@@ -331,5 +332,49 @@ class User extends Authenticatable
             $this->handleApiLogError($exception);
             return false;
         }
+    }
+
+    /**
+     * Get the filters that can be applied to the records.
+     * The method returns an array of filter options
+     * that can be used to filter the records.
+     * @return array An array of filter options.
+     */
+    public function getFilters()
+    {
+        $availableFilters = [
+            [
+                'id' => 1,
+                'key' => 'id',
+                'name' => 'Filter by ID',
+                'type' => 'number'
+            ],
+            [
+                'id' => 2,
+                'key' => 'full_name',
+                'name' => 'Filter by full name',
+                'type' => 'text'
+            ],
+            [
+                'id' => 3,
+                'key' => 'nickname',
+                'name' => 'Filter by nickname',
+                'type' => 'text'
+            ],
+            [
+                'id' => 4,
+                'key' => 'email',
+                'name' => 'Filter by email',
+                'type' => 'text'
+            ],
+            [
+                'id' => 5,
+                'key' => 'created_at',
+                'name' => 'Filter by joined date',
+                'type' => 'text'
+            ]
+        ];
+
+        return $availableFilters;
     }
 }

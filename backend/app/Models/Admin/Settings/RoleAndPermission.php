@@ -240,4 +240,36 @@ class RoleAndPermission extends Model
             return false;
         }
     }
+
+    /**
+     * Get the filters that can be applied to the records.
+     * The method returns an array of filter options
+     * that can be used to filter the records.
+     * @return array An array of filter options.
+     */
+    public function getFilters()
+    {
+        $availableFilters = [
+            [
+                'id' => 1,
+                'key' => 'id',
+                'name' => 'Filter by ID',
+                'type' => 'number'
+            ],
+            [
+                'id' => 2,
+                'key' => 'name',
+                'name' => 'Filter by name',
+                'type' => 'text'
+            ],
+            [
+                'id' => 3,
+                'key' => 'slug',
+                'name' => 'Filter by slug',
+                'type' => 'text'
+            ]
+        ];
+
+        return $availableFilters;
+    }
 }
