@@ -1,12 +1,12 @@
 // Application's communication endpoints
 const applicationCommunication: string | undefined = process.env.DEV_API_BASE_URL + '/admin/communication'
-const contactMeMessageEndpoint = '/contact-me-messages'
-const contactMeSubjectEndpoint = '/contact-me-subjects'
+const contactMessageEndpoint = '/contact-messages'
+const contactSubjectEndpoint = '/contact-subjects'
 const newsletterEndpoint = '/newsletter'
 
 export {
   applicationCommunication,
-  contactMeMessageEndpoint,
-  contactMeSubjectEndpoint,
+  contactMessageEndpoint,
+  contactSubjectEndpoint,
   newsletterEndpoint,
 }

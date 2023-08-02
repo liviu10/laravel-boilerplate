@@ -3,15 +3,15 @@
 namespace App\BusinessLogic\Services\Admin\Communication;
 
 use App\Traits\ApiResponseMessage;
-use App\BusinessLogic\Interfaces\Admin\Communication\ContactMeSubjectInterface;
-use App\Http\Requests\Admin\Communication\ContactMeSubjectRequest;
-use App\Models\Admin\Communication\ContactMeSubject;
+use App\BusinessLogic\Interfaces\Admin\Communication\ContactMessageInterface;
+use App\Http\Requests\Admin\Communication\ContactMessageRequest;
+use App\Models\Admin\Communication\ContactMessage;
 use Illuminate\Database\Eloquent\Collection;
 
 /**
- * ContactMeSubjectService is a service class the will implement all the methods from the ContactMeSubjectInterface contract and will handle the business logic.
+ * ContactMessageService is a service class the will implement all the methods from the ContactMessageInterface contract and will handle the business logic.
  */
-class ContactMeSubjectService implements ContactMeSubjectInterface
+class ContactMessageService implements ContactMessageInterface
 {
     use ApiResponseMessage;
 
@@ -23,7 +23,7 @@ class ContactMeSubjectService implements ContactMeSubjectInterface
      */
     public function __construct()
     {
-        $this->modelName = new ContactMeSubject();
+        $this->modelName = new ContactMessage();
     }
 
     /**
@@ -33,6 +33,7 @@ class ContactMeSubjectService implements ContactMeSubjectInterface
     public function handleIndex()
     {
         $apiDisplayAllRecords = $this->modelName->fetchAllRecords();
+        $apiFilters = $this->modelName->getFilters();
 
         if ($apiDisplayAllRecords instanceof \Illuminate\Pagination\LengthAwarePaginator)
         {
@@ -42,7 +43,7 @@ class ContactMeSubjectService implements ContactMeSubjectInterface
             }
             else
             {
-                return response($this->handleResponse('success', $apiDisplayAllRecords), 200);
+                return response($this->handleResponse('success', $apiDisplayAllRecords, $apiFilters), 200);
             }
         }
         else
@@ -53,16 +54,17 @@ class ContactMeSubjectService implements ContactMeSubjectInterface
 
     /**
      * Store a new record in the database.
-     * @param  ContactMeSubjectRequest  $request
+     * @param  ContactMessageRequest  $request
      * @return \Illuminate\Http\Response
      */
-    public function handleStore(ContactMeSubjectRequest $request)
+    public function handleStore(ContactMessageRequest $request)
     {
         $apiInsertRecord = [
-            'name'        => $request->get('name'),
-            'description' => $request->get('description') !== null ? $request->get('description') : null,
-            'is_active'   => $request->get('is_active') !== null ? $request->get('is_active') : false,
-            'user_id'     => $request->get('user_id'),
+            'full_name'          => $request->get('full_name'),
+            'email'              => $request->get('email'),
+            'contact_subject_id' => $request->get('contact_subject_id'),
+            'message'            => $request->get('message'),
+            'privacy_policy'     => $request->get('privacy_policy') !== null ? $request->get('privacy_policy') : false,
         ];
         $saveRecord = $this->modelName->createRecord($apiInsertRecord);
 
@@ -104,17 +106,18 @@ class ContactMeSubjectService implements ContactMeSubjectInterface
 
     /**
      * Update the specified resource in storage.
-     * @param  ContactMeSubjectRequest  $request
+     * @param  ContactMessageRequest  $request
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function handleUpdate(ContactMeSubjectRequest $request, $id)
+    public function handleUpdate(ContactMessageRequest $request, $id)
     {
         $apiUpdateRecord = [
-            'name'        => $request->get('name'),
-            'description' => $request->get('description') !== null ? $request->get('description') : null,
-            'is_active'   => $request->get('is_active') !== null ? $request->get('is_active') : false,
-            'user_id'     => $request->get('user_id'),
+            'full_name'          => $request->get('full_name'),
+            'email'              => $request->get('email'),
+            'contact_subject_id' => $request->get('contact_subject_id'),
+            'message'            => $request->get('message'),
+            'privacy_policy'     => $request->get('privacy_policy') !== null ? $request->get('privacy_policy') : false,
         ];
         $updateRecord = $this->modelName->createRecord($apiUpdateRecord, $id);
 

@@ -20,8 +20,8 @@ use Illuminate\Support\Facades\Route;
     use App\Http\Controllers\Admin\Management\MediaController;
     use App\Http\Controllers\Admin\Management\CommentController;
 // Import application's communication
-    use App\Http\Controllers\Admin\Communication\ContactMeMessageController;
-    use App\Http\Controllers\Admin\Communication\ContactMeSubjectController;
+    use App\Http\Controllers\Admin\Communication\ContactMessageController;
+    use App\Http\Controllers\Admin\Communication\ContactSubjectController;
     use App\Http\Controllers\Admin\Communication\NewsletterController;
 // Import application's reports
     use App\Http\Controllers\Admin\Report\ReportController;
@@ -60,9 +60,9 @@ Route::group([ 'prefix' => config('app.version') ], function () {
         // Application's communication endpoints
         Route::group([ 'prefix' => '/communication' ], function () {
             // Contact me subjects
-            Route::apiResource('/contact-me-subjects', ContactMeSubjectController::class);
+            Route::apiResource('/contact-subjects', ContactSubjectController::class);
             // Contact me messages
-            Route::apiResource('/contact-me-messages', ContactMeMessageController::class);
+            Route::apiResource('/contact-messages', ContactMessageController::class);
             // Newsletter
             Route::apiResource('/newsletter', NewsletterController::class);
         });

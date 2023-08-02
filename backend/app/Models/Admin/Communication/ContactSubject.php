@@ -7,16 +7,14 @@ use Illuminate\Database\Eloquent\Model;
 use App\Traits\ApiLogError;
 
 /**
- * Class ContactMe
+ * Class ContactSubject
  * @package App\Models\Admin\Communication
 
  * @property int $id
- * @property string $full_name
- * @property string $email
- * @property string $message
- * @property boolean $privacy_policy
+ * @property string $name
+ * @property string $description
+ * @property boolean $is_active
  * @property int $user_id
- * @property int $contact_me_subject_id
  * @property \Carbon\Carbon $created_at
  * @property \Carbon\Carbon $updated_at
  * @method fetchAllRecords
@@ -25,7 +23,7 @@ use App\Traits\ApiLogError;
  * @method updateRecord
  * @method deleteRecord
  */
-class ContactMeMessage extends Model
+class ContactSubject extends Model
 {
     use HasFactory, ApiLogError;
 
@@ -34,7 +32,7 @@ class ContactMeMessage extends Model
      *
      * @var string
      */
-    protected $table = 'contact_me_messages';
+    protected $table = 'contact_subjects';
 
     /**
      * The primary key associated with the table.
@@ -65,31 +63,15 @@ class ContactMeMessage extends Model
     protected $foreignKeyType = 'int';
 
     /**
-     * The foreign key associated with the table.
-     *
-     * @var string
-     */
-    protected $foreignKeyContactMeSubject = 'contact_me_subject_id';
-
-    /**
-     * The data type of the database table foreign key.
-     *
-     * @var string
-     */
-    protected $foreignKeyTypeContactMeSubject = 'int';
-
-    /**
      * The attributes that are mass assignable.
      *
      * @var string
      */
     protected $fillable = [
-        'full_name',
-        'email',
-        'message',
-        'privacy_policy',
+        'name',
+        'description',
+        'is_active',
         'user_id',
-        'contact_me_subject_id',
     ];
 
     /**
@@ -98,7 +80,7 @@ class ContactMeMessage extends Model
     * @var string
     */
     protected $attributes = [
-        'privacy_policy' => false,
+        'is_active' => false,
     ];
 
     /**
@@ -107,12 +89,11 @@ class ContactMeMessage extends Model
      * @var array<string, string>
      */
     protected $casts = [
-        'id'                    => 'integer',
-        'privacy_policy'        => 'boolean',
-        'created_at'            => 'datetime:d.m.Y H:i',
-        'updated_at'            => 'datetime:d.m.Y H:i',
-        'user_id'               => 'integer',
-        'contact_me_subject_id' => 'integer',
+        'id'         => 'integer',
+        'is_active'  => 'boolean',
+        'created_at' => 'datetime:d.m.Y H:i',
+        'updated_at' => 'datetime:d.m.Y H:i',
+        'user_id'    => 'integer',
     ];
 
     /**
@@ -136,12 +117,12 @@ class ContactMeMessage extends Model
     }
 
     /**
-     * Eloquent relationship between contact me messages and contact me subjects.
+     * Eloquent relationship between contact subjects and contact messages.
      *
      */
-    public function contact_me_subject()
+    public function contact_messages()
     {
-        return $this->belongsTo('App\Models\Admin\Communication\ContactMeSubject');
+        return $this->belongsTo('App\Models\Admin\Communication\ContactMessage');
     }
 
     /**
@@ -153,15 +134,7 @@ class ContactMeMessage extends Model
     {
         try
         {
-            return $this->select(
-                'id', 'full_name', 'email', 'contact_me_subject_id'
-            )
-            ->with([
-                'contact_me_subject' => function ($query) {
-                    $query->select('id', 'name');
-                }
-            ])
-            ->paginate(15);
+            return $this->select('id', 'name')->get();
         }
         catch (\Illuminate\Database\QueryException $mysqlError)
         {
@@ -183,12 +156,10 @@ class ContactMeMessage extends Model
         try
         {
             $this->create([
-                'full_name'             => $payload['full_name'],
-                'email'                 => $payload['email'],
-                'message'               => $payload['message'],
-                'privacy_policy'        => $payload['privacy_policy'],
-                'user_id'               => $payload['user_id'],
-                'contact_me_subject_id' => $payload['contact_me_subject_id'],
+                'name'        => $payload['name'],
+                'description' => $payload['description'],
+                'is_active'   => $payload['is_active'],
+                'user_id'     => $payload['user_id'],
             ]);
 
             return True;
@@ -217,8 +188,8 @@ class ContactMeMessage extends Model
             return $this->select('*')
                         ->where('id', '=', $id)
                         ->with([
-                            'contact_me_subject' => function ($query) {
-                                $query->select('id', 'name');
+                            'contact_messages' => function ($query) {
+                                $query->select('id', 'full_name');
                             },
                             'user' => function ($query) {
                                 $query->select('id', 'full_name');
@@ -247,12 +218,10 @@ class ContactMeMessage extends Model
         try
         {
             $this->find($id)->update([
-                'full_name'             => $payload['full_name'],
-                'email'                 => $payload['email'],
-                'message'               => $payload['message'],
-                'privacy_policy'        => $payload['privacy_policy'],
-                'user_id'               => $payload['user_id'],
-                'contact_me_subject_id' => $payload['contact_me_subject_id'],
+                'name'        => $payload['name'],
+                'description' => $payload['description'],
+                'is_active'   => $payload['is_active'],
+                'user_id'     => $payload['user_id'],
             ]);
 
             return True;
@@ -294,54 +263,5 @@ class ContactMeMessage extends Model
             $this->handleApiLogError($exception);
             return false;
         }
-    }
-
-    /**
-     * Get the filters that can be applied to the records.
-     * The method returns an array of filter options
-     * that can be used to filter the records.
-     * @return array An array of filter options.
-     */
-    public function getFilters()
-    {
-        $contactMeSubjectModel = new ContactMeSubject();
-        $subjectRecords = $contactMeSubjectModel->fetchAllRecords();
-        $options = [];
-        foreach ($subjectRecords as $record) {
-            $options[] = [
-                'value' => $record['id'],
-                'label' => $record['name'],
-            ];
-        }
-
-        $availableFilters = [
-            [
-                'id' => 1,
-                'key' => 'id',
-                'name' => 'Filter by ID',
-                'type' => 'number'
-            ],
-            [
-                'id' => 2,
-                'key' => 'full_name',
-                'name' => 'Filter by full name',
-                'type' => 'text'
-            ],
-            [
-                'id' => 3,
-                'key' => 'email',
-                'name' => 'Filter by email',
-                'type' => 'text'
-            ],
-            [
-                'id' => 3,
-                'key' => 'contact_me_subject_id',
-                'name' => 'Filter by subject',
-                'type' => 'select',
-                'options' => $options
-            ]
-        ];
-
-        return $availableFilters;
     }
 }

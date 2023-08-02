@@ -2,10 +2,10 @@
 
 namespace App\BusinessLogic\Interfaces\Admin\Communication;
 
-use App\Http\Requests\Admin\Communication\ContactMeSubjectRequest;
+use App\Http\Requests\Admin\Communication\ContactMessageRequest;
 
 /**
- * ContactMeSubjectInterface is a contract for what methods will be used in the UserRoleTypeService class.
+ * ContactMessageInterface is a contract for what methods will be used in the UserRoleTypeService class.
  * This consists of the following CRUD operations methods:
  * - handleIndex();
  * - handleStore();
@@ -13,7 +13,7 @@ use App\Http\Requests\Admin\Communication\ContactMeSubjectRequest;
  * - handleUpdate();
  * - handleDelete();
  */
-interface ContactMeSubjectInterface
+interface ContactMessageInterface
 {
     /**
      * Fetch all the records from the database.
@@ -23,10 +23,10 @@ interface ContactMeSubjectInterface
 
     /**
      * Store a new record in the database.
-     * @param App\Http\Requests\Admin\ContactMeSubjectRequest $request
+     * @param App\Http\Requests\Admin\ContactMessageRequest $request
      * @return \Illuminate\Http\Response
      */
-    public function handleStore(ContactMeSubjectRequest $request);
+    public function handleStore(ContactMessageRequest $request);
 
     /**
      * Fetch a single record from the database.
@@ -37,11 +37,11 @@ interface ContactMeSubjectInterface
 
     /**
      * Update an existing record in the database.
-     * @param App\Http\Requests\Admin\ContactMeSubjectRequest $request
+     * @param App\Http\Requests\Admin\ContactMessageRequest $request
      * @param int $id
      * @return \Illuminate\Http\Response
      */
-    public function handleUpdate(ContactMeSubjectRequest $request, $id);
+    public function handleUpdate(ContactMessageRequest $request, $id);
 
     /**
      * Delete a single record from the database

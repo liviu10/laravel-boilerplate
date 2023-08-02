@@ -4,19 +4,19 @@ namespace App\Http\Controllers\Admin\Communication;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\BusinessLogic\Interfaces\Admin\Communication\ContactMeSubjectInterface;
-use App\Http\Requests\Admin\Communication\ContactMeSubjectRequest;
+use App\BusinessLogic\Interfaces\Admin\Communication\ContactSubjectInterface;
+use App\Http\Requests\Admin\Communication\ContactSubjectRequest;
 
-class ContactMeSubjectController extends Controller
+class ContactSubjectController extends Controller
 {
-    protected ContactMeSubjectInterface $contactMeSubjectService;
+    protected ContactSubjectInterface $contactSubjectService;
 
     /**
      * Instantiate the interface that will be used to get all the methods that are going to be used in this controller.
      */
-    public function __construct(ContactMeSubjectInterface $contactMeSubjectService)
+    public function __construct(ContactSubjectInterface $contactSubjectService)
     {
-        $this->contactMeSubjectService = $contactMeSubjectService;
+        $this->contactSubjectService = $contactSubjectService;
     }
 
     /**
@@ -25,17 +25,17 @@ class ContactMeSubjectController extends Controller
      */
     public function index()
     {
-        return $this->contactMeSubjectService->handleIndex();
+        return $this->contactSubjectService->handleIndex();
     }
 
     /**
      * Store a new record in the database. HTTP request [POST].
-     * @param  ContactMeSubjectRequest  $request
+     * @param  ContactSubjectRequest  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(ContactMeSubjectRequest $request)
+    public function store(ContactSubjectRequest $request)
     {
-        return $this->contactMeSubjectService->handleStore($request);
+        return $this->contactSubjectService->handleStore($request);
     }
 
     /**
@@ -45,18 +45,18 @@ class ContactMeSubjectController extends Controller
      */
     public function show($id)
     {
-        return $this->contactMeSubjectService->handleShow($id);
+        return $this->contactSubjectService->handleShow($id);
     }
 
     /**
      * Update an existing record in the database. HTTP request [PUT].
-     * @param  ContactMeSubjectRequest  $request
+     * @param  ContactSubjectRequest  $request
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(ContactMeSubjectRequest $request, $id)
+    public function update(ContactSubjectRequest $request, $id)
     {
-        return $this->contactMeSubjectService->handleUpdate($request, $id);
+        return $this->contactSubjectService->handleUpdate($request, $id);
     }
 
     /**
@@ -66,6 +66,6 @@ class ContactMeSubjectController extends Controller
      */
     public function destroy($id)
     {
-        return $this->contactMeSubjectService->handleDestroy($id);
+        return $this->contactSubjectService->handleDestroy($id);
     }
 }

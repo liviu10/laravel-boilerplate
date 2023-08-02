@@ -6,8 +6,8 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\ServiceProvider;
 
 // Import application's communication settings
-use App\BusinessLogic\Interfaces\Admin\Communication\ContactMeMessageInterface;
-use App\BusinessLogic\Interfaces\Admin\Communication\ContactMeSubjectInterface;
+use App\BusinessLogic\Interfaces\Admin\Communication\ContactMessageInterface;
+use App\BusinessLogic\Interfaces\Admin\Communication\ContactSubjectInterface;
 
 // Import application's user settings
 use App\BusinessLogic\Interfaces\Admin\Settings\UserInterface;
@@ -24,8 +24,8 @@ class AppServiceProvider extends ServiceProvider
     public function register(): void
     {
         // Register application's communication settings interfaces and services
-        $this->app->bind( ContactMeMessageInterface::class, ContactMeMessageService::class );
-        $this->app->bind( ContactMeSubjectInterface::class, ContactMeSubjectService::class );
+        $this->app->bind( ContactMessageInterface::class, ContactMessageService::class );
+        $this->app->bind( ContactSubjectInterface::class, ContactSubjectService::class );
 
         // Register application's user settings interfaces and services
         $this->app->bind( UserInterface::class, UserService::class );

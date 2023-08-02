@@ -4,19 +4,19 @@ namespace App\Http\Controllers\Admin\Communication;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\BusinessLogic\Interfaces\Admin\Communication\ContactMeMessageInterface;
-use App\Http\Requests\Admin\Communication\ContactMeMessageRequest;
+use App\BusinessLogic\Interfaces\Admin\Communication\ContactMessageInterface;
+use App\Http\Requests\Admin\Communication\ContactMessageRequest;
 
-class ContactMeMessageController extends Controller
+class ContactMessageController extends Controller
 {
-    protected ContactMeMessageInterface $contactMeMessageService;
+    protected ContactMessageInterface $contactMessageService;
 
     /**
      * Instantiate the interface that will be used to get all the methods that are going to be used in this controller.
      */
-    public function __construct(ContactMeMessageInterface $contactMeMessageService)
+    public function __construct(ContactMessageInterface $contactMessageService)
     {
-        $this->contactMeMessageService = $contactMeMessageService;
+        $this->contactMessageService = $contactMessageService;
     }
 
     /**
@@ -25,17 +25,17 @@ class ContactMeMessageController extends Controller
      */
     public function index()
     {
-        return $this->contactMeMessageService->handleIndex();
+        return $this->contactMessageService->handleIndex();
     }
 
     /**
      * Store a new record in the database. HTTP request [POST].
-     * @param  ContactMeMessageRequest  $request
+     * @param  ContactMessageRequest  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(ContactMeMessageRequest $request)
+    public function store(ContactMessageRequest $request)
     {
-        return $this->contactMeMessageService->handleStore($request);
+        return $this->contactMessageService->handleStore($request);
     }
 
     /**
@@ -45,18 +45,18 @@ class ContactMeMessageController extends Controller
      */
     public function show($id)
     {
-        return $this->contactMeMessageService->handleShow($id);
+        return $this->contactMessageService->handleShow($id);
     }
 
     /**
      * Update an existing record in the database. HTTP request [PUT].
-     * @param  ContactMeMessageRequest  $request
+     * @param  ContactMessageRequest  $request
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(ContactMeMessageRequest $request, $id)
+    public function update(ContactMessageRequest $request, $id)
     {
-        return $this->contactMeMessageService->handleUpdate($request, $id);
+        return $this->contactMessageService->handleUpdate($request, $id);
     }
 
     /**
@@ -66,6 +66,6 @@ class ContactMeMessageController extends Controller
      */
     public function destroy($id)
     {
-        return $this->contactMeMessageService->handleDestroy($id);
+        return $this->contactMessageService->handleDestroy($id);
     }
 }

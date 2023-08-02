@@ -4,7 +4,7 @@ namespace App\Http\Requests\Admin\Communication;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class ContactMeMessageRequest extends FormRequest
+class ContactMessageRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,12 +24,12 @@ class ContactMeMessageRequest extends FormRequest
     public function rules()
     {
         $rules = [
-            'full_name'             => 'required|string|min:3|max:255|regex:/^[a-zA-Z\s]+$/',
-            'email'                 => 'required|string|min:3|max:255',
-            'phone'                 => 'required|string|min:7|max:15|regex:/^\+?(?:[0-9][ .-]?){6,14}[0-9]$/',
-            'contact_me_subject_id' => 'required',
-            'message'               => 'required|string|min:3|max:255|regex:/^[a-zA-Z\s]+$/',
-            'privacy_policy'        => 'required',
+            'full_name'          => 'required|string|min:3|max:255|regex:/^[a-zA-Z\s]+$/',
+            'email'              => 'required|string|min:3|max:255',
+            'phone'              => 'required|string|min:7|max:15|regex:/^\+?(?:[0-9][ .-]?){6,14}[0-9]$/',
+            'contact_subject_id' => 'required',
+            'message'            => 'required|string|min:3|max:255|regex:/^[a-zA-Z\s]+$/',
+            'privacy_policy'     => 'required',
         ];
 
         if ($this->isMethod('PUT')) {
@@ -63,7 +63,7 @@ class ContactMeMessageRequest extends FormRequest
             'phone.min' => 'The phone must be at least :min characters.',
             'phone.max' => 'The phone may not be greater than :max characters.',
             'phone.regex' => 'The phone must be a valid phone number.',
-            'contact_me_subject_id.required' => 'The subject field is required.',
+            'contact_subject_id.required' => 'The subject field is required.',
             'message.required' => 'The message field is required.',
             'message.string' => 'The message must be a string.',
             'message.min' => 'The message must be at least :min characters.',

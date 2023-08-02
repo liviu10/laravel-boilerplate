@@ -137,12 +137,12 @@ class User extends Authenticatable
     }
 
     /**
-     * Eloquent relationship between users and contact me messages.
+     * Eloquent relationship between users and contact subjects.
      *
      */
-    public function contact_me()
+    public function contact_subjects()
     {
-        return $this->hasMany('App\Models\Admin\Communication\ContactMe');
+        return $this->hasMany('App\Models\Admin\Communication\ContactSubjects');
     }
 
     /**
