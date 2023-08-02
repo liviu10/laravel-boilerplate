@@ -5,6 +5,7 @@ namespace App\Models\Admin\ApplicationSettings;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Traits\ApiLogError;
+use App\Traits\ApiFilters;
 
 /**
  * Class AcceptedDomain
@@ -25,7 +26,7 @@ use App\Traits\ApiLogError;
  */
 class AcceptedDomain extends Model
 {
-    use HasFactory, ApiLogError;
+    use HasFactory, ApiLogError, ApiFilters;
 
     /**
      * The table associated with the model.
@@ -72,6 +73,17 @@ class AcceptedDomain extends Model
         'type',
         'user_id',
         'is_active',
+    ];
+
+    /**
+     * The model filters.
+     *
+     * @var array<string, string>
+     */
+    protected $filters = [
+        'id'     => 'number',
+        'domain' => 'text',
+        'type'   => 'select',
     ];
 
     /**
@@ -261,35 +273,16 @@ class AcceptedDomain extends Model
      */
     public function getFilters()
     {
-        $availableFilters = [
-            [
-                'id' => 1,
-                'key' => 'id',
-                'name' => 'Filter by ID',
-                'type' => 'number'
-            ],
-            [
-                'id' => 2,
-                'key' => 'domain',
-                'name' => 'Filter by domain',
-                'type' => 'text'
-            ],
-            [
-                'id' => 3,
-                'key' => 'type',
-                'name' => 'Filter by type',
-                'type' => 'select',
-                'options' => [
-                    [ 'value' => 1, 'label' => 'generic' ],
-                    [ 'value' => 2, 'label' => 'country-code' ],
-                    [ 'value' => 3, 'label' => 'sponsored' ],
-                    [ 'value' => 4, 'label' => 'infrastructure' ],
-                    [ 'value' => 5, 'label' => 'generic-restricted' ],
-                    [ 'value' => 6, 'label' => 'local-environment' ],
-                ]
-            ]
+        $filterNames = [
+            'id'     => 'Filter by ID',
+            'domain' => 'Filter by domain name',
+            'type'   => 'Filter by domain type',
         ];
 
-        return $availableFilters;
+        $filterOptions = [
+            'type' => $this->select('id', 'type')->get()->unique('type')
+        ];
+
+        return $this->handleApiFilters($this->filters, $filterNames, $filterOptions);
     }
 }

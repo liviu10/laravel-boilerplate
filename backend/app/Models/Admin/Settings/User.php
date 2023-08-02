@@ -9,6 +9,8 @@ use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Facades\Auth;
 use Laravel\Sanctum\HasApiTokens;
 use App\Traits\ApiLogError;
+use App\Traits\ApiDataModel;
+use App\Traits\ApiFilters;
 
 /**
  * Class User
@@ -37,7 +39,7 @@ use App\Traits\ApiLogError;
  */
 class User extends Authenticatable
 {
-    use HasApiTokens, HasFactory, Notifiable, ApiLogError;
+    use HasApiTokens, HasFactory, Notifiable, ApiLogError, ApiDataModel, ApiFilters;
 
     /**
      * The primary key associated with the table.
@@ -73,15 +75,28 @@ class User extends Authenticatable
      * @var array<int, string>
      */
     protected $fillable = [
-        'full_name',
-        'first_name',
-        'last_name',
-        'nickname',
-        'email',
-        'phone',
-        'password',
-        'profile_image',
-        'role_id',
+        'full_name'      => 'text',
+        'first_name'     => 'text',
+        'last_name'      => 'text',
+        'nickname'       => 'text',
+        'email'          => 'email',
+        'phone'          => 'tel',
+        'password'       => 'password',
+        'profile_image'  => 'file',
+        'role_id'        => 'number',
+    ];
+
+    /**
+     * The model filters.
+     *
+     * @var array<string, string>
+     */
+    protected $filters = [
+        'id'         => 'number',
+        'full_name'  => 'text',
+        'nickname'   => 'text',
+        'email'      => 'text',
+        'created_at' => 'date',
     ];
 
     /**
@@ -336,6 +351,42 @@ class User extends Authenticatable
         }
     }
 
+    public function getDataModel()
+    {
+        $dataModelOptions = [
+            'first_name' => [
+                'name'        => 'First name',
+                'is_required' => true
+            ],
+            'last_name' => [
+                'name'        => 'Last name',
+                'is_required' => true
+            ],
+            'nickname' => [
+                'name'        => 'Nickname',
+                'is_required' => true
+            ],
+            'email' => [
+                'name'        => 'Email address',
+                'is_required' => true
+            ],
+            'phone' => [
+                'name'        => 'Phone number',
+                'is_required' => true
+            ],
+            'password' => [
+                'name'        => 'Password',
+                'is_required' => true
+            ],
+            'profile_image' => [
+                'name'        => 'Profile image',
+                'is_required' => true
+            ],
+        ];
+
+        return $this->handleApiDataModel($this->fillable, $dataModelOptions);
+    }
+
     /**
      * Get the filters that can be applied to the records.
      * The method returns an array of filter options
@@ -344,39 +395,14 @@ class User extends Authenticatable
      */
     public function getFilters()
     {
-        $availableFilters = [
-            [
-                'id' => 1,
-                'key' => 'id',
-                'name' => 'Filter by ID',
-                'type' => 'number'
-            ],
-            [
-                'id' => 2,
-                'key' => 'full_name',
-                'name' => 'Filter by full name',
-                'type' => 'text'
-            ],
-            [
-                'id' => 3,
-                'key' => 'nickname',
-                'name' => 'Filter by nickname',
-                'type' => 'text'
-            ],
-            [
-                'id' => 4,
-                'key' => 'email',
-                'name' => 'Filter by email',
-                'type' => 'text'
-            ],
-            [
-                'id' => 5,
-                'key' => 'created_at',
-                'name' => 'Filter by joined date',
-                'type' => 'text'
-            ]
+        $filterNames = [
+            'id'         => 'Filter by ID',
+            'full_name'  => 'Filter by full name',
+            'nickname'   => 'Filter by nickname',
+            'email'      => 'Filter by email',
+            'created_at' => 'Filter by joined date',
         ];
 
-        return $availableFilters;
+        return $this->handleApiFilters($this->filters, $filterNames);
     }
 }

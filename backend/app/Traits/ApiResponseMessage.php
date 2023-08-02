@@ -8,13 +8,19 @@ namespace App\Traits;
 trait ApiResponseMessage
 {
     /**
-     * Handle api responses.
-     *
-     * @param  string|null  $responseType
-     * @param  Array|null  $records
-     * @return  Array
+     * Handle the API response.
+     * This function generates an API response based on the specified response type and
+     * optional records and filters data.
+     * @param string|null $responseType (Optional) The type of response to generate. Possible values are:
+     * - "success": For successful responses.
+     * - "not_found": For resource not found responses.
+     * If not provided or null, it will generate a default error response.
+     * @param mixed|null  $records (Optional) An optional array of records to include in the response.
+     * Should be provided when $responseType is "success".
+     * @param mixed|null  $filters (Optional) An optional array of filters to include in the response.
+     * Should be provided when $responseType is "success".
      */
-    public function handleResponse($responseType = null, $records = null, $filters = null)
+    public function handleResponse($responseType = null, $records = null, $dataModel = null, $filters = null)
     {
         if ($responseType === 'success')
         {
@@ -25,6 +31,10 @@ trait ApiResponseMessage
             if ($records)
             {
                 $responseMessage['results'] = $records;
+            }
+            if ($dataModel)
+            {
+                $responseMessage['model'] = $dataModel;
             }
             if ($filters)
             {

@@ -4,15 +4,14 @@ namespace App\Traits;
 
 use Illuminate\Support\Facades\Log;
 
-/**
- *  ApiLogError is a trait the will used by all the model classes.
- */
 trait ApiLogError
 {
     /**
-     * Handle api log errors.
-     * @param  object  $mysqlError
-     * @return  void
+     * Handle API log error.
+     * This function is responsible for handling and logging API-related errors that
+     * occur during MySQL operations.
+     * @param \Exception|\Throwable $mysqlError The exception or throwable representing the MySQL error.
+     * @return void
      */
     public function handleApiLogError($mysqlError)
     {

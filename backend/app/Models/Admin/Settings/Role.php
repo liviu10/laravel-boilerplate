@@ -5,6 +5,7 @@ namespace App\Models\Admin\Settings;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Traits\ApiLogError;
+use App\Traits\ApiFilters;
 
 /**
  * Class Role
@@ -27,7 +28,7 @@ use App\Traits\ApiLogError;
  */
 class Role extends Model
 {
-    use HasFactory, ApiLogError;
+    use HasFactory, ApiLogError, ApiFilters;
 
     /**
      * The table associated with the model.
@@ -62,6 +63,17 @@ class Role extends Model
         'text_color',
         'slug',
         'is_active',
+    ];
+
+    /**
+     * The model filters.
+     *
+     * @var array<string, string>
+     */
+    protected $filters = [
+        'id'   => 'number',
+        'name' => 'text',
+        'slug' => 'text',
     ];
 
     /**
@@ -269,27 +281,12 @@ class Role extends Model
      */
     public function getFilters()
     {
-        $availableFilters = [
-            [
-                'id' => 1,
-                'key' => 'id',
-                'name' => 'Filter by ID',
-                'type' => 'number'
-            ],
-            [
-                'id' => 2,
-                'key' => 'name',
-                'name' => 'Filter by name',
-                'type' => 'text'
-            ],
-            [
-                'id' => 3,
-                'key' => 'slug',
-                'name' => 'Filter by slug',
-                'type' => 'text'
-            ]
+        $filterNames = [
+            'id'   => 'Filter by ID',
+            'name' => 'Filter by role name',
+            'slug' => 'Filter by role slug',
         ];
 
-        return $availableFilters;
+        return $this->handleApiFilters($this->filters, $filterNames);
     }
 }
