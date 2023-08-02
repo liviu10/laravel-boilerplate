@@ -12,7 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('contact_messages', function (Blueprint $table) {
-            $table->foreignId('contact_subject_id')->constrained()->onDelete('cascade')->onUpdate('cascade')->index('idx_contact_messages_contact_subject_id');
+            $table->foreignId('contact_subject_id')->constrained()->onDelete('cascade')->onUpdate('cascade')->index('idx_contact_subject_id');
         });
     }
 
