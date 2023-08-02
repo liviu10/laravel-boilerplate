@@ -11,13 +11,10 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('roles_and_permissions', function (Blueprint $table) {
+        Schema::create('permissions', function (Blueprint $table) {
             $table->id()->index('idx_id');
-            $table->string('name')->unique();
-            $table->string('description');
-            $table->string('bg_color')->nullable();
-            $table->string('text_color')->nullable();
-            $table->string('slug');
+            $table->string('name');
+            $table->string('description')->nullable();
             $table->boolean('is_active')->default(false);
             $table->timestamps();
         });
@@ -25,11 +22,9 @@ return new class extends Migration
 
     /**
      * Reverse the migrations.
-     *
-     * @return void
      */
-    public function down()
+    public function down(): void
     {
-        Schema::dropIfExists('user_role_types');
+        Schema::dropIfExists('permissions');
     }
 };

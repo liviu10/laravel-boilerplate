@@ -13,8 +13,8 @@ use App\BusinessLogic\Services\Admin\Communication\ContactSubjectService;
 // Import application's user settings
 use App\BusinessLogic\Interfaces\Admin\Settings\UserInterface;
 use App\BusinessLogic\Services\Admin\Settings\UserService;
-use App\BusinessLogic\Interfaces\Admin\Settings\RoleAndPermissionInterface;
-use App\BusinessLogic\Services\Admin\Settings\RoleAndPermissionService;
+use App\BusinessLogic\Interfaces\Admin\Settings\RoleInterface;
+use App\BusinessLogic\Services\Admin\Settings\RoleService;
 
 // Import application's settings
 use App\BusinessLogic\Interfaces\Admin\ApplicationSettings\AcceptedDomainInterface;
@@ -35,7 +35,7 @@ class BusinessLogicProvider extends ServiceProvider
 
         // Register application's user settings interfaces and services
         $this->app->bind( UserInterface::class, UserService::class );
-        $this->app->bind( RoleAndPermissionInterface::class, RoleAndPermissionService::class );
+        $this->app->bind( RoleInterface::class, RoleService::class );
 
         // Register application's settings interfaces and services
         $this->app->bind( AcceptedDomainInterface::class, AcceptedDomainService::class );

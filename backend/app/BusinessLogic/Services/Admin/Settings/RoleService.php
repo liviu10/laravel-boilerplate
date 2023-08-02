@@ -3,15 +3,15 @@
 namespace App\BusinessLogic\Services\Admin\Settings;
 
 use App\Traits\ApiResponseMessage;
-use App\BusinessLogic\Interfaces\Admin\Settings\RoleAndPermissionInterface;
-use App\Http\Requests\Admin\Settings\RoleAndPermissionRequest;
-use App\Models\Admin\Settings\RoleAndPermission;
+use App\BusinessLogic\Interfaces\Admin\Settings\RoleInterface;
+use App\Http\Requests\Admin\Settings\RoleRequest;
+use App\Models\Admin\Settings\Role;
 use Illuminate\Database\Eloquent\Collection;
 
 /**
- * RoleAndPermissionService is a service class the will implement all the methods from the RoleAndPermissionInterface contract and will handle the business logic.
+ * RoleService is a service class the will implement all the methods from the RoleInterface contract and will handle the business logic.
  */
-class RoleAndPermissionService implements RoleAndPermissionInterface
+class RoleService implements RoleInterface
 {
     use ApiResponseMessage;
 
@@ -23,7 +23,7 @@ class RoleAndPermissionService implements RoleAndPermissionInterface
      */
     public function __construct()
     {
-        $this->modelName = new RoleAndPermission();
+        $this->modelName = new Role();
     }
 
     /**
@@ -54,10 +54,10 @@ class RoleAndPermissionService implements RoleAndPermissionInterface
 
     /**
      * Store a new record in the database.
-     * @param  RoleAndPermissionRequest  $request
+     * @param  RoleRequest  $request
      * @return \Illuminate\Http\Response
      */
-    public function handleStore(RoleAndPermissionRequest $request)
+    public function handleStore(RoleRequest $request)
     {
         $apiInsertRecord = [
             'name'        => $request->get('name'),
@@ -107,11 +107,11 @@ class RoleAndPermissionService implements RoleAndPermissionInterface
 
     /**
      * Update the specified resource in storage.
-     * @param  RoleAndPermissionRequest  $request
+     * @param  RoleRequest  $request
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function handleUpdate(RoleAndPermissionRequest $request, $id)
+    public function handleUpdate(RoleRequest $request, $id)
     {
         $apiUpdateRecord = [
             'name'        => $request->get('name'),

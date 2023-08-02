@@ -85,14 +85,14 @@ class UserService implements UserInterface
     public function handleStore(UserRequest $request)
     {
         $apiInsertRecord = [
-            'first_name'               => $request->get('first_name'),
-            'last_name'                => $request->get('last_name'),
-            'nickname'                 => $request->get('nickname'),
-            'email'                    => $request->get('email'),
-            'phone'                    => $request->get('phone'),
-            'password'                 => $request->get('password'),
-            'profile_image'            => $request->get('profile_image'),
-            'roles_and_permissions_id' => 1
+            'first_name'    => $request->get('first_name'),
+            'last_name'     => $request->get('last_name'),
+            'nickname'      => $request->get('nickname'),
+            'email'         => $request->get('email'),
+            'phone'         => $request->get('phone'),
+            'password'      => $request->get('password'),
+            'profile_image' => $request->get('profile_image'),
+            'role_id'       => 1
         ];
         $apiInsertRecord['full_name'] = $request->get('first_name') . ' ' . $request->get('last_name');
         $saveRecord = $this->modelName->createRecord($apiInsertRecord);
@@ -142,14 +142,14 @@ class UserService implements UserInterface
     public function handleUpdate(UserRequest $request, $id)
     {
         $apiUpdateRecord = [
-            'first_name'               => $request->get('first_name'),
-            'last_name'                => $request->get('last_name'),
-            'nickname'                 => $request->get('nickname'),
-            'email'                    => $request->get('email'),
-            'phone'                    => $request->get('phone'),
-            'password'                 => $request->get('password'),
-            'profile_image'            => $request->get('profile_image'),
-            'roles_and_permissions_id' => 1
+            'first_name'    => $request->get('first_name'),
+            'last_name'     => $request->get('last_name'),
+            'nickname'      => $request->get('nickname'),
+            'email'         => $request->get('email'),
+            'phone'         => $request->get('phone'),
+            'password'      => $request->get('password'),
+            'profile_image' => $request->get('profile_image'),
+            'role_id'       => 1
         ];
         $apiUpdateRecord['full_name'] = $request->get('first_name') . ' ' . $request->get('last_name');
         $updateRecord = $this->modelName->updateRecord($apiUpdateRecord, $id);

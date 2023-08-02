@@ -4,10 +4,10 @@ namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
-use App\Models\Admin\Settings\RoleAndPermission;
+use App\Models\Admin\Settings\Role;
 use Carbon\Carbon;
 
-class RoleAndPermissionSeeder extends Seeder
+class RoleSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -17,7 +17,7 @@ class RoleAndPermissionSeeder extends Seeder
     public function run()
     {
         DB::statement('SET FOREIGN_KEY_CHECKS = 0');
-        RoleAndPermission::truncate();
+        Role::truncate();
         $records = [
             [
                 'id'          => 1,
@@ -75,7 +75,7 @@ class RoleAndPermissionSeeder extends Seeder
                 'updated_at'  => Carbon::now(),
             ],
         ];
-        RoleAndPermission::insert($records);
+        Role::insert($records);
         DB::statement('SET FOREIGN_KEY_CHECKS = 1');
     }
 }

@@ -1,17 +1,17 @@
 import { defineStore } from 'pinia';
 import { api } from 'src/boot/axios'
-import { applicationUserSettings, userRolesAndPermissionsEndpoint } from 'src/api/userSettings';
+import { applicationUserSettings, userRolesEndpoint } from 'src/api/userSettings';
 import { PaginatedResultsInterface } from 'src/interfaces/ApiResponseInterface';
 import { notificationSystem } from 'src/library/NotificationSystem';
-import { UserRolesAndPermissionsInterface } from 'src/interfaces/UserRolesAndPermissionsInterface';
+import { UserRoleInterface } from 'src/interfaces/UserRoleInterface';
 
-const fullApiUrl = applicationUserSettings + userRolesAndPermissionsEndpoint
+const fullApiUrl = applicationUserSettings + userRolesEndpoint
 
-const useUserRoleAndPermissionStore = defineStore('userRoleAndPermissionStore', {
+const useUserRoleStore = defineStore('userRoleStore', {
   state: () => ({
     allRecords: {} as PaginatedResultsInterface,
     createRecord: {},
-    singleRecord: {} as UserRolesAndPermissionsInterface,
+    singleRecord: {} as UserRoleInterface,
     updateRecord: {},
     deleteRecord: {},
   }),
@@ -32,8 +32,8 @@ const useUserRoleAndPermissionStore = defineStore('userRoleAndPermissionStore', 
           })
           .catch((error) => {
             notificationSystem(error.name, error.message, 'negative', error.response?.data)
-            console.log('--> Response roles and permissions endpoint: ', error.message, error.response?.data)
-            console.log('--> Request roles and permissions endpoint: ', error.request)
+            console.log('--> Response roles endpoint: ', error.message, error.response?.data)
+            console.log('--> Request roles endpoint: ', error.request)
           })
       return apiResponse
     },
@@ -43,7 +43,7 @@ const useUserRoleAndPermissionStore = defineStore('userRoleAndPermissionStore', 
     },
 
     async findRecord(recordId: number) {
-      const apiResponse: UserRolesAndPermissionsInterface | void =
+      const apiResponse: UserRoleInterface | void =
         await api.get(fullApiUrl + '/' + recordId)
           .then(response => {
             this.singleRecord = response.data.results[0]
@@ -51,8 +51,8 @@ const useUserRoleAndPermissionStore = defineStore('userRoleAndPermissionStore', 
           })
           .catch((error) => {
             notificationSystem(error.name, error.message, 'negative', error.response?.data)
-            console.log('--> Response roles and permissions endpoint: ', error.message, error.response?.data)
-            console.log('--> Request roles and permissions endpoint: ', error.request)
+            console.log('--> Response roles endpoint: ', error.message, error.response?.data)
+            console.log('--> Request roles endpoint: ', error.request)
           })
       return apiResponse
     },
@@ -67,4 +67,4 @@ const useUserRoleAndPermissionStore = defineStore('userRoleAndPermissionStore', 
   },
 });
 
-export { useUserRoleAndPermissionStore };
+export { useUserRoleStore };

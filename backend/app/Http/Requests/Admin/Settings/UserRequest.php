@@ -30,7 +30,7 @@ class UserRequest extends FormRequest
             'phone'                    => 'required|string|min:7|max:15|regex:/^\+?(?:[0-9][ .-]?){6,14}[0-9]$/',
             'password'                 => 'required|string|min:8|confirmed',
             'profile_image'            => 'required|image|mimes:jpeg,jpg,png,gif,webp,bmp,svg,tiff',
-            'roles_and_permissions_id' => 'required',
+            'role_id' => 'required',
         ];
 
         if ($this->isMethod('PUT')) {
@@ -77,7 +77,7 @@ class UserRequest extends FormRequest
             'profile_image.required' => 'The profile image field is required.',
             'profile_image.image' => 'The profile image must be an image file.',
             'profile_image.mimes' => 'The profile image must be a file of type: :values.',
-            'roles_and_permissions_id.required' => 'The roles and permissions field is required.',
+            'role_id.required' => 'The roles field is required.',
         ];
     }
 }

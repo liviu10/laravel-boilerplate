@@ -4,19 +4,19 @@ namespace App\Http\Controllers\Admin\Settings;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\BusinessLogic\Interfaces\Admin\Settings\RoleAndPermissionInterface;
-use App\Http\Requests\Admin\Settings\RoleAndPermissionRequest;
+use App\BusinessLogic\Interfaces\Admin\Settings\RoleInterface;
+use App\Http\Requests\Admin\Settings\RoleRequest;
 
-class RoleAndPermissionController extends Controller
+class RoleController extends Controller
 {
-    protected RoleAndPermissionInterface $roleAndPermissionService;
+    protected RoleInterface $roleService;
 
     /**
      * Instantiate the interface that will be used to get all the methods that are going to be used in this controller.
      */
-    public function __construct(RoleAndPermissionInterface $roleAndPermissionService)
+    public function __construct(RoleInterface $roleService)
     {
-        $this->roleAndPermissionService = $roleAndPermissionService;
+        $this->roleService = $roleService;
     }
 
     /**
@@ -25,17 +25,17 @@ class RoleAndPermissionController extends Controller
      */
     public function index()
     {
-        return $this->roleAndPermissionService->handleIndex();
+        return $this->roleService->handleIndex();
     }
 
     /**
      * Store a new record in the database. HTTP request [POST].
-     * @param  RoleAndPermissionRequest  $request
+     * @param  RoleRequest  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(RoleAndPermissionRequest $request)
+    public function store(RoleRequest $request)
     {
-        return $this->roleAndPermissionService->handleStore($request);
+        return $this->roleService->handleStore($request);
     }
 
     /**
@@ -45,18 +45,18 @@ class RoleAndPermissionController extends Controller
      */
     public function show($id)
     {
-        return $this->roleAndPermissionService->handleShow($id);
+        return $this->roleService->handleShow($id);
     }
 
     /**
      * Update an existing record in the database. HTTP request [PUT].
-     * @param  RoleAndPermissionRequest  $request
+     * @param  RoleRequest  $request
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(RoleAndPermissionRequest $request, $id)
+    public function update(RoleRequest $request, $id)
     {
-        return $this->roleAndPermissionService->handleUpdate($request, $id);
+        return $this->roleService->handleUpdate($request, $id);
     }
 
     /**
@@ -66,6 +66,6 @@ class RoleAndPermissionController extends Controller
      */
     public function destroy($id)
     {
-        return $this->roleAndPermissionService->handleDestroy($id);
+        return $this->roleService->handleDestroy($id);
     }
 }

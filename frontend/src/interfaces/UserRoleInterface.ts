@@ -1,4 +1,4 @@
-interface UserRolesAndPermissionsInterface {
+interface UserRoleInterface {
   id: number,
   name: string,
   description: string,
@@ -10,4 +10,4 @@ interface UserRolesAndPermissionsInterface {
   updated_at: string,
 }
 
-export { UserRolesAndPermissionsInterface }
+export { UserRoleInterface }

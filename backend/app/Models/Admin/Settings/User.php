@@ -24,7 +24,7 @@ use App\Traits\ApiLogError;
  * @property string $email_verified_at
  * @property string $password
  * @property string $profile_image
- * @property int $roles_and_permissions_id
+ * @property int $role_id
  * @property \Carbon\Carbon $created_at
  * @property \Carbon\Carbon $updated_at
  * @method fetchCurrentAuthUser
@@ -58,7 +58,7 @@ class User extends Authenticatable
      *
      * @var string
      */
-    protected $foreignKey = 'roles_and_permissions_id';
+    protected $foreignKey = 'role_id';
 
     /**
      * The data type of the database table foreign key.
@@ -81,7 +81,7 @@ class User extends Authenticatable
         'phone',
         'password',
         'profile_image',
-        'roles_and_permissions_id',
+        'role_id',
     ];
 
     /**
@@ -100,11 +100,11 @@ class User extends Authenticatable
      * @var array<string, string>
      */
     protected $casts = [
-        'id'                       => 'integer',
-        'email_verified_at'        => 'datetime:d.m.Y H:i',
-        'created_at'               => 'datetime:d.m.Y H:i',
-        'updated_at'               => 'datetime:d.m.Y H:i',
-        'roles_and_permissions_id' => 'integer',
+        'id'                => 'integer',
+        'email_verified_at' => 'datetime:d.m.Y H:i',
+        'created_at'        => 'datetime:d.m.Y H:i',
+        'updated_at'        => 'datetime:d.m.Y H:i',
+        'role_id'           => 'integer',
     ];
 
     /**
@@ -119,12 +119,12 @@ class User extends Authenticatable
     ];
 
     /**
-     * Eloquent relationship between users and roles and permissions.
+     * Eloquent relationship between users and roles.
      *
      */
-    public function roles_and_permissions()
+    public function role()
     {
-        return $this->belongsTo('App\Models\Admin\Settings\RoleAndPermission');
+        return $this->belongsTo('App\Models\Admin\Settings\Role');
     }
 
     /**
@@ -210,15 +210,15 @@ class User extends Authenticatable
         try
         {
             $this->create([
-                'full_name'                => $payload['full_name'],
-                'first_name'               => $payload['first_name'],
-                'last_name'                => $payload['last_name'],
-                'nickname'                 => $payload['nickname'],
-                'email'                    => $payload['email'],
-                'phone'                    => $payload['phone'],
-                'password'                 => bcrypt($payload['password']),
-                'profile_image'            => $payload['profile_image'],
-                'roles_and_permissions_id' => $payload['roles_and_permissions_id'],
+                'full_name'     => $payload['full_name'],
+                'first_name'    => $payload['first_name'],
+                'last_name'     => $payload['last_name'],
+                'nickname'      => $payload['nickname'],
+                'email'         => $payload['email'],
+                'phone'         => $payload['phone'],
+                'password'      => bcrypt($payload['password']),
+                'profile_image' => $payload['profile_image'],
+                'role_id'       => $payload['roles_id'],
             ]);
 
             return True;
@@ -250,8 +250,10 @@ class User extends Authenticatable
             return $this->select('*')
                         ->where('id', '=', $id)
                         ->with([
-                            'roles_and_permissions' => function ($query) {
-                                $query->select('id', 'name', 'is_active')->where('is_active', true);
+                            'role' => function ($query) {
+                                $query->select('id', 'name', 'is_active')
+                                    ->where('is_active', true)
+                                    ->with('permissions');
                             }
                         ])
                         ->get();
@@ -282,15 +284,15 @@ class User extends Authenticatable
         try
         {
             $this->find($id)->update([
-                'full_name'                => $payload['full_name'],
-                'first_name'               => $payload['first_name'],
-                'last_name'                => $payload['last_name'],
-                'nickname'                 => $payload['nickname'],
-                'email'                    => $payload['email'],
-                'phone'                    => $payload['phone'],
-                'password'                 => bcrypt($payload['password']),
-                'profile_image'            => $payload['profile_image'],
-                'roles_and_permissions_id' => $payload['roles_and_permissions_id'],
+                'full_name'     => $payload['full_name'],
+                'first_name'    => $payload['first_name'],
+                'last_name'     => $payload['last_name'],
+                'nickname'      => $payload['nickname'],
+                'email'         => $payload['email'],
+                'phone'         => $payload['phone'],
+                'password'      => bcrypt($payload['password']),
+                'profile_image' => $payload['profile_image'],
+                'role_id'       => $payload['roles_id'],
             ]);
 
             return True;

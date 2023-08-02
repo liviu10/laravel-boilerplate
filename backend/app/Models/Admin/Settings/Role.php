@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 use App\Traits\ApiLogError;
 
 /**
- * Class RoleAndPermission
+ * Class Role
  * @package App\Models\Admin\Settings
 
  * @property int $id
@@ -25,7 +25,7 @@ use App\Traits\ApiLogError;
  * @method updateRecord
  * @method deleteRecord
  */
-class RoleAndPermission extends Model
+class Role extends Model
 {
     use HasFactory, ApiLogError;
 
@@ -34,7 +34,7 @@ class RoleAndPermission extends Model
      *
      * @var string
      */
-    protected $table = 'roles_and_permissions';
+    protected $table = 'roles';
 
     /**
      * The primary key associated with the table.
@@ -97,12 +97,21 @@ class RoleAndPermission extends Model
     ];
 
     /**
-     * Eloquent relationship between roles and permissions and users.
+     * Eloquent relationship between roles and users.
      *
      */
     public function users()
     {
         return $this->hasMany('App\Models\Admin\Settings\User');
+    }
+
+    /**
+     * Eloquent relationship between roles and permissions.
+     *
+     */
+    public function permissions()
+    {
+        return $this->hasMany('App\Models\Admin\Settings\Permission');
     }
 
     /**
@@ -121,12 +130,17 @@ class RoleAndPermission extends Model
             $this->handleApiLogError($mysqlError);
             return False;
         }
+        catch (\Illuminate\Database\QueryException $exception)
+        {
+            $this->handleApiLogError($exception);
+            return false;
+        }
     }
 
     /**
      * Create a new record.
      * @param array $payload An associative array of values to create a new record.
-     * @return \App\Models\RoleAndPermission|bool Returns a user object if the creation was successful,
+     * @return \App\Models\Role|bool Returns a user object if the creation was successful,
      * or a boolean otherwise.
      * @throws \Exception|\Illuminate\Database\QueryException
      * Throws an exception if an error occurs during creation.
@@ -169,12 +183,18 @@ class RoleAndPermission extends Model
         {
             return $this->select('*')
                         ->where('id', '=', $id)
+                        ->with('permissions')
                         ->get();
         }
         catch (\Illuminate\Database\QueryException $mysqlError)
         {
             $this->handleApiLogError($mysqlError);
-            return False;
+            return false;
+        }
+        catch (\Illuminate\Database\QueryException $exception)
+        {
+            $this->handleApiLogError($exception);
+            return false;
         }
     }
 

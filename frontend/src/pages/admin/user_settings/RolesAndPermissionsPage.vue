@@ -81,10 +81,10 @@ import { notificationSystem } from 'src/library/NotificationSystem';
 import { DialogType } from 'src/types/DialogType';
 
 // Import Pinia's related utilities
-import { useUserRoleAndPermissionStore } from 'src/stores/admin/userSettings/userRolesAndPermissions';
+import { useUserRoleStore } from 'src/stores/admin/userSettings/userRoles';
 
 // Instantiate the pinia store
-const userRoleAndPermissionStore = useUserRoleAndPermissionStore();
+const userRoleStore = useUserRoleStore();
 
 // Defined the translation variable
 const { t } = useI18n({});
@@ -102,14 +102,14 @@ const applicationName: string | undefined = process.env.APP_NAME
 const loadData = ref(false)
 
 // Fetch all user roles and permissions
-const getAllRecords = computed(() => userRoleAndPermissionStore.getAllRecords);
+const getAllRecords = computed(() => userRoleStore.getAllRecords);
 
 // Display the action name & dialog
 const actionName: Ref<DialogType | undefined> = ref(undefined)
 const displayActionDialog = ref(false)
 
 // Fetch single user details
-const getSingleRecord = computed(() => userRoleAndPermissionStore.getSingleRecord);
+const getSingleRecord = computed(() => userRoleStore.getSingleRecord);
 
 /**
  * Perform an action (show, edit, or delete) on a
@@ -138,7 +138,7 @@ async function actionMethodDialog(action: DialogType, recordId?: number) {
       loadData.value = false
       notificationSystem(notificationTitle, notificationMessage, 'warning');
     } else {
-      userRoleAndPermissionStore.findRecord(recordId).then(() => {
+      userRoleStore.findRecord(recordId).then(() => {
         loadData.value = false
         actionName.value = action
         getSingleRecord.value
@@ -170,18 +170,18 @@ function handleActionMethod(action: DialogType) {
   displayActionDialog.value = false
   loadData.value = true
   if (action === 'create') {
-    userRoleAndPermissionStore.createRecord().then(() => {
+    userRoleStore.createRecord().then(() => {
       loadData.value = false
     })
   } else {
     const recordId = getSingleRecord.value && Object.keys(getSingleRecord.value).length > 0 ? getSingleRecord.value.id : null;
     if (recordId) {
       if (action === 'edit') {
-        userRoleAndPermissionStore.updateRecord(recordId).then(() => {
+        userRoleStore.updateRecord(recordId).then(() => {
           loadData.value = false
         })
       } else if (action === 'delete') {
-        userRoleAndPermissionStore.deleteRecord(recordId).then(() => {
+        userRoleStore.deleteRecord(recordId).then(() => {
           loadData.value = false
         })
       }
@@ -198,7 +198,7 @@ function handleActionMethod(action: DialogType) {
 
 onMounted(async () => {
   loadData.value = true
-  await userRoleAndPermissionStore.getRecords().then(() => {
+  await userRoleStore.getRecords().then(() => {
     loadData.value = false
   })
 })

@@ -2,10 +2,10 @@
 
 namespace App\BusinessLogic\Interfaces\Admin\Settings;
 
-use App\Http\Requests\Admin\Settings\RoleAndPermissionRequest;
+use App\Http\Requests\Admin\Settings\RoleRequest;
 
 /**
- * RoleAndPermissionInterface is a contract for what methods will be used in the UserRoleTypeService class.
+ * RoleInterface is a contract for what methods will be used in the UserRoleTypeService class.
  * This consists of the following CRUD operations methods:
  * - handleIndex();
  * - handleStore();
@@ -13,7 +13,7 @@ use App\Http\Requests\Admin\Settings\RoleAndPermissionRequest;
  * - handleUpdate();
  * - handleDelete();
  */
-interface RoleAndPermissionInterface
+interface RoleInterface
 {
     /**
      * Fetch all the records from the database.
@@ -23,10 +23,10 @@ interface RoleAndPermissionInterface
 
     /**
      * Store a new record in the database.
-     * @param App\Http\Requests\Admin\RoleAndPermissionRequest $request
+     * @param App\Http\Requests\Admin\RoleRequest $request
      * @return \Illuminate\Http\Response
      */
-    public function handleStore(RoleAndPermissionRequest $request);
+    public function handleStore(RoleRequest $request);
 
     /**
      * Fetch a single record from the database.
@@ -37,11 +37,11 @@ interface RoleAndPermissionInterface
 
     /**
      * Update an existing record in the database.
-     * @param App\Http\Requests\Admin\RoleAndPermissionRequest $request
+     * @param App\Http\Requests\Admin\RoleRequest $request
      * @param int $id
      * @return \Illuminate\Http\Response
      */
-    public function handleUpdate(RoleAndPermissionRequest $request, $id);
+    public function handleUpdate(RoleRequest $request, $id);
 
     /**
      * Delete a single record from the database

@@ -11,7 +11,7 @@ use App\BusinessLogic\Interfaces\Admin\Communication\ContactSubjectInterface;
 
 // Import application's user settings
 use App\BusinessLogic\Interfaces\Admin\Settings\UserInterface;
-use App\BusinessLogic\Interfaces\Admin\Settings\RoleAndPermissionInterface;
+use App\BusinessLogic\Interfaces\Admin\Settings\RoleInterface;
 
 // Import application's settings
 use App\BusinessLogic\Interfaces\Admin\ApplicationSettings\AcceptedDomainInterface;
@@ -29,7 +29,7 @@ class AppServiceProvider extends ServiceProvider
 
         // Register application's user settings interfaces and services
         $this->app->bind( UserInterface::class, UserService::class );
-        $this->app->bind( RoleAndPermissionInterface::class, RoleAndPermissionService::class );
+        $this->app->bind( RoleInterface::class, RoleService::class );
 
         // Register application's settings interfaces and services
         $this->app->bind( AcceptedDomainInterface::class, AcceptedDomainService::class );
