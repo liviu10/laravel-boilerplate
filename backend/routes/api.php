@@ -22,7 +22,7 @@ use Illuminate\Support\Facades\Route;
 // Import application's communication
     use App\Http\Controllers\Admin\Communication\ContactMessageController;
     use App\Http\Controllers\Admin\Communication\ContactSubjectController;
-    use App\Http\Controllers\Admin\Communication\NewsletterController;
+    use App\Http\Controllers\Admin\Communication\NewsletterCampaignController;
 // Import application's reports
     use App\Http\Controllers\Admin\Report\ReportController;
 // Import application's documentation
@@ -63,8 +63,11 @@ Route::group([ 'prefix' => config('app.version') ], function () {
             Route::apiResource('/contact-subjects', ContactSubjectController::class);
             // Contact me messages
             Route::apiResource('/contact-messages', ContactMessageController::class);
-            // Newsletter
-            Route::apiResource('/newsletter', NewsletterController::class);
+            // Newsletter campaign and subscribers
+            Route::group([ 'prefix' => '/newsletter' ], function () {
+                Route::apiResource('/campaigns', NewsletterCampaignController::class);
+                Route::apiResource('/Subscribers', NewsletterSubscriberController::class);
+            });
         });
         // Application's reports endpoints
         Route::group([ 'prefix' => '/' ], function () {

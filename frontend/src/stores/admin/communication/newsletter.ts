@@ -1,17 +1,17 @@
 import { defineStore } from 'pinia';
 import { api } from 'src/boot/axios'
-import { applicationCommunication, newsletterEndpoint } from 'src/api/communication';
+import { applicationCommunication, newsletterCampaignEndpoint } from 'src/api/communication';
 import { PaginatedResultsInterface } from 'src/interfaces/ApiResponseInterface';
 import { notificationSystem } from 'src/library/NotificationSystem';
-import { NewsletterInterface } from 'src/interfaces/NewsletterInterface';
+import { NewsletterCampaignInterface } from 'src/interfaces/NewsletterCampaignInterface';
 
-const fullApiUrl = applicationCommunication + newsletterEndpoint
+const fullApiUrl = applicationCommunication + newsletterCampaignEndpoint
 
 const useNewsletterStore = defineStore('newsletterStore', {
   state: () => ({
     allRecords: {} as PaginatedResultsInterface,
     createRecord: {},
-    singleRecord: {} as NewsletterInterface,
+    singleRecord: {} as NewsletterCampaignInterface,
     updateRecord: {},
     deleteRecord: {},
   }),
@@ -43,7 +43,7 @@ const useNewsletterStore = defineStore('newsletterStore', {
     },
 
     async findRecord(recordId: number) {
-      const apiResponse: NewsletterInterface | void =
+      const apiResponse: NewsletterCampaignInterface | void =
         await api.get(fullApiUrl + '/' + recordId)
           .then(response => {
             this.singleRecord = response.data.results[0]

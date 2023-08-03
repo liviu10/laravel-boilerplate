@@ -8,6 +8,7 @@ use Illuminate\Support\ServiceProvider;
 // Import application's communication settings
 use App\BusinessLogic\Interfaces\Admin\Communication\ContactMessageInterface;
 use App\BusinessLogic\Interfaces\Admin\Communication\ContactSubjectInterface;
+use App\BusinessLogic\Interfaces\Admin\Communication\NewsletterCampaignInterface;
 
 // Import application's user settings
 use App\BusinessLogic\Interfaces\Admin\Settings\UserInterface;
@@ -26,6 +27,7 @@ class AppServiceProvider extends ServiceProvider
         // Register application's communication settings interfaces and services
         $this->app->bind( ContactMessageInterface::class, ContactMessageService::class );
         $this->app->bind( ContactSubjectInterface::class, ContactSubjectService::class );
+        $this->app->bind( NewsletterCampaignInterface::class, NewsletterCampaignService::class );
 
         // Register application's user settings interfaces and services
         $this->app->bind( UserInterface::class, UserService::class );

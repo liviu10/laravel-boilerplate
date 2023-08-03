@@ -1,19 +1,28 @@
 interface RootObjectInterface {
-  title: string;
   description: string;
-  results: PaginatedResultsInterface;
   filters: FilterInterface;
+  model: ModelInterface,
+  results: PaginatedResultsInterface;
+  title: string;
 }
 
 interface FilterInterface {
   id: number;
   key: string;
   name: string;
-  type: string;
   options?: {
     value: number;
     label: string;
   }[];
+  type: string;
+}
+
+interface ModelInterface {
+  id: number;
+  key: string;
+  name: string;
+  required: boolean;
+  type: string;
 }
 
 interface PaginatedResultsInterface {
@@ -40,6 +49,8 @@ interface PaginationLinksInterface {
 
 export {
   RootObjectInterface,
+  FilterInterface,
+  ModelInterface,
   PaginatedResultsInterface,
   PaginationLinksInterface
 }

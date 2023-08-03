@@ -1,3 +1,5 @@
+import { UserPermissionInterface } from 'src/interfaces/UserPermissionInterface'
+
 interface UserInterface {
   created_at: string,
   email: string,
@@ -9,13 +11,14 @@ interface UserInterface {
   nickname: string,
   phone: string | null,
   profile_image: null,
-  updated_at: string,
-  roles_and_permissions: {
+  role: {
     id: number,
     is_active: boolean,
     name: string,
+    permissions: UserPermissionInterface[]
   },
   roles_and_permissions_id: number,
+  updated_at: string,
 }
 
 export { UserInterface }

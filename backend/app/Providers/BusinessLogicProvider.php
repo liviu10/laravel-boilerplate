@@ -9,6 +9,8 @@ use App\BusinessLogic\Interfaces\Admin\Communication\ContactMessageInterface;
 use App\BusinessLogic\Services\Admin\Communication\ContactMessageService;
 use App\BusinessLogic\Interfaces\Admin\Communication\ContactSubjectInterface;
 use App\BusinessLogic\Services\Admin\Communication\ContactSubjectService;
+use App\BusinessLogic\Interfaces\Admin\Communication\NewsletterCampaignInterface;
+use App\BusinessLogic\Services\Admin\Communication\NewsletterCampaignService;
 
 // Import application's user settings
 use App\BusinessLogic\Interfaces\Admin\Settings\UserInterface;
@@ -32,6 +34,7 @@ class BusinessLogicProvider extends ServiceProvider
         // Register application's communication settings interfaces and services
         $this->app->bind( ContactMessageInterface::class, ContactMessageService::class );
         $this->app->bind( ContactSubjectInterface::class, ContactSubjectService::class );
+        $this->app->bind( NewsletterCampaignInterface::class, NewsletterCampaignService::class );
 
         // Register application's user settings interfaces and services
         $this->app->bind( UserInterface::class, UserService::class );

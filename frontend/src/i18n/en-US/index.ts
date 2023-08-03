@@ -122,10 +122,16 @@ export default {
         },
       },
       newsletter: {
-        title: 'Newsletter',
+        title: 'Newsletters and Campaigns',
         description: `
           TEXT HERE.
         `,
+        table: {
+          name: 'Campaign name',
+          valid_from: 'Valid from',
+          valid_to: 'Valid to',
+          is_active: 'Is active?',
+        },
       },
     },
     reports: {

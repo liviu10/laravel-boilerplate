@@ -124,10 +124,16 @@ export default {
         },
       },
       newsletter: {
-        title: 'Newsletter',
+        title: 'Newsletter si Campanii',
         description: `
           TEXT HERE.
         `,
+        table: {
+          name: 'Nume campanie',
+          valid_from: 'Valabil de la',
+          valid_to: 'Valabil de la',
+          is_active: 'Este activa?',
+        },
       },
     },
     reports: {
