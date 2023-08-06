@@ -2,7 +2,7 @@ import { defineStore } from 'pinia';
 import { api } from 'src/boot/axios'
 import { applicationCommunication, contactMessageEndpoint } from 'src/api/communication';
 import { PaginatedResultsInterface } from 'src/interfaces/ApiResponseInterface';
-import { notificationSystem } from 'src/library/NotificationSystem';
+import { notificationSystem } from 'src/library/NotificationSystem/NotificationSystem';
 import { ContactMessageInterface } from 'src/interfaces/CommunicationInterface';
 
 
@@ -32,9 +32,8 @@ const useContactStore = defineStore('contactStore', {
             return this.allRecords
           })
           .catch((error) => {
-            notificationSystem(error.name, error.message, 'negative', error.response?.data)
-            console.log('--> Response contact me endpoint: ', error.message, error.response?.data)
-            console.log('--> Request contact me endpoint: ', error.request)
+            notificationSystem(error.name, error.message, 'negative', 'bottom', true, error.response?.data)
+            console.log(`Contact messages error message: ${error.message}, response: ${error.response?.data}, request: ${error.request}`)
           })
       return apiResponse
     },
@@ -51,9 +50,8 @@ const useContactStore = defineStore('contactStore', {
             return this.singleRecord
           })
           .catch((error) => {
-            notificationSystem(error.name, error.message, 'negative', error.response?.data)
-            console.log('--> Response contact me endpoint: ', error.message, error.response?.data)
-            console.log('--> Request contact me endpoint: ', error.request)
+            notificationSystem(error.name, error.message, 'negative', 'bottom', true, error.response?.data)
+            console.log(`Contact messages error message: ${error.message}, response: ${error.response?.data}, request: ${error.request}`)
           })
       return apiResponse
     },

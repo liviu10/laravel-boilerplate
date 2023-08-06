@@ -2,7 +2,7 @@ import { defineStore } from 'pinia';
 import { api } from 'src/boot/axios'
 import { applicationUserSettings, usersEndpoint } from 'src/api/userSettings';
 import { PaginatedResultsInterface, FilterInterface } from 'src/interfaces/ApiResponseInterface';
-import { notificationSystem } from 'src/library/NotificationSystem';
+import { notificationSystem } from 'src/library/NotificationSystem/NotificationSystem';
 import { UserInterface } from 'src/interfaces/UserInterface';
 import { Cookies } from 'quasar';
 
@@ -11,6 +11,7 @@ const fullApiUrl = applicationUserSettings + usersEndpoint
 const useUserStore = defineStore('userStore', {
   state: () => ({
     allRecords: {} as PaginatedResultsInterface,
+    userIsAuthenticated: false as boolean,
     allFilters: [] as FilterInterface[],
     createRecord: {},
     singleRecord: {} as UserInterface,
@@ -46,9 +47,8 @@ const useUserStore = defineStore('userStore', {
             return this.allRecords
           })
           .catch((error) => {
-            notificationSystem(error.name, error.message, 'negative', error.response?.data)
-            console.log('--> Response users endpoint: ', error.message, error.response?.data)
-            console.log('--> Request users endpoint: ', error.request)
+            notificationSystem(error.name, error.message, 'negative', 'bottom', true, error.response?.data)
+            console.log(`User error message: ${error.message}, response: ${error.response?.data}, request: ${error.request}`)
           })
       return apiResponse
     },
@@ -65,9 +65,8 @@ const useUserStore = defineStore('userStore', {
             return this.singleRecord
           })
           .catch((error) => {
-            notificationSystem(error.name, error.message, 'negative', error.response?.data)
-            console.log('--> Response users endpoint: ', error.message, error.response?.data)
-            console.log('--> Request users endpoint: ', error.request)
+            notificationSystem(error.name, error.message, 'negative', 'bottom', true, error.response?.data)
+            console.log(`User error message: ${error.message}, response: ${error.response?.data}, request: ${error.request}`)
           })
       return apiResponse
     },

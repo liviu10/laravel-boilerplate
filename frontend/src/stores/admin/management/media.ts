@@ -2,7 +2,7 @@ import { defineStore } from 'pinia';
 import { api } from 'src/boot/axios'
 import { applicationManagement, mediaEndpoint } from 'src/api/management';
 import { PaginatedResultsInterface } from 'src/interfaces/ApiResponseInterface';
-import { notificationSystem } from 'src/library/NotificationSystem';
+import { notificationSystem } from 'src/library/NotificationSystem/NotificationSystem';
 import { MediaInterface } from 'src/interfaces/ManagementInterface';
 
 const fullApiUrl = applicationManagement + mediaEndpoint
@@ -31,9 +31,8 @@ const useMediaStore = defineStore('mediaStore', {
             return this.allRecords
           })
           .catch((error) => {
-            notificationSystem(error.name, error.message, 'negative', error.response?.data)
-            console.log('--> Response media endpoint: ', error.message, error.response?.data)
-            console.log('--> Request media endpoint: ', error.request)
+            notificationSystem(error.name, error.message, 'negative', 'bottom', true, error.response?.data)
+            console.log(`Media error message: ${error.message}, response: ${error.response?.data}, request: ${error.request}`)
           })
       return apiResponse
     },
@@ -50,9 +49,8 @@ const useMediaStore = defineStore('mediaStore', {
             return this.singleRecord
           })
           .catch((error) => {
-            notificationSystem(error.name, error.message, 'negative', error.response?.data)
-            console.log('--> Response media endpoint: ', error.message, error.response?.data)
-            console.log('--> Request media endpoint: ', error.request)
+            notificationSystem(error.name, error.message, 'negative', 'bottom', true, error.response?.data)
+            console.log(`Media error message: ${error.message}, response: ${error.response?.data}, request: ${error.request}`)
           })
       return apiResponse
     },

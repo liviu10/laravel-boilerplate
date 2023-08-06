@@ -2,7 +2,7 @@ import { defineStore } from 'pinia';
 import { api } from 'src/boot/axios'
 import { applicationManagement, commentsEndpoint } from 'src/api/management';
 import { PaginatedResultsInterface } from 'src/interfaces/ApiResponseInterface';
-import { notificationSystem } from 'src/library/NotificationSystem';
+import { notificationSystem } from 'src/library/NotificationSystem/NotificationSystem';
 import { CommentsInterface } from 'src/interfaces/ManagementInterface';
 
 const fullApiUrl = applicationManagement + commentsEndpoint
@@ -31,9 +31,8 @@ const useCommentStore = defineStore('commentStore', {
             return this.allRecords
           })
           .catch((error) => {
-            notificationSystem(error.name, error.message, 'negative', error.response?.data)
-            console.log('--> Response comments endpoint: ', error.message, error.response?.data)
-            console.log('--> Request comments endpoint: ', error.request)
+            notificationSystem(error.name, error.message, 'negative', 'bottom', true, error.response?.data)
+            console.log(`Comments error message: ${error.message}, response: ${error.response?.data}, request: ${error.request}`)
           })
       return apiResponse
     },
@@ -50,9 +49,8 @@ const useCommentStore = defineStore('commentStore', {
             return this.singleRecord
           })
           .catch((error) => {
-            notificationSystem(error.name, error.message, 'negative', error.response?.data)
-            console.log('--> Response comments endpoint: ', error.message, error.response?.data)
-            console.log('--> Request comments endpoint: ', error.request)
+            notificationSystem(error.name, error.message, 'negative', 'bottom', true, error.response?.data)
+            console.log(`Comments error message: ${error.message}, response: ${error.response?.data}, request: ${error.request}`)
           })
       return apiResponse
     },

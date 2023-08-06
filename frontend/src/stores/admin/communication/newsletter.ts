@@ -2,7 +2,7 @@ import { defineStore } from 'pinia';
 import { api } from 'src/boot/axios'
 import { applicationCommunication, newsletterCampaignEndpoint } from 'src/api/communication';
 import { PaginatedResultsInterface } from 'src/interfaces/ApiResponseInterface';
-import { notificationSystem } from 'src/library/NotificationSystem';
+import { notificationSystem } from 'src/library/NotificationSystem/NotificationSystem';
 import { NewsletterCampaignInterface } from 'src/interfaces/CommunicationInterface';
 
 const fullApiUrl = applicationCommunication + newsletterCampaignEndpoint
@@ -31,9 +31,8 @@ const useNewsletterStore = defineStore('newsletterStore', {
             return this.allRecords
           })
           .catch((error) => {
-            notificationSystem(error.name, error.message, 'negative', error.response?.data)
-            console.log('--> Response newsletter endpoint: ', error.message, error.response?.data)
-            console.log('--> Request newsletter endpoint: ', error.request)
+            notificationSystem(error.name, error.message, 'negative', 'bottom', true, error.response?.data)
+            console.log(`Newsletter campaigns error message: ${error.message}, response: ${error.response?.data}, request: ${error.request}`)
           })
       return apiResponse
     },
@@ -50,9 +49,8 @@ const useNewsletterStore = defineStore('newsletterStore', {
             return this.singleRecord
           })
           .catch((error) => {
-            notificationSystem(error.name, error.message, 'negative', error.response?.data)
-            console.log('--> Response newsletter endpoint: ', error.message, error.response?.data)
-            console.log('--> Request newsletter endpoint: ', error.request)
+            notificationSystem(error.name, error.message, 'negative', 'bottom', true, error.response?.data)
+            console.log(`Newsletter campaigns error message: ${error.message}, response: ${error.response?.data}, request: ${error.request}`)
           })
       return apiResponse
     },

@@ -52,7 +52,7 @@ import { useI18n } from 'vue-i18n';
 // Import generic components, libraries and interfaces
 import { FilterInterface } from 'src/interfaces/ApiResponseInterface';
 import { displayLabel } from 'src/library/TextOperations';
-import { notificationSystem } from 'src/library/NotificationSystem';
+import { notificationSystem } from 'src/library/NotificationSystem/NotificationSystem';
 
 // Defined the translation variable
 const { t } = useI18n({});
@@ -104,7 +104,7 @@ function applyFilters(filters: FilterInterface[]) {
     notificationMessage.value = t('admin.generic.no_filters_to_apply', {
       resourceName: props.adminPageTitle
     })
-    notificationSystem(notificationTitle.value, notificationMessage.value, 'info')
+    notificationSystem(notificationTitle.value, notificationMessage.value, 'info', 'bottom', true)
     console.log(`There are no filters to be applied on ${props.adminPageTitle}, because the search query is empty or doesn't exist: ${appliedFilters}`)
   }
 

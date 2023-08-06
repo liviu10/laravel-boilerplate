@@ -72,7 +72,7 @@ import { Ref, ref } from 'vue';
 import GenericTableOptions from './GenericTableOptions.vue';
 import GenericTableActions from './GenericTableActions.vue';
 import GenericTableDialog from './GenericTableDialog.vue';
-import { notificationSystem } from 'src/library/NotificationSystem';
+import { notificationSystem } from 'src/library/NotificationSystem/NotificationSystem';
 import { displayLabel } from 'src/library/TextOperations';
 
 interface GenericTableProps {

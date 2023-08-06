@@ -95,6 +95,7 @@
 import { useRouter } from 'vue-router';
 import { ref, onMounted, computed, Ref } from 'vue';
 import { useI18n } from 'vue-i18n';
+import { Cookies } from 'quasar';
 
 // Import generic components, libraries and interfaces
 import AdminPageTitle from 'src/components/AdminPageTitle.vue';
@@ -106,10 +107,9 @@ import AdminPageContainerTable from 'src/components/AdminPageContainerTable.vue'
 import AdminPageContainerDialog from 'src/components/AdminPageContainerDialog.vue';
 import TableColumns from 'src/columns/userColumns';
 import { displayLabel } from 'src/library/TextOperations';
-import { notificationSystem } from 'src/library/NotificationSystem';
+import { notificationSystem } from 'src/library/NotificationSystem/NotificationSystem';
 import { DialogType } from 'src/types/DialogType';
 import { FilterInterface } from 'src/interfaces/ApiResponseInterface';
-import { Cookies } from 'quasar';
 
 // Import Pinia's related utilities
 import { useUserStore } from 'src/stores/admin/userSettings/users';
@@ -174,13 +174,13 @@ function clearFilters() {
     notificationMessage.value = t('admin.generic.filters_applied_remove', {
       resourceName: currentRouteTitle.value
     })
-    notificationSystem(notificationTitle.value, notificationMessage.value, 'positive')
+    notificationSystem(notificationTitle.value, notificationMessage.value, 'positive', 'bottom', true)
   } else {
     notificationTitle.value = t('admin.generic.notification_info_title')
     notificationMessage.value = t('admin.generic.no_filters_applied', {
       resourceName: currentRouteTitle.value
     })
-    notificationSystem(notificationTitle.value, notificationMessage.value, 'info')
+    notificationSystem(notificationTitle.value, notificationMessage.value, 'info', 'bottom', true)
   }
 
   displayFilterResults.value = false
@@ -211,7 +211,7 @@ async function actionMethodDialog(action: DialogType, recordId?: number) {
         `The operation could not be performed. Invalid record id: ${recordId}!`
       );
       loadData.value = false
-      notificationSystem(notificationTitle, notificationMessage, 'warning');
+      notificationSystem(notificationTitle, notificationMessage, 'warning', 'bottom', true)
     } else {
       userStore.findRecord(recordId).then(() => {
         loadData.value = false
@@ -266,7 +266,7 @@ function handleActionMethod(action: DialogType) {
       console.log(
         `The operation could not be performed. Invalid record id: ${recordId}!`
       );
-      notificationSystem(notificationTitle, notificationMessage, 'warning');
+      notificationSystem(notificationTitle, notificationMessage, 'warning', 'bottom', true)
     }
   }
 }

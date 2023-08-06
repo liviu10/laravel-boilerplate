@@ -77,7 +77,7 @@ import AdminPageContainerTable from 'src/components/AdminPageContainerTable.vue'
 import AdminPageContainerDialog from 'src/components/AdminPageContainerDialog.vue';
 import TableColumns from 'src/columns/rolesAndPermissionColumns';
 import { displayLabel } from 'src/library/TextOperations';
-import { notificationSystem } from 'src/library/NotificationSystem';
+import { notificationSystem } from 'src/library/NotificationSystem/NotificationSystem';
 import { DialogType } from 'src/types/DialogType';
 
 // Import Pinia's related utilities
@@ -136,7 +136,7 @@ async function actionMethodDialog(action: DialogType, recordId?: number) {
         `The operation could not be performed. Invalid record id: ${recordId}!`
       );
       loadData.value = false
-      notificationSystem(notificationTitle, notificationMessage, 'warning');
+      notificationSystem(notificationTitle, notificationMessage, 'warning', 'bottom', true)
     } else {
       userRoleStore.findRecord(recordId).then(() => {
         loadData.value = false
@@ -191,7 +191,7 @@ function handleActionMethod(action: DialogType) {
       console.log(
         `The operation could not be performed. Invalid record id: ${recordId}!`
       );
-      notificationSystem(notificationTitle, notificationMessage, 'warning');
+      notificationSystem(notificationTitle, notificationMessage, 'warning', 'bottom', true)
     }
   }
 }

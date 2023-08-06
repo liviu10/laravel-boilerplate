@@ -2,7 +2,7 @@ import { defineStore } from 'pinia';
 import { api } from 'src/boot/axios'
 import { applicationApiSettings, acceptedDomainsEndpoint } from 'src/api/apiSettings';
 import { PaginatedResultsInterface } from 'src/interfaces/ApiResponseInterface';
-import { notificationSystem } from 'src/library/NotificationSystem';
+import { notificationSystem } from 'src/library/NotificationSystem/NotificationSystem';
 import { AcceptedDomainInterface } from 'src/interfaces/ApplicationInterface';
 
 const fullApiUrl = applicationApiSettings + acceptedDomainsEndpoint
@@ -31,9 +31,8 @@ const useAcceptedDomainStore = defineStore('acceptedDomainStore', {
             return this.allRecords
           })
           .catch((error) => {
-            notificationSystem(error.name, error.message, 'negative', error.response?.data)
-            console.log('--> Response accepted domains endpoint: ', error.message, error.response?.data)
-            console.log('--> Request accepted domains endpoint: ', error.request)
+            notificationSystem(error.name, error.message, 'negative', 'bottom', true, error.response?.data)
+            console.log(`Accepted domains error message: ${error.message}, response: ${error.response?.data}, request: ${error.request}`)
           })
       return apiResponse
     },
@@ -50,9 +49,8 @@ const useAcceptedDomainStore = defineStore('acceptedDomainStore', {
             return this.singleRecord
           })
           .catch((error) => {
-            notificationSystem(error.name, error.message, 'negative', error.response?.data)
-            console.log('--> Response accepted domains endpoint: ', error.message, error.response?.data)
-            console.log('--> Request accepted domains endpoint: ', error.request)
+            notificationSystem(error.name, error.message, 'negative', 'bottom', true, error.response?.data)
+            console.log(`Accepted domains error message: ${error.message}, response: ${error.response?.data}, request: ${error.request}`)
           })
       return apiResponse
     },
