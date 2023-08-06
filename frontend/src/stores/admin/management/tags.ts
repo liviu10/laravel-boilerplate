@@ -3,7 +3,7 @@ import { api } from 'src/boot/axios'
 import { applicationManagement, tagsEndpoint } from 'src/api/management';
 import { PaginatedResultsInterface } from 'src/interfaces/ApiResponseInterface';
 import { notificationSystem } from 'src/library/NotificationSystem';
-import { TagsInterface } from 'src/interfaces/TagsInterface';
+import { TagsInterface } from 'src/interfaces/ManagementInterface';
 
 const fullApiUrl = applicationManagement + tagsEndpoint
 

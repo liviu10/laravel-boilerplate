@@ -26,7 +26,6 @@ interface AdminPageContainerTableTopLeftInterface {
   createNewRecord?: boolean;
   topLeftSlot?: boolean;
 }
-withDefaults(defineProps<AdminPageContainerTableTopLeftInterface>(), {});
 
 const emit = defineEmits<{
   (event: 'actionMethodDialog', action: DialogType): void;
@@ -38,7 +37,18 @@ const actionMethods: { [key: number]: DialogType } = {
   2: 'edit',
   3: 'delete',
 };
-function openDialog(action: DialogType) {
-  emit('actionMethodDialog', action)
-}
+
+/**
+ * Open a dialog by emitting the 'actionMethodDialog'
+ * event with the specified action. This function is
+ * typically used to trigger the opening of
+ * a dialog or modal for a specific action.
+ * @param action - The name of the action to
+ * be associated with the dialog.
+ * @function
+ * @returns void
+ */
+const openDialog = (action: DialogType) => emit('actionMethodDialog', action);
+
+withDefaults(defineProps<AdminPageContainerTableTopLeftInterface>(), {});
 </script>

@@ -3,7 +3,7 @@ import { api } from 'src/boot/axios'
 import { applicationApiSettings, acceptedDomainsEndpoint } from 'src/api/apiSettings';
 import { PaginatedResultsInterface } from 'src/interfaces/ApiResponseInterface';
 import { notificationSystem } from 'src/library/NotificationSystem';
-import { AcceptedDomainInterface } from 'src/interfaces/AcceptedDomainInterface';
+import { AcceptedDomainInterface } from 'src/interfaces/ApplicationInterface';
 
 const fullApiUrl = applicationApiSettings + acceptedDomainsEndpoint
 

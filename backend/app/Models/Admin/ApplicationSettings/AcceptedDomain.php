@@ -5,6 +5,7 @@ namespace App\Models\Admin\ApplicationSettings;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Traits\ApiLogError;
+use App\Traits\ApiDataModel;
 use App\Traits\ApiFilters;
 
 /**
@@ -26,7 +27,7 @@ use App\Traits\ApiFilters;
  */
 class AcceptedDomain extends Model
 {
-    use HasFactory, ApiLogError, ApiFilters;
+    use HasFactory, ApiLogError, ApiDataModel, ApiFilters;
 
     /**
      * The table associated with the model.
@@ -69,10 +70,10 @@ class AcceptedDomain extends Model
      * @var string
      */
     protected $fillable = [
-        'domain',
-        'type',
-        'user_id',
-        'is_active',
+        'domain'    => 'text',
+        'type'      => 'text',
+        'user_id'   => 'number',
+        'is_active' => 'boolean',
     ];
 
     /**
@@ -263,6 +264,26 @@ class AcceptedDomain extends Model
             $this->handleApiLogError($exception);
             return false;
         }
+    }
+
+    public function getDataModel()
+    {
+        $dataModelOptions = [
+            'domain' => [
+                'name'        => 'Domain',
+                'is_required' => true
+            ],
+            'type' => [
+                'name'        => 'Type',
+                'is_required' => true
+            ],
+            'is_active' => [
+                'name'        => 'Is active?',
+                'is_required' => true
+            ],
+        ];
+
+        return $this->handleApiDataModel($this->fillable, $dataModelOptions);
     }
 
     /**

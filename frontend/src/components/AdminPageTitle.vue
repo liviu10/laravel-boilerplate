@@ -21,7 +21,6 @@ const { t } = useI18n({});
 interface AdminPageTitleInterface {
   adminPageTitle?: RouteRecordName | null | undefined | unknown;
 }
-withDefaults(defineProps<AdminPageTitleInterface>(), {});
 
 /**
  * Displays the admin page title based on the provided adminPageTitle.
@@ -37,4 +36,6 @@ const displayAdminPageTitle = computed(() => {
     }
   }
 })
+
+withDefaults(defineProps<AdminPageTitleInterface>(), {});
 </script>

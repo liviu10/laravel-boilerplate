@@ -51,7 +51,16 @@ export default {
       show_dialog_title: 'Show record details',
       edit_dialog_title: 'Edit record',
       delete_dialog_title: 'Delete record',
-      delete_confirmation_message: 'Are you sure you want delete this record?'
+      delete_confirmation_message: 'Are you sure you want delete this record?',
+      filter: 'Filter table',
+      clear_filters: 'Clear filters',
+      apply_filters: 'Apply filters',
+      notification_info_title: 'Info',
+      no_filters_applied: 'There are no filters applied on table {resourceName}',
+      no_filters_to_apply: 'There are no filters to be applied on table {resourceName}',
+      filters_applied_remove: 'All the filters were successfully removed from table {resourceName}',
+      notification_success_title: 'Success',
+      filter_results_message: 'You are currently viewing results for: '
     },
     menu: {
       my_account: 'User profile',
@@ -158,7 +167,7 @@ export default {
         `,
       },
       users: {
-        title: 'Users',
+        title: 'All users',
         description: `
           TEXT HERE.
         `,

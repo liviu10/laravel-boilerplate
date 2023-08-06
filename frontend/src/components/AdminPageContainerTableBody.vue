@@ -42,6 +42,12 @@
       <div v-else-if="col.name === 'email'">
         <a :href="'mailto:' + col.value">{{ col.value }}</a>
       </div>
+      <q-badge
+        v-else-if="col.name === 'is_active'"
+        :color="(/true/).test(col.value) === true ? 'positive' : 'negative'"
+        text-color="black"
+        :label="(/true/).test(col.value) === true ? 'Yes' : 'No'"
+      />
       <div v-else>
         {{ col.value }}
       </div>
@@ -67,7 +73,6 @@ interface AdminPageContainerTableHeaderInterface {
   props: QTrProps['props'];
   recordId: number;
 }
-withDefaults(defineProps<AdminPageContainerTableHeaderInterface>(), {});
 
 const emit = defineEmits<{
   (event: 'actionMethodDialog', action: DialogType, recordId: number): void;
@@ -79,7 +84,21 @@ const actionMethods: { [key: number]: DialogType } = {
   2: 'edit',
   3: 'delete',
 };
-function openDialog(action: DialogType, recordId: number) {
-  emit('actionMethodDialog', action, recordId)
-}
+
+/**
+ * Open a dialog by emitting the 'actionMethodDialog' event
+ * with the specified action and record ID. This function
+ * is typically used to trigger the opening of a
+ * dialog or modal for a specific action related to
+ * a particular record identified by the record ID.
+ * @param action - The name of the action
+ * to be associated with the dialog.
+ * @param recordId - The unique identifier of
+ * the record related to the dialog action.
+ * @function
+ * @returns void
+ */
+const openDialog = (action: DialogType, recordId: number) => emit('actionMethodDialog', action, recordId);
+
+withDefaults(defineProps<AdminPageContainerTableHeaderInterface>(), {});
 </script>

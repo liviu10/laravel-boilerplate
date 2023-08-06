@@ -33,6 +33,7 @@ class ContactMessageService implements ContactMessageInterface
     public function handleIndex()
     {
         $apiDisplayAllRecords = $this->modelName->fetchAllRecords();
+        $apiDataModel = $this->modelName->getDataModel();
         $apiFilters = $this->modelName->getFilters();
 
         if ($apiDisplayAllRecords instanceof \Illuminate\Pagination\LengthAwarePaginator)
@@ -43,7 +44,7 @@ class ContactMessageService implements ContactMessageInterface
             }
             else
             {
-                return response($this->handleResponse('success', $apiDisplayAllRecords, $apiFilters), 200);
+                return response($this->handleResponse('success', $apiDisplayAllRecords, $apiDataModel, $apiFilters), 200);
             }
         }
         else
@@ -62,6 +63,7 @@ class ContactMessageService implements ContactMessageInterface
         $apiInsertRecord = [
             'full_name'          => $request->get('full_name'),
             'email'              => $request->get('email'),
+            'phone'              => $request->get('phone') !== null ? $request->get('phone') : null,
             'contact_subject_id' => $request->get('contact_subject_id'),
             'message'            => $request->get('message'),
             'privacy_policy'     => $request->get('privacy_policy') !== null ? $request->get('privacy_policy') : false,
@@ -115,6 +117,7 @@ class ContactMessageService implements ContactMessageInterface
         $apiUpdateRecord = [
             'full_name'          => $request->get('full_name'),
             'email'              => $request->get('email'),
+            'phone'              => $request->get('phone') !== null ? $request->get('phone') : null,
             'contact_subject_id' => $request->get('contact_subject_id'),
             'message'            => $request->get('message'),
             'privacy_policy'     => $request->get('privacy_policy') !== null ? $request->get('privacy_policy') : false,

@@ -93,7 +93,7 @@ class User extends Authenticatable
      */
     protected $filters = [
         'id'         => 'number',
-        'full_name'  => 'text',
+        'full_name'  => 'q-input',
         'nickname'   => 'text',
         'email'      => 'text',
         'created_at' => 'date',

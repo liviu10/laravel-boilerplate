@@ -3,7 +3,8 @@ import { api } from 'src/boot/axios'
 import { applicationCommunication, contactMessageEndpoint } from 'src/api/communication';
 import { PaginatedResultsInterface } from 'src/interfaces/ApiResponseInterface';
 import { notificationSystem } from 'src/library/NotificationSystem';
-import { ContactMeInterface } from 'src/interfaces/ContactMeInterface';
+import { ContactMessageInterface } from 'src/interfaces/CommunicationInterface';
+
 
 const fullApiUrl = applicationCommunication + contactMessageEndpoint
 
@@ -11,7 +12,7 @@ const useContactStore = defineStore('contactStore', {
   state: () => ({
     allRecords: {} as PaginatedResultsInterface,
     createRecord: {},
-    singleRecord: {} as ContactMeInterface,
+    singleRecord: {} as ContactMessageInterface,
     updateRecord: {},
     deleteRecord: {},
   }),
@@ -43,7 +44,7 @@ const useContactStore = defineStore('contactStore', {
     },
 
     async findRecord(recordId: number) {
-      const apiResponse: ContactMeInterface | void =
+      const apiResponse: ContactMessageInterface | void =
         await api.get(fullApiUrl + '/' + recordId)
           .then(response => {
             this.singleRecord = response.data.results[0]

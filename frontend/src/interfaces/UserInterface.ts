@@ -1,12 +1,10 @@
-import { UserPermissionInterface } from 'src/interfaces/UserPermissionInterface'
+import { SingleResultInterface } from 'src/interfaces/ApiResponseInterface'
 
-interface UserInterface {
-  created_at: string,
+interface UserInterface extends SingleResultInterface {
   email: string,
   email_verified_at: string | null,
   first_name: string,
   full_name: string,
-  id: number,
   last_name: string,
   nickname: string,
   phone: string | null,
@@ -18,7 +16,27 @@ interface UserInterface {
     permissions: UserPermissionInterface[]
   },
   roles_and_permissions_id: number,
-  updated_at: string,
 }
 
-export { UserInterface }
+interface UserPermissionInterface extends SingleResultInterface {
+  description: string | null,
+  is_active: boolean,
+  name: string,
+  role_id: number,
+}
+
+interface UserRoleInterface extends SingleResultInterface {
+  bg_color: string,
+  description: string,
+  is_active: boolean,
+  name: string,
+  permissions: UserPermissionInterface[],
+  slug: string | null,
+  text_color: string,
+}
+
+export {
+  UserInterface,
+  UserPermissionInterface,
+  UserRoleInterface,
+}

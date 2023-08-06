@@ -18,7 +18,8 @@ import { useI18n } from 'vue-i18n';
 import { RouteRecordName } from 'vue-router';
 import { computed, ref } from 'vue';
 
-// Import other utilities
+// Import generic components, libraries and interfaces
+import { UserInterface } from 'src/interfaces/UserInterface';
 import { checkCurrentRouteName } from 'src/library/CheckRouter';
 
 // Defined the translation variable
@@ -28,25 +29,30 @@ interface AdminPageDescriptionInterface {
   adminRouteName?: RouteRecordName | null | undefined;
   adminPageDescription?: string | undefined;
   adminApplicationName?: string | undefined;
-  currentAuthenticatedUser?: unknown // TODO: replace with the actual object type
+  currentAuthenticatedUser?: UserInterface | undefined;
 }
-withDefaults(defineProps<AdminPageDescriptionInterface>(), {});
 
 /**
  * Displays the admin page welcome message based on the provided currentAuthenticatedUser.
  * @param currentAuthenticatedUser - The name of the authenticated user.
  * @returns A string of the formatted admin page welcome message.
  */
-// TODO: when finished with login the user add currentAuthenticatedUser.full_name eg: 'Welcome, User Webmaster'
 const displayAdminWelcomeMessage = computed(() => {
-  return (currentAuthenticatedUser: unknown): string => {
-    if (currentAuthenticatedUser && Object.keys(currentAuthenticatedUser).length) {
-      return t('admin.generic.welcome', { authUserName: ', ' + currentAuthenticatedUser })
+  return (currentAuthenticatedUser: UserInterface | undefined): string => {
+    const userIsAuthenticate =
+      currentAuthenticatedUser &&
+      currentAuthenticatedUser !== undefined &&
+      Object.keys(currentAuthenticatedUser).length &&
+      Object.hasOwnProperty('full_name')
+    if (userIsAuthenticate) {
+      return t('admin.generic.welcome', {
+        authUserName: `, ${currentAuthenticatedUser.full_name}`,
+      });
     } else {
-      return t('admin.generic.welcome')
+      return t('admin.generic.welcome');
     }
-  }
-})
+  };
+});
 
 /**
  * Displays the admin page description based on the provided adminPageDescription.
@@ -92,4 +98,6 @@ const displayAdminDocMessage = computed(() => {
     }
   }
 })
+
+withDefaults(defineProps<AdminPageDescriptionInterface>(), {});
 </script>

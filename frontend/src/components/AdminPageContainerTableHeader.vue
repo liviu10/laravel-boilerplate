@@ -21,7 +21,6 @@ const { t } = useI18n({});
 interface AdminPageContainerTableHeaderInterface {
   props: QTrProps['props']
 }
-withDefaults(defineProps<AdminPageContainerTableHeaderInterface>(), {});
 
 /**
  * Computed function to format the column name for a table row.
@@ -46,4 +45,6 @@ const formatColumnName = computed(() => {
     }
   };
 });
+
+withDefaults(defineProps<AdminPageContainerTableHeaderInterface>(), {});
 </script>

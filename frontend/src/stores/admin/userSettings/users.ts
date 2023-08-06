@@ -1,15 +1,17 @@
 import { defineStore } from 'pinia';
 import { api } from 'src/boot/axios'
 import { applicationUserSettings, usersEndpoint } from 'src/api/userSettings';
-import { PaginatedResultsInterface } from 'src/interfaces/ApiResponseInterface';
+import { PaginatedResultsInterface, FilterInterface } from 'src/interfaces/ApiResponseInterface';
 import { notificationSystem } from 'src/library/NotificationSystem';
 import { UserInterface } from 'src/interfaces/UserInterface';
+import { Cookies } from 'quasar';
 
 const fullApiUrl = applicationUserSettings + usersEndpoint
 
 const useUserStore = defineStore('userStore', {
   state: () => ({
     allRecords: {} as PaginatedResultsInterface,
+    allFilters: [] as FilterInterface[],
     createRecord: {},
     singleRecord: {} as UserInterface,
     updateRecord: {},
@@ -17,17 +19,30 @@ const useUserStore = defineStore('userStore', {
   }),
   getters: {
     getAllRecords: (state) => state.allRecords,
+    getAllFilters: (state) => state.allFilters,
     getCreatRecord: (state) => state.createRecord,
     getSingleRecord: (state) => state.singleRecord,
     getUpdateRecord: (state) => state.updateRecord,
     getDeleteRecord: (state) => state.deleteRecord,
   },
   actions: {
-    async getRecords() {
+    async getRecords(appliedFilters?: string | undefined) {
+      const searchQuery: Record<string, number | string | null> = {}
+      if (appliedFilters && appliedFilters !== undefined) {
+        Cookies.set('all-user-filters', appliedFilters)
+        const savedSearchQuery: Pick<FilterInterface, 'key' | 'value'>[] = Cookies.get('all-user-filters')
+        if (savedSearchQuery && savedSearchQuery !== undefined) {
+          savedSearchQuery.forEach((filter: Pick<FilterInterface, 'key' | 'value'>) => {
+            searchQuery[filter.key] = filter.value
+          })
+        }
+      }
+
       const apiResponse: PaginatedResultsInterface | void =
-        await api.get(fullApiUrl)
+        await api.get(fullApiUrl, { params: searchQuery })
           .then(response => {
             this.allRecords = response.data.results
+            this.allFilters = response.data.filters
             return this.allRecords
           })
           .catch((error) => {

@@ -40,39 +40,48 @@
 
 <script setup lang="ts">
 // Import framework related utilities
-import { defineEmits } from 'vue';
+import { computed, defineEmits } from 'vue';
 import { useI18n } from 'vue-i18n';
+
+// Import generic components, libraries and interfaces
+import { UserInterface } from 'src/interfaces/UserInterface';
 
 interface AdminHeaderProps {
   adminApplicationName: string;
-  currentAuthenticatedUser?: unknown;
+  currentAuthenticatedUser?: UserInterface | undefined;
 }
 const emit = defineEmits<{
   (event: 'toggleLeftDrawer', value: boolean): void;
 }>();
-withDefaults(defineProps<AdminHeaderProps>(), {});
 
 // Defined the translation variable
 const { t } = useI18n({});
 
 /**
- * Displays the admin page welcome message based on the provided currentAuthenticatedUser.
- * @param currentAuthenticatedUser - The name of the authenticated user.
- * @returns A string of the formatted admin page welcome message.
+ * Computed function to generate an admin welcome message
+ * based on the current authenticated user. If the user is authenticated,
+ * it will return a welcome message with the user's full name,
+ * otherwise, it will return a generic welcome message.
+ * @param currentAuthenticatedUser - The current authenticated user object
+ * containing user details like 'full_name'.
+ * @returns The admin welcome message.
  */
-function displayAdminWelcomeMessage(currentAuthenticatedUser: unknown): string {
-  if (
-    currentAuthenticatedUser &&
-    Object.keys(currentAuthenticatedUser).length
-  ) {
-    // TODO: when finished with login the user add currentAuthenticatedUser.full_name to have something like: 'Welcome, User Webmaster'
-    return t('admin.generic.welcome', {
-      authUserName: ', ' + currentAuthenticatedUser,
-    });
-  } else {
-    return t('admin.generic.welcome');
-  }
-}
+const displayAdminWelcomeMessage = computed(() => {
+  return (currentAuthenticatedUser: UserInterface | undefined): string => {
+    const userIsAuthenticate =
+      currentAuthenticatedUser &&
+      currentAuthenticatedUser !== undefined &&
+      Object.keys(currentAuthenticatedUser).length &&
+      Object.hasOwnProperty('full_name')
+    if (userIsAuthenticate) {
+      return t('admin.generic.welcome', {
+        authUserName: `, ${currentAuthenticatedUser.full_name}`,
+      });
+    } else {
+      return t('admin.generic.welcome');
+    }
+  };
+});
 
 // Admin navigation menu
 const adminNavigationMenu = [
@@ -95,6 +104,8 @@ const adminNavigationMenu = [
     separator: true,
   },
 ];
+
+withDefaults(defineProps<AdminHeaderProps>(), {});
 </script>
 
 <style lang="scss" scoped>

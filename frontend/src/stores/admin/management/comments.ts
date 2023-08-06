@@ -3,7 +3,7 @@ import { api } from 'src/boot/axios'
 import { applicationManagement, commentsEndpoint } from 'src/api/management';
 import { PaginatedResultsInterface } from 'src/interfaces/ApiResponseInterface';
 import { notificationSystem } from 'src/library/NotificationSystem';
-import { CommentsInterface } from 'src/interfaces/CommentsInterface';
+import { CommentsInterface } from 'src/interfaces/ManagementInterface';
 
 const fullApiUrl = applicationManagement + commentsEndpoint
 

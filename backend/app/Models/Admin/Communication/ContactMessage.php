@@ -5,6 +5,8 @@ namespace App\Models\Admin\Communication;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Traits\ApiLogError;
+use App\Traits\ApiDataModel;
+use App\Traits\ApiFilters;
 
 /**
  * Class ContactMessage
@@ -27,7 +29,7 @@ use App\Traits\ApiLogError;
  */
 class ContactMessage extends Model
 {
-    use HasFactory, ApiLogError;
+    use HasFactory, ApiLogError, ApiDataModel, ApiFilters;
 
     /**
      * The table associated with the model.
@@ -70,12 +72,28 @@ class ContactMessage extends Model
      * @var string
      */
     protected $fillable = [
-        'full_name',
-        'email',
-        'message',
-        'privacy_policy',
-        'contact_subject_id',
+        'full_name'          => 'string',
+        'email'              => 'string',
+        'phone'              => 'string',
+        'message'            => 'string',
+        'privacy_policy'     => 'boolean',
+        'contact_subject_id' => 'number',
     ];
+
+    /**
+     * The model filters.
+     *
+     * @var array<string, string>
+     */
+    protected $filters = [
+        'id'                 => 'number',
+        'full_name'          => 'text',
+        'email'              => 'text',
+        'phone'              => 'text',
+        'privacy_policy'     => 'boolean',
+        'contact_subject_id' => 'number',
+    ];
+
 
     /**
     * The attributes that are mass assignable.
@@ -129,7 +147,7 @@ class ContactMessage extends Model
         try
         {
             return $this->select(
-                'id', 'full_name', 'email', 'contact_subject_id'
+                'id', 'full_name', 'email', 'phone', 'contact_subject_id'
             )
             ->with([
                 'contact_subject' => function ($query) {
@@ -160,6 +178,7 @@ class ContactMessage extends Model
             $this->create([
                 'full_name'          => $payload['full_name'],
                 'email'              => $payload['email'],
+                'phone'              => $payload['phone'],
                 'message'            => $payload['message'],
                 'privacy_policy'     => $payload['privacy_policy'],
                 'contact_subject_id' => $payload['contact_subject_id'],
@@ -220,6 +239,7 @@ class ContactMessage extends Model
             $this->find($id)->update([
                 'full_name'          => $payload['full_name'],
                 'email'              => $payload['email'],
+                'phone'              => $payload['phone'],
                 'message'            => $payload['message'],
                 'privacy_policy'     => $payload['privacy_policy'],
                 'contact_subject_id' => $payload['contact_subject_id'],
@@ -266,6 +286,38 @@ class ContactMessage extends Model
         }
     }
 
+    public function getDataModel()
+    {
+        $dataModelOptions = [
+            'full_name' => [
+                'name'        => 'Full name',
+                'is_required' => true
+            ],
+            'email' => [
+                'name'        => 'Email address',
+                'is_required' => true
+            ],
+            'phone' => [
+                'name'        => 'Phone number',
+                'is_required' => true
+            ],
+            'message' => [
+                'name'        => 'Message',
+                'is_required' => true
+            ],
+            'privacy_policy' => [
+                'name'        => 'Privacy policy',
+                'is_required' => true
+            ],
+            'contact_subject_id' => [
+                'name'        => 'Contact subject',
+                'is_required' => true
+            ],
+        ];
+
+        return $this->handleApiDataModel($this->fillable, $dataModelOptions);
+    }
+
     /**
      * Get the filters that can be applied to the records.
      * The method returns an array of filter options
@@ -274,44 +326,15 @@ class ContactMessage extends Model
      */
     public function getFilters()
     {
-        $contactMeSubjectModel = new ContactSubject();
-        $subjectRecords = $contactMeSubjectModel->fetchAllRecords();
-        $options = [];
-        foreach ($subjectRecords as $record) {
-            $options[] = [
-                'value' => $record['id'],
-                'label' => $record['name'],
-            ];
-        }
-
-        $availableFilters = [
-            [
-                'id' => 1,
-                'key' => 'id',
-                'name' => 'Filter by ID',
-                'type' => 'number'
-            ],
-            [
-                'id' => 2,
-                'key' => 'full_name',
-                'name' => 'Filter by full name',
-                'type' => 'text'
-            ],
-            [
-                'id' => 3,
-                'key' => 'email',
-                'name' => 'Filter by email',
-                'type' => 'text'
-            ],
-            [
-                'id' => 3,
-                'key' => 'contact_subject_id',
-                'name' => 'Filter by subject',
-                'type' => 'select',
-                'options' => $options
-            ]
+        $filterNames = [
+            'id'                 => 'Filter by ID',
+            'full_name'          => 'Filter by full name',
+            'email'              => 'Filter by email',
+            'phone'              => 'Filter by phone',
+            'privacy_policy'     => 'Filter by privacy policy',
+            'contact_subject_id' => 'Filter by privacy policy',
         ];
 
-        return $availableFilters;
+        return $this->handleApiFilters($this->filters, $filterNames);
     }
 }

@@ -9,13 +9,25 @@
     />
 
     <admin-page-container :admin-route-name="currentRouteName">
+      <template v-slot:admin-filters v-if="displayFilters">
+        <admin-page-container-filter
+          :admin-page-title="currentRouteTitle"
+          :filters="getAllFilters"
+          @apply-filters="applyFilters"
+          @clear-filters="clearFilters"
+        />
+      </template>
+
+      <template v-slot:admin-filter-results v-if="displayFilterResults">
+        <admin-page-container-filter-results :display-applied-filters="displayAppliedFilters" />
+      </template>
+
       <template v-slot:admin-content>
         <admin-page-container-table
           :columns="TableColumns"
           :create-new-record="true"
           :delete-record-button="true"
           :edit-record-button="true"
-          :filters="TableFilters"
           :fullscreen-button="true"
           :loading="loadData"
           :rows="getAllRecords.data"
@@ -88,13 +100,16 @@ import { useI18n } from 'vue-i18n';
 import AdminPageTitle from 'src/components/AdminPageTitle.vue';
 import AdminPageDescription from 'src/components/AdminPageDescription.vue';
 import AdminPageContainer from 'src/components/AdminPageContainer.vue';
+import AdminPageContainerFilter from 'src/components/AdminPageContainerFilter.vue';
+import AdminPageContainerFilterResults from 'src/components/AdminPageContainerFilterResults.vue';
 import AdminPageContainerTable from 'src/components/AdminPageContainerTable.vue';
 import AdminPageContainerDialog from 'src/components/AdminPageContainerDialog.vue';
 import TableColumns from 'src/columns/userColumns';
-import TableFilters from 'src/filters/userFilters.json';
 import { displayLabel } from 'src/library/TextOperations';
 import { notificationSystem } from 'src/library/NotificationSystem';
 import { DialogType } from 'src/types/DialogType';
+import { FilterInterface } from 'src/interfaces/ApiResponseInterface';
+import { Cookies } from 'quasar';
 
 // Import Pinia's related utilities
 import { useUserStore } from 'src/stores/admin/userSettings/users';
@@ -120,12 +135,56 @@ const loadData = ref(false)
 // Fetch all users
 const getAllRecords = computed(() => userStore.getAllRecords);
 
+// Get all filters
+const getAllFilters = computed(() => userStore.getAllFilters)
+
 // Display the action name & dialog
 const actionName: Ref<DialogType | undefined> = ref(undefined)
 const displayActionDialog = ref(false)
 
 // Fetch single user details
 const getSingleRecord = computed(() => userStore.getSingleRecord);
+
+const displayFilters = computed((): boolean => {
+  if (getAllFilters.value && getAllFilters.value !== undefined && Array.isArray(getAllFilters.value) && getAllFilters.value.length) {
+    return true;
+  } else {
+    return false;
+  }
+});
+const displayFilterResults = ref(false)
+const displayAppliedFilters = ref('')
+
+async function applyFilters(appliedFilters: string) {
+  loadData.value = true
+  displayAppliedFilters.value = appliedFilters
+  await userStore.getRecords(appliedFilters).then(() => {
+    displayFilterResults.value = true
+    loadData.value = false
+  })
+}
+
+function clearFilters() {
+  const notificationTitle = ref('')
+  const notificationMessage = ref('')
+  const savedSearchQuery: Pick<FilterInterface, 'key' | 'value'>[] = Cookies.get('all-user-filters')
+  if (savedSearchQuery && savedSearchQuery !== undefined) {
+    Cookies.remove('all-user-filters')
+    notificationTitle.value = t('admin.generic.notification_success_title')
+    notificationMessage.value = t('admin.generic.filters_applied_remove', {
+      resourceName: currentRouteTitle.value
+    })
+    notificationSystem(notificationTitle.value, notificationMessage.value, 'positive')
+  } else {
+    notificationTitle.value = t('admin.generic.notification_info_title')
+    notificationMessage.value = t('admin.generic.no_filters_applied', {
+      resourceName: currentRouteTitle.value
+    })
+    notificationSystem(notificationTitle.value, notificationMessage.value, 'info')
+  }
+
+  displayFilterResults.value = false
+}
 
 /**
  * Perform an action (show, edit, or delete) on a
@@ -214,8 +273,14 @@ function handleActionMethod(action: DialogType) {
 
 onMounted(async () => {
   loadData.value = true
-  await userStore.getRecords().then(() => {
-    loadData.value = false
+  const savedSearchQuery: Pick<FilterInterface, 'key' | 'value'>[] = Cookies.get('all-user-filters')
+  await userStore.getRecords(
+    savedSearchQuery && savedSearchQuery !== undefined
+      ? JSON.stringify(savedSearchQuery)
+      : undefined
+    ).then(() => {
+      displayFilterResults.value = true
+      loadData.value = false
   })
 })
 </script>

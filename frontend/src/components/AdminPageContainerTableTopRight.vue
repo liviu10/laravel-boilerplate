@@ -18,5 +18,6 @@ interface AdminPageContainerTableTopRightInterface {
     toggleFullscreen: () => void;
   }
 }
+
 withDefaults(defineProps<AdminPageContainerTableTopRightInterface>(), {});
 </script>

@@ -71,9 +71,10 @@ class Role extends Model
      * @var array<string, string>
      */
     protected $filters = [
-        'id'   => 'number',
-        'name' => 'text',
-        'slug' => 'text',
+        'id'        => 'number',
+        'name'      => 'text',
+        'slug'      => 'text',
+        'is_active' => 'boolean',
     ];
 
     /**
@@ -282,9 +283,10 @@ class Role extends Model
     public function getFilters()
     {
         $filterNames = [
-            'id'   => 'Filter by ID',
-            'name' => 'Filter by role name',
-            'slug' => 'Filter by role slug',
+            'id'        => 'Filter by ID',
+            'name'      => 'Filter by role name',
+            'slug'      => 'Filter by role slug',
+            'is_active' => 'Filter by is active',
         ];
 
         return $this->handleApiFilters($this->filters, $filterNames);

@@ -3,7 +3,7 @@ import { api } from 'src/boot/axios'
 import { applicationCommunication, newsletterCampaignEndpoint } from 'src/api/communication';
 import { PaginatedResultsInterface } from 'src/interfaces/ApiResponseInterface';
 import { notificationSystem } from 'src/library/NotificationSystem';
-import { NewsletterCampaignInterface } from 'src/interfaces/NewsletterCampaignInterface';
+import { NewsletterCampaignInterface } from 'src/interfaces/CommunicationInterface';
 
 const fullApiUrl = applicationCommunication + newsletterCampaignEndpoint
 

@@ -3,7 +3,7 @@ import { api } from 'src/boot/axios'
 import { applicationUserSettings, userRolesEndpoint } from 'src/api/userSettings';
 import { PaginatedResultsInterface } from 'src/interfaces/ApiResponseInterface';
 import { notificationSystem } from 'src/library/NotificationSystem';
-import { UserRoleInterface } from 'src/interfaces/UserRoleInterface';
+import { UserRoleInterface } from 'src/interfaces/UserInterface';
 
 const fullApiUrl = applicationUserSettings + userRolesEndpoint
 

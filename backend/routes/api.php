@@ -59,14 +59,15 @@ Route::group([ 'prefix' => config('app.version') ], function () {
         });
         // Application's communication endpoints
         Route::group([ 'prefix' => '/communication' ], function () {
-            // Contact me subjects
-            Route::apiResource('/contact-subjects', ContactSubjectController::class);
-            // Contact me messages
-            Route::apiResource('/contact-messages', ContactMessageController::class);
+            // Contact subject, messages and responses
+            Route::group([ 'prefix' => '/contact' ], function () {
+                Route::apiResource('/subjects', ContactSubjectController::class);
+                Route::apiResource('/messages', ContactMessageController::class);
+            });
             // Newsletter campaign and subscribers
             Route::group([ 'prefix' => '/newsletter' ], function () {
                 Route::apiResource('/campaigns', NewsletterCampaignController::class);
-                Route::apiResource('/Subscribers', NewsletterSubscriberController::class);
+                Route::apiResource('/subscribers', NewsletterSubscriberController::class);
             });
         });
         // Application's reports endpoints

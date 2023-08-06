@@ -69,9 +69,11 @@ interface AdminNavigationBarProps {
 const { t } = useI18n({});
 
 /**
- * Returns a string representation of the navigation icon if it is a valid string.
+ * Returns a string representation of the navigation
+ * icon if it is a valid string.
  * @param navigationIcon - The navigation icon to be displayed.
- * @returns The string representation of the navigation icon, or undefined if it is not a valid string.
+ * @returns The string representation of the
+ * navigation icon, or undefined if it is not a valid string.
  */
 const displayNavigationIcon = computed(() => {
   return (navigationIcon: string | unknown): string | undefined => {
@@ -84,9 +86,11 @@ const displayNavigationIcon = computed(() => {
 });
 
 /**
- * Returns a string representation of the navigation label; if it is a valid string.
+ * Returns a string representation of the navigation
+ * label; if it is a valid string.
  * @param navigationLabel - The navigation label to be displayed.
- * @returns The string representation of the navigation label, or undefined if it is not a valid string.
+ * @returns The string representation of the navigation
+ * label, or undefined if it is not a valid string.
  */
 const displayNavigationLabel = computed(() => {
   return (navigationLabel: string | unknown): string | undefined => {

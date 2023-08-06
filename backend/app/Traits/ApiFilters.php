@@ -23,6 +23,7 @@ trait ApiFilters
                 'key' => $index,
                 'name' => isset($filterNames[$index]) ? $filterNames[$index] : 'Default filter name',
                 'type' => $value,
+                'value' => null,
             ];
 
             if ($value === 'select') {

@@ -68,17 +68,6 @@ import { DialogType } from 'src/types/DialogType';
 // Defined the translation variable
 const { t } = useI18n({});
 
-interface TableFilterInterface {
-  id: number;
-  label: string;
-  type: string; // TODO: after linking to the api the type should be: 'q-input' | 'q-select' instead of string
-  value: string;
-  options?: {
-    value: string;
-    label: string;
-  }[];
-}
-
 interface AdminPageContainerTableInterface {
   bordered?: boolean;
   columns?: QTableProps['columns'];
@@ -87,7 +76,6 @@ interface AdminPageContainerTableInterface {
   deleteRecordButton?: boolean;
   dense?: boolean;
   editRecordButton?: boolean;
-  filters?: TableFilterInterface[];
   fullscreenButton?: boolean;
   loading?: boolean;
   rows?: QTableProps['rows'];
@@ -99,13 +87,6 @@ interface AdminPageContainerTableInterface {
   topRightSlot?: boolean;
   topRowSlot?: boolean;
 }
-withDefaults(defineProps<AdminPageContainerTableInterface>(), {
-  bordered: true,
-  customLoader: true,
-  dense: true,
-  square: true,
-  separator: 'cell',
-});
 
 // Action buttons properties
 const actionButtons = [
@@ -124,7 +105,13 @@ const emit = defineEmits<{
  * Available option: show, edit, delete
  * @param recordId - The unique identifier of the record associated with the dialog.
  */
-function actionMethodDialog(action: DialogType, recordId?: number) {
-  emit('actionMethodDialog', action, recordId)
-}
+const actionMethodDialog = (action: DialogType, recordId?: number) => emit('actionMethodDialog', action, recordId);
+
+withDefaults(defineProps<AdminPageContainerTableInterface>(), {
+  bordered: true,
+  customLoader: true,
+  dense: true,
+  square: true,
+  separator: 'cell',
+});
 </script>

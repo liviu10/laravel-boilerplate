@@ -3,7 +3,7 @@ import { api } from 'src/boot/axios'
 import { applicationManagement, articlesEndpoint } from 'src/api/management';
 import { PaginatedResultsInterface } from 'src/interfaces/ApiResponseInterface';
 import { notificationSystem } from 'src/library/NotificationSystem';
-import { ArticlesInterface } from 'src/interfaces/ArticlesInterface';
+import { ArticlesInterface } from 'src/interfaces/ManagementInterface';
 
 const fullApiUrl = applicationManagement + articlesEndpoint
 

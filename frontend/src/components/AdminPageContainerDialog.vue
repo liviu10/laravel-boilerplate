@@ -128,7 +128,25 @@ const filteredDialogActionButtons = computed(() => {
   return actionName === 'show' ? [dialogActionButtons[0]] : dialogActionButtons;
 });
 
+/**
+ * Close the action dialog by emitting the 'closeDialog' event.
+ * This function is typically used to trigger the
+ * closing of a dialog or modal when an action
+ * or operation is completed.
+ * @function
+ * @returns void
+ */
 const closeActionDialog = () => emit('closeDialog');
 
+/**
+ * Handle a dialog action by emitting the 'handleActionMethod'
+ * event with the specified action name. This function is
+ * typically used to trigger a specific action
+ * when interacting with a dialog or modal.
+ * @param actionName - The name of the action
+ * to be handled by the parent component.
+ * @function
+ * @returns void
+ */
 const handleDialogAction = (actionName: DialogType) => emit('handleActionMethod', actionName);
 </script>

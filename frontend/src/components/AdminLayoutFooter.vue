@@ -32,5 +32,6 @@ interface AdminFooterProps {
   designerContactUrl: string;
   designerName: string;
 }
+
 withDefaults(defineProps<AdminFooterProps>(), {});
 </script>

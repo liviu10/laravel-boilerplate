@@ -33,6 +33,7 @@ class AcceptedDomainService implements AcceptedDomainInterface
     public function handleIndex()
     {
         $apiDisplayAllRecords = $this->modelName->fetchAllRecords();
+        $apiDataModel = $this->modelName->getDataModel();
         $apiFilters = $this->modelName->getFilters();
 
         if ($apiDisplayAllRecords instanceof \Illuminate\Pagination\LengthAwarePaginator)
@@ -43,7 +44,7 @@ class AcceptedDomainService implements AcceptedDomainInterface
             }
             else
             {
-                return response($this->handleResponse('success', $apiDisplayAllRecords, $apiFilters), 200);
+                return response($this->handleResponse('success', $apiDisplayAllRecords, $apiDataModel, $apiFilters), 200);
             }
         }
         else
