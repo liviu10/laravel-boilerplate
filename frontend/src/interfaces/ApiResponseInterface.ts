@@ -19,6 +19,7 @@ interface FilterInterface extends BaseModelInterface {
     value: number;
     label: string;
   }[];
+  component_type?: string;
 }
 
 interface ModelInterface extends BaseModelInterface {

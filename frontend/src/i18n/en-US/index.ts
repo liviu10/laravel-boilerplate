@@ -52,7 +52,7 @@ export default {
       edit_dialog_title: 'Edit record',
       delete_dialog_title: 'Delete record',
       delete_confirmation_message: 'Are you sure you want delete this record?',
-      filter: 'Filter table',
+      filter_sort_and_order: 'Filter, sort and order the table',
       clear_filters: 'Clear filters',
       apply_filters: 'Apply filters',
       notification_info_title: 'Info',
@@ -60,7 +60,10 @@ export default {
       no_filters_to_apply: 'There are no filters to be applied on table {resourceName}',
       filters_applied_remove: 'All the filters were successfully removed from table {resourceName}',
       notification_success_title: 'Success',
-      filter_results_message: 'You are currently viewing results for: '
+      filter_results_message: 'You are currently viewing results for: ',
+      filter_label: 'Filter by',
+      sort_label: 'Sort by',
+      order_label: 'Order by',
     },
     menu: {
       my_account: 'User profile',

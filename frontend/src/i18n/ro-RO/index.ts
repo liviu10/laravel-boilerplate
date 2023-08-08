@@ -54,7 +54,7 @@ export default {
       edit_dialog_title: 'Modifica inregistrarea',
       delete_dialog_title: 'Sterge inregistrarea',
       delete_confirmation_message: 'Esti sigur ca vrei sa stergi aceasta inregistrare?',
-      filter: 'Filtreaza tabelul',
+      filter_sort_and_order: 'Filtreaza, sorteaza si ordoneaza tabelul',
       clear_filters: 'Sterge filtrele',
       apply_filters: 'Aplica filtrele',
       notification_info_title: 'Info',
@@ -62,7 +62,10 @@ export default {
       no_filters_to_apply: 'Nu exista filtre care sa fie aplicate pe tabelul {resourceName}',
       filters_applied_remove: 'Toate filtrele au fost sterse cu success de pe tabelul {resourceName}',
       notification_success_title: 'Succes',
-      filter_results_message: 'In prezent vezi rezultate pentru: '
+      filter_results_message: 'In prezent vezi rezultate pentru: ',
+      filter_label: 'Filtreaza dupa',
+      sort_label: 'Sorteaza',
+      order_label: 'Ordoneaza',
     },
     menu: {
       my_account: 'Profil utilizator',

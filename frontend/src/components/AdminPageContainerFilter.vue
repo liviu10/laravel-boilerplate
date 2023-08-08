@@ -1,41 +1,71 @@
 <template>
-  <div class="admin-section--container-filter">
+  <div class="admin-section--container-controls">
     <q-expansion-item
       v-model="expanded"
-      :label="`${t('admin.generic.filter')} ${displayAdminPageTitle(adminPageTitle)}`"
+      :label="displayFilterLabel()"
     >
       <q-form @submit="applyFilters(adminFilters)" @reset="clearFilters">
-        <div
-          class="admin-section--container-filter-fields"
-          v-for="filter in adminFilters"
-          :key="filter.id"
-        >
-          <q-input
-            dense
-            :label="filter.name"
-            outlined
-            square
-            stack-label
-            v-model="filter.value"
-          />
+        <div class="row admin-section--container-controls-body">
+          <div class="col-7 admin-section--container-controls-body-filter">
+            <p>{{ t('admin.generic.filter_label') }}</p>
+            <div v-for="filter in adminFilters" :key="filter.id">
+              <component
+                dense
+                :is="filter.component_type ? filter.component_type : 'q-input'"
+                :label="filter.name"
+                :options="filter.type === 'select' ? filter.options : null"
+                outlined
+                square
+                stack-label
+                :type="filter.type"
+                v-model="filter.value"
+              />
+            </div>
+          </div>
+          <div class="col-2 admin-section--container-controls-body-sort">
+            <p>{{ t('admin.generic.sort_label') }}</p>
+            <div v-for="filter in adminFilters" :key="filter.id">
+              <component
+                dense
+                :is="filter.component_type ? filter.component_type : 'q-input'"
+                :label="filter.name"
+                :options="filter.type === 'select' ? filter.options : null"
+                outlined
+                square
+                stack-label
+                :type="filter.type"
+                v-model="filter.value"
+              />
+            </div>
+          </div>
+          <div class="col-2 admin-section--container-controls-body-order">
+            <p>{{ t('admin.generic.order_label') }}</p>
+            <div v-for="filter in adminFilters" :key="filter.id">
+              <component
+                dense
+                :is="filter.component_type ? filter.component_type : 'q-input'"
+                :label="filter.name"
+                :options="filter.type === 'select' ? filter.options : null"
+                outlined
+                square
+                stack-label
+                :type="filter.type"
+                v-model="filter.value"
+              />
+            </div>
+          </div>
         </div>
 
-        <div class="admin-section--container-filter-actions">
+        <div class="admin-section--container-controls-actions">
           <q-btn
-            color="warning"
-            dense
-            icon="filter_alt_off"
-            :label="t('admin.generic.clear_filters')"
-            square
-            type="reset"
-          />
-          <q-btn
-            color="primary"
-            dense
-            icon="filter_alt"
-            :label="t('admin.generic.apply_filters')"
-            square
-            type="submit"
+            v-for="filter in filterActions"
+            :key="filter.id"
+            :color="filter.color"
+            :dense="filter.dense"	
+            :icon="filter.icon"
+            :label="filter.label"
+            :square="filter.square"	
+            :type="filter.type"
           />
         </div>
       </q-form>
@@ -45,13 +75,12 @@
 
 <script setup lang="ts">
 // Import vue related utilities
-import { Ref, computed, ref } from 'vue';
+import { computed, ref } from 'vue';
 import { RouteRecordName } from 'vue-router';
 import { useI18n } from 'vue-i18n';
 
 // Import generic components, libraries and interfaces
 import { FilterInterface } from 'src/interfaces/ApiResponseInterface';
-import { displayLabel } from 'src/library/TextOperations';
 import { notificationSystem } from 'src/library/NotificationSystem/NotificationSystem';
 
 // Defined the translation variable
@@ -74,21 +103,55 @@ const emit = defineEmits<{
  * @param adminPageTitle - The title of the admin page.
  * @returns string The formatted admin page title.
  */
-const displayAdminPageTitle = computed(() => {
-  return (adminPageTitle: RouteRecordName | null | undefined | unknown): string => {
-    if (adminPageTitle && typeof adminPageTitle === 'string') {
-      return displayLabel(adminPageTitle);
-    } else {
-      return t('admin.generic.page_title');
-    }
+const displayFilterLabel = computed(() => {
+  return (): string => {
+    return t('admin.generic.filter_sort_and_order')
   }
 })
 
+// Filter options and properties
 const expanded = ref(false)
-const adminFilters: Ref<FilterInterface[]> = ref(props.filters)
 const notificationTitle = ref('')
 const notificationMessage = ref('')
+const filterActions = [
+  {
+    id: 1,
+    color: 'warning',
+    dense: true,
+    icon: 'filter_alt_off',
+    label: t('admin.generic.clear_filters'),
+    square: true,
+    type: 'reset'
+  },
+  {
+    id: 2,
+    color: 'primary',
+    dense: true,
+    icon: 'filter_alt',
+    label: t('admin.generic.apply_filters'),
+    square: true,
+    type: 'submit'
+  },
+];
+const adminFilters = computed((): FilterInterface[] => {
+  const transformedFilters = props.filters.map(filter => {
+    let componentType = '';
+    if (filter.type === 'number' || filter.type === 'text' || filter.type === 'date') {
+      componentType = 'q-input';
+    } else if (filter.type === 'select') {
+      componentType = 'q-select';
+    }
 
+    return { ...filter, component_type: componentType };
+  });
+
+  return transformedFilters as FilterInterface[];
+});
+
+/**
+ * Apply filters to a data set based on the specified filter interface.
+ * @param filters - An array of filters to be applied.
+ */
 function applyFilters(filters: FilterInterface[]) {
   const appliedFilters: Pick<FilterInterface, 'key' | 'value'>[] = [];
   filters.forEach((filter) => {
@@ -111,6 +174,9 @@ function applyFilters(filters: FilterInterface[]) {
   expanded.value = false
 }
 
+/**
+ * Clear all applied filters and reset the filter state.
+ */
 function clearFilters() {
   emit('clearFilters')
   expanded.value = false
@@ -121,9 +187,16 @@ function clearFilters() {
 @import 'src/css/utilities/_rem_convertor.scss';
 @import 'src/css/utilities/_flexbox.scss';
 
-.admin-section--container-filter {
-  &-fields {
-    margin: rem-convertor(8px) rem-convertor(16px);
+.admin-section--container-controls {
+  &-body {
+    &-filter, &-sort, &-order {
+      margin: rem-convertor(8px);
+      & p {
+        margin-bottom: rem-convertor(4px);
+        text-align: center;
+        font-weight: 400;
+      }
+    }
   }
   &-actions {
     @include flex-center();

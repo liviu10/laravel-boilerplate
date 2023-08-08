@@ -19,13 +19,6 @@
         />
       </template>
 
-      <template v-slot:admin-filter-results>
-        <admin-page-container-filter-results
-          v-if="displayFilterResults"
-          :display-applied-filters="displayAppliedFilters"
-        />
-      </template>
-
       <template v-slot:admin-content>
         <admin-page-container-table
           :columns="TableColumns"
@@ -123,7 +116,6 @@ import AdminPageTitle from 'src/components/AdminPageTitle.vue';
 import AdminPageDescription from 'src/components/AdminPageDescription.vue';
 import AdminPageContainer from 'src/components/AdminPageContainer.vue';
 import AdminPageContainerFilter from 'src/components/AdminPageContainerFilter.vue';
-import AdminPageContainerFilterResults from 'src/components/AdminPageContainerFilterResults.vue';
 import AdminPageContainerTable from 'src/components/AdminPageContainerTable.vue';
 import AdminPageContainerDialog from 'src/components/AdminPageContainerDialog.vue';
 import TableColumns from 'src/columns/userColumns';
@@ -174,11 +166,9 @@ const displayFilters = computed((): boolean => {
   }
 });
 const displayFilterResults = ref(false)
-const displayAppliedFilters = ref('')
 
 async function applyFilters(appliedFilters: string) {
   loadData.value = true
-  displayAppliedFilters.value = appliedFilters
   await userStore.getRecords(appliedFilters).then(() => {
     displayFilterResults.value = true
     loadData.value = false
@@ -203,8 +193,6 @@ function clearFilters() {
     })
     notificationSystem(notificationTitle.value, notificationMessage.value, 'info', 'bottom', true)
   }
-
-  displayFilterResults.value = false
 }
 
 /**
