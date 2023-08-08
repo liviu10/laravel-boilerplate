@@ -1,11 +1,12 @@
 <template>
   <div class="admin-section__container-dialog">
-    <q-dialog v-model="displayDialog" persistent>
+    <q-dialog v-model="displayDialog" persistent square>
       <q-card>
         <q-form>
           <q-card-section>
             <div class="admin-section__container-dialog-title">
               {{ dialogTitle }}
+              <q-btn icon="close" flat round dense @click="closeActionDialog()" />
             </div>
           </q-card-section>
 
@@ -150,3 +151,16 @@ const closeActionDialog = () => emit('closeDialog');
  */
 const handleDialogAction = (actionName: DialogType) => emit('handleActionMethod', actionName);
 </script>
+
+
+<style lang="scss" scoped>
+@import 'src/css/utilities/_rem_convertor.scss';
+@import 'src/css/utilities/_flexbox.scss';
+
+.admin-section__container-dialog {
+  &-title {
+    @include flex-center();
+    justify-content: space-between;
+  }
+}
+</style>

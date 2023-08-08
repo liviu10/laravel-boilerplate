@@ -9,8 +9,9 @@
     />
 
     <admin-page-container :admin-route-name="currentRouteName">
-      <template v-slot:admin-filters v-if="displayFilters">
+      <template v-slot:admin-filters>
         <admin-page-container-filter
+          v-if="displayFilters"
           :admin-page-title="currentRouteTitle"
           :filters="getAllFilters"
           @apply-filters="applyFilters"
@@ -18,8 +19,11 @@
         />
       </template>
 
-      <template v-slot:admin-filter-results v-if="displayFilterResults">
-        <admin-page-container-filter-results :display-applied-filters="displayAppliedFilters" />
+      <template v-slot:admin-filter-results>
+        <admin-page-container-filter-results
+          v-if="displayFilterResults"
+          :display-applied-filters="displayAppliedFilters"
+        />
       </template>
 
       <template v-slot:admin-content>
@@ -64,6 +68,23 @@
                   text-color="black"
                   :label="item.toString()"
                 />
+                <template v-else-if="Array.isArray(item)">
+                  <template v-for="(subItem, key) in item" :key="key">
+                    <template v-for="(i, j) in subItem" :key="j">
+                      <div v-if="j === 'name' || j === 'is_active'" class="q-ml-md">
+                        <span class="text-bold">
+                          {{ displayLabel(j) }}
+                        </span>:
+                        <span v-if="j === 'is_active'">
+                          {{ i }}
+                        </span>
+                        <span v-else>
+                          {{ j }}: {{ i }}
+                        </span>
+                      </div>
+                    </template>
+                  </template>
+                </template>
                 <span v-else>
                   {{ item ?? '—' }}
                 </span>
