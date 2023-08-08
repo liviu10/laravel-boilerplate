@@ -20,7 +20,14 @@ trait ApiResponseMessage
      * @param mixed|null  $filters (Optional) An optional array of filters to include in the response.
      * Should be provided when $responseType is "success".
      */
-    public function handleResponse($responseType = null, $records = null, $dataModel = null, $filters = null)
+    public function handleResponse(
+        $responseType = null,
+        $records = null,
+        $dataModel = null,
+        $filters = null,
+        $sort = null,
+        $order = null
+    )
     {
         if ($responseType === 'success')
         {
@@ -39,6 +46,14 @@ trait ApiResponseMessage
             if ($filters)
             {
                 $responseMessage['filters'] = $filters;
+            }
+            if ($sort)
+            {
+                $responseMessage['sort'] = $sort;
+            }
+            if ($order)
+            {
+                $responseMessage['order'] = $order;
             }
         }
         elseif ($responseType === 'not_found')

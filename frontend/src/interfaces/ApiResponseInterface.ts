@@ -3,6 +3,8 @@ interface RootObjectInterface {
   filters: FilterInterface;
   model: ModelInterface,
   results: PaginatedResultsInterface;
+  sort: SortInterface;
+  order: OrderInterface;
   title: string;
 }
 
@@ -24,6 +26,26 @@ interface FilterInterface extends BaseModelInterface {
 
 interface ModelInterface extends BaseModelInterface {
   required: boolean;
+}
+
+interface SortInterface {
+  id: number;
+  key: string;
+  options: {
+    value: number;
+    label: string;
+  }[];
+  value: null;
+}
+
+interface OrderInterface {
+  id: number;
+  key: string;
+  options: {
+    value: number;
+    label: string;
+  }[];
+  value: null;
 }
 
 interface SingleResultInterface {
@@ -58,6 +80,8 @@ export {
   RootObjectInterface,
   FilterInterface,
   ModelInterface,
+  SortInterface,
+  OrderInterface,
   SingleResultInterface,
   PaginatedResultsInterface,
   PaginationLinksInterface

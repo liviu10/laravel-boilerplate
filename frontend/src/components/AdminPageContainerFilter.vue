@@ -14,6 +14,7 @@
                 :is="filter.component_type ? filter.component_type : 'q-input'"
                 :label="filter.name"
                 :options="filter.type === 'select' ? filter.options : null"
+                :options-dense="filter.type === 'select' ? true : false"
                 outlined
                 square
                 stack-label
@@ -24,33 +25,31 @@
           </div>
           <div class="col-2 admin-section--container-controls-body-sort">
             <p>{{ t('admin.generic.sort_label') }}</p>
-            <div v-for="filter in adminFilters" :key="filter.id">
+            <div v-for="sort in adminSort" :key="sort.id">
               <component
                 dense
-                :is="filter.component_type ? filter.component_type : 'q-input'"
-                :label="filter.name"
-                :options="filter.type === 'select' ? filter.options : null"
+                :is="'q-select'"
+                :options="sort.options"
+                options-dense
                 outlined
                 square
                 stack-label
-                :type="filter.type"
-                v-model="filter.value"
+                v-model="sort.value"
               />
             </div>
           </div>
           <div class="col-2 admin-section--container-controls-body-order">
             <p>{{ t('admin.generic.order_label') }}</p>
-            <div v-for="filter in adminFilters" :key="filter.id">
+            <div v-for="order in adminOrder" :key="order.id">
               <component
                 dense
-                :is="filter.component_type ? filter.component_type : 'q-input'"
-                :label="filter.name"
-                :options="filter.type === 'select' ? filter.options : null"
+                :is="'q-select'"
+                :options="order.options"
+                options-dense
                 outlined
                 square
                 stack-label
-                :type="filter.type"
-                v-model="filter.value"
+                v-model="order.value"
               />
             </div>
           </div>
@@ -61,10 +60,10 @@
             v-for="filter in filterActions"
             :key="filter.id"
             :color="filter.color"
-            :dense="filter.dense"	
+            :dense="filter.dense"
             :icon="filter.icon"
             :label="filter.label"
-            :square="filter.square"	
+            :square="filter.square"
             :type="filter.type"
           />
         </div>
@@ -80,7 +79,7 @@ import { RouteRecordName } from 'vue-router';
 import { useI18n } from 'vue-i18n';
 
 // Import generic components, libraries and interfaces
-import { FilterInterface } from 'src/interfaces/ApiResponseInterface';
+import { FilterInterface, SortInterface, OrderInterface } from 'src/interfaces/ApiResponseInterface';
 import { notificationSystem } from 'src/library/NotificationSystem/NotificationSystem';
 
 // Defined the translation variable
@@ -89,6 +88,8 @@ const { t } = useI18n({});
 interface AdminPageContainerFilterInterface {
   adminPageTitle?: RouteRecordName | null | undefined | unknown;
   filters: FilterInterface[];
+  sort: SortInterface[];
+  order: OrderInterface[];
 }
 
 const props = defineProps<AdminPageContainerFilterInterface>();
@@ -146,6 +147,12 @@ const adminFilters = computed((): FilterInterface[] => {
   });
 
   return transformedFilters as FilterInterface[];
+});
+const adminSort = computed((): SortInterface[] => {
+  return props.sort;
+});
+const adminOrder = computed((): OrderInterface[] => {
+  return props.order;
 });
 
 /**
