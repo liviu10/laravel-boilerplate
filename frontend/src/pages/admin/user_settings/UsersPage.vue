@@ -14,8 +14,6 @@
           v-if="displayFilters"
           :admin-page-title="currentRouteTitle"
           :filters="getAllFilters"
-          :sort="getAllSort"
-          :order="getAllOrder"
           @apply-filters="applyFilters"
           @clear-filters="clearFilters"
         />
@@ -152,12 +150,6 @@ const getAllRecords = computed(() => userStore.getAllRecords);
 
 // Get all filters
 const getAllFilters = computed(() => userStore.getAllFilters)
-
-// Get all sort
-const getAllSort = computed(() => userStore.getAllSort)
-
-// Get all order
-const getAllOrder = computed(() => userStore.getAllOrder)
 
 // Display the action name & dialog
 const actionName: Ref<DialogType | undefined> = ref(undefined)

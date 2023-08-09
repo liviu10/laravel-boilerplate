@@ -60,8 +60,6 @@ class UserService implements UserInterface
         $apiDisplayAllRecords = $this->modelName->fetchAllRecords();
         $apiDataModel = $this->modelName->getDataModel();
         $apiFilters = $this->modelName->getFilters();
-        $apiSort = $this->modelName->getSort();
-        $apiOrder = $this->modelName->getOrder();
 
         if ($apiDisplayAllRecords instanceof \Illuminate\Pagination\LengthAwarePaginator)
         {
@@ -71,7 +69,7 @@ class UserService implements UserInterface
             }
             else
             {
-                return response($this->handleResponse('success', $apiDisplayAllRecords, $apiDataModel, $apiFilters, $apiSort, $apiOrder), 200);
+                return response($this->handleResponse('success', $apiDisplayAllRecords, $apiDataModel, $apiFilters), 200);
             }
         }
         else

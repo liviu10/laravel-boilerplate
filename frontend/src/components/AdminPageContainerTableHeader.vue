@@ -1,6 +1,13 @@
 <template>
-  <q-tr :props="props" class="admin-section__container-table-header">
-    <q-th v-for="col in props.cols" :key="col.name" :props="props">
+  <q-tr
+    :props="props"
+    class="admin-section__container-table-header"
+  >
+    <q-th
+      v-for="col in props.cols"
+      :key="col.name"
+      :props="props"
+    >
       {{ formatColumnName(col.label) }}
     </q-th>
   </q-tr>

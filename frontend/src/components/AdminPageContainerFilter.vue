@@ -7,7 +7,6 @@
       <q-form @submit="applyFilters(adminFilters)" @reset="clearFilters">
         <div class="row admin-section--container-controls-body">
           <div class="col-7 admin-section--container-controls-body-filter">
-            <p>{{ t('admin.generic.filter_label') }}</p>
             <div v-for="filter in adminFilters" :key="filter.id">
               <component
                 dense
@@ -24,34 +23,23 @@
             </div>
           </div>
           <div class="col-2 admin-section--container-controls-body-sort">
-            <p>{{ t('admin.generic.sort_label') }}</p>
-            <div v-for="sort in adminSort" :key="sort.id">
-              <component
-                dense
-                :is="'q-select'"
-                :options="sort.options"
-                options-dense
-                outlined
-                square
-                stack-label
-                v-model="sort.value"
-              />
+            <div v-for="filter in adminFilters" :key="filter.id">
+              <div v-if="filter.sort">
+                <div v-for="sort in filter.sort" :key="sort.id">
+                  <q-select
+                    dense
+                    :options="sort.options"
+                    options-dense
+                    outlined
+                    square
+                    v-model="sort.value"
+                  />
+                </div>
+              </div>
             </div>
           </div>
           <div class="col-2 admin-section--container-controls-body-order">
-            <p>{{ t('admin.generic.order_label') }}</p>
-            <div v-for="order in adminOrder" :key="order.id">
-              <component
-                dense
-                :is="'q-select'"
-                :options="order.options"
-                options-dense
-                outlined
-                square
-                stack-label
-                v-model="order.value"
-              />
-            </div>
+            <!-- Loop over filter.sort -->
           </div>
         </div>
 
@@ -74,12 +62,12 @@
 
 <script setup lang="ts">
 // Import vue related utilities
-import { computed, ref } from 'vue';
+import { Ref, computed, ref } from 'vue';
 import { RouteRecordName } from 'vue-router';
 import { useI18n } from 'vue-i18n';
 
 // Import generic components, libraries and interfaces
-import { FilterInterface, SortInterface, OrderInterface } from 'src/interfaces/ApiResponseInterface';
+import { FilterInterface, OrderAndSortInterface } from 'src/interfaces/ApiResponseInterface';
 import { notificationSystem } from 'src/library/NotificationSystem/NotificationSystem';
 
 // Defined the translation variable
@@ -88,8 +76,6 @@ const { t } = useI18n({});
 interface AdminPageContainerFilterInterface {
   adminPageTitle?: RouteRecordName | null | undefined | unknown;
   filters: FilterInterface[];
-  sort: SortInterface[];
-  order: OrderInterface[];
 }
 
 const props = defineProps<AdminPageContainerFilterInterface>();
@@ -134,8 +120,10 @@ const filterActions = [
     type: 'submit'
   },
 ];
-const adminFilters = computed((): FilterInterface[] => {
-  const transformedFilters = props.filters.map(filter => {
+// Admin filters
+const adminFilters: Ref<FilterInterface[]> = ref([]);
+const transformedFilters = computed((): FilterInterface[] => {
+  return props.filters.map(filter => {
     let componentType = '';
     if (filter.type === 'number' || filter.type === 'text' || filter.type === 'date') {
       componentType = 'q-input';
@@ -145,15 +133,27 @@ const adminFilters = computed((): FilterInterface[] => {
 
     return { ...filter, component_type: componentType };
   });
+});
+adminFilters.value = transformedFilters.value;
 
-  return transformedFilters as FilterInterface[];
-});
-const adminSort = computed((): SortInterface[] => {
-  return props.sort;
-});
-const adminOrder = computed((): OrderInterface[] => {
-  return props.order;
-});
+// Admin orders
+
+// Admin sorts
+
+// const adminOrders = computed((): OrderAndSortInterface[] => {
+//   const transformedOrders = props.filters.map(filter => {
+//     return { ...filter.order }
+//   });
+
+//   return transformedOrders as unknown as OrderAndSortInterface[];
+// });
+// const adminSorts = computed((): OrderAndSortInterface[] => {
+//   const transformedSorts = props.filters.map(filter => {
+//     return { ...filter.sort }
+//   });
+
+//   return transformedSorts as unknown as OrderAndSortInterface[];
+// });
 
 /**
  * Apply filters to a data set based on the specified filter interface.
@@ -196,13 +196,8 @@ function clearFilters() {
 
 .admin-section--container-controls {
   &-body {
-    &-filter, &-sort, &-order {
+    &-filter, &-order, &-sort {
       margin: rem-convertor(8px);
-      & p {
-        margin-bottom: rem-convertor(4px);
-        text-align: center;
-        font-weight: 400;
-      }
     }
   }
   &-actions {

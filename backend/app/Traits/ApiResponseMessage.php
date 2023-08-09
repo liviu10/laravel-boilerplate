@@ -24,9 +24,7 @@ trait ApiResponseMessage
         $responseType = null,
         $records = null,
         $dataModel = null,
-        $filters = null,
-        $sort = null,
-        $order = null
+        $filters = null
     )
     {
         if ($responseType === 'success')
@@ -46,14 +44,6 @@ trait ApiResponseMessage
             if ($filters)
             {
                 $responseMessage['filters'] = $filters;
-            }
-            if ($sort)
-            {
-                $responseMessage['sort'] = $sort;
-            }
-            if ($order)
-            {
-                $responseMessage['order'] = $order;
             }
         }
         elseif ($responseType === 'not_found')

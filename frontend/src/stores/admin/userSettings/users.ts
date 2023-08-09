@@ -1,7 +1,7 @@
 import { defineStore } from 'pinia';
 import { api } from 'src/boot/axios'
 import { applicationUserSettings, usersEndpoint } from 'src/api/userSettings';
-import { PaginatedResultsInterface, FilterInterface, SortInterface, OrderInterface } from 'src/interfaces/ApiResponseInterface';
+import { PaginatedResultsInterface, FilterInterface } from 'src/interfaces/ApiResponseInterface';
 import { notificationSystem } from 'src/library/NotificationSystem/NotificationSystem';
 import { UserInterface } from 'src/interfaces/UserInterface';
 import { Cookies } from 'quasar';
@@ -13,8 +13,6 @@ const useUserStore = defineStore('userStore', {
     allRecords: {} as PaginatedResultsInterface,
     userIsAuthenticated: false as boolean,
     allFilters: [] as FilterInterface[],
-    allSort: [] as SortInterface[],
-    allOrder: [] as OrderInterface[],
     createRecord: {},
     singleRecord: {} as UserInterface,
     updateRecord: {},
@@ -23,8 +21,6 @@ const useUserStore = defineStore('userStore', {
   getters: {
     getAllRecords: (state) => state.allRecords,
     getAllFilters: (state) => state.allFilters,
-    getAllSort: (state) => state.allSort,
-    getAllOrder: (state) => state.allOrder,
     getCreatRecord: (state) => state.createRecord,
     getSingleRecord: (state) => state.singleRecord,
     getUpdateRecord: (state) => state.updateRecord,
@@ -48,8 +44,6 @@ const useUserStore = defineStore('userStore', {
           .then(response => {
             this.allRecords = response.data.results
             this.allFilters = response.data.filters
-            this.allSort = response.data.sort
-            this.allOrder = response.data.order
             return this.allRecords
           })
           .catch((error) => {

@@ -11,8 +11,6 @@ use Laravel\Sanctum\HasApiTokens;
 use App\Traits\ApiLogError;
 use App\Traits\ApiDataModel;
 use App\Traits\ApiFilters;
-use App\Traits\ApiSort;
-use App\Traits\ApiOrder;
 
 /**
  * Class User
@@ -41,7 +39,7 @@ use App\Traits\ApiOrder;
  */
 class User extends Authenticatable
 {
-    use HasApiTokens, HasFactory, Notifiable, ApiLogError, ApiDataModel, ApiFilters, ApiSort, ApiOrder;
+    use HasApiTokens, HasFactory, Notifiable, ApiLogError, ApiDataModel, ApiFilters;
 
     /**
      * The primary key associated with the table.
@@ -406,15 +404,5 @@ class User extends Authenticatable
         ];
 
         return $this->handleApiFilters($this->filters, $filterNames);
-    }
-
-    public function getSort()
-    {
-        return $this->handleApiSort($this->filters);
-    }
-
-    public function getOrder()
-    {
-        return $this->handleApiOrder($this->filters);
     }
 }
