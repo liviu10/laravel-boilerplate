@@ -5,9 +5,9 @@
       :label="displayFilterLabel()"
     >
       <q-form @submit="applyFilters(adminFilters)" @reset="clearFilters">
-        <div class="row admin-section--container-controls-body">
-          <div class="col-7 admin-section--container-controls-body-filter">
-            <div v-for="filter in adminFilters" :key="filter.id">
+        <div v-for="filter in adminFilters" :key="filter.id">
+          <div class="row admin-section--container-controls-body">
+            <div class="col-7 admin-section--container-controls-body-filter">
               <component
                 dense
                 :is="filter.component_type ? filter.component_type : 'q-input'"
@@ -21,25 +21,28 @@
                 v-model="filter.value"
               />
             </div>
-          </div>
-          <div class="col-2 admin-section--container-controls-body-sort">
-            <div v-for="filter in adminFilters" :key="filter.id">
-              <div v-if="filter.sort">
-                <div v-for="sort in filter.sort" :key="sort.id">
-                  <q-select
-                    dense
-                    :options="sort.options"
-                    options-dense
-                    outlined
-                    square
-                    v-model="sort.value"
-                  />
-                </div>
-              </div>
+            <div class="col-2 admin-section--container-controls-body-sort">
+              <!-- Loop over filter.sort -->
+              <q-select
+                dense
+                :options="filter.sort.options"
+                options-dense
+                outlined
+                square
+                v-model="filter.sort.value"
+              />
             </div>
-          </div>
-          <div class="col-2 admin-section--container-controls-body-order">
-            <!-- Loop over filter.sort -->
+            <div class="col-2 admin-section--container-controls-body-order">
+              <!-- Loop over filter.order -->
+              <q-select
+                dense
+                :options="filter.order.options"
+                options-dense
+                outlined
+                square
+                v-model="filter.order.value"
+              />
+            </div>
           </div>
         </div>
 
@@ -67,7 +70,7 @@ import { RouteRecordName } from 'vue-router';
 import { useI18n } from 'vue-i18n';
 
 // Import generic components, libraries and interfaces
-import { FilterInterface, OrderAndSortInterface } from 'src/interfaces/ApiResponseInterface';
+import { FilterInterface } from 'src/interfaces/ApiResponseInterface';
 import { notificationSystem } from 'src/library/NotificationSystem/NotificationSystem';
 
 // Defined the translation variable
@@ -136,30 +139,12 @@ const transformedFilters = computed((): FilterInterface[] => {
 });
 adminFilters.value = transformedFilters.value;
 
-// Admin orders
-
-// Admin sorts
-
-// const adminOrders = computed((): OrderAndSortInterface[] => {
-//   const transformedOrders = props.filters.map(filter => {
-//     return { ...filter.order }
-//   });
-
-//   return transformedOrders as unknown as OrderAndSortInterface[];
-// });
-// const adminSorts = computed((): OrderAndSortInterface[] => {
-//   const transformedSorts = props.filters.map(filter => {
-//     return { ...filter.sort }
-//   });
-
-//   return transformedSorts as unknown as OrderAndSortInterface[];
-// });
-
 /**
  * Apply filters to a data set based on the specified filter interface.
  * @param filters - An array of filters to be applied.
  */
 function applyFilters(filters: FilterInterface[]) {
+  debugger;
   const appliedFilters: Pick<FilterInterface, 'key' | 'value'>[] = [];
   filters.forEach((filter) => {
     if (filter.value !== null && filter.value !== undefined) {
@@ -168,6 +153,7 @@ function applyFilters(filters: FilterInterface[]) {
   });
 
   if (appliedFilters.length > 0) {
+    debugger;
     emit('applyFilters', JSON.stringify(appliedFilters));
   } else {
     notificationTitle.value = t('admin.generic.notification_info_title')

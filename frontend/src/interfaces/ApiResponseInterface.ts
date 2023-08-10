@@ -17,10 +17,11 @@ interface BaseModelInterface {
 interface OrderAndSortInterface {
   id: string;
   value: string | null;
-  options: {  
+  options: {
     value: number;
     label: string;
     icon: string;
+    key: string;
   }[];
 }
 
@@ -29,8 +30,8 @@ interface FilterInterface extends BaseModelInterface {
     value: number;
     label: string;
   }[];
-  order?: OrderAndSortInterface[];
-  sort?: OrderAndSortInterface[];
+  order: OrderAndSortInterface;
+  sort: OrderAndSortInterface;
   component_type?: string;
 }
 
