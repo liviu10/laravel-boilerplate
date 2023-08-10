@@ -6,8 +6,9 @@
     >
       <q-form @submit="applyFilters(adminFilters)" @reset="clearFilters">
         <div v-for="filter in adminFilters" :key="filter.id">
+
           <div class="row admin-section--container-controls-body">
-            <div class="col-7 admin-section--container-controls-body-filter">
+            <div class="col-3 admin-section--container-controls-body-filter">
               <component
                 dense
                 :is="filter.component_type ? filter.component_type : 'q-input'"
@@ -21,27 +22,37 @@
                 v-model="filter.value"
               />
             </div>
-            <div class="col-2 admin-section--container-controls-body-sort">
-              <!-- Loop over filter.sort -->
+            <div class="col-3 admin-section--container-controls-body-sort">
               <q-select
                 dense
+                label="Sort by"
                 :options="filter.sort.options"
                 options-dense
                 outlined
                 square
+                stack-label
                 v-model="filter.sort.value"
-              />
+              >
+                <template v-if="filter.sort.value" v-slot:append>
+                  <q-icon name="cancel" @click.stop.prevent="filter.sort.value = null" class="cursor-pointer" />
+                </template>
+              </q-select>
             </div>
-            <div class="col-2 admin-section--container-controls-body-order">
-              <!-- Loop over filter.order -->
+            <div class="col-3 admin-section--container-controls-body-order">
               <q-select
                 dense
+                label="Order by"
                 :options="filter.order.options"
                 options-dense
                 outlined
                 square
+                stack-label
                 v-model="filter.order.value"
-              />
+              >
+                <template v-if="filter.order.value" v-slot:append>
+                  <q-icon name="cancel" @click.stop.prevent="filter.order.value = null" class="cursor-pointer" />
+                </template>
+              </q-select>
             </div>
           </div>
         </div>
@@ -182,8 +193,9 @@ function clearFilters() {
 
 .admin-section--container-controls {
   &-body {
+    justify-content: space-around;
     &-filter, &-order, &-sort {
-      margin: rem-convertor(8px);
+      margin: rem-convertor(4px);
     }
   }
   &-actions {
