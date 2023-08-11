@@ -188,17 +188,26 @@ class User extends Authenticatable
 
     /**
      * Get all the records from the database.
+     * @param  array  $search
      * @return \Illuminate\Database\Eloquent\Collection|array|boolean
      * Returns a collection of records.
      * If an error occurs during retrieval, a boolean will be returned.
      * @throws \Exception|\Illuminate\Database\QueryException
      * Throws an exception if an error occurs during retrieval.
      */
-    public function fetchAllRecords()
+    public function fetchAllRecords($search)
     {
         try
         {
-            return $this->select('id', 'full_name', 'nickname', 'email', 'created_at')->paginate(15);
+            $query = $this->select('id', 'full_name', 'nickname', 'email', 'created_at');
+
+            if (!empty($search)) {
+                foreach ($search as $field => $value) {
+                    $query->where($field, 'LIKE', '%' . $value . '%');
+                }
+            }
+
+            return $query->paginate(15);
         }
         catch (\Exception $exception)
         {

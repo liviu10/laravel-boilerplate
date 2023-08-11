@@ -25,9 +25,10 @@ interface UserInterface
 
     /**
      * Fetch all the records from the database.
+     * @param array $search
      * @return \Illuminate\Http\Response
      */
-    public function handleIndex();
+    public function handleIndex($search);
 
     /**
      * Store a new record in the database.

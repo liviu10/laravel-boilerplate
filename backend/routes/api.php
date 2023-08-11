@@ -45,18 +45,18 @@ Route::group([ 'prefix' => config('app.version') ], function () {
     // Application's admin api endpoints
     Route::group([ 'prefix' => '/admin' ], function () {
         // Application's management endpoints
-        Route::group([ 'prefix' => '/management' ], function () {
-            // Pages
-            Route::apiResource('/pages', PageController::class);
-            // Tags
-            Route::apiResource('/tags', TagController::class);
-            // Articles
-            Route::apiResource('/articles', ArticleController::class);
-            // Media
-            Route::apiResource('/media', MediaController::class);
-            // Comments
-            Route::apiResource('/comments', CommentController::class);
-        });
+        // Route::group([ 'prefix' => '/management' ], function () {
+        //     // Pages
+        //     Route::apiResource('/pages', PageController::class);
+        //     // Tags
+        //     Route::apiResource('/tags', TagController::class);
+        //     // Articles
+        //     Route::apiResource('/articles', ArticleController::class);
+        //     // Media
+        //     Route::apiResource('/media', MediaController::class);
+        //     // Comments
+        //     Route::apiResource('/comments', CommentController::class);
+        // });
         // Application's communication endpoints
         Route::group([ 'prefix' => '/communication' ], function () {
             // Contact subject, messages and responses
@@ -67,40 +67,41 @@ Route::group([ 'prefix' => config('app.version') ], function () {
             // Newsletter campaign and subscribers
             Route::group([ 'prefix' => '/newsletter' ], function () {
                 Route::apiResource('/campaigns', NewsletterCampaignController::class);
-                Route::apiResource('/subscribers', NewsletterSubscriberController::class);
+                // Route::apiResource('/subscribers', NewsletterSubscriberController::class);
             });
         });
         // Application's reports endpoints
-        Route::group([ 'prefix' => '/' ], function () {
-            // Reports
-            Route::apiResource('/reports', ReportController::class);
-        });
+        // Route::group([ 'prefix' => '/' ], function () {
+        //     // Reports
+        //     Route::apiResource('/reports', ReportController::class);
+        // });
         // Application's documentation endpoints
-        Route::group([ 'prefix' => '/' ], function () {
-            // Reports
-            Route::apiResource('/documentation', DocumentationController::class);
-        });
+        // Route::group([ 'prefix' => '/' ], function () {
+        //     // Reports
+        //     Route::apiResource('/documentation', DocumentationController::class);
+        // });
         // Application's user settings api endpoints
         Route::group([ 'prefix' => '/settings' ], function () {
             // Users
             Route::get('/users/current-auth', [UserController::class, 'currentAuthUser']);
-            Route::apiResource('/users', UserController::class);
+            Route::get('/users/{search?}', [UserController::class, 'index']);
+            Route::apiResource('/users', UserController::class)->except('index');
             // User role types
             Route::apiResource('/roles', RoleController::class);
         });
         // Application's settings endpoints
-        Route::group([ 'prefix' => '/application-settings' ], function () {
-            // General
-            Route::apiResource('/general', GeneralController::class);
-            // Performance
-            Route::apiResource('/performance', PerformanceController::class);
-            // Accepted domains
-            Route::apiResource('/accepted-domains', AcceptedDomainController::class);
-            // Notifications
-            Route::apiResource('/notifications', NotificationController::class);
-            // Emails
-            Route::apiResource('/emails', EmailController::class);
-        });
+        // Route::group([ 'prefix' => '/application-settings' ], function () {
+        //     // General
+        //     Route::apiResource('/general', GeneralController::class);
+        //     // Performance
+        //     Route::apiResource('/performance', PerformanceController::class);
+        //     // Accepted domains
+        //     Route::apiResource('/accepted-domains', AcceptedDomainController::class);
+        //     // Notifications
+        //     Route::apiResource('/notifications', NotificationController::class);
+        //     // Emails
+        //     Route::apiResource('/emails', EmailController::class);
+        // });
     });
 
     // Application's client api endpoints
