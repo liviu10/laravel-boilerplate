@@ -4,7 +4,6 @@ import { applicationUserSettings, usersEndpoint } from 'src/api/userSettings';
 import { PaginatedResultsInterface, FilterInterface } from 'src/interfaces/ApiResponseInterface';
 import { notificationSystem } from 'src/library/NotificationSystem/NotificationSystem';
 import { UserInterface } from 'src/interfaces/UserInterface';
-import { Cookies } from 'quasar';
 
 const fullApiUrl = applicationUserSettings + usersEndpoint
 
@@ -13,6 +12,7 @@ const useUserStore = defineStore('userStore', {
     allRecords: {} as PaginatedResultsInterface,
     userIsAuthenticated: false as boolean,
     allFilters: [] as FilterInterface[],
+    appliedFilters: [] as Pick<FilterInterface, 'key' | 'value'>[],
     createRecord: {},
     singleRecord: {} as UserInterface,
     updateRecord: {},
@@ -21,21 +21,37 @@ const useUserStore = defineStore('userStore', {
   getters: {
     getAllRecords: (state) => state.allRecords,
     getAllFilters: (state) => state.allFilters,
+    getAppliedFilters: (state) => state.appliedFilters,
     getCreatRecord: (state) => state.createRecord,
     getSingleRecord: (state) => state.singleRecord,
     getUpdateRecord: (state) => state.updateRecord,
     getDeleteRecord: (state) => state.deleteRecord,
   },
   actions: {
-    async getRecords(appliedFilters?: string | undefined) {
-      const searchQuery: Record<string, number | string | null> = {}
-      if (appliedFilters && appliedFilters !== undefined) {
-        Cookies.set('all-user-filters', appliedFilters)
-        const savedSearchQuery: Pick<FilterInterface, 'key' | 'value'>[] = Cookies.get('all-user-filters')
-        if (savedSearchQuery && savedSearchQuery !== undefined) {
-          savedSearchQuery.forEach((filter: Pick<FilterInterface, 'key' | 'value'>) => {
-            searchQuery[filter.key] = filter.value
-          })
+    async getRecords(search?: Pick<FilterInterface, 'key' | 'value'>[] | undefined) {
+      let searchQuery: Record<string, string | number | null> = {};
+      if (search && search.length) {
+        const savedSearch: string | null = localStorage.getItem('user-filters')
+        if (savedSearch && savedSearch !== null) {
+          const existingSearchQuery: Record<string, string | number | null> = JSON.parse(savedSearch);
+          searchQuery = search.reduce((query, filter) => {
+            query[filter.key] = filter.value;
+            return query;
+          }, {} as Record<string, string | number | null>);
+          Object.assign(searchQuery, existingSearchQuery)
+          localStorage.setItem('user-filters', JSON.stringify(searchQuery));
+        } else {
+          searchQuery = search.reduce((query, filter) => {
+            query[filter.key] = filter.value;
+            return query;
+          }, {} as Record<string, string | number | null>);
+          localStorage.setItem('user-filters', JSON.stringify(searchQuery));
+        }
+      } else {
+        const savedSearch: string | null = localStorage.getItem('user-filters')
+        if (savedSearch && savedSearch !== null) {
+          const existingSearchQuery: Record<string, string | number | null> = JSON.parse(savedSearch);
+          Object.assign(searchQuery, existingSearchQuery)
         }
       }
 
@@ -62,6 +78,7 @@ const useUserStore = defineStore('userStore', {
         await api.get(fullApiUrl + '/' + recordId)
           .then(response => {
             this.singleRecord = response.data.results[0]
+            debugger;
             return this.singleRecord
           })
           .catch((error) => {

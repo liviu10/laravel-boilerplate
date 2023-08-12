@@ -28,5 +28,26 @@ export default store((/* { ssrContext } */) => {
   // You can add Pinia plugins here
   // pinia.use(SomePiniaPlugin)
 
+  // pinia.use((context) => {
+  //   const storeId = context.store.$id
+
+  //   const serializer = {
+  //     serialize: JSON.stringify,
+  //     deserialize: JSON.parse
+  //   }
+
+  //   const storeData = window.localStorage.getItem(storeId)
+
+  //   if (storeData !== null) {
+  //     const fromStorage = serializer.deserialize(storeData)
+
+  //     context.store.$patch(fromStorage)
+  //   }
+
+  //   context.store.$subscribe((mutation, state) => {
+  //     window.localStorage.setItem(storeId, serializer.serialize(state))
+  //   })
+  // })
+
   return pinia;
 });

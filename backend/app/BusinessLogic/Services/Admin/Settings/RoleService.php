@@ -28,11 +28,12 @@ class RoleService implements RoleInterface
 
     /**
      * Fetch all the records from the database.
+     * @param  array  $search
      * @return \Illuminate\Http\Response
      */
-    public function handleIndex()
+    public function handleIndex($search)
     {
-        $apiDisplayAllRecords = $this->modelName->fetchAllRecords();
+        $apiDisplayAllRecords = $this->modelName->fetchAllRecords($search);
         $apiFilters = $this->modelName->getFilters();
 
         if ($apiDisplayAllRecords instanceof \Illuminate\Pagination\LengthAwarePaginator)

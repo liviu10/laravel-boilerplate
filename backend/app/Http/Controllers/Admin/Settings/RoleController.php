@@ -21,11 +21,12 @@ class RoleController extends Controller
 
     /**
      * Fetch all the records from the database. HTTP request [GET].
+     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        return $this->roleService->handleIndex();
+        return $this->roleService->handleIndex($request->all());
     }
 
     /**

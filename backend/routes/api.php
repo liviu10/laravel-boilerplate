@@ -87,7 +87,8 @@ Route::group([ 'prefix' => config('app.version') ], function () {
             Route::get('/users/{search?}', [UserController::class, 'index']);
             Route::apiResource('/users', UserController::class)->except('index');
             // User role types
-            Route::apiResource('/roles', RoleController::class);
+            Route::get('/roles/{search?}', [RoleController::class, 'index']);
+            Route::apiResource('/roles', RoleController::class)->except('index');
         });
         // Application's settings endpoints
         // Route::group([ 'prefix' => '/application-settings' ], function () {

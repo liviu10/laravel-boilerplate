@@ -80,7 +80,7 @@ module.exports = configure(function (ctx) {
       server: {
         type: 'http',
       },
-      port: 8081, // 8080 is the default port
+      port: 8080, // 8080 is the default port
       open: true, // opens browser window automatically
     },
 

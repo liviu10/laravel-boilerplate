@@ -129,6 +129,7 @@ class Role extends Model
 
     /**
      * Fetches all records from the database.
+     * @param  array  $search
      * @return \Illuminate\Database\Eloquent\Collection|bool
      * The collection of records on success, or false on failure.
      */
@@ -136,7 +137,15 @@ class Role extends Model
     {
         try
         {
-            return $this->select('id', 'name', 'slug')->paginate(15);
+            $query = $this->select('id', 'name', 'slug');
+
+            if (!empty($search)) {
+                foreach ($search as $field => $value) {
+                    $query->where($field, 'LIKE', '%' . $value . '%');
+                }
+            }
+
+            return $query->paginate(15);
         }
         catch (\Illuminate\Database\QueryException $mysqlError)
         {

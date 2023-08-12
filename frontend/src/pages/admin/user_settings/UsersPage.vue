@@ -9,22 +9,14 @@
     />
 
     <admin-page-container :admin-route-name="currentRouteName">
-      <template v-slot:admin-filters>
-        <admin-page-container-filter
-          v-if="displayFilters"
-          :admin-page-title="currentRouteTitle"
-          :filters="getAllFilters"
-          @apply-filters="applyFilters"
-          @clear-filters="clearFilters"
-        />
-      </template>
-
       <template v-slot:admin-content>
         <admin-page-container-table
+          :applied-filters="appliedFilters && appliedFilters.length ? appliedFilters : []"
           :columns="TableColumns"
           :create-new-record="true"
           :delete-record-button="true"
           :edit-record-button="true"
+          :filters="getAllFilters"
           :fullscreen-button="true"
           :loading="loadData"
           :rows="getAllRecords.data"
@@ -34,6 +26,8 @@
           :top-right-slot="true"
           :top-row-slot="true"
           @action-method-dialog="actionMethodDialog"
+          @filter-record="filterRecord"
+          @clear-filter="clearFilter"
         />
       </template>
     </admin-page-container>
@@ -109,13 +103,11 @@
 import { useRouter } from 'vue-router';
 import { ref, onMounted, computed, Ref } from 'vue';
 import { useI18n } from 'vue-i18n';
-import { Cookies } from 'quasar';
 
 // Import generic components, libraries and interfaces
 import AdminPageTitle from 'src/components/AdminPageTitle.vue';
 import AdminPageDescription from 'src/components/AdminPageDescription.vue';
 import AdminPageContainer from 'src/components/AdminPageContainer.vue';
-import AdminPageContainerFilter from 'src/components/AdminPageContainerFilter.vue';
 import AdminPageContainerTable from 'src/components/AdminPageContainerTable.vue';
 import AdminPageContainerDialog from 'src/components/AdminPageContainerDialog.vue';
 import TableColumns from 'src/columns/userColumns';
@@ -149,7 +141,33 @@ const loadData = ref(false)
 const getAllRecords = computed(() => userStore.getAllRecords);
 
 // Get all filters
-const getAllFilters = computed(() => userStore.getAllFilters)
+const getAllFilters = computed(() => {
+  const savedSearch: string | null = localStorage.getItem('user-filters')
+  if (savedSearch && savedSearch !== null) {
+    const existingSearchQuery: Record<string, string | number | null> = JSON.parse(savedSearch);
+    const filterArray: Pick<FilterInterface, 'key' | 'value'>[] = Object.keys(existingSearchQuery).map((key) => ({
+      key,
+      value: existingSearchQuery[key]
+    }));
+    appliedFilters = filterArray
+  }
+
+  if (appliedFilters && appliedFilters.length) {
+    const updatedFilters = JSON.parse(JSON.stringify(userStore.getAllFilters));
+    appliedFilters.forEach(appliedFilter => {
+      const { key, value } = appliedFilter;
+      updatedFilters.forEach((filter: FilterInterface) => {
+        if (filter.key === key) {
+          filter.value = value;
+        }
+      });
+    });
+
+    return updatedFilters;
+  } else {
+    return userStore.getAllFilters
+  }
+})
 
 // Display the action name & dialog
 const actionName: Ref<DialogType | undefined> = ref(undefined)
@@ -158,40 +176,39 @@ const displayActionDialog = ref(false)
 // Fetch single user details
 const getSingleRecord = computed(() => userStore.getSingleRecord);
 
-const displayFilters = computed((): boolean => {
-  if (getAllFilters.value && getAllFilters.value !== undefined && Array.isArray(getAllFilters.value) && getAllFilters.value.length) {
-    return true;
-  } else {
-    return false;
-  }
-});
-const displayFilterResults = ref(false)
-
-async function applyFilters(appliedFilters: string) {
+async function filterRecord(appliedFilters: Pick<FilterInterface, 'key' | 'value'>[]) {
   loadData.value = true
+  console.log('--> UserPage.vue filterRecord:', appliedFilters)
   await userStore.getRecords(appliedFilters).then(() => {
-    displayFilterResults.value = true
     loadData.value = false
   })
 }
 
-function clearFilters() {
-  const notificationTitle = ref('')
-  const notificationMessage = ref('')
-  const savedSearchQuery: Pick<FilterInterface, 'key' | 'value'>[] = Cookies.get('all-user-filters')
-  if (savedSearchQuery && savedSearchQuery !== undefined) {
-    Cookies.remove('all-user-filters')
-    notificationTitle.value = t('admin.generic.notification_success_title')
-    notificationMessage.value = t('admin.generic.filters_applied_remove', {
-      resourceName: currentRouteTitle.value
-    })
-    notificationSystem(notificationTitle.value, notificationMessage.value, 'positive', 'bottom', true)
+async function clearFilter(filterKey: string) {
+  loadData.value = true
+  console.log('--> UserPage.vue clearFilter:', filterKey)
+  const savedSearch: string | null = localStorage.getItem('user-filters')
+  appliedFilters = []
+  if (savedSearch && savedSearch !== null) {
+    const existingSearchQuery: Record<string, string | number | null> = JSON.parse(savedSearch);
+    if (existingSearchQuery.hasOwnProperty(filterKey)) {
+      if (Object.keys(existingSearchQuery).length > 1) {
+        delete existingSearchQuery[filterKey]
+        localStorage.setItem('user-filters', JSON.stringify(existingSearchQuery));
+      } else {
+        localStorage.removeItem('user-filters');
+      }
+      await userStore.getRecords().then(() => {
+        loadData.value = false
+      })
+    }
   } else {
-    notificationTitle.value = t('admin.generic.notification_info_title')
-    notificationMessage.value = t('admin.generic.no_filters_applied', {
+    loadData.value = false
+    const notificationTitle = t('admin.generic.notification_info_title')
+    const notificationMessage = t('admin.generic.no_filters_applied', {
       resourceName: currentRouteTitle.value
     })
-    notificationSystem(notificationTitle.value, notificationMessage.value, 'info', 'bottom', true)
+    notificationSystem(notificationTitle, notificationMessage, 'info', 'bottom', true)
   }
 }
 
@@ -280,17 +297,28 @@ function handleActionMethod(action: DialogType) {
   }
 }
 
+let appliedFilters: Pick<FilterInterface, 'key' | 'value'>[] = [];
 onMounted(async () => {
   loadData.value = true
-  const savedSearchQuery: Pick<FilterInterface, 'key' | 'value'>[] = Cookies.get('all-user-filters')
-  await userStore.getRecords(
-    savedSearchQuery && savedSearchQuery !== undefined
-      ? JSON.stringify(savedSearchQuery)
-      : undefined
-    ).then(() => {
-      displayFilterResults.value = true
-      loadData.value = false
-  })
+  const savedSearch: string | null = localStorage.getItem('user-filters')
+  if (savedSearch && savedSearch !== null) {
+    const existingSearchQuery: Record<string, string | number | null> = JSON.parse(savedSearch);
+    const filterArray: Pick<FilterInterface, 'key' | 'value'>[] = Object.keys(existingSearchQuery).map((key) => ({
+      key,
+      value: existingSearchQuery[key]
+    }));
+    appliedFilters = filterArray
+    await userStore.getRecords(filterArray)
+      .then(() => {
+        appliedFilters = []
+        loadData.value = false
+      })
+  } else {
+    await userStore.getRecords()
+      .then(() => {
+        loadData.value = false
+      })
+  }
 })
 </script>
 

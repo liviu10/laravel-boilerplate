@@ -35,6 +35,14 @@
       />
     </template>
 
+    <template v-slot:top-row>
+      <admin-page-container-table-top-row
+        :filters="filters"
+        @filter-record="filterRecord"
+        @clear-filter="clearFilter"
+      />
+    </template>
+
     <template v-slot:header="props">
       <admin-page-container-table-header :props="props" />
     </template>
@@ -61,14 +69,17 @@ import { QTableProps } from 'quasar';
 // Import generic components, libraries and interfaces
 import AdminPageContainerTableTopLeft from 'src/components/AdminPageContainerTableTopLeft.vue';
 import AdminPageContainerTableTopRight from 'src/components/AdminPageContainerTableTopRight.vue';
+import AdminPageContainerTableTopRow from 'src/components/AdminPageContainerTableTopRow.vue';
 import AdminPageContainerTableHeader from 'src/components/AdminPageContainerTableHeader.vue';
 import AdminPageContainerTableBody from 'src/components/AdminPageContainerTableBody.vue';
 import { DialogType } from 'src/types/DialogType';
+import { FilterInterface } from 'src/interfaces/ApiResponseInterface';
 
 // Defined the translation variable
 const { t } = useI18n({});
 
 interface AdminPageContainerTableInterface {
+  appliedFilters: Pick<FilterInterface, 'key' | 'value'>[] | [];
   bordered?: boolean;
   columns?: QTableProps['columns'];
   createNewRecord?: boolean;
@@ -76,6 +87,7 @@ interface AdminPageContainerTableInterface {
   deleteRecordButton?: boolean;
   dense?: boolean;
   editRecordButton?: boolean;
+  filters: FilterInterface[];
   fullscreenButton?: boolean;
   loading?: boolean;
   rows?: QTableProps['rows'];
@@ -97,6 +109,8 @@ const actionButtons = [
 
 const emit = defineEmits<{
   (event: 'actionMethodDialog', action: DialogType, recordId?: number): void;
+  (event: 'filterRecord', filters: Pick<FilterInterface, 'key' | 'value'>[]): void;
+  (event: 'clearFilter', filterKey: string): void;
 }>();
 
 /**
@@ -107,6 +121,10 @@ const emit = defineEmits<{
  */
 const actionMethodDialog = (action: DialogType, recordId?: number) => emit('actionMethodDialog', action, recordId);
 
+const filterRecord = (filters: Pick<FilterInterface, 'key' | 'value'>[]) => emit('filterRecord', filters)
+
+const clearFilter = (filterKey: string) => emit('clearFilter', filterKey)
+
 withDefaults(defineProps<AdminPageContainerTableInterface>(), {
   bordered: true,
   customLoader: true,
@@ -115,3 +133,5 @@ withDefaults(defineProps<AdminPageContainerTableInterface>(), {
   separator: 'cell',
 });
 </script>
+
+<style lang="scss" scoped></style>
