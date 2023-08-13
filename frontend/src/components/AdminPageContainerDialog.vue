@@ -11,12 +11,18 @@
           </q-card-section>
 
           <q-card-section class="q-py-none">
-            <slot v-if="actionName !== 'create'" name="record-details"></slot>
+            <slot v-if="actionName !== 'create' && actionName !== 'advanced-filters'" name="record-details"></slot>
 
-            <q-separator v-if="actionName === 'edit' || actionName === 'delete'" class="q-my-md" />
+            <q-separator
+              v-if="actionName === 'edit' || actionName === 'delete'"
+              class="q-my-md"
+            />
 
-            <div v-if="actionName === 'delete'" class="admin-section__container-dialog-content">
-              {{ t('admin.generic.delete_confirmation_message') }}
+            <div
+              v-if="actionName === 'delete'"
+              class="admin-section__container-dialog-content"
+            >
+              {{ t("admin.generic.delete_confirmation_message") }}
             </div>
           </q-card-section>
 
@@ -70,7 +76,7 @@ const displayDialog: Ref<boolean> = computed(() => {
   } else {
     return false;
   }
-})
+});
 
 /**
  * Computes and returns the title of the dialog
@@ -88,6 +94,8 @@ const dialogTitle = computed(() => {
       return t('admin.generic.edit_dialog_title');
     case 'delete':
       return t('admin.generic.delete_dialog_title');
+    case 'advanced-filters':
+      return t('admin.generic.advanced_filter_dialog_title');
     default:
       return t('admin.generic.default_dialog_title');
   }
@@ -110,18 +118,35 @@ const filteredDialogActionButtons = computed(() => {
       class: 'q-mx-sm',
       color: 'primary',
       dense: true,
-      label: actionName === 'show' ? 'admin.generic.close_label' : 'admin.generic.cancel_label',
+      label:
+        actionName === 'show'
+          ? 'admin.generic.close_label'
+          : 'admin.generic.cancel_label',
       square: true,
-      clickEvent: () => closeActionDialog()
+      clickEvent: () => closeActionDialog(),
     },
     {
       id: 2,
       class: 'q-mx-sm',
-      color: actionName === 'edit' ? 'warning' : actionName === 'delete' ? 'negative' : 'positive',
+      color:
+        actionName === 'edit'
+          ? 'warning'
+          : actionName === 'delete'
+          ? 'negative'
+          : 'positive',
       dense: true,
-      label: actionName === 'create' ? 'admin.generic.save_label' : actionName === 'edit' ? 'admin.generic.update_label' : actionName === 'delete' ? 'admin.generic.delete_label' : 'admin.generic.ok_label',
+      label:
+        actionName === 'create'
+          ? 'admin.generic.save_label'
+          : actionName === 'edit'
+          ? 'admin.generic.update_label'
+          : actionName === 'delete'
+          ? 'admin.generic.delete_label'
+          : actionName === 'advanced-filters'
+          ? 'admin.generic.apply_filters'
+          : 'admin.generic.ok_label',
       square: true,
-      clickEvent: () => handleDialogAction(actionName)
+      clickEvent: () => handleDialogAction(actionName),
     },
   ];
 
@@ -149,13 +174,13 @@ const closeActionDialog = () => emit('closeDialog');
  * @function
  * @returns void
  */
-const handleDialogAction = (actionName: DialogType) => emit('handleActionMethod', actionName);
+const handleDialogAction = (actionName: DialogType) =>
+  emit('handleActionMethod', actionName);
 </script>
 
-
 <style lang="scss" scoped>
-@import 'src/css/utilities/_rem_convertor.scss';
-@import 'src/css/utilities/_flexbox.scss';
+@import "src/css/utilities/_rem_convertor.scss";
+@import "src/css/utilities/_flexbox.scss";
 
 .admin-section__container-dialog {
   &-title {

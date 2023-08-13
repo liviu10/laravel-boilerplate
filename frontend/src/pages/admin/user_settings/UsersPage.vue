@@ -11,6 +11,7 @@
     <admin-page-container :admin-route-name="currentRouteName">
       <template v-slot:admin-content>
         <admin-page-container-table
+          :advance-filter-record="true"
           :applied-filters="appliedFilters && appliedFilters.length ? appliedFilters : []"
           :columns="TableColumns"
           :create-new-record="true"
@@ -225,6 +226,10 @@ async function clearFilter(filterKey: string) {
 async function actionMethodDialog(action: DialogType, recordId?: number) {
   loadData.value = true
   if (action === 'create') {
+    loadData.value = false
+    actionName.value = action
+    displayActionDialog.value = true
+  } else if (action === 'advanced-filters') {
     loadData.value = false
     actionName.value = action
     displayActionDialog.value = true

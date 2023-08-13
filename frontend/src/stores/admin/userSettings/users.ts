@@ -78,7 +78,6 @@ const useUserStore = defineStore('userStore', {
         await api.get(fullApiUrl + '/' + recordId)
           .then(response => {
             this.singleRecord = response.data.results[0]
-            debugger;
             return this.singleRecord
           })
           .catch((error) => {

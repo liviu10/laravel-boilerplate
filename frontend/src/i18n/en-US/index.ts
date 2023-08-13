@@ -52,6 +52,7 @@ export default {
       edit_dialog_title: 'Edit record',
       delete_dialog_title: 'Delete record',
       delete_confirmation_message: 'Are you sure you want delete this record?',
+      advanced_filter_dialog_title: 'Advanced filters',
       filter: 'Filter table',
       filter_advanced: 'Advanced filters',
       clear_filters: 'Clear filters',

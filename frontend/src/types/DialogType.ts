@@ -1,3 +1,3 @@
-type DialogType = 'create' | 'show' | 'edit' | 'delete'
+type DialogType = 'create' | 'show' | 'edit' | 'delete' | 'advanced-filters'
 
 export { DialogType }

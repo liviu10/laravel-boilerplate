@@ -54,6 +54,7 @@ export default {
       edit_dialog_title: 'Modifica inregistrarea',
       delete_dialog_title: 'Sterge inregistrarea',
       delete_confirmation_message: 'Esti sigur ca vrei sa stergi aceasta inregistrare?',
+      advanced_filter_dialog_title: 'Filtrare avansata',
       filter: 'Filtreaza tabelul',
       filter_advanced: 'Filtrare avansata',
       clear_filters: 'Sterge filtrele',

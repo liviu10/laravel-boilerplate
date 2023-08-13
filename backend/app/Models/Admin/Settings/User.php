@@ -203,7 +203,11 @@ class User extends Authenticatable
 
             if (!empty($search)) {
                 foreach ($search as $field => $value) {
-                    $query->where($field, 'LIKE', '%' . $value . '%');
+                    if ($field === 'id') {
+                        $query->where($field, '=', $value);
+                    } else {
+                        $query->where($field, 'LIKE', '%' . $value . '%');
+                    }
                 }
             }
 

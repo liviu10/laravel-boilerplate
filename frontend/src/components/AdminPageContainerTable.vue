@@ -21,6 +21,7 @@
 
     <template v-slot:top-left>
       <admin-page-container-table-top-left
+        :advance-filter-record="advanceFilterRecord"
         :create-new-record="createNewRecord"
         :top-left-slot="topLeftSlot"
         @action-method-dialog="actionMethodDialog"
@@ -79,6 +80,7 @@ import { FilterInterface } from 'src/interfaces/ApiResponseInterface';
 const { t } = useI18n({});
 
 interface AdminPageContainerTableInterface {
+  advanceFilterRecord?: boolean;
   appliedFilters: Pick<FilterInterface, 'key' | 'value'>[] | [];
   bordered?: boolean;
   columns?: QTableProps['columns'];
