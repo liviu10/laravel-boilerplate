@@ -41,8 +41,14 @@ const emit = defineEmits<{
 }>();
 
 const accumulatedFilters: Pick<FilterInterface, 'key' | 'value'>[] = []
+
+/**
+ * Accumulate and emit filters for a record.
+ * @param {FilterInterface} filter - The filter to be accumulated and emitted.
+ * @returns {void}
+ */
 const filterRecord = computed(() => {
-  return ((filter: FilterInterface) => {
+  return ((filter: FilterInterface): void => {
     accumulatedFilters.push({
       key: filter.key,
       value: filter.value
@@ -51,6 +57,11 @@ const filterRecord = computed(() => {
   });
 });
 
+/**
+ * Emit clearing event of a specific filter.
+ * @param {FilterInterface} filter - The filter to be cleared.
+ * @returns {void}
+ */
 const clearFilter = computed(() => {
   return ((filter: FilterInterface) => {
     emit('clearFilter', filter.key)

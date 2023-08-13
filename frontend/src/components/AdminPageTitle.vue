@@ -12,8 +12,8 @@ import { useI18n } from 'vue-i18n';
 import { RouteRecordName } from 'vue-router';
 import { computed } from 'vue';
 
-// Import other utilities
-import { displayLabel } from 'src/library/TextOperations';
+// Import generic components, libraries and interfaces
+import { displayFormattedLabelInfo } from 'src/library/TextOperations/TextOperations';
 
 // Defined the translation variable
 const { t } = useI18n({});
@@ -23,19 +23,21 @@ interface AdminPageTitleInterface {
 }
 
 /**
- * Displays the admin page title based on the provided adminPageTitle.
- * @param adminPageTitle - The title of the admin page.
- * @returns string The formatted admin page title.
+ * Generate the title for an admin page.
+ * @param {RouteRecordName | null | undefined | unknown} adminPageTitle - The title of the admin page.
+ * @returns {string} The generated title for the admin page.
  */
 const displayAdminPageTitle = computed(() => {
+  const defaultPageTitle = t('admin.generic.page_title');
   return (adminPageTitle: RouteRecordName | null | undefined | unknown): string => {
-    if (adminPageTitle && typeof adminPageTitle === 'string') {
-      return displayLabel(adminPageTitle);
+    if (adminPageTitle && adminPageTitle !== null && typeof adminPageTitle === 'string') {
+      return displayFormattedLabelInfo.value(adminPageTitle);
     } else {
-      return t('admin.generic.page_title');
+      return defaultPageTitle;
     }
   }
 })
 
 withDefaults(defineProps<AdminPageTitleInterface>(), {});
 </script>
+src/library/TextOperations/TextOperations

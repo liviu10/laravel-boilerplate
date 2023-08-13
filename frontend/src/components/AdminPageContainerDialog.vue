@@ -50,7 +50,7 @@ import { Ref, computed } from 'vue';
 import { useI18n } from 'vue-i18n';
 
 // Import generic components, libraries and interfaces
-import { DialogType } from 'src/types/DialogType';
+import { DialogActionInterface, DialogType } from 'src/types/DialogType';
 
 interface AdminPageContainerDialogInterface {
   actionName?: DialogType;
@@ -67,24 +67,18 @@ const emit = defineEmits(['handleActionMethod', 'closeDialog']);
 const { t } = useI18n({});
 
 /**
- * Computed property to determine the visibility of
- * the dialog based on the 'displayActionDialog' prop.
+ * Determine if a dialog should be displayed based on the provided prop.
+ * @returns {boolean} True if the dialog should be displayed, false otherwise.
  */
-const displayDialog: Ref<boolean> = computed(() => {
-  if (props.displayActionDialog) {
-    return true;
-  } else {
-    return false;
-  }
+const displayDialog: Ref<boolean> = computed((): boolean => {
+  return props.displayActionDialog ? true : false
 });
 
 /**
- * Computes and returns the title of the dialog
- * based on the provided actionName prop.
- * @function
- * @returns The title of the dialog.
+ * Generate the title for a dialog based on the provided action name.
+ * @returns {string} The title for the dialog.
  */
-const dialogTitle = computed(() => {
+const dialogTitle = computed((): string => {
   switch (props.actionName) {
     case 'create':
       return t('admin.generic.create_dialog_title');
@@ -102,17 +96,15 @@ const dialogTitle = computed(() => {
 });
 
 /**
- * Computes and returns the filtered dialog action
- * buttons based on the provided actionName.
- * @function
- * @returns An array of dialog action buttons.
+ * Generate filtered action buttons for a dialog based on the provided action name.
+ * @returns {Array<DialogActionInterface>} Filtered action buttons for the dialog.
  */
-const filteredDialogActionButtons = computed(() => {
+const filteredDialogActionButtons = computed((): DialogActionInterface[] => {
   // The default actionName is 'show' if props.actionName is not provided.
   const actionName = props.actionName || 'show';
 
   // Define the dialog action buttons.
-  const dialogActionButtons = [
+  const dialogActionButtons: DialogActionInterface[] = [
     {
       id: 1,
       class: 'q-mx-sm',
@@ -156,26 +148,16 @@ const filteredDialogActionButtons = computed(() => {
 
 /**
  * Close the action dialog by emitting the 'closeDialog' event.
- * This function is typically used to trigger the
- * closing of a dialog or modal when an action
- * or operation is completed.
- * @function
- * @returns void
+ * @returns {void}
  */
-const closeActionDialog = () => emit('closeDialog');
+const closeActionDialog = (): void => emit('closeDialog');
 
 /**
- * Handle a dialog action by emitting the 'handleActionMethod'
- * event with the specified action name. This function is
- * typically used to trigger a specific action
- * when interacting with a dialog or modal.
- * @param actionName - The name of the action
- * to be handled by the parent component.
- * @function
- * @returns void
+ * Handle a dialog action by emitting the 'handleActionMethod' event with the specified action name.
+ * @param {DialogType} actionName - The type of dialog action to be handled.
+ * @returns {void}
  */
-const handleDialogAction = (actionName: DialogType) =>
-  emit('handleActionMethod', actionName);
+const handleDialogAction = (actionName: DialogType): void => emit('handleActionMethod', actionName);
 </script>
 
 <style lang="scss" scoped>

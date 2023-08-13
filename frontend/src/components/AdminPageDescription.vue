@@ -16,11 +16,12 @@
 // Import vue related utilities
 import { useI18n } from 'vue-i18n';
 import { RouteRecordName } from 'vue-router';
-import { computed, ref } from 'vue';
+import { computed } from 'vue';
 
 // Import generic components, libraries and interfaces
 import { UserInterface } from 'src/interfaces/UserInterface';
 import { checkCurrentRouteName } from 'src/library/CheckRouter';
+import { userIsAuthenticated } from 'src/composables/UserIsAuthenticated';
 
 // Defined the translation variable
 const { t } = useI18n({});
@@ -33,34 +34,28 @@ interface AdminPageDescriptionInterface {
 }
 
 /**
- * Displays the admin page welcome message based on the provided currentAuthenticatedUser.
- * @param currentAuthenticatedUser - The name of the authenticated user.
- * @returns A string of the formatted admin page welcome message.
+ * Generate a welcome message based on the authentication status of the user.
+ * Example: Welcome, John Doe
+ * @param {UserInterface | undefined} currentAuthenticatedUser - The currently authenticated user.
+ * @returns {string} The welcome message.
  */
 const displayAdminWelcomeMessage = computed(() => {
   return (currentAuthenticatedUser: UserInterface | undefined): string => {
-    const userIsAuthenticate =
-      currentAuthenticatedUser &&
-      currentAuthenticatedUser !== undefined &&
-      Object.keys(currentAuthenticatedUser).length &&
-      Object.hasOwnProperty('full_name')
-    if (userIsAuthenticate) {
-      return t('admin.generic.welcome', {
-        authUserName: `, ${currentAuthenticatedUser.full_name}`,
-      });
-    } else {
-      return t('admin.generic.welcome');
-    }
+    const isAuthenticated: string | boolean = userIsAuthenticated.value(currentAuthenticatedUser)
+    return isAuthenticated
+      ? t('admin.generic.welcome', { authUserName: `, ${isAuthenticated}` })
+      : t('admin.generic.welcome')
   };
 });
 
 /**
- * Displays the admin page description based on the provided adminPageDescription.
- * @param adminPageDescription - The description of the admin page.
- * @param adminApplicationName - The application name.
- * @returns A string of the formatted admin page description.
+ * Generate the description for an admin page.
+ * @param {string | undefined} adminPageDescription - The description of the admin page.
+ * @param {string | undefined} adminApplicationName - The name of the admin application.
+ * @returns {string} The generated description for the admin page.
  */
 const displayAdminPageDescription = computed(() => {
+  // TODO: Improve this code because it's identical with the one from AdminLayoutHeader
   return (adminPageDescription: string | undefined, adminApplicationName: string | undefined): string => {
     if (adminPageDescription && typeof adminPageDescription === 'string') {
       return adminPageDescription
@@ -75,26 +70,27 @@ const displayAdminPageDescription = computed(() => {
 })
 
 /**
- * Displays the admin page documentation message based on the provided adminApplicationName.
- * @param adminApplicationName - The application name.
- * @returns A string of the formatted admin page description.
+ * Generate the documentation message for an admin page.
+ * @param {string | undefined} adminApplicationName - The name of the admin application.
+ * @returns {string} The generated documentation message for the admin page.
  */
 const displayAdminDocMessage = computed(() => {
+  // TODO: Improve this code
   return (adminApplicationName: string | undefined): string => {
     const documentationPageUrl = '/admin/documentation';
-    let firstPart = ref('')
-    let secondPart = ref('')
-    let thirdPart = ref('')
+    let firstPart = ''
+    let secondPart = ''
+    let thirdPart = ''
     if (adminApplicationName && typeof adminApplicationName === 'string') {
-      firstPart.value = t('admin.generic.documentation.first_part', { applicationName: adminApplicationName })
-      secondPart.value = `<a href="${documentationPageUrl}">${t('admin.generic.documentation.second_part')}</a>`
-      thirdPart.value = t('admin.generic.documentation.third_part')
-      return firstPart.value + secondPart.value + thirdPart.value;
+      firstPart = t('admin.generic.documentation.first_part', { applicationName: adminApplicationName })
+      secondPart = `<a href="${documentationPageUrl}">${t('admin.generic.documentation.second_part')}</a>`
+      thirdPart = t('admin.generic.documentation.third_part')
+      return firstPart + secondPart + thirdPart;
     } else {
-      firstPart.value = t('admin.generic.documentation.first_part', { applicationName: t('admin.generic.application_name') })
-      secondPart.value = `<a href="${documentationPageUrl}">${t('admin.generic.documentation.second_part')}</a>`
-      thirdPart.value = t('admin.generic.documentation.third_part')
-      return firstPart.value + secondPart.value + thirdPart.value;
+      firstPart = t('admin.generic.documentation.first_part', { applicationName: t('admin.generic.application_name') })
+      secondPart = `<a href="${documentationPageUrl}">${t('admin.generic.documentation.second_part')}</a>`
+      thirdPart = t('admin.generic.documentation.third_part')
+      return firstPart + secondPart + thirdPart;
     }
   }
 })

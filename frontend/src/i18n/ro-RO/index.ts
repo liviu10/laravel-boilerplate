@@ -1,13 +1,10 @@
-// English translations
+// Romanian translations
 
 export default {
   admin: {
     generic: {
-      application_name: 'Generic boilerplate',
-      designed_by: 'Designed by',
-      all_rights_reserved: 'Toate drepturile rezervate',
-      page_title: 'Titlu pagina admin',
       welcome: 'Bun venit {authUserName}',
+      page_title: 'Titlu pagina admin',
       page_description: `
         Aplicatia de panou de bord {applicationName} este o platforma
         bogata in functionalitati si personalizabila care ofera utilizatorilor

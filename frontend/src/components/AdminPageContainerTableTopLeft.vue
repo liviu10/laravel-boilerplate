@@ -62,16 +62,11 @@ const actionMethods: { [key: number]: DialogType } = {
 };
 
 /**
- * Open a dialog by emitting the 'actionMethodDialog'
- * event with the specified action. This function is
- * typically used to trigger the opening of
- * a dialog or modal for a specific action.
- * @param action - The name of the action to
- * be associated with the dialog.
- * @function
- * @returns void
+ * Open a dialog for a specific action by emitting the 'actionMethodDialog' event with the specified action.
+ * @param {DialogType} action - The type of dialog action to be opened.
+ * @returns {void}
  */
-const openDialog = (action: DialogType) => emit('actionMethodDialog', action);
+const openDialog = (action: DialogType): void => emit('actionMethodDialog', action);
 
 withDefaults(defineProps<AdminPageContainerTableTopLeftInterface>(), {});
 </script>

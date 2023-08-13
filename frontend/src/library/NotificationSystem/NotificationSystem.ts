@@ -12,20 +12,14 @@ import {
 } from 'src/library/NotificationSystem/NotificationSystemType';
 
 /**
- * Creates and displays a notification using
- * the Quasar framework's Notify.create method.
- * @param title - The title of the notification.
- * @param description - The description or main
- * content of the notification.
- * @param type - The type of notification
- * (e.g., 'positive', 'error', 'warning').
- * @param position - The position of the
- * notification on the screen.
- * @param progress - (Optional) If true,
- * shows a progress indicator for the notification.
- * @param additionalMessage - (Optional) Additional
- * message or details for the notification.
- * @returns void
+ * Creates and displays a notification using the Quasar framework's Notify.create method.
+ * @param {title} title - The title of the notification.
+ * @param {description} description - The description or main content of the notification.
+ * @param {type} type - The type of notification (e.g., 'positive', 'error', 'warning').
+ * @param {position} position - The position of the notification on the screen.
+ * @param {progress} progress - (Optional) If true, shows a progress indicator for the notification.
+ * @param {additionalMessage} additionalMessage - (Optional) Additional message or details for the notification.
+ * @returns {void}
  */
 const notificationSystem = (
   title: string | undefined,
@@ -48,11 +42,9 @@ const notificationSystem = (
   })
 
   /**
-   * Computed function to get the icon associated
-   * with the given notification type.
-   * @param type - The type of the notification
-   * (e.g., 'positive', 'info', 'warning', 'negative').
-   * @returns The icon string associated with the notification type.
+   * Computed function to get the icon associated with the given notification type.
+   * @param {type} type - The type of the notification (e.g., 'positive', 'info', 'warning', 'negative').
+   * @returns {string} The icon string associated with the notification type.
    */
   const notificationIcon = computed(() => {
     return (type: string | undefined): string => {
@@ -73,11 +65,10 @@ const notificationSystem = (
 
   /**
    * Computed function to generate the content of a notification message.
-   * @param title - The title of the notification.
-   * @param message - The main content of the notification.
-   * @param additionalMessage - (Optional) Additional message
-   * or details for the notification.
-   * @returns The HTML-formatted notification message content.
+   * @param {title} title - The title of the notification.
+   * @param {message} message - The main content of the notification.
+   * @param {additionalMessage} additionalMessage - (Optional) Additional message or details for the notification.
+   * @returns {string} The HTML-formatted notification message content.
    */
   const notificationMessage = computed(() => {
     return (
@@ -119,62 +110,42 @@ const notificationSystem = (
   });
 
   /**
-   * Computed function to determine the position
-   * of a notification on the screen.
-   * @param position - The desired position
-   * of the notification (e.g., 'top', 'bottom', 'left', 'right').
-   * @returns The resolved position for the notification.
+   * Computed function to determine the position of a notification on the screen.
+   * @param {position} position - The desired position of the notification (e.g., 'top', 'bottom', 'left', 'right').
+   * @returns {Type<NotificationPositionType>} The resolved position for the notification.
    */
   const notificationPosition = computed(() => {
     return (position: NotificationPositionType | undefined): NotificationPositionType => {
-      if (position && position !== undefined) {
-        return position
-      } else {
-        return 'bottom'
-      }
+      return position && position !== undefined ? position : 'bottom';
     }
   })
 
   /**
-   * Computed function to determine whether to
-   * show a progress indicator in a notification.
-   * @param progress - (Optional) If true,
-   * the notification will display a progress indicator.
-   * @returns The resolved value for displaying a progress indicator.
+   * Computed function to determine whether to show a progress indicator in a notification.
+   * @param {progress} progress - (Optional) If true, the notification will display a progress indicator.
+   * @returns {boolean} The resolved value for displaying a progress indicator.
    */
   const notificationProgress = computed(() => {
     return (progress: boolean | undefined): boolean => {
-      if (progress && progress !== undefined) {
-        return progress
-      } else {
-        return true
-      }
+      return progress && progress !== undefined ? progress : true;
     }
   })
 
   /**
    * Computed function to determine the type of a notification.
-   * @param type - The type of the notification
-   * (e.g., 'positive', 'info', 'warning', 'negative').
-   * @returns The resolved type for the notification.
+   * @param {type} type - The type of the notification (e.g., 'positive', 'info', 'warning', 'negative').
+   * @returns {string} The resolved type for the notification.
    */
   const notificationType = computed(() => {
     return (type: string | undefined): string => {
-      if (type && type !== undefined) {
-        return type
-      } else {
-        return NotificationTypeOptions.info
-      }
+      return type && type !== undefined ? type : NotificationTypeOptions.info
     }
   })
 
   /**
-   * Computed function to determine the timeout
-   * duration for a notification.
-   * @param type - The type of the notification
-   * (e.g., 'positive', 'info', 'warning', 'negative').
-   * @returns The resolved timeout duration
-   * in milliseconds for the notification.
+   * Computed function to determine the timeout duration for a notification.
+   * @param {type} type - The type of the notification (e.g., 'positive', 'info', 'warning', 'negative').
+   * @returns {number} The resolved timeout duration in milliseconds for the notification.
    */
   const notificationTimeout = computed(() => {
     return (type: string | undefined): number => {
@@ -192,11 +163,9 @@ const notificationSystem = (
   })
 
   /**
-   * Computed function to determine the CSS
-   * classes for styling a notification based on its type.
-   * @param type - The type of the notification
-   * (e.g., 'positive', 'info', 'warning', 'negative').
-   * @returns The CSS class names associated with the notification type.
+   * Computed function to determine the CSS classes for styling a notification based on its type.
+   * @param {type} type - The type of the notification (e.g., 'positive', 'info', 'warning', 'negative').
+   * @returns {string} The CSS class names associated with the notification type.
    */
   const notificationClasses = computed(() => {
     return (type: string | undefined): string => {
@@ -216,11 +185,9 @@ const notificationSystem = (
   })
 
   /**
-   * Computed function to determine the color type
-   * for styling a notification based on its type.
-   * @param type - The type of the notification
-   * (e.g., 'positive', 'info', 'warning', 'negative').
-   * @returns The color type associated with the notification type.
+   * Computed function to determine the color type for styling a notification based on its type.
+   * @param {type} type - The type of the notification (e.g., 'positive', 'info', 'warning', 'negative').
+   * @returns {Type<NotificationColorType>} The color type associated with the notification type.
    */
   const notificationColor = computed(() => {
     return (type: string | undefined): NotificationColorType => {

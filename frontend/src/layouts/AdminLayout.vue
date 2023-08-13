@@ -1,7 +1,7 @@
 <template>
   <q-layout view="lHh Lpr lFf" class="admin admin--layout">
     <admin-layout-header
-      :admin-application-name="applicationName"
+      :admin-application-name="displayApplicationName"
       @toggleLeftDrawer="toggleLeftDrawer()"
     />
 
@@ -16,7 +16,7 @@
           v-for="(link, index) in navigationBarLinks"
           :key="index"
           :router-config="link"
-          :application-name="applicationName"
+          :application-name="displayApplicationName"
           class="admin__drawer-list-item"
         />
       </q-list>
@@ -27,48 +27,43 @@
     </q-page-container>
 
     <admin-layout-footer
-      :admin-application-name="applicationName"
+      :admin-application-name="displayApplicationName"
       :copyright-info="displayCopyrightInfo"
-      :designer-contact-url="designerContactUrl"
-      :designer-name="designerName"
+      :designer-contact-url="displayDesignerContactUrlInfo"
+      :designer-name="displayDesignerNameInfo"
     />
   </q-layout>
 </template>
 
 <script setup lang="ts">
 // Import framework related utilities
-import { Ref, computed, ref } from 'vue';
+import { computed, ref } from 'vue';
 import { useRouter } from 'vue-router';
-import { useI18n } from 'vue-i18n';
 
 // Import generic components, libraries and interfaces
 import AdminLayoutHeader from 'src/components/AdminLayoutHeader.vue';
 import AdminLayoutNavigationBar from 'src/components/AdminLayoutNavigationBar.vue';
 import AdminLayoutFooter from 'src/components/AdminLayoutFooter.vue';
-
-// Defined the translation variable
-const { t } = useI18n({});
+import {
+  applicationName,
+  copyrightInfo,
+  designerNameInfo,
+  designerContactUrlInfo
+} from 'src/composables/CopyrightInfo';
 
 // Display the application name and version
-let applicationName = ref(process.env.APP_NAME ?? t('admin.generic.application_name'));
+const displayApplicationName = computed((): string => applicationName.value);
 
 // Navigation bar related functions and utilities
 const router = useRouter();
-let leftDrawerOpen: Ref<boolean> = ref(false);
-let navigationBarLinks = ref(router.options.routes[0].children);
+let leftDrawerOpen = ref(false);
+let navigationBarLinks = router.options.routes[0].children;
 function toggleLeftDrawer() {
   leftDrawerOpen.value = !leftDrawerOpen.value;
 }
 
 // Footer related functions and utilities
-const displayCopyrightInfo = computed(() => {
-  const currentYear: number = new Date().getFullYear();
-  if (currentYear && typeof currentYear === 'number') {
-    return 'Copyright © ' + currentYear + ' ' + t('admin.generic.all_rights_reserved');
-  } else {
-    return `Copyright © 2023 ${t('admin.generic.all_rights_reserved')}`;
-  }
-});
-let designerName = ref(process.env.APP_DESIGNER ?? 'John Doe');
-let designerContactUrl = ref(process.env.APP_DESIGNER_URL ?? '#');
+const displayCopyrightInfo = computed((): string => copyrightInfo.value);
+const displayDesignerNameInfo = computed((): string => designerNameInfo.value);
+const displayDesignerContactUrlInfo = computed((): string => designerContactUrlInfo.value);
 </script>

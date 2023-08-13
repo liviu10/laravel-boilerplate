@@ -20,7 +20,7 @@ import { QTrProps } from 'quasar';
 import { computed } from 'vue';
 
 // Import generic components, libraries and interfaces
-import { displayLabel } from 'src/library/TextOperations';
+import { displayFormattedLabelInfo } from 'src/library/TextOperations/TextOperations';
 
 // Defined the translation variable
 const { t } = useI18n({});
@@ -30,23 +30,15 @@ interface AdminPageContainerTableHeaderInterface {
 }
 
 /**
- * Computed function to format the column name for a table row.
- * @function formatColumnName
- * @returns A function that takes a `columnName`
- * argument and returns the formatted column name.
- * @param columnName The column name to be formatted.
- * It can be a string representing a translation
- * key (QTrProps['props']), or undefined.
- * @returns The formatted column name, which is
- * either the translated display label or the default
- * column name if the `columnName` is not
- * provided or is of the wrong type.
+ * Generate a formatted column name for a table.
+ * @param {QTrProps['props'] | undefined} columnName - The column name to be formatted.
+ * @returns {string} The formatted column name.
  */
 const formatColumnName = computed(() => {
   const defaultColumnName = t('admin.generic.table.default_column_name')
-  return (columnName: QTrProps['props'] | undefined): QTrProps['props'] => {
+  return (columnName: QTrProps['props'] | undefined): string => {
     if (columnName && typeof columnName !== undefined) {
-      return displayLabel(t(columnName));
+      return displayFormattedLabelInfo.value(t(columnName));
     } else {
       return defaultColumnName;
     }
@@ -55,3 +47,4 @@ const formatColumnName = computed(() => {
 
 withDefaults(defineProps<AdminPageContainerTableHeaderInterface>(), {});
 </script>
+src/library/TextOperations/TextOperations

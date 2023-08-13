@@ -116,16 +116,26 @@ const emit = defineEmits<{
 }>();
 
 /**
- * Function triggers event for executing action method in dialog interactions.
- * @param action - The name of the action method to be executed for the dialog.
- * Available option: show, edit, delete
- * @param recordId - The unique identifier of the record associated with the dialog.
+ * Perform a dialog action by emitting the 'actionMethodDialog' event with the specified action and optional record ID.
+ * @param {DialogType} action - The type of dialog action to be performed.
+ * @param {number | undefined} recordId - The optional record ID associated with the action.
+ * @returns {void}
  */
-const actionMethodDialog = (action: DialogType, recordId?: number) => emit('actionMethodDialog', action, recordId);
+const actionMethodDialog = (action: DialogType, recordId?: number): void => emit('actionMethodDialog', action, recordId);
 
-const filterRecord = (filters: Pick<FilterInterface, 'key' | 'value'>[]) => emit('filterRecord', filters)
+/**
+ * Apply filters to a record by emitting the 'filterRecord' event with the specified filters.
+ * @param {Pick<FilterInterface, 'key' | 'value'>[]} filters - The array of filters to be applied to the record.
+ * @returns {void}
+ */
+const filterRecord = (filters: Pick<FilterInterface, 'key' | 'value'>[]): void => emit('filterRecord', filters)
 
-const clearFilter = (filterKey: string) => emit('clearFilter', filterKey)
+/**
+ * Clear a specific filter by emitting the 'clearFilter' event with the specified filter key.
+ * @param {string} filterKey - The key of the filter to be cleared.
+ * @returns {void}
+ */
+const clearFilter = (filterKey: string): void => emit('clearFilter', filterKey)
 
 withDefaults(defineProps<AdminPageContainerTableInterface>(), {
   bordered: true,

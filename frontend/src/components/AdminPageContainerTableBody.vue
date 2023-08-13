@@ -86,19 +86,12 @@ const actionMethods: { [key: number]: DialogType } = {
 };
 
 /**
- * Open a dialog by emitting the 'actionMethodDialog' event
- * with the specified action and record ID. This function
- * is typically used to trigger the opening of a
- * dialog or modal for a specific action related to
- * a particular record identified by the record ID.
- * @param action - The name of the action
- * to be associated with the dialog.
- * @param recordId - The unique identifier of
- * the record related to the dialog action.
- * @function
- * @returns void
+ * Open a dialog for a specific action and record by emitting the 'actionMethodDialog' event with the specified action and record ID.
+ * @param {DialogType} action - The type of dialog action to be opened.
+ * @param {number} recordId - The ID of the record associated with the action.
+ * @returns {void}
  */
-const openDialog = (action: DialogType, recordId: number) => emit('actionMethodDialog', action, recordId);
+const openDialog = (action: DialogType, recordId: number): void => emit('actionMethodDialog', action, recordId);
 
 withDefaults(defineProps<AdminPageContainerTableHeaderInterface>(), {});
 </script>

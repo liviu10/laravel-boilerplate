@@ -11,7 +11,7 @@
     <q-toolbar>
       <div class="admin-layout-section__footer-designer">
         <p>
-          {{ t('admin.generic.designed_by') }}
+          Designed by
           <a :href="designerContactUrl" target="_blank">{{ designerName }}</a>
         </p>
       </div>
@@ -20,12 +20,6 @@
 </template>
 
 <script setup lang="ts">
-// Import framework related utilities
-import { useI18n } from 'vue-i18n';
-
-// Defined the translation variable
-const { t } = useI18n({});
-
 interface AdminFooterProps {
   adminApplicationName: string;
   copyrightInfo: string;

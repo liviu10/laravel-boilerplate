@@ -45,6 +45,7 @@ import { useI18n } from 'vue-i18n';
 
 // Import generic components, libraries and interfaces
 import { UserInterface } from 'src/interfaces/UserInterface';
+import { userIsAuthenticated } from 'src/composables/UserIsAuthenticated';
 
 interface AdminHeaderProps {
   adminApplicationName: string;
@@ -58,28 +59,18 @@ const emit = defineEmits<{
 const { t } = useI18n({});
 
 /**
- * Computed function to generate an admin welcome message
- * based on the current authenticated user. If the user is authenticated,
- * it will return a welcome message with the user's full name,
- * otherwise, it will return a generic welcome message.
- * @param currentAuthenticatedUser - The current authenticated user object
- * containing user details like 'full_name'.
- * @returns The admin welcome message.
+ * Generate a welcome message based on the authentication status of the user.
+ * Example: Welcome, John Doe
+ * @param {UserInterface | undefined} currentAuthenticatedUser - The currently authenticated user.
+ * @returns {string} The welcome message.
  */
 const displayAdminWelcomeMessage = computed(() => {
+  // TODO: Improve this code because it's identical with the one from AdminPageDescription
   return (currentAuthenticatedUser: UserInterface | undefined): string => {
-    const userIsAuthenticate =
-      currentAuthenticatedUser &&
-      currentAuthenticatedUser !== undefined &&
-      Object.keys(currentAuthenticatedUser).length &&
-      Object.hasOwnProperty('full_name')
-    if (userIsAuthenticate) {
-      return t('admin.generic.welcome', {
-        authUserName: `, ${currentAuthenticatedUser.full_name}`,
-      });
-    } else {
-      return t('admin.generic.welcome');
-    }
+    const isAuthenticated: string | boolean = userIsAuthenticated.value(currentAuthenticatedUser)
+    return isAuthenticated
+      ? t('admin.generic.welcome', { authUserName: `, ${isAuthenticated}` })
+      : t('admin.generic.welcome')
   };
 });
 
