@@ -5,7 +5,6 @@ import { computed } from 'vue';
  * @returns {string} The name of the application.
  */
 const applicationName = computed((): string => {
-
   const appName: string = process.env.APP_NAME ?? 'Generic boilerplate'
   return appName
 });

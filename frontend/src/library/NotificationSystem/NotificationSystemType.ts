@@ -27,10 +27,33 @@ type NotificationColorType =
   | 'black'
   | 'white'
 
+/**
+ * Interface representing additional notification message properties.
+ * @property description
+ * @property message
+ * @property error
+ * @interface NotificationAdditionalMessageInterface
+ */
 interface NotificationAdditionalMessageInterface {
-  description?: string | undefined,
-  message?: string | undefined,
-  error?: string | undefined,
+  description?: string | undefined
+  message?: string | undefined
+  error?: string | undefined
+}
+
+/**
+ * Interface representing log properties.
+ * @property message
+ * @property response
+ * @property request
+ * @interface NotificationSystemLogInterface
+ */
+interface NotificationSystemLogInterface {
+  message?: string | undefined
+  response?: {
+    data: {
+      message: string
+    }
+  } | undefined
 }
 
 export {
@@ -38,5 +61,6 @@ export {
   NotificationIconOptions,
   NotificationPositionType,
   NotificationColorType,
-  NotificationAdditionalMessageInterface
+  NotificationAdditionalMessageInterface,
+  NotificationSystemLogInterface
 }

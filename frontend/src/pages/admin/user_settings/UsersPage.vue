@@ -143,7 +143,7 @@ const getAllRecords = computed(() => userStore.getAllRecords);
 
 // Get all filters
 const getAllFilters = computed(() => {
-  const savedSearch: string | null = localStorage.getItem('user-filters')
+  const savedSearch: string | null = localStorage.getItem(`${userStore.$id}-filters`)
   if (savedSearch && savedSearch !== null) {
     const existingSearchQuery: Record<string, string | number | null> = JSON.parse(savedSearch);
     const filterArray: Pick<FilterInterface, 'key' | 'value'>[] = Object.keys(existingSearchQuery).map((key) => ({
@@ -188,16 +188,16 @@ async function filterRecord(appliedFilters: Pick<FilterInterface, 'key' | 'value
 async function clearFilter(filterKey: string) {
   loadData.value = true
   console.log('--> UserPage.vue clearFilter:', filterKey)
-  const savedSearch: string | null = localStorage.getItem('user-filters')
+  const savedSearch: string | null = localStorage.getItem(`${userStore.$id}-filters`)
   appliedFilters = []
   if (savedSearch && savedSearch !== null) {
     const existingSearchQuery: Record<string, string | number | null> = JSON.parse(savedSearch);
     if (existingSearchQuery.hasOwnProperty(filterKey)) {
       if (Object.keys(existingSearchQuery).length > 1) {
         delete existingSearchQuery[filterKey]
-        localStorage.setItem('user-filters', JSON.stringify(existingSearchQuery));
+        localStorage.setItem(`${userStore.$id}-filters`, JSON.stringify(existingSearchQuery));
       } else {
-        localStorage.removeItem('user-filters');
+        localStorage.removeItem(`${userStore.$id}-filters`);
       }
       await userStore.getRecords().then(() => {
         loadData.value = false
@@ -305,7 +305,7 @@ function handleActionMethod(action: DialogType) {
 let appliedFilters: Pick<FilterInterface, 'key' | 'value'>[] = [];
 onMounted(async () => {
   loadData.value = true
-  const savedSearch: string | null = localStorage.getItem('user-filters')
+  const savedSearch: string | null = localStorage.getItem(`${userStore.$id}-filters`)
   if (savedSearch && savedSearch !== null) {
     const existingSearchQuery: Record<string, string | number | null> = JSON.parse(savedSearch);
     const filterArray: Pick<FilterInterface, 'key' | 'value'>[] = Object.keys(existingSearchQuery).map((key) => ({

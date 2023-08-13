@@ -4,6 +4,8 @@ import { applicationUserSettings, usersEndpoint } from 'src/api/userSettings';
 import { PaginatedResultsInterface, FilterInterface } from 'src/interfaces/ApiResponseInterface';
 import { notificationSystem } from 'src/library/NotificationSystem/NotificationSystem';
 import { UserInterface } from 'src/interfaces/UserInterface';
+import { saveFilterToLocalStorage } from 'src/library/SaveFilterToLocalStorage/SaveFilterToLocalStorage';
+import { notificationSystemLog } from 'src/library/NotificationSystem/NotificationSystemLog';
 
 const fullApiUrl = applicationUserSettings + usersEndpoint
 
@@ -30,30 +32,7 @@ const useUserStore = defineStore('userStore', {
   actions: {
     async getRecords(search?: Pick<FilterInterface, 'key' | 'value'>[] | undefined) {
       let searchQuery: Record<string, string | number | null> = {};
-      if (search && search.length) {
-        const savedSearch: string | null = localStorage.getItem('user-filters')
-        if (savedSearch && savedSearch !== null) {
-          const existingSearchQuery: Record<string, string | number | null> = JSON.parse(savedSearch);
-          searchQuery = search.reduce((query, filter) => {
-            query[filter.key] = filter.value;
-            return query;
-          }, {} as Record<string, string | number | null>);
-          Object.assign(searchQuery, existingSearchQuery)
-          localStorage.setItem('user-filters', JSON.stringify(searchQuery));
-        } else {
-          searchQuery = search.reduce((query, filter) => {
-            query[filter.key] = filter.value;
-            return query;
-          }, {} as Record<string, string | number | null>);
-          localStorage.setItem('user-filters', JSON.stringify(searchQuery));
-        }
-      } else {
-        const savedSearch: string | null = localStorage.getItem('user-filters')
-        if (savedSearch && savedSearch !== null) {
-          const existingSearchQuery: Record<string, string | number | null> = JSON.parse(savedSearch);
-          Object.assign(searchQuery, existingSearchQuery)
-        }
-      }
+      searchQuery = saveFilterToLocalStorage.value(useUserStore.$id, search)
 
       const apiResponse: PaginatedResultsInterface | void =
         await api.get(fullApiUrl, { params: searchQuery })
@@ -64,7 +43,7 @@ const useUserStore = defineStore('userStore', {
           })
           .catch((error) => {
             notificationSystem(error.name, error.message, 'negative', 'bottom', true, error.response?.data)
-            console.log(`User error message: ${error.message}, response: ${error.response?.data}, request: ${error.request}`)
+            console.error(`${notificationSystemLog.value('negative', useUserStore.$id, error)}`)
           })
       return apiResponse
     },
@@ -82,7 +61,7 @@ const useUserStore = defineStore('userStore', {
           })
           .catch((error) => {
             notificationSystem(error.name, error.message, 'negative', 'bottom', true, error.response?.data)
-            console.log(`User error message: ${error.message}, response: ${error.response?.data}, request: ${error.request}`)
+            console.error(`${notificationSystemLog.value('negative', useUserStore.$id, error)}`)
           })
       return apiResponse
     },
