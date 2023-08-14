@@ -1,14 +1,14 @@
 <template>
   <q-page class="admin admin--page">
-    <admin-page-title :admin-page-title="currentRouteTitle" />
+    <admin-page-title :admin-page-title="currentRouteTitle(router.currentRoute.value.meta)" />
 
     <admin-page-description
-      :admin-route-name="currentRouteName"
+      :admin-route-name="currentRouteName(router.currentRoute.value.name)"
       :admin-application-name="applicationName"
-      :admin-page-description="currentRouteDescription"
+      :admin-page-description="currentRouteDescription(router.currentRoute.value.meta)"
     />
 
-    <admin-page-container :admin-route-name="currentRouteName">
+    <admin-page-container :admin-route-name="currentRouteName(router.currentRoute.value.name)">
       <template v-slot:admin-content>
         <admin-page-container-table
           :advance-filter-record="true"
@@ -85,6 +85,14 @@ import { displayLabel } from 'src/library/TextOperations';
 import { notificationSystem } from 'src/library/NotificationSystem/NotificationSystem';
 import { DialogType } from 'src/types/DialogType';
 import { FilterInterface } from 'src/interfaces/ApiResponseInterface';
+import { applicationName } from 'src/composables/CopyrightInfo';
+import {
+  currentRouteName,
+  currentRouteTitle,
+  currentRouteDescription
+} from 'src/composables/RouteInfo';
+import { readFilterFromLocalStorage } from 'src/library/FilterToLocalStorage/ReadFilterFromLocalStorage';
+import { updateFilterToStore } from 'src/library/FilterToLocalStorage/UpdateFilterToStore';
 
 // Import Pinia's related utilities
 import { useUserRoleStore } from 'src/stores/admin/userSettings/userRoles';
@@ -97,12 +105,6 @@ const { t } = useI18n({});
 
 // Get current route title and route name
 const router = useRouter();
-let currentRouteName = ref(router.currentRoute.value.name);
-let currentRouteTitle = ref(t(router.currentRoute.value.meta.title as string))
-let currentRouteDescription = ref(t(router.currentRoute.value.meta.caption as string))
-
-// Get application name
-const applicationName: string | undefined = process.env.APP_NAME
 
 // Load table data
 const loadData = ref(false)
@@ -112,28 +114,10 @@ const getAllRecords = computed(() => userRoleStore.getAllRecords);
 
 // Get all filters
 const getAllFilters = computed(() => {
-  const savedSearch: string | null = localStorage.getItem(`${userRoleStore.$id}-filters`)
-  if (savedSearch && savedSearch !== null) {
-    const existingSearchQuery: Record<string, string | number | null> = JSON.parse(savedSearch);
-    const filterArray: Pick<FilterInterface, 'key' | 'value'>[] = Object.keys(existingSearchQuery).map((key) => ({
-      key,
-      value: existingSearchQuery[key]
-    }));
-    appliedFilters = filterArray
-  }
+  appliedFilters = readFilterFromLocalStorage.value(userRoleStore.$id)
 
   if (appliedFilters && appliedFilters.length) {
-    const updatedFilters = JSON.parse(JSON.stringify(userRoleStore.getAllFilters));
-    appliedFilters.forEach(appliedFilter => {
-      const { key, value } = appliedFilter;
-      updatedFilters.forEach((filter: FilterInterface) => {
-        if (filter.key === key) {
-          filter.value = value;
-        }
-      });
-    });
-
-    return updatedFilters;
+    return updateFilterToStore.value(userRoleStore.getAllFilters, appliedFilters)
   } else {
     return userRoleStore.getAllFilters
   }
@@ -155,7 +139,6 @@ async function filterRecord(appliedFilters: Pick<FilterInterface, 'key' | 'value
 
 async function clearFilter(filterKey: string) {
   loadData.value = true
-  console.log('--> UserPage.vue clearFilter:', filterKey)
   const savedSearch: string | null = localStorage.getItem(`${userRoleStore.$id}-filters`)
   appliedFilters = []
   if (savedSearch && savedSearch !== null) {
@@ -175,7 +158,7 @@ async function clearFilter(filterKey: string) {
     loadData.value = false
     const notificationTitle = t('admin.generic.notification_info_title')
     const notificationMessage = t('admin.generic.no_filters_applied', {
-      resourceName: currentRouteTitle.value
+      resourceName: t(currentRouteTitle.value(router.currentRoute.value.meta) as string)
     })
     notificationSystem(notificationTitle, notificationMessage, 'info', 'bottom', true)
   }

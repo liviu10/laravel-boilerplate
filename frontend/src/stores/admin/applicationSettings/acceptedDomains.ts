@@ -4,7 +4,7 @@ import { applicationApiSettings, acceptedDomainsEndpoint } from 'src/api/apiSett
 import { PaginatedResultsInterface, FilterInterface } from 'src/interfaces/ApiResponseInterface';
 import { notificationSystem } from 'src/library/NotificationSystem/NotificationSystem';
 import { AcceptedDomainInterface } from 'src/interfaces/ApplicationInterface';
-import { saveFilterToLocalStorage } from 'src/library/SaveFilterToLocalStorage/SaveFilterToLocalStorage';
+import { saveFilterToLocalStorage } from 'src/library/FilterToLocalStorage/SaveFilterToLocalStorage';
 import { notificationSystemLog } from 'src/library/NotificationSystem/NotificationSystemLog';
 
 const fullApiUrl = applicationApiSettings + acceptedDomainsEndpoint

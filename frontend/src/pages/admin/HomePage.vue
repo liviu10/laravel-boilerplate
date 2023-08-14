@@ -1,13 +1,14 @@
 <template>
   <q-page class="admin admin--page">
-    <admin-page-title :admin-page-title="currentRouteTitle" />
+    <admin-page-title :admin-page-title="currentRouteTitle(router.currentRoute.value.meta)" />
 
     <admin-page-description
+      :admin-route-name="currentRouteName(router.currentRoute.value.name)"
       :admin-application-name="applicationName"
-      :admin-route-name="currentRouteName"
+      :admin-page-description="currentRouteDescription(router.currentRoute.value.meta)"
     />
 
-    <admin-page-container :admin-route-name="currentRouteName">
+    <admin-page-container :admin-route-name="currentRouteName(router.currentRoute.value.name)">
       <template v-slot:admin-content>
         <div class="admin-section__home-content">
           <q-card
@@ -57,7 +58,7 @@
 
 <script setup lang="ts">
 // Import vue related utilities
-import { Ref, computed, ref } from 'vue';
+import { computed } from 'vue';
 import { RouteRecordRaw, useRouter } from 'vue-router';
 import { useI18n } from 'vue-i18n';
 
@@ -65,20 +66,23 @@ import { useI18n } from 'vue-i18n';
 import AdminPageTitle from 'src/components/AdminPageTitle.vue';
 import AdminPageDescription from 'src/components/AdminPageDescription.vue';
 import AdminPageContainer from 'src/components/AdminPageContainer.vue';
+import {
+  currentRouteName,
+  currentRouteTitle,
+  currentRouteDescription
+} from 'src/composables/RouteInfo';
 
 // Defined the translation variable
 const { t } = useI18n({});
 
 // Get current route title and route name
 const router = useRouter();
-let currentRouteTitle = ref(t(router.currentRoute.value.meta.title as string));
-let currentRouteName = ref(router.currentRoute.value.name);
 
 // Get application name
 const applicationName: string | undefined = process.env.APP_NAME;
 
 // Get all available resources
-const availableResources: Ref<RouteRecordRaw[] | undefined> = computed(() => {
+const availableResources = computed((): RouteRecordRaw[] | undefined => {
   const allResources = router.options.routes[0].children;
   const displayResources: RouteRecordRaw[] | undefined = [];
   allResources?.forEach((resource) => {
@@ -86,7 +90,7 @@ const availableResources: Ref<RouteRecordRaw[] | undefined> = computed(() => {
       displayResources.push(resource);
     }
   });
-  return displayResources;
+  return displayResources as RouteRecordRaw[] | undefined;
 });
 
 // Generates an array of HTMLAnchorElement objects for the provided children routes.

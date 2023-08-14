@@ -1,11 +1,11 @@
 <template>
   <q-page class="admin admin--page">
-    <admin-page-title :admin-page-title="currentRouteTitle" />
+    <admin-page-title :admin-page-title="currentRouteTitle(router.currentRoute.value.meta)" />
 
     <admin-page-description
-      :admin-route-name="currentRouteName"
+      :admin-route-name="currentRouteName(router.currentRoute.value.name)"
       :admin-application-name="applicationName"
-      :admin-page-description="currentRouteDescription"
+      :admin-page-description="currentRouteDescription(router.currentRoute.value.meta)"
     />
   </q-page>
 </template>
@@ -13,24 +13,19 @@
 <script setup lang="ts">
 // Import vue related utilities
 import { useRouter } from 'vue-router';
-import { ref } from 'vue';
-import { useI18n } from 'vue-i18n';
 
 // Import generic components, libraries and interfaces
 import AdminPageTitle from 'src/components/AdminPageTitle.vue';
 import AdminPageDescription from 'src/components/AdminPageDescription.vue';
-
-// Defined the translation variable
-const { t } = useI18n({});
+import { applicationName } from 'src/composables/CopyrightInfo';
+import {
+  currentRouteName,
+  currentRouteTitle,
+  currentRouteDescription
+} from 'src/composables/RouteInfo';
 
 // Get current route title and route name
 const router = useRouter();
-let currentRouteName = ref(router.currentRoute.value.name);
-let currentRouteTitle = ref(t(router.currentRoute.value.meta.title as string))
-let currentRouteDescription = ref(t(router.currentRoute.value.meta.caption as string))
-
-// Get application name
-const applicationName: string | undefined = process.env.APP_NAME
 </script>
 
 <style lang="scss" scoped></style>

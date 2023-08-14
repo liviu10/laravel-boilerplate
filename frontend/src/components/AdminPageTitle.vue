@@ -31,7 +31,7 @@ const displayAdminPageTitle = computed(() => {
   const defaultPageTitle = t('admin.generic.page_title');
   return (adminPageTitle: RouteRecordName | null | undefined | unknown): string => {
     if (adminPageTitle && adminPageTitle !== null && typeof adminPageTitle === 'string') {
-      return displayFormattedLabelInfo.value(adminPageTitle);
+      return displayFormattedLabelInfo.value(t(adminPageTitle as string));
     } else {
       return defaultPageTitle;
     }

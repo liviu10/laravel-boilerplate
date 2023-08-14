@@ -4,7 +4,7 @@ import { applicationUserSettings, usersEndpoint } from 'src/api/userSettings';
 import { PaginatedResultsInterface, FilterInterface } from 'src/interfaces/ApiResponseInterface';
 import { notificationSystem } from 'src/library/NotificationSystem/NotificationSystem';
 import { UserInterface } from 'src/interfaces/UserInterface';
-import { saveFilterToLocalStorage } from 'src/library/SaveFilterToLocalStorage/SaveFilterToLocalStorage';
+import { saveFilterToLocalStorage } from 'src/library/FilterToLocalStorage/SaveFilterToLocalStorage';
 import { notificationSystemLog } from 'src/library/NotificationSystem/NotificationSystemLog';
 
 const fullApiUrl = applicationUserSettings + usersEndpoint

@@ -5,19 +5,7 @@ export default {
     generic: {
       welcome: 'Welcome {authUserName}',
       page_title: 'Admin page title',
-      page_description: `
-        {applicationName} dashboard application is a feature-rich and customizable
-        platform that provides users with an extensive range of capabilities.
-        Built with the combination of Vue.js and TypeScript, it offers a visually
-        appealing and intuitive user interface. Users can effortlessly modify their profiles,
-        including personal information and preferences, while also having control over
-        user roles and permissions. This application empowers users to create dynamic
-        and engaging pages and articles, enabling seamless content management.
-        Additionally, the dashboard facilitates convenient media file uploads,
-        ensuring smooth integration of multimedia elements. With its powerful tools
-        and flexibility, this application serves as a comprehensive solution for efficient
-        management and customization.
-      `,
+      page_description: 'Replace this generic description',
       documentation: {
         first_part: `
           For a more comprehensive understanding and detailed insights into the
@@ -70,19 +58,23 @@ export default {
     home: {
       title: 'Dashboard',
       description: `
-        TEXT HERE.
+        {applicationName} dashboard application is a feature-rich and customizable
+        platform that provides users with an extensive range of capabilities.
+        Built with the combination of Vue.js and TypeScript, it offers a visually
+        appealing and intuitive user interface. Users can effortlessly modify their profiles,
+        including personal information and preferences, while also having control over
+        user roles and permissions. This application empowers users to create dynamic
+        and engaging pages and articles, enabling seamless content management.
+        Additionally, the dashboard facilitates convenient media file uploads,
+        ensuring smooth integration of multimedia elements. With its powerful tools
+        and flexibility, this application serves as a comprehensive solution for efficient
+        management and customization.
       `,
     },
     management: {
       title: 'Management',
-      description: `
-        TEXT HERE
-      `,
       pages: {
         title: 'Pages',
-        description: `
-          TEXT HERE.
-        `,
         table: {
           field_1: 'Field 1',
           field_2: 'Field 2',
@@ -91,39 +83,21 @@ export default {
       },
       tags: {
         title: 'Tags',
-        description: `
-          TEXT HERE.
-        `,
       },
       articles: {
         title: 'Articles',
-        description: `
-          TEXT HERE.
-        `,
       },
       media: {
         title: 'Media',
-        description: `
-          TEXT HERE.
-        `,
       },
       comments: {
         title: 'Comments',
-        description: `
-          TEXT HERE.
-        `,
       },
     },
     communication: {
       title: 'Communication',
-      description: `
-        TEXT HERE.
-      `,
       contact: {
         title: 'Contact me',
-        description: `
-          TEXT HERE.
-        `,
         table: {
           full_name: 'Full name',
           email: 'Email address',
@@ -132,9 +106,6 @@ export default {
       },
       newsletter: {
         title: 'Newsletters and Campaigns',
-        description: `
-          TEXT HERE.
-        `,
         table: {
           name: 'Campaign name',
           valid_from: 'Valid from',
@@ -145,32 +116,17 @@ export default {
     },
     reports: {
       title: 'Reports',
-      description: `
-        TEXT HERE.
-      `,
     },
     documentation: {
       title: 'Documentation',
-      description: `
-        TEXT HERE.
-      `,
     },
     user_settings: {
       title: 'User settings',
-      description: `
-        TEXT HERE.
-      `,
       user_profile: {
         title: 'User profile',
-        description: `
-          TEXT HERE.
-        `,
       },
       users: {
         title: 'All users',
-        description: `
-          TEXT HERE.
-        `,
         table: {
           full_name: 'Full name',
           email: 'Email address',
@@ -180,9 +136,6 @@ export default {
       },
       roles_and_permissions: {
         title: 'Roles and permissions',
-        description: `
-          TEXT HERE.
-        `,
         table: {
           name: 'Name',
           slug: 'Slug'
@@ -191,26 +144,14 @@ export default {
     },
     application_settings: {
       title: 'Application settings',
-      description: `
-        TEXT HERE.
-      `,
       general: {
         title: 'General',
-        description: `
-          TEXT HERE.
-        `,
       },
       performance: {
         title: 'Performance',
-        description: `
-          TEXT HERE.
-        `,
       },
       accepted_domains: {
         title: 'Accepted domains',
-        description: `
-          TEXT HERE.
-        `,
         table: {
           domain: 'Domain',
           type: 'Type'
@@ -218,15 +159,9 @@ export default {
       },
       notifications: {
         title: 'Notifications',
-        description: `
-          TEXT HERE.
-        `,
       },
       emails: {
         title: 'Emails',
-        description: `
-          TEXT HERE.
-        `,
       },
     },
   },

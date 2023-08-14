@@ -5,7 +5,7 @@
         {{ displayAdminWelcomeMessage(currentAuthenticatedUser) }}
       </div>
       <div class="admin-section__content">
-        {{ displayAdminPageDescription(adminPageDescription, adminApplicationName) }}
+        {{ displayAdminPageDescription(adminPageDescription, adminApplicationName, adminRouteName) }}
       </div>
       <div v-if="checkCurrentRouteName(adminRouteName)" v-html="displayAdminDocMessage(adminApplicationName)" class="admin-section__content"> </div>
     </div>
@@ -40,6 +40,7 @@ interface AdminPageDescriptionInterface {
  * @returns {string} The welcome message.
  */
 const displayAdminWelcomeMessage = computed(() => {
+  // TODO: Improve this code because it's identical with the one from AdminLayoutHeader
   return (currentAuthenticatedUser: UserInterface | undefined): string => {
     const isAuthenticated: string | boolean = userIsAuthenticated.value(currentAuthenticatedUser)
     return isAuthenticated
@@ -52,19 +53,15 @@ const displayAdminWelcomeMessage = computed(() => {
  * Generate the description for an admin page.
  * @param {string | undefined} adminPageDescription - The description of the admin page.
  * @param {string | undefined} adminApplicationName - The name of the admin application.
+ * @param {RouteRecordName | null | undefined} adminRouteName - The name of the route.
  * @returns {string} The generated description for the admin page.
  */
 const displayAdminPageDescription = computed(() => {
-  // TODO: Improve this code because it's identical with the one from AdminLayoutHeader
-  return (adminPageDescription: string | undefined, adminApplicationName: string | undefined): string => {
-    if (adminPageDescription && typeof adminPageDescription === 'string') {
-      return adminPageDescription
+  return (adminPageDescription: string | undefined, adminApplicationName: string | undefined, adminRouteName: RouteRecordName | null | undefined): string => {
+    if (adminRouteName === 'HomePage') {
+      return t('admin.home.description', { applicationName: adminApplicationName ?? t('admin.home.description') });
     } else {
-      if (adminApplicationName && typeof adminApplicationName === 'string') {
-        return t('admin.generic.page_description', { applicationName: adminApplicationName });
-      } else {
-        return t('admin.generic.page_description', { applicationName: t('admin.generic.application_name') });
-      }
+      return t(adminPageDescription as string);
     }
   }
 })

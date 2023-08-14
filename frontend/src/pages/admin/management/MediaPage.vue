@@ -1,14 +1,14 @@
 <template>
   <q-page class="admin admin--page">
-    <admin-page-title :admin-page-title="currentRouteTitle" />
+    <admin-page-title :admin-page-title="currentRouteTitle(router.currentRoute.value.meta)" />
 
     <admin-page-description
-      :admin-route-name="currentRouteName"
+      :admin-route-name="currentRouteName(router.currentRoute.value.name)"
       :admin-application-name="applicationName"
-      :admin-page-description="currentRouteDescription"
+      :admin-page-description="currentRouteDescription(router.currentRoute.value.meta)"
     />
 
-    <admin-page-container :admin-route-name="currentRouteName">
+    <admin-page-container :admin-route-name="currentRouteName(router.currentRoute.value.name)">
       <template v-slot:admin-content>
         <admin-page-container-table
           :columns="TableColumns"
@@ -90,6 +90,12 @@ import TableColumns from 'src/columns/mediaColumns';
 import { displayLabel } from 'src/library/TextOperations';
 import { notificationSystem } from 'src/library/NotificationSystem/NotificationSystem';
 import { DialogType } from 'src/types/DialogType';
+import { applicationName } from 'src/composables/CopyrightInfo';
+import {
+  currentRouteName,
+  currentRouteTitle,
+  currentRouteDescription
+} from 'src/composables/RouteInfo';
 
 // Import Pinia's related utilities
 import { useMediaStore } from 'src/stores/admin/management/media';
@@ -102,14 +108,6 @@ const { t } = useI18n({});
 
 // Get current route title and route name
 const router = useRouter();
-let currentRouteName = ref(router.currentRoute.value.name);
-let currentRouteTitle = ref(t(router.currentRoute.value.meta.title as string));
-let currentRouteDescription = ref(
-  t(router.currentRoute.value.meta.caption as string)
-);
-
-// Get application name
-const applicationName: string | undefined = process.env.APP_NAME;
 
 // Load table data
 const loadData = ref(false)
