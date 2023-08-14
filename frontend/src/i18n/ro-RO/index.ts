@@ -31,6 +31,7 @@ export default {
       view_resource: 'Vizualizeaza',
       table: {
         id: 'Id',
+        is_active: 'Este activ?',
         actions: 'Actiuni',
         no_data_label: 'Nu exista inregistrari',
         new_record_label: 'Inregistrare noua',

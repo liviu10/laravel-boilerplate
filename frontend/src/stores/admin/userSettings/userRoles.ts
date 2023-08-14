@@ -1,15 +1,20 @@
 import { defineStore } from 'pinia';
 import { api } from 'src/boot/axios'
 import { applicationUserSettings, userRolesEndpoint } from 'src/api/userSettings';
-import { PaginatedResultsInterface } from 'src/interfaces/ApiResponseInterface';
+import { PaginatedResultsInterface, FilterInterface } from 'src/interfaces/ApiResponseInterface';
 import { notificationSystem } from 'src/library/NotificationSystem/NotificationSystem';
 import { UserRoleInterface } from 'src/interfaces/UserInterface';
+import { saveFilterToLocalStorage } from 'src/library/SaveFilterToLocalStorage/SaveFilterToLocalStorage';
+import { notificationSystemLog } from 'src/library/NotificationSystem/NotificationSystemLog';
 
 const fullApiUrl = applicationUserSettings + userRolesEndpoint
 
 const useUserRoleStore = defineStore('userRoleStore', {
   state: () => ({
     allRecords: {} as PaginatedResultsInterface,
+    userIsAuthenticated: false as boolean,
+    allFilters: [] as FilterInterface[],
+    appliedFilters: [] as Pick<FilterInterface, 'key' | 'value'>[],
     createRecord: {},
     singleRecord: {} as UserRoleInterface,
     updateRecord: {},
@@ -17,22 +22,28 @@ const useUserRoleStore = defineStore('userRoleStore', {
   }),
   getters: {
     getAllRecords: (state) => state.allRecords,
+    getAllFilters: (state) => state.allFilters,
+    getAppliedFilters: (state) => state.appliedFilters,
     getCreatRecord: (state) => state.createRecord,
     getSingleRecord: (state) => state.singleRecord,
     getUpdateRecord: (state) => state.updateRecord,
     getDeleteRecord: (state) => state.deleteRecord,
   },
   actions: {
-    async getRecords() {
+    async getRecords(search?: Pick<FilterInterface, 'key' | 'value'>[] | undefined) {
+      let searchQuery: Record<string, string | number | null> = {};
+      searchQuery = saveFilterToLocalStorage.value(useUserRoleStore.$id, search)
+
       const apiResponse: PaginatedResultsInterface | void =
-        await api.get(fullApiUrl)
+        await api.get(fullApiUrl, { params: searchQuery })
           .then(response => {
             this.allRecords = response.data.results
+            this.allFilters = response.data.filters
             return this.allRecords
           })
           .catch((error) => {
             notificationSystem(error.name, error.message, 'negative', 'bottom', true, error.response?.data)
-            console.log(`Roles and permissions error message: ${error.message}, response: ${error.response?.data}, request: ${error.request}`)
+            console.error(`${notificationSystemLog.value('negative', useUserRoleStore.$id, error)}`)
           })
       return apiResponse
     },
@@ -50,7 +61,7 @@ const useUserRoleStore = defineStore('userRoleStore', {
           })
           .catch((error) => {
             notificationSystem(error.name, error.message, 'negative', 'bottom', true, error.response?.data)
-            console.log(`Roles and permissions error message: ${error.message}, response: ${error.response?.data}, request: ${error.request}`)
+            console.error(`${notificationSystemLog.value('negative', useUserRoleStore.$id, error)}`)
           })
       return apiResponse
     },

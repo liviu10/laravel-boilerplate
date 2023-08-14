@@ -1,24 +1,40 @@
 <template>
   <q-tr>
     <q-td v-for="filter in filters" :key="filter.id">
-      <component
+      <q-input
+        v-if="filter.type !== 'select'"
         debounce="500"
         dense
-        :is="filter.component_type ? filter.component_type : 'q-input'"
         :label="filter.name"
-        :options="filter.type === 'select' ? filter.options : null"
-        :options-dense="filter.type === 'select' ? true : false"
         outlined
         square
         stack-label
-        :type="filter.type"
+        :type="filterType(filter.type)"
         v-model="filter.value"
         @update:model-value="filterRecord(filter)"
       >
-        <template v-if="filter.value && filter.value !== null" v-slot:append>
+        <template v-if="filter.value" v-slot:append>
           <q-icon name="cancel" @click="clearFilter(filter)" class="cursor-pointer" />
         </template>
-      </component>
+      </q-input>
+      <q-select
+        v-else
+        dense
+        emit-value
+        :label="filter.name"
+        map-options
+        :options="filter.options"
+        options-dense
+        outlined
+        square
+        stack-label
+        v-model="filter.value"
+        @update:model-value="filterRecord(filter)"
+      >
+        <template v-if="filter.value" v-slot:append>
+          <q-icon name="cancel" @click="clearFilter(filter)" class="cursor-pointer" />
+        </template>
+      </q-select>
     </q-td>
     <q-td />
   </q-tr>
@@ -30,6 +46,7 @@ import { computed } from 'vue';
 
 // Import generic components, libraries and interfaces
 import { FilterInterface } from 'src/interfaces/ApiResponseInterface';
+import { InputType } from 'src/types/InputType';
 
 interface AdminPageContainerTableTopRowInterface {
   filters: FilterInterface[];
@@ -41,6 +58,42 @@ const emit = defineEmits<{
 }>();
 
 const accumulatedFilters: Pick<FilterInterface, 'key' | 'value'>[] = []
+
+/**
+ * Display the filter type.
+ * @param {string} filter - The filter type.
+ * @returns {InputType}
+ */
+const filterType = computed(() => {
+  return ((type: string): InputType => {
+    switch (type) {
+      case 'number':
+        return 'number';
+      case 'textarea':
+        return 'textarea';
+      case 'time':
+        return 'time';
+      case 'text':
+        return 'text';
+      case 'password':
+        return 'password';
+      case 'email':
+        return 'email';
+      case 'search':
+        return 'search';
+      case 'tel':
+        return 'tel';
+      case 'file':
+        return 'file';
+      case 'url':
+        return 'url';
+      case 'date':
+        return 'date';
+      default:
+        return undefined;
+    }
+  });
+});
 
 /**
  * Accumulate and emit filters for a record.

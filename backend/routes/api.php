@@ -89,18 +89,18 @@ Route::group([ 'prefix' => config('app.version') ], function () {
             Route::apiResource('/roles', RoleController::class);
         });
         // Application's settings endpoints
-        // Route::group([ 'prefix' => '/application-settings' ], function () {
-        //     // General
-        //     Route::apiResource('/general', GeneralController::class);
-        //     // Performance
-        //     Route::apiResource('/performance', PerformanceController::class);
-        //     // Accepted domains
-        //     Route::apiResource('/accepted-domains', AcceptedDomainController::class);
-        //     // Notifications
-        //     Route::apiResource('/notifications', NotificationController::class);
-        //     // Emails
-        //     Route::apiResource('/emails', EmailController::class);
-        // });
+        Route::group([ 'prefix' => '/application-settings' ], function () {
+            // General
+            // Route::apiResource('/general', GeneralController::class);
+            // Performance
+            // Route::apiResource('/performance', PerformanceController::class);
+            // Accepted domains
+            Route::apiResource('/accepted-domains', AcceptedDomainController::class);
+            // Notifications
+            // Route::apiResource('/notifications', NotificationController::class);
+            // Emails
+            // Route::apiResource('/emails', EmailController::class);
+        });
     });
 
     // Application's client api endpoints

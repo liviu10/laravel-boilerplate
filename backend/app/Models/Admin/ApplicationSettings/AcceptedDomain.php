@@ -82,9 +82,10 @@ class AcceptedDomain extends Model
      * @var array<string, string>
      */
     protected $filters = [
-        'id'     => 'number',
-        'domain' => 'text',
-        'type'   => 'select',
+        'id'        => 'number',
+        'domain'    => 'text',
+        'type'      => 'select',
+        'is_active' => 'select',
     ];
 
     /**
@@ -131,14 +132,27 @@ class AcceptedDomain extends Model
 
     /**
      * Fetches all records from the database.
+     * @param  array  $search
      * @return \Illuminate\Database\Eloquent\Collection|bool
      * The collection of records on success, or false on failure.
      */
-    public function fetchAllRecords()
+    public function fetchAllRecords($search)
     {
         try
         {
-            return $this->select('id', 'domain', 'type')->paginate(15);
+            $query = $this->select('id', 'domain', 'type', 'is_active');
+
+            if (!empty($search)) {
+                foreach ($search as $field => $value) {
+                    if ($field === 'id') {
+                        $query->where($field, '=', $value);
+                    } else {
+                        $query->where($field, 'LIKE', '%' . $value . '%');
+                    }
+                }
+            }
+
+            return $query->paginate(15);
         }
         catch (\Illuminate\Database\QueryException $mysqlError)
         {
@@ -295,9 +309,10 @@ class AcceptedDomain extends Model
     public function getFilters()
     {
         $filterNames = [
-            'id'     => 'Filter by ID',
-            'domain' => 'Filter by domain name',
-            'type'   => 'Filter by domain type',
+            'id'        => 'Filter by ID',
+            'domain'    => 'Filter by domain name',
+            'type'      => 'Filter by domain type',
+            'is_active' => 'Filter by is active',
         ];
 
         $filterOptions = [

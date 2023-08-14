@@ -29,6 +29,7 @@ export default {
       view_resource: 'View',
       table: {
         id: 'Id',
+        is_active: 'Is active?',
         actions: 'Actions',
         no_data_label: 'No data available!',
         new_record_label: 'New record',

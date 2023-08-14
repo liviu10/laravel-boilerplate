@@ -11,10 +11,13 @@
     <admin-page-container :admin-route-name="currentRouteName">
       <template v-slot:admin-content>
         <admin-page-container-table
+          :advance-filter-record="true"
+          :applied-filters="appliedFilters && appliedFilters.length ? appliedFilters : []"
           :columns="TableColumns"
           :create-new-record="true"
           :delete-record-button="true"
           :edit-record-button="true"
+          :filters="getAllFilters"
           :fullscreen-button="true"
           :loading="loadData"
           :rows="getAllRecords.data"
@@ -24,6 +27,8 @@
           :top-right-slot="true"
           :top-row-slot="true"
           @action-method-dialog="actionMethodDialog"
+          @filter-record="filterRecord"
+          @clear-filter="clearFilter"
         />
       </template>
     </admin-page-container>
@@ -79,6 +84,7 @@ import TableColumns from 'src/columns/rolesAndPermissionColumns';
 import { displayLabel } from 'src/library/TextOperations';
 import { notificationSystem } from 'src/library/NotificationSystem/NotificationSystem';
 import { DialogType } from 'src/types/DialogType';
+import { FilterInterface } from 'src/interfaces/ApiResponseInterface';
 
 // Import Pinia's related utilities
 import { useUserRoleStore } from 'src/stores/admin/userSettings/userRoles';
@@ -104,12 +110,76 @@ const loadData = ref(false)
 // Fetch all user roles and permissions
 const getAllRecords = computed(() => userRoleStore.getAllRecords);
 
+// Get all filters
+const getAllFilters = computed(() => {
+  const savedSearch: string | null = localStorage.getItem(`${userRoleStore.$id}-filters`)
+  if (savedSearch && savedSearch !== null) {
+    const existingSearchQuery: Record<string, string | number | null> = JSON.parse(savedSearch);
+    const filterArray: Pick<FilterInterface, 'key' | 'value'>[] = Object.keys(existingSearchQuery).map((key) => ({
+      key,
+      value: existingSearchQuery[key]
+    }));
+    appliedFilters = filterArray
+  }
+
+  if (appliedFilters && appliedFilters.length) {
+    const updatedFilters = JSON.parse(JSON.stringify(userRoleStore.getAllFilters));
+    appliedFilters.forEach(appliedFilter => {
+      const { key, value } = appliedFilter;
+      updatedFilters.forEach((filter: FilterInterface) => {
+        if (filter.key === key) {
+          filter.value = value;
+        }
+      });
+    });
+
+    return updatedFilters;
+  } else {
+    return userRoleStore.getAllFilters
+  }
+})
+
 // Display the action name & dialog
 const actionName: Ref<DialogType | undefined> = ref(undefined)
 const displayActionDialog = ref(false)
 
 // Fetch single user details
 const getSingleRecord = computed(() => userRoleStore.getSingleRecord);
+
+async function filterRecord(appliedFilters: Pick<FilterInterface, 'key' | 'value'>[]) {
+  loadData.value = true
+  await userRoleStore.getRecords(appliedFilters).then(() => {
+    loadData.value = false
+  })
+}
+
+async function clearFilter(filterKey: string) {
+  loadData.value = true
+  console.log('--> UserPage.vue clearFilter:', filterKey)
+  const savedSearch: string | null = localStorage.getItem(`${userRoleStore.$id}-filters`)
+  appliedFilters = []
+  if (savedSearch && savedSearch !== null) {
+    const existingSearchQuery: Record<string, string | number | null> = JSON.parse(savedSearch);
+    if (existingSearchQuery.hasOwnProperty(filterKey)) {
+      if (Object.keys(existingSearchQuery).length > 1) {
+        delete existingSearchQuery[filterKey]
+        localStorage.setItem(`${userRoleStore.$id}-filters`, JSON.stringify(existingSearchQuery));
+      } else {
+        localStorage.removeItem(`${userRoleStore.$id}-filters`);
+      }
+      await userRoleStore.getRecords().then(() => {
+        loadData.value = false
+      })
+    }
+  } else {
+    loadData.value = false
+    const notificationTitle = t('admin.generic.notification_info_title')
+    const notificationMessage = t('admin.generic.no_filters_applied', {
+      resourceName: currentRouteTitle.value
+    })
+    notificationSystem(notificationTitle, notificationMessage, 'info', 'bottom', true)
+  }
+}
 
 /**
  * Perform an action (show, edit, or delete) on a
@@ -124,6 +194,10 @@ const getSingleRecord = computed(() => userRoleStore.getSingleRecord);
 async function actionMethodDialog(action: DialogType, recordId?: number) {
   loadData.value = true
   if (action === 'create') {
+    loadData.value = false
+    actionName.value = action
+    displayActionDialog.value = true
+  } else if (action === 'advanced-filters') {
     loadData.value = false
     actionName.value = action
     displayActionDialog.value = true
@@ -196,11 +270,28 @@ function handleActionMethod(action: DialogType) {
   }
 }
 
+let appliedFilters: Pick<FilterInterface, 'key' | 'value'>[] = [];
 onMounted(async () => {
   loadData.value = true
-  await userRoleStore.getRecords().then(() => {
-    loadData.value = false
-  })
+  const savedSearch: string | null = localStorage.getItem(`${userRoleStore.$id}-filters`)
+  if (savedSearch && savedSearch !== null) {
+    const existingSearchQuery: Record<string, string | number | null> = JSON.parse(savedSearch);
+    const filterArray: Pick<FilterInterface, 'key' | 'value'>[] = Object.keys(existingSearchQuery).map((key) => ({
+      key,
+      value: existingSearchQuery[key]
+    }));
+    appliedFilters = filterArray
+    await userRoleStore.getRecords(filterArray)
+      .then(() => {
+        appliedFilters = []
+        loadData.value = false
+      })
+  } else {
+    await userRoleStore.getRecords()
+      .then(() => {
+        loadData.value = false
+      })
+  }
 })
 </script>
 

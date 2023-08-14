@@ -28,11 +28,12 @@ class AcceptedDomainService implements AcceptedDomainInterface
 
     /**
      * Fetch all the records from the database.
+     * @param  array  $search
      * @return \Illuminate\Http\Response
      */
-    public function handleIndex()
+    public function handleIndex($search)
     {
-        $apiDisplayAllRecords = $this->modelName->fetchAllRecords();
+        $apiDisplayAllRecords = $this->modelName->fetchAllRecords($search);
         $apiDataModel = $this->modelName->getDataModel();
         $apiFilters = $this->modelName->getFilters();
 

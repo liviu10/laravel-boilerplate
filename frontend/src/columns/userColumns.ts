@@ -17,7 +17,7 @@ export default [
     align: 'center' as 'left' | 'right' | 'center',
     style: 'width: 100px',
     headerStyle: 'width: 100px',
-    // sort: (a: string, b: string) => parseInt(a, 10) - parseInt(b, 10),
+    sort: (a: string, b: string) => parseInt(a, 10) - parseInt(b, 10),
   },
   {
     name: 'email',
@@ -28,7 +28,7 @@ export default [
     align: 'center' as 'left' | 'right' | 'center',
     style: 'width: 100px',
     headerStyle: 'width: 100px',
-    // sort: (a: string, b: string) => parseInt(a, 10) - parseInt(b, 10),
+    sort: (a: string, b: string) => parseInt(a, 10) - parseInt(b, 10),
   },
   {
     name: 'nickname',
@@ -39,7 +39,7 @@ export default [
     align: 'center' as 'left' | 'right' | 'center',
     style: 'width: 100px',
     headerStyle: 'width: 100px',
-    // sort: (a: string, b: string) => parseInt(a, 10) - parseInt(b, 10),
+    sort: (a: string, b: string) => parseInt(a, 10) - parseInt(b, 10),
   },
   {
     name: 'created_at',
@@ -50,7 +50,7 @@ export default [
     align: 'center' as 'left' | 'right' | 'center',
     style: 'width: 100px',
     headerStyle: 'width: 100px',
-    // sort: (a: string, b: string) => parseInt(a, 10) - parseInt(b, 10),
+    sort: (a: string, b: string) => parseInt(a, 10) - parseInt(b, 10),
   },
   {
     name: 'actions',

@@ -205,20 +205,34 @@ trait ApiFilters
 
             // Add options for filter select type
             if ($value === 'select') {
-                $options = isset($filterOptions[$index]) ? $filterOptions[$index] : [];
-                $mappedOptions = [];
-                $optionId = 1;
-                foreach ($options as $option) {
-                    $optionValue = $optionId;
-                    $optionLabel = $option[array_keys($option->toArray())[1]];
-                    $mappedOptions[] = [
-                        'value' => $optionValue,
-                        'label' => $optionLabel,
+                if ($index === 'is_active') {
+                    $filter['options'] = [
+                        [
+                            'value' => 0,
+                            'label' => 'No',
+                        ],
+                        [
+                            'value' => 1,
+                            'label' => 'Yes',
+                        ],
                     ];
-
-                    $optionId++;
                 }
-                $filter['options'] = $mappedOptions;
+                else {
+                    $options = isset($filterOptions[$index]) ? $filterOptions[$index] : [];
+                    $mappedOptions = [];
+                    $optionId = 1;
+                    foreach ($options as $option) {
+                        $optionValue = $optionId;
+                        $optionLabel = $option[array_keys($option->toArray())[1]];
+                        $mappedOptions[] = [
+                            'value' => $optionValue,
+                            'label' => $optionLabel,
+                        ];
+
+                        $optionId++;
+                    }
+                    $filter['options'] = $mappedOptions;
+                }
             }
 
             $availableFilters[] = $filter;

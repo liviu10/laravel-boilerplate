@@ -5,6 +5,7 @@ namespace App\Models\Admin\Settings;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Traits\ApiLogError;
+use App\Traits\ApiDataModel;
 use App\Traits\ApiFilters;
 
 /**
@@ -28,7 +29,7 @@ use App\Traits\ApiFilters;
  */
 class Role extends Model
 {
-    use HasFactory, ApiLogError, ApiFilters;
+    use HasFactory, ApiLogError, ApiDataModel, ApiFilters;
 
     /**
      * The table associated with the model.
@@ -57,12 +58,12 @@ class Role extends Model
      * @var string
      */
     protected $fillable = [
-        'name',
-        'description',
-        'bg_color',
-        'text_color',
-        'slug',
-        'is_active',
+        'name'        => 'text',
+        'description' => 'text',
+        'bg_color'    => 'text',
+        'text_color'  => 'text',
+        'slug'        => 'text',
+        'is_active'   => 'boolean',
     ];
 
     /**
@@ -133,15 +134,19 @@ class Role extends Model
      * @return \Illuminate\Database\Eloquent\Collection|bool
      * The collection of records on success, or false on failure.
      */
-    public function fetchAllRecords()
+    public function fetchAllRecords($search)
     {
         try
         {
-            $query = $this->select('id', 'name', 'slug');
+            $query = $this->select('id', 'name', 'slug', 'is_active');
 
             if (!empty($search)) {
                 foreach ($search as $field => $value) {
-                    $query->where($field, 'LIKE', '%' . $value . '%');
+                    if ($field === 'id') {
+                        $query->where($field, '=', $value);
+                    } else {
+                        $query->where($field, 'LIKE', '%' . $value . '%');
+                    }
                 }
             }
 
@@ -281,6 +286,38 @@ class Role extends Model
             $this->handleApiLogError($exception);
             return false;
         }
+    }
+
+    public function getDataModel()
+    {
+        $dataModelOptions = [
+            'name' => [
+                'name'        => 'Role name',
+                'is_required' => true
+            ],
+            'description' => [
+                'name'        => 'Role description',
+                'is_required' => true
+            ],
+            'bg_color' => [
+                'name'        => 'Background color',
+                'is_required' => false
+            ],
+            'text_color' => [
+                'name'        => 'Text color',
+                'is_required' => false
+            ],
+            'slug' => [
+                'name'        => 'Role slug',
+                'is_required' => true
+            ],
+            'is_active' => [
+                'name'        => 'Is active?',
+                'is_required' => true
+            ],
+        ];
+
+        return $this->handleApiDataModel($this->fillable, $dataModelOptions);
     }
 
     /**

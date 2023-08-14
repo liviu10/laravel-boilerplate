@@ -34,6 +34,7 @@ class RoleService implements RoleInterface
     public function handleIndex($search)
     {
         $apiDisplayAllRecords = $this->modelName->fetchAllRecords($search);
+        $apiDataModel = $this->modelName->getDataModel();
         $apiFilters = $this->modelName->getFilters();
 
         if ($apiDisplayAllRecords instanceof \Illuminate\Pagination\LengthAwarePaginator)
@@ -44,7 +45,7 @@ class RoleService implements RoleInterface
             }
             else
             {
-                return response($this->handleResponse('success', $apiDisplayAllRecords, $apiFilters), 200);
+                return response($this->handleResponse('success', $apiDisplayAllRecords, $apiDataModel, $apiFilters), 200);
             }
         }
         else

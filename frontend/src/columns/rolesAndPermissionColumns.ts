@@ -31,6 +31,17 @@ export default [
     sort: (a: string, b: string) => parseInt(a, 10) - parseInt(b, 10),
   },
   {
+    name: 'is_active',
+    label: 'admin.generic.table.is_active',
+    field: 'is_active',
+    format: (val: string) => `${val}`,
+    sortable: true,
+    align: 'center' as 'left' | 'right' | 'center',
+    style: 'width: 100px',
+    headerStyle: 'width: 100px',
+    sort: (a: string, b: string) => parseInt(a, 10) - parseInt(b, 10),
+  },
+  {
     name: 'actions',
     label: 'admin.generic.table.actions',
     field: 'actions',
