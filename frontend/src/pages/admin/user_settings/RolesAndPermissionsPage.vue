@@ -84,7 +84,7 @@ import TableColumns from 'src/columns/rolesAndPermissionColumns';
 import { displayLabel } from 'src/library/TextOperations';
 import { notificationSystem } from 'src/library/NotificationSystem/NotificationSystem';
 import { DialogType } from 'src/types/DialogType';
-import { FilterInterface } from 'src/interfaces/ApiResponseInterface';
+import { FilterInterface, PaginatedResultsInterface } from 'src/interfaces/ApiResponseInterface';
 import { applicationName } from 'src/composables/CopyrightInfo';
 import {
   currentRouteName,
@@ -93,6 +93,8 @@ import {
 } from 'src/composables/RouteInfo';
 import { readFilterFromLocalStorage } from 'src/library/FilterToLocalStorage/ReadFilterFromLocalStorage';
 import { updateFilterToStore } from 'src/library/FilterToLocalStorage/UpdateFilterToStore';
+import { removeFilterFromLocalStorage } from 'src/library/FilterToLocalStorage/RemoveFilterFromLocalStorage';
+import { UserRoleInterface } from 'src/interfaces/UserInterface';
 
 // Import Pinia's related utilities
 import { useUserRoleStore } from 'src/stores/admin/userSettings/userRoles';
@@ -109,11 +111,18 @@ const router = useRouter();
 // Load table data
 const loadData = ref(false)
 
-// Fetch all user roles and permissions
-const getAllRecords = computed(() => userRoleStore.getAllRecords);
+/**
+ * Computed function that retrieves all records from the userRoleStore.
+ * @returns {PaginatedResultsInterface} An object representing paginated results
+ * containing user records.
+ */
+const getAllRecords = computed((): PaginatedResultsInterface => userRoleStore.getAllRecords);
 
-// Get all filters
-const getAllFilters = computed(() => {
+/**
+ * Computed function that retrieves and processes filters from the userRoleStore.
+ * @returns {FilterInterface[]} An array of filter objects representing filters.
+ */
+const getAllFilters = computed((): FilterInterface[] => {
   appliedFilters = readFilterFromLocalStorage.value(userRoleStore.$id)
 
   if (appliedFilters && appliedFilters.length) {
@@ -127,33 +136,40 @@ const getAllFilters = computed(() => {
 const actionName: Ref<DialogType | undefined> = ref(undefined)
 const displayActionDialog = ref(false)
 
-// Fetch single user details
-const getSingleRecord = computed(() => userRoleStore.getSingleRecord);
+/**
+ * Computed function that retrieves a single user record from the userRoleStore.
+ * @returns {UserInterface} An object representing a single user record.
+ */
+const getSingleRecord = computed((): UserRoleInterface => userRoleStore.getSingleRecord);
 
-async function filterRecord(appliedFilters: Pick<FilterInterface, 'key' | 'value'>[]) {
+/**
+ * Asynchronously filters user records based on the provided filters and updates the data accordingly.
+ * @param {Pick<FilterInterface, 'key' | 'value'>[]} appliedFilters - An array of filter objects with 'key' and 'value' properties.
+ * @returns {Promise<void>} A Promise that resolves once the filtering and data update process is complete.
+ */
+async function filterRecord(appliedFilters: Pick<FilterInterface, 'key' | 'value'>[]): Promise<void> {
   loadData.value = true
   await userRoleStore.getRecords(appliedFilters).then(() => {
     loadData.value = false
   })
 }
 
-async function clearFilter(filterKey: string) {
+/**
+ * Asynchronously clears a specific filter, updates saved search in localStorage,
+ * and fetches updated user records based on the applied filters.
+ * @param {string} filterKey - The key associated with the filter to be cleared.
+ * @returns {Promise<void>} A Promise that resolves once the clearing and data update process is complete.
+ */
+async function clearFilter(filterKey: string): Promise<void> {
   loadData.value = true
   const savedSearch: string | null = localStorage.getItem(`${userRoleStore.$id}-filters`)
   appliedFilters = []
   if (savedSearch && savedSearch !== null) {
     const existingSearchQuery: Record<string, string | number | null> = JSON.parse(savedSearch);
-    if (existingSearchQuery.hasOwnProperty(filterKey)) {
-      if (Object.keys(existingSearchQuery).length > 1) {
-        delete existingSearchQuery[filterKey]
-        localStorage.setItem(`${userRoleStore.$id}-filters`, JSON.stringify(existingSearchQuery));
-      } else {
-        localStorage.removeItem(`${userRoleStore.$id}-filters`);
-      }
-      await userRoleStore.getRecords().then(() => {
-        loadData.value = false
-      })
-    }
+    removeFilterFromLocalStorage.value(userRoleStore.$id, existingSearchQuery, filterKey)
+    await userRoleStore.getRecords().then(() => {
+      loadData.value = false
+    })
   } else {
     loadData.value = false
     const notificationTitle = t('admin.generic.notification_info_title')
@@ -165,16 +181,12 @@ async function clearFilter(filterKey: string) {
 }
 
 /**
- * Perform an action (show, edit, or delete) on a
- * specific record with the given record ID.
- * @param action - The type of action to perform
- * on the record. It can be 'show', 'edit', or 'delete'.
- * @param recordId - The ID of the record on
- * which the action will be performed.
- * @returns - A promise that resolves when
- * the action is completed or rejects if an error occurs.
+ * Asynchronously manages action dialogs based on the provided action type and record ID.
+ * @param {DialogType} action - The type of action to perform in the dialog.
+ * @param {number | undefined} recordId - The ID of the record associated with the action (if applicable).
+ * @returns {Promise<void>} A Promise that resolves once the action dialog handling is complete.
  */
-async function actionMethodDialog(action: DialogType, recordId?: number) {
+async function actionMethodDialog(action: DialogType, recordId?: number): Promise<void> {
   loadData.value = true
   if (action === 'create') {
     loadData.value = false
@@ -206,24 +218,20 @@ async function actionMethodDialog(action: DialogType, recordId?: number) {
 }
 
 /**
- * Computed property to get the 'id'
- * of the selected record from 'getSingleRecord' array.
- * @returns The 'id' of the selected record if available,
- * or null if the array is empty.
+ * Computed property that retrieves the ID of the selected record if available.
+ * @returns {number | null} The ID of the selected record, or null if no record is selected.
  */
-const selectedRecordId = computed(() => {
+const selectedRecordId = computed((): number | null => {
   const recordId = getSingleRecord.value && Object.keys(getSingleRecord.value).length > 0 ? getSingleRecord.value.id : null;
   return recordId
 });
 
 /**
- * Performs an action based on the provided DialogType.
- * Example: If the action is 'create' than 'createRecord'
- * will be called from the pinia store.
- * @param action - The type of action to be performed
- * ('create', 'edit', 'delete').
+ * Asynchronously handles action methods such as creating, editing, or deleting records.
+ * @param {DialogType} action - The type of action to perform.
+ * @returns {Promise<void>} A Promise that resolves once the action handling is complete.
  */
-function handleActionMethod(action: DialogType) {
+async function handleActionMethod(action: DialogType): Promise<void> {
   displayActionDialog.value = false
   loadData.value = true
   if (action === 'create') {
