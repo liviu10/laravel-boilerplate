@@ -369,7 +369,11 @@ class User extends Authenticatable
         $dataModelOptions = [
             'first_name' => [
                 'name'        => 'First name',
-                'is_required' => true
+                'is_required' => true,
+                'rules'       => [
+                    'condition' => null,
+                    'message'   => 'Acest mesaj vine din backend'
+                ],
             ],
             'last_name' => [
                 'name'        => 'Last name',
@@ -385,7 +389,7 @@ class User extends Authenticatable
             ],
             'phone' => [
                 'name'        => 'Phone number',
-                'is_required' => true
+                'is_required' => false
             ],
             'password' => [
                 'name'        => 'Password',

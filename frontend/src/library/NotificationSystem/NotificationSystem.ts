@@ -94,7 +94,17 @@ const notificationSystem = (
       } else {
         let additionalMessageText = '';
         if (additionalMessage && Object.keys(additionalMessage).length) {
-          additionalMessageText = `<p class="q-mb-none">${additionalMessage.description || additionalMessage.message || additionalMessage.error}</p>`;
+          if (additionalMessage.description) {
+            additionalMessageText = `<p class="q-mb-none">${additionalMessage.description}</p>`;
+          }
+
+          if (additionalMessage.message) {
+            additionalMessageText = `<p class="q-mb-none">${additionalMessage.message}</p>`;
+          }
+
+          if (additionalMessage.error) {
+            additionalMessageText = `<p class="q-mb-none">${additionalMessage.error}</p>`;
+          }
         }
 
         commonMessage.value = `

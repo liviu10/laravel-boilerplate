@@ -40,4 +40,3 @@ const displayAdminPageTitle = computed(() => {
 
 withDefaults(defineProps<AdminPageTitleInterface>(), {});
 </script>
-src/library/TextOperations/TextOperations

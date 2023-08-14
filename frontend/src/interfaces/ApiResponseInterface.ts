@@ -76,6 +76,11 @@ interface FilterInterface extends BaseModelInterface {
  * @extends {BaseModelInterface}
  */
 interface CreateModelInterface extends BaseModelInterface {
+  errors?: string | undefined
+  options?: {
+    value: number
+    label: string
+  }[]
   required: boolean
 }
 

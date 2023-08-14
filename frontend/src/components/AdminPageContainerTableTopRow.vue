@@ -47,6 +47,7 @@ import { computed } from 'vue';
 // Import generic components, libraries and interfaces
 import { FilterInterface } from 'src/interfaces/ApiResponseInterface';
 import { InputType } from 'src/types/InputType';
+import { inputType } from 'src/composables/InputType';
 
 interface AdminPageContainerTableTopRowInterface {
   filters: FilterInterface[];
@@ -66,33 +67,13 @@ const accumulatedFilters: Pick<FilterInterface, 'key' | 'value'>[] = []
  */
 const filterType = computed(() => {
   return ((type: string): InputType => {
-    switch (type) {
-      case 'number':
-        return 'number';
-      case 'textarea':
-        return 'textarea';
-      case 'time':
-        return 'time';
-      case 'text':
-        return 'text';
-      case 'password':
-        return 'password';
-      case 'email':
-        return 'email';
-      case 'search':
-        return 'search';
-      case 'tel':
-        return 'tel';
-      case 'file':
-        return 'file';
-      case 'url':
-        return 'url';
-      case 'date':
-        return 'date';
-      default:
-        return undefined;
+    const fieldType = inputType.value(type)
+    if (fieldType && fieldType !== undefined) {
+      return fieldType
+    } else {
+      return 'text'
     }
-  });
+  })
 });
 
 /**

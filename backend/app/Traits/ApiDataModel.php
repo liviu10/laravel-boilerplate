@@ -18,12 +18,15 @@ trait ApiDataModel
                     'name' => $isName ? $dataModelOptions[$index]['name'] : 'Default input name',
                     'type' => $value,
                     'required' => $isRequired ? $dataModelOptions[$index]['is_required'] : false,
-                    'value' => null
+                    'value' => null,
+                    'rules' => $index
                 ];
 
                 $availableDataModel[] = $model;
                 $dataModelId++;
             }
+
+            dd($dataModelOptions);
         }
 
         return $availableDataModel;

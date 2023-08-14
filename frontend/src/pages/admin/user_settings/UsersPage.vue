@@ -36,6 +36,7 @@
     <admin-page-container-dialog
       v-if="displayActionDialog"
       :action-name="actionName"
+      :data-model="getDataModel"
       :display-action-dialog="displayActionDialog"
       :record-id="selectedRecordId"
       @closeDialog="() => displayActionDialog = false"
@@ -115,7 +116,7 @@ import TableColumns from 'src/columns/userColumns';
 import { displayLabel } from 'src/library/TextOperations';
 import { notificationSystem } from 'src/library/NotificationSystem/NotificationSystem';
 import { DialogType } from 'src/types/DialogType';
-import { FilterInterface, PaginatedResultsInterface } from 'src/interfaces/ApiResponseInterface';
+import { CreateModelInterface, FilterInterface, PaginatedResultsInterface } from 'src/interfaces/ApiResponseInterface';
 import { applicationName } from 'src/composables/CopyrightInfo';
 import {
   currentRouteName,
@@ -162,6 +163,14 @@ const getAllFilters = computed((): FilterInterface[] => {
     return userStore.getAllFilters
   }
 })
+
+/**
+ * Computed function that retrieves and processes data model from the userStore.
+ * @returns {CreateModelInterface[]} An array of data model objects.
+ */
+const getDataModel = computed((): CreateModelInterface[] => {
+  return userStore.getDataModel
+});
 
 // Display the action name & dialog
 const actionName: Ref<DialogType | undefined> = ref(undefined)
@@ -263,10 +272,14 @@ const selectedRecordId = computed((): number | null => {
  * @returns {Promise<void>} A Promise that resolves once the action handling is complete.
  */
 async function handleActionMethod(action: DialogType): Promise<void> {
-  displayActionDialog.value = false
   loadData.value = true
   if (action === 'create') {
-    await userStore.createRecord().then(() => {
+    await userStore.createRecord().then((response) => {
+      if (response && response !== undefined) {
+        displayActionDialog.value = false
+      } else {
+        displayActionDialog.value = true
+      }
       loadData.value = false
     })
   } else {
@@ -274,10 +287,12 @@ async function handleActionMethod(action: DialogType): Promise<void> {
     if (recordId) {
       if (action === 'edit') {
         await userStore.updateRecord(recordId).then(() => {
+          displayActionDialog.value = false
           loadData.value = false
         })
       } else if (action === 'delete') {
         await userStore.deleteRecord(recordId).then(() => {
+          displayActionDialog.value = false
           loadData.value = false
         })
       }

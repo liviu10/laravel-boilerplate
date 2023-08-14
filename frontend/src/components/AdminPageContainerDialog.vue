@@ -11,6 +11,8 @@
           </q-card-section>
 
           <q-card-section class="q-py-none">
+            <admin-page-container-dialog-new v-if="actionName === 'create'" :data-model="dataModel" />
+
             <slot v-if="actionName !== 'create' && actionName !== 'advanced-filters'" name="record-details"></slot>
 
             <q-separator
@@ -50,10 +52,13 @@ import { Ref, computed } from 'vue';
 import { useI18n } from 'vue-i18n';
 
 // Import generic components, libraries and interfaces
+import AdminPageContainerDialogNew from 'src/components/AdminPageContainerDialogNew.vue';
 import { DialogActionInterface, DialogType } from 'src/types/DialogType';
+import { CreateModelInterface } from 'src/interfaces/ApiResponseInterface';
 
 interface AdminPageContainerDialogInterface {
   actionName?: DialogType;
+  dataModel?: CreateModelInterface[];
   displayActionDialog?: boolean;
   recordId: number | null;
 }
