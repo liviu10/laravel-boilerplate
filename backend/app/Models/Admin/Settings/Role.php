@@ -29,7 +29,7 @@ use App\Traits\ApiFilters;
  */
 class Role extends Model
 {
-    use HasFactory, ApiLogError, ApiDataModel, ApiFilters;
+    use HasFactory, ApiLogError, ApiDataModel, ApiDataModel, ApiFilters;
 
     /**
      * The table associated with the model.
@@ -67,18 +67,6 @@ class Role extends Model
     ];
 
     /**
-     * The model filters.
-     *
-     * @var array<string, string>
-     */
-    protected $filters = [
-        'id'        => 'number',
-        'name'      => 'text',
-        'slug'      => 'text',
-        'is_active' => 'boolean',
-    ];
-
-    /**
     * The attributes that are mass assignable.
     *
     * @var string
@@ -109,6 +97,24 @@ class Role extends Model
         'created_at',
         'updated_at',
     ];
+
+    /**
+     * Eloquent polymorphic relationship between users and fields.
+     *
+     */
+    public function field()
+    {
+        return $this->morphOne(Field::class, 'fieldable');
+    }
+
+    /**
+     * Eloquent polymorphic relationship between users and sorts.
+     *
+     */
+    public function sort()
+    {
+        return $this->morphOne(Sort::class, 'sortable');
+    }
 
     /**
      * Eloquent relationship between roles and users.
@@ -288,53 +294,8 @@ class Role extends Model
         }
     }
 
-    public function getDataModel()
+    public function getFields()
     {
-        $dataModelOptions = [
-            'name' => [
-                'name'        => 'Role name',
-                'is_required' => true
-            ],
-            'description' => [
-                'name'        => 'Role description',
-                'is_required' => true
-            ],
-            'bg_color' => [
-                'name'        => 'Background color',
-                'is_required' => false
-            ],
-            'text_color' => [
-                'name'        => 'Text color',
-                'is_required' => false
-            ],
-            'slug' => [
-                'name'        => 'Role slug',
-                'is_required' => true
-            ],
-            'is_active' => [
-                'name'        => 'Is active?',
-                'is_required' => true
-            ],
-        ];
-
-        return $this->handleApiDataModel($this->fillable, $dataModelOptions);
-    }
-
-    /**
-     * Get the filters that can be applied to the records.
-     * The method returns an array of filter options
-     * that can be used to filter the records.
-     * @return array An array of filter options.
-     */
-    public function getFilters()
-    {
-        $filterNames = [
-            'id'        => 'Filter by ID',
-            'name'      => 'Filter by role name',
-            'slug'      => 'Filter by role slug',
-            'is_active' => 'Filter by is active',
-        ];
-
-        return $this->handleApiFilters($this->filters, $filterNames);
+        return $this->fillable;
     }
 }

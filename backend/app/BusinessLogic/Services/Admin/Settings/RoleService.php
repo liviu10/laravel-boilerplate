@@ -3,6 +3,7 @@
 namespace App\BusinessLogic\Services\Admin\Settings;
 
 use App\Traits\ApiResponseMessage;
+use App\Traits\ApiGenerateDataModel;
 use App\BusinessLogic\Interfaces\Admin\Settings\RoleInterface;
 use App\Http\Requests\Admin\Settings\RoleRequest;
 use App\Models\Admin\Settings\Role;
@@ -13,8 +14,9 @@ use Illuminate\Database\Eloquent\Collection;
  */
 class RoleService implements RoleInterface
 {
-    use ApiResponseMessage;
+    use ApiResponseMessage, ApiGenerateDataModel;
 
+    protected $modelId;
     protected $modelName;
 
     /**
@@ -23,6 +25,7 @@ class RoleService implements RoleInterface
      */
     public function __construct()
     {
+        $this->modelId = 2;
         $this->modelName = new Role();
     }
 
@@ -34,8 +37,7 @@ class RoleService implements RoleInterface
     public function handleIndex($search)
     {
         $apiDisplayAllRecords = $this->modelName->fetchAllRecords($search);
-        $apiDataModel = $this->modelName->getDataModel();
-        $apiFilters = $this->modelName->getFilters();
+        $apiDataModel = $this->handleApiGenerateDataModel($this->modelId, $this->modelName, $this->modelName->getFields());
 
         if ($apiDisplayAllRecords instanceof \Illuminate\Pagination\LengthAwarePaginator)
         {
@@ -45,7 +47,7 @@ class RoleService implements RoleInterface
             }
             else
             {
-                return response($this->handleResponse('success', $apiDisplayAllRecords, $apiDataModel, $apiFilters), 200);
+                return response($this->handleResponse('success', $apiDisplayAllRecords, $apiDataModel), 200);
             }
         }
         else

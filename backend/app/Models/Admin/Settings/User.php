@@ -8,6 +8,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Facades\Auth;
 use Laravel\Sanctum\HasApiTokens;
+use App\Models\Admin\Settings\Field;
 use App\Traits\ApiLogError;
 use App\Traits\ApiDataModel;
 use App\Traits\ApiFilters;
@@ -87,19 +88,6 @@ class User extends Authenticatable
     ];
 
     /**
-     * The model filters.
-     *
-     * @var array<string, string>
-     */
-    protected $filters = [
-        'id'         => 'number',
-        'full_name'  => 'text',
-        'nickname'   => 'text',
-        'email'      => 'text',
-        'created_at' => 'date',
-    ];
-
-    /**
      * The attributes that should be hidden for serialization.
      *
      * @var array<int, string>
@@ -132,6 +120,24 @@ class User extends Authenticatable
         'created_at',
         'updated_at'
     ];
+
+    /**
+     * Eloquent polymorphic relationship between users and fields.
+     *
+     */
+    public function field()
+    {
+        return $this->morphOne(Field::class, 'fieldable');
+    }
+
+    /**
+     * Eloquent polymorphic relationship between users and sorts.
+     *
+     */
+    public function sort()
+    {
+        return $this->morphOne(Sort::class, 'sortable');
+    }
 
     /**
      * Eloquent relationship between users and roles.
@@ -364,62 +370,8 @@ class User extends Authenticatable
         }
     }
 
-    public function getDataModel()
+    public function getFields()
     {
-        $dataModelOptions = [
-            'first_name' => [
-                'name'        => 'First name',
-                'is_required' => true,
-                'rules'       => [
-                    'condition' => null,
-                    'message'   => 'Acest mesaj vine din backend'
-                ],
-            ],
-            'last_name' => [
-                'name'        => 'Last name',
-                'is_required' => true
-            ],
-            'nickname' => [
-                'name'        => 'Nickname',
-                'is_required' => true
-            ],
-            'email' => [
-                'name'        => 'Email address',
-                'is_required' => true
-            ],
-            'phone' => [
-                'name'        => 'Phone number',
-                'is_required' => false
-            ],
-            'password' => [
-                'name'        => 'Password',
-                'is_required' => true
-            ],
-            'profile_image' => [
-                'name'        => 'Profile image',
-                'is_required' => true
-            ],
-        ];
-
-        return $this->handleApiDataModel($this->fillable, $dataModelOptions);
-    }
-
-    /**
-     * Get the filters that can be applied to the records.
-     * The method returns an array of filter options
-     * that can be used to filter the records.
-     * @return array An array of filter options.
-     */
-    public function getFilters()
-    {
-        $filterNames = [
-            'id'         => 'Filter by ID',
-            'full_name'  => 'Filter by full name',
-            'nickname'   => 'Filter by nickname',
-            'email'      => 'Filter by email',
-            'created_at' => 'Filter by joined date',
-        ];
-
-        return $this->handleApiFilters($this->filters, $filterNames);
+        return $this->fillable;
     }
 }

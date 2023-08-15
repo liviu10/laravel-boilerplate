@@ -23,8 +23,7 @@ trait ApiResponseMessage
     public function handleResponse(
         $responseType = null,
         $records = null,
-        $dataModel = null,
-        $filters = null
+        $dataModel = null
     )
     {
         if ($responseType === 'success')
@@ -40,10 +39,6 @@ trait ApiResponseMessage
             if ($dataModel)
             {
                 $responseMessage['model'] = $dataModel;
-            }
-            if ($filters)
-            {
-                $responseMessage['filters'] = $filters;
             }
         }
         elseif ($responseType === 'not_found')
