@@ -4,6 +4,7 @@ namespace App\BusinessLogic\Services\Admin\Settings;
 
 use App\Traits\ApiResponseMessage;
 use App\Traits\ApiGenerateDataModel;
+use App\Traits\GenerateDataModel;
 use App\BusinessLogic\Interfaces\Admin\Settings\UserInterface;
 use App\Http\Requests\Admin\Settings\UserRequest;
 use App\Models\Admin\Settings\User;
@@ -14,7 +15,7 @@ use Illuminate\Database\Eloquent\Collection;
  */
 class UserService implements UserInterface
 {
-    use ApiResponseMessage, ApiGenerateDataModel;
+    use ApiResponseMessage, ApiGenerateDataModel, GenerateDataModel;
 
     protected $modelId;
     protected $modelName;
@@ -62,7 +63,8 @@ class UserService implements UserInterface
     public function handleIndex($search)
     {
         $apiDisplayAllRecords = $this->modelName->fetchAllRecords($search);
-        $apiDataModel = $this->handleApiGenerateDataModel($this->modelId, $this->modelName, $this->modelName->getFields());
+        // $apiDataModel = $this->handleApiGenerateDataModel($this->modelId, $this->modelName, $this->modelName->getFields());
+        $apiDataModel = $this->generateApiDataModel($this->modelName->getFields());
 
         if ($apiDisplayAllRecords instanceof \Illuminate\Pagination\LengthAwarePaginator)
         {
