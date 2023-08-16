@@ -9,9 +9,8 @@ use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Facades\Auth;
 use Laravel\Sanctum\HasApiTokens;
 use App\Models\Admin\Settings\Field;
+use App\Models\Admin\Settings\Sort;
 use App\Traits\ApiLogError;
-use App\Traits\ApiDataModel;
-use App\Traits\ApiFilters;
 
 /**
  * Class User
@@ -40,7 +39,7 @@ use App\Traits\ApiFilters;
  */
 class User extends Authenticatable
 {
-    use HasApiTokens, HasFactory, Notifiable, ApiLogError, ApiDataModel, ApiFilters;
+    use HasApiTokens, HasFactory, Notifiable, ApiLogError;
 
     /**
      * The primary key associated with the table.

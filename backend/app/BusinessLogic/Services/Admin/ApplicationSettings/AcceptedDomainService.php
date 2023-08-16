@@ -3,6 +3,7 @@
 namespace App\BusinessLogic\Services\Admin\ApplicationSettings;
 
 use App\Traits\ApiResponseMessage;
+use App\Traits\ApiGenerateDataModel;
 use App\BusinessLogic\Interfaces\Admin\ApplicationSettings\AcceptedDomainInterface;
 use App\Http\Requests\Admin\ApplicationSettings\AcceptedDomainRequest;
 use App\Models\Admin\ApplicationSettings\AcceptedDomain;
@@ -13,8 +14,9 @@ use Illuminate\Database\Eloquent\Collection;
  */
 class AcceptedDomainService implements AcceptedDomainInterface
 {
-    use ApiResponseMessage;
+    use ApiResponseMessage, ApiGenerateDataModel;
 
+    protected $modelId;
     protected $modelName;
 
     /**
@@ -23,6 +25,7 @@ class AcceptedDomainService implements AcceptedDomainInterface
      */
     public function __construct()
     {
+        $this->modelId = 3;
         $this->modelName = new AcceptedDomain();
     }
 
@@ -34,8 +37,17 @@ class AcceptedDomainService implements AcceptedDomainInterface
     public function handleIndex($search)
     {
         $apiDisplayAllRecords = $this->modelName->fetchAllRecords($search);
-        $apiDataModel = $this->modelName->getDataModel();
-        $apiFilters = $this->modelName->getFilters();
+        $filterTypeOptions = $this->modelName->select('id', 'type')->get()->unique('type')->toArray();
+        // $filterTypeOptionId = 1;
+        // foreach ($filterTypeOptions as $key => $value) {
+        //     $filterTypeOptions[$key] = [
+        //         'value' => $filterTypeOptionId,
+        //         'label' => $value['type']
+        //     ];
+        //     $filterTypeOptionId++;
+        // }
+        // dd($filterTypeOptions);
+        $apiDataModel = $this->handleApiGenerateDataModel($this->modelId, $this->modelName, $this->modelName->getFields(), $filterTypeOptions);
 
         if ($apiDisplayAllRecords instanceof \Illuminate\Pagination\LengthAwarePaginator)
         {
@@ -45,7 +57,7 @@ class AcceptedDomainService implements AcceptedDomainInterface
             }
             else
             {
-                return response($this->handleResponse('success', $apiDisplayAllRecords, $apiDataModel, $apiFilters), 200);
+                return response($this->handleResponse('success', $apiDisplayAllRecords, $apiDataModel), 200);
             }
         }
         else

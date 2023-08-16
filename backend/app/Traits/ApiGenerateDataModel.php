@@ -203,19 +203,17 @@ trait ApiGenerateDataModel
                     }
 
                     if ($modelOptions && count($modelOptions)) {
-                        if ($field['key'] === 'options') {
-                            $sorts = $modelOptions;
-                            foreach ($sorts as $sort) {
-                                $sortsPayload[] = [
-                                    'id'        => $sortId,
-                                    'field_id'  => $field['id'],
-                                    'value'     => $sort['value'],
-                                    'label'     => $sort['label'],
-                                    'is_order'  => false,
-                                    'is_sort'   => true,
-                                    'is_active' => false,
-                                ];
-                            }
+                        $sorts = $modelOptions;
+                        foreach ($sorts as $sort) {
+                            $sortsPayload[] = [
+                                'id'        => $sortId,
+                                'field_id'  => $field['id'],
+                                'value'     => $sort['id'],
+                                'label'     => $sort['type'],
+                                'is_order'  => false,
+                                'is_sort'   => true,
+                                'is_active' => false,
+                            ];
                         }
                     }
                 }
@@ -232,6 +230,8 @@ trait ApiGenerateDataModel
                 return $value['field_id'] === $field['id'];
             });
         }
+
+        // dd($fieldsPayload);
 
         return $fieldsPayload;
     }

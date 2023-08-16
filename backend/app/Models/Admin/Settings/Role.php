@@ -4,9 +4,10 @@ namespace App\Models\Admin\Settings;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use App\Models\Admin\Settings\Field;
+use App\Models\Admin\Settings\Sort;
 use App\Traits\ApiLogError;
 use App\Traits\ApiDataModel;
-use App\Traits\ApiFilters;
 
 /**
  * Class Role
@@ -29,7 +30,7 @@ use App\Traits\ApiFilters;
  */
 class Role extends Model
 {
-    use HasFactory, ApiLogError, ApiDataModel, ApiDataModel, ApiFilters;
+    use HasFactory, ApiLogError, ApiDataModel;
 
     /**
      * The table associated with the model.

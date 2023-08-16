@@ -4,9 +4,9 @@ namespace App\Models\Admin\ApplicationSettings;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use App\Models\Admin\Settings\Field;
+use App\Models\Admin\Settings\Sort;
 use App\Traits\ApiLogError;
-use App\Traits\ApiDataModel;
-use App\Traits\ApiFilters;
 
 /**
  * Class AcceptedDomain
@@ -27,7 +27,7 @@ use App\Traits\ApiFilters;
  */
 class AcceptedDomain extends Model
 {
-    use HasFactory, ApiLogError, ApiDataModel, ApiFilters;
+    use HasFactory, ApiLogError;
 
     /**
      * The table associated with the model.
@@ -71,7 +71,7 @@ class AcceptedDomain extends Model
      */
     protected $fillable = [
         'domain'    => 'text',
-        'type'      => 'text',
+        'type'      => 'select',
         'user_id'   => 'number',
         'is_active' => 'boolean',
     ];
@@ -120,6 +120,24 @@ class AcceptedDomain extends Model
         'created_at',
         'updated_at',
     ];
+
+    /**
+     * Eloquent polymorphic relationship between users and fields.
+     *
+     */
+    public function field()
+    {
+        return $this->morphOne(Field::class, 'fieldable');
+    }
+
+    /**
+     * Eloquent polymorphic relationship between users and sorts.
+     *
+     */
+    public function sort()
+    {
+        return $this->morphOne(Sort::class, 'sortable');
+    }
 
     /**
      * Eloquent relationship between accepted domains and users.
@@ -280,45 +298,8 @@ class AcceptedDomain extends Model
         }
     }
 
-    public function getDataModel()
+    public function getFields()
     {
-        $dataModelOptions = [
-            'domain' => [
-                'name'        => 'Domain',
-                'is_required' => true
-            ],
-            'type' => [
-                'name'        => 'Type',
-                'is_required' => true
-            ],
-            'is_active' => [
-                'name'        => 'Is active?',
-                'is_required' => true
-            ],
-        ];
-
-        return $this->handleApiDataModel($this->fillable, $dataModelOptions);
-    }
-
-    /**
-     * Get the filters that can be applied to the records.
-     * The method returns an array of filter options
-     * that can be used to filter the records.
-     * @return array An array of filter options.
-     */
-    public function getFilters()
-    {
-        $filterNames = [
-            'id'        => 'Filter by ID',
-            'domain'    => 'Filter by domain name',
-            'type'      => 'Filter by domain type',
-            'is_active' => 'Filter by is active',
-        ];
-
-        $filterOptions = [
-            'type' => $this->select('id', 'type')->get()->unique('type')
-        ];
-
-        return $this->handleApiFilters($this->filters, $filterNames, $filterOptions);
+        return $this->fillable;
     }
 }
