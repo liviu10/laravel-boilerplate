@@ -7,7 +7,6 @@ use Illuminate\Database\Eloquent\Model;
 use App\Models\Admin\Settings\Field;
 use App\Models\Admin\Settings\Sort;
 use App\Traits\ApiLogError;
-use App\Traits\ApiDataModel;
 
 /**
  * Class Role
@@ -30,7 +29,7 @@ use App\Traits\ApiDataModel;
  */
 class Role extends Model
 {
-    use HasFactory, ApiLogError, ApiDataModel;
+    use HasFactory, ApiLogError;
 
     /**
      * The table associated with the model.
