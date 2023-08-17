@@ -3,7 +3,8 @@
 namespace App\BusinessLogic\Services\Admin\Settings;
 
 use App\Traits\ApiResponseMessage;
-use App\Traits\ApiGenerateDataModel;
+use App\Traits\GenerateDataModel;
+use App\Traits\GenerateFilterModel;
 use App\BusinessLogic\Interfaces\Admin\Settings\RoleInterface;
 use App\Http\Requests\Admin\Settings\RoleRequest;
 use App\Models\Admin\Settings\Role;
@@ -14,9 +15,8 @@ use Illuminate\Database\Eloquent\Collection;
  */
 class RoleService implements RoleInterface
 {
-    use ApiResponseMessage, ApiGenerateDataModel;
+    use ApiResponseMessage, GenerateDataModel, GenerateFilterModel;
 
-    protected $modelId;
     protected $modelName;
 
     /**
@@ -25,7 +25,6 @@ class RoleService implements RoleInterface
      */
     public function __construct()
     {
-        $this->modelId = 2;
         $this->modelName = new Role();
     }
 
@@ -37,17 +36,19 @@ class RoleService implements RoleInterface
     public function handleIndex($search)
     {
         $apiDisplayAllRecords = $this->modelName->fetchAllRecords($search);
-        $apiDataModel = $this->handleApiGenerateDataModel($this->modelId, $this->modelName, $this->modelName->getFields());
 
         if ($apiDisplayAllRecords instanceof \Illuminate\Pagination\LengthAwarePaginator)
         {
             if ($apiDisplayAllRecords->isEmpty())
             {
-                return response($this->handleResponse('not_found'), 404);
+                return response($this->handleResponse('not_found'), 200);
             }
             else
             {
-                return response($this->handleResponse('success', $apiDisplayAllRecords, $apiDataModel), 200);
+                $apiDataModel = $this->generateApiDataModel($this->modelName->getFields());
+                $apiFilterModel = $this->generateApiFilterModel($apiDisplayAllRecords->toArray(), $this->modelName->getFields());
+
+                return response($this->handleResponse('success', $apiDisplayAllRecords, $apiDataModel, $apiFilterModel), 200);
             }
         }
         else

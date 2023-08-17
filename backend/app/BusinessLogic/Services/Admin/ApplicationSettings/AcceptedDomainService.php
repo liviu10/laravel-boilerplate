@@ -3,7 +3,8 @@
 namespace App\BusinessLogic\Services\Admin\ApplicationSettings;
 
 use App\Traits\ApiResponseMessage;
-use App\Traits\ApiGenerateDataModel;
+use App\Traits\GenerateDataModel;
+use App\Traits\GenerateFilterModel;
 use App\BusinessLogic\Interfaces\Admin\ApplicationSettings\AcceptedDomainInterface;
 use App\Http\Requests\Admin\ApplicationSettings\AcceptedDomainRequest;
 use App\Models\Admin\ApplicationSettings\AcceptedDomain;
@@ -14,9 +15,8 @@ use Illuminate\Database\Eloquent\Collection;
  */
 class AcceptedDomainService implements AcceptedDomainInterface
 {
-    use ApiResponseMessage, ApiGenerateDataModel;
+    use ApiResponseMessage, GenerateDataModel, GenerateFilterModel;
 
-    protected $modelId;
     protected $modelName;
 
     /**
@@ -25,7 +25,6 @@ class AcceptedDomainService implements AcceptedDomainInterface
      */
     public function __construct()
     {
-        $this->modelId = 3;
         $this->modelName = new AcceptedDomain();
     }
 
@@ -37,27 +36,19 @@ class AcceptedDomainService implements AcceptedDomainInterface
     public function handleIndex($search)
     {
         $apiDisplayAllRecords = $this->modelName->fetchAllRecords($search);
-        $filterTypeOptions = $this->modelName->select('id', 'type')->get()->unique('type')->toArray();
-        // $filterTypeOptionId = 1;
-        // foreach ($filterTypeOptions as $key => $value) {
-        //     $filterTypeOptions[$key] = [
-        //         'value' => $filterTypeOptionId,
-        //         'label' => $value['type']
-        //     ];
-        //     $filterTypeOptionId++;
-        // }
-        // dd($filterTypeOptions);
-        $apiDataModel = $this->handleApiGenerateDataModel($this->modelId, $this->modelName, $this->modelName->getFields(), $filterTypeOptions);
 
         if ($apiDisplayAllRecords instanceof \Illuminate\Pagination\LengthAwarePaginator)
         {
             if ($apiDisplayAllRecords->isEmpty())
             {
-                return response($this->handleResponse('not_found'), 404);
+                return response($this->handleResponse('not_found'), 200);
             }
             else
             {
-                return response($this->handleResponse('success', $apiDisplayAllRecords, $apiDataModel), 200);
+                $apiDataModel = $this->generateApiDataModel($this->modelName->getFields(), $this->modelName->getUniqueDomainTypes());
+                $apiFilterModel = $this->generateApiFilterModel($apiDisplayAllRecords->toArray(), $this->modelName->getFields(), $this->modelName->getUniqueDomainTypes());
+
+                return response($this->handleResponse('success', $apiDisplayAllRecords, $apiDataModel, $apiFilterModel), 200);
             }
         }
         else

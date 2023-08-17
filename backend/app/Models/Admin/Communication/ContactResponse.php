@@ -4,7 +4,7 @@ namespace App\Models\Admin\Communication;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use App\Traits\ApiLogError;
+use App\Traits\LogApiError;
 
 /**
  * Class ContactResponse
@@ -24,7 +24,7 @@ use App\Traits\ApiLogError;
  */
 class ContactResponse extends Model
 {
-    use HasFactory, ApiLogError;
+    use HasFactory, LogApiError;
 
     /**
      * The table associated with the model.
@@ -81,11 +81,11 @@ class ContactResponse extends Model
      * @var string
      */
     protected $fillable = [
-        'full_name',
-        'email',
-        'message',
-        'user_id',
-        'contact_message_id',
+        'full_name'          => 'text',
+        'email'              => 'text',
+        'message'            => 'text',
+        'user_id'            => 'number',
+        'contact_message_id' => 'number',
     ];
 
     /**
@@ -149,7 +149,7 @@ class ContactResponse extends Model
         }
         catch (\Illuminate\Database\QueryException $mysqlError)
         {
-            $this->handleApiLogError($mysqlError);
+            $this->LogApiError($mysqlError);
             return False;
         }
     }
@@ -178,12 +178,12 @@ class ContactResponse extends Model
         }
         catch (\Exception $exception)
         {
-            $this->handleApiLogError($exception);
+            $this->LogApiError($exception);
             return false;
         }
         catch (\Illuminate\Database\QueryException $exception)
         {
-            $this->handleApiLogError($exception);
+            $this->LogApiError($exception);
             return false;
         }
     }
@@ -208,7 +208,7 @@ class ContactResponse extends Model
         }
         catch (\Illuminate\Database\QueryException $mysqlError)
         {
-            $this->handleApiLogError($mysqlError);
+            $this->LogApiError($mysqlError);
             return False;
         }
     }
@@ -238,12 +238,12 @@ class ContactResponse extends Model
         }
         catch (\Exception $exception)
         {
-            $this->handleApiLogError($exception);
+            $this->LogApiError($exception);
             return false;
         }
         catch (\Illuminate\Database\QueryException $exception)
         {
-            $this->handleApiLogError($exception);
+            $this->LogApiError($exception);
             return false;
         }
     }
@@ -265,62 +265,30 @@ class ContactResponse extends Model
         }
         catch (\Exception $exception)
         {
-            $this->handleApiLogError($exception);
+            $this->LogApiError($exception);
             return false;
         }
         catch (\Illuminate\Database\QueryException $exception)
         {
-            $this->handleApiLogError($exception);
+            $this->LogApiError($exception);
             return false;
         }
     }
 
     /**
-     * Get the filters that can be applied to the records.
-     * The method returns an array of filter options
-     * that can be used to filter the records.
-     * @return array An array of filter options.
+     * Get the fillable fields for the model.
+     * @return array An array containing the fillable fields for the model.
      */
-    public function getFilters()
+    public function getFields()
     {
-        $contactMeSubjectModel = new ContactSubject();
-        $subjectRecords = $contactMeSubjectModel->fetchAllRecords();
-        $options = [];
-        foreach ($subjectRecords as $record) {
-            $options[] = [
-                'value' => $record['id'],
-                'label' => $record['name'],
-            ];
+        $excludeFields = ['user_id'];
+        $filteredFields = [];
+        foreach ($this->fillable as $field => $type) {
+            if (!in_array($field, $excludeFields)) {
+                $filteredFields[$field] = $type;
+            }
         }
 
-        $availableFilters = [
-            [
-                'id' => 1,
-                'key' => 'id',
-                'name' => 'Filter by ID',
-                'type' => 'number'
-            ],
-            [
-                'id' => 2,
-                'key' => 'full_name',
-                'name' => 'Filter by full name',
-                'type' => 'text'
-            ],
-            [
-                'id' => 3,
-                'key' => 'email',
-                'name' => 'Filter by email',
-                'type' => 'text'
-            ],
-            [
-                'id' => 3,
-                'key' => 'contact_message_id',
-                'name' => 'Filter by subject',
-                'type' => 'select',
-                'options' => $options
-            ]
-        ];
-
-        return $availableFilters;
+        return $filteredFields;
     }
 }

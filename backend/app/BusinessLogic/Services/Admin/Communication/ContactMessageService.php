@@ -3,6 +3,8 @@
 namespace App\BusinessLogic\Services\Admin\Communication;
 
 use App\Traits\ApiResponseMessage;
+use App\Traits\GenerateDataModel;
+use App\Traits\GenerateFilterModel;
 use App\BusinessLogic\Interfaces\Admin\Communication\ContactMessageInterface;
 use App\Http\Requests\Admin\Communication\ContactMessageRequest;
 use App\Models\Admin\Communication\ContactMessage;
@@ -13,7 +15,7 @@ use Illuminate\Database\Eloquent\Collection;
  */
 class ContactMessageService implements ContactMessageInterface
 {
-    use ApiResponseMessage;
+    use ApiResponseMessage, GenerateDataModel, GenerateFilterModel;
 
     protected $modelName;
 
@@ -33,18 +35,19 @@ class ContactMessageService implements ContactMessageInterface
     public function handleIndex()
     {
         $apiDisplayAllRecords = $this->modelName->fetchAllRecords();
-        $apiDataModel = $this->modelName->getDataModel();
-        $apiFilters = $this->modelName->getFilters();
 
         if ($apiDisplayAllRecords instanceof \Illuminate\Pagination\LengthAwarePaginator)
         {
             if ($apiDisplayAllRecords->isEmpty())
             {
-                return response($this->handleResponse('not_found'), 404);
+                return response($this->handleResponse('not_found'), 200);
             }
             else
             {
-                return response($this->handleResponse('success', $apiDisplayAllRecords, $apiDataModel, $apiFilters), 200);
+                $apiDataModel = $this->generateApiDataModel($this->modelName->getFields());
+                $apiFilterModel = $this->generateApiFilterModel($apiDisplayAllRecords->toArray(), $this->modelName->getFields());
+
+                return response($this->handleResponse('success', $apiDisplayAllRecords, $apiDataModel, $apiFilterModel), 200);
             }
         }
         else

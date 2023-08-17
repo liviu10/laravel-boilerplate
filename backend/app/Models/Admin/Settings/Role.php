@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\Admin\Settings\Field;
 use App\Models\Admin\Settings\Sort;
-use App\Traits\ApiLogError;
+use App\Traits\LogApiError;
 
 /**
  * Class Role
@@ -29,7 +29,7 @@ use App\Traits\ApiLogError;
  */
 class Role extends Model
 {
-    use HasFactory, ApiLogError;
+    use HasFactory, LogApiError;
 
     /**
      * The table associated with the model.
@@ -99,24 +99,6 @@ class Role extends Model
     ];
 
     /**
-     * Eloquent polymorphic relationship between users and fields.
-     *
-     */
-    public function field()
-    {
-        return $this->morphOne(Field::class, 'fieldable');
-    }
-
-    /**
-     * Eloquent polymorphic relationship between users and sorts.
-     *
-     */
-    public function sort()
-    {
-        return $this->morphOne(Sort::class, 'sortable');
-    }
-
-    /**
      * Eloquent relationship between roles and users.
      *
      */
@@ -160,12 +142,12 @@ class Role extends Model
         }
         catch (\Illuminate\Database\QueryException $mysqlError)
         {
-            $this->handleApiLogError($mysqlError);
+            $this->LogApiError($mysqlError);
             return False;
         }
         catch (\Illuminate\Database\QueryException $exception)
         {
-            $this->handleApiLogError($exception);
+            $this->LogApiError($exception);
             return false;
         }
     }
@@ -195,12 +177,12 @@ class Role extends Model
         }
         catch (\Exception $exception)
         {
-            $this->handleApiLogError($exception);
+            $this->LogApiError($exception);
             return false;
         }
         catch (\Illuminate\Database\QueryException $exception)
         {
-            $this->handleApiLogError($exception);
+            $this->LogApiError($exception);
             return false;
         }
     }
@@ -221,12 +203,12 @@ class Role extends Model
         }
         catch (\Illuminate\Database\QueryException $mysqlError)
         {
-            $this->handleApiLogError($mysqlError);
+            $this->LogApiError($mysqlError);
             return false;
         }
         catch (\Illuminate\Database\QueryException $exception)
         {
-            $this->handleApiLogError($exception);
+            $this->LogApiError($exception);
             return false;
         }
     }
@@ -257,12 +239,12 @@ class Role extends Model
         }
         catch (\Exception $exception)
         {
-            $this->handleApiLogError($exception);
+            $this->LogApiError($exception);
             return false;
         }
         catch (\Illuminate\Database\QueryException $exception)
         {
-            $this->handleApiLogError($exception);
+            $this->LogApiError($exception);
             return false;
         }
     }
@@ -284,16 +266,20 @@ class Role extends Model
         }
         catch (\Exception $exception)
         {
-            $this->handleApiLogError($exception);
+            $this->LogApiError($exception);
             return false;
         }
         catch (\Illuminate\Database\QueryException $exception)
         {
-            $this->handleApiLogError($exception);
+            $this->LogApiError($exception);
             return false;
         }
     }
 
+    /**
+     * Get the fillable fields for the model.
+     * @return array An array containing the fillable fields for the model.
+     */
     public function getFields()
     {
         return $this->fillable;

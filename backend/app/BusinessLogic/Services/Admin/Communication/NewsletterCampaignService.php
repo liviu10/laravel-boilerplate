@@ -3,6 +3,8 @@
 namespace App\BusinessLogic\Services\Admin\Communication;
 
 use App\Traits\ApiResponseMessage;
+use App\Traits\GenerateDataModel;
+use App\Traits\GenerateFilterModel;
 use App\BusinessLogic\Interfaces\Admin\Communication\NewsletterCampaignInterface;
 use App\Http\Requests\Admin\Communication\NewsletterCampaignRequest;
 use App\Models\Admin\Communication\NewsletterCampaign;
@@ -13,7 +15,7 @@ use Illuminate\Database\Eloquent\Collection;
  */
 class NewsletterCampaignService implements NewsletterCampaignInterface
 {
-    use ApiResponseMessage;
+    use ApiResponseMessage, GenerateDataModel, GenerateFilterModel;
 
     protected $modelName;
 
@@ -38,11 +40,14 @@ class NewsletterCampaignService implements NewsletterCampaignInterface
         {
             if ($apiDisplayAllRecords->isEmpty())
             {
-                return response($this->handleResponse('not_found'), 404);
+                return response($this->handleResponse('not_found'), 200);
             }
             else
             {
-                return response($this->handleResponse('success', $apiDisplayAllRecords), 200);
+                $apiDataModel = $this->generateApiDataModel($this->modelName->getFields());
+                $apiFilterModel = $this->generateApiFilterModel($apiDisplayAllRecords->toArray(), $this->modelName->getFields());
+
+                return response($this->handleResponse('success', $apiDisplayAllRecords, $apiDataModel, $apiFilterModel), 200);
             }
         }
         else

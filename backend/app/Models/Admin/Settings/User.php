@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\Auth;
 use Laravel\Sanctum\HasApiTokens;
 use App\Models\Admin\Settings\Field;
 use App\Models\Admin\Settings\Sort;
-use App\Traits\ApiLogError;
+use App\Traits\LogApiError;
 
 /**
  * Class User
@@ -39,7 +39,7 @@ use App\Traits\ApiLogError;
  */
 class User extends Authenticatable
 {
-    use HasApiTokens, HasFactory, Notifiable, ApiLogError;
+    use HasApiTokens, HasFactory, Notifiable, LogApiError;
 
     /**
      * The primary key associated with the table.
@@ -121,24 +121,6 @@ class User extends Authenticatable
     ];
 
     /**
-     * Eloquent polymorphic relationship between users and fields.
-     *
-     */
-    public function field()
-    {
-        return $this->morphOne(Field::class, 'fieldable');
-    }
-
-    /**
-     * Eloquent polymorphic relationship between users and sorts.
-     *
-     */
-    public function sort()
-    {
-        return $this->morphOne(Sort::class, 'sortable');
-    }
-
-    /**
      * Eloquent relationship between users and roles.
      *
      */
@@ -181,12 +163,12 @@ class User extends Authenticatable
         }
         catch (\Exception $exception)
         {
-            $this->handleApiLogError($exception);
+            $this->LogApiError($exception);
             return false;
         }
         catch (\Illuminate\Database\QueryException $exception)
         {
-            $this->handleApiLogError($exception);
+            $this->LogApiError($exception);
             return false;
         }
     }
@@ -220,12 +202,12 @@ class User extends Authenticatable
         }
         catch (\Exception $exception)
         {
-            $this->handleApiLogError($exception);
+            $this->LogApiError($exception);
             return false;
         }
         catch (\Illuminate\Database\QueryException $exception)
         {
-            $this->handleApiLogError($exception);
+            $this->LogApiError($exception);
             return false;
         }
     }
@@ -258,12 +240,12 @@ class User extends Authenticatable
         }
         catch (\Exception $exception)
         {
-            $this->handleApiLogError($exception);
+            $this->LogApiError($exception);
             return false;
         }
         catch (\Illuminate\Database\QueryException $exception)
         {
-            $this->handleApiLogError($exception);
+            $this->LogApiError($exception);
             return false;
         }
     }
@@ -293,12 +275,12 @@ class User extends Authenticatable
         }
         catch (\Exception $exception)
         {
-            $this->handleApiLogError($exception);
+            $this->LogApiError($exception);
             return false;
         }
         catch (\Illuminate\Database\QueryException $exception)
         {
-            $this->handleApiLogError($exception);
+            $this->LogApiError($exception);
             return false;
         }
     }
@@ -332,12 +314,12 @@ class User extends Authenticatable
         }
         catch (\Exception $exception)
         {
-            $this->handleApiLogError($exception);
+            $this->LogApiError($exception);
             return false;
         }
         catch (\Illuminate\Database\QueryException $exception)
         {
-            $this->handleApiLogError($exception);
+            $this->LogApiError($exception);
             return false;
         }
     }
@@ -359,18 +341,30 @@ class User extends Authenticatable
         }
         catch (\Exception $exception)
         {
-            $this->handleApiLogError($exception);
+            $this->LogApiError($exception);
             return false;
         }
         catch (\Illuminate\Database\QueryException $exception)
         {
-            $this->handleApiLogError($exception);
+            $this->LogApiError($exception);
             return false;
         }
     }
 
+    /**
+     * Get the fillable fields for the model.
+     * @return array An array containing the fillable fields for the model.
+     */
     public function getFields()
     {
-        return $this->fillable;
+        $excludeFields = ['full_name', 'role_id'];
+        $filteredFields = [];
+        foreach ($this->fillable as $field => $type) {
+            if (!in_array($field, $excludeFields)) {
+                $filteredFields[$field] = $type;
+            }
+        }
+
+        return $filteredFields;
     }
 }

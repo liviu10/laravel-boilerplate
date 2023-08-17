@@ -4,7 +4,7 @@ namespace App\Models\Admin\Settings;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use App\Traits\ApiLogError;
+use App\Traits\LogApiError;
 
 /**
  * Class Permission
@@ -25,7 +25,7 @@ use App\Traits\ApiLogError;
  */
 class Permission extends Model
 {
-    use HasFactory, ApiLogError;
+    use HasFactory, LogApiError;
 
     /**
      * The table associated with the model.
@@ -129,7 +129,7 @@ class Permission extends Model
         }
         catch (\Illuminate\Database\QueryException $mysqlError)
         {
-            $this->handleApiLogError($mysqlError);
+            $this->LogApiError($mysqlError);
             return False;
         }
     }
@@ -157,12 +157,12 @@ class Permission extends Model
         }
         catch (\Exception $exception)
         {
-            $this->handleApiLogError($exception);
+            $this->LogApiError($exception);
             return false;
         }
         catch (\Illuminate\Database\QueryException $exception)
         {
-            $this->handleApiLogError($exception);
+            $this->LogApiError($exception);
             return false;
         }
     }
@@ -182,7 +182,7 @@ class Permission extends Model
         }
         catch (\Illuminate\Database\QueryException $mysqlError)
         {
-            $this->handleApiLogError($mysqlError);
+            $this->LogApiError($mysqlError);
             return False;
         }
     }
@@ -211,12 +211,12 @@ class Permission extends Model
         }
         catch (\Exception $exception)
         {
-            $this->handleApiLogError($exception);
+            $this->LogApiError($exception);
             return false;
         }
         catch (\Illuminate\Database\QueryException $exception)
         {
-            $this->handleApiLogError($exception);
+            $this->LogApiError($exception);
             return false;
         }
     }
@@ -238,12 +238,12 @@ class Permission extends Model
         }
         catch (\Exception $exception)
         {
-            $this->handleApiLogError($exception);
+            $this->LogApiError($exception);
             return false;
         }
         catch (\Illuminate\Database\QueryException $exception)
         {
-            $this->handleApiLogError($exception);
+            $this->LogApiError($exception);
             return false;
         }
     }

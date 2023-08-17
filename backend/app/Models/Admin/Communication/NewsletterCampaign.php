@@ -4,7 +4,7 @@ namespace App\Models\Admin\Communication;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use App\Traits\ApiLogError;
+use App\Traits\LogApiError;
 
 /**
  * Class NewsletterCampaign
@@ -31,7 +31,7 @@ use App\Traits\ApiLogError;
  */
 class NewsletterCampaign extends Model
 {
-    use HasFactory, ApiLogError;
+    use HasFactory, LogApiError;
 
     /**
      * The table associated with the model.
@@ -74,16 +74,16 @@ class NewsletterCampaign extends Model
      * @var string
      */
     protected $fillable = [
-        'campaign_name',
-        'campaign_description',
-        'campaign_is_active',
-        'valid_from',
-        'valid_to',
-        'occur_times',
-        'occur_week',
-        'occur_day',
-        'occur_hour',
-        'user_id'
+        'name'        => 'text',
+        'description' => 'text',
+        'is_active'   => 'boolean',
+        'valid_from'  => 'date',
+        'valid_to'    => 'date',
+        'occur_times' => 'number',
+        'occur_week'  => 'number',
+        'occur_day'   => 'number',
+        'occur_hour'  => 'time',
+        'user_id'     => 'number',
     ];
 
     /**
@@ -156,7 +156,7 @@ class NewsletterCampaign extends Model
         }
         catch (\Illuminate\Database\QueryException $mysqlError)
         {
-            $this->handleApiLogError($mysqlError);
+            $this->LogApiError($mysqlError);
             return False;
         }
     }
@@ -190,12 +190,12 @@ class NewsletterCampaign extends Model
         }
         catch (\Exception $exception)
         {
-            $this->handleApiLogError($exception);
+            $this->LogApiError($exception);
             return false;
         }
         catch (\Illuminate\Database\QueryException $exception)
         {
-            $this->handleApiLogError($exception);
+            $this->LogApiError($exception);
             return false;
         }
     }
@@ -223,7 +223,7 @@ class NewsletterCampaign extends Model
         }
         catch (\Illuminate\Database\QueryException $mysqlError)
         {
-            $this->handleApiLogError($mysqlError);
+            $this->LogApiError($mysqlError);
             return False;
         }
     }
@@ -258,12 +258,12 @@ class NewsletterCampaign extends Model
         }
         catch (\Exception $exception)
         {
-            $this->handleApiLogError($exception);
+            $this->LogApiError($exception);
             return false;
         }
         catch (\Illuminate\Database\QueryException $exception)
         {
-            $this->handleApiLogError($exception);
+            $this->LogApiError($exception);
             return false;
         }
     }
@@ -285,13 +285,30 @@ class NewsletterCampaign extends Model
         }
         catch (\Exception $exception)
         {
-            $this->handleApiLogError($exception);
+            $this->LogApiError($exception);
             return false;
         }
         catch (\Illuminate\Database\QueryException $exception)
         {
-            $this->handleApiLogError($exception);
+            $this->LogApiError($exception);
             return false;
         }
+    }
+
+    /**
+     * Get the fillable fields for the model.
+     * @return array An array containing the fillable fields for the model.
+     */
+    public function getFields()
+    {
+        $excludeFields = ['user_id'];
+        $filteredFields = [];
+        foreach ($this->fillable as $field => $type) {
+            if (!in_array($field, $excludeFields)) {
+                $filteredFields[$field] = $type;
+            }
+        }
+
+        return $filteredFields;
     }
 }

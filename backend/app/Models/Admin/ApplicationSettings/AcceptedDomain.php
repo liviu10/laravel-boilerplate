@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\Admin\Settings\Field;
 use App\Models\Admin\Settings\Sort;
-use App\Traits\ApiLogError;
+use App\Traits\LogApiError;
 
 /**
  * Class AcceptedDomain
@@ -27,7 +27,7 @@ use App\Traits\ApiLogError;
  */
 class AcceptedDomain extends Model
 {
-    use HasFactory, ApiLogError;
+    use HasFactory, LogApiError;
 
     /**
      * The table associated with the model.
@@ -77,18 +77,6 @@ class AcceptedDomain extends Model
     ];
 
     /**
-     * The model filters.
-     *
-     * @var array<string, string>
-     */
-    protected $filters = [
-        'id'        => 'number',
-        'domain'    => 'text',
-        'type'      => 'select',
-        'is_active' => 'select',
-    ];
-
-    /**
     * The attributes that are mass assignable.
     *
     * @var string
@@ -120,24 +108,6 @@ class AcceptedDomain extends Model
         'created_at',
         'updated_at',
     ];
-
-    /**
-     * Eloquent polymorphic relationship between users and fields.
-     *
-     */
-    public function field()
-    {
-        return $this->morphOne(Field::class, 'fieldable');
-    }
-
-    /**
-     * Eloquent polymorphic relationship between users and sorts.
-     *
-     */
-    public function sort()
-    {
-        return $this->morphOne(Sort::class, 'sortable');
-    }
 
     /**
      * Eloquent relationship between accepted domains and users.
@@ -174,7 +144,7 @@ class AcceptedDomain extends Model
         }
         catch (\Illuminate\Database\QueryException $mysqlError)
         {
-            $this->handleApiLogError($mysqlError);
+            $this->LogApiError($mysqlError);
             return False;
         }
     }
@@ -202,12 +172,12 @@ class AcceptedDomain extends Model
         }
         catch (\Exception $exception)
         {
-            $this->handleApiLogError($exception);
+            $this->LogApiError($exception);
             return false;
         }
         catch (\Illuminate\Database\QueryException $exception)
         {
-            $this->handleApiLogError($exception);
+            $this->LogApiError($exception);
             return false;
         }
     }
@@ -232,7 +202,7 @@ class AcceptedDomain extends Model
         }
         catch (\Illuminate\Database\QueryException $mysqlError)
         {
-            $this->handleApiLogError($mysqlError);
+            $this->LogApiError($mysqlError);
             return False;
         }
     }
@@ -261,12 +231,12 @@ class AcceptedDomain extends Model
         }
         catch (\Exception $exception)
         {
-            $this->handleApiLogError($exception);
+            $this->LogApiError($exception);
             return false;
         }
         catch (\Illuminate\Database\QueryException $exception)
         {
-            $this->handleApiLogError($exception);
+            $this->LogApiError($exception);
             return false;
         }
     }
@@ -288,18 +258,35 @@ class AcceptedDomain extends Model
         }
         catch (\Exception $exception)
         {
-            $this->handleApiLogError($exception);
+            $this->LogApiError($exception);
             return false;
         }
         catch (\Illuminate\Database\QueryException $exception)
         {
-            $this->handleApiLogError($exception);
+            $this->LogApiError($exception);
             return false;
         }
     }
 
+    /**
+     * Get the fillable fields for the model.
+     * @return array An array containing the fillable fields for the model.
+     */
     public function getFields()
     {
-        return $this->fillable;
+        $excludeFields = ['user_id'];
+        $filteredFields = [];
+        foreach ($this->fillable as $field => $type) {
+            if (!in_array($field, $excludeFields)) {
+                $filteredFields[$field] = $type;
+            }
+        }
+
+        return $filteredFields;
+    }
+
+    public function getUniqueDomainTypes()
+    {
+        return $this->select('id', 'type')->get()->unique('type')->toArray();
     }
 }

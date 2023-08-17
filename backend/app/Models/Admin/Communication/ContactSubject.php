@@ -4,7 +4,7 @@ namespace App\Models\Admin\Communication;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use App\Traits\ApiLogError;
+use App\Traits\LogApiError;
 
 /**
  * Class ContactSubject
@@ -25,7 +25,7 @@ use App\Traits\ApiLogError;
  */
 class ContactSubject extends Model
 {
-    use HasFactory, ApiLogError;
+    use HasFactory, LogApiError;
 
     /**
      * The table associated with the model.
@@ -68,10 +68,10 @@ class ContactSubject extends Model
      * @var string
      */
     protected $fillable = [
-        'name',
-        'description',
-        'is_active',
-        'user_id',
+        'name'        => 'text',
+        'description' => 'text',
+        'is_active'   => 'boolean',
+        'user_id'     => 'number',
     ];
 
     /**
@@ -138,7 +138,7 @@ class ContactSubject extends Model
         }
         catch (\Illuminate\Database\QueryException $mysqlError)
         {
-            $this->handleApiLogError($mysqlError);
+            $this->LogApiError($mysqlError);
             return False;
         }
     }
@@ -166,12 +166,12 @@ class ContactSubject extends Model
         }
         catch (\Exception $exception)
         {
-            $this->handleApiLogError($exception);
+            $this->LogApiError($exception);
             return false;
         }
         catch (\Illuminate\Database\QueryException $exception)
         {
-            $this->handleApiLogError($exception);
+            $this->LogApiError($exception);
             return false;
         }
     }
@@ -196,7 +196,7 @@ class ContactSubject extends Model
         }
         catch (\Illuminate\Database\QueryException $mysqlError)
         {
-            $this->handleApiLogError($mysqlError);
+            $this->LogApiError($mysqlError);
             return False;
         }
     }
@@ -225,12 +225,12 @@ class ContactSubject extends Model
         }
         catch (\Exception $exception)
         {
-            $this->handleApiLogError($exception);
+            $this->LogApiError($exception);
             return false;
         }
         catch (\Illuminate\Database\QueryException $exception)
         {
-            $this->handleApiLogError($exception);
+            $this->LogApiError($exception);
             return false;
         }
     }
@@ -252,13 +252,30 @@ class ContactSubject extends Model
         }
         catch (\Exception $exception)
         {
-            $this->handleApiLogError($exception);
+            $this->LogApiError($exception);
             return false;
         }
         catch (\Illuminate\Database\QueryException $exception)
         {
-            $this->handleApiLogError($exception);
+            $this->LogApiError($exception);
             return false;
         }
+    }
+
+    /**
+     * Get the fillable fields for the model.
+     * @return array An array containing the fillable fields for the model.
+     */
+    public function getFields()
+    {
+        $excludeFields = ['user_id'];
+        $filteredFields = [];
+        foreach ($this->fillable as $field => $type) {
+            if (!in_array($field, $excludeFields)) {
+                $filteredFields[$field] = $type;
+            }
+        }
+
+        return $filteredFields;
     }
 }

@@ -4,9 +4,7 @@ namespace App\Models\Admin\Communication;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use App\Traits\ApiLogError;
-use App\Traits\ApiDataModel;
-use App\Traits\ApiFilters;
+use App\Traits\LogApiError;
 
 /**
  * Class ContactMessage
@@ -29,7 +27,7 @@ use App\Traits\ApiFilters;
  */
 class ContactMessage extends Model
 {
-    use HasFactory, ApiLogError, ApiDataModel, ApiFilters;
+    use HasFactory, LogApiError;
 
     /**
      * The table associated with the model.
@@ -72,28 +70,13 @@ class ContactMessage extends Model
      * @var string
      */
     protected $fillable = [
-        'full_name'          => 'string',
-        'email'              => 'string',
-        'phone'              => 'string',
-        'message'            => 'string',
-        'privacy_policy'     => 'boolean',
-        'contact_subject_id' => 'number',
-    ];
-
-    /**
-     * The model filters.
-     *
-     * @var array<string, string>
-     */
-    protected $filters = [
-        'id'                 => 'number',
         'full_name'          => 'text',
         'email'              => 'text',
         'phone'              => 'text',
+        'message'            => 'text',
         'privacy_policy'     => 'boolean',
         'contact_subject_id' => 'number',
     ];
-
 
     /**
     * The attributes that are mass assignable.
@@ -158,7 +141,7 @@ class ContactMessage extends Model
         }
         catch (\Illuminate\Database\QueryException $mysqlError)
         {
-            $this->handleApiLogError($mysqlError);
+            $this->LogApiError($mysqlError);
             return False;
         }
     }
@@ -188,12 +171,12 @@ class ContactMessage extends Model
         }
         catch (\Exception $exception)
         {
-            $this->handleApiLogError($exception);
+            $this->LogApiError($exception);
             return false;
         }
         catch (\Illuminate\Database\QueryException $exception)
         {
-            $this->handleApiLogError($exception);
+            $this->LogApiError($exception);
             return false;
         }
     }
@@ -218,7 +201,7 @@ class ContactMessage extends Model
         }
         catch (\Illuminate\Database\QueryException $mysqlError)
         {
-            $this->handleApiLogError($mysqlError);
+            $this->LogApiError($mysqlError);
             return False;
         }
     }
@@ -249,12 +232,12 @@ class ContactMessage extends Model
         }
         catch (\Exception $exception)
         {
-            $this->handleApiLogError($exception);
+            $this->LogApiError($exception);
             return false;
         }
         catch (\Illuminate\Database\QueryException $exception)
         {
-            $this->handleApiLogError($exception);
+            $this->LogApiError($exception);
             return false;
         }
     }
@@ -276,65 +259,22 @@ class ContactMessage extends Model
         }
         catch (\Exception $exception)
         {
-            $this->handleApiLogError($exception);
+            $this->LogApiError($exception);
             return false;
         }
         catch (\Illuminate\Database\QueryException $exception)
         {
-            $this->handleApiLogError($exception);
+            $this->LogApiError($exception);
             return false;
         }
     }
 
-    public function getDataModel()
-    {
-        $dataModelOptions = [
-            'full_name' => [
-                'name'        => 'Full name',
-                'is_required' => true
-            ],
-            'email' => [
-                'name'        => 'Email address',
-                'is_required' => true
-            ],
-            'phone' => [
-                'name'        => 'Phone number',
-                'is_required' => true
-            ],
-            'message' => [
-                'name'        => 'Message',
-                'is_required' => true
-            ],
-            'privacy_policy' => [
-                'name'        => 'Privacy policy',
-                'is_required' => true
-            ],
-            'contact_subject_id' => [
-                'name'        => 'Contact subject',
-                'is_required' => true
-            ],
-        ];
-
-        return $this->handleApiDataModel($this->fillable, $dataModelOptions);
-    }
-
     /**
-     * Get the filters that can be applied to the records.
-     * The method returns an array of filter options
-     * that can be used to filter the records.
-     * @return array An array of filter options.
+     * Get the fillable fields for the model.
+     * @return array An array containing the fillable fields for the model.
      */
-    public function getFilters()
+    public function getFields()
     {
-        $filterNames = [
-            'id'                 => 'Filter by ID',
-            'full_name'          => 'Filter by full name',
-            'email'              => 'Filter by email',
-            'phone'              => 'Filter by phone',
-            'privacy_policy'     => 'Filter by privacy policy',
-            'contact_subject_id' => 'Filter by privacy policy',
-        ];
-
-        return $this->handleApiFilters($this->filters, $filterNames);
+        return $this->fillable;
     }
 }
