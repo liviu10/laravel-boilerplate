@@ -16,9 +16,10 @@ trait GenerateDataModel
     {
         $mappedOptions = [];
         $optionId = 1;
+
         foreach ($options as $option) {
             $optionValue = $optionId;
-            $optionLabel = $option[array_keys($option)[1]];
+            $optionLabel = array_key_exists('id', $options) ? $option[array_keys($option)[1]] : $option;
             $mappedOptions[] = [
                 'value' => $optionValue,
                 'label' => $optionLabel,
@@ -26,6 +27,7 @@ trait GenerateDataModel
 
             $optionId++;
         }
+
         $options = $mappedOptions;
 
         return $options;
@@ -80,7 +82,7 @@ trait GenerateDataModel
 
             if ($dataModel === 'select')
             {
-                $model['options'] = $this->getDataModelOptions($dataModelOptions);
+                $model['options'] = $this->getDataModelOptions($dataModelOptions[$key]);
             }
 
             if ($dataModel === 'boolean')

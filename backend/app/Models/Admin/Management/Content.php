@@ -1,22 +1,24 @@
 <?php
 
-namespace App\Models\Admin\Communication;
+namespace App\Models\Admin\Management;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Traits\LogApiError;
 
 /**
- * Class ContactMessage
- * @package App\Models\Admin\Communication
+ * Class Content
+ * @package App\Models\Admin\Management
 
  * @property int $id
- * @property string $full_name
- * @property string $email
- * @property string $message
- * @property boolean $privacy_policy
+ * @property string $visibility
+ * @property string $content_url
+ * @property string $title
+ * @property string $content_type
+ * @property string $description
+ * @property string $content
+ * @property boolean $allow_comments
  * @property int $user_id
- * @property int $contact_subject_id
  * @property \Carbon\Carbon $created_at
  * @property \Carbon\Carbon $updated_at
  * @method fetchAllRecords
@@ -25,7 +27,7 @@ use App\Traits\LogApiError;
  * @method updateRecord
  * @method deleteRecord
  */
-class ContactMessage extends Model
+class Content extends Model
 {
     use HasFactory, LogApiError;
 
@@ -34,7 +36,7 @@ class ContactMessage extends Model
      *
      * @var string
      */
-    protected $table = 'contact_messages';
+    protected $table = 'contents';
 
     /**
      * The primary key associated with the table.
@@ -55,7 +57,7 @@ class ContactMessage extends Model
      *
      * @var string
      */
-    protected $foreignKey = 'contact_subject_id';
+    protected $foreignKey = 'user_id';
 
     /**
      * The data type of the database table foreign key.
@@ -70,12 +72,32 @@ class ContactMessage extends Model
      * @var array<string, string>
      */
     protected $fillable = [
-        'full_name'          => 'text',
-        'email'              => 'text',
-        'phone'              => 'text',
-        'message'            => 'text',
-        'privacy_policy'     => 'boolean',
-        'contact_subject_id' => 'number',
+        'visibility'     => 'select',
+        'content_url'    => 'text',
+        'title'          => 'text',
+        'content_type'   => 'select',
+        'description'    => 'date',
+        'content'        => 'number',
+        'allow_comments' => 'boolean',
+        'user_id'        => 'number',
+    ];
+
+    /**
+     * The visibility options.
+     *
+     * @var array<string>
+     */
+    protected $visibilityOptions = [
+        'Public', 'Private', 'Draft'
+    ];
+
+    /**
+     * The content type options.
+     *
+     * @var array<string>
+     */
+    protected $contentTypeOptions = [
+        'Page', 'Article'
     ];
 
     /**
@@ -84,7 +106,7 @@ class ContactMessage extends Model
     * @var string
     */
     protected $attributes = [
-        'privacy_policy' => false,
+        'allow_comments' => false,
     ];
 
     /**
@@ -93,11 +115,11 @@ class ContactMessage extends Model
      * @var array<string, string>
      */
     protected $casts = [
-        'id'                 => 'integer',
-        'privacy_policy'     => 'boolean',
-        'created_at'         => 'datetime:d.m.Y H:i',
-        'updated_at'         => 'datetime:d.m.Y H:i',
-        'contact_subject_id' => 'integer',
+        'id'             => 'integer',
+        'allow_comments' => 'boolean',
+        'created_at'     => 'datetime:d.m.Y H:i',
+        'updated_at'     => 'datetime:d.m.Y H:i',
+        'user_id'        => 'integer',
     ];
 
     /**
@@ -112,12 +134,30 @@ class ContactMessage extends Model
     ];
 
     /**
-     * Eloquent relationship between contact messages and contact subjects.
+     * Eloquent relationship between contact me messages and users.
      *
      */
-    public function contact_subject()
+    public function user()
     {
-        return $this->belongsTo('App\Models\Admin\Communication\ContactSubject');
+        return $this->belongsTo('App\Models\Admin\Settings\User');
+    }
+
+    /**
+     * Eloquent relationship between contents and tags.
+     *
+     */
+    public function tags()
+    {
+        return $this->hasMany('App\Models\Admin\Management\Tag');
+    }
+
+    /**
+     * Eloquent relationship between contents and medias.
+     *
+     */
+    public function medias()
+    {
+        return $this->hasMany('App\Models\Admin\Management\Media');
     }
 
     /**
@@ -129,15 +169,7 @@ class ContactMessage extends Model
     {
         try
         {
-            return $this->select(
-                'id', 'full_name', 'email', 'phone', 'contact_subject_id'
-            )
-            ->with([
-                'contact_subject' => function ($query) {
-                    $query->select('id', 'name');
-                }
-            ])
-            ->paginate(15);
+            return $this->select('id', 'visibility', 'content_url', 'title', 'content_type')->paginate(15);
         }
         catch (\Illuminate\Database\QueryException $mysqlError)
         {
@@ -159,12 +191,14 @@ class ContactMessage extends Model
         try
         {
             $this->create([
-                'full_name'          => $payload['full_name'],
-                'email'              => $payload['email'],
-                'phone'              => $payload['phone'],
-                'message'            => $payload['message'],
-                'privacy_policy'     => $payload['privacy_policy'],
-                'contact_subject_id' => $payload['contact_subject_id'],
+                'visibility'     => $payload['visibility'],
+                'content_url'    => $payload['content_url'],
+                'title'          => $payload['title'],
+                'content_type'   => $payload['content_type'],
+                'description'    => $payload['description'],
+                'content'        => $payload['content'],
+                'allow_comments' => $payload['allow_comments'],
+                'user_id'        => $payload['user_id'],
             ]);
 
             return True;
@@ -193,8 +227,14 @@ class ContactMessage extends Model
             return $this->select('*')
                         ->where('id', '=', $id)
                         ->with([
-                            'contact_subject' => function ($query) {
-                                $query->select('id', 'name');
+                            'tags' => function ($query) {
+                                $query->select('*');
+                            },
+                            'medias' => function ($query) {
+                                $query->select('*');
+                            },
+                            'user' => function ($query) {
+                                $query->select('id', 'full_name');
                             }
                         ])
                         ->get();
@@ -220,12 +260,14 @@ class ContactMessage extends Model
         try
         {
             $this->find($id)->update([
-                'full_name'          => $payload['full_name'],
-                'email'              => $payload['email'],
-                'phone'              => $payload['phone'],
-                'message'            => $payload['message'],
-                'privacy_policy'     => $payload['privacy_policy'],
-                'contact_subject_id' => $payload['contact_subject_id'],
+                'visibility'     => $payload['visibility'],
+                'content_url'    => $payload['content_url'],
+                'title'          => $payload['title'],
+                'content_type'   => $payload['content_type'],
+                'description'    => $payload['description'],
+                'content'        => $payload['content'],
+                'allow_comments' => $payload['allow_comments'],
+                'user_id'        => $payload['user_id'],
             ]);
 
             return True;
@@ -275,6 +317,32 @@ class ContactMessage extends Model
      */
     public function getFields()
     {
-        return $this->fillable;
+        $excludeFields = ['user_id'];
+        $filteredFields = [];
+        foreach ($this->fillable as $field => $type) {
+            if (!in_array($field, $excludeFields)) {
+                $filteredFields[$field] = $type;
+            }
+        }
+
+        return $filteredFields;
+    }
+
+    /**
+     * Get the visibility options.
+     * @return array An array containing the visibility options.
+     */
+    public function getVisibilityOptions()
+    {
+        return $this->visibilityOptions;
+    }
+
+    /**
+     * Get the content type options.
+     * @return array An array containing the content type options.
+     */
+    public function getContentTypeOptions()
+    {
+        return $this->contentTypeOptions;
     }
 }

@@ -14,15 +14,16 @@ use Illuminate\Support\Facades\Route;
 |
 */
 // Import application's management
-    use App\Http\Controllers\Admin\Management\PageController;
+    use App\Http\Controllers\Admin\Management\ContentController;
     use App\Http\Controllers\Admin\Management\TagController;
-    use App\Http\Controllers\Admin\Management\ArticleController;
     use App\Http\Controllers\Admin\Management\MediaController;
     use App\Http\Controllers\Admin\Management\CommentController;
+    use App\Http\Controllers\Admin\Management\AppreciationController;
 // Import application's communication
     use App\Http\Controllers\Admin\Communication\ContactMessageController;
     use App\Http\Controllers\Admin\Communication\ContactSubjectController;
     use App\Http\Controllers\Admin\Communication\NewsletterCampaignController;
+    use App\Http\Controllers\Admin\Communication\NewsletterSubscriberController;
 // Import application's reports
     use App\Http\Controllers\Admin\Report\ReportController;
 // Import application's documentation
@@ -45,18 +46,18 @@ Route::group([ 'prefix' => config('app.version') ], function () {
     // Application's admin api endpoints
     Route::group([ 'prefix' => '/admin' ], function () {
         // Application's management endpoints
-        // Route::group([ 'prefix' => '/management' ], function () {
-        //     // Pages
-        //     Route::apiResource('/pages', PageController::class);
-        //     // Tags
-        //     Route::apiResource('/tags', TagController::class);
-        //     // Articles
-        //     Route::apiResource('/articles', ArticleController::class);
-        //     // Media
-        //     Route::apiResource('/media', MediaController::class);
-        //     // Comments
-        //     Route::apiResource('/comments', CommentController::class);
-        // });
+        Route::group([ 'prefix' => '/management' ], function () {
+            // Pages
+            Route::apiResource('/contents', ContentController::class);
+            // Tags
+            Route::apiResource('/tags', TagController::class);
+            // Media
+            Route::apiResource('/media', MediaController::class);
+            // Comments
+            Route::apiResource('/comments', CommentController::class);
+            // Appreciation
+            Route::apiResource('/appreciations', AppreciationController::class);
+        });
         // Application's communication endpoints
         Route::group([ 'prefix' => '/communication' ], function () {
             // Contact subject, messages and responses
@@ -67,7 +68,7 @@ Route::group([ 'prefix' => config('app.version') ], function () {
             // Newsletter campaign and subscribers
             Route::group([ 'prefix' => '/newsletter' ], function () {
                 Route::apiResource('/campaigns', NewsletterCampaignController::class);
-                // Route::apiResource('/subscribers', NewsletterSubscriberController::class);
+                Route::apiResource('/subscribers', NewsletterSubscriberController::class);
             });
         });
         // Application's reports endpoints

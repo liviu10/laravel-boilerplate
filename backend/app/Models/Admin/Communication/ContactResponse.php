@@ -78,7 +78,7 @@ class ContactResponse extends Model
     /**
      * The attributes that are mass assignable.
      *
-     * @var string
+     * @var array<string, string>
      */
     protected $fillable = [
         'full_name'          => 'text',

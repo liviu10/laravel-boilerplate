@@ -7,16 +7,15 @@ use Illuminate\Database\Eloquent\Model;
 use App\Traits\LogApiError;
 
 /**
- * Class ContactMessage
+ * Class NewsletterSubscriber
  * @package App\Models\Admin\Communication
 
  * @property int $id
  * @property string $full_name
  * @property string $email
- * @property string $message
  * @property boolean $privacy_policy
- * @property int $user_id
- * @property int $contact_subject_id
+ * @property boolean $valid_email
+ * @property int $newsletter_campaign_id
  * @property \Carbon\Carbon $created_at
  * @property \Carbon\Carbon $updated_at
  * @method fetchAllRecords
@@ -25,7 +24,7 @@ use App\Traits\LogApiError;
  * @method updateRecord
  * @method deleteRecord
  */
-class ContactMessage extends Model
+class NewsletterSubscriber extends Model
 {
     use HasFactory, LogApiError;
 
@@ -34,7 +33,7 @@ class ContactMessage extends Model
      *
      * @var string
      */
-    protected $table = 'contact_messages';
+    protected $table = 'newsletter_subscribers';
 
     /**
      * The primary key associated with the table.
@@ -55,7 +54,7 @@ class ContactMessage extends Model
      *
      * @var string
      */
-    protected $foreignKey = 'contact_subject_id';
+    protected $foreignKey = 'newsletter_campaign_id';
 
     /**
      * The data type of the database table foreign key.
@@ -70,12 +69,11 @@ class ContactMessage extends Model
      * @var array<string, string>
      */
     protected $fillable = [
-        'full_name'          => 'text',
-        'email'              => 'text',
-        'phone'              => 'text',
-        'message'            => 'text',
-        'privacy_policy'     => 'boolean',
-        'contact_subject_id' => 'number',
+        'full_name'              => 'text',
+        'email'                  => 'text',
+        'privacy_policy'         => 'boolean',
+        'valid_email'            => 'boolean',
+        'newsletter_campaign_id' => 'number',
     ];
 
     /**
@@ -85,6 +83,7 @@ class ContactMessage extends Model
     */
     protected $attributes = [
         'privacy_policy' => false,
+        'valid_email'    => false,
     ];
 
     /**
@@ -93,11 +92,10 @@ class ContactMessage extends Model
      * @var array<string, string>
      */
     protected $casts = [
-        'id'                 => 'integer',
-        'privacy_policy'     => 'boolean',
-        'created_at'         => 'datetime:d.m.Y H:i',
-        'updated_at'         => 'datetime:d.m.Y H:i',
-        'contact_subject_id' => 'integer',
+        'id'                     => 'integer',
+        'privacy_policy'         => 'boolean',
+        'valid_email'            => 'boolean',
+        'newsletter_campaign_id' => 'integer',
     ];
 
     /**
@@ -112,12 +110,12 @@ class ContactMessage extends Model
     ];
 
     /**
-     * Eloquent relationship between contact messages and contact subjects.
+     * Eloquent relationship between newsletter subscribers and newsletter campaigns.
      *
      */
-    public function contact_subject()
+    public function newsletter_campaign()
     {
-        return $this->belongsTo('App\Models\Admin\Communication\ContactSubject');
+        return $this->belongsTo('App\Models\Admin\Communication\NewsletterCampaign');
     }
 
     /**
@@ -129,15 +127,7 @@ class ContactMessage extends Model
     {
         try
         {
-            return $this->select(
-                'id', 'full_name', 'email', 'phone', 'contact_subject_id'
-            )
-            ->with([
-                'contact_subject' => function ($query) {
-                    $query->select('id', 'name');
-                }
-            ])
-            ->paginate(15);
+            return $this->select('id', 'full_name', 'email', 'privacy_policy', 'valid_email')->paginate(15);
         }
         catch (\Illuminate\Database\QueryException $mysqlError)
         {
@@ -159,12 +149,11 @@ class ContactMessage extends Model
         try
         {
             $this->create([
-                'full_name'          => $payload['full_name'],
-                'email'              => $payload['email'],
-                'phone'              => $payload['phone'],
-                'message'            => $payload['message'],
-                'privacy_policy'     => $payload['privacy_policy'],
-                'contact_subject_id' => $payload['contact_subject_id'],
+                'full_name'              => $payload['full_name'],
+                'email'                  => $payload['email'],
+                'privacy_policy'         => $payload['privacy_policy'],
+                'valid_email'            => $payload['valid_email'],
+                'newsletter_campaign_id' => $payload['newsletter_campaign_id'],
             ]);
 
             return True;
@@ -193,8 +182,8 @@ class ContactMessage extends Model
             return $this->select('*')
                         ->where('id', '=', $id)
                         ->with([
-                            'contact_subject' => function ($query) {
-                                $query->select('id', 'name');
+                            'newsletter_campaign' => function ($query) {
+                                $query->select('id', 'name', 'valid_from', 'valid_to');
                             }
                         ])
                         ->get();
@@ -220,12 +209,11 @@ class ContactMessage extends Model
         try
         {
             $this->find($id)->update([
-                'full_name'          => $payload['full_name'],
-                'email'              => $payload['email'],
-                'phone'              => $payload['phone'],
-                'message'            => $payload['message'],
-                'privacy_policy'     => $payload['privacy_policy'],
-                'contact_subject_id' => $payload['contact_subject_id'],
+                'full_name'              => $payload['full_name'],
+                'email'                  => $payload['email'],
+                'privacy_policy'         => $payload['privacy_policy'],
+                'valid_email'            => $payload['valid_email'],
+                'newsletter_campaign_id' => $payload['newsletter_campaign_id'],
             ]);
 
             return True;
@@ -275,6 +263,15 @@ class ContactMessage extends Model
      */
     public function getFields()
     {
-        return $this->fillable;
+        $excludeFields = ['newsletter_campaign_id'];
+        $filteredFields = [];
+        dd($this->fillable);
+        foreach ($this->fillable as $field => $type) {
+            if (!in_array($field, $excludeFields)) {
+                $filteredFields[$field] = $type;
+            }
+        }
+
+        return $filteredFields;
     }
 }

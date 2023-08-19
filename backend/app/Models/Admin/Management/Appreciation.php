@@ -1,22 +1,21 @@
 <?php
 
-namespace App\Models\Admin\Communication;
+namespace App\Models\Admin\Management;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Traits\LogApiError;
 
 /**
- * Class ContactMessage
- * @package App\Models\Admin\Communication
+ * Class Appreciation
+ * @package App\Models\Admin\Management
 
  * @property int $id
- * @property string $full_name
- * @property string $email
- * @property string $message
- * @property boolean $privacy_policy
+ * @property int $likes
+ * @property int $dislikes
+ * @property int $rating
+ * @property int $content_id
  * @property int $user_id
- * @property int $contact_subject_id
  * @property \Carbon\Carbon $created_at
  * @property \Carbon\Carbon $updated_at
  * @method fetchAllRecords
@@ -25,7 +24,7 @@ use App\Traits\LogApiError;
  * @method updateRecord
  * @method deleteRecord
  */
-class ContactMessage extends Model
+class Appreciation extends Model
 {
     use HasFactory, LogApiError;
 
@@ -34,7 +33,7 @@ class ContactMessage extends Model
      *
      * @var string
      */
-    protected $table = 'contact_messages';
+    protected $table = 'appreciations';
 
     /**
      * The primary key associated with the table.
@@ -51,40 +50,16 @@ class ContactMessage extends Model
     protected $keyType = 'int';
 
     /**
-     * The foreign key associated with the table.
-     *
-     * @var string
-     */
-    protected $foreignKey = 'contact_subject_id';
-
-    /**
-     * The data type of the database table foreign key.
-     *
-     * @var string
-     */
-    protected $foreignKeyType = 'int';
-
-    /**
      * The attributes that are mass assignable.
      *
      * @var array<string, string>
      */
     protected $fillable = [
-        'full_name'          => 'text',
-        'email'              => 'text',
-        'phone'              => 'text',
-        'message'            => 'text',
-        'privacy_policy'     => 'boolean',
-        'contact_subject_id' => 'number',
-    ];
-
-    /**
-    * The attributes that are mass assignable.
-    *
-    * @var string
-    */
-    protected $attributes = [
-        'privacy_policy' => false,
+        'likes'      => 'number',
+        'dislikes'   => 'number',
+        'rating'     => 'number',
+        'content_id' => 'number',
+        'user_id'    => 'number',
     ];
 
     /**
@@ -93,11 +68,14 @@ class ContactMessage extends Model
      * @var array<string, string>
      */
     protected $casts = [
-        'id'                 => 'integer',
-        'privacy_policy'     => 'boolean',
-        'created_at'         => 'datetime:d.m.Y H:i',
-        'updated_at'         => 'datetime:d.m.Y H:i',
-        'contact_subject_id' => 'integer',
+        'id'         => 'integer',
+        'likes'      => 'integer',
+        'dislikes'   => 'integer',
+        'rating'     => 'integer',
+        'created_at' => 'datetime:d.m.Y H:i',
+        'updated_at' => 'datetime:d.m.Y H:i',
+        'content_id' => 'integer',
+        'user_id'    => 'integer',
     ];
 
     /**
@@ -112,15 +90,6 @@ class ContactMessage extends Model
     ];
 
     /**
-     * Eloquent relationship between contact messages and contact subjects.
-     *
-     */
-    public function contact_subject()
-    {
-        return $this->belongsTo('App\Models\Admin\Communication\ContactSubject');
-    }
-
-    /**
      * Fetches all records from the database.
      * @return \Illuminate\Database\Eloquent\Collection|bool
      * The collection of records on success, or false on failure.
@@ -129,15 +98,7 @@ class ContactMessage extends Model
     {
         try
         {
-            return $this->select(
-                'id', 'full_name', 'email', 'phone', 'contact_subject_id'
-            )
-            ->with([
-                'contact_subject' => function ($query) {
-                    $query->select('id', 'name');
-                }
-            ])
-            ->paginate(15);
+            return $this->select('*')->paginate(15);
         }
         catch (\Illuminate\Database\QueryException $mysqlError)
         {
@@ -159,12 +120,11 @@ class ContactMessage extends Model
         try
         {
             $this->create([
-                'full_name'          => $payload['full_name'],
-                'email'              => $payload['email'],
-                'phone'              => $payload['phone'],
-                'message'            => $payload['message'],
-                'privacy_policy'     => $payload['privacy_policy'],
-                'contact_subject_id' => $payload['contact_subject_id'],
+                'likes'      => $payload['likes'],
+                'dislikes'   => $payload['dislikes'],
+                'rating'     => $payload['rating'],
+                'content_id' => $payload['content_id'],
+                'user_id'    => $payload['user_id'],
             ]);
 
             return True;
@@ -192,11 +152,6 @@ class ContactMessage extends Model
         {
             return $this->select('*')
                         ->where('id', '=', $id)
-                        ->with([
-                            'contact_subject' => function ($query) {
-                                $query->select('id', 'name');
-                            }
-                        ])
                         ->get();
         }
         catch (\Illuminate\Database\QueryException $mysqlError)
@@ -220,12 +175,11 @@ class ContactMessage extends Model
         try
         {
             $this->find($id)->update([
-                'full_name'          => $payload['full_name'],
-                'email'              => $payload['email'],
-                'phone'              => $payload['phone'],
-                'message'            => $payload['message'],
-                'privacy_policy'     => $payload['privacy_policy'],
-                'contact_subject_id' => $payload['contact_subject_id'],
+                'likes'      => $payload['likes'],
+                'dislikes'   => $payload['dislikes'],
+                'rating'     => $payload['rating'],
+                'content_id' => $payload['content_id'],
+                'user_id'    => $payload['user_id'],
             ]);
 
             return True;
@@ -275,6 +229,14 @@ class ContactMessage extends Model
      */
     public function getFields()
     {
-        return $this->fillable;
+        $excludeFields = ['content_id', 'user_id'];
+        $filteredFields = [];
+        foreach ($this->fillable as $field => $type) {
+            if (!in_array($field, $excludeFields)) {
+                $filteredFields[$field] = $type;
+            }
+        }
+
+        return $filteredFields;
     }
 }

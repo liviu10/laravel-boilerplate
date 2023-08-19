@@ -71,9 +71,10 @@ trait GenerateFilterModel
     {
         $mappedOptions = [];
         $optionId = 1;
+
         foreach ($options as $option) {
             $optionValue = $optionId;
-            $optionLabel = $option[array_keys($option)[1]];
+            $optionLabel = array_key_exists('id', $options) ? $option[array_keys($option)[1]] : $option;
             $mappedOptions[] = [
                 'value' => $optionValue,
                 'label' => $optionLabel,
@@ -81,6 +82,7 @@ trait GenerateFilterModel
 
             $optionId++;
         }
+
         $options = $mappedOptions;
 
         return $options;
@@ -132,9 +134,9 @@ trait GenerateFilterModel
                     $filteredDataFields = $this->getFilteredFields($dataFields, $availableFields);
 
                     $availableFilterModel = [];
+                    $filterId = 1;
                     foreach ($filteredDataFields as $key => $filter)
                     {
-                        $filterId = 1;
                         $model = [
                             'id'        => $filterId,
                             'is_active' => true,
@@ -147,7 +149,7 @@ trait GenerateFilterModel
 
                         if ($filter === 'select')
                         {
-                            $model['options'] = $this->getFilterModelOptions($filterModelOptions);
+                            $model['options'] = $this->getFilterModelOptions($filterModelOptions[$key]);
                         }
 
                         if ($filter === 'boolean')
