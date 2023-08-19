@@ -357,7 +357,7 @@ class User extends Authenticatable
      */
     public function getFields()
     {
-        $excludeFields = ['full_name', 'role_id'];
+        $excludeFields = ['role_id'];
         $filteredFields = [];
         foreach ($this->fillable as $field => $type) {
             if (!in_array($field, $excludeFields)) {

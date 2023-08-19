@@ -3,9 +3,8 @@
 namespace App\BusinessLogic\Services\Admin\ApplicationSettings;
 
 use App\Traits\ApiResponseMessage;
-use App\Traits\GenerateDataModel;
-use App\Traits\GenerateFilterModel;
 use App\BusinessLogic\Interfaces\Admin\ApplicationSettings\AcceptedDomainInterface;
+use App\BusinessLogic\Services\Admin\DataModel;
 use App\Http\Requests\Admin\ApplicationSettings\AcceptedDomainRequest;
 use App\Models\Admin\ApplicationSettings\AcceptedDomain;
 use Illuminate\Database\Eloquent\Collection;
@@ -15,7 +14,7 @@ use Illuminate\Database\Eloquent\Collection;
  */
 class AcceptedDomainService implements AcceptedDomainInterface
 {
-    use ApiResponseMessage, GenerateDataModel, GenerateFilterModel;
+    use ApiResponseMessage;
 
     protected $modelName;
 
@@ -45,10 +44,17 @@ class AcceptedDomainService implements AcceptedDomainInterface
             }
             else
             {
-                $apiDataModel = $this->generateApiDataModel($this->modelName->getFields(), $this->modelName->getUniqueDomainTypes());
-                $apiFilterModel = $this->generateApiFilterModel($apiDisplayAllRecords->toArray(), $this->modelName->getFields(), $this->modelName->getUniqueDomainTypes());
+                $dataModel = new DataModel($apiDisplayAllRecords->toArray(), $this->modelName->getFields(), class_basename($this->modelName));
+                $apiDataModel = $dataModel->generateDataModel('model');
+                $apiColumnModel = $dataModel->generateDataModel('column');
+                $apiFilterModel = $dataModel->generateDataModel('filter');
 
-                return response($this->handleResponse('success', $apiDisplayAllRecords, $apiDataModel, $apiFilterModel), 200);
+                return response($this->handleResponse('success',
+                    $apiDisplayAllRecords,
+                    $apiDataModel,
+                    $apiColumnModel,
+                    $apiFilterModel
+                ), 200);
             }
         }
         else

@@ -3,9 +3,8 @@
 namespace App\BusinessLogic\Services\Admin\Communication;
 
 use App\Traits\ApiResponseMessage;
-use App\Traits\GenerateDataModel;
-use App\Traits\GenerateFilterModel;
 use App\BusinessLogic\Interfaces\Admin\Communication\ContactMessageInterface;
+use App\BusinessLogic\Services\Admin\DataModel;
 use App\Http\Requests\Admin\Communication\ContactMessageRequest;
 use App\Models\Admin\Communication\ContactMessage;
 use Illuminate\Database\Eloquent\Collection;
@@ -15,7 +14,7 @@ use Illuminate\Database\Eloquent\Collection;
  */
 class ContactMessageService implements ContactMessageInterface
 {
-    use ApiResponseMessage, GenerateDataModel, GenerateFilterModel;
+    use ApiResponseMessage;
 
     protected $modelName;
 
@@ -44,10 +43,17 @@ class ContactMessageService implements ContactMessageInterface
             }
             else
             {
-                $apiDataModel = $this->generateApiDataModel($this->modelName->getFields());
-                $apiFilterModel = $this->generateApiFilterModel($apiDisplayAllRecords->toArray(), $this->modelName->getFields());
+                $dataModel = new DataModel($apiDisplayAllRecords->toArray(), $this->modelName->getFields(), class_basename($this->modelName));
+                $apiDataModel = $dataModel->generateDataModel('model');
+                $apiColumnModel = $dataModel->generateDataModel('column');
+                $apiFilterModel = $dataModel->generateDataModel('filter');
 
-                return response($this->handleResponse('success', $apiDisplayAllRecords, $apiDataModel, $apiFilterModel), 200);
+                return response($this->handleResponse('success',
+                    $apiDisplayAllRecords,
+                    $apiDataModel,
+                    $apiColumnModel,
+                    $apiFilterModel
+                ), 200);
             }
         }
         else

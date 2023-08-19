@@ -3,9 +3,8 @@
 namespace App\BusinessLogic\Services\Admin\Communication;
 
 use App\Traits\ApiResponseMessage;
-use App\Traits\GenerateDataModel;
-use App\Traits\GenerateFilterModel;
 use App\BusinessLogic\Interfaces\Admin\Communication\NewsletterSubscriberInterface;
+use App\BusinessLogic\Services\Admin\DataModel;
 use App\Http\Requests\Admin\Communication\NewsletterSubscriberRequest;
 use App\Models\Admin\Communication\NewsletterSubscriber;
 use Illuminate\Database\Eloquent\Collection;
@@ -15,7 +14,7 @@ use Illuminate\Database\Eloquent\Collection;
  */
 class NewsletterSubscriberService implements NewsletterSubscriberInterface
 {
-    use ApiResponseMessage, GenerateDataModel, GenerateFilterModel;
+    use ApiResponseMessage;
 
     protected $modelName;
 
@@ -44,10 +43,17 @@ class NewsletterSubscriberService implements NewsletterSubscriberInterface
             }
             else
             {
-                $apiDataModel = $this->generateApiDataModel($this->modelName->getFields());
-                $apiFilterModel = $this->generateApiFilterModel($apiDisplayAllRecords->toArray(), $this->modelName->getFields());
+                $dataModel = new DataModel($apiDisplayAllRecords->toArray(), $this->modelName->getFields(), class_basename($this->modelName));
+                $apiDataModel = $dataModel->generateDataModel('model');
+                $apiColumnModel = $dataModel->generateDataModel('column');
+                $apiFilterModel = $dataModel->generateDataModel('filter');
 
-                return response($this->handleResponse('success', $apiDisplayAllRecords, $apiDataModel, $apiFilterModel), 200);
+                return response($this->handleResponse('success',
+                    $apiDisplayAllRecords,
+                    $apiDataModel,
+                    $apiColumnModel,
+                    $apiFilterModel
+                ), 200);
             }
         }
         else

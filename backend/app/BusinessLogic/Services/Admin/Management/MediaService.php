@@ -3,9 +3,8 @@
 namespace App\BusinessLogic\Services\Admin\Management;
 
 use App\Traits\ApiResponseMessage;
-use App\Traits\GenerateDataModel;
-use App\Traits\GenerateFilterModel;
 use App\BusinessLogic\Interfaces\Admin\Management\MediaInterface;
+use App\BusinessLogic\Services\Admin\DataModel;
 use App\Http\Requests\Admin\Management\MediaRequest;
 use App\Models\Admin\Management\Media;
 use Illuminate\Database\Eloquent\Collection;
@@ -15,7 +14,7 @@ use Illuminate\Database\Eloquent\Collection;
  */
 class MediaService implements MediaInterface
 {
-    use ApiResponseMessage, GenerateDataModel, GenerateFilterModel;
+    use ApiResponseMessage;
 
     protected $modelName;
 
@@ -44,13 +43,17 @@ class MediaService implements MediaInterface
             }
             else
             {
-                $modelOptions = [
-                    'type' => $this->modelName->getMediaTypeOptions(),
-                ];
-                $apiDataModel = $this->generateApiDataModel($this->modelName->getFields(), $modelOptions);
-                $apiFilterModel = $this->generateApiFilterModel($apiDisplayAllRecords->toArray(), $this->modelName->getFields(), $modelOptions);
+                $dataModel = new DataModel($apiDisplayAllRecords->toArray(), $this->modelName->getFields(), class_basename($this->modelName));
+                $apiDataModel = $dataModel->generateDataModel('model');
+                $apiColumnModel = $dataModel->generateDataModel('column');
+                $apiFilterModel = $dataModel->generateDataModel('filter');
 
-                return response($this->handleResponse('success', $apiDisplayAllRecords, $apiDataModel, $apiFilterModel), 200);
+                return response($this->handleResponse('success',
+                    $apiDisplayAllRecords,
+                    $apiDataModel,
+                    $apiColumnModel,
+                    $apiFilterModel
+                ), 200);
             }
         }
         else

@@ -8,6 +8,7 @@ trait ApiResponseMessage
         $responseType = null,
         $records = null,
         $dataModel = null,
+        $columnModel = null,
         $filterModel = null
     )
     {
@@ -24,6 +25,10 @@ trait ApiResponseMessage
             if ($dataModel)
             {
                 $responseMessage['model'] = $dataModel;
+            }
+            if ($columnModel)
+            {
+                $responseMessage['columns'] = $columnModel;
             }
             if ($filterModel)
             {
