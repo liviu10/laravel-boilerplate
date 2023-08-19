@@ -12,7 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('permissions', function (Blueprint $table) {
-            $table->foreignId('role_id')->constrained()->onDelete('cascade')->onUpdate('cascade')->index('idx_role_permission_id');
+            $table->foreignId('role_id')->constrained()->onDelete('cascade')->onUpdate('cascade')->index('idx_permissions_role_id');
         });
     }
 

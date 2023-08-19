@@ -5,6 +5,7 @@ namespace App\Models\Admin\Communication;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Traits\LogApiError;
+use App\Traits\FilterAvailableFields;
 
 /**
  * Class NewsletterCampaign
@@ -31,7 +32,7 @@ use App\Traits\LogApiError;
  */
 class NewsletterCampaign extends Model
 {
-    use HasFactory, LogApiError;
+    use HasFactory, FilterAvailableFields, LogApiError;
 
     /**
      * The table associated with the model.
@@ -301,14 +302,8 @@ class NewsletterCampaign extends Model
      */
     public function getFields()
     {
-        $excludeFields = ['user_id'];
-        $filteredFields = [];
-        foreach ($this->fillable as $field => $type) {
-            if (!in_array($field, $excludeFields)) {
-                $filteredFields[$field] = $type;
-            }
-        }
+        $excludedFields = ['user_id'];
 
-        return $filteredFields;
+        return $this->handleFilterAvailableFields($this->fillable, $excludedFields);
     }
 }

@@ -4,9 +4,8 @@ namespace App\Models\Admin\ApplicationSettings;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use App\Models\Admin\Settings\Field;
-use App\Models\Admin\Settings\Sort;
 use App\Traits\LogApiError;
+use App\Traits\FilterAvailableFields;
 
 /**
  * Class AcceptedDomain
@@ -27,7 +26,7 @@ use App\Traits\LogApiError;
  */
 class AcceptedDomain extends Model
 {
-    use HasFactory, LogApiError;
+    use HasFactory, FilterAvailableFields, LogApiError;
 
     /**
      * The table associated with the model.
@@ -67,7 +66,7 @@ class AcceptedDomain extends Model
     /**
      * The attributes that are mass assignable.
      *
-     * @var string
+     * @var array<int, string>
      */
     protected $fillable = [
         'domain'    => 'text',
@@ -274,15 +273,9 @@ class AcceptedDomain extends Model
      */
     public function getFields()
     {
-        $excludeFields = ['user_id'];
-        $filteredFields = [];
-        foreach ($this->fillable as $field => $type) {
-            if (!in_array($field, $excludeFields)) {
-                $filteredFields[$field] = $type;
-            }
-        }
+        $excludedFields = ['user_id'];
 
-        return $filteredFields;
+        return $this->handleFilterAvailableFields($this->fillable, $excludedFields);
     }
 
     public function getUniqueDomainTypes()

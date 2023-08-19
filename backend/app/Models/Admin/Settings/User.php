@@ -8,9 +8,8 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Facades\Auth;
 use Laravel\Sanctum\HasApiTokens;
-use App\Models\Admin\Settings\Field;
-use App\Models\Admin\Settings\Sort;
 use App\Traits\LogApiError;
+use App\Traits\FilterAvailableFields;
 
 /**
  * Class User
@@ -39,7 +38,7 @@ use App\Traits\LogApiError;
  */
 class User extends Authenticatable
 {
-    use HasApiTokens, HasFactory, Notifiable, LogApiError;
+    use HasApiTokens, HasFactory, Notifiable, FilterAvailableFields, LogApiError;
 
     /**
      * The primary key associated with the table.
@@ -139,12 +138,57 @@ class User extends Authenticatable
     }
 
     /**
+     * Eloquent relationship between users and contact responses.
+     *
+     */
+    public function contact_responses()
+    {
+        return $this->hasMany('App\Models\Admin\Communication\ContactResponse');
+    }
+
+    /**
      * Eloquent relationship between users and contact subjects.
      *
      */
     public function contact_subjects()
     {
-        return $this->hasMany('App\Models\Admin\Communication\ContactSubjects');
+        return $this->hasMany('App\Models\Admin\Communication\ContactSubject');
+    }
+
+    /**
+     * Eloquent relationship between users and newsletter campaigns.
+     *
+     */
+    public function newsletter_campaigns()
+    {
+        return $this->hasMany('App\Models\Admin\Communication\NewsletterCampaign');
+    }
+
+    /**
+     * Eloquent relationship between users and contents.
+     *
+     */
+    public function contents()
+    {
+        return $this->hasMany('App\Models\Admin\Management\Content');
+    }
+
+    /**
+     * Eloquent relationship between users and medias.
+     *
+     */
+    public function medias()
+    {
+        return $this->hasMany('App\Models\Admin\Management\Media');
+    }
+
+    /**
+     * Eloquent relationship between users and tags.
+     *
+     */
+    public function tags()
+    {
+        return $this->hasMany('App\Models\Admin\Management\Tags');
     }
 
     /**
@@ -357,14 +401,8 @@ class User extends Authenticatable
      */
     public function getFields()
     {
-        $excludeFields = ['role_id'];
-        $filteredFields = [];
-        foreach ($this->fillable as $field => $type) {
-            if (!in_array($field, $excludeFields)) {
-                $filteredFields[$field] = $type;
-            }
-        }
+        $excludedFields = ['role_id'];
 
-        return $filteredFields;
+        return $this->handleFilterAvailableFields($this->fillable, $excludedFields);
     }
 }

@@ -12,7 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('contact_responses', function (Blueprint $table) {
-            $table->foreignId('contact_message_id')->constrained()->onDelete('cascade')->onUpdate('cascade')->index('idx_contact_responses_contact_messages_id');
+            $table->foreignId('user_id')->constrained()->onDelete('cascade')->onUpdate('cascade')->index('idx_contact_responses_user_id');
         });
     }
 
@@ -22,8 +22,8 @@ return new class extends Migration
     public function down(): void
     {
         Schema::table('contact_responses', function (Blueprint $table) {
-            $table->dropForeign(['contact_message_id']);
-            $table->dropColumn('contact_message_id');
+            $table->dropForeign(['user_id']);
+            $table->dropColumn('user_id');
         });
     }
 };

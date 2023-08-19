@@ -5,6 +5,7 @@ namespace App\Models\Admin\Communication;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Traits\LogApiError;
+use App\Traits\FilterAvailableFields;
 
 /**
  * Class ContactMessage
@@ -27,7 +28,7 @@ use App\Traits\LogApiError;
  */
 class ContactMessage extends Model
 {
-    use HasFactory, LogApiError;
+    use HasFactory, FilterAvailableFields, LogApiError;
 
     /**
      * The table associated with the model.
@@ -275,6 +276,6 @@ class ContactMessage extends Model
      */
     public function getFields()
     {
-        return $this->fillable;
+        return $this->handleFilterAvailableFields($this->fillable);
     }
 }

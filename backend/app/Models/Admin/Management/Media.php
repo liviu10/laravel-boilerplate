@@ -5,6 +5,7 @@ namespace App\Models\Admin\Management;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Traits\LogApiError;
+use App\Traits\FilterAvailableFields;
 
 /**
  * Class Media
@@ -26,7 +27,7 @@ use App\Traits\LogApiError;
  */
 class Media extends Model
 {
-    use HasFactory, LogApiError;
+    use HasFactory, FilterAvailableFields, LogApiError;
 
     /**
      * The table associated with the model.
@@ -124,15 +125,6 @@ class Media extends Model
     ];
 
     /**
-     * Eloquent relationship between medias and contents.
-     *
-     */
-    public function content()
-    {
-        return $this->belongsTo('App\Models\Admin\Management\Content');
-    }
-
-    /**
      * Eloquent relationship between medias and users.
      *
      */
@@ -142,12 +134,12 @@ class Media extends Model
     }
 
     /**
-     * Eloquent relationship between contents and tags.
+     * Eloquent relationship between medias and contents.
      *
      */
-    public function tags()
+    public function content()
     {
-        return $this->hasMany('App\Models\Admin\Management\Tag');
+        return $this->belongsTo('App\Models\Admin\Management\Content');
     }
 
     /**
@@ -298,15 +290,9 @@ class Media extends Model
      */
     public function getFields()
     {
-        $excludeFields = ['content_id', 'user_id'];
-        $filteredFields = [];
-        foreach ($this->fillable as $field => $type) {
-            if (!in_array($field, $excludeFields)) {
-                $filteredFields[$field] = $type;
-            }
-        }
+        $excludedFields = ['content_id', 'user_id'];
 
-        return $filteredFields;
+        return $this->handleFilterAvailableFields($this->fillable, $excludedFields);
     }
 
     /**

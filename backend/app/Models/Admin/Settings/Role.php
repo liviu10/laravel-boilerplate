@@ -4,9 +4,8 @@ namespace App\Models\Admin\Settings;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use App\Models\Admin\Settings\Field;
-use App\Models\Admin\Settings\Sort;
 use App\Traits\LogApiError;
+use App\Traits\FilterAvailableFields;
 
 /**
  * Class Role
@@ -29,7 +28,7 @@ use App\Traits\LogApiError;
  */
 class Role extends Model
 {
-    use HasFactory, LogApiError;
+    use HasFactory, FilterAvailableFields, LogApiError;
 
     /**
      * The table associated with the model.
@@ -55,7 +54,7 @@ class Role extends Model
     /**
      * The attributes that are mass assignable.
      *
-     * @var string
+     * @var array<int, string>
      */
     protected $fillable = [
         'name'        => 'text',
@@ -282,6 +281,6 @@ class Role extends Model
      */
     public function getFields()
     {
-        return $this->fillable;
+        return $this->handleFilterAvailableFields($this->fillable);
     }
 }
