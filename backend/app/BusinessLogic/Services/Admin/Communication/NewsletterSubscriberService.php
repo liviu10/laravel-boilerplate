@@ -4,7 +4,7 @@ namespace App\BusinessLogic\Services\Admin\Communication;
 
 use App\Traits\ApiResponseMessage;
 use App\BusinessLogic\Interfaces\Admin\Communication\NewsletterSubscriberInterface;
-use App\BusinessLogic\Services\Admin\DataModel;
+use App\Library\DataModel;
 use App\Http\Requests\Admin\Communication\NewsletterSubscriberRequest;
 use App\Models\Admin\Communication\NewsletterSubscriber;
 use Illuminate\Database\Eloquent\Collection;

@@ -4,7 +4,7 @@ namespace App\BusinessLogic\Services\Admin\Management;
 
 use App\Traits\ApiResponseMessage;
 use App\BusinessLogic\Interfaces\Admin\Management\AppreciationInterface;
-use App\BusinessLogic\Services\Admin\DataModel;
+use App\Library\DataModel;
 use App\Http\Requests\Admin\Management\AppreciationRequest;
 use App\Models\Admin\Management\Appreciation;
 use Illuminate\Database\Eloquent\Collection;

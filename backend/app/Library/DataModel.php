@@ -1,6 +1,6 @@
 <?php
 
-namespace App\BusinessLogic\Services\Admin;
+namespace App\Library;
 
 class DataModel
 {

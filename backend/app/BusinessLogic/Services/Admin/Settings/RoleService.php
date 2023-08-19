@@ -4,7 +4,7 @@ namespace App\BusinessLogic\Services\Admin\Settings;
 
 use App\Traits\ApiResponseMessage;
 use App\BusinessLogic\Interfaces\Admin\Settings\RoleInterface;
-use App\BusinessLogic\Services\Admin\DataModel;
+use App\Library\DataModel;
 use App\Http\Requests\Admin\Settings\RoleRequest;
 use App\Models\Admin\Settings\Role;
 use Illuminate\Database\Eloquent\Collection;

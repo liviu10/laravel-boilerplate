@@ -4,7 +4,7 @@ namespace App\BusinessLogic\Services\Admin\Management;
 
 use App\Traits\ApiResponseMessage;
 use App\BusinessLogic\Interfaces\Admin\Management\MediaInterface;
-use App\BusinessLogic\Services\Admin\DataModel;
+use App\Library\DataModel;
 use App\Http\Requests\Admin\Management\MediaRequest;
 use App\Models\Admin\Management\Media;
 use Illuminate\Database\Eloquent\Collection;

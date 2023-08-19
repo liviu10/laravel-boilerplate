@@ -4,7 +4,7 @@ namespace App\BusinessLogic\Services\Admin\Management;
 
 use App\Traits\ApiResponseMessage;
 use App\BusinessLogic\Interfaces\Admin\Management\TagInterface;
-use App\BusinessLogic\Services\Admin\DataModel;
+use App\Library\DataModel;
 use App\Http\Requests\Admin\Management\TagRequest;
 use App\Models\Admin\Management\Tag;
 use Illuminate\Database\Eloquent\Collection;
