@@ -30,54 +30,47 @@ class ContactSubject extends Model
 
     /**
      * The table associated with the model.
-     *
      * @var string
      */
     protected $table = 'contact_subjects';
 
     /**
      * The primary key associated with the table.
-     *
      * @var string
      */
     protected $primaryKey = 'id';
 
     /**
      * The data type of the auto-incrementing ID.
-     *
      * @var string
      */
     protected $keyType = 'int';
 
     /**
      * The foreign key associated with the table.
-     *
      * @var string
      */
     protected $foreignKey = 'user_id';
 
     /**
      * The data type of the database table foreign key.
-     *
      * @var string
      */
     protected $foreignKeyType = 'int';
 
     /**
      * The attributes that are mass assignable.
-     *
-     * @var array<string, string>
+     * @var array<string>
      */
     protected $fillable = [
-        'name'        => 'text',
-        'description' => 'text',
-        'is_active'   => 'boolean',
-        'user_id'     => 'number',
+        'name',
+        'description',
+        'is_active',
+        'user_id',
     ];
 
     /**
     * The attributes that are mass assignable.
-    *
     * @var string
     */
     protected $attributes = [
@@ -86,7 +79,6 @@ class ContactSubject extends Model
 
     /**
      * The attributes that should be cast.
-     *
      * @var array<string, string>
      */
     protected $casts = [
@@ -99,7 +91,6 @@ class ContactSubject extends Model
 
     /**
      * The attributes that aren't mass assignable.
-     *
      * @var array
      */
     protected $guarded = [
@@ -110,7 +101,6 @@ class ContactSubject extends Model
 
     /**
      * Eloquent relationship between contact me messages and users.
-     *
      */
     public function user()
     {
@@ -119,7 +109,6 @@ class ContactSubject extends Model
 
     /**
      * Eloquent relationship between contact subjects and contact messages.
-     *
      */
     public function contact_messages()
     {
@@ -269,8 +258,15 @@ class ContactSubject extends Model
      */
     public function getFields()
     {
+        $fieldTypes = [
+            'name'        => 'text',
+            'description' => 'text',
+            'is_active'   => 'boolean',
+            'user_id'     => 'number',
+        ];
+
         $excludedFields = ['user_id'];
 
-        return $this->handleFilterAvailableFields($this->fillable, $excludedFields);
+        return $this->handleFilterAvailableFields($fieldTypes, $excludedFields);
     }
 }

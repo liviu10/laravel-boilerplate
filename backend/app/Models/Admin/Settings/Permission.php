@@ -29,43 +29,37 @@ class Permission extends Model
 
     /**
      * The table associated with the model.
-     *
      * @var string
      */
     protected $table = 'permissions';
 
     /**
      * The primary key associated with the table.
-     *
      * @var string
      */
     protected $primaryKey = 'id';
 
     /**
      * The data type of the auto-incrementing ID.
-     *
      * @var string
      */
     protected $keyType = 'int';
 
     /**
      * The foreign key associated with the table.
-     *
      * @var string
      */
     protected $foreignKey = 'role_id';
 
     /**
      * The data type of the database table foreign key.
-     *
      * @var string
      */
     protected $foreignKeyType = 'int';
 
     /**
      * The attributes that are mass assignable.
-     *
-     * @var string
+     * @var array<string>
      */
     protected $fillable = [
         'name',
@@ -76,7 +70,6 @@ class Permission extends Model
 
     /**
     * The attributes that are mass assignable.
-    *
     * @var string
     */
     protected $attributes = [
@@ -85,7 +78,6 @@ class Permission extends Model
 
     /**
      * The attributes that should be cast.
-     *
      * @var array<string, string>
      */
     protected $casts = [
@@ -98,7 +90,6 @@ class Permission extends Model
 
     /**
      * The attributes that aren't mass assignable.
-     *
      * @var array
      */
     protected $guarded = [
@@ -109,7 +100,6 @@ class Permission extends Model
 
     /**
      * Eloquent relationship between permissions and roles.
-     *
      */
     public function role()
     {

@@ -31,69 +31,60 @@ class Tag extends Model
 
     /**
      * The table associated with the model.
-     *
      * @var string
      */
     protected $table = 'tags';
 
     /**
      * The primary key associated with the table.
-     *
      * @var string
      */
     protected $primaryKey = 'id';
 
     /**
      * The data type of the auto-incrementing ID.
-     *
      * @var string
      */
     protected $keyType = 'int';
 
     /**
      * The foreign key associated with the table.
-     *
      * @var string
      */
     protected $foreignKey = 'content_id';
 
     /**
      * The data type of the database table foreign key.
-     *
      * @var string
      */
     protected $foreignKeyType = 'int';
 
     /**
      * The foreign key associated with the table.
-     *
      * @var string
      */
     protected $userIdForeignKey = 'user_id';
 
     /**
      * The data type of the database table foreign key.
-     *
      * @var string
      */
     protected $userIdForeignKeyType = 'int';
 
     /**
      * The attributes that are mass assignable.
-     *
-     * @var array<string, string>
+     * @var array<string>
      */
     protected $fillable = [
-        'name'        => 'text',
-        'description' => 'text',
-        'slug'        => 'text',
-        'content_id'  => 'number',
-        'user_id'     => 'number',
+        'name',
+        'description',
+        'slug',
+        'content_id',
+        'user_id',
     ];
 
     /**
      * The attributes that should be cast.
-     *
      * @var array<string, string>
      */
     protected $casts = [
@@ -106,7 +97,6 @@ class Tag extends Model
 
     /**
      * The attributes that aren't mass assignable.
-     *
      * @var array
      */
     protected $guarded = [
@@ -117,7 +107,6 @@ class Tag extends Model
 
     /**
      * Eloquent relationship between tags and users.
-     *
      */
     public function user()
     {
@@ -126,7 +115,6 @@ class Tag extends Model
 
     /**
      * Eloquent relationship between tags and contents.
-     *
      */
     public function content()
     {
@@ -281,8 +269,16 @@ class Tag extends Model
      */
     public function getFields()
     {
+        $fieldTypes = [
+            'name'        => 'text',
+            'description' => 'text',
+            'slug'        => 'text',
+            'content_id'  => 'number',
+            'user_id'     => 'number',
+        ];
+
         $excludedFields = ['content_id', 'user_id'];
 
-        return $this->handleFilterAvailableFields($this->fillable, $excludedFields);
+        return $this->handleFilterAvailableFields($fieldTypes, $excludedFields);
     }
 }

@@ -34,44 +34,39 @@ class Comment extends Model
 
     /**
      * The table associated with the model.
-     *
      * @var string
      */
     protected $table = 'comments';
 
     /**
      * The primary key associated with the table.
-     *
      * @var string
      */
     protected $primaryKey = 'id';
 
     /**
      * The data type of the auto-incrementing ID.
-     *
      * @var string
      */
     protected $keyType = 'int';
 
     /**
      * The attributes that are mass assignable.
-     *
-     * @var array<string, string>
+     * @var array<string>
      */
     protected $fillable = [
-        'type'                => 'select',
-        'status'              => 'select',
-        'full_name'           => 'text',
-        'email'               => 'text',
-        'message'             => 'text',
-        'notify_new_comments' => 'boolean',
-        'content_id'          => 'number',
-        'user_id'             => 'number',
+        'type',
+        'status',
+        'full_name',
+        'email',
+        'message',
+        'notify_new_comments',
+        'content_id',
+        'user_id',
     ];
 
     /**
      * The comment type options.
-     *
      * @var array<string>
      */
     protected $commentTypeOptions = [
@@ -80,7 +75,6 @@ class Comment extends Model
 
     /**
      * The comment status options.
-     *
      * @var array<string>
      */
     protected $commentStatusOptions = [
@@ -89,7 +83,6 @@ class Comment extends Model
 
     /**
     * The attributes that are mass assignable.
-    *
     * @var string
     */
     protected $attributes = [
@@ -98,7 +91,6 @@ class Comment extends Model
 
     /**
      * The attributes that should be cast.
-     *
      * @var array<string, string>
      */
     protected $casts = [
@@ -112,7 +104,6 @@ class Comment extends Model
 
     /**
      * The attributes that aren't mass assignable.
-     *
      * @var array
      */
     protected $guarded = [
@@ -267,9 +258,20 @@ class Comment extends Model
      */
     public function getFields()
     {
+        $fieldTypes = [
+            'type'                => 'select',
+            'status'              => 'select',
+            'full_name'           => 'text',
+            'email'               => 'text',
+            'message'             => 'text',
+            'notify_new_comments' => 'boolean',
+            'content_id'          => 'number',
+            'user_id'             => 'number',
+        ];
+
         $excludedFields = ['content_id', 'user_id'];
 
-        return $this->handleFilterAvailableFields($this->fillable, $excludedFields);
+        return $this->handleFilterAvailableFields($fieldTypes, $excludedFields);
     }
 
     /**

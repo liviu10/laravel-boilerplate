@@ -31,41 +31,36 @@ class Appreciation extends Model
 
     /**
      * The table associated with the model.
-     *
      * @var string
      */
     protected $table = 'appreciations';
 
     /**
      * The primary key associated with the table.
-     *
      * @var string
      */
     protected $primaryKey = 'id';
 
     /**
      * The data type of the auto-incrementing ID.
-     *
      * @var string
      */
     protected $keyType = 'int';
 
     /**
      * The attributes that are mass assignable.
-     *
-     * @var array<string, string>
+     * @var array<string>
      */
     protected $fillable = [
-        'likes'      => 'number',
-        'dislikes'   => 'number',
-        'rating'     => 'number',
-        'content_id' => 'number',
-        'user_id'    => 'number',
+        'likes',
+        'dislikes',
+        'rating',
+        'content_id',
+        'user_id',
     ];
 
     /**
      * The attributes that should be cast.
-     *
      * @var array<string, string>
      */
     protected $casts = [
@@ -81,7 +76,6 @@ class Appreciation extends Model
 
     /**
      * The attributes that aren't mass assignable.
-     *
      * @var array
      */
     protected $guarded = [
@@ -230,8 +224,16 @@ class Appreciation extends Model
      */
     public function getFields()
     {
+        $fieldTypes = [
+            'likes'      => 'number',
+            'dislikes'   => 'number',
+            'rating'     => 'number',
+            'content_id' => 'number',
+            'user_id'    => 'number',
+        ];
+
         $excludedFields = ['content_id', 'user_id'];
 
-        return $this->handleFilterAvailableFields($this->fillable, $excludedFields);
+        return $this->handleFilterAvailableFields($fieldTypes, $excludedFields);
     }
 }

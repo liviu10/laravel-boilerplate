@@ -31,69 +31,60 @@ class Media extends Model
 
     /**
      * The table associated with the model.
-     *
      * @var string
      */
     protected $table = 'medias';
 
     /**
      * The primary key associated with the table.
-     *
      * @var string
      */
     protected $primaryKey = 'id';
 
     /**
      * The data type of the auto-incrementing ID.
-     *
      * @var string
      */
     protected $keyType = 'int';
 
     /**
      * The foreign key associated with the table.
-     *
      * @var string
      */
     protected $foreignKey = 'content_id';
 
     /**
      * The data type of the database table foreign key.
-     *
      * @var string
      */
     protected $foreignKeyType = 'int';
 
     /**
      * The foreign key associated with the table.
-     *
      * @var string
      */
     protected $userIdForeignKey = 'user_id';
 
     /**
      * The data type of the database table foreign key.
-     *
      * @var string
      */
     protected $userIdForeignKeyType = 'int';
 
     /**
      * The attributes that are mass assignable.
-     *
-     * @var array<string, string>
+     * @var array<string>
      */
     protected $fillable = [
-        'type'          => 'select',
-        'internal_path' => 'text',
-        'external_path' => 'text',
-        'content_id'    => 'number',
-        'user_id'       => 'number',
+        'type',
+        'internal_path',
+        'external_path',
+        'content_id',
+        'user_id',
     ];
 
     /**
      * The media type options.
-     *
      * @var array<string>
      */
     protected $mediaTypeOptions = [
@@ -102,7 +93,6 @@ class Media extends Model
 
     /**
      * The attributes that should be cast.
-     *
      * @var array<string, string>
      */
     protected $casts = [
@@ -115,7 +105,6 @@ class Media extends Model
 
     /**
      * The attributes that aren't mass assignable.
-     *
      * @var array
      */
     protected $guarded = [
@@ -126,7 +115,6 @@ class Media extends Model
 
     /**
      * Eloquent relationship between medias and users.
-     *
      */
     public function user()
     {
@@ -135,7 +123,6 @@ class Media extends Model
 
     /**
      * Eloquent relationship between medias and contents.
-     *
      */
     public function content()
     {
@@ -290,9 +277,17 @@ class Media extends Model
      */
     public function getFields()
     {
+        $fieldTypes = [
+            'type'          => 'select',
+            'internal_path' => 'text',
+            'external_path' => 'text',
+            'content_id'    => 'number',
+            'user_id'       => 'number',
+        ];
+
         $excludedFields = ['content_id', 'user_id'];
 
-        return $this->handleFilterAvailableFields($this->fillable, $excludedFields);
+        return $this->handleFilterAvailableFields($fieldTypes, $excludedFields);
     }
 
     /**

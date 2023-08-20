@@ -32,56 +32,49 @@ class ContactMessage extends Model
 
     /**
      * The table associated with the model.
-     *
      * @var string
      */
     protected $table = 'contact_messages';
 
     /**
      * The primary key associated with the table.
-     *
      * @var string
      */
     protected $primaryKey = 'id';
 
     /**
      * The data type of the auto-incrementing ID.
-     *
      * @var string
      */
     protected $keyType = 'int';
 
     /**
      * The foreign key associated with the table.
-     *
      * @var string
      */
     protected $foreignKey = 'contact_subject_id';
 
     /**
      * The data type of the database table foreign key.
-     *
      * @var string
      */
     protected $foreignKeyType = 'int';
 
     /**
      * The attributes that are mass assignable.
-     *
-     * @var array<string, string>
+     * @var array<string>
      */
     protected $fillable = [
-        'full_name'          => 'text',
-        'email'              => 'text',
-        'phone'              => 'text',
-        'message'            => 'text',
-        'privacy_policy'     => 'boolean',
-        'contact_subject_id' => 'number',
+        'full_name',
+        'email',
+        'phone',
+        'message',
+        'privacy_policy',
+        'contact_subject_id',
     ];
 
     /**
     * The attributes that are mass assignable.
-    *
     * @var string
     */
     protected $attributes = [
@@ -90,7 +83,6 @@ class ContactMessage extends Model
 
     /**
      * The attributes that should be cast.
-     *
      * @var array<string, string>
      */
     protected $casts = [
@@ -103,7 +95,6 @@ class ContactMessage extends Model
 
     /**
      * The attributes that aren't mass assignable.
-     *
      * @var array
      */
     protected $guarded = [
@@ -114,7 +105,6 @@ class ContactMessage extends Model
 
     /**
      * Eloquent relationship between contact messages and contact subjects.
-     *
      */
     public function contact_subject()
     {
@@ -276,6 +266,15 @@ class ContactMessage extends Model
      */
     public function getFields()
     {
-        return $this->handleFilterAvailableFields($this->fillable);
+        $fieldTypes = [
+            'full_name'          => 'text',
+            'email'              => 'text',
+            'phone'              => 'text',
+            'message'            => 'text',
+            'privacy_policy'     => 'boolean',
+            'contact_subject_id' => 'number',
+        ];
+
+        return $this->handleFilterAvailableFields($fieldTypes);
     }
 }

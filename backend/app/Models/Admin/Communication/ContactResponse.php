@@ -29,69 +29,60 @@ class ContactResponse extends Model
 
     /**
      * The table associated with the model.
-     *
      * @var string
      */
     protected $table = 'contact_response';
 
     /**
      * The primary key associated with the table.
-     *
      * @var string
      */
     protected $primaryKey = 'id';
 
     /**
      * The data type of the auto-incrementing ID.
-     *
      * @var string
      */
     protected $keyType = 'int';
 
     /**
      * The foreign key associated with the table.
-     *
      * @var string
      */
     protected $foreignKey = 'user_id';
 
     /**
      * The data type of the database table foreign key.
-     *
      * @var string
      */
     protected $foreignKeyType = 'int';
 
     /**
      * The foreign key associated with the table.
-     *
      * @var string
      */
     protected $contactMessageForeignKey = 'contact_message_id';
 
     /**
      * The data type of the database table foreign key.
-     *
      * @var string
      */
     protected $contactMessageForeignKeyType = 'int';
 
     /**
      * The attributes that are mass assignable.
-     *
-     * @var array<string, string>
+     * @var array<string>
      */
     protected $fillable = [
-        'full_name'          => 'text',
-        'email'              => 'text',
-        'message'            => 'text',
-        'user_id'            => 'number',
-        'contact_message_id' => 'number',
+        'full_name',
+        'email',
+        'message',
+        'user_id',
+        'contact_message_id',
     ];
 
     /**
      * The attributes that should be cast.
-     *
      * @var array<string, string>
      */
     protected $casts = [
@@ -104,7 +95,6 @@ class ContactResponse extends Model
 
     /**
      * The attributes that aren't mass assignable.
-     *
      * @var array
      */
     protected $guarded = [
@@ -115,7 +105,6 @@ class ContactResponse extends Model
 
     /**
      * Eloquent relationship between contact response and users.
-     *
      */
     public function user()
     {
@@ -124,7 +113,6 @@ class ContactResponse extends Model
 
     /**
      * Eloquent relationship between contact response and contact message.
-     *
      */
     public function contact_message()
     {
@@ -282,8 +270,16 @@ class ContactResponse extends Model
      */
     public function getFields()
     {
+        $fieldTypes = [
+            'full_name'          => 'text',
+            'email'              => 'text',
+            'message'            => 'text',
+            'user_id'            => 'number',
+            'contact_message_id' => 'number',
+        ];
+
         $excludedFields = ['user_id'];
 
-        return $this->handleFilterAvailableFields($this->fillable, $excludedFields);
+        return $this->handleFilterAvailableFields($fieldTypes, $excludedFields);
     }
 }

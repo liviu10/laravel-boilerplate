@@ -42,52 +42,46 @@ class User extends Authenticatable
 
     /**
      * The primary key associated with the table.
-     *
      * @var string
      */
     protected $primaryKey = 'id';
 
     /**
      * The data type of the auto-incrementing ID.
-     *
      * @var string
      */
     protected $keyType = 'int';
 
     /**
      * The foreign key associated with the table.
-     *
      * @var string
      */
     protected $foreignKey = 'role_id';
 
     /**
      * The data type of the database table foreign key.
-     *
      * @var string
      */
     protected $foreignKeyType = 'int';
 
     /**
      * The attributes that are mass assignable.
-     *
-     * @var array<int, string>
+     * @var array<string>
      */
     protected $fillable = [
-        'full_name'     => 'text',
-        'first_name'    => 'text',
-        'last_name'     => 'text',
-        'nickname'      => 'text',
-        'email'         => 'email',
-        'phone'         => 'tel',
-        'password'      => 'password',
-        'profile_image' => 'file',
-        'role_id'       => 'number',
+        'full_name',
+        'first_name',
+        'last_name',
+        'nickname',
+        'email',
+        'phone',
+        'password',
+        'profile_image',
+        'role_id',
     ];
 
     /**
      * The attributes that should be hidden for serialization.
-     *
      * @var array<int, string>
      */
     protected $hidden = [
@@ -97,7 +91,6 @@ class User extends Authenticatable
 
     /**
      * The attributes that should be cast.
-     *
      * @var array<string, string>
      */
     protected $casts = [
@@ -110,7 +103,6 @@ class User extends Authenticatable
 
     /**
      * The attributes that aren't mass assignable.
-     *
      * @var array
      */
     protected $guarded = [
@@ -121,7 +113,6 @@ class User extends Authenticatable
 
     /**
      * Eloquent relationship between users and roles.
-     *
      */
     public function role()
     {
@@ -130,7 +121,6 @@ class User extends Authenticatable
 
     /**
      * Eloquent relationship between users and accepted domains.
-     *
      */
     public function accepted_domains()
     {
@@ -139,7 +129,6 @@ class User extends Authenticatable
 
     /**
      * Eloquent relationship between users and contact responses.
-     *
      */
     public function contact_responses()
     {
@@ -148,7 +137,6 @@ class User extends Authenticatable
 
     /**
      * Eloquent relationship between users and contact subjects.
-     *
      */
     public function contact_subjects()
     {
@@ -157,7 +145,6 @@ class User extends Authenticatable
 
     /**
      * Eloquent relationship between users and newsletter campaigns.
-     *
      */
     public function newsletter_campaigns()
     {
@@ -166,7 +153,6 @@ class User extends Authenticatable
 
     /**
      * Eloquent relationship between users and contents.
-     *
      */
     public function contents()
     {
@@ -175,7 +161,6 @@ class User extends Authenticatable
 
     /**
      * Eloquent relationship between users and medias.
-     *
      */
     public function medias()
     {
@@ -184,7 +169,6 @@ class User extends Authenticatable
 
     /**
      * Eloquent relationship between users and tags.
-     *
      */
     public function tags()
     {
@@ -401,8 +385,20 @@ class User extends Authenticatable
      */
     public function getFields()
     {
+        $fieldTypes = [
+            'full_name'     => 'text',
+            'first_name'    => 'text',
+            'last_name'     => 'text',
+            'nickname'      => 'text',
+            'email'         => 'email',
+            'phone'         => 'tel',
+            'password'      => 'password',
+            'profile_image' => 'file',
+            'role_id'       => 'number',
+        ];
+
         $excludedFields = ['role_id'];
 
-        return $this->handleFilterAvailableFields($this->fillable, $excludedFields);
+        return $this->handleFilterAvailableFields($fieldTypes, $excludedFields);
     }
 }

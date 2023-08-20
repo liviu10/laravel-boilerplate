@@ -32,42 +32,37 @@ class Role extends Model
 
     /**
      * The table associated with the model.
-     *
      * @var string
      */
     protected $table = 'roles';
 
     /**
      * The primary key associated with the table.
-     *
      * @var string
      */
     protected $primaryKey = 'id';
 
     /**
      * The data type of the auto-incrementing ID.
-     *
      * @var string
      */
     protected $keyType = 'int';
 
     /**
      * The attributes that are mass assignable.
-     *
-     * @var array<int, string>
+     * @var array<string>
      */
     protected $fillable = [
-        'name'        => 'text',
-        'description' => 'text',
-        'bg_color'    => 'text',
-        'text_color'  => 'text',
-        'slug'        => 'text',
-        'is_active'   => 'boolean',
+        'name',
+        'description',
+        'bg_color',
+        'text_color',
+        'slug',
+        'is_active',
     ];
 
     /**
     * The attributes that are mass assignable.
-    *
     * @var string
     */
     protected $attributes = [
@@ -76,7 +71,6 @@ class Role extends Model
 
     /**
      * The attributes that should be cast.
-     *
      * @var array<string, string>
      */
     protected $casts = [
@@ -88,7 +82,6 @@ class Role extends Model
 
     /**
      * The attributes that aren't mass assignable.
-     *
      * @var array
      */
     protected $guarded = [
@@ -99,7 +92,6 @@ class Role extends Model
 
     /**
      * Eloquent relationship between roles and users.
-     *
      */
     public function users()
     {
@@ -108,7 +100,6 @@ class Role extends Model
 
     /**
      * Eloquent relationship between roles and permissions.
-     *
      */
     public function permissions()
     {
@@ -281,6 +272,15 @@ class Role extends Model
      */
     public function getFields()
     {
-        return $this->handleFilterAvailableFields($this->fillable);
+        $fieldTypes = [
+            'name'        => 'text',
+            'description' => 'text',
+            'bg_color'    => 'text',
+            'text_color'  => 'text',
+            'slug'        => 'text',
+            'is_active'   => 'boolean',
+        ];
+
+        return $this->handleFilterAvailableFields($fieldTypes);
     }
 }

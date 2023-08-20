@@ -34,58 +34,51 @@ class Content extends Model
 
     /**
      * The table associated with the model.
-     *
      * @var string
      */
     protected $table = 'contents';
 
     /**
      * The primary key associated with the table.
-     *
      * @var string
      */
     protected $primaryKey = 'id';
 
     /**
      * The data type of the auto-incrementing ID.
-     *
      * @var string
      */
     protected $keyType = 'int';
 
     /**
      * The foreign key associated with the table.
-     *
      * @var string
      */
     protected $foreignKey = 'user_id';
 
     /**
      * The data type of the database table foreign key.
-     *
      * @var string
      */
     protected $foreignKeyType = 'int';
 
     /**
      * The attributes that are mass assignable.
-     *
-     * @var array<string, string>
+     * @var array<string>
      */
     protected $fillable = [
-        'visibility'     => 'select',
-        'content_url'    => 'text',
-        'title'          => 'text',
-        'content_type'   => 'select',
-        'description'    => 'date',
-        'content'        => 'number',
-        'allow_comments' => 'boolean',
-        'user_id'        => 'number',
+        'visibility',
+        'content_url',
+        'title',
+        'content_type',
+        'description',
+        'content',
+        'allow_comments',
+        'user_id',
     ];
 
     /**
      * The visibility options.
-     *
      * @var array<string>
      */
     protected $visibilityOptions = [
@@ -94,7 +87,6 @@ class Content extends Model
 
     /**
      * The content type options.
-     *
      * @var array<string>
      */
     protected $contentTypeOptions = [
@@ -103,7 +95,6 @@ class Content extends Model
 
     /**
     * The attributes that are mass assignable.
-    *
     * @var string
     */
     protected $attributes = [
@@ -112,7 +103,6 @@ class Content extends Model
 
     /**
      * The attributes that should be cast.
-     *
      * @var array<string, string>
      */
     protected $casts = [
@@ -125,7 +115,6 @@ class Content extends Model
 
     /**
      * The attributes that aren't mass assignable.
-     *
      * @var array
      */
     protected $guarded = [
@@ -136,7 +125,6 @@ class Content extends Model
 
     /**
      * Eloquent relationship between contact me messages and users.
-     *
      */
     public function user()
     {
@@ -145,7 +133,6 @@ class Content extends Model
 
     /**
      * Eloquent relationship between contents and tags.
-     *
      */
     public function tags()
     {
@@ -154,7 +141,6 @@ class Content extends Model
 
     /**
      * Eloquent relationship between contents and medias.
-     *
      */
     public function medias()
     {
@@ -318,9 +304,20 @@ class Content extends Model
      */
     public function getFields()
     {
+        $fieldTypes = [
+            'visibility'     => 'select',
+            'content_url'    => 'text',
+            'title'          => 'text',
+            'content_type'   => 'select',
+            'description'    => 'date',
+            'content'        => 'number',
+            'allow_comments' => 'boolean',
+            'user_id'        => 'number',
+        ];
+
         $excludedFields = ['user_id'];
 
-        return $this->handleFilterAvailableFields($this->fillable, $excludedFields);
+        return $this->handleFilterAvailableFields($fieldTypes, $excludedFields);
     }
 
     /**

@@ -31,55 +31,48 @@ class NewsletterSubscriber extends Model
 
     /**
      * The table associated with the model.
-     *
      * @var string
      */
     protected $table = 'newsletter_subscribers';
 
     /**
      * The primary key associated with the table.
-     *
      * @var string
      */
     protected $primaryKey = 'id';
 
     /**
      * The data type of the auto-incrementing ID.
-     *
      * @var string
      */
     protected $keyType = 'int';
 
     /**
      * The foreign key associated with the table.
-     *
      * @var string
      */
     protected $foreignKey = 'newsletter_campaign_id';
 
     /**
      * The data type of the database table foreign key.
-     *
      * @var string
      */
     protected $foreignKeyType = 'int';
 
     /**
      * The attributes that are mass assignable.
-     *
-     * @var array<string, string>
+     * @var array<string>
      */
     protected $fillable = [
-        'full_name'              => 'text',
-        'email'                  => 'text',
-        'privacy_policy'         => 'boolean',
-        'valid_email'            => 'boolean',
-        'newsletter_campaign_id' => 'number',
+        'full_name',
+        'email',
+        'privacy_policy',
+        'valid_email',
+        'newsletter_campaign_id',
     ];
 
     /**
     * The attributes that are mass assignable.
-    *
     * @var string
     */
     protected $attributes = [
@@ -89,7 +82,6 @@ class NewsletterSubscriber extends Model
 
     /**
      * The attributes that should be cast.
-     *
      * @var array<string, string>
      */
     protected $casts = [
@@ -101,7 +93,6 @@ class NewsletterSubscriber extends Model
 
     /**
      * The attributes that aren't mass assignable.
-     *
      * @var array
      */
     protected $guarded = [
@@ -112,7 +103,6 @@ class NewsletterSubscriber extends Model
 
     /**
      * Eloquent relationship between newsletter subscribers and newsletter campaigns.
-     *
      */
     public function newsletter_campaign()
     {
@@ -264,8 +254,16 @@ class NewsletterSubscriber extends Model
      */
     public function getFields()
     {
+        $fieldTypes = [
+            'full_name'              => 'text',
+            'email'                  => 'text',
+            'privacy_policy'         => 'boolean',
+            'valid_email'            => 'boolean',
+            'newsletter_campaign_id' => 'number',
+        ];
+
         $excludedFields = ['newsletter_campaign_id'];
 
-        return $this->handleFilterAvailableFields($this->fillable, $excludedFields);
+        return $this->handleFilterAvailableFields($fieldTypes, $excludedFields);
     }
 }

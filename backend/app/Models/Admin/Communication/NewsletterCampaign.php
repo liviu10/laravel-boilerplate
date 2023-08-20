@@ -36,60 +36,53 @@ class NewsletterCampaign extends Model
 
     /**
      * The table associated with the model.
-     *
      * @var string
      */
     protected $table = 'newsletter_campaigns';
 
     /**
      * The primary key associated with the table.
-     *
      * @var string
      */
     protected $primaryKey = 'id';
 
     /**
      * The data type of the auto-incrementing ID.
-     *
      * @var string
      */
     protected $keyType = 'int';
 
     /**
      * The foreign key associated with the table.
-     *
      * @var string
      */
     protected $foreignKey = 'user_id';
 
     /**
      * The data type of the database table foreign key.
-     *
      * @var string
      */
     protected $foreignKeyType = 'int';
 
     /**
      * The attributes that are mass assignable.
-     *
-     * @var array<string, string>
+     * @var array<string>
      */
     protected $fillable = [
-        'name'        => 'text',
-        'description' => 'text',
-        'is_active'   => 'boolean',
-        'valid_from'  => 'date',
-        'valid_to'    => 'date',
-        'occur_times' => 'number',
-        'occur_week'  => 'number',
-        'occur_day'   => 'number',
-        'occur_hour'  => 'time',
-        'user_id'     => 'number',
+        'name',
+        'description',
+        'is_active',
+        'valid_from',
+        'valid_to',
+        'occur_times',
+        'occur_week',
+        'occur_day',
+        'occur_hour',
+        'user_id',
     ];
 
     /**
     * The attributes that are mass assignable.
-    *
     * @var string
     */
     protected $attributes = [
@@ -98,7 +91,6 @@ class NewsletterCampaign extends Model
 
     /**
      * The attributes that should be cast.
-     *
      * @var array<string, string>
      */
     protected $casts = [
@@ -117,7 +109,6 @@ class NewsletterCampaign extends Model
 
     /**
      * The attributes that aren't mass assignable.
-     *
      * @var array
      */
     protected $guarded = [
@@ -128,7 +119,6 @@ class NewsletterCampaign extends Model
 
     /**
      * Eloquent relationship between contact me messages and users.
-     *
      */
     public function user()
     {
@@ -137,7 +127,6 @@ class NewsletterCampaign extends Model
 
     /**
      * Eloquent relationship between newsletter campaigns and newsletter subscribers.
-     *
      */
     public function newsletter_subscribers()
     {
@@ -302,8 +291,21 @@ class NewsletterCampaign extends Model
      */
     public function getFields()
     {
+        $fieldTypes = [
+            'name'        => 'text',
+            'description' => 'text',
+            'is_active'   => 'boolean',
+            'valid_from'  => 'date',
+            'valid_to'    => 'date',
+            'occur_times' => 'number',
+            'occur_week'  => 'number',
+            'occur_day'   => 'number',
+            'occur_hour'  => 'time',
+            'user_id'     => 'number',
+        ];
+
         $excludedFields = ['user_id'];
 
-        return $this->handleFilterAvailableFields($this->fillable, $excludedFields);
+        return $this->handleFilterAvailableFields($fieldTypes, $excludedFields);
     }
 }
