@@ -128,6 +128,22 @@ class User extends Authenticatable
     }
 
     /**
+     * Eloquent relationship between users and generals.
+     */
+    public function generals()
+    {
+        return $this->hasMany('App\Models\Admin\ApplicationSettings\General');
+    }
+
+    /**
+     * Eloquent relationship between users and notifications.
+     */
+    public function notifications()
+    {
+        return $this->hasMany('App\Models\Admin\ApplicationSettings\Notification');
+    }
+
+    /**
      * Eloquent relationship between users and contact responses.
      */
     public function contact_responses()

@@ -25,18 +25,14 @@ use Illuminate\Support\Facades\Route;
     use App\Http\Controllers\Admin\Communication\NewsletterCampaignController;
     use App\Http\Controllers\Admin\Communication\NewsletterSubscriberController;
 // Import application's reports
-    use App\Http\Controllers\Admin\Report\ReportController;
-// Import application's documentation
-    use App\Http\Controllers\Admin\Documentation\DocumentationController;
+    use App\Http\Controllers\Admin\Reports\ReportController;
 // Import application's user settings
     use App\Http\Controllers\Admin\Settings\UserController;
     use App\Http\Controllers\Admin\Settings\RoleController;
 // Import application's settings
     use App\Http\Controllers\Admin\ApplicationSettings\GeneralController;
-    use App\Http\Controllers\Admin\ApplicationSettings\PerformanceController;
     use App\Http\Controllers\Admin\ApplicationSettings\AcceptedDomainController;
     use App\Http\Controllers\Admin\ApplicationSettings\NotificationController;
-    use App\Http\Controllers\Admin\ApplicationSettings\EmailController;
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
@@ -72,15 +68,10 @@ Route::group([ 'prefix' => config('app.version') ], function () {
             });
         });
         // Application's reports endpoints
-        // Route::group([ 'prefix' => '/' ], function () {
-        //     // Reports
-        //     Route::apiResource('/reports', ReportController::class);
-        // });
-        // Application's documentation endpoints
-        // Route::group([ 'prefix' => '/' ], function () {
-        //     // Reports
-        //     Route::apiResource('/documentation', DocumentationController::class);
-        // });
+        Route::group([ 'prefix' => '/' ], function () {
+            // Reports
+            Route::get('/reports', [ReportController::class, 'show']);
+        });
         // Application's user settings api endpoints
         Route::group([ 'prefix' => '/settings' ], function () {
             // Users
@@ -92,15 +83,11 @@ Route::group([ 'prefix' => config('app.version') ], function () {
         // Application's settings endpoints
         Route::group([ 'prefix' => '/application-settings' ], function () {
             // General
-            // Route::apiResource('/general', GeneralController::class);
-            // Performance
-            // Route::apiResource('/performance', PerformanceController::class);
+            Route::apiResource('/general', GeneralController::class);
             // Accepted domains
             Route::apiResource('/accepted-domains', AcceptedDomainController::class);
             // Notifications
-            // Route::apiResource('/notifications', NotificationController::class);
-            // Emails
-            // Route::apiResource('/emails', EmailController::class);
+            Route::apiResource('/notifications', NotificationController::class);
         });
     });
 
