@@ -6,29 +6,29 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\ServiceProvider;
 
 // Import application's settings
-use App\BusinessLogic\Interfaces\Admin\ApplicationSettings\AcceptedDomainInterface;
-use App\BusinessLogic\Interfaces\Admin\ApplicationSettings\GeneralInterface;
-use App\BusinessLogic\Interfaces\Admin\ApplicationSettings\NotificationInterface;
+use App\BusinessLogic\Interfaces\Admin\AcceptedDomainInterface;
+use App\BusinessLogic\Interfaces\Admin\GeneralInterface;
+use App\BusinessLogic\Interfaces\Admin\NotificationInterface;
 
 // Import application's communication settings
-use App\BusinessLogic\Interfaces\Admin\Communication\ContactMessageInterface;
-use App\BusinessLogic\Interfaces\Admin\Communication\ContactSubjectInterface;
-use App\BusinessLogic\Interfaces\Admin\Communication\NewsletterCampaignInterface;
-use App\BusinessLogic\Interfaces\Admin\Communication\NewsletterSubscriberInterface;
+use App\BusinessLogic\Interfaces\Admin\ContactMessageInterface;
+use App\BusinessLogic\Interfaces\Admin\ContactSubjectInterface;
+use App\BusinessLogic\Interfaces\Admin\NewsletterCampaignInterface;
+use App\BusinessLogic\Interfaces\Admin\NewsletterSubscriberInterface;
 
 // Import application's management settings
-use App\BusinessLogic\Interfaces\Admin\Management\ContentInterface;
-use App\BusinessLogic\Interfaces\Admin\Management\TagInterface;
-use App\BusinessLogic\Interfaces\Admin\Management\MediaInterface;
-use App\BusinessLogic\Interfaces\Admin\Management\CommentInterface;
-use App\BusinessLogic\Interfaces\Admin\Management\AppreciationInterface;
+use App\BusinessLogic\Interfaces\Admin\ContentInterface;
+use App\BusinessLogic\Interfaces\Admin\TagInterface;
+use App\BusinessLogic\Interfaces\Admin\MediaInterface;
+use App\BusinessLogic\Interfaces\Admin\CommentInterface;
+use App\BusinessLogic\Interfaces\Admin\AppreciationInterface;
 
 // Import application's report settings
-use App\BusinessLogic\Interfaces\Admin\Reports\ReportInterface;
+use App\BusinessLogic\Interfaces\Admin\ReportInterface;
 
 // Import application's user settings
-use App\BusinessLogic\Interfaces\Admin\Settings\UserInterface;
-use App\BusinessLogic\Interfaces\Admin\Settings\RoleInterface;
+use App\BusinessLogic\Interfaces\Admin\UserInterface;
+use App\BusinessLogic\Interfaces\Admin\RoleInterface;
 
 class AppServiceProvider extends ServiceProvider
 {

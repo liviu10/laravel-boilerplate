@@ -14,25 +14,25 @@ use Illuminate\Support\Facades\Route;
 |
 */
 // Import application's management
-    use App\Http\Controllers\Admin\Management\ContentController;
-    use App\Http\Controllers\Admin\Management\TagController;
-    use App\Http\Controllers\Admin\Management\MediaController;
-    use App\Http\Controllers\Admin\Management\CommentController;
-    use App\Http\Controllers\Admin\Management\AppreciationController;
+    use App\Http\Controllers\Admin\ContentController;
+    use App\Http\Controllers\Admin\TagController;
+    use App\Http\Controllers\Admin\MediaController;
+    use App\Http\Controllers\Admin\CommentController;
+    use App\Http\Controllers\Admin\AppreciationController;
 // Import application's communication
-    use App\Http\Controllers\Admin\Communication\ContactMessageController;
-    use App\Http\Controllers\Admin\Communication\ContactSubjectController;
-    use App\Http\Controllers\Admin\Communication\NewsletterCampaignController;
-    use App\Http\Controllers\Admin\Communication\NewsletterSubscriberController;
+    use App\Http\Controllers\Admin\ContactMessageController;
+    use App\Http\Controllers\Admin\ContactSubjectController;
+    use App\Http\Controllers\Admin\NewsletterCampaignController;
+    use App\Http\Controllers\Admin\NewsletterSubscriberController;
 // Import application's reports
-    use App\Http\Controllers\Admin\Reports\ReportController;
+    use App\Http\Controllers\Admin\ReportController;
 // Import application's user settings
-    use App\Http\Controllers\Admin\Settings\UserController;
-    use App\Http\Controllers\Admin\Settings\RoleController;
+    use App\Http\Controllers\Admin\UserController;
+    use App\Http\Controllers\Admin\RoleController;
 // Import application's settings
-    use App\Http\Controllers\Admin\ApplicationSettings\GeneralController;
-    use App\Http\Controllers\Admin\ApplicationSettings\AcceptedDomainController;
-    use App\Http\Controllers\Admin\ApplicationSettings\NotificationController;
+    use App\Http\Controllers\Admin\GeneralController;
+    use App\Http\Controllers\Admin\AcceptedDomainController;
+    use App\Http\Controllers\Admin\NotificationController;
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();

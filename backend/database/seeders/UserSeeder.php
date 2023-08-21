@@ -4,7 +4,7 @@ namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
-use App\Models\Admin\Settings\User;
+use App\Models\Admin\User;
 use Carbon\Carbon;
 
 class UserSeeder extends Seeder
