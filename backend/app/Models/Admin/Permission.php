@@ -103,7 +103,7 @@ class Permission extends Model
      */
     public function role()
     {
-        return $this->belongsTo('App\Models\Admin\Settings\Role');
+        return $this->belongsTo('App\Models\Admin\Role');
     }
 
     /**

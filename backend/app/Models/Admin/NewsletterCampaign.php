@@ -122,7 +122,7 @@ class NewsletterCampaign extends Model
      */
     public function user()
     {
-        return $this->belongsTo('App\Models\Admin\Settings\User');
+        return $this->belongsTo('App\Models\Admin\User');
     }
 
     /**
@@ -130,7 +130,7 @@ class NewsletterCampaign extends Model
      */
     public function newsletter_subscribers()
     {
-        return $this->hasMany('App\Models\Admin\Communication\NewsletterSubscriber');
+        return $this->hasMany('App\Models\Admin\NewsletterSubscriber');
     }
 
     /**

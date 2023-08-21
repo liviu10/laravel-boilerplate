@@ -106,7 +106,7 @@ class NewsletterSubscriber extends Model
      */
     public function newsletter_campaign()
     {
-        return $this->belongsTo('App\Models\Admin\Communication\NewsletterCampaign');
+        return $this->belongsTo('App\Models\Admin\NewsletterCampaign');
     }
 
     /**

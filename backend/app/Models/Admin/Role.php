@@ -95,7 +95,7 @@ class Role extends Model
      */
     public function users()
     {
-        return $this->hasMany('App\Models\Admin\Settings\User');
+        return $this->hasMany('App\Models\Admin\User');
     }
 
     /**
@@ -103,7 +103,7 @@ class Role extends Model
      */
     public function permissions()
     {
-        return $this->hasMany('App\Models\Admin\Settings\Permission');
+        return $this->hasMany('App\Models\Admin\Permission');
     }
 
     /**

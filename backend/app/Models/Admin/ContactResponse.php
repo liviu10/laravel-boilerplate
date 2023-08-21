@@ -108,7 +108,7 @@ class ContactResponse extends Model
      */
     public function user()
     {
-        return $this->belongsTo('App\Models\Admin\Communication\User');
+        return $this->belongsTo('App\Models\Admin\User');
     }
 
     /**
@@ -116,7 +116,7 @@ class ContactResponse extends Model
      */
     public function contact_message()
     {
-        return $this->belongsTo('App\Models\Admin\Communication\ContactMessage');
+        return $this->belongsTo('App\Models\Admin\ContactMessage');
     }
 
     /**

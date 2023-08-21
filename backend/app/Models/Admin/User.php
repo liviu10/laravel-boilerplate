@@ -116,7 +116,7 @@ class User extends Authenticatable
      */
     public function role()
     {
-        return $this->belongsTo('App\Models\Admin\Settings\Role');
+        return $this->belongsTo('App\Models\Admin\Role');
     }
 
     /**
@@ -124,7 +124,7 @@ class User extends Authenticatable
      */
     public function accepted_domains()
     {
-        return $this->hasMany('App\Models\Admin\ApplicationSettings\AcceptedDomain');
+        return $this->hasMany('App\Models\Admin\AcceptedDomain');
     }
 
     /**
@@ -132,7 +132,7 @@ class User extends Authenticatable
      */
     public function generals()
     {
-        return $this->hasMany('App\Models\Admin\ApplicationSettings\General');
+        return $this->hasMany('App\Models\Admin\General');
     }
 
     /**
@@ -140,7 +140,7 @@ class User extends Authenticatable
      */
     public function notifications()
     {
-        return $this->hasMany('App\Models\Admin\ApplicationSettings\Notification');
+        return $this->hasMany('App\Models\Admin\Notification');
     }
 
     /**
@@ -148,7 +148,7 @@ class User extends Authenticatable
      */
     public function contact_responses()
     {
-        return $this->hasMany('App\Models\Admin\Communication\ContactResponse');
+        return $this->hasMany('App\Models\Admin\ContactResponse');
     }
 
     /**
@@ -156,7 +156,7 @@ class User extends Authenticatable
      */
     public function contact_subjects()
     {
-        return $this->hasMany('App\Models\Admin\Communication\ContactSubject');
+        return $this->hasMany('App\Models\Admin\ContactSubject');
     }
 
     /**
@@ -164,7 +164,7 @@ class User extends Authenticatable
      */
     public function newsletter_campaigns()
     {
-        return $this->hasMany('App\Models\Admin\Communication\NewsletterCampaign');
+        return $this->hasMany('App\Models\Admin\NewsletterCampaign');
     }
 
     /**
@@ -172,7 +172,7 @@ class User extends Authenticatable
      */
     public function contents()
     {
-        return $this->hasMany('App\Models\Admin\Management\Content');
+        return $this->hasMany('App\Models\Admin\Content');
     }
 
     /**
@@ -180,7 +180,7 @@ class User extends Authenticatable
      */
     public function medias()
     {
-        return $this->hasMany('App\Models\Admin\Management\Media');
+        return $this->hasMany('App\Models\Admin\Media');
     }
 
     /**
@@ -188,7 +188,7 @@ class User extends Authenticatable
      */
     public function tags()
     {
-        return $this->hasMany('App\Models\Admin\Management\Tags');
+        return $this->hasMany('App\Models\Admin\Tags');
     }
 
     /**

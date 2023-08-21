@@ -108,7 +108,7 @@ class ContactMessage extends Model
      */
     public function contact_subject()
     {
-        return $this->belongsTo('App\Models\Admin\Communication\ContactSubject');
+        return $this->belongsTo('App\Models\Admin\ContactSubject');
     }
 
     /**

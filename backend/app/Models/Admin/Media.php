@@ -118,7 +118,7 @@ class Media extends Model
      */
     public function user()
     {
-        return $this->belongsTo('App\Models\Admin\Settings\User');
+        return $this->belongsTo('App\Models\Admin\User');
     }
 
     /**
@@ -126,7 +126,7 @@ class Media extends Model
      */
     public function content()
     {
-        return $this->belongsTo('App\Models\Admin\Management\Content');
+        return $this->belongsTo('App\Models\Admin\Content');
     }
 
     /**

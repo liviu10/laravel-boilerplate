@@ -108,7 +108,7 @@ class General extends Model
      */
     public function user()
     {
-        return $this->belongsTo('App\Models\Admin\Settings\User');
+        return $this->belongsTo('App\Models\Admin\User');
     }
 
     /**

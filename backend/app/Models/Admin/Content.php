@@ -128,7 +128,7 @@ class Content extends Model
      */
     public function user()
     {
-        return $this->belongsTo('App\Models\Admin\Settings\User');
+        return $this->belongsTo('App\Models\Admin\User');
     }
 
     /**
@@ -136,7 +136,7 @@ class Content extends Model
      */
     public function tags()
     {
-        return $this->hasMany('App\Models\Admin\Management\Tag');
+        return $this->hasMany('App\Models\Admin\Tag');
     }
 
     /**
@@ -144,7 +144,7 @@ class Content extends Model
      */
     public function medias()
     {
-        return $this->hasMany('App\Models\Admin\Management\Media');
+        return $this->hasMany('App\Models\Admin\Media');
     }
 
     /**

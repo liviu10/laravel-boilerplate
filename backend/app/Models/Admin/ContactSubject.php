@@ -104,7 +104,7 @@ class ContactSubject extends Model
      */
     public function user()
     {
-        return $this->belongsTo('App\Models\Admin\Settings\User');
+        return $this->belongsTo('App\Models\Admin\User');
     }
 
     /**
@@ -112,7 +112,7 @@ class ContactSubject extends Model
      */
     public function contact_messages()
     {
-        return $this->hasMany('App\Models\Admin\Communication\ContactMessage');
+        return $this->hasMany('App\Models\Admin\ContactMessage');
     }
 
     /**
