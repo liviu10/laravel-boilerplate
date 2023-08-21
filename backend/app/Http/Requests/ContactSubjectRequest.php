@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Facades\Route;
 
 class ContactSubjectRequest extends FormRequest
 {
@@ -23,16 +24,26 @@ class ContactSubjectRequest extends FormRequest
      */
     public function rules()
     {
-        $rules = [
-            'name'        => 'required|string|min:3|max:255|regex:/^[a-zA-Z\s]+$/',
-            'description' => 'required|string|min:3|max:255',
-            'is_active'   => 'required',
-        ];
+        $currentRouteName = Route::current()->getName();
 
-        if ($this->isMethod('PUT')) {
-            $rules = array_map(function ($rule) {
-                return str_replace('required|', 'sometimes|', $rule);
-            }, $rules);
+        // Validation rules when creating
+        if ($currentRouteName === 'subjects.store')
+        {
+            $rules = [
+                'name' => 'required|string|min:3|max:255|regex:/^[a-zA-Z\s]+$/',
+                'description' => 'sometimes|string|min:3|max:255',
+                'is_active' => 'required',
+            ];
+        }
+
+        // Validation rules when updating
+        if ($currentRouteName === 'subjects.update')
+        {
+            $rules = [
+                'name' => 'sometime|string|min:3|max:255|regex:/^[a-zA-Z\s]+$/',
+                'description' => 'sometimes|string|min:3|max:255',
+                'is_active' => 'sometime',
+            ];
         }
 
         return $rules;
@@ -55,7 +66,7 @@ class ContactSubjectRequest extends FormRequest
             'description.string' => 'The description must be a string.',
             'description.min' => 'The description must be at least :min characters.',
             'description.max' => 'The description may not be greater than :max characters.',
-            'privacy_policy.required' => 'You must accept the privacy policy.',
+            'is_active.required' => 'You must activate this.',
         ];
     }
 }

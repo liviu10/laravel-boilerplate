@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Facades\Route;
 
 class RoleRequest extends FormRequest
 {
@@ -23,19 +24,32 @@ class RoleRequest extends FormRequest
      */
     public function rules()
     {
-        $rules = [
-            'name'        => 'required|string|min:3|max:100|regex:/^[a-zA-Z\s]+$/',
-            'description' => 'required|string|min:10|max:255',
-            'slug'        => 'required|string|min:3|max:100',
-            'bg_color'    => 'sometimes|string|min:3|max:6|regex:/^[a-zA-Z0-9]+$/',
-            'text_color'  => 'sometimes|string|min:3|max:6|regex:/^[a-zA-Z0-9]+$/',
-            'is_active'   => 'required',
-        ];
+        $currentRouteName = Route::current()->getName();
 
-        if ($this->isMethod('PUT')) {
-            $rules = array_map(function ($rule) {
-                return str_replace('required|', 'sometimes|', $rule);
-            }, $rules);
+        // Validation rules when creating
+        if ($currentRouteName === 'roles.store')
+        {
+            $rules = [
+                'name'        => 'required|string|min:3|max:100|regex:/^[a-zA-Z\s]+$/',
+                'description' => 'required|string|min:10|max:255',
+                'slug'        => 'required|string|min:3|max:100',
+                'bg_color'    => 'sometimes|string|min:3|max:6|regex:/^[a-zA-Z0-9]+$/',
+                'text_color'  => 'sometimes|string|min:3|max:6|regex:/^[a-zA-Z0-9]+$/',
+                'is_active'   => 'required',
+            ];
+        }
+
+        // Validation rules when updating
+        if ($currentRouteName === 'roles.update')
+        {
+            $rules = [
+                'name'        => 'sometimes|string|min:3|max:100|regex:/^[a-zA-Z\s]+$/',
+                'description' => 'sometimes|string|min:10|max:255',
+                'slug'        => 'sometimes|string|min:3|max:100',
+                'bg_color'    => 'sometimes|string|min:3|max:6|regex:/^[a-zA-Z0-9]+$/',
+                'text_color'  => 'sometimes|string|min:3|max:6|regex:/^[a-zA-Z0-9]+$/',
+                'is_active'   => 'sometimes',
+            ];
         }
 
         return $rules;
@@ -62,17 +76,15 @@ class RoleRequest extends FormRequest
             'slug.string' => 'The slug must be a string.',
             'slug.min' => 'The slug must be at least :min characters.',
             'slug.max' => 'The slug may not be greater than :max characters.',
-            'bg_color.required' => 'The background color field is required.',
             'bg_color.string' => 'The background color must be a string.',
             'bg_color.min' => 'The background color must be at least :min characters.',
             'bg_color.max' => 'The background color may not be greater than :max characters.',
-            'bg_color.regex' => 'The background color may only contain letters and numbers.',
-            'text_color.required' => 'The text color field is required.',
+            'bg_color.regex' => 'The background color may only contain letters and digits.',
             'text_color.string' => 'The text color must be a string.',
             'text_color.min' => 'The text color must be at least :min characters.',
             'text_color.max' => 'The text color may not be greater than :max characters.',
-            'text_color.regex' => 'The text color may only contain letters and numbers.',
-            'is_active.required' => 'The is_active field is required.',
+            'text_color.regex' => 'The text color may only contain letters and digits.',
+            'is_active.required' => 'The is active field is required.',
         ];
     }
 }

@@ -4,6 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
+use Illuminate\Support\Facades\Route;
 
 class GeneralRequest extends FormRequest
 {
@@ -24,28 +25,50 @@ class GeneralRequest extends FormRequest
      */
     public function rules()
     {
-        $rules = [
-            'type' => [
-                'required',
-                'string',
-                Rule::in([
-                    'General',
-                    'Writing',
-                    'Reading',
-                    'Discussion',
-                    'Media',
-                    'Performance',
-                    'Notifications',
-                ])
-            ],
-            'label' => 'required|string|min:3|max:50',
-            'value' => 'required|string|min:3|max:255',
-        ];
+        $currentRouteName = Route::current()->getName();
 
-        if ($this->isMethod('PUT')) {
-            $rules = array_map(function ($rule) {
-                return str_replace('required|', 'sometimes|', $rule);
-            }, $rules);
+        // Validation rules when creating
+        if ($currentRouteName === 'general.store')
+        {
+            $rules = [
+                'type' => [
+                    'required',
+                    'string',
+                    Rule::in([
+                        'General',
+                        'Writing',
+                        'Reading',
+                        'Discussion',
+                        'Media',
+                        'Performance',
+                        'Notifications',
+                    ])
+                ],
+                'label' => 'required|string|min:3|max:50',
+                'value' => 'required|string|min:3|max:255',
+            ];
+        }
+
+        // Validation rules when updating
+        if ($currentRouteName === 'general.update')
+        {
+            $rules = [
+                'type' => [
+                    'sometimes',
+                    'string',
+                    Rule::in([
+                        'General',
+                        'Writing',
+                        'Reading',
+                        'Discussion',
+                        'Media',
+                        'Performance',
+                        'Notifications',
+                    ])
+                ],
+                'label' => 'sometimes|string|min:3|max:50',
+                'value' => 'sometimes|string|min:3|max:255',
+            ];
         }
 
         return $rules;

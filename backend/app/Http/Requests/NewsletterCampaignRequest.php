@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Facades\Route;
 
 class NewsletterCampaignRequest extends FormRequest
 {
@@ -23,22 +24,38 @@ class NewsletterCampaignRequest extends FormRequest
      */
     public function rules()
     {
-        $rules = [
-            'name'        => 'required|string|min:3|max:255',
-            'description' => 'required|string|min:10|max:255|',
-            'is_active'   => 'required',
-            'valid_from'  => 'required',
-            'valid_to'    => 'required',
-            'occur_times' => 'required',
-            'occur_week'  => 'required',
-            'occur_day'   => 'required',
-            'occur_hour'  => 'required',
-        ];
+        $currentRouteName = Route::current()->getName();
 
-        if ($this->isMethod('PUT')) {
-            $rules = array_map(function ($rule) {
-                return str_replace('required|', 'sometimes|', $rule);
-            }, $rules);
+        // Validation rules when creating
+        if ($currentRouteName === 'campaigns.store')
+        {
+            $rules = [
+                'name' => 'required|string|min:3|max:255',
+                'description' => 'required|string|min:10|max:255|',
+                'is_active' => 'required',
+                'valid_from' => 'required',
+                'valid_to' => 'required',
+                'occur_times' => 'required|integer|min:1',
+                'occur_week' => 'required|integer|min:1|max:53',
+                'occur_day' => 'required|integer|min:1|max:7',
+                'occur_hour' => 'required',
+            ];
+        }
+
+        // Validation rules when updating
+        if ($currentRouteName === 'campaigns.update')
+        {
+            $rules = [
+                'name' => 'sometimes|string|min:3|max:255',
+                'description' => 'sometimes|string|min:10|max:255|',
+                'is_active' => 'sometimes',
+                'valid_from' => 'sometimes',
+                'valid_to' => 'sometimes',
+                'occur_times' => 'sometimes|integer|min:1',
+                'occur_week' => 'sometimes|integer|min:1|max:53',
+                'occur_day' => 'sometimes|integer|min:1|max:7',
+                'occur_hour' => 'sometimes',
+            ];
         }
 
         return $rules;
@@ -56,18 +73,25 @@ class NewsletterCampaignRequest extends FormRequest
             'name.string' => 'The name must be a string.',
             'name.min' => 'The name must be at least :min characters.',
             'name.max' => 'The name may not be greater than :max characters.',
-            'name.regex' => 'The name may only contain letters and spaces.',
             'description.required' => 'The description field is required.',
             'description.string' => 'The description must be a string.',
             'description.min' => 'The description must be at least :min characters.',
             'description.max' => 'The description may not be greater than :max characters.',
-            'is_active.required' => 'You must activate this campaign.',
-            'valid_from.required' => 'You must specify the starting date and time for this campaign.',
-            'valid_to.required' => 'You must specify the ending date and time for this campaign.',
-            'occur_times.required' => 'You must specify the number of occurrences for this campaign.',
-            'occur_week.required' => 'You must specify the number of the week when this campaign will occur.',
-            'occur_day.required' => 'You must specify the number of the week day when this campaign will occur.',
-            'occur_hour.required' => 'You must specify the starting hour for this campaign.',
+            'is_active.required' => 'The is active field is required.',
+            'valid_from.required' => 'The valid from field is required.',
+            'valid_to.required' => 'The valid to field is required.',
+            'occur_times.required' => 'The occur times field is required.',
+            'occur_times.integer' => 'The occur times must be an integer.',
+            'occur_times.min' => 'The occur times must be at least :min.',
+            'occur_week.required' => 'The occur week field is required.',
+            'occur_week.integer' => 'The occur week must be an integer.',
+            'occur_week.min' => 'The occur week must be at least :min.',
+            'occur_week.max' => 'The occur week may not be greater than :max.',
+            'occur_day.required' => 'The occur day field is required.',
+            'occur_day.integer' => 'The occur day must be an integer.',
+            'occur_day.min' => 'The occur day must be at least :min.',
+            'occur_day.max' => 'The occur day may not be greater than :max.',
+            'occur_hour.required' => 'The occur hour field is required.',
         ];
     }
 }

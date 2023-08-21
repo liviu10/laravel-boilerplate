@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Facades\Route;
 
 class TagRequest extends FormRequest
 {
@@ -23,15 +24,24 @@ class TagRequest extends FormRequest
      */
     public function rules()
     {
-        $rules = [
-            'name'        => 'required|string|min:3|max:255',
-            'description' => 'required|string|min:10|max:255',
-        ];
+        $currentRouteName = Route::current()->getName();
 
-        if ($this->isMethod('PUT')) {
-            $rules = array_map(function ($rule) {
-                return str_replace('required|', 'sometimes|', $rule);
-            }, $rules);
+        // Validation rules when creating
+        if ($currentRouteName === 'tags.store')
+        {
+            $rules = [
+                'name' => 'required|string|min:3|max:255',
+                'description' => 'sometimes|string|min:10|max:255',
+            ];
+        }
+
+        // Validation rules when updating
+        if ($currentRouteName === 'tags.update')
+        {
+            $rules = [
+                'name' => 'sometimes|string|min:3|max:255',
+                'description' => 'sometimes|string|min:10|max:255',
+            ];
         }
 
         return $rules;

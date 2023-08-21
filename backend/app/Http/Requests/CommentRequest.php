@@ -25,27 +25,16 @@ class CommentRequest extends FormRequest
     public function rules()
     {
         $rules = [
-            'type' => [
-                'required',
-                'string',
-                Rule::in(['Comment', 'Reply'])
-            ],
             'status' => [
-                'required',
+                'sometimes',
                 'string',
                 Rule::in(['Pending', 'Approved', 'Spam', 'Trash'])
             ],
             'full_name' => 'required|string|min:5|max:255',
-            'email' => 'required|string|min:3|max:255',
+            'email' => 'sometimes|string|min:3|max:255',
             'message' => 'required|string|min:5|max:255',
             'notify_new_comments' => 'required',
         ];
-
-        if ($this->isMethod('PUT')) {
-            $rules = array_map(function ($rule) {
-                return str_replace('required|', 'sometimes|', $rule);
-            }, $rules);
-        }
 
         return $rules;
     }
@@ -58,9 +47,6 @@ class CommentRequest extends FormRequest
     public function messages()
     {
         return [
-            'type.required' => 'The type field is required.',
-            'type.string' => 'The type must be a string.',
-            'type.in' => 'The selected type is invalid.',
             'status.required' => 'The status field is required.',
             'status.string' => 'The status must be a string.',
             'status.in' => 'The selected status is invalid.',

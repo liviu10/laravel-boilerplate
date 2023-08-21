@@ -4,6 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
+use Illuminate\Support\Facades\Route;
 
 class ContentRequest extends FormRequest
 {
@@ -24,28 +25,50 @@ class ContentRequest extends FormRequest
      */
     public function rules()
     {
-        $rules = [
-            'visibility'    => [
-                'required',
-                'string',
-                Rule::in(['Public', 'Private', 'Draft'])
-            ],
-            'content_url'   => 'required|string|min:10|max:255',
-            'title'         => 'required|string|min:10|max:255',
-            'content_type'  => [
-                'required',
-                'string',
-                Rule::in(['Page', 'Article'])
-            ],
-            'description'   => 'required|string|min:10|max:255',
-            'content'       => 'required|string|min:100',
-            'allow_comment' => 'required',
-        ];
+        $currentRouteName = Route::current()->getName();
 
-        if ($this->isMethod('PUT')) {
-            $rules = array_map(function ($rule) {
-                return str_replace('required|', 'sometimes|', $rule);
-            }, $rules);
+        // Validation rules when creating
+        if ($currentRouteName === 'contents.store')
+        {
+            $rules = [
+                'visibility' => [
+                    'required',
+                    'string',
+                    Rule::in(['Public', 'Private', 'Draft'])
+                ],
+                'content_url' => 'required|string|min:10|max:255',
+                'title' => 'required|string|min:10|max:255',
+                'content_type' => [
+                    'required',
+                    'string',
+                    Rule::in(['Page', 'Article'])
+                ],
+                'description' => 'required|string|min:10|max:255',
+                'content' => 'required|string|min:100',
+                'allow_comment' => 'required',
+            ];
+        }
+
+        // Validation rules when updating
+        if ($currentRouteName === 'contents.update')
+        {
+            $rules = [
+                'visibility' => [
+                    'sometimes',
+                    'string',
+                    Rule::in(['Public', 'Private', 'Draft'])
+                ],
+                'content_url' => 'sometimes|string|min:10|max:255',
+                'title' => 'sometimes|string|min:10|max:255',
+                'content_type' => [
+                    'sometimes',
+                    'string',
+                    Rule::in(['Page', 'Article'])
+                ],
+                'description' => 'sometimes|string|min:10|max:255',
+                'content' => 'sometimes|string|min:100',
+                'allow_comment' => 'sometimes',
+            ];
         }
 
         return $rules;

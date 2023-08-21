@@ -4,6 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
+use Illuminate\Support\Facades\Route;
 
 class NotificationRequest extends FormRequest
 {
@@ -24,25 +25,44 @@ class NotificationRequest extends FormRequest
      */
     public function rules()
     {
-        $rules = [
-            'type' => [
-                'required',
-                'string',
-                Rule::in(['SMS', 'Email'])
-            ],
-            'condition' => [
-                'required',
-                'string',
-                Rule::in(['Read', 'Create', 'Show', 'Update', 'Delete', 'Restore'])
-            ],
-            'title' => 'required|string|min:3|max:255',
-            'content' => 'required|string|min:50',
-        ];
+        $currentRouteName = Route::current()->getName();
 
-        if ($this->isMethod('PUT')) {
-            $rules = array_map(function ($rule) {
-                return str_replace('required|', 'sometimes|', $rule);
-            }, $rules);
+        // Validation rules when creating
+        if ($currentRouteName === 'notifications.store')
+        {
+            $rules = [
+                'type' => [
+                    'required',
+                    'string',
+                    Rule::in(['SMS', 'Email'])
+                ],
+                'condition' => [
+                    'required',
+                    'string',
+                    Rule::in(['Read', 'Create', 'Show', 'Update', 'Delete', 'Restore'])
+                ],
+                'title' => 'required|string|min:3|max:255',
+                'content' => 'required|string|min:50',
+            ];
+        }
+
+        // Validation rules when updating
+        if ($currentRouteName === 'notifications.update')
+        {
+            $rules = [
+                'type' => [
+                    'sometimes',
+                    'string',
+                    Rule::in(['SMS', 'Email'])
+                ],
+                'condition' => [
+                    'sometimes',
+                    'string',
+                    Rule::in(['Read', 'Create', 'Show', 'Update', 'Delete', 'Restore'])
+                ],
+                'title' => 'sometimes|string|min:3|max:255',
+                'content' => 'sometimes|string|min:50',
+            ];
         }
 
         return $rules;

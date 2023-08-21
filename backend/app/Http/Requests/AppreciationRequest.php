@@ -24,16 +24,10 @@ class AppreciationRequest extends FormRequest
     public function rules()
     {
         $rules = [
-            'likes'    => 'required|integer',
-            'dislikes' => 'required|integer',
-            'rating'   => 'required|integer|min:0|max:5',
+            'likes' => 'sometimes|integer',
+            'dislikes' => 'sometimes|integer',
+            'rating' => 'sometimes|integer|min:0|max:5',
         ];
-
-        if ($this->isMethod('PUT')) {
-            $rules = array_map(function ($rule) {
-                return str_replace('required|', 'sometimes|', $rule);
-            }, $rules);
-        }
 
         return $rules;
     }

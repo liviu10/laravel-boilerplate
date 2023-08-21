@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Facades\Route;
 
 class NewsletterSubscriberRequest extends FormRequest
 {
@@ -23,16 +24,16 @@ class NewsletterSubscriberRequest extends FormRequest
      */
     public function rules()
     {
-        $rules = [
-            'full_name'      => 'required|string|min:3|max:255',
-            'email'          => 'required|string|min:3|max:255|unique:newsletter_subscribers',
-            'privacy_policy' => 'required',
-        ];
+        $currentRouteName = Route::current()->getName();
 
-        if ($this->isMethod('PUT')) {
-            $rules = array_map(function ($rule) {
-                return str_replace('required|', 'sometimes|', $rule);
-            }, $rules);
+        // Validation rules when creating
+        if ($currentRouteName === 'subscribers.store')
+        {
+            $rules = [
+                'full_name' => 'required|string|min:3|max:255',
+                'email' => 'required|string|min:3|max:255|unique:newsletter_subscribers',
+                'privacy_policy' => 'sometimes',
+            ];
         }
 
         return $rules;

@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Facades\Route;
 
 class UserRequest extends FormRequest
 {
@@ -23,20 +24,56 @@ class UserRequest extends FormRequest
      */
     public function rules()
     {
-        $rules = [
-            'first_name'               => 'required|string|min:3|max:100|regex:/^[a-zA-Z\s]+$/',
-            'last_name'                => 'required|string|min:3|max:100|regex:/^[a-zA-Z\s]+$/',
-            'nickname'                 => 'required|string|min:3|max:100',
-            'phone'                    => 'required|string|min:7|max:15|regex:/^\+?(?:[0-9][ .-]?){6,14}[0-9]$/',
-            'password'                 => 'required|string|min:8|confirmed',
-            'profile_image'            => 'required|image|mimes:jpeg,jpg,png,gif,webp,bmp,svg,tiff',
-            'role_id' => 'required',
-        ];
+        $currentRouteName = Route::current()->getName();
 
-        if ($this->isMethod('PUT')) {
-            $rules = array_map(function ($rule) {
-                return str_replace('required|', 'sometimes|', $rule);
-            }, $rules);
+        // Validation rules when creating
+        if ($currentRouteName === 'users.store')
+        {
+            $rules = [
+                'first_name' => 'required|string|min:3|max:100|regex:/^[a-zA-Z\s]+$/',
+                'last_name' => 'required|string|min:3|max:100|regex:/^[a-zA-Z\s]+$/',
+                'nickname' => 'required|string|min:3|max:100',
+                'email' => 'required|string|min:3|max:255|unique:user',
+                'phone' => 'sometimes|string|min:7|max:15|regex:/^\+?(?:[0-9][ .-]?){6,14}[0-9]$/',
+                'password' => 'required|string|min:8|confirmed',
+                'profile_image' => 'sometimes|image|mimes:jpeg,jpg,png,gif,webp,bmp,svg,tiff',
+            ];
+        }
+
+        // Validation rules when updating
+        if ($currentRouteName === 'users.update')
+        {
+            $rules = [
+                'first_name' => 'sometimes|string|min:3|max:100|regex:/^[a-zA-Z\s]+$/',
+                'last_name' => 'sometimes|string|min:3|max:100|regex:/^[a-zA-Z\s]+$/',
+                'nickname' => 'sometimes|string|min:3|max:100',
+                'email' => 'sometimes|string|min:3|max:255',
+                'phone' => 'sometimes|string|min:7|max:15|regex:/^\+?(?:[0-9][ .-]?){6,14}[0-9]$/',
+                'password' => 'sometimes|string|min:8|confirmed',
+                'profile_image' => 'sometimes|image|mimes:jpeg,jpg,png,gif,webp,bmp,svg,tiff',
+            ];
+        }
+
+        // Validation rules when registering a new user account
+        if ($currentRouteName === 'register')
+        {
+            $rules = [
+                'first_name'=> 'required|string|min:3|max:100|regex:/^[a-zA-Z\s]+$/',
+                'last_name' => 'required|string|min:3|max:100|regex:/^[a-zA-Z\s]+$/',
+                'nickname' => 'required|string|min:3|max:100',
+                'email' => 'required|string|min:3|max:255',
+                'password' => 'required|string|min:8|confirmed',
+            ];
+        }
+
+        // Validation rules when login user account
+        if ($currentRouteName === 'login')
+        {
+            $rules = [
+                'nickname' => 'sometimes|string|min:3|max:100',
+                'email' => 'sometimes|string|min:3|max:255',
+                'password' => 'sometimes|string|min:8|confirmed',
+            ];
         }
 
         return $rules;
@@ -64,20 +101,21 @@ class UserRequest extends FormRequest
             'nickname.string' => 'The nickname must be a string.',
             'nickname.min' => 'The nickname must be at least :min characters.',
             'nickname.max' => 'The nickname may not be greater than :max characters.',
-            'phone.required' => 'The phone field is required.',
+            'email.required' => 'The email field is required.',
+            'email.string' => 'The email must be a string.',
+            'email.min' => 'The email must be at least :min characters.',
+            'email.max' => 'The email may not be greater than :max characters.',
+            'email.unique' => 'The email has already been taken.',
             'phone.string' => 'The phone must be a string.',
             'phone.min' => 'The phone must be at least :min characters.',
             'phone.max' => 'The phone may not be greater than :max characters.',
             'phone.regex' => 'Please enter a valid phone number.',
             'password.required' => 'The password field is required.',
-            'password.required' => 'The password field is required.',
             'password.string' => 'The password must be a string.',
             'password.min' => 'The password must be at least :min characters.',
             'password.confirmed' => 'The password confirmation does not match.',
-            'profile_image.required' => 'The profile image field is required.',
             'profile_image.image' => 'The profile image must be an image file.',
             'profile_image.mimes' => 'The profile image must be a file of type: :values.',
-            'role_id.required' => 'The roles field is required.',
         ];
     }
 }

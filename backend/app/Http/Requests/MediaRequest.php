@@ -4,6 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
+use Illuminate\Support\Facades\Route;
 
 class MediaRequest extends FormRequest
 {
@@ -24,20 +25,34 @@ class MediaRequest extends FormRequest
      */
     public function rules()
     {
-        $rules = [
-            'type'    => [
-                'required',
-                'string',
-                Rule::in(['Images', 'Documents', 'Videos', 'Audio', 'Others'])
-            ],
-            'internal_path'   => 'required|string|min:10|max:255',
-            'external_path'   => 'required|string|min:10|max:255',
-        ];
+        $currentRouteName = Route::current()->getName();
 
-        if ($this->isMethod('PUT')) {
-            $rules = array_map(function ($rule) {
-                return str_replace('required|', 'sometimes|', $rule);
-            }, $rules);
+        // Validation rules when creating
+        if ($currentRouteName === 'general.store')
+        {
+            $rules = [
+                'type' => [
+                    'required',
+                    'string',
+                    Rule::in(['Images', 'Documents', 'Videos', 'Audio', 'Others'])
+                ],
+                'internal_path' => 'required|string|min:10|max:255',
+                'external_path' => 'required|string|min:10|max:255',
+            ];
+        }
+
+        // Validation rules when updating
+        if ($currentRouteName === 'media.update')
+        {
+            $rules = [
+                'type' => [
+                    'sometimes',
+                    'string',
+                    Rule::in(['Images', 'Documents', 'Videos', 'Audio', 'Others'])
+                ],
+                'internal_path' => 'sometimes|string|min:10|max:255',
+                'external_path' => 'sometimes|string|min:10|max:255',
+            ];
         }
 
         return $rules;

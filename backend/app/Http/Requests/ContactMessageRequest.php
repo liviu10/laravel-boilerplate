@@ -24,19 +24,13 @@ class ContactMessageRequest extends FormRequest
     public function rules()
     {
         $rules = [
-            'full_name'          => 'required|string|min:3|max:255|regex:/^[a-zA-Z\s]+$/',
-            'email'              => 'required|string|min:3|max:255',
-            'phone'              => 'required|string|min:7|max:15|regex:/^\+?(?:[0-9][ .-]?){6,14}[0-9]$/',
+            'full_name' => 'required|string|min:3|max:255|regex:/^[a-zA-Z\s]+$/',
+            'email' => 'required|string|min:3|max:255',
+            'phone' => 'sometimes|string|min:7|max:15|regex:/^\+?(?:[0-9][ .-]?){6,14}[0-9]$/',
             'contact_subject_id' => 'required',
-            'message'            => 'required|string|min:3|max:255|regex:/^[a-zA-Z\s]+$/',
-            'privacy_policy'     => 'required',
+            'message' => 'required|string|min:3|max:255|regex:/^[a-zA-Z\s]+$/',
+            'privacy_policy' => 'required',
         ];
-
-        if ($this->isMethod('PUT')) {
-            $rules = array_map(function ($rule) {
-                return str_replace('required|', 'sometimes|', $rule);
-            }, $rules);
-        }
 
         return $rules;
     }

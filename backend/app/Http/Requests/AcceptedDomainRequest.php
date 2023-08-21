@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Facades\Route;
 
 class AcceptedDomainRequest extends FormRequest
 {
@@ -23,16 +24,26 @@ class AcceptedDomainRequest extends FormRequest
      */
     public function rules()
     {
-        $rules = [
-            'domain'      => 'required|string|min:3|max:50|regex:/^[a-zA-Z\s]+$/|regex:/^[a-z]+$/|unique:accepted_domains',
-            'type'        => 'required|string|min:3|max:50|regex:/^[a-zA-Z\s]+$/',
-            'is_active'   => 'required',
-        ];
+        $currentRouteName = Route::current()->getName();
 
-        if ($this->isMethod('PUT')) {
-            $rules = array_map(function ($rule) {
-                return str_replace('required|', 'sometimes|', $rule);
-            }, $rules);
+        // Validation rules when creating
+        if ($currentRouteName === 'accepted-domains.store')
+        {
+            $rules = [
+                'domain' => 'required|string|min:3|max:50|regex:/^[a-zA-Z\s]+$/|regex:/^[a-z]+$/|unique:accepted_domains',
+                'type' => 'required|string|min:3|max:50|regex:/^[a-zA-Z\s]+$/',
+                'is_active' => 'required',
+            ];
+        }
+
+        // Validation rules when updating
+        if ($currentRouteName === 'accepted-domains.update')
+        {
+            $rules = [
+                'domain' => 'sometimes|string|min:3|max:50|regex:/^[a-zA-Z\s]+$/|regex:/^[a-z]+$/|unique:accepted_domains',
+                'type' => 'sometimes|string|min:3|max:50|regex:/^[a-zA-Z\s]+$/',
+                'is_active' => 'sometimes',
+            ];
         }
 
         return $rules;
