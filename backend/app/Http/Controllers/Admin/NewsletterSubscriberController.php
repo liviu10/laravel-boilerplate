@@ -62,11 +62,11 @@ class NewsletterSubscriberController extends Controller
 
     /**
      * Delete a single record from the database. HTTP request [DELETE].
-     * @param  int  $id
+     * @param  string  $email
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy($email)
     {
-        return $this->newsletterCampaignService->handleDestroy($id);
+        return $this->newsletterCampaignService->handleDestroy($email);
     }
 }

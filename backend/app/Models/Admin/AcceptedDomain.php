@@ -275,6 +275,34 @@ class AcceptedDomain extends Model
         return $this->handleFilterAvailableFields($fieldTypes, $excludedFields);
     }
 
+    /**
+     * Check if domain names exist and retrieve their information.
+     * @param array $domain An array of domain names (without periods)
+     * to check and retrieve information for.
+     * @return array|false An array containing associative arrays with
+     * 'id' and 'domain' keys for the matching
+     * domains, or false if an error occurs during the query.
+     */
+    public function checkEmailProvider($domain)
+    {
+        try
+        {
+            $result = $this->select('id', 'domain')->whereIn('domain', ['.' . $domain[0], '.' . $domain[1]])->get()->toArray();
+
+            return $result;
+        }
+        catch (\Illuminate\Database\QueryException $mysqlError)
+        {
+            $this->LogApiError($mysqlError);
+            return false;
+        }
+    }
+
+    /**
+     * Retrieve an array of unique domain types.
+     * @return array An array containing associative arrays with
+     * 'id' and 'type' keys for each unique domain type.
+     */
     public function getUniqueDomainTypes()
     {
         $uniqueDomainTypes['type'] = $this->select('id', 'type')->get()->unique('type')->toArray();

@@ -6,6 +6,7 @@ use App\Traits\ApiResponseMessage;
 use App\BusinessLogic\Interfaces\Admin\NewsletterSubscriberInterface;
 use App\Library\DataModel;
 use App\Http\Requests\NewsletterSubscriberRequest;
+use App\Models\Admin\AcceptedDomain;
 use App\Models\Admin\NewsletterSubscriber;
 use Illuminate\Database\Eloquent\Collection;
 
@@ -71,21 +72,33 @@ class NewsletterSubscriberService implements NewsletterSubscriberInterface
     public function handleStore(NewsletterSubscriberRequest $request)
     {
         $apiInsertRecord = [
-            'full_name'              => $request->get('full_name'),
-            'email'                  => $request->get('email'),
-            'privacy_policy'         => $request->get('privacy_policy') !== null ? $request->get('privacy_policy') : false,
-            'valid_email'            => true,
-            'newsletter_campaign_id' => 1,
+            'full_name' => $request->get('full_name'),
+            'email' => $request->get('email'),
+            'privacy_policy' => $request->get('privacy_policy') !== null ? $request->get('privacy_policy') : false,
         ];
-        $saveRecord = $this->modelName->createRecord($apiInsertRecord);
 
-        if ($saveRecord === true)
+        $acceptedDomain = new AcceptedDomain();
+        $getEmailProvider = explode('.', substr(strstr($request->get('email'), '@'), 1));
+        $checkEmailProvider = $acceptedDomain->checkEmailProvider($getEmailProvider);
+
+        if (count($checkEmailProvider) === 2)
         {
-            return response($this->handleResponse('success'), 201);
+            $apiInsertRecord['valid_email'] = true;
+            $apiInsertRecord['newsletter_campaign_id'] = 1;
+            $saveRecord = $this->modelName->createRecord($apiInsertRecord);
+            // TODO: create email WelcomeNewsletter
+            if ($saveRecord === true)
+            {
+                return response($this->handleResponse('success'), 201);
+            }
+            else
+            {
+                return response($this->handleResponse('error_message'), 500);
+            }
         }
         else
         {
-            return response($this->handleResponse('error_message'), 500);
+            return response($this->handleResponse('warning'), 422);
         }
     }
 
@@ -124,13 +137,11 @@ class NewsletterSubscriberService implements NewsletterSubscriberInterface
     public function handleUpdate(NewsletterSubscriberRequest $request, $id)
     {
         $apiUpdateRecord = [
-            'full_name'              => $request->get('full_name'),
-            'email'                  => $request->get('email'),
-            'privacy_policy'         => $request->get('privacy_policy') !== null ? $request->get('privacy_policy') : false,
-            'valid_email'            => true,
-            'newsletter_campaign_id' => 1,
+            'newsletter_campaign_id' => $request->get('newsletter_campaign_id'),
         ];
-        $updateRecord = $this->modelName->createRecord($apiUpdateRecord, $id);
+        $updateRecord = $this->modelName->updateRecord($apiUpdateRecord, $id);
+
+        // TODO: create email updated newsletter campaign
 
         if ($updateRecord === true)
         {
@@ -144,28 +155,20 @@ class NewsletterSubscriberService implements NewsletterSubscriberInterface
 
     /**
      * Delete a single record from the database
-     * @param  int  $id
+     * @param  string  $email
      * @return \Illuminate\Http\Response
      */
-    public function handleDestroy($id)
+    public function handleDestroy($email)
     {
-        $apiDisplaySingleRecord = $this->modelName->fetchSingleRecord($id);
-
-        if ($apiDisplaySingleRecord instanceof Collection)
+        $checkEmailSubscriber = $this->modelName->checkEmailSubscriber($email);
+        if (count($checkEmailSubscriber))
         {
-            if ($apiDisplaySingleRecord->isEmpty())
-            {
-                return response($this->handleResponse('not_found'), 404);
-            }
-            else
-            {
-                $this->modelName->deleteRecord($id);
-                return response($this->handleResponse('success'), 200);
-            }
+            $this->modelName->deleteRecord($checkEmailSubscriber[0]['id']);
+            return response($this->handleResponse('success'), 200);
         }
         else
         {
-            return response($this->handleResponse('error_message'), 500);
+            return response($this->handleResponse('not_found'), 200);
         }
     }
 }

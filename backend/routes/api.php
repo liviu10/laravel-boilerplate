@@ -64,7 +64,7 @@ Route::group([ 'prefix' => config('app.version') ], function () {
             // Newsletter campaign and subscribers
             Route::group([ 'prefix' => '/newsletter' ], function () {
                 Route::apiResource('/campaigns', NewsletterCampaignController::class);
-                Route::apiResource('/subscribers', NewsletterSubscriberController::class);
+                Route::apiResource('/subscribers', NewsletterSubscriberController::class)->only('index', 'show', 'update');
             });
         });
         // Application's reports endpoints
@@ -92,5 +92,9 @@ Route::group([ 'prefix' => config('app.version') ], function () {
     });
 
     // Application's client api endpoints
-    Route::group([ 'prefix' => '/client' ], function () {});
+    Route::group([ 'prefix' => '/client' ], function () {
+        // Subscribe / unsubscribe to / from newsletter
+        Route::apiResource('/subscribe', NewsletterSubscriberController::class)->only('store');
+        Route::apiResource('/unsubscribe', NewsletterSubscriberController::class)->only('destroy');
+    });
 });

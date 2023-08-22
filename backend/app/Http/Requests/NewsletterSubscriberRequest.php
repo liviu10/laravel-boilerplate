@@ -25,6 +25,7 @@ class NewsletterSubscriberRequest extends FormRequest
     public function rules()
     {
         $currentRouteName = Route::current()->getName();
+        $rules = [];
 
         // Validation rules when creating
         if ($currentRouteName === 'subscribers.store')
@@ -33,6 +34,14 @@ class NewsletterSubscriberRequest extends FormRequest
                 'full_name' => 'required|string|min:3|max:255',
                 'email' => 'required|string|min:3|max:255|unique:newsletter_subscribers',
                 'privacy_policy' => 'sometimes',
+            ];
+        }
+
+        // Validation rules when updating
+        if ($currentRouteName === 'subscribers.update')
+        {
+            $rules = [
+                'newsletter_campaign_id' => 'required',
             ];
         }
 

@@ -213,10 +213,6 @@ class NewsletterSubscriber extends Model
         try
         {
             $this->find($id)->update([
-                'full_name'              => $payload['full_name'],
-                'email'                  => $payload['email'],
-                'privacy_policy'         => $payload['privacy_policy'],
-                'valid_email'            => $payload['valid_email'],
                 'newsletter_campaign_id' => $payload['newsletter_campaign_id'],
             ]);
 
@@ -278,5 +274,26 @@ class NewsletterSubscriber extends Model
         $excludedFields = ['newsletter_campaign_id'];
 
         return $this->handleFilterAvailableFields($fieldTypes, $excludedFields);
+    }
+
+    /**
+     * Check if an email subscriber exists and retrieve their information.
+     * @param string $email The email address to check and retrieve information for.
+     * @return array|false An array containing associative arrays with 'id' and 'email'
+     * keys for the matching subscriber(s), or false if an error occurs during the query.
+     */
+    public function checkEmailSubscriber($email)
+    {
+        try
+        {
+            $result = $this->select('id', 'email')->where('email', $email)->get()->toArray();
+
+            return $result;
+        }
+        catch (\Illuminate\Database\QueryException $mysqlError)
+        {
+            $this->LogApiError($mysqlError);
+            return false;
+        }
     }
 }

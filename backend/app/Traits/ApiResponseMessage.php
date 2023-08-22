@@ -42,6 +42,13 @@ trait ApiResponseMessage
                 'description' => __('translations.not_found_message.description'),
             ];
         }
+        elseif ($responseType === 'warning')
+        {
+            $responseMessage = [
+                'title'       => __('translations.warning_message.title'),
+                'description' => __('translations.warning_message.description'),
+            ];
+        }
         else
         {
             $responseMessage = [

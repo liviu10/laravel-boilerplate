@@ -46,8 +46,8 @@ interface NewsletterSubscriberInterface
 
     /**
      * Delete a single record from the database
-     * @param int $id
+     * @param string $string
      * @return \Illuminate\Http\Response
      */
-    public function handleDestroy($id);
+    public function handleDestroy($string);
 }
