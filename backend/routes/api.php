@@ -14,25 +14,25 @@ use Illuminate\Support\Facades\Route;
 |
 */
 // Import application's management
-    use App\Http\Controllers\Admin\ContentController;
-    use App\Http\Controllers\Admin\TagController;
-    use App\Http\Controllers\Admin\MediaController;
-    use App\Http\Controllers\Admin\CommentController;
-    use App\Http\Controllers\Admin\AppreciationController;
+    use App\Http\Controllers\ContentController;
+    use App\Http\Controllers\TagController;
+    use App\Http\Controllers\MediaController;
+    use App\Http\Controllers\CommentController;
+    use App\Http\Controllers\AppreciationController;
 // Import application's communication
-    use App\Http\Controllers\Admin\ContactMessageController;
-    use App\Http\Controllers\Admin\ContactSubjectController;
-    use App\Http\Controllers\Admin\NewsletterCampaignController;
-    use App\Http\Controllers\Admin\NewsletterSubscriberController;
+    use App\Http\Controllers\ContactMessageController;
+    use App\Http\Controllers\ContactSubjectController;
+    use App\Http\Controllers\NewsletterCampaignController;
+    use App\Http\Controllers\NewsletterSubscriberController;
 // Import application's reports
-    use App\Http\Controllers\Admin\ReportController;
+    use App\Http\Controllers\ReportController;
 // Import application's user settings
-    use App\Http\Controllers\Admin\UserController;
-    use App\Http\Controllers\Admin\RoleController;
+    use App\Http\Controllers\UserController;
+    use App\Http\Controllers\RoleController;
 // Import application's settings
-    use App\Http\Controllers\Admin\GeneralController;
-    use App\Http\Controllers\Admin\AcceptedDomainController;
-    use App\Http\Controllers\Admin\NotificationController;
+    use App\Http\Controllers\GeneralController;
+    use App\Http\Controllers\AcceptedDomainController;
+    use App\Http\Controllers\NotificationController;
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();

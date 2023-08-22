@@ -4,7 +4,7 @@ namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
-use App\Models\Admin\Role;
+use App\Models\Role;
 use Carbon\Carbon;
 
 class RoleSeeder extends Seeder

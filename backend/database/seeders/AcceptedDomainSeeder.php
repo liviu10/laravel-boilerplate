@@ -4,7 +4,7 @@ namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
-use App\Models\Admin\AcceptedDomain;
+use App\Models\AcceptedDomain;
 use Carbon\Carbon;
 
 class AcceptedDomainSeeder extends Seeder

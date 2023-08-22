@@ -4,7 +4,7 @@ namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
-use App\Models\Admin\Permission;
+use App\Models\Permission;
 use Carbon\Carbon;
 
 class PermissionSeeder extends Seeder

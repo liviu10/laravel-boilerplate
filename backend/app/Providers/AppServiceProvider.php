@@ -6,29 +6,29 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\ServiceProvider;
 
 // Import application's settings
-use App\BusinessLogic\Interfaces\Admin\AcceptedDomainInterface;
-use App\BusinessLogic\Interfaces\Admin\GeneralInterface;
-use App\BusinessLogic\Interfaces\Admin\NotificationInterface;
+use App\BusinessLogic\Interfaces\AcceptedDomainInterface;
+use App\BusinessLogic\Interfaces\GeneralInterface;
+use App\BusinessLogic\Interfaces\NotificationInterface;
 
 // Import application's communication settings
-use App\BusinessLogic\Interfaces\Admin\ContactMessageInterface;
-use App\BusinessLogic\Interfaces\Admin\ContactSubjectInterface;
-use App\BusinessLogic\Interfaces\Admin\NewsletterCampaignInterface;
-use App\BusinessLogic\Interfaces\Admin\NewsletterSubscriberInterface;
+use App\BusinessLogic\Interfaces\ContactMessageInterface;
+use App\BusinessLogic\Interfaces\ContactSubjectInterface;
+use App\BusinessLogic\Interfaces\NewsletterCampaignInterface;
+use App\BusinessLogic\Interfaces\NewsletterSubscriberInterface;
 
 // Import application's management settings
-use App\BusinessLogic\Interfaces\Admin\ContentInterface;
-use App\BusinessLogic\Interfaces\Admin\TagInterface;
-use App\BusinessLogic\Interfaces\Admin\MediaInterface;
-use App\BusinessLogic\Interfaces\Admin\CommentInterface;
-use App\BusinessLogic\Interfaces\Admin\AppreciationInterface;
+use App\BusinessLogic\Interfaces\ContentInterface;
+use App\BusinessLogic\Interfaces\TagInterface;
+use App\BusinessLogic\Interfaces\MediaInterface;
+use App\BusinessLogic\Interfaces\CommentInterface;
+use App\BusinessLogic\Interfaces\AppreciationInterface;
 
 // Import application's report settings
-use App\BusinessLogic\Interfaces\Admin\ReportInterface;
+use App\BusinessLogic\Interfaces\ReportInterface;
 
 // Import application's user settings
-use App\BusinessLogic\Interfaces\Admin\UserInterface;
-use App\BusinessLogic\Interfaces\Admin\RoleInterface;
+use App\BusinessLogic\Interfaces\UserInterface;
+use App\BusinessLogic\Interfaces\RoleInterface;
 
 class AppServiceProvider extends ServiceProvider
 {

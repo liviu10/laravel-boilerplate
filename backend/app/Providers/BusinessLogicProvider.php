@@ -5,44 +5,44 @@ namespace App\Providers;
 use Illuminate\Support\ServiceProvider;
 
 // Import application's settings
-use App\BusinessLogic\Interfaces\Admin\AcceptedDomainInterface;
-use App\BusinessLogic\Services\Admin\AcceptedDomainService;
-use App\BusinessLogic\Interfaces\Admin\GeneralInterface;
-use App\BusinessLogic\Services\Admin\GeneralService;
-use App\BusinessLogic\Interfaces\Admin\NotificationInterface;
-use App\BusinessLogic\Services\Admin\NotificationService;
+use App\BusinessLogic\Interfaces\AcceptedDomainInterface;
+use App\BusinessLogic\Services\AcceptedDomainService;
+use App\BusinessLogic\Interfaces\GeneralInterface;
+use App\BusinessLogic\Services\GeneralService;
+use App\BusinessLogic\Interfaces\NotificationInterface;
+use App\BusinessLogic\Services\NotificationService;
 
 // Import application's communication settings
-use App\BusinessLogic\Interfaces\Admin\ContactMessageInterface;
-use App\BusinessLogic\Services\Admin\ContactMessageService;
-use App\BusinessLogic\Interfaces\Admin\ContactSubjectInterface;
-use App\BusinessLogic\Services\Admin\ContactSubjectService;
-use App\BusinessLogic\Interfaces\Admin\NewsletterCampaignInterface;
-use App\BusinessLogic\Services\Admin\NewsletterCampaignService;
-use App\BusinessLogic\Interfaces\Admin\NewsletterSubscriberInterface;
-use App\BusinessLogic\Services\Admin\NewsletterSubscriberService;
+use App\BusinessLogic\Interfaces\ContactMessageInterface;
+use App\BusinessLogic\Services\ContactMessageService;
+use App\BusinessLogic\Interfaces\ContactSubjectInterface;
+use App\BusinessLogic\Services\ContactSubjectService;
+use App\BusinessLogic\Interfaces\NewsletterCampaignInterface;
+use App\BusinessLogic\Services\NewsletterCampaignService;
+use App\BusinessLogic\Interfaces\NewsletterSubscriberInterface;
+use App\BusinessLogic\Services\NewsletterSubscriberService;
 
 // Import application's management settings
-use App\BusinessLogic\Interfaces\Admin\ContentInterface;
-use App\BusinessLogic\Services\Admin\ContentService;
-use App\BusinessLogic\Interfaces\Admin\TagInterface;
-use App\BusinessLogic\Services\Admin\TagService;
-use App\BusinessLogic\Interfaces\Admin\MediaInterface;
-use App\BusinessLogic\Services\Admin\MediaService;
-use App\BusinessLogic\Interfaces\Admin\CommentInterface;
-use App\BusinessLogic\Services\Admin\CommentService;
-use App\BusinessLogic\Interfaces\Admin\AppreciationInterface;
-use App\BusinessLogic\Services\Admin\AppreciationService;
+use App\BusinessLogic\Interfaces\ContentInterface;
+use App\BusinessLogic\Services\ContentService;
+use App\BusinessLogic\Interfaces\TagInterface;
+use App\BusinessLogic\Services\TagService;
+use App\BusinessLogic\Interfaces\MediaInterface;
+use App\BusinessLogic\Services\MediaService;
+use App\BusinessLogic\Interfaces\CommentInterface;
+use App\BusinessLogic\Services\CommentService;
+use App\BusinessLogic\Interfaces\AppreciationInterface;
+use App\BusinessLogic\Services\AppreciationService;
 
 // Import application's report settings
-use App\BusinessLogic\Interfaces\Admin\ReportInterface;
-use App\BusinessLogic\Services\Admin\ReportService;
+use App\BusinessLogic\Interfaces\ReportInterface;
+use App\BusinessLogic\Services\ReportService;
 
 // Import application's user settings
-use App\BusinessLogic\Interfaces\Admin\UserInterface;
-use App\BusinessLogic\Services\Admin\UserService;
-use App\BusinessLogic\Interfaces\Admin\RoleInterface;
-use App\BusinessLogic\Services\Admin\RoleService;
+use App\BusinessLogic\Interfaces\UserInterface;
+use App\BusinessLogic\Services\UserService;
+use App\BusinessLogic\Interfaces\RoleInterface;
+use App\BusinessLogic\Services\RoleService;
 
 class BusinessLogicProvider extends ServiceProvider
 {

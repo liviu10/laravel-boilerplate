@@ -4,7 +4,7 @@ namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
-use App\Models\Admin\NewsletterCampaign;
+use App\Models\NewsletterCampaign;
 use Carbon\Carbon;
 
 class NewsletterCampaignSeeder extends Seeder
