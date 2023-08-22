@@ -13,7 +13,7 @@ use App\Traits\FilterAvailableFields;
 
 /**
  * Class User
- * @package App\Models\Admin\Settings
+ * @package App\Models
  *
  * @property int $id
  * @property string $full_name

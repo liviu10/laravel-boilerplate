@@ -8,7 +8,7 @@ use App\Traits\LogApiError;
 
 /**
  * Class Permission
- * @package App\Models\Admin\Settings
+ * @package App\Models
 
  * @property int $id
  * @property string $name

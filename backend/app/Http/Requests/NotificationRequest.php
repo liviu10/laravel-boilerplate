@@ -26,6 +26,7 @@ class NotificationRequest extends FormRequest
     public function rules()
     {
         $currentRouteName = Route::current()->getName();
+        $rules = [];
 
         // Validation rules when creating
         if ($currentRouteName === 'notifications.store')

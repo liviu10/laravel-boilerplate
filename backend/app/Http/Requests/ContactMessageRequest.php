@@ -29,7 +29,7 @@ class ContactMessageRequest extends FormRequest
             'phone' => 'sometimes|string|min:7|max:15|regex:/^\+?(?:[0-9][ .-]?){6,14}[0-9]$/',
             'contact_subject_id' => 'required',
             'message' => 'required|string|min:3|max:255|regex:/^[a-zA-Z\s]+$/',
-            'privacy_policy' => 'required',
+            'privacy_policy' => 'sometimes',
         ];
 
         return $rules;

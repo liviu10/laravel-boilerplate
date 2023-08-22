@@ -9,7 +9,7 @@ use App\Traits\FilterAvailableFields;
 
 /**
  * Class Appreciation
- * @package App\Models\Admin\Management
+ * @package App\Models
 
  * @property int $id
  * @property int $likes

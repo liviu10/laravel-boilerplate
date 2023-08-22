@@ -9,7 +9,7 @@ use App\Traits\FilterAvailableFields;
 
 /**
  * Class NewsletterSubscriber
- * @package App\Models\Admin\Communication
+ * @package App\Models
 
  * @property int $id
  * @property string $full_name

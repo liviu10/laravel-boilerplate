@@ -9,7 +9,7 @@ use App\Traits\FilterAvailableFields;
 
 /**
  * Class AcceptedDomain
- * @package App\Models\Admin\ApplicationSettings
+ * @package App\Models
 
  * @property int $id
  * @property string $domain

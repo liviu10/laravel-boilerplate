@@ -9,7 +9,7 @@ use App\Traits\FilterAvailableFields;
 
 /**
  * Class Media
- * @package App\Models\Admin\Management
+ * @package App\Models
 
  * @property int $id
  * @property string $type

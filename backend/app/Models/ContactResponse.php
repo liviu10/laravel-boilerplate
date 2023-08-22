@@ -9,7 +9,7 @@ use App\Traits\FilterAvailableFields;
 
 /**
  * Class ContactResponse
- * @package App\Models\Admin\Communication
+ * @package App\Models
 
  * @property int $id
  * @property string $message

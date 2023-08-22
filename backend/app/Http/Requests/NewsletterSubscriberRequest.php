@@ -27,8 +27,8 @@ class NewsletterSubscriberRequest extends FormRequest
         $currentRouteName = Route::current()->getName();
         $rules = [];
 
-        // Validation rules when creating
-        if ($currentRouteName === 'subscribers.store')
+        // Validation rules when user is subscribing to the newsletter
+        if ($currentRouteName === 'subscribe.store')
         {
             $rules = [
                 'full_name' => 'required|string|min:3|max:255',

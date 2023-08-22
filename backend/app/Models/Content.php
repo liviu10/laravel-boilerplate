@@ -9,7 +9,7 @@ use App\Traits\FilterAvailableFields;
 
 /**
  * Class Content
- * @package App\Models\Admin\Management
+ * @package App\Models
 
  * @property int $id
  * @property string $visibility
