@@ -70,7 +70,7 @@ Route::group([ 'prefix' => config('app.version') ], function () {
         // Application's reports endpoints
         Route::group([ 'prefix' => '/' ], function () {
             // Reports
-            Route::get('/reports', [ReportController::class, 'show']);
+            Route::get('/reports', [ReportController::class, 'index']);
         });
         // Application's user settings api endpoints
         Route::group([ 'prefix' => '/settings' ], function () {

@@ -10,9 +10,9 @@ namespace App\BusinessLogic\Interfaces;
 interface ReportInterface
 {
     /**
-     * Fetch a single record from the database.
-     * @param int $id
+     * Fetch all the records from the database.
+     * @param array $search
      * @return \Illuminate\Http\Response
      */
-    public function handleShow($id);
+    public function handleIndex($search);
 }

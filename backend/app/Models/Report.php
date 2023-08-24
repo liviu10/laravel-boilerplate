@@ -49,8 +49,11 @@ class Report extends Model
      * @var string
      */
     protected $fillable = [
+        'reportable_type',
         'label',
         'value',
+        'created_at',
+        'updated_at',
     ];
 
     /**
@@ -85,15 +88,56 @@ class Report extends Model
     }
 
     /**
+     * Get all the records from the database.
+     * @param  array  $search
+     * @return \Illuminate\Database\Eloquent\Collection|array|boolean
+     * Returns a collection of records.
+     * If an error occurs during retrieval, a boolean will be returned.
+     * @throws \Exception|\Illuminate\Database\QueryException
+     * Throws an exception if an error occurs during retrieval.
+     */
+    public function fetchAllRecords($search)
+    {
+        try
+        {
+            $query = $this->select('id', 'label', 'value', 'created_at', 'updated_at');
+
+            if (!empty($search)) {
+                foreach ($search as $field => $value) {
+                    if ($field === 'id') {
+                        $query->where($field, '=', $value);
+                    } else {
+                        $query->where($field, 'LIKE', '%' . $value . '%');
+                    }
+                }
+            }
+
+            return $query->get();
+        }
+        catch (\Exception $exception)
+        {
+            $this->LogApiError($exception);
+            return false;
+        }
+        catch (\Illuminate\Database\QueryException $exception)
+        {
+            $this->LogApiError($exception);
+            return false;
+        }
+    }
+
+    /**
      * Get the fillable fields for the model.
      * @return array An array containing the fillable fields for the model.
      */
     public function getFields()
     {
         $fieldTypes = [
-            'label'      => 'text',
-            'value'      => 'number',
-            'created_at' => 'text',
+            'reportable_type' => 'text',
+            'label'           => 'text',
+            'value'           => 'number',
+            'created_at'      => 'date',
+            'updated_at'      => 'date',
         ];
 
         return $this->handleFilterAvailableFields($fieldTypes);

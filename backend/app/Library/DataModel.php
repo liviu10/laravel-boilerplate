@@ -25,6 +25,10 @@ class DataModel
     {
         if ($this->modelResults && count($this->modelResults))
         {
+            // Define $availableDataModel as empty array
+            $availableDataModel = [];
+            $dataModelId = 1;
+
             if (array_key_exists('total', $this->modelResults) && $this->modelResults['total'] !== 0)
             {
                 if (array_key_exists('data', $this->modelResults))
@@ -35,62 +39,7 @@ class DataModel
                     // Get the filtered fields from $dataFields
                     $filteredDataFields = $this->getFilteredFields($dataFields, $this->availableFields);
 
-                    // Define $availableDataModel as empty array
-                    $availableDataModel = [];
-                    $dataModelId = 1;
-
-                    if ($type === 'column')
-                    {
-                        // Add actions column to $filteredDataFields
-                        $filteredDataFields += ['actions' => 'other'];
-
-                        // Construct the available data model based on $type = column
-                        foreach ($filteredDataFields as $key => $columnModel)
-                        {
-                            $model = [
-                                'name'        => $key,
-                                'label'       => $this->getTranslationStringName($this->modelName, $key, $type),
-                                'field'       => $key,
-                                'align'       => 'center',
-                            ];
-                            $dataModelId++;
-
-                            $model += $this->getColumnStyle($key);
-
-                            $availableDataModel[] = $model;
-                        }
-                    }
-
-                    if ($type === 'model' || $type === 'filter')
-                    {
-                        // Construct the available data model based on $type = filter
-                        foreach ($filteredDataFields as $key => $filterModel)
-                        {
-                            $model = [
-                                'id'        => $dataModelId,
-                                'is_active' => true,
-                                'key'       => $key,
-                                'name'      => $this->getTranslationStringName($this->modelName, $key, $type),
-                                'type'      => $filterModel,
-                                'value'     => null,
-                            ];
-                            $dataModelId++;
-
-                            if ($filterModel === 'select')
-                            {
-                                $model['options'] = $this->getDataModelOptions($modelOptions[$key]);
-                            }
-
-                            if ($filterModel === 'boolean')
-                            {
-                                $model['options'] = $this->getDataModelBooleanOptions();
-                            }
-
-                            $availableDataModel[] = $model;
-                        }
-                    }
-
-                    return $availableDataModel;
+                    return $this->getModelFields($type, $dataModelId, $filteredDataFields, $modelOptions, $availableDataModel);
                 }
                 else
                 {
@@ -99,7 +48,13 @@ class DataModel
             }
             else
             {
-                return [];
+                // Get all the fields from the $modelResults
+                $dataFields = $this->getFields($this->modelResults);
+
+                // Get the filtered fields from $dataFields
+                $filteredDataFields = $this->getFilteredFields($dataFields, $this->availableFields);
+
+                return $this->getModelFields($type, $dataModelId, $filteredDataFields, $modelOptions, $availableDataModel);
             }
         }
         else
@@ -211,6 +166,71 @@ class DataModel
     }
 
     /**
+     * Retrieve an array of model fields based on the given parameters.
+     * @param string $type The type of data model ('column', 'model', or 'filter').
+     * @param int $dataModelId The starting ID for the data models.
+     * @param array $filteredDataFields An array of filtered data fields.
+     * @param array $modelOptions An array of options for the data models.
+     * @param array $availableDataModel An array to store the available data models.
+     * @return array An array containing the available data models based on the provided parameters.
+     */
+    private function getModelFields($type, $dataModelId, $filteredDataFields = [], $modelOptions = [], $availableDataModel = []): Array
+    {
+        if ($type === 'column')
+        {
+            // Add actions column to $filteredDataFields
+            $filteredDataFields += ['actions' => 'other'];
+
+            // Construct the available data model based on $type = column
+            foreach ($filteredDataFields as $key => $columnModel)
+            {
+                $model = [
+                    'name'        => $key,
+                    'label'       => $this->getTranslationStringName($this->modelName, $key, $type),
+                    'field'       => $key,
+                    'align'       => 'center',
+                ];
+                $dataModelId++;
+
+                $model += $this->getColumnStyle($key);
+
+                $availableDataModel[] = $model;
+            }
+        }
+
+        if ($type === 'model' || $type === 'filter')
+        {
+            // Construct the available data model based on $type = filter
+            foreach ($filteredDataFields as $key => $filterModel)
+            {
+                $model = [
+                    'id'        => $dataModelId,
+                    'is_active' => true,
+                    'key'       => $key,
+                    'name'      => $this->getTranslationStringName($this->modelName, $key, $type),
+                    'type'      => $filterModel,
+                    'value'     => null,
+                ];
+                $dataModelId++;
+
+                if ($filterModel === 'select')
+                {
+                    $model['options'] = $this->getDataModelOptions($modelOptions[$key]);
+                }
+
+                if ($filterModel === 'boolean')
+                {
+                    $model['options'] = $this->getDataModelBooleanOptions();
+                }
+
+                $availableDataModel[] = $model;
+            }
+        }
+
+        return $availableDataModel;
+    }
+
+    /**
      * Map and format data model options for select fields.
      * @param array $dataModelOptions The options to be formatted.
      * @return array An array containing the mapped and formatted data model options.
@@ -220,15 +240,28 @@ class DataModel
         $mappedDataModelOptions = [];
         $optionId = 1;
 
-        foreach ($dataModelOptions as $option) {
-            $optionValue = $optionId;
-            $optionLabel = array_key_exists('id', $dataModelOptions) ? $option[array_keys($option)[1]] : $option;
-            $mappedDataModelOptions[] = [
-                'value' => $optionValue,
-                'label' => $optionLabel,
-            ];
+        // foreach ($dataModelOptions as $option) {
+        //     $optionValue = $optionId;
+        //     $optionLabel = array_key_exists('id', $dataModelOptions) ? $option[array_keys($option)[1]] : $option;
+        //     $mappedDataModelOptions[] = [
+        //         'value' => $optionValue,
+        //         'label' => $optionLabel,
+        //     ];
 
-            $optionId++;
+        //     $optionId++;
+        // }
+
+        foreach ($dataModelOptions as $option) {
+            $id = $option['id'];
+            unset($option['id']);
+
+            foreach ($option as $label) {
+                $mappedDataModelOptions[] = [
+                    'value' => $optionId,
+                    'label' => $label,
+                ];
+                $optionId++;
+            }
         }
 
         $dataModelOptions = $mappedDataModelOptions;

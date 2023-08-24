@@ -60,6 +60,10 @@ class UserService implements UserInterface
     public function handleIndex($search)
     {
         $apiDisplayAllRecords = $this->modelName->fetchAllRecords($search);
+        $this->modelName->find(1)->report()->create([
+            'label' => 'handle index test',
+            'value' => 222
+        ]);
 
         if ($apiDisplayAllRecords instanceof \Illuminate\Pagination\LengthAwarePaginator)
         {

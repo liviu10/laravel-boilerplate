@@ -192,6 +192,15 @@ class User extends Authenticatable
     }
 
     /**
+     * Eloquent polymorphic relationship between users and reports.
+     *
+     */
+    public function report()
+    {
+        return $this->morphOne(Report::class, 'reportable');
+    }
+
+    /**
      * Fetches the current authenticated user from the Auth facade,
      * excluding the password and email_verified_at fields.
      * @return \Illuminate\Support\Collection|boolean Returns a collection
