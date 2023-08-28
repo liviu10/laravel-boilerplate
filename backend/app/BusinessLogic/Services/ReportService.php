@@ -4,7 +4,6 @@ namespace App\BusinessLogic\Services;
 
 use App\Traits\ApiResponseMessage;
 use App\BusinessLogic\Interfaces\ReportInterface;
-use App\Library\DataModel;
 use App\Models\Report;
 use Illuminate\Database\Eloquent\Collection;
 
@@ -28,12 +27,20 @@ class ReportService implements ReportInterface
 
     /**
      * Fetch all the records from the database.
-     * @param  array  $search
      * @return \Illuminate\Http\Response
      */
-    public function handleIndex($search)
+    public function handleIndex()
     {
-        $apiDisplayAllRecords = $this->modelName->fetchAllRecords($search);
+        $apiDisplayAllRecords = $this->modelName->fetchAllRecords();
+
+        $modifiedRecords = [];
+
+        foreach ($apiDisplayAllRecords as $item) {
+            $modifiedRecords[] = [
+                'value' => $item['reportable_id'],
+                'label' => class_basename($item['reportable_type']),
+            ];
+        }
 
         if ($apiDisplayAllRecords instanceof \Illuminate\Support\Collection)
         {
@@ -43,10 +50,33 @@ class ReportService implements ReportInterface
             }
             else
             {
-                $dataModel = new DataModel($apiDisplayAllRecords->toArray(), $this->modelName->getFields(), class_basename($this->modelName));
-                $apiFilterModel = $dataModel->generateDataModel('filter');
+                return response($this->handleResponse('success', $modifiedRecords), 200);
+            }
+        }
+        else
+        {
+            return response($this->handleResponse('error_message'), 500);
+        }
+    }
 
-                return response($this->handleResponse('success', $apiDisplayAllRecords, null, null, $apiFilterModel), 200);
+    /**
+     * Fetch a single record from the database.
+     * @param  int $reportableId
+     * @return \Illuminate\Http\Response
+     */
+    public function handleShow($reportableId)
+    {
+        $apiDisplaySingleRecord = $this->modelName->fetchSingleRecord($reportableId);
+
+        if ($apiDisplaySingleRecord instanceof Collection)
+        {
+            if ($apiDisplaySingleRecord->isEmpty())
+            {
+                return response($this->handleResponse('not_found'), 404);
+            }
+            else
+            {
+                return response($this->handleResponse('success', $apiDisplaySingleRecord), 200);
             }
         }
         else

@@ -11,8 +11,14 @@ interface ReportInterface
 {
     /**
      * Fetch all the records from the database.
-     * @param array $search
      * @return \Illuminate\Http\Response
      */
-    public function handleIndex($search);
+    public function handleIndex();
+
+    /**
+     * Fetch a single record from the database.
+     * @param int $reportableId
+     * @return \Illuminate\Http\Response
+     */
+    public function handleShow($reportableId);
 }

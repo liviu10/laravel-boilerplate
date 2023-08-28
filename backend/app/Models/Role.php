@@ -283,4 +283,24 @@ class Role extends Model
 
         return $this->handleFilterAvailableFields($fieldTypes);
     }
+
+    public function fetchUserRoles()
+    {
+        try
+        {
+            $query = $this->select('id', 'name', 'slug')->get()->toArray();
+
+            return $query;
+        }
+        catch (\Illuminate\Database\QueryException $mysqlError)
+        {
+            $this->LogApiError($mysqlError);
+            return False;
+        }
+        catch (\Illuminate\Database\QueryException $exception)
+        {
+            $this->LogApiError($exception);
+            return false;
+        }
+    }
 }

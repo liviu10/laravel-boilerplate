@@ -16,7 +16,10 @@ return new class extends Migration
             $table->unsignedBigInteger('reportable_id')->nullable();
             $table->string('reportable_type')->nullable();
             $table->string('label');
-            $table->integer('value');
+            $table->integer('value')->nullable();
+            $table->decimal('percentage')->nullable();
+            $table->dateTime('from');
+            $table->dateTime('to');
             $table->timestamps();
         });
     }

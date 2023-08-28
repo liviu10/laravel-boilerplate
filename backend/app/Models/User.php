@@ -10,6 +10,8 @@ use Illuminate\Support\Facades\Auth;
 use Laravel\Sanctum\HasApiTokens;
 use App\Traits\LogApiError;
 use App\Traits\FilterAvailableFields;
+use App\Traits\GetModelIdAndName;
+use App\Traits\GetStatisticalIndicators;
 
 /**
  * Class User
@@ -38,7 +40,21 @@ use App\Traits\FilterAvailableFields;
  */
 class User extends Authenticatable
 {
-    use HasApiTokens, HasFactory, Notifiable, FilterAvailableFields, LogApiError;
+    use HasApiTokens, HasFactory, Notifiable,
+    FilterAvailableFields, LogApiError, GetModelIdAndName,
+    GetStatisticalIndicators;
+
+    /**
+     * The model id.
+     * @var int
+     */
+    protected $modelId = 1;
+
+    /**
+     * The model name.
+     * @var string
+     */
+    protected $modelName = 'User';
 
     /**
      * The primary key associated with the table.
@@ -78,6 +94,19 @@ class User extends Authenticatable
         'password',
         'profile_image',
         'role_id',
+    ];
+
+    /**
+     * The statistical indicators.
+     * @var array<string>
+     */
+    protected $indicators = [
+        'number_of_users',
+        'users_with_missing_phone',
+        'users_with_missing_profile_image',
+        'users_with_unverified_account',
+        'users_by_role',
+        'number_of_profile_modifications',
     ];
 
     /**
@@ -210,17 +239,12 @@ class User extends Authenticatable
      */
     public function currentAuthUser()
     {
-        try
-        {
-            return collect(Auth::user())->except([ 'email_verified_at', 'password' ]);
-        }
-        catch (\Exception $exception)
-        {
+        try {
+            return collect(Auth::user())->except(['email_verified_at', 'password']);
+        } catch (\Exception $exception) {
             $this->LogApiError($exception);
             return false;
-        }
-        catch (\Illuminate\Database\QueryException $exception)
-        {
+        } catch (\Illuminate\Database\QueryException $exception) {
             $this->LogApiError($exception);
             return false;
         }
@@ -237,8 +261,7 @@ class User extends Authenticatable
      */
     public function fetchAllRecords($search)
     {
-        try
-        {
+        try {
             $query = $this->select('id', 'full_name', 'nickname', 'email', 'created_at');
 
             if (!empty($search)) {
@@ -252,14 +275,10 @@ class User extends Authenticatable
             }
 
             return $query->paginate(15);
-        }
-        catch (\Exception $exception)
-        {
+        } catch (\Exception $exception) {
             $this->LogApiError($exception);
             return false;
-        }
-        catch (\Illuminate\Database\QueryException $exception)
-        {
+        } catch (\Illuminate\Database\QueryException $exception) {
             $this->LogApiError($exception);
             return false;
         }
@@ -275,8 +294,7 @@ class User extends Authenticatable
      */
     public function createRecord($payload)
     {
-        try
-        {
+        try {
             $this->create([
                 'full_name'     => $payload['full_name'],
                 'first_name'    => $payload['first_name'],
@@ -290,14 +308,10 @@ class User extends Authenticatable
             ]);
 
             return True;
-        }
-        catch (\Exception $exception)
-        {
+        } catch (\Exception $exception) {
             $this->LogApiError($exception);
             return false;
-        }
-        catch (\Illuminate\Database\QueryException $exception)
-        {
+        } catch (\Illuminate\Database\QueryException $exception) {
             $this->LogApiError($exception);
             return false;
         }
@@ -313,26 +327,21 @@ class User extends Authenticatable
      */
     public function fetchSingleRecord($id)
     {
-        try
-        {
+        try {
             return $this->select('*')
-                        ->where('id', '=', $id)
-                        ->with([
-                            'role' => function ($query) {
-                                $query->select('id', 'name', 'is_active')
-                                    ->where('is_active', true)
-                                    ->with('permissions');
-                            }
-                        ])
-                        ->get();
-        }
-        catch (\Exception $exception)
-        {
+                ->where('id', '=', $id)
+                ->with([
+                    'role' => function ($query) {
+                        $query->select('id', 'name', 'is_active')
+                            ->where('is_active', true)
+                            ->with('permissions');
+                    }
+                ])
+                ->get();
+        } catch (\Exception $exception) {
             $this->LogApiError($exception);
             return false;
-        }
-        catch (\Illuminate\Database\QueryException $exception)
-        {
+        } catch (\Illuminate\Database\QueryException $exception) {
             $this->LogApiError($exception);
             return false;
         }
@@ -349,8 +358,7 @@ class User extends Authenticatable
      */
     public function updateRecord($payload, $id)
     {
-        try
-        {
+        try {
             $this->find($id)->update([
                 'full_name'     => $payload['full_name'],
                 'first_name'    => $payload['first_name'],
@@ -364,14 +372,10 @@ class User extends Authenticatable
             ]);
 
             return True;
-        }
-        catch (\Exception $exception)
-        {
+        } catch (\Exception $exception) {
             $this->LogApiError($exception);
             return false;
-        }
-        catch (\Illuminate\Database\QueryException $exception)
-        {
+        } catch (\Illuminate\Database\QueryException $exception) {
             $this->LogApiError($exception);
             return false;
         }
@@ -386,19 +390,14 @@ class User extends Authenticatable
      */
     public function deleteRecord(int $id)
     {
-        try
-        {
+        try {
             $this->find($id)->delete();
 
             return true;
-        }
-        catch (\Exception $exception)
-        {
+        } catch (\Exception $exception) {
             $this->LogApiError($exception);
             return false;
-        }
-        catch (\Illuminate\Database\QueryException $exception)
-        {
+        } catch (\Illuminate\Database\QueryException $exception) {
             $this->LogApiError($exception);
             return false;
         }
@@ -425,5 +424,20 @@ class User extends Authenticatable
         $excludedFields = ['role_id'];
 
         return $this->handleFilterAvailableFields($fieldTypes, $excludedFields);
+    }
+
+    public function getModelIdAndName()
+    {
+        $modelId = $this->modelId;
+        $modelName = __NAMESPACE__ . '\\' . basename($this->modelName);
+
+        return $this->handleModelIdAndName($modelId, $modelName);
+    }
+
+    public function getStatisticalIndicators()
+    {
+        $statisticalIndicators = $this->indicators;
+
+        return $this->handleStatisticalIndicators($statisticalIndicators);
     }
 }

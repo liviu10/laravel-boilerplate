@@ -14,6 +14,9 @@ use App\Traits\FilterAvailableFields;
  * @property int $id
  * @property string $label
  * @property int $value
+ * @property int $percentage
+ * @property \Carbon\Carbon $from
+ * @property \Carbon\Carbon $to
  * @property \Carbon\Carbon $created_at
  * @property \Carbon\Carbon $updated_at
  * @method fetchAllRecords
@@ -49,9 +52,11 @@ class Report extends Model
      * @var string
      */
     protected $fillable = [
-        'reportable_type',
         'label',
         'value',
+        'percentage',
+        'from',
+        'to',
         'created_at',
         'updated_at',
     ];
@@ -63,6 +68,8 @@ class Report extends Model
     protected $casts = [
         'id'         => 'integer',
         'value'      => 'integer',
+        'from'       => 'datetime:d.m.Y H:i',
+        'to'         => 'datetime:d.m.Y H:i',
         'created_at' => 'datetime:d.m.Y H:i',
         'updated_at' => 'datetime:d.m.Y H:i',
     ];
@@ -89,30 +96,19 @@ class Report extends Model
 
     /**
      * Get all the records from the database.
-     * @param  array  $search
      * @return \Illuminate\Database\Eloquent\Collection|array|boolean
      * Returns a collection of records.
      * If an error occurs during retrieval, a boolean will be returned.
      * @throws \Exception|\Illuminate\Database\QueryException
      * Throws an exception if an error occurs during retrieval.
      */
-    public function fetchAllRecords($search)
+    public function fetchAllRecords()
     {
         try
         {
-            $query = $this->select('id', 'label', 'value', 'created_at', 'updated_at');
+            $query = $this->select('id', 'reportable_id', 'reportable_type')->get()->unique('reportable_type');
 
-            if (!empty($search)) {
-                foreach ($search as $field => $value) {
-                    if ($field === 'id') {
-                        $query->where($field, '=', $value);
-                    } else {
-                        $query->where($field, 'LIKE', '%' . $value . '%');
-                    }
-                }
-            }
-
-            return $query->get();
+            return $query;
         }
         catch (\Exception $exception)
         {
@@ -127,19 +123,39 @@ class Report extends Model
     }
 
     /**
-     * Get the fillable fields for the model.
-     * @return array An array containing the fillable fields for the model.
+     * Get record details from the database.
+     * @return \Illuminate\Database\Eloquent\Collection|array|boolean
+     * Returns a collection of record with their associated relation.
+     * If an error occurs during retrieval, a boolean will be returned.
+     * @throws \Exception|\Illuminate\Database\QueryException
+     * Throws an exception if an error occurs during retrieval.
      */
-    public function getFields()
+    public function fetchSingleRecord($reportableId)
     {
-        $fieldTypes = [
-            'reportable_type' => 'text',
-            'label'           => 'text',
-            'value'           => 'number',
-            'created_at'      => 'date',
-            'updated_at'      => 'date',
-        ];
+        try
+        {
+            $query = $this->select(
+                'id',
+                'label',
+                'value',
+                'percentage',
+                'from',
+                'to'
+            )
+            ->where('reportable_id', '=', $reportableId)
+            ->get();
 
-        return $this->handleFilterAvailableFields($fieldTypes);
+            return $query;
+        }
+        catch (\Exception $exception)
+        {
+            $this->LogApiError($exception);
+            return false;
+        }
+        catch (\Illuminate\Database\QueryException $exception)
+        {
+            $this->LogApiError($exception);
+            return false;
+        }
     }
 }

@@ -19,11 +19,20 @@ class ReportController extends Controller
 
     /**
      * Fetch all the records from the database. HTTP request [GET].
-     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function index(Request $request)
+    public function index()
     {
-        return $this->reportService->handleIndex($request->all());
+        return $this->reportService->handleIndex();
+    }
+
+    /**
+     * Display the specified resource. HTTP request [GET].
+     * @param  int  $reportableId
+     * @return \Illuminate\Http\Response
+     */
+    public function show($reportableId)
+    {
+        return $this->reportService->handleShow($reportableId);
     }
 }

@@ -6,6 +6,8 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Traits\LogApiError;
 use App\Traits\FilterAvailableFields;
+use App\Traits\GetModelIdAndName;
+use App\Traits\GetStatisticalIndicators;
 
 /**
  * Class NewsletterCampaign
@@ -32,7 +34,20 @@ use App\Traits\FilterAvailableFields;
  */
 class NewsletterCampaign extends Model
 {
-    use HasFactory, FilterAvailableFields, LogApiError;
+    use HasFactory, FilterAvailableFields, LogApiError,
+    GetModelIdAndName, GetStatisticalIndicators;
+
+    /**
+     * The model id.
+     * @var int
+     */
+    protected $modelId = 7;
+
+    /**
+     * The model name.
+     * @var string
+     */
+    protected $modelName = 'NewsletterCampaign';
 
     /**
      * The table associated with the model.
@@ -79,6 +94,15 @@ class NewsletterCampaign extends Model
         'occur_day',
         'occur_hour',
         'user_id',
+    ];
+
+    /**
+     * The statistical indicators.
+     * @var array<string>
+     */
+    protected $indicators = [
+        'number_of_newsletter_campaigns',
+        'number_of_newsletter_campaigns_by_status',
     ];
 
     /**
@@ -131,6 +155,15 @@ class NewsletterCampaign extends Model
     public function newsletter_subscribers()
     {
         return $this->hasMany('App\Models\NewsletterSubscriber');
+    }
+
+    /**
+     * Eloquent polymorphic relationship between notification campaigns and reports.
+     *
+     */
+    public function report()
+    {
+        return $this->morphOne(Report::class, 'reportable');
     }
 
     /**
@@ -320,5 +353,20 @@ class NewsletterCampaign extends Model
         $excludedFields = ['user_id'];
 
         return $this->handleFilterAvailableFields($fieldTypes, $excludedFields);
+    }
+
+    public function getModelIdAndName()
+    {
+        $modelId = $this->modelId;
+        $modelName = __NAMESPACE__ . '\\' . basename($this->modelName);
+
+        return $this->handleModelIdAndName($modelId, $modelName);
+    }
+
+    public function getStatisticalIndicators()
+    {
+        $statisticalIndicators = $this->indicators;
+
+        return $this->handleStatisticalIndicators($statisticalIndicators);
     }
 }

@@ -7,6 +7,8 @@ use App\BusinessLogic\Interfaces\UserInterface;
 use App\Library\DataModel;
 use App\Http\Requests\UserRequest;
 use App\Models\User;
+use App\Models\Role;
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Collection;
 
 /**
@@ -17,6 +19,7 @@ class UserService implements UserInterface
     use ApiResponseMessage;
 
     protected $modelName;
+    protected $modelNameRole;
 
     /**
      * Instantiate the variables that will be used to get the model and table name as well as the table's columns.
@@ -25,6 +28,7 @@ class UserService implements UserInterface
     public function __construct()
     {
         $this->modelName = new User();
+        $this->modelNameRole = new Role();
     }
 
     /**
@@ -60,10 +64,7 @@ class UserService implements UserInterface
     public function handleIndex($search)
     {
         $apiDisplayAllRecords = $this->modelName->fetchAllRecords($search);
-        $this->modelName->find(1)->report()->create([
-            'label' => 'handle index test',
-            'value' => 222
-        ]);
+        $this->statistics();
 
         if ($apiDisplayAllRecords instanceof \Illuminate\Pagination\LengthAwarePaginator)
         {
@@ -204,5 +205,131 @@ class UserService implements UserInterface
         {
             return response($this->handleResponse('error_message'), 500);
         }
+    }
+
+    public function statistics()
+    {
+        $reportableId = $this->modelName->getModelIdAndName()[0];
+        $reportableType = $this->modelName->getModelIdAndName()[1];
+        $records = $this->modelName->all()->toArray();
+        $indicators = $this->modelName->getIndicators();
+
+        $statisticalIndicators = [];
+        $numberOfRecords = count($records);
+
+        foreach ($indicators as $label)
+        {
+            $indicator = [];
+
+            if ($label === 'users_by_role')
+            {
+                $roleIndicators = [];
+
+                foreach ($this->modelNameRole->fetchUserRoles() as $role)
+                {
+                    $count = 0;
+                    foreach ($records as $record)
+                    {
+                        if ($record['role_id'] === $role['id'])
+                        {
+                            $count++;
+                        }
+                    }
+
+                    if ($count > 0) {
+                        $roleIndicator = [
+                            'reportable_id' => $reportableId,
+                            'reportable_type' => $reportableType,
+                            'label' => 'admin.reports.users.' . $label . '.' . $role['slug'],
+                            'value' => $count,
+                            'percentage' => ($count / $numberOfRecords) * 100,
+                        ];
+
+                        $roleIndicators[] = $roleIndicator;
+                    }
+                }
+
+                if (!empty($roleIndicators)) {
+                    $statisticalIndicators = array_merge($statisticalIndicators, $roleIndicators);
+                }
+            }
+            else
+            {
+                $count = 0;
+                if ($label === 'number_of_users')
+                {
+                    $count = $numberOfRecords;
+                }
+                elseif ($label === 'users_with_missing_phone')
+                {
+                    foreach ($records as $record)
+                    {
+                        if ($record['phone'] === null)
+                        {
+                            $count++;
+                        }
+                    }
+                }
+                elseif ($label === 'users_with_missing_profile_image')
+                {
+                    foreach ($records as $record)
+                    {
+                        if ($record['profile_image'] === null)
+                        {
+                            $count++;
+                        }
+                    }
+                }
+                elseif ($label === 'users_with_unverified_account')
+                {
+                    foreach ($records as $record)
+                    {
+                        if ($record['email_verified_at'] === null)
+                        {
+                            $count++;
+                        }
+                    }
+                }
+                elseif ($label === 'number_of_profile_modifications')
+                {
+                    foreach ($records as $record)
+                    {
+                        if ($record['created_at'] !== $record['updated_at'])
+                        {
+                            $count++;
+                        }
+                    }
+                }
+
+                $indicator = [
+                    'reportable_id'   => $reportableId,
+                    'reportable_type' => $reportableType,
+                    'label'           => 'admin.reports.users.' . $label,
+                    'value'           => $count,
+                    'percentage'      => ($count / $numberOfRecords) * 100,
+                ];
+
+                $statisticalIndicators[] = $indicator;
+            }
+        }
+
+        $newStatisticalIndicators = [];
+
+        foreach ($statisticalIndicators as $item)
+        {
+            $fromDate = Carbon::now()->startOfWeek();
+            $toDate = Carbon::now()->endOfWeek();
+
+            $newItem = array_merge($item, [
+                'from' => $fromDate->toDateTimeString(),
+                'to' => $toDate->toDateTimeString(),
+            ]);
+
+            $newStatisticalIndicators[] = $newItem;
+        }
+
+        $statisticalIndicators = $newStatisticalIndicators;
+
+        $this->modelName->select('id')->find($reportableId)->report()->insert($statisticalIndicators);
     }
 }
