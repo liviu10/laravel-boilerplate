@@ -4,7 +4,7 @@ namespace App\BusinessLogic\Services;
 
 use App\Traits\ApiResponseMessage;
 use App\BusinessLogic\Interfaces\NewsletterSubscriberInterface;
-use App\Library\DataModel;
+use App\Library\ApiResponse;
 use App\Http\Requests\NewsletterSubscriberRequest;
 use App\Models\AcceptedDomain;
 use App\Models\NewsletterSubscriber;
@@ -18,6 +18,7 @@ class NewsletterSubscriberService implements NewsletterSubscriberInterface
     use ApiResponseMessage;
 
     protected $modelName;
+    protected $apiResponse;
 
     /**
      * Instantiate the variables that will be used to get the model and table name as well as the table's columns.
@@ -26,6 +27,7 @@ class NewsletterSubscriberService implements NewsletterSubscriberInterface
     public function __construct()
     {
         $this->modelName = new NewsletterSubscriber();
+        $this->apiResponse = new ApiResponse();
     }
 
     /**
@@ -35,33 +37,13 @@ class NewsletterSubscriberService implements NewsletterSubscriberInterface
      */
     public function handleIndex($search)
     {
-        $apiDisplayAllRecords = $this->modelName->fetchAllRecords($search);
+        $apiDisplayAllRecords = $this->apiResponse->generateApiResponse(
+            $this->modelName->fetchAllRecords($search),
+            $this->modelName->getFields(),
+            class_basename($this->modelName)
+        );
 
-        if ($apiDisplayAllRecords instanceof \Illuminate\Pagination\LengthAwarePaginator)
-        {
-            if ($apiDisplayAllRecords->isEmpty())
-            {
-                return response($this->handleResponse('not_found'), 200);
-            }
-            else
-            {
-                $dataModel = new DataModel($apiDisplayAllRecords->toArray(), $this->modelName->getFields(), class_basename($this->modelName));
-                $apiDataModel = $dataModel->generateDataModel('model');
-                $apiColumnModel = $dataModel->generateDataModel('column');
-                $apiFilterModel = $dataModel->generateDataModel('filter');
-
-                return response($this->handleResponse('success',
-                    $apiDisplayAllRecords,
-                    $apiDataModel,
-                    $apiColumnModel,
-                    $apiFilterModel
-                ), 200);
-            }
-        }
-        else
-        {
-            return response($this->handleResponse('error_message'), 500);
-        }
+        return $apiDisplayAllRecords;
     }
 
     /**

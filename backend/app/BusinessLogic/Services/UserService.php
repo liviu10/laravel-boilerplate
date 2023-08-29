@@ -4,7 +4,7 @@ namespace App\BusinessLogic\Services;
 
 use App\Traits\ApiResponseMessage;
 use App\BusinessLogic\Interfaces\UserInterface;
-use App\Library\DataModel;
+use App\Library\ApiResponse;
 use App\Http\Requests\UserRequest;
 use App\Models\User;
 use App\Models\Role;
@@ -20,6 +20,7 @@ class UserService implements UserInterface
 
     protected $modelName;
     protected $modelNameRole;
+    protected $apiResponse;
 
     /**
      * Instantiate the variables that will be used to get the model and table name as well as the table's columns.
@@ -29,6 +30,7 @@ class UserService implements UserInterface
     {
         $this->modelName = new User();
         $this->modelNameRole = new Role();
+        $this->apiResponse = new ApiResponse();
     }
 
     /**
@@ -63,34 +65,13 @@ class UserService implements UserInterface
      */
     public function handleIndex($search)
     {
-        $apiDisplayAllRecords = $this->modelName->fetchAllRecords($search);
-        $this->statistics();
+        $apiDisplayAllRecords = $this->apiResponse->generateApiResponse(
+            $this->modelName->fetchAllRecords($search),
+            $this->modelName->getFields(),
+            class_basename($this->modelName)
+        );
 
-        if ($apiDisplayAllRecords instanceof \Illuminate\Pagination\LengthAwarePaginator)
-        {
-            if ($apiDisplayAllRecords->isEmpty())
-            {
-                return response($this->handleResponse('not_found'), 200);
-            }
-            else
-            {
-                $dataModel = new DataModel($apiDisplayAllRecords->toArray(), $this->modelName->getFields(), class_basename($this->modelName));
-                $apiDataModel = $dataModel->generateDataModel('model');
-                $apiColumnModel = $dataModel->generateDataModel('column');
-                $apiFilterModel = $dataModel->generateDataModel('filter');
-
-                return response($this->handleResponse('success',
-                    $apiDisplayAllRecords,
-                    $apiDataModel,
-                    $apiColumnModel,
-                    $apiFilterModel
-                ), 200);
-            }
-        }
-        else
-        {
-            return response($this->handleResponse('error_message'), 500);
-        }
+        return $apiDisplayAllRecords;
     }
 
     /**
