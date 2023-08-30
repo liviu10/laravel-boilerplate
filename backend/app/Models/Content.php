@@ -6,8 +6,6 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Traits\LogApiError;
 use App\Traits\FilterAvailableFields;
-use App\Traits\GetModelIdAndName;
-use App\Traits\GetStatisticalIndicators;
 
 /**
  * Class Content
@@ -32,20 +30,7 @@ use App\Traits\GetStatisticalIndicators;
  */
 class Content extends Model
 {
-    use HasFactory, FilterAvailableFields, LogApiError,
-    GetModelIdAndName, GetStatisticalIndicators;
-
-    /**
-     * The model id.
-     * @var int
-     */
-    protected $modelId = 6;
-
-    /**
-     * The model name.
-     * @var string
-     */
-    protected $modelName = 'Content';
+    use HasFactory, FilterAvailableFields, LogApiError;
 
     /**
      * The table associated with the model.
@@ -90,16 +75,6 @@ class Content extends Model
         'content',
         'allow_comments',
         'user_id',
-    ];
-
-    /**
-     * The statistical indicators.
-     * @var array<string>
-     */
-    protected $indicators = [
-        'number_of_contents',
-        'number_of_contents_by_visibility',
-        'number_of_contents_by_type',
     ];
 
     /**
@@ -170,15 +145,6 @@ class Content extends Model
     public function medias()
     {
         return $this->hasMany('App\Models\Media');
-    }
-
-    /**
-     * Eloquent polymorphic relationship between contents and reports.
-     *
-     */
-    public function report()
-    {
-        return $this->morphOne(Report::class, 'reportable');
     }
 
     /**
@@ -383,20 +349,5 @@ class Content extends Model
     public function getContentTypeOptions()
     {
         return $this->contentTypeOptions;
-    }
-
-    public function getModelIdAndName()
-    {
-        $modelId = $this->modelId;
-        $modelName = __NAMESPACE__ . '\\' . basename($this->modelName);
-
-        return $this->handleModelIdAndName($modelId, $modelName);
-    }
-
-    public function getStatisticalIndicators()
-    {
-        $statisticalIndicators = $this->indicators;
-
-        return $this->handleStatisticalIndicators($statisticalIndicators);
     }
 }

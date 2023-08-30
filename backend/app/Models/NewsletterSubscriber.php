@@ -6,8 +6,6 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Traits\LogApiError;
 use App\Traits\FilterAvailableFields;
-use App\Traits\GetModelIdAndName;
-use App\Traits\GetStatisticalIndicators;
 
 /**
  * Class NewsletterSubscriber
@@ -29,20 +27,7 @@ use App\Traits\GetStatisticalIndicators;
  */
 class NewsletterSubscriber extends Model
 {
-    use HasFactory, FilterAvailableFields, LogApiError,
-    GetModelIdAndName, GetStatisticalIndicators;
-
-    /**
-     * The model id.
-     * @var int
-     */
-    protected $modelId = 8;
-
-    /**
-     * The model name.
-     * @var string
-     */
-    protected $modelName = 'NewsletterSubscriber';
+    use HasFactory, FilterAvailableFields, LogApiError;
 
     /**
      * The table associated with the model.
@@ -87,16 +72,6 @@ class NewsletterSubscriber extends Model
     ];
 
     /**
-     * The statistical indicators.
-     * @var array<string>
-     */
-    protected $indicators = [
-        'number_of_newsletter_subscribers',
-        'number_of_newsletter_subscribers_by_privacy_policy',
-        'number_of_newsletter_subscribers_by_newsletter_campaign',
-    ];
-
-    /**
     * The attributes that are mass assignable.
     * @var string
     */
@@ -132,15 +107,6 @@ class NewsletterSubscriber extends Model
     public function newsletter_campaign()
     {
         return $this->belongsTo('App\Models\NewsletterCampaign');
-    }
-
-    /**
-     * Eloquent polymorphic relationship between notification subscribers and reports.
-     *
-     */
-    public function report()
-    {
-        return $this->morphOne(Report::class, 'reportable');
     }
 
     /**
@@ -329,20 +295,5 @@ class NewsletterSubscriber extends Model
             $this->LogApiError($mysqlError);
             return false;
         }
-    }
-
-    public function getModelIdAndName()
-    {
-        $modelId = $this->modelId;
-        $modelName = __NAMESPACE__ . '\\' . basename($this->modelName);
-
-        return $this->handleModelIdAndName($modelId, $modelName);
-    }
-
-    public function getStatisticalIndicators()
-    {
-        $statisticalIndicators = $this->indicators;
-
-        return $this->handleStatisticalIndicators($statisticalIndicators);
     }
 }

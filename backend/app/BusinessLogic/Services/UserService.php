@@ -68,7 +68,9 @@ class UserService implements UserInterface
         $apiDisplayAllRecords = $this->apiResponse->generateApiResponse(
             $this->modelName->fetchAllRecords($search),
             $this->modelName->getFields(),
-            class_basename($this->modelName)
+            class_basename($this->modelName),
+            [],
+            $this->getStatisticalIndicators()
         );
 
         return $apiDisplayAllRecords;
@@ -188,129 +190,35 @@ class UserService implements UserInterface
         }
     }
 
-    public function statistics()
+    public function getStatisticalIndicators()
     {
-        $reportableId = $this->modelName->getModelIdAndName()[0];
-        $reportableType = $this->modelName->getModelIdAndName()[1];
-        $records = $this->modelName->all()->toArray();
-        $indicators = $this->modelName->getIndicators();
+        $indicators = [
+            'number_of_users'                  => [
+                'number'     => $this->modelName->count(),
+                'percentage' => null,
+            ],
+            'users_with_missing_phone'         => [
+                'number'     => $this->modelName->count(),
+                'percentage' => null,
+            ],
+            'users_with_missing_profile_image' => [
+                'number'     => $this->modelName->count(),
+                'percentage' => null,
+            ],
+            'users_with_unverified_account'    => [
+                'number'     => $this->modelName->count(),
+                'percentage' => null,
+            ],
+            'users_by_role'                    => [
+                'number'     => $this->modelName->count(),
+                'percentage' => null,
+            ],
+            'number_of_profile_modifications'  => [
+                'number'     => $this->modelName->count(),
+                'percentage' => null,
+            ],
+        ];
 
-        $statisticalIndicators = [];
-        $numberOfRecords = count($records);
-
-        foreach ($indicators as $label)
-        {
-            $indicator = [];
-
-            if ($label === 'users_by_role')
-            {
-                $roleIndicators = [];
-
-                foreach ($this->modelNameRole->fetchUserRoles() as $role)
-                {
-                    $count = 0;
-                    foreach ($records as $record)
-                    {
-                        if ($record['role_id'] === $role['id'])
-                        {
-                            $count++;
-                        }
-                    }
-
-                    if ($count > 0) {
-                        $roleIndicator = [
-                            'reportable_id' => $reportableId,
-                            'reportable_type' => $reportableType,
-                            'label' => 'admin.reports.users.' . $label . '.' . $role['slug'],
-                            'value' => $count,
-                            'percentage' => ($count / $numberOfRecords) * 100,
-                        ];
-
-                        $roleIndicators[] = $roleIndicator;
-                    }
-                }
-
-                if (!empty($roleIndicators)) {
-                    $statisticalIndicators = array_merge($statisticalIndicators, $roleIndicators);
-                }
-            }
-            else
-            {
-                $count = 0;
-                if ($label === 'number_of_users')
-                {
-                    $count = $numberOfRecords;
-                }
-                elseif ($label === 'users_with_missing_phone')
-                {
-                    foreach ($records as $record)
-                    {
-                        if ($record['phone'] === null)
-                        {
-                            $count++;
-                        }
-                    }
-                }
-                elseif ($label === 'users_with_missing_profile_image')
-                {
-                    foreach ($records as $record)
-                    {
-                        if ($record['profile_image'] === null)
-                        {
-                            $count++;
-                        }
-                    }
-                }
-                elseif ($label === 'users_with_unverified_account')
-                {
-                    foreach ($records as $record)
-                    {
-                        if ($record['email_verified_at'] === null)
-                        {
-                            $count++;
-                        }
-                    }
-                }
-                elseif ($label === 'number_of_profile_modifications')
-                {
-                    foreach ($records as $record)
-                    {
-                        if ($record['created_at'] !== $record['updated_at'])
-                        {
-                            $count++;
-                        }
-                    }
-                }
-
-                $indicator = [
-                    'reportable_id'   => $reportableId,
-                    'reportable_type' => $reportableType,
-                    'label'           => 'admin.reports.users.' . $label,
-                    'value'           => $count,
-                    'percentage'      => ($count / $numberOfRecords) * 100,
-                ];
-
-                $statisticalIndicators[] = $indicator;
-            }
-        }
-
-        $newStatisticalIndicators = [];
-
-        foreach ($statisticalIndicators as $item)
-        {
-            $fromDate = Carbon::now()->startOfWeek();
-            $toDate = Carbon::now()->endOfWeek();
-
-            $newItem = array_merge($item, [
-                'from' => $fromDate->toDateTimeString(),
-                'to' => $toDate->toDateTimeString(),
-            ]);
-
-            $newStatisticalIndicators[] = $newItem;
-        }
-
-        $statisticalIndicators = $newStatisticalIndicators;
-
-        $this->modelName->select('id')->find($reportableId)->report()->insert($statisticalIndicators);
+        return $indicators;
     }
 }

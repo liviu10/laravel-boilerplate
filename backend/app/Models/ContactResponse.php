@@ -6,8 +6,6 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Traits\LogApiError;
 use App\Traits\FilterAvailableFields;
-use App\Traits\GetModelIdAndName;
-use App\Traits\GetStatisticalIndicators;
 
 /**
  * Class ContactResponse
@@ -27,20 +25,7 @@ use App\Traits\GetStatisticalIndicators;
  */
 class ContactResponse extends Model
 {
-    use HasFactory, FilterAvailableFields, LogApiError,
-    GetModelIdAndName, GetStatisticalIndicators;
-
-    /**
-     * The model id.
-     * @var int
-     */
-    protected $modelId = 5;
-
-    /**
-     * The model name.
-     * @var string
-     */
-    protected $modelName = 'ContactResponse';
+    use HasFactory, FilterAvailableFields, LogApiError;
 
     /**
      * The table associated with the model.
@@ -97,15 +82,6 @@ class ContactResponse extends Model
     ];
 
     /**
-     * The statistical indicators.
-     * @var array<string>
-     */
-    protected $indicators = [
-        'number_of_contact_responses',
-        'contact_responses_by_contact_message',
-    ];
-
-    /**
      * The attributes that should be cast.
      * @var array<string, string>
      */
@@ -141,15 +117,6 @@ class ContactResponse extends Model
     public function contact_message()
     {
         return $this->belongsTo('App\Models\ContactMessage');
-    }
-
-    /**
-     * Eloquent polymorphic relationship between contact responses and reports.
-     *
-     */
-    public function report()
-    {
-        return $this->morphOne(Report::class, 'reportable');
     }
 
     /**
@@ -326,20 +293,5 @@ class ContactResponse extends Model
         $excludedFields = ['user_id'];
 
         return $this->handleFilterAvailableFields($fieldTypes, $excludedFields);
-    }
-
-    public function getModelIdAndName()
-    {
-        $modelId = $this->modelId;
-        $modelName = __NAMESPACE__ . '\\' . basename($this->modelName);
-
-        return $this->handleModelIdAndName($modelId, $modelName);
-    }
-
-    public function getStatisticalIndicators()
-    {
-        $statisticalIndicators = $this->indicators;
-
-        return $this->handleStatisticalIndicators($statisticalIndicators);
     }
 }

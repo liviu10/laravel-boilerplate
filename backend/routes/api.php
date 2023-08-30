@@ -24,8 +24,6 @@ use Illuminate\Support\Facades\Route;
     use App\Http\Controllers\ContactSubjectController;
     use App\Http\Controllers\NewsletterCampaignController;
     use App\Http\Controllers\NewsletterSubscriberController;
-// Import application's reports
-    use App\Http\Controllers\ReportController;
 // Import application's user settings
     use App\Http\Controllers\UserController;
     use App\Http\Controllers\RoleController;
@@ -66,11 +64,6 @@ Route::group([ 'prefix' => config('app.version') ], function () {
                 Route::apiResource('/campaigns', NewsletterCampaignController::class);
                 Route::apiResource('/subscribers', NewsletterSubscriberController::class)->only('index', 'show', 'update');
             });
-        });
-        // Application's reports endpoints
-        Route::group([ 'prefix' => '/' ], function () {
-            // Reports
-            Route::apiResource('/reports', ReportController::class)->only('index', 'show');
         });
         // Application's user settings api endpoints
         Route::group([ 'prefix' => '/settings' ], function () {

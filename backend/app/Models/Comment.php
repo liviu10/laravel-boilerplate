@@ -6,8 +6,6 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Traits\LogApiError;
 use App\Traits\FilterAvailableFields;
-use App\Traits\GetModelIdAndName;
-use App\Traits\GetStatisticalIndicators;
 
 /**
  * Class Comment
@@ -32,20 +30,7 @@ use App\Traits\GetStatisticalIndicators;
  */
 class Comment extends Model
 {
-    use HasFactory, FilterAvailableFields, LogApiError,
-    GetModelIdAndName, GetStatisticalIndicators;
-
-    /**
-     * The model id.
-     * @var int
-     */
-    protected $modelId = 3;
-
-    /**
-     * The model name.
-     * @var string
-     */
-    protected $modelName = 'Comment';
+    use HasFactory, FilterAvailableFields, LogApiError;
 
     /**
      * The table associated with the model.
@@ -78,18 +63,6 @@ class Comment extends Model
         'notify_new_comments',
         'content_id',
         'user_id',
-    ];
-
-    /**
-     * The statistical indicators.
-     * @var array<string>
-     */
-    protected $indicators = [
-        'number_of_comments_by_type',
-        'number_of_comments_by_status',
-        'number_of_comments_by_type_and_content',
-        'number_of_comments_by_status_and_content',
-        'number_of_comments_by_type_and_status',
     ];
 
     /**
@@ -138,15 +111,6 @@ class Comment extends Model
         'created_at',
         'updated_at',
     ];
-
-    /**
-     * Eloquent polymorphic relationship between comments and reports.
-     *
-     */
-    public function report()
-    {
-        return $this->morphOne(Report::class, 'reportable');
-    }
 
     /**
      * Fetches all records from the database.
@@ -339,20 +303,5 @@ class Comment extends Model
     public function getCommentStatusOptions()
     {
         return $this->commentStatusOptions;
-    }
-
-    public function getModelIdAndName()
-    {
-        $modelId = $this->modelId;
-        $modelName = __NAMESPACE__ . '\\' . basename($this->modelName);
-
-        return $this->handleModelIdAndName($modelId, $modelName);
-    }
-
-    public function getStatisticalIndicators()
-    {
-        $statisticalIndicators = $this->indicators;
-
-        return $this->handleStatisticalIndicators($statisticalIndicators);
     }
 }

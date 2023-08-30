@@ -15,13 +15,16 @@ class ApiResponse
      * @param LengthAwarePaginator|Collection|array $records The records to be included in the response.
      * @param array|null $fields An array of fields to include in the response.
      * @param string|null $modelName The name of the model associated with the records.
+     * @param array|null $modelOptions The options of the model associated with the records.
+     * @param array|null $statisticalIndicators The reports of the model associated with the records.
      * @return Response|ResponseFactory The generated API response or response factory.
      */
     public function generateApiResponse(
         LengthAwarePaginator|Collection|array $records,
         array $fields = null,
         string $modelName = null,
-        array $modelOptions = null
+        array $modelOptions = null,
+        array $statisticalIndicators = null
     ): Response|ResponseFactory
     {
         if ($records instanceof LengthAwarePaginator || $records instanceof Collection)
@@ -34,12 +37,24 @@ class ApiResponse
             {
                 if (is_array($fields) && $modelName)
                 {
-                    $dataModel = new DataModel($records->toArray(), $fields, $modelName);
-                    $apiDataModel = $dataModel->generateDataModel('model', is_array($modelOptions) ? $modelOptions : []);
+                    $dataModel = new DataModel(
+                        $records->toArray(),
+                        $fields,
+                        $modelName,
+                        is_array($statisticalIndicators) && count($statisticalIndicators) ? $statisticalIndicators : []
+                    );
+                    $apiDataModel = $dataModel->generateDataModel(
+                        'model',
+                        is_array($modelOptions) && count($modelOptions) ? $modelOptions : []
+                    );
                     $apiColumnModel = $dataModel->generateDataModel('column');
-                    $apiFilterModel = $dataModel->generateDataModel('filter', is_array($modelOptions) ? $modelOptions : []);
+                    $apiFilterModel = $dataModel->generateDataModel(
+                        'filter',
+                        is_array($modelOptions) && count($modelOptions) ? $modelOptions : []
+                    );
+                    $apiStatisticalIndicators = $dataModel->generateDataModel('report');
 
-                    return $this->handleSuccessResponse($records, $apiDataModel, $apiColumnModel, $apiFilterModel);
+                    return $this->handleSuccessResponse($records, $apiDataModel, $apiColumnModel, $apiFilterModel, $apiStatisticalIndicators);
                 }
                 else
                 {
@@ -53,12 +68,24 @@ class ApiResponse
             {
                 if (is_array($fields) && $modelName)
                 {
-                    $dataModel = new DataModel($records, $fields, $modelName);
-                    $apiDataModel = $dataModel->generateDataModel('model');
+                    $dataModel = new DataModel(
+                        $records,
+                        $fields,
+                        $modelName,
+                        is_array($statisticalIndicators) && count($statisticalIndicators) ? $statisticalIndicators : []
+                    );
+                    $apiDataModel = $dataModel->generateDataModel(
+                        'model',
+                        is_array($modelOptions) && count($modelOptions) ? $modelOptions : []
+                    );
                     $apiColumnModel = $dataModel->generateDataModel('column');
-                    $apiFilterModel = $dataModel->generateDataModel('filter');
+                    $apiFilterModel = $dataModel->generateDataModel(
+                        'filter',
+                        is_array($modelOptions) && count($modelOptions) ? $modelOptions : []
+                    );
+                    $apiStatisticalIndicators = $dataModel->generateDataModel('report');
 
-                    return $this->handleSuccessResponse($records, $apiDataModel, $apiColumnModel, $apiFilterModel);
+                    return $this->handleSuccessResponse($records, $apiDataModel, $apiColumnModel, $apiFilterModel, $apiStatisticalIndicators);
                 }
                 else
                 {
@@ -96,6 +123,7 @@ class ApiResponse
      * @param array|null $apiDataModel An array representing the data model information.
      * @param array|null $apiColumnModel An array representing the column model information.
      * @param array|null $apiFilterModel An array representing the filter model information.
+     * @param array|null $apiStatisticalIndicators An array representing the reports model information.
      * @return Response|ResponseFactory The generated response or response factory.
      */
     private function handleSuccessResponse(
@@ -103,6 +131,7 @@ class ApiResponse
         array $apiDataModel = null,
         array $apiColumnModel = null,
         array $apiFilterModel = null,
+        array $apiStatisticalIndicators = null
     ): Response|ResponseFactory
     {
         $message = [
@@ -124,6 +153,11 @@ class ApiResponse
         if (is_array($apiFilterModel) && count($apiFilterModel))
         {
             $message['filters'] = $apiFilterModel;
+        }
+
+        if (is_array($apiStatisticalIndicators) && count($apiStatisticalIndicators))
+        {
+            $message['reports'] = $apiStatisticalIndicators;
         }
 
         return response($message, 200);

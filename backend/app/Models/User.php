@@ -10,8 +10,6 @@ use Illuminate\Support\Facades\Auth;
 use Laravel\Sanctum\HasApiTokens;
 use App\Traits\LogApiError;
 use App\Traits\FilterAvailableFields;
-use App\Traits\GetModelIdAndName;
-use App\Traits\GetStatisticalIndicators;
 
 /**
  * Class User
@@ -41,20 +39,7 @@ use App\Traits\GetStatisticalIndicators;
 class User extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable,
-    FilterAvailableFields, LogApiError, GetModelIdAndName,
-    GetStatisticalIndicators;
-
-    /**
-     * The model id.
-     * @var int
-     */
-    protected $modelId = 1;
-
-    /**
-     * The model name.
-     * @var string
-     */
-    protected $modelName = 'User';
+    FilterAvailableFields, LogApiError;
 
     /**
      * The primary key associated with the table.
@@ -94,19 +79,6 @@ class User extends Authenticatable
         'password',
         'profile_image',
         'role_id',
-    ];
-
-    /**
-     * The statistical indicators.
-     * @var array<string>
-     */
-    protected $indicators = [
-        'number_of_users',
-        'users_with_missing_phone',
-        'users_with_missing_profile_image',
-        'users_with_unverified_account',
-        'users_by_role',
-        'number_of_profile_modifications',
     ];
 
     /**
@@ -218,15 +190,6 @@ class User extends Authenticatable
     public function tags()
     {
         return $this->hasMany('App\Models\Tags');
-    }
-
-    /**
-     * Eloquent polymorphic relationship between users and reports.
-     *
-     */
-    public function report()
-    {
-        return $this->morphOne(Report::class, 'reportable');
     }
 
     /**
@@ -424,20 +387,5 @@ class User extends Authenticatable
         $excludedFields = ['role_id'];
 
         return $this->handleFilterAvailableFields($fieldTypes, $excludedFields);
-    }
-
-    public function getModelIdAndName()
-    {
-        $modelId = $this->modelId;
-        $modelName = __NAMESPACE__ . '\\' . basename($this->modelName);
-
-        return $this->handleModelIdAndName($modelId, $modelName);
-    }
-
-    public function getStatisticalIndicators()
-    {
-        $statisticalIndicators = $this->indicators;
-
-        return $this->handleStatisticalIndicators($statisticalIndicators);
     }
 }

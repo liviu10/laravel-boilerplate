@@ -34,10 +34,6 @@ use App\BusinessLogic\Services\CommentService;
 use App\BusinessLogic\Interfaces\AppreciationInterface;
 use App\BusinessLogic\Services\AppreciationService;
 
-// Import application's report settings
-use App\BusinessLogic\Interfaces\ReportInterface;
-use App\BusinessLogic\Services\ReportService;
-
 // Import application's user settings
 use App\BusinessLogic\Interfaces\UserInterface;
 use App\BusinessLogic\Services\UserService;
@@ -70,9 +66,6 @@ class BusinessLogicProvider extends ServiceProvider
         $this->app->bind( ContentInterface::class, ContentService::class );
         $this->app->bind( MediaInterface::class, MediaService::class );
         $this->app->bind( TagInterface::class, TagService::class );
-
-        // Register application's report settings interfaces and services
-        $this->app->bind( ReportInterface::class, ReportService::class );
 
         // Register application's user settings interfaces and services
         $this->app->bind( UserInterface::class, UserService::class );

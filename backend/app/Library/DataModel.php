@@ -7,12 +7,14 @@ class DataModel
     protected $modelResults;
     protected $availableFields;
     protected $modelName;
+    protected $statisticalIndicators;
 
-    public function __construct($modelResults, $availableFields, $modelName)
+    public function __construct($modelResults, $availableFields, $modelName, $statisticalIndicators)
     {
         $this->modelResults = $modelResults;
         $this->availableFields = $availableFields;
         $this->modelName = $modelName;
+        $this->statisticalIndicators = $statisticalIndicators;
     }
 
     /**
@@ -23,7 +25,8 @@ class DataModel
      */
     public function generateDataModel($type, $modelOptions = []): array
     {
-        if (!$this->modelResults || !count($this->modelResults)) {
+        if (!$this->modelResults || !count($this->modelResults))
+        {
             return [];
         }
 
@@ -34,7 +37,7 @@ class DataModel
 
         $filteredDataFields = $this->getFilteredFields($dataFields, $this->availableFields);
 
-        return $this->getModelFields($type, $dataModelId, $filteredDataFields, $modelOptions, []);
+        return $this->getModelFields($type, $dataModelId, $filteredDataFields, $modelOptions, [], $this->statisticalIndicators);
     }
 
     /**
@@ -115,9 +118,12 @@ class DataModel
                 'deleted_at' => 'date'
             ];
 
-            if (isset($fieldTypes[$field])) {
+            if (isset($fieldTypes[$field]))
+            {
                 $filteredFields[$field] = $fieldTypes[$field];
-            } elseif (isset($availableFields[$field])) {
+            }
+            elseif (isset($availableFields[$field]))
+            {
                 $filteredFields[$field] = $availableFields[$field];
             }
         }
@@ -134,37 +140,63 @@ class DataModel
      * @param array $availableDataModel An array to store the available data models.
      * @return array An array containing the available data models based on the provided parameters.
      */
-    private function getModelFields($type, $dataModelId, $filteredDataFields = [], $modelOptions = [], $availableDataModel = []): array
+    private function getModelFields($type, $dataModelId, $filteredDataFields = [], $modelOptions = [], $availableDataModel = [], $statisticalIndicators = []): array
     {
-        foreach ($filteredDataFields as $key => $modelField) {
-            $model = [
-                'id' => $dataModelId,
-                'name' => $this->getTranslationStringName($this->modelName, $key, $type),
-                'field' => $key,
-                'align' => 'center',
-            ];
+        if ($type !== 'report')
+        {
+            foreach ($filteredDataFields as $key => $modelField) {
+                if ($type !== 'report')
+                {
+                    $model = [
+                        'id' => $dataModelId,
+                        'name' => $this->getTranslationStringName($this->modelName, $key, $type),
+                        'field' => $key,
+                    ];
 
-            if ($type === 'column') {
-                $model += $this->getColumnStyle($key);
-            }
+                    if ($type === 'column')
+                    {
+                        $model += $this->getColumnStyle($key);
+                    }
 
-            if ($type === 'column') {
-                $model['label'] = $model['name'];
-            } elseif ($type === 'model' || $type === 'filter') {
-                $model['is_active'] = true;
-                $model['key'] = $key;
-                $model['type'] = $modelField;
-                $model['value'] = null;
+                    if ($type === 'column')
+                    {
+                        $model['align'] = 'center';
+                        $model['label'] = $model['name'];
+                    }
+                    elseif ($type === 'model' || $type === 'filter')
+                    {
+                        $model['is_active'] = true;
+                        $model['key'] = $key;
+                        $model['type'] = $modelField;
+                        $model['value'] = null;
 
-                if ($modelField === 'select') {
-                    $model['options'] = $this->getDataModelOptions($modelOptions[$key]);
-                } elseif ($modelField === 'boolean') {
-                    $model['options'] = $this->getDataModelBooleanOptions();
+                        if ($modelField === 'select')
+                        {
+                            $model['options'] = $this->getDataModelOptions($modelOptions[$key]);
+                        }
+                        elseif ($modelField === 'boolean')
+                        {
+                            $model['options'] = $this->getDataModelBooleanOptions();
+                        }
+                    }
+
+                    $dataModelId++;
+                    $availableDataModel[] = $model;
                 }
             }
+        }
+        else {
+            foreach ($statisticalIndicators as $key => $indicatorValue) {
+                $model = [
+                    'id' => $dataModelId,
+                    'name' => $this->getTranslationStringName($this->modelName, $key, $type),
+                    'value' => $indicatorValue['number'],
+                    'percentage' => $indicatorValue['percentage'],
+                ];
 
-            $dataModelId++;
-            $availableDataModel[] = $model;
+                $dataModelId++;
+                $availableDataModel[] = $model;
+            }
         }
 
         return $availableDataModel;
