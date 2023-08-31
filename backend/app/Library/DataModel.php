@@ -190,9 +190,32 @@ class DataModel
                 $model = [
                     'id' => $dataModelId,
                     'name' => $this->getTranslationStringName($this->modelName, $key, $type),
-                    'value' => $indicatorValue['number'],
-                    'percentage' => $indicatorValue['percentage'],
                 ];
+
+                if (is_array($indicatorValue) && count($indicatorValue))
+                {
+                    if (array_key_exists('number', $indicatorValue) && array_key_exists('percentage', $indicatorValue))
+                    {
+                        $model += [
+                            'value' => $indicatorValue['number'],
+                            'percentage' => $indicatorValue['percentage']
+                        ];
+                    }
+                    else
+                    {
+                        $options = [];
+                        foreach ($indicatorValue as $roleKey => $roleValue) {
+                            if (is_array($roleValue) && array_key_exists('number', $roleValue)) {
+                                $options[] = [
+                                    'key' => $roleKey,
+                                    'value' => $roleValue['number'],
+                                    'percentage' => $roleValue['percentage']
+                                ];
+                            }
+                        }
+                        $model['options'] = $options;
+                    }
+                }
 
                 $dataModelId++;
                 $availableDataModel[] = $model;

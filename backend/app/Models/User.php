@@ -222,7 +222,7 @@ class User extends Authenticatable
      * @throws \Exception|\Illuminate\Database\QueryException
      * Throws an exception if an error occurs during retrieval.
      */
-    public function fetchAllRecords($search)
+    public function fetchAllRecords($search = [])
     {
         try {
             $query = $this->select('id', 'full_name', 'nickname', 'email', 'created_at');
@@ -387,5 +387,22 @@ class User extends Authenticatable
         $excludedFields = ['role_id'];
 
         return $this->handleFilterAvailableFields($fieldTypes, $excludedFields);
+    }
+
+    public function fetchAllRecordDetails()
+    {
+        try {
+            return $this->select('*')->with([
+                    'role' => function ($query) {
+                        $query->select('id', 'name', 'is_active')->where('is_active', true);
+                    }
+                ])->get()->toArray();
+        } catch (\Exception $exception) {
+            $this->LogApiError($exception);
+            return false;
+        } catch (\Illuminate\Database\QueryException $exception) {
+            $this->LogApiError($exception);
+            return false;
+        }
     }
 }

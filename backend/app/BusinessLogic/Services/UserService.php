@@ -192,30 +192,81 @@ class UserService implements UserInterface
 
     public function getStatisticalIndicators()
     {
+        $apiAllRecordDetails = $this->modelName->fetchAllRecordDetails();
+
+        $numberOfUsers = count($apiAllRecordDetails);
+        $usersWithMissingPhone = 0;
+        $usersWithMissingProfileImage = 0;
+        $usersWithUnverifiedAccount = 0;
+        $usersByRoleIdWebmaster = 0;
+        $usersByRoleIdAdministrator = 0;
+        $usersByRoleIdAccountant = 0;
+        $usersByRoleIdSales = 0;
+        $usersByRoleIdClient = 0;
+        $numberOfProfileModifications = 0;
+
+        foreach ($apiAllRecordDetails as $item) {
+            $item['phone'] || $usersWithMissingPhone++;
+
+            $item['profile_image'] || $usersWithMissingProfileImage++;
+
+            $item['email_verified_at'] || $usersWithUnverifiedAccount++;
+
+            $item['role_id'] === 1 ? $usersByRoleIdWebmaster++ : null;
+
+            $item['role_id'] === 2 ? $usersByRoleIdAdministrator++ : null;
+
+            $item['role_id'] === 3 ? $usersByRoleIdAccountant++ : null;
+
+            $item['role_id'] === 4 ? $usersByRoleIdSales++ : null;
+
+            $item['role_id'] === 5 ? $usersByRoleIdClient++ : null;
+
+            $item['created_at'] !== $item['updated_at'] ? $numberOfProfileModifications++ : null;
+        }
+
         $indicators = [
-            'number_of_users'                  => [
-                'number'     => $this->modelName->count(),
+            'number_of_users' => [
+                'number'     => $numberOfUsers,
                 'percentage' => null,
             ],
-            'users_with_missing_phone'         => [
-                'number'     => $this->modelName->count(),
-                'percentage' => null,
+            'users_with_missing_phone' => [
+                'number'     => $usersWithMissingPhone,
+                'percentage' => ($usersWithMissingPhone / $numberOfUsers) * 100,
             ],
             'users_with_missing_profile_image' => [
-                'number'     => $this->modelName->count(),
-                'percentage' => null,
+                'number'     => $usersWithMissingProfileImage,
+                'percentage' => ($usersWithMissingProfileImage / $numberOfUsers) * 100,
             ],
-            'users_with_unverified_account'    => [
-                'number'     => $this->modelName->count(),
-                'percentage' => null,
+            'users_with_unverified_account' => [
+                'number'     => $usersWithUnverifiedAccount,
+                'percentage' => ($usersWithUnverifiedAccount / $numberOfUsers) * 100,
             ],
-            'users_by_role'                    => [
-                'number'     => $this->modelName->count(),
-                'percentage' => null,
+            'users_by_role' => [
+                'webmaster' => [
+                    'number'     => $usersByRoleIdWebmaster,
+                    'percentage' => ($usersByRoleIdWebmaster / $numberOfUsers) * 100,
+                ],
+                'administrator' => [
+                    'number'     => $usersByRoleIdAdministrator,
+                    'percentage' => ($usersByRoleIdAdministrator / $numberOfUsers) * 100,
+                ],
+                'accountant' => [
+                    'number'     => $usersByRoleIdAccountant,
+                    'percentage' => ($usersByRoleIdAccountant / $numberOfUsers) * 100,
+                ],
+                'sales' => [
+                    'number'     => $usersByRoleIdSales,
+                    'percentage' => ($usersByRoleIdSales / $numberOfUsers) * 100,
+                ],
+                'client' => [
+                    'number'     => $usersByRoleIdClient,
+                    'percentage' => ($usersByRoleIdClient / $numberOfUsers) * 100,
+                ],
             ],
-            'number_of_profile_modifications'  => [
-                'number'     => $this->modelName->count(),
-                'percentage' => null,
+            'number_of_profile_modifications' => [
+                'number'     => $numberOfProfileModifications,
+                'percentage' => ($numberOfProfileModifications / $numberOfUsers) * 100,
             ],
         ];
 
