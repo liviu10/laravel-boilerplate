@@ -198,19 +198,25 @@ class DataModel
                     {
                         $model += [
                             'value' => $indicatorValue['number'],
-                            'percentage' => $indicatorValue['percentage']
+                            'percentage' => round($indicatorValue['percentage'], 2)
                         ];
                     }
                     else
                     {
                         $options = [];
-                        foreach ($indicatorValue as $roleKey => $roleValue) {
-                            if (is_array($roleValue) && array_key_exists('number', $roleValue)) {
+                        foreach ($indicatorValue as $subKey => $subValue) {
+                            if (array_key_exists('number', $subValue) && array_key_exists('percentage', $subValue))
+                            {
                                 $options[] = [
-                                    'key' => $roleKey,
-                                    'value' => $roleValue['number'],
-                                    'percentage' => $roleValue['percentage']
+                                    'key' => $subKey,
+                                    'value' => $subValue['number'],
+                                    'percentage' => round($subValue['percentage'], 2)
                                 ];
+                            }
+
+                            if (array_key_exists('average', $subValue))
+                            {
+                                $options[count($options) - 1]['average'] = $subValue['average'];
                             }
                         }
                         $model['options'] = $options;

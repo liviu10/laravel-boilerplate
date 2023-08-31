@@ -39,7 +39,9 @@ class AppreciationService implements AppreciationInterface
         $apiDisplayAllRecords = $this->apiResponse->generateApiResponse(
             $this->modelName->fetchAllRecords($search),
             $this->modelName->getFields(),
-            class_basename($this->modelName)
+            class_basename($this->modelName),
+            [],
+            $this->getStatisticalIndicators()
         );
 
         return $apiDisplayAllRecords;
@@ -149,5 +151,88 @@ class AppreciationService implements AppreciationInterface
         {
             return response($this->handleResponse('error_message'), 500);
         }
+    }
+
+    public function getStatisticalIndicators()
+    {
+        $apiAllRecordDetails = $this->modelName->fetchAllRecordDetails();
+
+        $numberOfAppreciations = count($apiAllRecordDetails);
+        $numberOfLikes = 0;
+        $numberOfDislikes = 0;
+        $numberOfRatingVeryBad = 0;
+        $totalRatingVeryBad = 0;
+        $numberOfRatingBad = 0;
+        $numberOfRatingNeutral = 0;
+        $numberOfRatingGood = 0;
+        $numberOfRatingVeryGood = 0;
+        $numberOfRatingExcellent = 0;
+
+        foreach ($apiAllRecordDetails as $item) {
+            $item['likes'] !== 0 ? $numberOfLikes++ : null;
+
+            $item['dislikes'] !== 0 ? $numberOfDislikes++ : null;
+
+            $item['rating'] >= 0 && $item['rating'] < 1 ? $numberOfRatingVeryBad++ : null;
+
+            $item['rating'] >= 1 && $item['rating'] < 2 ? $numberOfRatingBad++ : null;
+
+            $item['rating'] >= 2 && $item['rating'] < 3 ? $numberOfRatingNeutral++ : null;
+
+            $item['rating'] >= 3 && $item['rating'] < 4 ? $numberOfRatingGood++ : null;
+
+            $item['rating'] >= 4 && $item['rating'] < 5 ? $numberOfRatingVeryGood++ : null;
+
+            $item['rating'] === 5 ? $numberOfRatingExcellent++ : null;
+        }
+
+        $indicators = [
+            'number_of_appreciations' => [
+                'number'     => $numberOfAppreciations,
+                'percentage' => null,
+            ],
+            'number_of_likes' => [
+                'number'     => $numberOfLikes,
+                'percentage' => ($numberOfLikes / $numberOfAppreciations) * 100,
+            ],
+            'number_of_dislikes' => [
+                'number'     => $numberOfDislikes,
+                'percentage' => ($numberOfDislikes / $numberOfAppreciations) * 100,
+            ],
+            'number_of_ratings' => [
+                'very_bad' => [
+                    'number'     => $numberOfRatingVeryBad,
+                    'average'    => 1,
+                    'percentage' => ($numberOfRatingVeryBad / $numberOfAppreciations) * 100,
+                ],
+                'bad' => [
+                    'number'     => $numberOfRatingBad,
+                    'average'    => 1,
+                    'percentage' => ($numberOfRatingBad / $numberOfAppreciations) * 100,
+                ],
+                'neutral' => [
+                    'number'     => $numberOfRatingNeutral,
+                    'average'    => 1,
+                    'percentage' => ($numberOfRatingNeutral / $numberOfAppreciations) * 100,
+                ],
+                'good' => [
+                    'number'     => $numberOfRatingGood,
+                    'average'    => 1,
+                    'percentage' => ($numberOfRatingGood / $numberOfAppreciations) * 100,
+                ],
+                'very_good' => [
+                    'number'     => $numberOfRatingVeryGood,
+                    'average'    => 1,
+                    'percentage' => ($numberOfRatingVeryGood / $numberOfAppreciations) * 100,
+                ],
+                'excellent' => [
+                    'number'     => $numberOfRatingExcellent,
+                    'average'    => 1,
+                    'percentage' => ($numberOfRatingExcellent / $numberOfAppreciations) * 100,
+                ],
+            ],
+        ];
+
+        return $indicators;
     }
 }

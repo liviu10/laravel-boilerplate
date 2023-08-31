@@ -255,4 +255,17 @@ class Appreciation extends Model
 
         return $this->handleFilterAvailableFields($fieldTypes, $excludedFields);
     }
+
+    public function fetchAllRecordDetails()
+    {
+        try {
+            return $this->select('*')->get()->toArray();
+        } catch (\Exception $exception) {
+            $this->LogApiError($exception);
+            return false;
+        } catch (\Illuminate\Database\QueryException $exception) {
+            $this->LogApiError($exception);
+            return false;
+        }
+    }
 }
