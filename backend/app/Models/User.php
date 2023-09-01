@@ -82,6 +82,37 @@ class User extends Authenticatable
     ];
 
     /**
+     * The statistical indicators.
+     * @var array<string>
+     */
+    protected $statisticalIndicators = [
+        'number_of_users' => [
+            'field' => 'id',
+            'type'  => 'count'
+        ],
+        'users_with_missing_phone' => [
+            'field' => 'phone',
+            'type'  => 'count',
+            'condition' => null
+        ],
+        'users_with_missing_profile_image' => [
+            'field' => 'profile_image',
+            'type'  => 'count',
+            'condition' => null
+        ],
+        'users_with_unverified_account' => [
+            'field' => 'email_verified_at',
+            'type'  => 'count',
+            'condition' => null
+        ],
+        'number_of_users_by_role' => [
+            'field' => 'role_id',
+            'type'  => 'custom',
+            'condition' => 'foreign_key'
+        ],
+    ];
+
+    /**
      * The attributes that should be hidden for serialization.
      * @var array<int, string>
      */
@@ -387,6 +418,15 @@ class User extends Authenticatable
         $excludedFields = ['role_id'];
 
         return $this->handleFilterAvailableFields($fieldTypes, $excludedFields);
+    }
+
+    /**
+     * Get the statistical indicators for the model.
+     * @return array An array containing the statistical indicators for the model.
+     */
+    public function getStatisticalIndicators()
+    {
+        return $this->statisticalIndicators;
     }
 
     public function fetchAllRecordDetails()

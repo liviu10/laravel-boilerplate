@@ -308,4 +308,17 @@ class AcceptedDomain extends Model
         $uniqueDomainTypes['type'] = $this->select('id', 'type')->get()->unique('type')->toArray();
         return $uniqueDomainTypes;
     }
+
+    public function fetchAllRecordDetails()
+    {
+        try {
+            return $this->select('*')->get()->toArray();
+        } catch (\Exception $exception) {
+            $this->LogApiError($exception);
+            return false;
+        } catch (\Illuminate\Database\QueryException $exception) {
+            $this->LogApiError($exception);
+            return false;
+        }
+    }
 }

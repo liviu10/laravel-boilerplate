@@ -40,7 +40,8 @@ class AcceptedDomainService implements AcceptedDomainInterface
             $this->modelName->fetchAllRecords($search),
             $this->modelName->getFields(),
             class_basename($this->modelName),
-            $this->modelName->getUniqueDomainTypes()
+            $this->modelName->getUniqueDomainTypes(),
+            $this->getStatisticalIndicators()
         );
 
         return $apiDisplayAllRecords;
@@ -149,5 +150,56 @@ class AcceptedDomainService implements AcceptedDomainInterface
         {
             return response($this->handleResponse('error_message'), 500);
         }
+    }
+
+    public function getStatisticalIndicators()
+    {
+        $apiAllRecordDetails = $this->modelName->fetchAllRecordDetails();
+        $types = $this->modelName->getUniqueDomainTypes()['type'];
+
+        $numberOfRecords = count($apiAllRecordDetails);
+        $typeOptions = [];
+        $numberOfActiveRecords = 0;
+        $numberOfInactiveRecords = 0;
+
+        foreach ($apiAllRecordDetails as $item) {
+            if ($item['type'])
+            {
+                foreach ($types as $type)
+                {
+                    $typeOptions += [
+                        (string)$type['type'] => []
+                    ];
+                    $typeCount = 0;
+                    foreach ($apiAllRecordDetails as $innerItem) {
+                        $innerItem['type'] === $type['type'] ? $typeCount++ : null;
+                    }
+                    $typeOptions[(string)$type['type']]['number'] = $typeCount;
+                    $typeOptions[(string)$type['type']]['percentage'] = round(($typeCount / $numberOfRecords) * 100, 2);
+                }
+            }
+
+            $item['is_active'] ? $numberOfActiveRecords++ : $numberOfInactiveRecords++;
+        }
+
+        $indicators = [
+            'number_of_accepted_domains' => [
+                'number'     => $numberOfRecords,
+                'percentage' => null,
+            ],
+            'number_of_accepted_domains_by_type' => $typeOptions,
+            'number_of_accepted_domains_by_status' => [
+                'active' => [
+                    'number'     => $numberOfActiveRecords,
+                    'percentage' => null,
+                ],
+                'inactive' => [
+                    'number'     => $numberOfInactiveRecords,
+                    'percentage' => null,
+                ],
+            ],
+        ];
+
+        return $indicators;
     }
 }
