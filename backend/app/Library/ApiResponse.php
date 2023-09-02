@@ -21,17 +21,18 @@ class ApiResponse
      */
     public function generateApiResponse(
         LengthAwarePaginator|Collection|array $records,
+        string $actionMethod = 'get' | 'create' | 'update' | 'delete',
         array $fields = null,
         string $modelName = null,
         array $modelOptions = null,
-        array $statisticalIndicators = null
+        array $statisticalIndicators = null,
     ): Response|ResponseFactory
     {
         if ($records instanceof LengthAwarePaginator || $records instanceof Collection)
         {
             if ($records->isEmpty())
             {
-                return $this->handleNotFoundResponse();
+                return $this->handleNotFoundResponse($actionMethod);
             }
             else
             {
@@ -54,11 +55,18 @@ class ApiResponse
                     );
                     $apiStatisticalIndicators = $dataModel->generateDataModel('report');
 
-                    return $this->handleSuccessResponse($records, $apiDataModel, $apiColumnModel, $apiFilterModel, $apiStatisticalIndicators);
+                    return $this->handleSuccessResponse(
+                        $records,
+                        $actionMethod,
+                        $apiDataModel,
+                        $apiColumnModel,
+                        $apiFilterModel,
+                        $apiStatisticalIndicators
+                    );
                 }
                 else
                 {
-                    return $this->handleSuccessResponse($records);
+                    return $this->handleSuccessResponse($records, $actionMethod);
                 }
             }
         }
@@ -85,16 +93,23 @@ class ApiResponse
                     );
                     $apiStatisticalIndicators = $dataModel->generateDataModel('report');
 
-                    return $this->handleSuccessResponse($records, $apiDataModel, $apiColumnModel, $apiFilterModel, $apiStatisticalIndicators);
+                    return $this->handleSuccessResponse(
+                        $records,
+                        $actionMethod,
+                        $apiDataModel,
+                        $apiColumnModel,
+                        $apiFilterModel,
+                        $apiStatisticalIndicators
+                    );
                 }
                 else
                 {
-                    return $this->handleSuccessResponse($records);
+                    return $this->handleSuccessResponse($records, $actionMethod);
                 }
             }
             else
             {
-                return $this->handleNotFoundResponse();
+                return $this->handleNotFoundResponse($actionMethod);
             }
         }
         else
@@ -107,14 +122,14 @@ class ApiResponse
      * Handle a response for a resource not found scenario.
      * @return Response|ResponseFactory The generated response or response factory.
      */
-    private function handleNotFoundResponse(): Response|ResponseFactory
+    private function handleNotFoundResponse(string $actionMethod = 'get' | 'create' | 'update' | 'delete'): Response|ResponseFactory
     {
         $message = [
             'title'       => __('translations.not_found_message.title'),
             'description' => __('translations.not_found_message.description'),
         ];
 
-        return response($message, 200);
+        return response($message, 404);
     }
 
     /**
@@ -128,6 +143,7 @@ class ApiResponse
      */
     private function handleSuccessResponse(
         LengthAwarePaginator|Collection|array $records,
+        string $actionMethod = 'get' | 'create' | 'update' | 'delete',
         array $apiDataModel = null,
         array $apiColumnModel = null,
         array $apiFilterModel = null,
@@ -160,7 +176,7 @@ class ApiResponse
             $message['reports'] = $apiStatisticalIndicators;
         }
 
-        return response($message, 200);
+        return response($message, $actionMethod === 'create' ? 201 : 200);
     }
 
     /**

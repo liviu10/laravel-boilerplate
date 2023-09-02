@@ -21,7 +21,8 @@ interface UserInterface
      * Fetch current authenticated user.
      * @return \Illuminate\Http\Response
      */
-    public function handleCurrentAuthUser();
+    // TODO: Improve this when finishing with the login system
+    // public function handleCurrentAuthUser();
 
     /**
      * Fetch all the records from the database.
@@ -32,10 +33,9 @@ interface UserInterface
 
     /**
      * Store a new record in the database.
-     * @param App\Http\Requests\Admin\UserRequest $request
      * @return \Illuminate\Http\Response
      */
-    public function handleStore(UserRequest $request);
+    public function handleStore($request);
 
     /**
      * Fetch a single record from the database.
@@ -46,11 +46,10 @@ interface UserInterface
 
     /**
      * Update an existing record in the database.
-     * @param App\Http\Requests\Admin\UserRequest $request
      * @param int $id
      * @return \Illuminate\Http\Response
      */
-    public function handleUpdate(UserRequest $request, $id);
+    public function handleUpdate($request, $id);
 
     /**
      * Delete a single record from the database

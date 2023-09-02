@@ -303,4 +303,24 @@ class Role extends Model
             return false;
         }
     }
+
+    public function fetchClientRole()
+    {
+        try
+        {
+            $query = $this->select('id')->where('id', 5)->get()->pluck('id')->toArray()[0];
+
+            return $query;
+        }
+        catch (\Illuminate\Database\QueryException $mysqlError)
+        {
+            $this->LogApiError($mysqlError);
+            return False;
+        }
+        catch (\Illuminate\Database\QueryException $exception)
+        {
+            $this->LogApiError($exception);
+            return false;
+        }
+    }
 }

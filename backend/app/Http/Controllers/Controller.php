@@ -49,7 +49,7 @@ class Controller extends BaseController
         $this->validate($request, $this->requestClass::rules());
         $serviceInstance = app($this->serviceClass);
 
-        return $serviceInstance->handleStore($request);
+        return $serviceInstance->handleStore($request->all());
     }
 
     /**
@@ -76,7 +76,7 @@ class Controller extends BaseController
         $this->validate($request, $this->requestClass::rules());
         $serviceInstance = app($this->serviceClass);
 
-        return $serviceInstance->handleUpdate($request, $id);
+        return $serviceInstance->handleUpdate($request->all(), $id);
     }
 
     /**

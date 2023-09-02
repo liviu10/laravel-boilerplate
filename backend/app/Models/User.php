@@ -231,18 +231,19 @@ class User extends Authenticatable
      * @throws \Exception|\Illuminate\Database\QueryException Returns an boolean if there was a problem fetching
      * the current authenticated user.
      */
-    public function currentAuthUser()
-    {
-        try {
-            return collect(Auth::user())->except(['email_verified_at', 'password']);
-        } catch (\Exception $exception) {
-            $this->LogApiError($exception);
-            return false;
-        } catch (\Illuminate\Database\QueryException $exception) {
-            $this->LogApiError($exception);
-            return false;
-        }
-    }
+    // TODO: Improve this when finishing with the login system
+    // public function currentAuthUser()
+    // {
+    //     try {
+    //         return collect(Auth::user())->except(['email_verified_at', 'password']);
+    //     } catch (\Exception $exception) {
+    //         $this->LogApiError($exception);
+    //         return false;
+    //     } catch (\Illuminate\Database\QueryException $exception) {
+    //         $this->LogApiError($exception);
+    //         return false;
+    //     }
+    // }
 
     /**
      * Get all the records from the database.
@@ -289,19 +290,19 @@ class User extends Authenticatable
     public function createRecord($payload)
     {
         try {
-            $this->create([
+            $query = $this->create([
                 'full_name'     => $payload['full_name'],
                 'first_name'    => $payload['first_name'],
                 'last_name'     => $payload['last_name'],
                 'nickname'      => $payload['nickname'],
                 'email'         => $payload['email'],
                 'phone'         => $payload['phone'],
-                'password'      => bcrypt($payload['password']),
+                'password'      => $payload['password'],
                 'profile_image' => $payload['profile_image'],
-                'role_id'       => $payload['roles_id'],
+                'role_id'       => $payload['role_id'],
             ]);
 
-            return True;
+            return $query;
         } catch (\Exception $exception) {
             $this->LogApiError($exception);
             return false;
@@ -343,29 +344,23 @@ class User extends Authenticatable
 
     /**
      * Update an existing record.
-     * @param array $payload An associative array of values to update the record.
-     * @param int $id The ID of the record to update.
-     * @return bool Returns true if the update was successful,
-     * or an boolean otherwise.
+     * @param array $payload An associative array of values to create a new record.
+     * @return \App\Models\User|bool Returns a record object if the creation was successful,
+     * or a boolean otherwise.
      * @throws \Exception|\Illuminate\Database\QueryException
-     * Throws an exception if an error occurs during the update.
+     * Throws an exception if an error occurs during creation.
      */
     public function updateRecord($payload, $id)
     {
         try {
-            $this->find($id)->update([
+            $query = tap($this->find($id))->update([
                 'full_name'     => $payload['full_name'],
                 'first_name'    => $payload['first_name'],
                 'last_name'     => $payload['last_name'],
-                'nickname'      => $payload['nickname'],
-                'email'         => $payload['email'],
-                'phone'         => $payload['phone'],
-                'password'      => bcrypt($payload['password']),
-                'profile_image' => $payload['profile_image'],
-                'role_id'       => $payload['roles_id'],
+                'role_id'       => $payload['role_id'],
             ]);
 
-            return True;
+            return $query->fresh();
         } catch (\Exception $exception) {
             $this->LogApiError($exception);
             return false;
@@ -385,9 +380,9 @@ class User extends Authenticatable
     public function deleteRecord(int $id)
     {
         try {
-            $this->find($id)->delete();
+            $query = tap($this->find($id))->delete();
 
-            return true;
+            return $query->fresh();
         } catch (\Exception $exception) {
             $this->LogApiError($exception);
             return false;

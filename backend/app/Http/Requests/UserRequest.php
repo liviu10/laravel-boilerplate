@@ -22,7 +22,7 @@ class UserRequest extends FormRequest
      *
      * @return array
      */
-    public function rules()
+    static function rules()
     {
         $currentRouteName = Route::current()->getName();
         $rules = [];
@@ -33,11 +33,8 @@ class UserRequest extends FormRequest
             $rules = [
                 'first_name' => 'required|string|min:3|max:100|regex:/^[a-zA-Z\s]+$/',
                 'last_name' => 'required|string|min:3|max:100|regex:/^[a-zA-Z\s]+$/',
-                'nickname' => 'required|string|min:3|max:100',
-                'email' => 'required|string|min:3|max:255|unique:user',
-                'phone' => 'sometimes|string|min:7|max:15|regex:/^\+?(?:[0-9][ .-]?){6,14}[0-9]$/',
-                'password' => 'required|string|min:8|confirmed',
-                'profile_image' => 'sometimes|image|mimes:jpeg,jpg,png,gif,webp,bmp,svg,tiff',
+                'email' => 'required|string|min:3|max:255|unique:users',
+                'role_id' => 'required',
             ];
         }
 
@@ -47,11 +44,7 @@ class UserRequest extends FormRequest
             $rules = [
                 'first_name' => 'sometimes|string|min:3|max:100|regex:/^[a-zA-Z\s]+$/',
                 'last_name' => 'sometimes|string|min:3|max:100|regex:/^[a-zA-Z\s]+$/',
-                'nickname' => 'sometimes|string|min:3|max:100',
-                'email' => 'sometimes|string|min:3|max:255',
-                'phone' => 'sometimes|string|min:7|max:15|regex:/^\+?(?:[0-9][ .-]?){6,14}[0-9]$/',
-                'password' => 'sometimes|string|min:8|confirmed',
-                'profile_image' => 'sometimes|image|mimes:jpeg,jpg,png,gif,webp,bmp,svg,tiff',
+                'role_id' => 'sometimes',
             ];
         }
 
@@ -74,6 +67,21 @@ class UserRequest extends FormRequest
                 'nickname' => 'sometimes|string|min:3|max:100',
                 'email' => 'sometimes|string|min:3|max:255',
                 'password' => 'sometimes|string|min:8|confirmed',
+            ];
+        }
+
+        // Validation rules when updating user profile
+        if ($currentRouteName === 'users.profile')
+        {
+            $rules = [
+                'first_name' => 'sometimes|string|min:3|max:100|regex:/^[a-zA-Z\s]+$/',
+                'last_name' => 'sometimes|string|min:3|max:100|regex:/^[a-zA-Z\s]+$/',
+                'nickname' => 'sometimes|string|min:3|max:100',
+                'email' => 'sometimes|string|min:3|max:255',
+                'phone' => 'sometimes|string|min:7|max:15|regex:/^\+?(?:[0-9][ .-]?){6,14}[0-9]$/',
+                'password' => 'sometimes|string|min:8|confirmed',
+                'profile_image' => 'sometimes|image|mimes:jpeg,jpg,png,gif,webp,bmp,svg,tiff',
+                'role_id' => 'sometimes',
             ];
         }
 

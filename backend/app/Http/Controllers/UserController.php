@@ -23,8 +23,9 @@ class UserController extends Controller
      * Fetch current authenticated user from the database. HTTP request [GET].
      * @return \Illuminate\Http\Response
      */
-    public function currentAuthUser()
-    {
-        return $this->userService->handleCurrentAuthUser();
-    }
+    // TODO: Improve this when finishing with the login system
+    // public function currentAuthUser()
+    // {
+    //     return $this->userService->handleCurrentAuthUser();
+    // }
 }

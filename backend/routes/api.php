@@ -68,7 +68,8 @@ Route::group([ 'prefix' => config('app.version') ], function () {
         // Application's user settings api endpoints
         Route::group([ 'prefix' => '/settings' ], function () {
             // Users
-            Route::get('/users/current-auth', [UserController::class, 'currentAuthUser']);
+            // TODO: Improve this when finishing with the login system
+            // Route::get('/users/current-auth', [UserController::class, 'currentAuthUser']);
             Route::apiResource('/users', UserController::class);
             // User role types
             Route::apiResource('/roles', RoleController::class);
