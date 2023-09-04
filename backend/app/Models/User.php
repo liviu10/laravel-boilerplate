@@ -38,8 +38,11 @@ use App\Traits\FilterAvailableFields;
  */
 class User extends Authenticatable
 {
-    use HasApiTokens, HasFactory, Notifiable,
-    FilterAvailableFields, LogApiError;
+    use HasApiTokens,
+        HasFactory,
+        Notifiable,
+        FilterAvailableFields,
+        LogApiError;
 
     /**
      * The primary key associated with the table.
@@ -254,7 +257,7 @@ class User extends Authenticatable
      * @throws \Exception|\Illuminate\Database\QueryException
      * Throws an exception if an error occurs during retrieval.
      */
-    public function fetchAllRecords($search = [])
+    public function fetchAllRecords($search = [], string|null $type = null)
     {
         try {
             $query = $this->select('id', 'full_name', 'nickname', 'email', 'created_at');
@@ -269,7 +272,11 @@ class User extends Authenticatable
                 }
             }
 
-            return $query->paginate(15);
+            if ($type === 'paginate') {
+                return $query->paginate(15);
+            } else {
+                return $query->get();
+            }
         } catch (\Exception $exception) {
             $this->LogApiError($exception);
             return false;
@@ -320,19 +327,29 @@ class User extends Authenticatable
      * @throws \Exception|\Illuminate\Database\QueryException
      * Throws an exception if an error occurs during retrieval.
      */
-    public function fetchSingleRecord($id)
+    public function fetchSingleRecord($id, string|null $type = null)
     {
         try {
-            return $this->select('*')
-                ->where('id', '=', $id)
-                ->with([
+            $query = $this->select('*')->where('id', '=', $id);
+
+            if ($type === 'relation') {
+                $query->with([
                     'role' => function ($query) {
                         $query->select('id', 'name', 'is_active')
                             ->where('is_active', true)
-                            ->with('permissions');
+                            ->with([
+                                'permissions' => function ($query) {
+                                    $query->select('id', 'name', 'is_active', 'role_id')
+                                        ->where('is_active', true);
+                                }
+                            ]);
                     }
-                ])
-                ->get();
+                ]);
+
+                return $query->get();
+            } else {
+                return $query->get();
+            }
         } catch (\Exception $exception) {
             $this->LogApiError($exception);
             return false;
@@ -422,22 +439,5 @@ class User extends Authenticatable
     public function getStatisticalIndicators()
     {
         return $this->statisticalIndicators;
-    }
-
-    public function fetchAllRecordDetails()
-    {
-        try {
-            return $this->select('*')->with([
-                    'role' => function ($query) {
-                        $query->select('id', 'name', 'is_active')->where('is_active', true);
-                    }
-                ])->get()->toArray();
-        } catch (\Exception $exception) {
-            $this->LogApiError($exception);
-            return false;
-        } catch (\Illuminate\Database\QueryException $exception) {
-            $this->LogApiError($exception);
-            return false;
-        }
     }
 }

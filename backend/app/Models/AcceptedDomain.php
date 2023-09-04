@@ -70,9 +70,9 @@ class AcceptedDomain extends Model
     ];
 
     /**
-    * The attributes that are mass assignable.
-    * @var string
-    */
+     * The attributes that are mass assignable.
+     * @var string
+     */
     protected $attributes = [
         'is_active' => false,
     ];
@@ -113,10 +113,9 @@ class AcceptedDomain extends Model
      * @return \Illuminate\Database\Eloquent\Collection|bool
      * The collection of records on success, or false on failure.
      */
-    public function fetchAllRecords($search)
+    public function fetchAllRecords($search = [], string|null $type = null)
     {
-        try
-        {
+        try {
             $query = $this->select('id', 'domain', 'type', 'is_active');
 
             if (!empty($search)) {
@@ -129,10 +128,12 @@ class AcceptedDomain extends Model
                 }
             }
 
-            return $query->paginate(15);
-        }
-        catch (\Illuminate\Database\QueryException $mysqlError)
-        {
+            if ($type === 'paginate') {
+                return $query->paginate(15);
+            } else {
+                return $query->get();
+            }
+        } catch (\Illuminate\Database\QueryException $mysqlError) {
             $this->LogApiError($mysqlError);
             return False;
         }
@@ -148,83 +149,77 @@ class AcceptedDomain extends Model
      */
     public function createRecord($payload)
     {
-        try
-        {
-            $this->create([
+        try {
+            $query = $this->create([
                 'domain'    => $payload['domain'],
                 'type'      => $payload['type'],
                 'user_id'   => $payload['user_id'],
                 'is_active' => $payload['is_active'],
             ]);
 
-            return True;
-        }
-        catch (\Exception $exception)
-        {
+            return $query;
+        } catch (\Exception $exception) {
             $this->LogApiError($exception);
             return false;
-        }
-        catch (\Illuminate\Database\QueryException $exception)
-        {
+        } catch (\Illuminate\Database\QueryException $exception) {
             $this->LogApiError($exception);
             return false;
         }
     }
 
     /**
-     * SQL query to fetch a single record from the database.
-     * @param  int  $id
-     * @return  Collection|Bool
+     * Get record details from the database.
+     * @return \Illuminate\Database\Eloquent\Collection|array|boolean
+     * Returns a collection of record with their associated relation.
+     * If an error occurs during retrieval, a boolean will be returned.
+     * @throws \Exception|\Illuminate\Database\QueryException
+     * Throws an exception if an error occurs during retrieval.
      */
-    public function fetchSingleRecord($id)
+    public function fetchSingleRecord($id, string|null $type = null)
     {
-        try
-        {
-            return $this->select('*')
-                        ->where('id', '=', $id)
-                        ->with([
-                            'user' => function ($query) {
-                                $query->select('id', 'full_name');
-                            }
-                        ])
-                        ->get();
-        }
-        catch (\Illuminate\Database\QueryException $mysqlError)
-        {
+        try {
+            $query = $this->select('*')->where('id', '=', $id);
+
+            if ($type === 'relation') {
+                $query->with([
+                    'user' => function ($query) {
+                        $query->select('id', 'full_name');
+                    }
+                ]);
+
+                return $query->get();
+            } else {
+                return $query->get();
+            }
+        } catch (\Illuminate\Database\QueryException $mysqlError) {
             $this->LogApiError($mysqlError);
             return False;
         }
     }
 
     /**
-     * Update the record.
-     * @param array $payload An associative array of values to update the record.
-     * @param int $id The ID of the user to update.
-     * @return bool Returns true if the update was successful,
-     * or an boolean otherwise.
+     * Update an existing record.
+     * @param array $payload An associative array of values to create a new record.
+     * @return \App\Models\AcceptedDomain|bool Returns a record object if the creation was successful,
+     * or a boolean otherwise.
      * @throws \Exception|\Illuminate\Database\QueryException
-     * Throws an exception if an error occurs during the update.
+     * Throws an exception if an error occurs during creation.
      */
     public function updateRecord($payload, $id)
     {
-        try
-        {
-            $this->find($id)->update([
+        try {
+            $query = tap($this->find($id))->update([
                 'domain'    => $payload['domain'],
                 'type'      => $payload['type'],
                 'user_id'   => $payload['user_id'],
                 'is_active' => $payload['is_active'],
             ]);
 
-            return True;
-        }
-        catch (\Exception $exception)
-        {
+            return $query->fresh();
+        } catch (\Exception $exception) {
             $this->LogApiError($exception);
             return false;
-        }
-        catch (\Illuminate\Database\QueryException $exception)
-        {
+        } catch (\Illuminate\Database\QueryException $exception) {
             $this->LogApiError($exception);
             return false;
         }
@@ -239,19 +234,14 @@ class AcceptedDomain extends Model
      */
     public function deleteRecord(int $id)
     {
-        try
-        {
+        try {
             $this->find($id)->delete();
 
             return true;
-        }
-        catch (\Exception $exception)
-        {
+        } catch (\Exception $exception) {
             $this->LogApiError($exception);
             return false;
-        }
-        catch (\Illuminate\Database\QueryException $exception)
-        {
+        } catch (\Illuminate\Database\QueryException $exception) {
             $this->LogApiError($exception);
             return false;
         }
@@ -285,14 +275,11 @@ class AcceptedDomain extends Model
      */
     public function checkEmailProvider($domain)
     {
-        try
-        {
+        try {
             $result = $this->select('id', 'domain')->whereIn('domain', ['.' . $domain[0], '.' . $domain[1]])->get()->toArray();
 
             return $result;
-        }
-        catch (\Illuminate\Database\QueryException $mysqlError)
-        {
+        } catch (\Illuminate\Database\QueryException $mysqlError) {
             $this->LogApiError($mysqlError);
             return false;
         }

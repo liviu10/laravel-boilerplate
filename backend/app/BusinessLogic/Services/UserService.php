@@ -65,7 +65,7 @@ class UserService implements UserInterface
     public function handleIndex($search)
     {
         $apiDisplayAllRecords = $this->apiResponse->generateApiResponse(
-            $this->modelName->fetchAllRecords($search),
+            $this->modelName->fetchAllRecords($search, 'paginate'),
             'get',
             $this->modelName->getFields(),
             class_basename($this->modelName),
@@ -108,7 +108,10 @@ class UserService implements UserInterface
      */
     public function handleShow($id)
     {
-        $apiDisplaySingleRecord = $this->apiResponse->generateApiResponse($this->modelName->fetchSingleRecord($id), 'get');
+        $apiDisplaySingleRecord = $this->apiResponse->generateApiResponse(
+            $this->modelName->fetchSingleRecord($id, 'relation'),
+            'get'
+        );
 
         return $apiDisplaySingleRecord;
     }
@@ -149,13 +152,20 @@ class UserService implements UserInterface
         return $apiDeleteRecord;
     }
 
+    /**
+     * Retrieve statistical indicators based on the fetched record details.
+     * This function calculates and returns statistical indicators based on the data
+     * retrieved using the modelName's `fetchAllRecordDetails` and `getStatisticalIndicators` methods.
+     * @return array An associative array containing statistical indicators, where each key represents an indicator name
+     * and each value is an associative array with 'number' and 'percentage' keys (depending on the type of indicator).
+     */
     public function getStatisticalIndicators()
     {
-        $apiAllRecordDetails = $this->modelName->fetchAllRecordDetails();
+        $apiAllRecordDetails = $this->modelName->fetchAllRecords();
         $statisticalIndicators = $this->modelName->getStatisticalIndicators();
         $indicators = [];
 
-        foreach ($apiAllRecordDetails as $record)
+        foreach ($apiAllRecordDetails->toArray() as $record)
         {
             $indicators += [];
             foreach ($statisticalIndicators as $key => $options)

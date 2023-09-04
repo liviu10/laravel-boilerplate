@@ -4,6 +4,7 @@ namespace App\BusinessLogic\Services;
 
 use App\Traits\ApiResponseMessage;
 use App\BusinessLogic\Interfaces\AcceptedDomainInterface;
+use Illuminate\Support\Facades\Auth;
 use App\Library\ApiResponse;
 use App\Http\Requests\AcceptedDomainRequest;
 use App\Models\AcceptedDomain;
@@ -37,7 +38,8 @@ class AcceptedDomainService implements AcceptedDomainInterface
     public function handleIndex($search)
     {
         $apiDisplayAllRecords = $this->apiResponse->generateApiResponse(
-            $this->modelName->fetchAllRecords($search),
+            $this->modelName->fetchAllRecords($search, 'paginate'),
+            'get',
             $this->modelName->getFields(),
             class_basename($this->modelName),
             $this->modelName->getUniqueDomainTypes(),
@@ -49,27 +51,21 @@ class AcceptedDomainService implements AcceptedDomainInterface
 
     /**
      * Store a new record in the database.
-     * @param  AcceptedDomainRequest  $request
+     * @param array $request An associative array of values to create a new record.
      * @return \Illuminate\Http\Response
      */
-    public function handleStore(AcceptedDomainRequest $request)
+    public function handleStore($request)
     {
         $apiInsertRecord = [
-            'domain'    => substr($request->get('domain'), 0) === '.' ? $request->get('domain') : '.' . $request->get('domain'),
-            'type'      => $request->get('type'),
-            'user_id'   => $request->get('user_id'),
-            'is_active' => $request->get('is_active'),
+            'domain'    => '.' . $request['domain'],
+            'type'      => $request['type'],
+            'user_id'   => Auth::user() ? Auth::user()->id : 1,
+            'is_active' => $request['is_active'],
         ];
-        $saveRecord = $this->modelName->createRecord($apiInsertRecord);
+        $createdRecord = $this->modelName->createRecord($apiInsertRecord);
+        $apiCreatedRecord = $this->apiResponse->generateApiResponse($createdRecord->toArray(), 'create');
 
-        if ($saveRecord === true)
-        {
-            return response($this->handleResponse('success'), 201);
-        }
-        else
-        {
-            return response($this->handleResponse('error_message'), 500);
-        }
+        return $apiCreatedRecord;
     }
 
     /**
@@ -79,50 +75,32 @@ class AcceptedDomainService implements AcceptedDomainInterface
      */
     public function handleShow($id)
     {
-        $apiDisplaySingleRecord = $this->modelName->fetchSingleRecord($id);
+        $apiDisplaySingleRecord = $this->apiResponse->generateApiResponse(
+            $this->modelName->fetchSingleRecord($id, 'relation'),
+            'get'
+        );
 
-        if ($apiDisplaySingleRecord instanceof Collection)
-        {
-            if ($apiDisplaySingleRecord->isEmpty())
-            {
-                return response($this->handleResponse('not_found'), 404);
-            }
-            else
-            {
-                return response($this->handleResponse('success', $apiDisplaySingleRecord), 200);
-            }
-        }
-        else
-        {
-            return response($this->handleResponse('error_message'), 500);
-        }
+        return $apiDisplaySingleRecord;
     }
 
     /**
      * Update the specified resource in storage.
-     * @param  AcceptedDomainRequest  $request
+     * @param array $request An associative array of values to create a new record.
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function handleUpdate(AcceptedDomainRequest $request, $id)
+    public function handleUpdate($request, $id)
     {
         $apiUpdateRecord = [
-            'domain'    => substr($request->get('domain'), 0) === '.' ? $request->get('domain') : '.' . $request->get('domain'),
-            'type'      => $request->get('type'),
-            'user_id'   => $request->get('user_id'),
-            'is_active' => $request->get('is_active'),
+            'domain'    => $request['domain'],
+            'type'      => $request['type'],
+            'user_id'   => Auth::user() ? Auth::user()->id : 1,
+            'is_active' => $request['is_active'],
         ];
-        $apiUpdateRecord['slug'] = strtolower($request->get('name'));
-        $updateRecord = $this->modelName->createRecord($apiUpdateRecord, $id);
+        $updatedRecord = $this->modelName->updateRecord($apiUpdateRecord, $id);
+        $apiCreatedRecord = $this->apiResponse->generateApiResponse($updatedRecord->toArray(), 'update');
 
-        if ($updateRecord === true)
-        {
-            return response($this->handleResponse('success'), 201);
-        }
-        else
-        {
-            return response($this->handleResponse('error_message'), 500);
-        }
+        return $apiCreatedRecord;
     }
 
     /**
@@ -133,23 +111,12 @@ class AcceptedDomainService implements AcceptedDomainInterface
     public function handleDestroy($id)
     {
         $apiDisplaySingleRecord = $this->modelName->fetchSingleRecord($id);
-
-        if ($apiDisplaySingleRecord instanceof Collection)
+        if ($apiDisplaySingleRecord && $apiDisplaySingleRecord->isNotEmpty())
         {
-            if ($apiDisplaySingleRecord->isEmpty())
-            {
-                return response($this->handleResponse('not_found'), 404);
-            }
-            else
-            {
-                $this->modelName->deleteRecord($id);
-                return response($this->handleResponse('success'), 200);
-            }
+            $this->modelName->deleteRecord($id);
         }
-        else
-        {
-            return response($this->handleResponse('error_message'), 500);
-        }
+        $apiDeleteRecord = $this->apiResponse->generateApiResponse($apiDisplaySingleRecord, 'delete');
+        return $apiDeleteRecord;
     }
 
     public function getStatisticalIndicators()
@@ -163,10 +130,8 @@ class AcceptedDomainService implements AcceptedDomainInterface
         $numberOfInactiveRecords = 0;
 
         foreach ($apiAllRecordDetails as $item) {
-            if ($item['type'])
-            {
-                foreach ($types as $type)
-                {
+            if ($item['type']) {
+                foreach ($types as $type) {
                     $typeOptions += [
                         (string)$type['type'] => []
                     ];
