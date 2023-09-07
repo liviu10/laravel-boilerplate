@@ -2,7 +2,7 @@
 
 namespace App\BusinessLogic\Services;
 
-use App\Traits\ApiResponseMessage;
+use App\Traits\ApiStatisticalIndicators;
 use App\BusinessLogic\Interfaces\MediaInterface;
 use App\Library\ApiResponse;
 use App\Http\Requests\MediaRequest;
@@ -14,7 +14,7 @@ use Illuminate\Database\Eloquent\Collection;
  */
 class MediaService implements MediaInterface
 {
-    use ApiResponseMessage;
+    use ApiStatisticalIndicators;
 
     protected $modelName;
     protected $apiResponse;

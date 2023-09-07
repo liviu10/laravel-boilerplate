@@ -200,6 +200,11 @@ class DataModel
                             'value' => $indicatorValue['number'],
                             'percentage' => round($indicatorValue['percentage'], 2)
                         ];
+                        if (array_key_exists('options', $indicatorValue)) {
+                            $model += [
+                                'options' => $indicatorValue['options']
+                            ];
+                        }
                     }
                     else
                     {

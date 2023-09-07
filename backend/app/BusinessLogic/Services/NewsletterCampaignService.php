@@ -2,7 +2,7 @@
 
 namespace App\BusinessLogic\Services;
 
-use App\Traits\ApiResponseMessage;
+use App\Traits\ApiStatisticalIndicators;
 use App\BusinessLogic\Interfaces\NewsletterCampaignInterface;
 use App\Library\ApiResponse;
 use App\Http\Requests\NewsletterCampaignRequest;
@@ -14,7 +14,7 @@ use Illuminate\Database\Eloquent\Collection;
  */
 class NewsletterCampaignService implements NewsletterCampaignInterface
 {
-    use ApiResponseMessage;
+    use ApiStatisticalIndicators;
 
     protected $modelName;
     protected $apiResponse;

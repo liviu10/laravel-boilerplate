@@ -89,30 +89,31 @@ class User extends Authenticatable
      * @var array<string>
      */
     protected $statisticalIndicators = [
-        'number_of_users' => [
-            'field' => 'id',
-            'type'  => 'count'
-        ],
-        'users_with_missing_phone' => [
-            'field' => 'phone',
-            'type'  => 'count',
-            'condition' => null
-        ],
-        'users_with_missing_profile_image' => [
-            'field' => 'profile_image',
-            'type'  => 'count',
-            'condition' => null
-        ],
-        'users_with_unverified_account' => [
-            'field' => 'email_verified_at',
-            'type'  => 'count',
-            'condition' => null
-        ],
-        'number_of_users_by_role' => [
-            'field' => 'role_id',
-            'type'  => 'custom',
-            'condition' => 'foreign_key'
-        ],
+        'phone',
+        'profile_image',
+        'email_verified_at',
+        'role_id',
+        // 'number_of_users' => [
+        //     'field' => 'id',
+        //     'type'  => 'count',
+        // ],
+        // 'users_with_missing_phone' => [
+        //     'field' => 'phone',
+        //     'type'  => 'count',
+        // ],
+        // 'users_with_missing_profile_image' => [
+        //     'field' => 'profile_image',
+        //     'type'  => 'count',
+        // ],
+        // 'users_with_unverified_account' => [
+        //     'field' => 'email_verified_at',
+        //     'type'  => 'count',
+        // ],
+        // 'number_of_users_by_role' => [
+        //     'field' => 'role_id',
+        //     'type'  => 'custom',
+        //     'condition' => 'foreign_key'
+        // ],
     ];
 
     /**
@@ -274,6 +275,8 @@ class User extends Authenticatable
 
             if ($type === 'paginate') {
                 return $query->paginate(15);
+            } elseif ($type === 'statistics') {
+                return $this->select('*')->get();
             } else {
                 return $query->get();
             }

@@ -2,7 +2,7 @@
 
 namespace App\BusinessLogic\Services;
 
-use App\Traits\ApiResponseMessage;
+use App\Traits\ApiStatisticalIndicators;
 use App\BusinessLogic\Interfaces\AppreciationInterface;
 use App\Library\ApiResponse;
 use App\Http\Requests\AppreciationRequest;
@@ -14,7 +14,7 @@ use Illuminate\Database\Eloquent\Collection;
  */
 class AppreciationService implements AppreciationInterface
 {
-    use ApiResponseMessage;
+    use ApiStatisticalIndicators;
 
     protected $modelName;
     protected $apiResponse;

@@ -2,7 +2,7 @@
 
 namespace App\BusinessLogic\Services;
 
-use App\Traits\ApiResponseMessage;
+use App\Traits\ApiStatisticalIndicators;
 use App\BusinessLogic\Interfaces\UserInterface;
 use App\Library\ApiResponse;
 use App\Models\User;
@@ -14,7 +14,7 @@ use Illuminate\Database\Eloquent\Collection;
  */
 class UserService implements UserInterface
 {
-    use ApiResponseMessage;
+    use ApiStatisticalIndicators;
 
     protected $modelName;
     protected $modelNameRole;
@@ -161,45 +161,16 @@ class UserService implements UserInterface
      */
     public function getStatisticalIndicators()
     {
-        $apiAllRecordDetails = $this->modelName->fetchAllRecords();
+        $apiAllRecordDetails = $this->modelName->fetchAllRecords([], 'statistics');
         $statisticalIndicators = $this->modelName->getStatisticalIndicators();
-        $indicators = [];
+        $options = [
+            'role_id' => $this->modelNameRole->fetchUserRoles()
+        ];
 
-        foreach ($apiAllRecordDetails->toArray() as $record)
-        {
-            $indicators += [];
-            foreach ($statisticalIndicators as $key => $options)
-            {
-                $indicators += [
-                    (string)$key => []
-                ];
-                if ($options['type'] === 'count')
-                {
-                    if (!array_key_exists('condition', $options))
-                    {
-                        $indicators[(string)$key]['number'] = count($apiAllRecordDetails);
-                        $indicators[(string)$key]['percentage'] = null;
-                    }
-                    else
-                    {
-                        if (array_key_exists($options['field'], $record))
-                        {
-                            $indicators[(string)$key]['number'] = null;
-                            $indicators[(string)$key]['percentage'] = null;
-                        }
-                    }
-                }
-                elseif ($options['type'] === 'custom')
-                {
-                    if ($options['condition'] === 'foreign_key')
-                    {
-                        $indicators[(string)$key]['number'] = null;
-                        $indicators[(string)$key]['percentage'] = null;
-                    }
-                }
-            }
-        }
-
-        return $indicators;
+        return $this->handleStatisticalIndicators(
+            $apiAllRecordDetails,
+            $statisticalIndicators,
+            $options
+        );
     }
 }

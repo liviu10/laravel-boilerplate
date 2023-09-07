@@ -2,11 +2,10 @@
 
 namespace App\BusinessLogic\Services;
 
-use App\Traits\ApiResponseMessage;
+use App\Traits\ApiStatisticalIndicators;
 use App\BusinessLogic\Interfaces\AcceptedDomainInterface;
 use Illuminate\Support\Facades\Auth;
 use App\Library\ApiResponse;
-use App\Http\Requests\AcceptedDomainRequest;
 use App\Models\AcceptedDomain;
 use Illuminate\Database\Eloquent\Collection;
 
@@ -15,7 +14,7 @@ use Illuminate\Database\Eloquent\Collection;
  */
 class AcceptedDomainService implements AcceptedDomainInterface
 {
-    use ApiResponseMessage;
+    use ApiStatisticalIndicators;
 
     protected $modelName;
     protected $apiResponse;
@@ -119,52 +118,15 @@ class AcceptedDomainService implements AcceptedDomainInterface
         return $apiDeleteRecord;
     }
 
+    /**
+     * Retrieve statistical indicators based on the fetched record details.
+     * This function calculates and returns statistical indicators based on the data
+     * retrieved using the modelName's `fetchAllRecordDetails` and `getStatisticalIndicators` methods.
+     * @return array An associative array containing statistical indicators, where each key represents an indicator name
+     * and each value is an associative array with 'number' and 'percentage' keys (depending on the type of indicator).
+     */
     public function getStatisticalIndicators()
     {
-        $apiAllRecordDetails = $this->modelName->fetchAllRecordDetails();
-        $types = $this->modelName->getUniqueDomainTypes()['type'];
-
-        $numberOfRecords = count($apiAllRecordDetails);
-        $typeOptions = [];
-        $numberOfActiveRecords = 0;
-        $numberOfInactiveRecords = 0;
-
-        foreach ($apiAllRecordDetails as $item) {
-            if ($item['type']) {
-                foreach ($types as $type) {
-                    $typeOptions += [
-                        (string)$type['type'] => []
-                    ];
-                    $typeCount = 0;
-                    foreach ($apiAllRecordDetails as $innerItem) {
-                        $innerItem['type'] === $type['type'] ? $typeCount++ : null;
-                    }
-                    $typeOptions[(string)$type['type']]['number'] = $typeCount;
-                    $typeOptions[(string)$type['type']]['percentage'] = round(($typeCount / $numberOfRecords) * 100, 2);
-                }
-            }
-
-            $item['is_active'] ? $numberOfActiveRecords++ : $numberOfInactiveRecords++;
-        }
-
-        $indicators = [
-            'number_of_accepted_domains' => [
-                'number'     => $numberOfRecords,
-                'percentage' => null,
-            ],
-            'number_of_accepted_domains_by_type' => $typeOptions,
-            'number_of_accepted_domains_by_status' => [
-                'active' => [
-                    'number'     => $numberOfActiveRecords,
-                    'percentage' => null,
-                ],
-                'inactive' => [
-                    'number'     => $numberOfInactiveRecords,
-                    'percentage' => null,
-                ],
-            ],
-        ];
-
-        return $indicators;
+        
     }
 }

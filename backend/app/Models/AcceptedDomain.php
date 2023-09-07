@@ -70,6 +70,27 @@ class AcceptedDomain extends Model
     ];
 
     /**
+     * The statistical indicators.
+     * @var array<string>
+     */
+    protected $statisticalIndicators = [
+        'number_of_accepted_domains' => [
+            'field' => 'id',
+            'type'  => 'count'
+        ],
+        'number_of_accepted_domains_by_type' => [
+            'field' => 'type',
+            'type'  => 'custom',
+            'condition' => 'enum',
+        ],
+        'number_of_accepted_domains_by_status' => [
+            'field' => 'status',
+            'type'  => 'custom',
+            'condition' => 'foreign_key'
+        ],
+    ];
+
+    /**
      * The attributes that are mass assignable.
      * @var string
      */
@@ -307,5 +328,14 @@ class AcceptedDomain extends Model
             $this->LogApiError($exception);
             return false;
         }
+    }
+
+    /**
+     * Get the statistical indicators for the model.
+     * @return array An array containing the statistical indicators for the model.
+     */
+    public function getStatisticalIndicators()
+    {
+        return $this->statisticalIndicators;
     }
 }
