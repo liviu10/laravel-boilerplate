@@ -37,9 +37,12 @@ class CommentService implements CommentInterface
     public function handleIndex($search)
     {
         $apiDisplayAllRecords = $this->apiResponse->generateApiResponse(
-            $this->modelName->fetchAllRecords($search),
+            $this->modelName->fetchAllRecords($search, 'paginate'),
+            'get',
             $this->modelName->getFields(),
             class_basename($this->modelName)
+            [],
+            $this->getStatisticalIndicators()
         );
 
         return $apiDisplayAllRecords;
@@ -47,18 +50,18 @@ class CommentService implements CommentInterface
 
     /**
      * Store a new record in the database.
-     * @param  CommentRequest  $request
+     * @param array $request An associative array of values to create a new record.
      * @return \Illuminate\Http\Response
      */
-    public function handleStore(CommentRequest $request)
+    public function handleStore($request)
     {
         $apiInsertRecord = [
-            'type'                => $request->get('type'),
-            'status'              => $request->get('status'),
-            'full_name'           => $request->get('full_name'),
-            'email'               => $request->get('email'),
-            'message'             => $request->get('message'),
-            'notify_new_comments' => $request->get('notify_new_comments') !== null ? $request->get('notify_new_comments') : false,
+            'type'                => $request['type'],
+            'status'              => $request['status'],
+            'full_name'           => $request['full_name'],
+            'email'               => $request['email'],
+            'message'             => $request['message'],
+            'notify_new_comments' => $request['notify_new_comments'] !== null ? $request['notify_new_comments'] : false,
             'content_id'          => 1,
             'user_id'             => 1,
         ];
@@ -102,19 +105,19 @@ class CommentService implements CommentInterface
 
     /**
      * Update the specified resource in storage.
-     * @param  CommentRequest  $request
+     * @param array $request An associative array of values to create a new record.
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function handleUpdate(CommentRequest $request, $id)
+    public function handleUpdate($request, $id)
     {
         $apiUpdateRecord = [
-            'type'                => $request->get('type'),
-            'status'              => $request->get('status'),
-            'full_name'           => $request->get('full_name'),
-            'email'               => $request->get('email'),
-            'message'             => $request->get('message'),
-            'notify_new_comments' => $request->get('notify_new_comments') !== null ? $request->get('notify_new_comments') : false,
+            'type'                => $request['type'],
+            'status'              => $request['status'],
+            'full_name'           => $request['full_name'],
+            'email'               => $request['email'],
+            'message'             => $request['message'],
+            'notify_new_comments' => $request['notify_new_comments'] !== null ? $request['notify_new_comments'] : false,
             'content_id'          => 1,
             'user_id'             => 1,
         ];
@@ -155,5 +158,27 @@ class CommentService implements CommentInterface
         {
             return response($this->handleResponse('error_message'), 500);
         }
+    }
+
+    /**
+     * Retrieve statistical indicators based on the fetched record details.
+     * This function calculates and returns statistical indicators based on the data
+     * retrieved using the modelName's `fetchAllRecordDetails` and `getStatisticalIndicators` methods.
+     * @return array An associative array containing statistical indicators, where each key represents an indicator name
+     * and each value is an associative array with 'number' and 'percentage' keys (depending on the type of indicator).
+     */
+    public function getStatisticalIndicators()
+    {
+        // $apiAllRecordDetails = $this->modelName->fetchAllRecords([], 'statistics');
+        // $statisticalIndicators = $this->modelName->getStatisticalIndicators();
+        // $options = [
+        //     'role_id' => $this->modelNameRole->fetchUserRoles()
+        // ];
+
+        // return $this->handleStatisticalIndicators(
+        //     $apiAllRecordDetails,
+        //     $statisticalIndicators,
+        //     $options
+        // );
     }
 }

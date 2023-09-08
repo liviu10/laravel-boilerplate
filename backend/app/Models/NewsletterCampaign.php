@@ -3,9 +3,13 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
+use App\Models\BaseModel;
 use App\Traits\LogApiError;
 use App\Traits\FilterAvailableFields;
+use Exception;
+use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Database\QueryException;
+use Illuminate\Pagination\LengthAwarePaginator;
 
 /**
  * Class NewsletterCampaign
@@ -30,7 +34,7 @@ use App\Traits\FilterAvailableFields;
  * @method updateRecord
  * @method deleteRecord
  */
-class NewsletterCampaign extends Model
+class NewsletterCampaign extends BaseModel
 {
     use HasFactory, FilterAvailableFields, LogApiError;
 
@@ -39,18 +43,6 @@ class NewsletterCampaign extends Model
      * @var string
      */
     protected $table = 'newsletter_campaigns';
-
-    /**
-     * The primary key associated with the table.
-     * @var string
-     */
-    protected $primaryKey = 'id';
-
-    /**
-     * The data type of the auto-incrementing ID.
-     * @var string
-     */
-    protected $keyType = 'int';
 
     /**
      * The foreign key associated with the table.
@@ -82,40 +74,32 @@ class NewsletterCampaign extends Model
     ];
 
     /**
-    * The attributes that are mass assignable.
-    * @var string
-    */
+     * The attributes that are mass assignable.
+     * @var string
+     */
     protected $attributes = [
         'is_active' => false,
     ];
 
     /**
-     * The attributes that should be cast.
-     * @var array<string, string>
+     * Get the type casts for the model attributes.
+     * This method allows you to customize the attribute type casts for the model.
+     * It merges the parent model's casts with any additional or modified casts
+     * specific to the child model.
+     * @return array
      */
-    protected $casts = [
-        'id'          => 'integer',
-        'is_active'   => 'boolean',
-        'valid_from'  => 'datetime:d.m.Y H:i',
-        'valid_to'    => 'datetime:d.m.Y H:i',
-        'occur_times' => 'integer',
-        'occur_week'  => 'integer',
-        'occur_day'   => 'integer',
-        'occur_time'  => 'time:H:i',
-        'created_at'  => 'datetime:d.m.Y H:i',
-        'updated_at'  => 'datetime:d.m.Y H:i',
-        'user_id'     => 'integer',
-    ];
-
-    /**
-     * The attributes that aren't mass assignable.
-     * @var array
-     */
-    protected $guarded = [
-        'id',
-        'created_at',
-        'updated_at',
-    ];
+    protected function getCastAttributes()
+    {
+        $parentCasts = parent::getCastAttributes();
+        return array_merge($parentCasts, [
+            'valid_from'  => 'datetime:d.m.Y H:i',
+            'valid_to'    => 'datetime:d.m.Y H:i',
+            'occur_times' => 'integer',
+            'occur_week'  => 'integer',
+            'occur_day'   => 'integer',
+            'occur_time'  => 'time:H:i',
+        ]);
+    }
 
     /**
      * Eloquent relationship between contact me messages and users.
@@ -134,49 +118,51 @@ class NewsletterCampaign extends Model
     }
 
     /**
-     * Fetches all records from the database.
-     * @param  array  $search
-     * @return \Illuminate\Database\Eloquent\Collection|bool
-     * The collection of records on success, or false on failure.
+     * Fetch records from the database based on optional search criteria.
+     * @param array $search An associative array of search criteria (field => value).
+     * @param string|null $type The fetch type: 'paginate'for paginated results or null for a collection.
+     * @return \Illuminate\Pagination\LengthAwarePaginator|\Illuminate\Support\Collection|bool
+     * A paginated result, a collection, or `false` if an error occurs.
      */
-    public function fetchAllRecords($search)
+    public function fetchAllRecords(array $search = [], string|null $type = null): LengthAwarePaginator|Collection|bool
     {
-        try
-        {
+        try {
             $query = $this->select('id', 'name', 'valid_from', 'valid_to', 'is_active');
 
             if (!empty($search)) {
                 foreach ($search as $field => $value) {
-                    if ($field === 'id') {
-                        $query->where($field, '=', $value);
-                    } else {
+                    if ($field === 'description') {
                         $query->where($field, 'LIKE', '%' . $value . '%');
+                    } else {
+                        $query->where($field, '=', $value);
                     }
                 }
             }
 
-            return $query->paginate(15);
-        }
-        catch (\Illuminate\Database\QueryException $mysqlError)
-        {
-            $this->LogApiError($mysqlError);
-            return False;
+            if ($type === 'paginate') {
+                return $query->paginate(15);
+            } else {
+                return $query->get();
+            }
+        } catch (Exception $exception) {
+            $this->LogApiError($exception);
+            return false;
+        } catch (QueryException $exception) {
+            $this->LogApiError($exception);
+            return false;
         }
     }
 
     /**
-     * Create a new record.
-     * @param array $payload An associative array of values to create a new record.
-     * @return \App\Models\ContactMe|bool Returns a user object if the creation was successful,
-     * or a boolean otherwise.
-     * @throws \Exception|\Illuminate\Database\QueryException
-     * Throws an exception if an error occurs during creation.
+     * Create a new record in the database.
+     * @param array $payload An associative array containing record data.
+     * @return \App\Models\NewsletterCampaign|bool The newly created
+     * User instance, or `false` if an error occurs.
      */
-    public function createRecord($payload)
+    public function createRecord(array $payload): NewsletterCampaign|bool
     {
-        try
-        {
-            $this->create([
+        try {
+            $query = $this->create([
                 'name'        => $payload['name'],
                 'description' => $payload['description'],
                 'is_active'   => $payload['is_active'],
@@ -189,62 +175,61 @@ class NewsletterCampaign extends Model
                 'user_id'     => $payload['user_id'],
             ]);
 
-            return True;
-        }
-        catch (\Exception $exception)
-        {
+            return $query;
+        } catch (Exception $exception) {
             $this->LogApiError($exception);
             return false;
-        }
-        catch (\Illuminate\Database\QueryException $exception)
-        {
+        } catch (QueryException $exception) {
             $this->LogApiError($exception);
             return false;
         }
     }
 
     /**
-     * SQL query to fetch a single record from the database.
-     * @param  int  $id
-     * @return  Collection|Bool
+     * Fetch a single record from the database by its ID.
+     * @param int $id The unique identifier of the record to fetch.
+     * @param string|null $type The fetch type: 'relation' to include
+     * related data or null for just the record.
+     * @return \Illuminate\Support\Collection|bool The fetched record or
+     * related data as a Collection, or `false` if an error occurs.
      */
-    public function fetchSingleRecord($id)
+    public function fetchSingleRecord(int $id, string|null $type = null): Collection|bool
     {
-        try
-        {
-            return $this->select('*')
-                        ->where('id', '=', $id)
-                        ->with([
-                            'newsletter_subscribers' => function ($query) {
-                                $query->select('id', 'newsletter_campaign_id', 'full_name', 'email_address', 'privacy_policy');
-                            },
-                            'user' => function ($query) {
-                                $query->select('id', 'full_name');
-                            }
-                        ])
-                        ->get();
-        }
-        catch (\Illuminate\Database\QueryException $mysqlError)
-        {
-            $this->LogApiError($mysqlError);
-            return False;
+        try {
+            $query = $this->select('*')->where('id', '=', $id);
+
+            if ($type === 'relation') {
+                $query->with([
+                    'newsletter_subscribers' => function ($query) {
+                        $query->select('id', 'newsletter_campaign_id', 'full_name', 'email_address', 'privacy_policy');
+                    },
+                    'user' => function ($query) {
+                        $query->select('id', 'full_name');
+                    }
+                ]);
+                return $query->get();
+            } else {
+                return $query->get();
+            }
+        } catch (Exception $exception) {
+            $this->LogApiError($exception);
+            return false;
+        } catch (QueryException $exception) {
+            $this->LogApiError($exception);
+            return false;
         }
     }
 
     /**
-     * Update the record.
-     * @param array $payload An associative array of values to update the record.
-     * @param int $id The ID of the user to update.
-     * @return bool Returns true if the update was successful,
-     * or an boolean otherwise.
-     * @throws \Exception|\Illuminate\Database\QueryException
-     * Throws an exception if an error occurs during the update.
+     * Update a record in the database.
+     * @param array $payload An associative array containing the updated record data.
+     * @param int $id The unique identifier of the record to update.
+     * @return \App\Models\NewsletterCampaign|bool The freshly updated User instance, or `false` if an error occurs.
      */
-    public function updateRecord($payload, $id)
+    public function updateRecord(array $payload, int $id): NewsletterCampaign|bool
     {
-        try
-        {
-            $this->find($id)->update([
+        try {
+            $query = tap($this->find($id))->update([
                 'name'        => $payload['name'],
                 'description' => $payload['description'],
                 'is_active'   => $payload['is_active'],
@@ -257,42 +242,11 @@ class NewsletterCampaign extends Model
                 'user_id'     => $payload['user_id'],
             ]);
 
-            return True;
-        }
-        catch (\Exception $exception)
-        {
+            return $query->fresh();
+        } catch (Exception $exception) {
             $this->LogApiError($exception);
             return false;
-        }
-        catch (\Illuminate\Database\QueryException $exception)
-        {
-            $this->LogApiError($exception);
-            return false;
-        }
-    }
-
-    /**
-     * Deletes a record from the database.
-     * @param int $id The ID of the user to delete.
-     * @return bool Whether the user was successfully deleted.
-     * @throws \Exception|\Illuminate\Database\QueryException
-     * Throws an exception if an error occurs during deletion.
-     */
-    public function deleteRecord(int $id)
-    {
-        try
-        {
-            $this->find($id)->delete();
-
-            return true;
-        }
-        catch (\Exception $exception)
-        {
-            $this->LogApiError($exception);
-            return false;
-        }
-        catch (\Illuminate\Database\QueryException $exception)
-        {
+        } catch (QueryException $exception) {
             $this->LogApiError($exception);
             return false;
         }
@@ -302,7 +256,7 @@ class NewsletterCampaign extends Model
      * Get the fillable fields for the model.
      * @return array An array containing the fillable fields for the model.
      */
-    public function getFields()
+    public function getFields(): array
     {
         $fieldTypes = [
             'name'        => 'text',

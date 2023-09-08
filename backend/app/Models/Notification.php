@@ -3,9 +3,13 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
+use App\Models\BaseModel;
 use App\Traits\LogApiError;
 use App\Traits\FilterAvailableFields;
+use Exception;
+use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Database\QueryException;
+use Illuminate\Pagination\LengthAwarePaginator;
 
 /**
  * Class Notification
@@ -24,7 +28,7 @@ use App\Traits\FilterAvailableFields;
  * @method updateRecord
  * @method deleteRecord
  */
-class Notification extends Model
+class Notification extends BaseModel
 {
     use HasFactory, FilterAvailableFields, LogApiError;
 
@@ -33,18 +37,6 @@ class Notification extends Model
      * @var string
      */
     protected $table = 'notifications';
-
-    /**
-     * The primary key associated with the table.
-     * @var string
-     */
-    protected $primaryKey = 'id';
-
-    /**
-     * The data type of the auto-incrementing ID.
-     * @var string
-     */
-    protected $keyType = 'int';
 
     /**
      * The foreign key associated with the table.
@@ -93,25 +85,19 @@ class Notification extends Model
     ];
 
     /**
-     * The attributes that should be cast.
-     * @var array<string, string>
+     * Get the type casts for the model attributes.
+     * This method allows you to customize the attribute type casts for the model.
+     * It merges the parent model's casts with any additional or modified casts
+     * specific to the child model.
+     * @return array
      */
-    protected $casts = [
-        'id'         => 'integer',
-        'created_at' => 'datetime:d.m.Y H:i',
-        'updated_at' => 'datetime:d.m.Y H:i',
-        'user_id'    => 'integer',
-    ];
-
-    /**
-     * The attributes that aren't mass assignable.
-     * @var array
-     */
-    protected $guarded = [
-        'id',
-        'created_at',
-        'updated_at',
-    ];
+    protected function getCastAttributes()
+    {
+        $parentCasts = parent::getCastAttributes();
+        return array_merge($parentCasts, [
+            'user_id' => 'integer',
+        ]);
+    }
 
     /**
      * Eloquent relationship between accepted domains and users.
@@ -122,15 +108,15 @@ class Notification extends Model
     }
 
     /**
-     * Fetches all records from the database.
-     * @param  array  $search
-     * @return \Illuminate\Database\Eloquent\Collection|bool
-     * The collection of records on success, or false on failure.
+     * Fetch records from the database based on optional search criteria.
+     * @param array $search An associative array of search criteria (field => value).
+     * @param string|null $type The fetch type: 'paginate'for paginated results or null for a collection.
+     * @return \Illuminate\Pagination\LengthAwarePaginator|\Illuminate\Support\Collection|bool
+     * A paginated result, a collection, or `false` if an error occurs.
      */
-    public function fetchAllRecords($search)
+    public function fetchAllRecords(array $search = [], string|null $type = null): LengthAwarePaginator|Collection|bool
     {
-        try
-        {
+        try {
             $query = $this->select('*');
 
             if (!empty($search)) {
@@ -143,28 +129,30 @@ class Notification extends Model
                 }
             }
 
-            return $query->paginate(15);
-        }
-        catch (\Illuminate\Database\QueryException $mysqlError)
-        {
-            $this->LogApiError($mysqlError);
-            return False;
+            if ($type === 'paginate') {
+                return $query->paginate(15);
+            } else {
+                return $query->get();
+            }
+        } catch (Exception $exception) {
+            $this->LogApiError($exception);
+            return false;
+        } catch (QueryException $exception) {
+            $this->LogApiError($exception);
+            return false;
         }
     }
 
     /**
-     * Create a new record.
-     * @param array $payload An associative array of values to create a new record.
-     * @return \App\Models\Notification|bool Returns a user object if the creation was successful,
-     * or a boolean otherwise.
-     * @throws \Exception|\Illuminate\Database\QueryException
-     * Throws an exception if an error occurs during creation.
+     * Create a new record in the database.
+     * @param array $payload An associative array containing record data.
+     * @return \App\Models\Notification|bool The newly created
+     * User instance, or `false` if an error occurs.
      */
-    public function createRecord($payload)
+    public function createRecord(array $payload): Notification|bool
     {
-        try
-        {
-            $this->create([
+        try {
+            $query = $this->create([
                 'type'      => $payload['type'],
                 'condition' => $payload['condition'],
                 'title'     => $payload['title'],
@@ -172,34 +160,26 @@ class Notification extends Model
                 'user_id'   => $payload['user_id'],
             ]);
 
-            return True;
-        }
-        catch (\Exception $exception)
-        {
+            return $query;
+        } catch (Exception $exception) {
             $this->LogApiError($exception);
             return false;
-        }
-        catch (\Illuminate\Database\QueryException $exception)
-        {
+        } catch (QueryException $exception) {
             $this->LogApiError($exception);
             return false;
         }
     }
 
     /**
-     * Update the record.
-     * @param array $payload An associative array of values to update the record.
-     * @param int $id The ID of the user to update.
-     * @return bool Returns true if the update was successful,
-     * or an boolean otherwise.
-     * @throws \Exception|\Illuminate\Database\QueryException
-     * Throws an exception if an error occurs during the update.
+     * Update a record in the database.
+     * @param array $payload An associative array containing the updated record data.
+     * @param int $id The unique identifier of the record to update.
+     * @return \App\Models\Notification|bool The freshly updated User instance, or `false` if an error occurs.
      */
-    public function updateRecord($payload, $id)
+    public function updateRecord(array $payload, int $id): Notification|bool
     {
-        try
-        {
-            $this->find($id)->update([
+        try {
+            $query = tap($this->find($id))->update([
                 'type'      => $payload['type'],
                 'condition' => $payload['condition'],
                 'title'     => $payload['title'],
@@ -207,42 +187,11 @@ class Notification extends Model
                 'user_id'   => $payload['user_id'],
             ]);
 
-            return True;
-        }
-        catch (\Exception $exception)
-        {
+            return $query->fresh();
+        } catch (Exception $exception) {
             $this->LogApiError($exception);
             return false;
-        }
-        catch (\Illuminate\Database\QueryException $exception)
-        {
-            $this->LogApiError($exception);
-            return false;
-        }
-    }
-
-    /**
-     * Deletes a record from the database.
-     * @param int $id The ID of the user to delete.
-     * @return bool Whether the user was successfully deleted.
-     * @throws \Exception|\Illuminate\Database\QueryException
-     * Throws an exception if an error occurs during deletion.
-     */
-    public function deleteRecord(int $id)
-    {
-        try
-        {
-            $this->find($id)->delete();
-
-            return true;
-        }
-        catch (\Exception $exception)
-        {
-            $this->LogApiError($exception);
-            return false;
-        }
-        catch (\Illuminate\Database\QueryException $exception)
-        {
+        } catch (QueryException $exception) {
             $this->LogApiError($exception);
             return false;
         }
@@ -252,7 +201,7 @@ class Notification extends Model
      * Get the fillable fields for the model.
      * @return array An array containing the fillable fields for the model.
      */
-    public function getFields()
+    public function getFields(): array
     {
         $fieldTypes = [
             'type'      => 'text',
@@ -271,7 +220,7 @@ class Notification extends Model
      * Get the notification type options.
      * @return array An array containing the notification type options.
      */
-    public function getNotificationTypeOptions()
+    public function getNotificationTypeOptions(): array
     {
         return $this->notificationTypeOptions;
     }
@@ -280,7 +229,7 @@ class Notification extends Model
      * Get the notification condition options.
      * @return array An array containing the notification condition options.
      */
-    public function getNotificationConditionOptions()
+    public function getNotificationConditionOptions(): array
     {
         return $this->notificationConditionOptions;
     }

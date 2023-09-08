@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Collection;
 trait ApiStatisticalIndicators
 {
     public function handleStatisticalIndicators(
-        Collection $apiAllRecordsDetails,
+        Collection|array $apiAllRecordsDetails,
         array $apiStatisticalIndicators,
         array|null $options = null
     ): array {
@@ -32,7 +32,12 @@ trait ApiStatisticalIndicators
                 $indicatorOptions = [];
                 foreach ($options[$indicator] as $option) {
                     $count = $apiAllRecordsDetails->filter(function ($record) use ($option, $indicator) {
-                        return $record[$indicator] === $option['id'];
+                        dd($record[$indicator], $option);
+                        if ($indicator === 'is_active') {
+                            return $record[$indicator] === (bool)$option['id'];
+                        } else {
+                            return $record[$indicator] === $option['id'];
+                        }
                     })->count();
 
                     $indicatorOptions[] = [

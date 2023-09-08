@@ -3,8 +3,12 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
+use App\Models\BaseModel;
 use App\Traits\LogApiError;
+use Exception;
+use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Database\QueryException;
+use Illuminate\Pagination\LengthAwarePaginator;
 
 /**
  * Class Permission
@@ -23,7 +27,7 @@ use App\Traits\LogApiError;
  * @method updateRecord
  * @method deleteRecord
  */
-class Permission extends Model
+class Permission extends BaseModel
 {
     use HasFactory, LogApiError;
 
@@ -32,18 +36,6 @@ class Permission extends Model
      * @var string
      */
     protected $table = 'permissions';
-
-    /**
-     * The primary key associated with the table.
-     * @var string
-     */
-    protected $primaryKey = 'id';
-
-    /**
-     * The data type of the auto-incrementing ID.
-     * @var string
-     */
-    protected $keyType = 'int';
 
     /**
      * The foreign key associated with the table.
@@ -69,34 +61,27 @@ class Permission extends Model
     ];
 
     /**
-    * The attributes that are mass assignable.
-    * @var string
-    */
+     * The attributes that are mass assignable.
+     * @var string
+     */
     protected $attributes = [
         'is_active' => false,
     ];
 
     /**
-     * The attributes that should be cast.
-     * @var array<string, string>
+     * Get the type casts for the model attributes.
+     * This method allows you to customize the attribute type casts for the model.
+     * It merges the parent model's casts with any additional or modified casts
+     * specific to the child model.
+     * @return array
      */
-    protected $casts = [
-        'id'         => 'integer',
-        'is_active'  => 'boolean',
-        'created_at' => 'datetime:d.m.Y H:i',
-        'updated_at' => 'datetime:d.m.Y H:i',
-        'role_id'    => 'integer',
-    ];
-
-    /**
-     * The attributes that aren't mass assignable.
-     * @var array
-     */
-    protected $guarded = [
-        'id',
-        'created_at',
-        'updated_at',
-    ];
+    protected function getCastAttributes()
+    {
+        $parentCasts = parent::getCastAttributes();
+        return array_merge($parentCasts, [
+            'role_id' => 'integer',
+        ]);
+    }
 
     /**
      * Eloquent relationship between permissions and roles.
@@ -107,20 +92,20 @@ class Permission extends Model
     }
 
     /**
-     * Fetches all records from the database.
-     * @return \Illuminate\Database\Eloquent\Collection|bool
-     * The collection of records on success, or false on failure.
+     * Fetch records from the database based on optional search criteria.
+     * @return \Illuminate\Pagination\LengthAwarePaginator|bool
+     * A paginated result or `false` if an error occurs.
      */
-    public function fetchAllRecords()
+    public function fetchAllRecords(): LengthAwarePaginator|bool
     {
-        try
-        {
+        try {
             return $this->select('id', 'name')->paginate(15);
-        }
-        catch (\Illuminate\Database\QueryException $mysqlError)
-        {
-            $this->LogApiError($mysqlError);
-            return False;
+        } catch (Exception $exception) {
+            $this->LogApiError($exception);
+            return false;
+        } catch (QueryException $exception) {
+            $this->LogApiError($exception);
+            return false;
         }
     }
 
@@ -134,8 +119,7 @@ class Permission extends Model
      */
     public function createRecord($payload)
     {
-        try
-        {
+        try {
             $this->create([
                 'name'        => $payload['name'],
                 'description' => $payload['description'],
@@ -144,14 +128,10 @@ class Permission extends Model
             ]);
 
             return True;
-        }
-        catch (\Exception $exception)
-        {
+        } catch (Exception $exception) {
             $this->LogApiError($exception);
             return false;
-        }
-        catch (\Illuminate\Database\QueryException $exception)
-        {
+        } catch (QueryException $exception) {
             $this->LogApiError($exception);
             return false;
         }
@@ -164,16 +144,16 @@ class Permission extends Model
      */
     public function fetchSingleRecord($id)
     {
-        try
-        {
+        try {
             return $this->select('*')
-                        ->where('id', '=', $id)
-                        ->get();
-        }
-        catch (\Illuminate\Database\QueryException $mysqlError)
-        {
-            $this->LogApiError($mysqlError);
-            return False;
+                ->where('id', '=', $id)
+                ->get();
+        } catch (Exception $exception) {
+            $this->LogApiError($exception);
+            return false;
+        } catch (QueryException $exception) {
+            $this->LogApiError($exception);
+            return false;
         }
     }
 
@@ -188,8 +168,7 @@ class Permission extends Model
      */
     public function updateRecord($payload, $id)
     {
-        try
-        {
+        try {
             $this->find($id)->update([
                 'name'        => $payload['name'],
                 'description' => $payload['description'],
@@ -198,41 +177,10 @@ class Permission extends Model
             ]);
 
             return True;
-        }
-        catch (\Exception $exception)
-        {
+        } catch (Exception $exception) {
             $this->LogApiError($exception);
             return false;
-        }
-        catch (\Illuminate\Database\QueryException $exception)
-        {
-            $this->LogApiError($exception);
-            return false;
-        }
-    }
-
-    /**
-     * Deletes a record from the database.
-     * @param int $id The ID of the user to delete.
-     * @return bool Whether the user was successfully deleted.
-     * @throws \Exception|\Illuminate\Database\QueryException
-     * Throws an exception if an error occurs during deletion.
-     */
-    public function deleteRecord(int $id)
-    {
-        try
-        {
-            $this->find($id)->delete();
-
-            return true;
-        }
-        catch (\Exception $exception)
-        {
-            $this->LogApiError($exception);
-            return false;
-        }
-        catch (\Illuminate\Database\QueryException $exception)
-        {
+        } catch (QueryException $exception) {
             $this->LogApiError($exception);
             return false;
         }

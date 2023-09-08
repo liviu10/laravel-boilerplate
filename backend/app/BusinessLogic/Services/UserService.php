@@ -131,9 +131,9 @@ class UserService implements UserInterface
         ];
         $apiUpdateRecord['full_name'] = $request['first_name'] . ' ' . $request['last_name'];
         $updatedRecord = $this->modelName->updateRecord($apiUpdateRecord, $id);
-        $apiCreatedRecord = $this->apiResponse->generateApiResponse($updatedRecord->toArray(), 'update');
+        $apiUpdatedRecord = $this->apiResponse->generateApiResponse($updatedRecord->toArray(), 'update');
 
-        return $apiCreatedRecord;
+        return $apiUpdatedRecord;
     }
 
     /**
@@ -149,6 +149,7 @@ class UserService implements UserInterface
             $this->modelName->deleteRecord($id);
         }
         $apiDeleteRecord = $this->apiResponse->generateApiResponse($apiDisplaySingleRecord, 'delete');
+        
         return $apiDeleteRecord;
     }
 
@@ -161,16 +162,16 @@ class UserService implements UserInterface
      */
     public function getStatisticalIndicators()
     {
-        $apiAllRecordDetails = $this->modelName->fetchAllRecords([], 'statistics');
-        $statisticalIndicators = $this->modelName->getStatisticalIndicators();
-        $options = [
-            'role_id' => $this->modelNameRole->fetchUserRoles()
-        ];
+        // $apiAllRecordDetails = $this->modelName->fetchAllRecords([], 'statistics');
+        // $statisticalIndicators = $this->modelName->getStatisticalIndicators();
+        // $options = [
+        //     'role_id' => $this->modelNameRole->fetchUserRoles()
+        // ];
 
-        return $this->handleStatisticalIndicators(
-            $apiAllRecordDetails,
-            $statisticalIndicators,
-            $options
-        );
+        // return $this->handleStatisticalIndicators(
+        //     $apiAllRecordDetails,
+        //     $statisticalIndicators,
+        //     $options
+        // );
     }
 }

@@ -37,9 +37,12 @@ class RoleService implements RoleInterface
     public function handleIndex($search)
     {
         $apiDisplayAllRecords = $this->apiResponse->generateApiResponse(
-            $this->modelName->fetchAllRecords($search),
+            $this->modelName->fetchAllRecords($search, 'paginate'),
+            'get',
             $this->modelName->getFields(),
-            class_basename($this->modelName)
+            class_basename($this->modelName),
+            [],
+            $this->getStatisticalIndicators()
         );
 
         return $apiDisplayAllRecords;
@@ -47,29 +50,23 @@ class RoleService implements RoleInterface
 
     /**
      * Store a new record in the database.
-     * @param  RoleRequest  $request
+     * @param array $request An associative array of values to create a new record.
      * @return \Illuminate\Http\Response
      */
-    public function handleStore(RoleRequest $request)
+    public function handleStore($request)
     {
         $apiInsertRecord = [
-            'name'        => $request->get('name'),
-            'description' => $request->get('description'),
-            'bg_color'    => $request->get('bg_color') !== null ? $request->get('bg_color') : null,
-            'text_color'  => $request->get('text_color') !== null ? $request->get('text_color') : null,
-            'is_active'   => $request->get('is_active'),
+            'name'        => $request['name'],
+            'description' => $request['description'],
+            'bg_color'    => $request['bg_color'] ?? null,
+            'text_color'  => $request['text_color'] ?? null,
+            'is_active'   => $request['is_active'],
         ];
-        $apiInsertRecord['slug'] = strtolower($request->get('name'));
-        $saveRecord = $this->modelName->createRecord($apiInsertRecord);
+        $apiInsertRecord['slug'] = strtolower($request['name']);
+        $createdRecord = $this->modelName->createRecord($apiInsertRecord);
+        $apiCreatedRecord = $this->apiResponse->generateApiResponse($createdRecord->toArray(), 'create');
 
-        if ($saveRecord === true)
-        {
-            return response($this->handleResponse('success'), 201);
-        }
-        else
-        {
-            return response($this->handleResponse('error_message'), 500);
-        }
+        return $apiCreatedRecord;
     }
 
     /**
@@ -79,51 +76,34 @@ class RoleService implements RoleInterface
      */
     public function handleShow($id)
     {
-        $apiDisplaySingleRecord = $this->modelName->fetchSingleRecord($id);
+        $apiDisplaySingleRecord = $this->apiResponse->generateApiResponse(
+            $this->modelName->fetchSingleRecord($id, 'relation'),
+            'get'
+        );
 
-        if ($apiDisplaySingleRecord instanceof Collection)
-        {
-            if ($apiDisplaySingleRecord->isEmpty())
-            {
-                return response($this->handleResponse('not_found'), 404);
-            }
-            else
-            {
-                return response($this->handleResponse('success', $apiDisplaySingleRecord), 200);
-            }
-        }
-        else
-        {
-            return response($this->handleResponse('error_message'), 500);
-        }
+        return $apiDisplaySingleRecord;
     }
 
     /**
      * Update the specified resource in storage.
-     * @param  RoleRequest  $request
+     * @param array $request An associative array of values to create a new record.
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function handleUpdate(RoleRequest $request, $id)
+    public function handleUpdate($request, $id)
     {
         $apiUpdateRecord = [
-            'name'        => $request->get('name'),
-            'description' => $request->get('description'),
-            'bg_color'    => $request->get('bg_color') !== null ? $request->get('bg_color') : null,
-            'text_color'  => $request->get('text_color') !== null ? $request->get('text_color') : null,
-            'is_active'   => $request->get('is_active'),
+            'name'        => $request['name'],
+            'description' => $request['description'],
+            'bg_color'    => $request['bg_color'] !== null ? $request['bg_color'] : null,
+            'text_color'  => $request['text_color'] !== null ? $request['text_color'] : null,
+            'is_active'   => $request['is_active'],
         ];
-        $apiUpdateRecord['slug'] = strtolower($request->get('name'));
-        $updateRecord = $this->modelName->createRecord($apiUpdateRecord, $id);
+        $apiUpdateRecord['slug'] = strtolower($request['name']);
+        $updatedRecord = $this->modelName->updateRecord($apiUpdateRecord, $id);
+        $apiUpdatedRecord = $this->apiResponse->generateApiResponse($updatedRecord->toArray(), 'update');
 
-        if ($updateRecord === true)
-        {
-            return response($this->handleResponse('success'), 201);
-        }
-        else
-        {
-            return response($this->handleResponse('error_message'), 500);
-        }
+        return $apiUpdatedRecord;
     }
 
     /**
@@ -134,22 +114,37 @@ class RoleService implements RoleInterface
     public function handleDestroy($id)
     {
         $apiDisplaySingleRecord = $this->modelName->fetchSingleRecord($id);
+        if ($apiDisplaySingleRecord && $apiDisplaySingleRecord->isNotEmpty())
+        {
+            $this->modelName->deleteRecord($id);
+        }
+        $apiDeleteRecord = $this->apiResponse->generateApiResponse($apiDisplaySingleRecord, 'delete');
 
-        if ($apiDisplaySingleRecord instanceof Collection)
-        {
-            if ($apiDisplaySingleRecord->isEmpty())
-            {
-                return response($this->handleResponse('not_found'), 404);
-            }
-            else
-            {
-                $this->modelName->deleteRecord($id);
-                return response($this->handleResponse('success'), 200);
-            }
-        }
-        else
-        {
-            return response($this->handleResponse('error_message'), 500);
-        }
+        return $apiDeleteRecord;
+    }
+
+    /**
+     * Retrieve statistical indicators based on the fetched record details.
+     * This function calculates and returns statistical indicators based on the data
+     * retrieved using the modelName's `fetchAllRecordDetails` and `getStatisticalIndicators` methods.
+     * @return array An associative array containing statistical indicators, where each key represents an indicator name
+     * and each value is an associative array with 'number' and 'percentage' keys (depending on the type of indicator).
+     */
+    public function getStatisticalIndicators()
+    {
+        // $apiAllRecordDetails = $this->modelName->fetchAllRecords([], 'statistics');
+        // $statisticalIndicators = $this->modelName->getStatisticalIndicators();
+        // $options = [
+        //     'is_active' => [
+        //         ['id' => 0],
+        //         ['id' => 1]
+        //     ],
+        // ];
+
+        // return $this->handleStatisticalIndicators(
+        //     $apiAllRecordDetails,
+        //     $statisticalIndicators,
+        //     $options
+        // );
     }
 }

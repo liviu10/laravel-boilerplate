@@ -3,9 +3,13 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
+use App\Models\BaseModel;
 use App\Traits\LogApiError;
 use App\Traits\FilterAvailableFields;
+use Exception;
+use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Database\QueryException;
+use Illuminate\Pagination\LengthAwarePaginator;
 
 /**
  * Class AcceptedDomain
@@ -24,7 +28,7 @@ use App\Traits\FilterAvailableFields;
  * @method updateRecord
  * @method deleteRecord
  */
-class AcceptedDomain extends Model
+class AcceptedDomain extends BaseModel
 {
     use HasFactory, FilterAvailableFields, LogApiError;
 
@@ -33,18 +37,6 @@ class AcceptedDomain extends Model
      * @var string
      */
     protected $table = 'accepted_domains';
-
-    /**
-     * The primary key associated with the table.
-     * @var string
-     */
-    protected $primaryKey = 'id';
-
-    /**
-     * The data type of the auto-incrementing ID.
-     * @var string
-     */
-    protected $keyType = 'int';
 
     /**
      * The foreign key associated with the table.
@@ -74,20 +66,9 @@ class AcceptedDomain extends Model
      * @var array<string>
      */
     protected $statisticalIndicators = [
-        'number_of_accepted_domains' => [
-            'field' => 'id',
-            'type'  => 'count'
-        ],
-        'number_of_accepted_domains_by_type' => [
-            'field' => 'type',
-            'type'  => 'custom',
-            'condition' => 'enum',
-        ],
-        'number_of_accepted_domains_by_status' => [
-            'field' => 'status',
-            'type'  => 'custom',
-            'condition' => 'foreign_key'
-        ],
+        'type',
+        'user_id',
+        'is_active',
     ];
 
     /**
@@ -99,26 +80,19 @@ class AcceptedDomain extends Model
     ];
 
     /**
-     * The attributes that should be cast.
-     * @var array<string, string>
+     * Get the type casts for the model attributes.
+     * This method allows you to customize the attribute type casts for the model.
+     * It merges the parent model's casts with any additional or modified casts
+     * specific to the child model.
+     * @return array
      */
-    protected $casts = [
-        'id'         => 'integer',
-        'is_active'  => 'boolean',
-        'created_at' => 'datetime:d.m.Y H:i',
-        'updated_at' => 'datetime:d.m.Y H:i',
-        'user_id'    => 'integer',
-    ];
-
-    /**
-     * The attributes that aren't mass assignable.
-     * @var array
-     */
-    protected $guarded = [
-        'id',
-        'created_at',
-        'updated_at',
-    ];
+    protected function getCastAttributes(): array
+    {
+        $parentCasts = parent::getCastAttributes();
+        return array_merge($parentCasts, [
+            'user_id' => 'integer',
+        ]);
+    }
 
     /**
      * Eloquent relationship between accepted domains and users.
@@ -129,19 +103,25 @@ class AcceptedDomain extends Model
     }
 
     /**
-     * Fetches all records from the database.
-     * @param  array  $search
-     * @return \Illuminate\Database\Eloquent\Collection|bool
-     * The collection of records on success, or false on failure.
+     * Fetch records from the database based on optional search criteria.
+     * @param array $search An associative array of search criteria (field => value).
+     * @param string|null $type The fetch type: 'paginate'for paginated results or null for a collection.
+     * @return \Illuminate\Pagination\LengthAwarePaginator|\Illuminate\Support\Collection|bool
+     * A paginated result, a collection, or `false` if an error occurs.
      */
-    public function fetchAllRecords($search = [], string|null $type = null)
+    public function fetchAllRecords(array $search = [], string|null $type = null): LengthAwarePaginator|Collection|bool
     {
         try {
-            $query = $this->select('id', 'domain', 'type', 'is_active');
+            $query = $this->select(
+                'id',
+                'domain',
+                'type',
+                'is_active'
+            );
 
             if (!empty($search)) {
                 foreach ($search as $field => $value) {
-                    if ($field === 'id') {
+                    if ($field === 'id' || $field === 'type' || $field === 'is_active') {
                         $query->where($field, '=', $value);
                     } else {
                         $query->where($field, 'LIKE', '%' . $value . '%');
@@ -154,21 +134,22 @@ class AcceptedDomain extends Model
             } else {
                 return $query->get();
             }
-        } catch (\Illuminate\Database\QueryException $mysqlError) {
-            $this->LogApiError($mysqlError);
-            return False;
+        } catch (Exception $exception) {
+            $this->LogApiError($exception);
+            return false;
+        } catch (QueryException $exception) {
+            $this->LogApiError($exception);
+            return false;
         }
     }
 
     /**
-     * Create a new record.
-     * @param array $payload An associative array of values to create a new record.
-     * @return \App\Models\AcceptedDomain|bool Returns a user object if the creation was successful,
-     * or a boolean otherwise.
-     * @throws \Exception|\Illuminate\Database\QueryException
-     * Throws an exception if an error occurs during creation.
+     * Create a new record in the database.
+     * @param array $payload An associative array containing record data.
+     * @return \App\Models\AcceptedDomain|bool The newly created
+     * User instance, or `false` if an error occurs.
      */
-    public function createRecord($payload)
+    public function createRecord(array $payload): AcceptedDomain|bool
     {
         try {
             $query = $this->create([
@@ -179,24 +160,24 @@ class AcceptedDomain extends Model
             ]);
 
             return $query;
-        } catch (\Exception $exception) {
+        } catch (Exception $exception) {
             $this->LogApiError($exception);
             return false;
-        } catch (\Illuminate\Database\QueryException $exception) {
+        } catch (QueryException $exception) {
             $this->LogApiError($exception);
             return false;
         }
     }
 
     /**
-     * Get record details from the database.
-     * @return \Illuminate\Database\Eloquent\Collection|array|boolean
-     * Returns a collection of record with their associated relation.
-     * If an error occurs during retrieval, a boolean will be returned.
-     * @throws \Exception|\Illuminate\Database\QueryException
-     * Throws an exception if an error occurs during retrieval.
+     * Fetch a single record from the database by its ID.
+     * @param int $id The unique identifier of the record to fetch.
+     * @param string|null $type The fetch type: 'relation' to include
+     * related data or null for just the record.
+     * @return \Illuminate\Support\Collection|bool The fetched record or
+     * related data as a Collection, or `false` if an error occurs.
      */
-    public function fetchSingleRecord($id, string|null $type = null)
+    public function fetchSingleRecord(int $id, string|null $type = null): Collection|bool
     {
         try {
             $query = $this->select('*')->where('id', '=', $id);
@@ -212,21 +193,22 @@ class AcceptedDomain extends Model
             } else {
                 return $query->get();
             }
-        } catch (\Illuminate\Database\QueryException $mysqlError) {
-            $this->LogApiError($mysqlError);
-            return False;
+        } catch (Exception $exception) {
+            $this->LogApiError($exception);
+            return false;
+        } catch (QueryException $exception) {
+            $this->LogApiError($exception);
+            return false;
         }
     }
 
     /**
-     * Update an existing record.
-     * @param array $payload An associative array of values to create a new record.
-     * @return \App\Models\AcceptedDomain|bool Returns a record object if the creation was successful,
-     * or a boolean otherwise.
-     * @throws \Exception|\Illuminate\Database\QueryException
-     * Throws an exception if an error occurs during creation.
+     * Update a record in the database.
+     * @param array $payload An associative array containing the updated record data.
+     * @param int $id The unique identifier of the record to update.
+     * @return \App\Models\AcceptedDomain|bool The freshly updated User instance, or `false` if an error occurs.
      */
-    public function updateRecord($payload, $id)
+    public function updateRecord(array $payload, int $id): AcceptedDomain|bool
     {
         try {
             $query = tap($this->find($id))->update([
@@ -237,32 +219,47 @@ class AcceptedDomain extends Model
             ]);
 
             return $query->fresh();
-        } catch (\Exception $exception) {
+        } catch (Exception $exception) {
             $this->LogApiError($exception);
             return false;
-        } catch (\Illuminate\Database\QueryException $exception) {
+        } catch (QueryException $exception) {
             $this->LogApiError($exception);
             return false;
         }
     }
 
     /**
-     * Deletes a record from the database.
-     * @param int $id The ID of the user to delete.
-     * @return bool Whether the user was successfully deleted.
-     * @throws \Exception|\Illuminate\Database\QueryException
-     * Throws an exception if an error occurs during deletion.
+     * Check if email provider domains exist in the database.
+     * @param array $domain An array containing email provider domains to check.
+     * @return array|bool An array of matching records or `false` if an error occurs.
      */
-    public function deleteRecord(int $id)
+    public function checkEmailProvider(array $domain): array|bool
     {
         try {
-            $this->find($id)->delete();
-
-            return true;
-        } catch (\Exception $exception) {
+            $result = $this->select('id', 'domain')->whereIn('domain', ['.' . $domain[0], '.' . $domain[1]])->get()->toArray();
+            return $result;
+        } catch (Exception $exception) {
             $this->LogApiError($exception);
             return false;
-        } catch (\Illuminate\Database\QueryException $exception) {
+        } catch (QueryException $exception) {
+            $this->LogApiError($exception);
+            return false;
+        }
+    }
+
+    /**
+     * Get unique domain types from the database.
+     * @return array|bool An array containing unique domain types or `false` if an error occurs.
+     */
+    public function getUniqueDomainTypes(): array|bool
+    {
+        try {
+            $uniqueDomainTypes['type'] = $this->select('id', 'type')->get()->unique('type')->toArray();
+            return $uniqueDomainTypes;
+        } catch (Exception $exception) {
+            $this->LogApiError($exception);
+            return false;
+        } catch (QueryException $exception) {
             $this->LogApiError($exception);
             return false;
         }
@@ -272,7 +269,7 @@ class AcceptedDomain extends Model
      * Get the fillable fields for the model.
      * @return array An array containing the fillable fields for the model.
      */
-    public function getFields()
+    public function getFields(): array
     {
         $fieldTypes = [
             'domain'    => 'text',
@@ -284,58 +281,5 @@ class AcceptedDomain extends Model
         $excludedFields = ['user_id'];
 
         return $this->handleFilterAvailableFields($fieldTypes, $excludedFields);
-    }
-
-    /**
-     * Check if domain names exist and retrieve their information.
-     * @param array $domain An array of domain names (without periods)
-     * to check and retrieve information for.
-     * @return array|false An array containing associative arrays with
-     * 'id' and 'domain' keys for the matching
-     * domains, or false if an error occurs during the query.
-     */
-    public function checkEmailProvider($domain)
-    {
-        try {
-            $result = $this->select('id', 'domain')->whereIn('domain', ['.' . $domain[0], '.' . $domain[1]])->get()->toArray();
-
-            return $result;
-        } catch (\Illuminate\Database\QueryException $mysqlError) {
-            $this->LogApiError($mysqlError);
-            return false;
-        }
-    }
-
-    /**
-     * Retrieve an array of unique domain types.
-     * @return array An array containing associative arrays with
-     * 'id' and 'type' keys for each unique domain type.
-     */
-    public function getUniqueDomainTypes()
-    {
-        $uniqueDomainTypes['type'] = $this->select('id', 'type')->get()->unique('type')->toArray();
-        return $uniqueDomainTypes;
-    }
-
-    public function fetchAllRecordDetails()
-    {
-        try {
-            return $this->select('*')->get()->toArray();
-        } catch (\Exception $exception) {
-            $this->LogApiError($exception);
-            return false;
-        } catch (\Illuminate\Database\QueryException $exception) {
-            $this->LogApiError($exception);
-            return false;
-        }
-    }
-
-    /**
-     * Get the statistical indicators for the model.
-     * @return array An array containing the statistical indicators for the model.
-     */
-    public function getStatisticalIndicators()
-    {
-        return $this->statisticalIndicators;
     }
 }

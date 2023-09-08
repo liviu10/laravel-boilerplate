@@ -3,9 +3,13 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
+use App\Models\BaseModel;
 use App\Traits\LogApiError;
 use App\Traits\FilterAvailableFields;
+use Exception;
+use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Database\QueryException;
+use Illuminate\Pagination\LengthAwarePaginator;
 
 /**
  * Class Comment
@@ -28,7 +32,7 @@ use App\Traits\FilterAvailableFields;
  * @method updateRecord
  * @method deleteRecord
  */
-class Comment extends Model
+class Comment extends BaseModel
 {
     use HasFactory, FilterAvailableFields, LogApiError;
 
@@ -37,18 +41,6 @@ class Comment extends Model
      * @var string
      */
     protected $table = 'comments';
-
-    /**
-     * The primary key associated with the table.
-     * @var string
-     */
-    protected $primaryKey = 'id';
-
-    /**
-     * The data type of the auto-incrementing ID.
-     * @var string
-     */
-    protected $keyType = 'int';
 
     /**
      * The attributes that are mass assignable.
@@ -60,6 +52,18 @@ class Comment extends Model
         'full_name',
         'email',
         'message',
+        'notify_new_comments',
+        'content_id',
+        'user_id',
+    ];
+
+    /**
+     * The statistical indicators.
+     * @var array<string>
+     */
+    protected $statisticalIndicators = [
+        'type',
+        'status',
         'notify_new_comments',
         'content_id',
         'user_id',
@@ -82,51 +86,45 @@ class Comment extends Model
     ];
 
     /**
-    * The attributes that are mass assignable.
-    * @var string
-    */
+     * The attributes that are mass assignable.
+     * @var string
+     */
     protected $attributes = [
         'notify_new_comments' => false,
     ];
 
     /**
-     * The attributes that should be cast.
-     * @var array<string, string>
+     * Get the type casts for the model attributes.
+     * This method allows you to customize the attribute type casts for the model.
+     * It merges the parent model's casts with any additional or modified casts
+     * specific to the child model.
+     * @return array
      */
-    protected $casts = [
-        'id'                  => 'integer',
-        'notify_new_comments' => 'boolean',
-        'created_at'          => 'datetime:d.m.Y H:i',
-        'updated_at'          => 'datetime:d.m.Y H:i',
-        'content_id'          => 'integer',
-        'user_id'             => 'integer',
-    ];
-
-    /**
-     * The attributes that aren't mass assignable.
-     * @var array
-     */
-    protected $guarded = [
-        'id',
-        'created_at',
-        'updated_at',
-    ];
-
-    /**
-     * Fetches all records from the database.
-     * @param  array  $search
-     * @return \Illuminate\Database\Eloquent\Collection|bool
-     * The collection of records on success, or false on failure.
-     */
-    public function fetchAllRecords($search)
+    protected function getCastAttributes()
     {
-        try
-        {
-            $query = $this->select('*');
+        $parentCasts = parent::getCastAttributes();
+        return array_merge($parentCasts, [
+            'notify_new_comments' => 'boolean',
+            'content_id'          => 'integer',
+            'user_id'             => 'integer',
+        ]);
+    }
+
+    /**
+     * Fetch records from the database based on optional search criteria.
+     * @param array $search An associative array of search criteria (field => value).
+     * @param string|null $type The fetch type: 'paginate'for paginated results or null for a collection.
+     * @return \Illuminate\Pagination\LengthAwarePaginator|\Illuminate\Support\Collection|bool
+     * A paginated result, a collection, or `false` if an error occurs.
+     */
+    public function fetchAllRecords(array $search = [], string|null $type = null): LengthAwarePaginator|Collection|bool
+    {
+        try {
+            $query = $this->all();
 
             if (!empty($search)) {
                 foreach ($search as $field => $value) {
-                    if ($field === 'id') {
+                    if ($field === 'id' || $field === 'type' || $field === 'status' || $field === 'notify_new_comments') {
                         $query->where($field, '=', $value);
                     } else {
                         $query->where($field, 'LIKE', '%' . $value . '%');
@@ -134,28 +132,30 @@ class Comment extends Model
                 }
             }
 
-            return $query->paginate(15);
-        }
-        catch (\Illuminate\Database\QueryException $mysqlError)
-        {
-            $this->LogApiError($mysqlError);
-            return False;
+            if ($type === 'paginate') {
+                return $query->paginate(15);
+            } else {
+                return $query;
+            }
+        } catch (Exception $exception) {
+            $this->LogApiError($exception);
+            return false;
+        } catch (QueryException $exception) {
+            $this->LogApiError($exception);
+            return false;
         }
     }
 
     /**
-     * Create a new record.
-     * @param array $payload An associative array of values to create a new record.
-     * @return \App\Models\ContactMe|bool Returns a user object if the creation was successful,
-     * or a boolean otherwise.
-     * @throws \Exception|\Illuminate\Database\QueryException
-     * Throws an exception if an error occurs during creation.
+     * Create a new record in the database.
+     * @param array $payload An associative array containing record data.
+     * @return \App\Models\Comment|bool The newly created
+     * User instance, or `false` if an error occurs.
      */
-    public function createRecord($payload)
+    public function createRecord(array $payload): Comment|bool
     {
-        try
-        {
-            $this->create([
+        try {
+            $query = $this->create([
                 'type'                => $payload['type'],
                 'status'              => $payload['status'],
                 'full_name'           => $payload['full_name'],
@@ -166,54 +166,54 @@ class Comment extends Model
                 'user_id'             => $payload['user_id'],
             ]);
 
-            return True;
-        }
-        catch (\Exception $exception)
-        {
+            return $query;
+        } catch (Exception $exception) {
             $this->LogApiError($exception);
             return false;
-        }
-        catch (\Illuminate\Database\QueryException $exception)
-        {
+        } catch (QueryException $exception) {
             $this->LogApiError($exception);
             return false;
         }
     }
 
     /**
-     * SQL query to fetch a single record from the database.
-     * @param  int  $id
-     * @return  Collection|Bool
+     * Fetch a single record from the database by its ID.
+     * @param int $id The unique identifier of the record to fetch.
+     * @param string|null $type The fetch type: 'relation' to include
+     * related data or null for just the record.
+     * @return \Illuminate\Support\Collection|bool The fetched record or
+     * related data as a Collection, or `false` if an error occurs.
      */
-    public function fetchSingleRecord($id)
+    public function fetchSingleRecord(int $id, string|null $type = null): Collection|bool
     {
-        try
-        {
-            return $this->select('*')
-                        ->where('id', '=', $id)
-                        ->get();
-        }
-        catch (\Illuminate\Database\QueryException $mysqlError)
-        {
-            $this->LogApiError($mysqlError);
-            return False;
+        try {
+            $query = $this->select('*')->where('id', '=', $id);
+
+            if ($type === 'relation') {
+                // TODO: get relation content_id and user_id
+                return $query->get();
+            } else {
+                return $query->get();
+            }
+        } catch (Exception $exception) {
+            $this->LogApiError($exception);
+            return false;
+        } catch (QueryException $exception) {
+            $this->LogApiError($exception);
+            return false;
         }
     }
 
     /**
-     * Update the record.
-     * @param array $payload An associative array of values to update the record.
-     * @param int $id The ID of the user to update.
-     * @return bool Returns true if the update was successful,
-     * or an boolean otherwise.
-     * @throws \Exception|\Illuminate\Database\QueryException
-     * Throws an exception if an error occurs during the update.
+     * Update a record in the database.
+     * @param array $payload An associative array containing the updated record data.
+     * @param int $id The unique identifier of the record to update.
+     * @return \App\Models\Comment|bool The freshly updated User instance, or `false` if an error occurs.
      */
-    public function updateRecord($payload, $id)
+    public function updateRecord(array $payload, int $id): Comment|bool
     {
-        try
-        {
-            $this->find($id)->update([
+        try {
+            $query = tap($this->find($id))->update([
                 'type'                => $payload['type'],
                 'status'              => $payload['status'],
                 'full_name'           => $payload['full_name'],
@@ -224,42 +224,11 @@ class Comment extends Model
                 'user_id'             => $payload['user_id'],
             ]);
 
-            return True;
-        }
-        catch (\Exception $exception)
-        {
+            return $query->fresh();
+        } catch (Exception $exception) {
             $this->LogApiError($exception);
             return false;
-        }
-        catch (\Illuminate\Database\QueryException $exception)
-        {
-            $this->LogApiError($exception);
-            return false;
-        }
-    }
-
-    /**
-     * Deletes a record from the database.
-     * @param int $id The ID of the user to delete.
-     * @return bool Whether the user was successfully deleted.
-     * @throws \Exception|\Illuminate\Database\QueryException
-     * Throws an exception if an error occurs during deletion.
-     */
-    public function deleteRecord(int $id)
-    {
-        try
-        {
-            $this->find($id)->delete();
-
-            return true;
-        }
-        catch (\Exception $exception)
-        {
-            $this->LogApiError($exception);
-            return false;
-        }
-        catch (\Illuminate\Database\QueryException $exception)
-        {
+        } catch (QueryException $exception) {
             $this->LogApiError($exception);
             return false;
         }
@@ -269,7 +238,7 @@ class Comment extends Model
      * Get the fillable fields for the model.
      * @return array An array containing the fillable fields for the model.
      */
-    public function getFields()
+    public function getFields(): array
     {
         $fieldTypes = [
             'type'                => 'select',
@@ -291,7 +260,7 @@ class Comment extends Model
      * Get the comment type options.
      * @return array An array containing the comment type options.
      */
-    public function getCommentTypeOptions()
+    public function getCommentTypeOptions(): array
     {
         return $this->commentTypeOptions;
     }
@@ -300,7 +269,7 @@ class Comment extends Model
      * Get the content status options.
      * @return array An array containing the content status options.
      */
-    public function getCommentStatusOptions()
+    public function getCommentStatusOptions(): array
     {
         return $this->commentStatusOptions;
     }

@@ -97,9 +97,9 @@ class AcceptedDomainService implements AcceptedDomainInterface
             'is_active' => $request['is_active'],
         ];
         $updatedRecord = $this->modelName->updateRecord($apiUpdateRecord, $id);
-        $apiCreatedRecord = $this->apiResponse->generateApiResponse($updatedRecord->toArray(), 'update');
+        $apiUpdatedRecord = $this->apiResponse->generateApiResponse($updatedRecord->toArray(), 'update');
 
-        return $apiCreatedRecord;
+        return $apiUpdatedRecord;
     }
 
     /**
@@ -127,6 +127,16 @@ class AcceptedDomainService implements AcceptedDomainInterface
      */
     public function getStatisticalIndicators()
     {
-        
+        // $apiAllRecordDetails = $this->modelName->fetchAllRecords([], 'statistics');
+        // $statisticalIndicators = $this->modelName->getStatisticalIndicators();
+        // $options = [
+        //     'type' => $this->modelName->getUniqueDomainTypes()
+        // ];
+
+        // return $this->handleStatisticalIndicators(
+        //     $apiAllRecordDetails,
+        //     $statisticalIndicators,
+        //     $options
+        // );
     }
 }

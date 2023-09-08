@@ -93,27 +93,6 @@ class User extends Authenticatable
         'profile_image',
         'email_verified_at',
         'role_id',
-        // 'number_of_users' => [
-        //     'field' => 'id',
-        //     'type'  => 'count',
-        // ],
-        // 'users_with_missing_phone' => [
-        //     'field' => 'phone',
-        //     'type'  => 'count',
-        // ],
-        // 'users_with_missing_profile_image' => [
-        //     'field' => 'profile_image',
-        //     'type'  => 'count',
-        // ],
-        // 'users_with_unverified_account' => [
-        //     'field' => 'email_verified_at',
-        //     'type'  => 'count',
-        // ],
-        // 'number_of_users_by_role' => [
-        //     'field' => 'role_id',
-        //     'type'  => 'custom',
-        //     'condition' => 'foreign_key'
-        // ],
     ];
 
     /**
@@ -265,7 +244,7 @@ class User extends Authenticatable
 
             if (!empty($search)) {
                 foreach ($search as $field => $value) {
-                    if ($field === 'id') {
+                    if ($field === 'id' || $field === 'role_id') {
                         $query->where($field, '=', $value);
                     } else {
                         $query->where($field, 'LIKE', '%' . $value . '%');
