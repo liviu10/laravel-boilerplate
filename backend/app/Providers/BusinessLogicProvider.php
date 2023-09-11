@@ -5,6 +5,8 @@ namespace App\Providers;
 use Illuminate\Support\ServiceProvider;
 
 // Import application's settings
+use App\BusinessLogic\Interfaces\ApplicationMenuInterface;
+use App\BusinessLogic\Services\ApplicationMenuService;
 use App\BusinessLogic\Interfaces\AcceptedDomainInterface;
 use App\BusinessLogic\Services\AcceptedDomainService;
 use App\BusinessLogic\Interfaces\GeneralInterface;
@@ -50,6 +52,7 @@ class BusinessLogicProvider extends ServiceProvider
     public function register()
     {
         // Register application's settings interfaces and services
+        $this->app->bind( ApplicationMenuInterface::class, ApplicationMenuService::class );
         $this->app->bind( AcceptedDomainInterface::class, AcceptedDomainService::class );
         $this->app->bind( GeneralInterface::class, GeneralService::class );
         $this->app->bind( NotificationInterface::class, NotificationService::class );

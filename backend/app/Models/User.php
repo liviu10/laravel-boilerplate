@@ -143,6 +143,14 @@ class User extends Authenticatable
     }
 
     /**
+     * Eloquent relationship between users and application menu.
+     */
+    public function application_menus()
+    {
+        return $this->hasMany('App\Models\ApplicationMenu');
+    }
+
+    /**
      * Eloquent relationship between users and generals.
      */
     public function generals()

@@ -7,6 +7,7 @@ use Illuminate\Support\ServiceProvider;
 
 // Import application's settings
 use App\BusinessLogic\Interfaces\AcceptedDomainInterface;
+use App\BusinessLogic\Interfaces\ApplicationMenuInterface;
 use App\BusinessLogic\Interfaces\GeneralInterface;
 use App\BusinessLogic\Interfaces\NotificationInterface;
 
@@ -35,6 +36,7 @@ class AppServiceProvider extends ServiceProvider
     public function register(): void
     {
         // Register application's settings interfaces and services
+        $this->app->bind( ApplicationMenuInterface::class, ApplicationMenuService::class );
         $this->app->bind( AcceptedDomainInterface::class, AcceptedDomainService::class );
         $this->app->bind( GeneralInterface::class, GeneralService::class );
         $this->app->bind( NotificationInterface::class, NotificationService::class );

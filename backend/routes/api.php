@@ -28,6 +28,7 @@ use Illuminate\Support\Facades\Route;
     use App\Http\Controllers\UserController;
     use App\Http\Controllers\RoleController;
 // Import application's settings
+    use App\Http\Controllers\ApplicationMenuController;
     use App\Http\Controllers\GeneralController;
     use App\Http\Controllers\AcceptedDomainController;
     use App\Http\Controllers\NotificationController;
@@ -76,6 +77,8 @@ Route::group([ 'prefix' => config('app.version') ], function () {
         });
         // Application's settings endpoints
         Route::group([ 'prefix' => '/application-settings' ], function () {
+            // Application menus
+            Route::apiResource('/application-menus', ApplicationMenuController::class);
             // General
             Route::apiResource('/general', GeneralController::class);
             // Accepted domains
