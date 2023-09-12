@@ -129,7 +129,7 @@ class ApiResponse
             'description' => __('translations.not_found_message.description'),
         ];
 
-        return response($message, 404);
+        return response($message, 200);
     }
 
     /**

@@ -5,7 +5,6 @@ namespace App\BusinessLogic\Services;
 use App\Traits\ApiStatisticalIndicators;
 use App\BusinessLogic\Interfaces\RoleInterface;
 use App\Library\ApiResponse;
-use App\Http\Requests\RoleRequest;
 use App\Models\Role;
 use Illuminate\Database\Eloquent\Collection;
 
@@ -92,15 +91,18 @@ class RoleService implements RoleInterface
      */
     public function handleUpdate($request, $id)
     {
-        $apiUpdateRecord = [
-            'name'        => $request['name'],
-            'description' => $request['description'],
-            'bg_color'    => $request['bg_color'] !== null ? $request['bg_color'] : null,
-            'text_color'  => $request['text_color'] !== null ? $request['text_color'] : null,
-            'is_active'   => $request['is_active'],
-        ];
-        $apiUpdateRecord['slug'] = strtolower($request['name']);
-        $updatedRecord = $this->modelName->updateRecord($apiUpdateRecord, $id);
+        $apiDisplaySingleRecord = $this->modelName->fetchSingleRecord($id);
+        if ($apiDisplaySingleRecord && $apiDisplaySingleRecord->isNotEmpty()) {
+            $apiUpdateRecord = [
+                'name'        => $request['name'] ?? $apiDisplaySingleRecord->name,
+                'description' => $request['description'] ?? $apiDisplaySingleRecord->description,
+                'bg_color'    => $request['bg_color'] ?? $apiDisplaySingleRecord->bg_color,
+                'text_color'  => $request['text_color'] ?? $apiDisplaySingleRecord->text_color,
+                'is_active'   => $request['is_active'] ?? $apiDisplaySingleRecord->is_active,
+            ];
+            $apiUpdateRecord['slug'] = strtolower($request['name']);
+            $updatedRecord = $this->modelName->updateRecord($apiUpdateRecord, $id);
+        }
         $apiUpdatedRecord = $this->apiResponse->generateApiResponse($updatedRecord->toArray(), 'update');
 
         return $apiUpdatedRecord;
@@ -114,8 +116,7 @@ class RoleService implements RoleInterface
     public function handleDestroy($id)
     {
         $apiDisplaySingleRecord = $this->modelName->fetchSingleRecord($id);
-        if ($apiDisplaySingleRecord && $apiDisplaySingleRecord->isNotEmpty())
-        {
+        if ($apiDisplaySingleRecord && $apiDisplaySingleRecord->isNotEmpty()) {
             $this->modelName->deleteRecord($id);
         }
         $apiDeleteRecord = $this->apiResponse->generateApiResponse($apiDisplaySingleRecord, 'delete');

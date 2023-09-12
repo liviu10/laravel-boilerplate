@@ -165,12 +165,12 @@ class Role extends BaseModel
             if ($type === 'relation') {
                 $query->with([
                     'permissions' => function ($query) {
-                        $query->select('id', 'name', 'is_active', 'role_id')
+                        $query->select('id', 'name', 'role_id')
                             ->where('is_active', true);
                     }
                 ]);
 
-                return $query;
+                return $query->get();
             } else {
                 return $query->get();
             }
