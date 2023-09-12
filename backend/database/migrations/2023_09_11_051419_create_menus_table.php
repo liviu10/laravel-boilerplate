@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('application_menus', function (Blueprint $table) {
+        Schema::create('menus', function (Blueprint $table) {
             $table->id()->index('idx_id');
             $table->string('path');
             $table->string('name');
@@ -31,6 +31,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('application_menus');
+        Schema::dropIfExists('menus');
     }
 };

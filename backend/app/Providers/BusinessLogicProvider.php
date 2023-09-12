@@ -4,16 +4,6 @@ namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
 
-// Import application's settings
-use App\BusinessLogic\Interfaces\ApplicationMenuInterface;
-use App\BusinessLogic\Services\ApplicationMenuService;
-use App\BusinessLogic\Interfaces\AcceptedDomainInterface;
-use App\BusinessLogic\Services\AcceptedDomainService;
-use App\BusinessLogic\Interfaces\GeneralInterface;
-use App\BusinessLogic\Services\GeneralService;
-use App\BusinessLogic\Interfaces\NotificationInterface;
-use App\BusinessLogic\Services\NotificationService;
-
 // Import application's communication settings
 use App\BusinessLogic\Interfaces\ContactMessageInterface;
 use App\BusinessLogic\Services\ContactMessageService;
@@ -41,6 +31,14 @@ use App\BusinessLogic\Interfaces\UserInterface;
 use App\BusinessLogic\Services\UserService;
 use App\BusinessLogic\Interfaces\RoleInterface;
 use App\BusinessLogic\Services\RoleService;
+use App\BusinessLogic\Interfaces\MenuInterface;
+use App\BusinessLogic\Services\MenuService;
+use App\BusinessLogic\Interfaces\AcceptedDomainInterface;
+use App\BusinessLogic\Services\AcceptedDomainService;
+use App\BusinessLogic\Interfaces\GeneralInterface;
+use App\BusinessLogic\Services\GeneralService;
+use App\BusinessLogic\Interfaces\NotificationInterface;
+use App\BusinessLogic\Services\NotificationService;
 
 class BusinessLogicProvider extends ServiceProvider
 {
@@ -51,12 +49,6 @@ class BusinessLogicProvider extends ServiceProvider
      */
     public function register()
     {
-        // Register application's settings interfaces and services
-        $this->app->bind( ApplicationMenuInterface::class, ApplicationMenuService::class );
-        $this->app->bind( AcceptedDomainInterface::class, AcceptedDomainService::class );
-        $this->app->bind( GeneralInterface::class, GeneralService::class );
-        $this->app->bind( NotificationInterface::class, NotificationService::class );
-
         // Register application's communication settings interfaces and services
         $this->app->bind( ContactMessageInterface::class, ContactMessageService::class );
         $this->app->bind( ContactSubjectInterface::class, ContactSubjectService::class );
@@ -64,15 +56,19 @@ class BusinessLogicProvider extends ServiceProvider
         $this->app->bind( NewsletterSubscriberInterface::class, NewsletterSubscriberService::class );
 
         // Register application's management settings interfaces and services
-        $this->app->bind( AppreciationInterface::class, AppreciationService::class );
-        $this->app->bind( CommentInterface::class, CommentService::class );
         $this->app->bind( ContentInterface::class, ContentService::class );
-        $this->app->bind( MediaInterface::class, MediaService::class );
         $this->app->bind( TagInterface::class, TagService::class );
+        $this->app->bind( MediaInterface::class, MediaService::class );
+        $this->app->bind( CommentInterface::class, CommentService::class );
+        $this->app->bind( AppreciationInterface::class, AppreciationService::class );
 
         // Register application's user settings interfaces and services
         $this->app->bind( UserInterface::class, UserService::class );
         $this->app->bind( RoleInterface::class, RoleService::class );
+        $this->app->bind( MenuInterface::class, MenuService::class );
+        $this->app->bind( AcceptedDomainInterface::class, AcceptedDomainService::class );
+        $this->app->bind( GeneralInterface::class, GeneralService::class );
+        $this->app->bind( NotificationInterface::class, NotificationService::class );
     }
 
     /**

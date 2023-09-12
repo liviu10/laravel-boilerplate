@@ -12,7 +12,7 @@ use Illuminate\Database\QueryException;
 use Illuminate\Pagination\LengthAwarePaginator;
 
 /**
- * Class ApplicationMenu
+ * Class Menu
  * @package App\Models
 
  * @property int $id
@@ -32,7 +32,7 @@ use Illuminate\Pagination\LengthAwarePaginator;
  * @method createRecord
  * @method updateRecord
  */
-class ApplicationMenu extends BaseModel
+class Menu extends BaseModel
 {
     use HasFactory, FilterAvailableFields, LogApiError;
 
@@ -40,7 +40,7 @@ class ApplicationMenu extends BaseModel
      * The table associated with the model.
      * @var string
      */
-    protected $table = 'application_menus';
+    protected $table = 'menus';
 
     /**
      * The foreign key associated with the table.
@@ -154,10 +154,10 @@ class ApplicationMenu extends BaseModel
     /**
      * Create a new record in the database.
      * @param array $payload An associative array containing record data.
-     * @return \App\Models\ApplicationMenu|bool The newly created
+     * @return \App\Models\Menu|bool The newly created
      * User instance, or `false` if an error occurs.
      */
-    public function createRecord(array $payload): ApplicationMenu|bool
+    public function createRecord(array $payload): Menu|bool
     {
         try {
             $query = $this->create([
@@ -187,9 +187,9 @@ class ApplicationMenu extends BaseModel
      * Update a record in the database.
      * @param array $payload An associative array containing the updated record data.
      * @param int $id The unique identifier of the record to update.
-     * @return \App\Models\ApplicationMenu|bool The freshly updated User instance, or `false` if an error occurs.
+     * @return \App\Models\Menu|bool The freshly updated User instance, or `false` if an error occurs.
      */
-    public function updateRecord(array $payload, int $id): ApplicationMenu|bool
+    public function updateRecord(array $payload, int $id): Menu|bool
     {
         try {
             $query = tap($this->find($id))->update([

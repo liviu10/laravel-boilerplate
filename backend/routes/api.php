@@ -24,11 +24,10 @@ use Illuminate\Support\Facades\Route;
     use App\Http\Controllers\ContactSubjectController;
     use App\Http\Controllers\NewsletterCampaignController;
     use App\Http\Controllers\NewsletterSubscriberController;
-// Import application's user settings
+// Import application's settings
     use App\Http\Controllers\UserController;
     use App\Http\Controllers\RoleController;
-// Import application's settings
-    use App\Http\Controllers\ApplicationMenuController;
+    use App\Http\Controllers\MenuController;
     use App\Http\Controllers\GeneralController;
     use App\Http\Controllers\AcceptedDomainController;
     use App\Http\Controllers\NotificationController;
@@ -74,11 +73,8 @@ Route::group([ 'prefix' => config('app.version') ], function () {
             Route::apiResource('/users', UserController::class);
             // User role types
             Route::apiResource('/roles', RoleController::class);
-        });
-        // Application's settings endpoints
-        Route::group([ 'prefix' => '/application-settings' ], function () {
             // Application menus
-            Route::apiResource('/application-menus', ApplicationMenuController::class);
+            Route::apiResource('/menus', MenuController::class)->only('index', 'create', 'update');
             // General
             Route::apiResource('/general', GeneralController::class);
             // Accepted domains

@@ -2,16 +2,16 @@
 
 namespace App\BusinessLogic\Services;
 
-use App\BusinessLogic\Interfaces\ApplicationMenuInterface;
+use App\BusinessLogic\Interfaces\MenuInterface;
 use Illuminate\Support\Facades\Auth;
 use App\Library\ApiResponse;
-use App\Models\ApplicationMenu;
+use App\Models\Menu;
 use Illuminate\Database\Eloquent\Collection;
 
 /**
- * ApplicationMenuService is a service class the will implement all the methods from the ApplicationMenuInterface contract and will handle the business logic.
+ * MenuService is a service class the will implement all the methods from the MenuInterface contract and will handle the business logic.
  */
-class ApplicationMenuService implements ApplicationMenuInterface
+class MenuService implements MenuInterface
 {
 
     protected $modelName;
@@ -23,7 +23,7 @@ class ApplicationMenuService implements ApplicationMenuInterface
      */
     public function __construct()
     {
-        $this->modelName = new ApplicationMenu();
+        $this->modelName = new Menu();
         $this->apiResponse = new ApiResponse();
     }
 

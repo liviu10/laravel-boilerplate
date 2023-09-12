@@ -4,10 +4,10 @@ namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
-use App\Models\ApplicationMenu;
+use App\Models\Menu;
 use Carbon\Carbon;
 
-class ApplicationMenuSeeder extends Seeder
+class MenuSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -15,7 +15,7 @@ class ApplicationMenuSeeder extends Seeder
     public function run(): void
     {
         DB::statement('SET FOREIGN_KEY_CHECKS = 0');
-        ApplicationMenu::truncate();
+        Menu::truncate();
         $records = [
             [
                 'id'            => 1,
@@ -33,7 +33,7 @@ class ApplicationMenuSeeder extends Seeder
                 'updated_at'    => Carbon::now(),
             ],
         ];
-        ApplicationMenu::insert($records);
+        Menu::insert($records);
         DB::statement('SET FOREIGN_KEY_CHECKS = 1');
     }
 }
