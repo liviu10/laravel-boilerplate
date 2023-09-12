@@ -78,19 +78,22 @@ class MenuService implements MenuInterface
      */
     public function handleUpdate($request, $id)
     {
-        $apiUpdateRecord = [
-            'path'          => $request['path'],
-            'name'          => $request['name'],
-            'title'         => $request['title'] ?? null,
-            'caption'       => $request['caption'] ?? null,
-            'icon'          => $request['icon'] ?? null,
-            'is_active'     => $request['is_active'] ?? false,
-            'requires_auth' => $request['requires_auth'] ?? false,
-            'user_id'       => Auth::user() ? Auth::user()->id : 1,
-        ];
-        $apiInsertRecord['layout'] = $this->handleLayoutPath($request['path']);
-        $apiInsertRecord['component'] = $this->handleComponentPath($request['path']);
-        $updatedRecord = $this->modelName->updateRecord($apiUpdateRecord, $id);
+        $apiDisplaySingleRecord = $this->modelName->fetchSingleRecord($id);
+        if ($apiDisplaySingleRecord && $apiDisplaySingleRecord->isNotEmpty()) {
+            $apiUpdateRecord = [
+                'path'          => $request['path'] ?? $apiDisplaySingleRecord->path,
+                'name'          => $request['name'] ?? $apiDisplaySingleRecord->name,
+                'title'         => $request['title'] ?? $apiDisplaySingleRecord->title,
+                'caption'       => $request['caption'] ?? $apiDisplaySingleRecord->caption,
+                'icon'          => $request['icon'] ?? $apiDisplaySingleRecord->icon,
+                'is_active'     => $request['is_active'] ?? $apiDisplaySingleRecord->is_active,
+                'requires_auth' => $request['requires_auth'] ?? $apiDisplaySingleRecord->requires_auth,
+                'user_id'       => Auth::user() ? Auth::user()->id : 1,
+            ];
+            $apiInsertRecord['layout'] = $this->handleLayoutPath($request['path']);
+            $apiInsertRecord['component'] = $this->handleComponentPath($request['path']);
+            $updatedRecord = $this->modelName->updateRecord($apiUpdateRecord, $id);
+        }
         $apiUpdatedRecord = $this->apiResponse->generateApiResponse($updatedRecord->toArray(), 'update');
 
         return $apiUpdatedRecord;
@@ -108,13 +111,7 @@ class MenuService implements MenuInterface
     {
         $componentMainDirectory = ucfirst(explode('/', $path)[1]);
 
-        if ($componentMainDirectory === 'admin') {
-            return 'src/layouts/' . $componentMainDirectory . 'Layout.vue';
-        }
-
-        if ($componentMainDirectory === 'client') {
-            return 'src/layouts/' . $componentMainDirectory . 'Layout.vue';
-        }
+        return 'src/layouts/' . $componentMainDirectory . 'Layout.vue';
     }
 
     /**

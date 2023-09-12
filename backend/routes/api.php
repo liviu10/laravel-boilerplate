@@ -74,7 +74,7 @@ Route::group([ 'prefix' => config('app.version') ], function () {
             // User role types
             Route::apiResource('/roles', RoleController::class);
             // Application menus
-            Route::apiResource('/menus', MenuController::class)->only('index', 'create', 'update');
+            Route::apiResource('/menus', MenuController::class)->only('index', 'store', 'update');
             // General
             Route::apiResource('/general', GeneralController::class);
             // Accepted domains
