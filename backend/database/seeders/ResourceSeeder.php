@@ -4,10 +4,10 @@ namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
-use App\Models\Menu;
+use App\Models\Resource;
 use Carbon\Carbon;
 
-class MenuSeeder extends Seeder
+class ResourceSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -15,10 +15,11 @@ class MenuSeeder extends Seeder
     public function run(): void
     {
         DB::statement('SET FOREIGN_KEY_CHECKS = 0');
-        Menu::truncate();
+        Resource::truncate();
         $records = [
             [
                 'id'            => 1,
+                'type'          => 'Menu',
                 'path'          => '/admin',
                 'name'          => 'HomePage',
                 'component'     => 'pages/admin/HomePage.vue',
@@ -33,7 +34,7 @@ class MenuSeeder extends Seeder
                 'updated_at'    => Carbon::now(),
             ],
         ];
-        Menu::insert($records);
+        Resource::insert($records);
         DB::statement('SET FOREIGN_KEY_CHECKS = 1');
     }
 }

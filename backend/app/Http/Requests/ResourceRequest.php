@@ -3,9 +3,10 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\Route;
 
-class MenuRequest extends FormRequest
+class ResourceRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -28,27 +29,37 @@ class MenuRequest extends FormRequest
         $rules = [];
 
         // Validation rules when creating
-        if ($currentRouteName === 'application-menus.store')
+        if ($currentRouteName === 'resources.store')
         {
             $rules = [
+                'type' => [
+                    'required',
+                    'string',
+                    Rule::in(['Menu', 'API'])
+                ],
                 'path' => 'required|string|min:3|max:255',
-                'name' => 'required|string|min:3|max:255|regex:/^[a-zA-Z\s]+$/',
+                'name' => 'sometimes|string|min:3|max:255|regex:/^[a-zA-Z\s]+$/',
                 'title' => 'required|string|min:3|max:100',
-                'caption' => 'required|string|min:3|max:255|regex:/^[a-zA-Z\s]+$/',
-                'icon' => 'required|string|min:1|max:100|regex:/^[a-zA-Z\s]+$/',
+                'caption' => 'sometimes|string|min:3|max:255|regex:/^[a-zA-Z\s.]+$/',
+                'icon' => 'sometimes|string|min:1|max:100|regex:/^[a-zA-Z\s]+$/',
                 'is_active' => 'required',
                 'requires_auth' => 'required',
             ];
         }
 
         // Validation rules when updating
-        if ($currentRouteName === 'application-menus.update')
+        if ($currentRouteName === 'resources.update')
         {
             $rules = [
+                'type' => [
+                    'sometimes',
+                    'string',
+                    Rule::in(['Menu', 'API'])
+                ],
                 'path' => 'sometimes|string|min:3|max:255',
                 'name' => 'sometimes|string|min:3|max:255|regex:/^[a-zA-Z\s]+$/',
                 'title' => 'sometimes|string|min:3|max:100',
-                'caption' => 'sometimes|string|min:3|max:255|regex:/^[a-zA-Z\s]+$/',
+                'caption' => 'sometimes|string|min:3|max:255|regex:/^[a-zA-Z\s.]+$/',
                 'icon' => 'sometimes|string|min:1|max:100|regex:/^[a-zA-Z\s]+$/',
                 'is_active' => 'sometimes',
                 'requires_auth' => 'sometimes',
@@ -66,6 +77,9 @@ class MenuRequest extends FormRequest
     public function messages()
     {
         return [
+            'type.required' => 'The type field is required.',
+            'type.string' => 'The type must be a string.',
+            'type.in' => 'The selected type is invalid.',
             'path.required' => 'The path field is required.',
             'path.string' => 'The path must be a string.',
             'path.min' => 'The path must be at least :min characters.',

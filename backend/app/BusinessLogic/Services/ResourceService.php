@@ -2,16 +2,16 @@
 
 namespace App\BusinessLogic\Services;
 
-use App\BusinessLogic\Interfaces\MenuInterface;
+use App\BusinessLogic\Interfaces\ResourceInterface;
 use Illuminate\Support\Facades\Auth;
 use App\Library\ApiResponse;
-use App\Models\Menu;
+use App\Models\Resource;
 use Illuminate\Database\Eloquent\Collection;
 
 /**
- * MenuService is a service class the will implement all the methods from the MenuInterface contract and will handle the business logic.
+ * ResourceService is a service class the will implement all the methods from the ResourceInterface contract and will handle the business logic.
  */
-class MenuService implements MenuInterface
+class ResourceService implements ResourceInterface
 {
 
     protected $modelName;
@@ -23,7 +23,7 @@ class MenuService implements MenuInterface
      */
     public function __construct()
     {
-        $this->modelName = new Menu();
+        $this->modelName = new Resource();
         $this->apiResponse = new ApiResponse();
     }
 
@@ -53,8 +53,8 @@ class MenuService implements MenuInterface
     public function handleStore($request)
     {
         $apiInsertRecord = [
+            'type'          => $request['type'],
             'path'          => $request['path'],
-            'name'          => $request['name'],
             'title'         => $request['title'] ?? null,
             'caption'       => $request['caption'] ?? null,
             'icon'          => $request['icon'] ?? null,
@@ -63,6 +63,7 @@ class MenuService implements MenuInterface
             'user_id'       => Auth::user() ? Auth::user()->id : 1,
         ];
         $apiInsertRecord['layout'] = $this->handleLayoutPath($request['path']);
+        $apiInsertRecord['name'] = $this->handleComponentName($request['path']);
         $apiInsertRecord['component'] = $this->handleComponentPath($request['path']);
         $createdRecord = $this->modelName->createRecord($apiInsertRecord);
         $apiCreatedRecord = $this->apiResponse->generateApiResponse($createdRecord->toArray(), 'create');
@@ -78,16 +79,17 @@ class MenuService implements MenuInterface
      */
     public function handleUpdate($request, $id)
     {
-        $apiDisplaySingleRecord = $this->modelName->fetchSingleRecord($id);
-        if ($apiDisplaySingleRecord && $apiDisplaySingleRecord->isNotEmpty()) {
+        $apiDisplaySingleRecord = $this->modelName->fetchSingleRecord($id)->toArray()[0];
+        if ($apiDisplaySingleRecord && count($apiDisplaySingleRecord)) {
             $apiUpdateRecord = [
-                'path'          => $request['path'] ?? $apiDisplaySingleRecord->path,
-                'name'          => $request['name'] ?? $apiDisplaySingleRecord->name,
-                'title'         => $request['title'] ?? $apiDisplaySingleRecord->title,
-                'caption'       => $request['caption'] ?? $apiDisplaySingleRecord->caption,
-                'icon'          => $request['icon'] ?? $apiDisplaySingleRecord->icon,
-                'is_active'     => $request['is_active'] ?? $apiDisplaySingleRecord->is_active,
-                'requires_auth' => $request['requires_auth'] ?? $apiDisplaySingleRecord->requires_auth,
+                'type'          => $request['type'] ?? $apiDisplaySingleRecord['type'],
+                'path'          => $request['path'] ?? $apiDisplaySingleRecord['path'],
+                'name'          => $request['name'] ?? $apiDisplaySingleRecord['name'],
+                'title'         => $request['title'] ?? $apiDisplaySingleRecord['title'],
+                'caption'       => $request['caption'] ?? $apiDisplaySingleRecord['caption'],
+                'icon'          => $request['icon'] ?? $apiDisplaySingleRecord['icon'],
+                'is_active'     => $request['is_active'] ?? $apiDisplaySingleRecord['is_active'],
+                'requires_auth' => $request['requires_auth'] ?? $apiDisplaySingleRecord['requires_auth'],
                 'user_id'       => Auth::user() ? Auth::user()->id : 1,
             ];
             $apiInsertRecord['layout'] = $this->handleLayoutPath($request['path']);
@@ -114,6 +116,26 @@ class MenuService implements MenuInterface
         return 'src/layouts/' . $componentMainDirectory . 'Layout.vue';
     }
 
+    public function handleComponentName(string $path): string
+    {
+        $item = array_filter(explode('/', $path), 'strlen');
+        $componentName = '';
+
+        if (substr(end($item), -1, 1) === 's') {
+            $componentName = substr(end($item), 0, -1);
+        }
+
+        if (str_contains(end($item), '-')) {
+            if (substr(end($item), -1, 1) === 's') {
+                $componentName = substr(str_replace(' ', '', ucwords(str_replace('-', ' ', end($item)))), 0, -1);
+            } else {
+                $componentName = str_replace(' ', '', ucwords(str_replace('-', ' ', end($item))));
+            }
+        }
+
+        return $componentName . 'Page';
+    }
+
     /**
      * Transforms a component path into a page path.
      * This method takes a component path, which typically represents a Vue.js
@@ -125,10 +147,29 @@ class MenuService implements MenuInterface
      */
     public function handleComponentPath(string $path): string
     {
-        $componentMainDirectory = explode('/', $path)[1];
-        $componentSubdirectory = ucwords(str_replace('-', '', explode('/', $path)[2]));
-        $componentName = explode('/', $path)[1] . '.vue';
+        $urlParts = array_filter(explode('/', $path), 'strlen');
+        $componentPath = 'pages/';
+        foreach ($urlParts as $index => $item) {
+            if ($index === count($urlParts)) {
+                $componentName = ucfirst($item);
+                if (substr($componentName, -1, 1) === 's') {
+                    $componentName = substr($componentName, 0, -1);
+                }
 
-        return 'pages/' . $componentMainDirectory . '/' . $componentSubdirectory . '/' . $componentName;
+                if (str_contains($item, '-')) {
+                    if (substr($componentName, -1, 1) === 's') {
+                        $componentName = substr(str_replace(' ', '', ucwords(str_replace('-', ' ', $item))), 0, -1);
+                    } else {
+                        $componentName = str_replace(' ', '', ucwords(str_replace('-', ' ', $item)));
+                    }
+                }
+                $componentPath .=  $componentName . 'Page.vue';
+            } else {
+                $componentPath .= $item . '/';
+            }
+        }
+        $componentPath = rtrim($componentPath, '/');
+
+        return $componentPath;
     }
 }

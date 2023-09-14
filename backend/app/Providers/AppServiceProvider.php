@@ -22,7 +22,7 @@ use App\BusinessLogic\Interfaces\AppreciationInterface;
 use App\BusinessLogic\Interfaces\UserInterface;
 use App\BusinessLogic\Interfaces\RoleInterface;
 use App\BusinessLogic\Interfaces\AcceptedDomainInterface;
-use App\BusinessLogic\Interfaces\MenuInterface;
+use App\BusinessLogic\Interfaces\ResourceInterface;
 use App\BusinessLogic\Interfaces\GeneralInterface;
 use App\BusinessLogic\Interfaces\NotificationInterface;
 
@@ -49,7 +49,7 @@ class AppServiceProvider extends ServiceProvider
         // Register application's user settings interfaces and services
         $this->app->bind( RoleInterface::class, RoleService::class );
         $this->app->bind( UserInterface::class, UserService::class );
-        $this->app->bind( MenuInterface::class, MenuService::class );
+        $this->app->bind( ResourceInterface::class, ResourceService::class );
         $this->app->bind( AcceptedDomainInterface::class, AcceptedDomainService::class );
         $this->app->bind( GeneralInterface::class, GeneralService::class );
         $this->app->bind( NotificationInterface::class, NotificationService::class );

@@ -12,7 +12,7 @@ use Illuminate\Database\QueryException;
 use Illuminate\Pagination\LengthAwarePaginator;
 
 /**
- * Class Menu
+ * Class Resource
  * @package App\Models
 
  * @property int $id
@@ -32,7 +32,7 @@ use Illuminate\Pagination\LengthAwarePaginator;
  * @method createRecord
  * @method updateRecord
  */
-class Menu extends BaseModel
+class Resource extends BaseModel
 {
     use HasFactory, FilterAvailableFields, LogApiError;
 
@@ -40,7 +40,7 @@ class Menu extends BaseModel
      * The table associated with the model.
      * @var string
      */
-    protected $table = 'menus';
+    protected $table = 'resources';
 
     /**
      * The foreign key associated with the table.
@@ -59,6 +59,7 @@ class Menu extends BaseModel
      * @var array<string>
      */
     protected $fillable = [
+        'type',
         'path',
         'name',
         'component',
@@ -78,6 +79,14 @@ class Menu extends BaseModel
     protected $attributes = [
         'is_active'     => false,
         'requires_auth' => false,
+    ];
+
+    /**
+     * The visibility options.
+     * @var array<string>
+     */
+    protected $visibilityOptions = [
+        'Menu', 'API'
     ];
 
     /**
@@ -116,6 +125,7 @@ class Menu extends BaseModel
         try {
             $query = $this->select(
                 'id',
+                'type',
                 'path',
                 'name',
                 'component',
@@ -154,13 +164,14 @@ class Menu extends BaseModel
     /**
      * Create a new record in the database.
      * @param array $payload An associative array containing record data.
-     * @return \App\Models\Menu|bool The newly created
+     * @return \App\Models\Resource|bool The newly created
      * User instance, or `false` if an error occurs.
      */
-    public function createRecord(array $payload): Menu|bool
+    public function createRecord(array $payload): Resource|bool
     {
         try {
             $query = $this->create([
+                'type'          => $payload['type'],
                 'path'          => $payload['path'],
                 'name'          => $payload['name'],
                 'component'     => $payload['component'],
@@ -220,12 +231,13 @@ class Menu extends BaseModel
      * Update a record in the database.
      * @param array $payload An associative array containing the updated record data.
      * @param int $id The unique identifier of the record to update.
-     * @return \App\Models\Menu|bool The freshly updated User instance, or `false` if an error occurs.
+     * @return \App\Models\Resource|bool The freshly updated User instance, or `false` if an error occurs.
      */
-    public function updateRecord(array $payload, int $id): Menu|bool
+    public function updateRecord(array $payload, int $id): Resource|bool
     {
         try {
             $query = tap($this->find($id))->update([
+                'type'          => $payload['type'],
                 'path'          => $payload['path'],
                 'name'          => $payload['name'],
                 'component'     => $payload['component'],
@@ -276,5 +288,14 @@ class Menu extends BaseModel
         ];
 
         return $this->handleFilterAvailableFields($fieldTypes, $excludedFields);
+    }
+
+    /**
+     * Get the resource types.
+     * @return array An array containing the resource types.
+     */
+    public function getResourceTypes(): array
+    {
+        return $this->resourceTypes;
     }
 }

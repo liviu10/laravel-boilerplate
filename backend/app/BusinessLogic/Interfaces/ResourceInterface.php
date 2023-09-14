@@ -2,16 +2,14 @@
 
 namespace App\BusinessLogic\Interfaces;
 
-use App\Http\Requests\MenuRequest;
-
 /**
- * MenuInterface is a contract for what methods will be used in the MenuService class.
+ * ResourceInterface is a contract for what methods will be used in the ResourceService class.
  * This consists of the following CRUD operations methods:
  * - handleIndex();
  * - handleStore();
  * - handleUpdate();
  */
-interface MenuInterface
+interface ResourceInterface
 {
     /**
      * Fetch all the records from the database.

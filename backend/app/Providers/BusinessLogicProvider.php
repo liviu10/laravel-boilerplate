@@ -31,8 +31,8 @@ use App\BusinessLogic\Interfaces\UserInterface;
 use App\BusinessLogic\Services\UserService;
 use App\BusinessLogic\Interfaces\RoleInterface;
 use App\BusinessLogic\Services\RoleService;
-use App\BusinessLogic\Interfaces\MenuInterface;
-use App\BusinessLogic\Services\MenuService;
+use App\BusinessLogic\Interfaces\ResourceInterface;
+use App\BusinessLogic\Services\ResourceService;
 use App\BusinessLogic\Interfaces\AcceptedDomainInterface;
 use App\BusinessLogic\Services\AcceptedDomainService;
 use App\BusinessLogic\Interfaces\GeneralInterface;
@@ -65,7 +65,7 @@ class BusinessLogicProvider extends ServiceProvider
         // Register application's user settings interfaces and services
         $this->app->bind( UserInterface::class, UserService::class );
         $this->app->bind( RoleInterface::class, RoleService::class );
-        $this->app->bind( MenuInterface::class, MenuService::class );
+        $this->app->bind( ResourceInterface::class, ResourceService::class );
         $this->app->bind( AcceptedDomainInterface::class, AcceptedDomainService::class );
         $this->app->bind( GeneralInterface::class, GeneralService::class );
         $this->app->bind( NotificationInterface::class, NotificationService::class );

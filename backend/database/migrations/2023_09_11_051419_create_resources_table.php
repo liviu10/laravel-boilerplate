@@ -11,8 +11,9 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('menus', function (Blueprint $table) {
+        Schema::create('resources', function (Blueprint $table) {
             $table->id()->index('idx_id');
+            $table->enum('type', ['Menu', 'API']);
             $table->string('path');
             $table->string('name');
             $table->string('component');
@@ -31,6 +32,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('menus');
+        Schema::dropIfExists('resources');
     }
 };
