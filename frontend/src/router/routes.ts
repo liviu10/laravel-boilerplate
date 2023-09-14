@@ -26,16 +26,16 @@ const routes: RouteRecordRaw[] = [
       // Admin communication urls,
       ...communication,
 
-      {
-        path: '/admin/reports',
-        name: 'MonitoringPage',
-        component: () => import('pages/admin/MonitoringPage.vue'),
-        meta: {
-          title: 'admin.reports.title',
-          caption: 'admin.reports.description',
-          icon: 'analytics',
-        },
-      },
+      // {
+      //   path: '/admin/reports',
+      //   name: 'MonitoringPage',
+      //   component: () => import('pages/admin/MonitoringPage.vue'),
+      //   meta: {
+      //     title: 'admin.reports.title',
+      //     caption: 'admin.reports.description',
+      //     icon: 'analytics',
+      //   },
+      // },
 
       {
         path: '/admin/documentation',

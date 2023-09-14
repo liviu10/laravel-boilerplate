@@ -10,12 +10,12 @@ const routes: RouteRecordRaw[] = [
     },
     children: [
       {
-        path: '/admin/management/pages',
-        name: 'ManagementPage',
-        component: () => import('pages/admin/management/ManagementPage.vue'),
+        path: '/admin/management/contents',
+        name: 'ContentPage',
+        component: () => import('pages/admin/management/ContentPage.vue'),
         meta: {
-          title: 'admin.management.pages.title',
-          caption: 'admin.management.pages.description',
+          title: 'admin.management.contents.title',
+          caption: 'admin.management.contents.description',
         },
       },
       {
