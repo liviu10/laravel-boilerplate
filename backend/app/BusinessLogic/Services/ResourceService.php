@@ -55,16 +55,29 @@ class ResourceService implements ResourceInterface
         $apiInsertRecord = [
             'type'          => $request['type'],
             'path'          => $request['path'],
-            'title'         => $request['title'] ?? null,
-            'caption'       => $request['caption'] ?? null,
             'icon'          => $request['icon'] ?? null,
             'is_active'     => $request['is_active'] ?? false,
             'requires_auth' => $request['requires_auth'] ?? false,
             'user_id'       => Auth::user() ? Auth::user()->id : 1,
         ];
-        $apiInsertRecord['layout'] = $this->handleLayoutPath($request['path']);
-        $apiInsertRecord['name'] = $this->handleComponentName($request['path']);
-        $apiInsertRecord['component'] = $this->handleComponentPath($request['path']);
+
+        if ($request['type'] === 'Menu') {
+            $componentDetails = $this->handleComponentDetails($request['path']);
+            $apiInsertRecord['name'] = $componentDetails['component_name'];
+            $apiInsertRecord['component'] = $componentDetails['component_path'];
+            $apiInsertRecord['layout'] = $componentDetails['layout_path'];
+            $apiInsertRecord['title'] = $componentDetails['title_translation'];
+            $apiInsertRecord['caption'] = $componentDetails['caption_translation'];
+        }
+
+        if ($request['type'] === 'API') {
+            $apiInsertRecord['name'] = null;
+            $apiInsertRecord['component'] = null;
+            $apiInsertRecord['layout'] = null;
+            $apiInsertRecord['title'] = null;
+            $apiInsertRecord['caption'] = null;
+        }
+
         $createdRecord = $this->modelName->createRecord($apiInsertRecord);
         $apiCreatedRecord = $this->apiResponse->generateApiResponse($createdRecord->toArray(), 'create');
 
@@ -84,7 +97,6 @@ class ResourceService implements ResourceInterface
             $apiUpdateRecord = [
                 'type'          => $request['type'] ?? $apiDisplaySingleRecord['type'],
                 'path'          => $request['path'] ?? $apiDisplaySingleRecord['path'],
-                'name'          => $request['name'] ?? $apiDisplaySingleRecord['name'],
                 'title'         => $request['title'] ?? $apiDisplaySingleRecord['title'],
                 'caption'       => $request['caption'] ?? $apiDisplaySingleRecord['caption'],
                 'icon'          => $request['icon'] ?? $apiDisplaySingleRecord['icon'],
@@ -92,39 +104,54 @@ class ResourceService implements ResourceInterface
                 'requires_auth' => $request['requires_auth'] ?? $apiDisplaySingleRecord['requires_auth'],
                 'user_id'       => Auth::user() ? Auth::user()->id : 1,
             ];
-            $apiInsertRecord['layout'] = $this->handleLayoutPath($request['path']);
-            $apiInsertRecord['component'] = $this->handleComponentPath($request['path']);
+
+            if ($request['type'] === 'Menu') {
+                if ($request['path'] && $request['path'] !== null) {
+                    $componentDetails = $this->handleComponentDetails($request['path']);
+                    $apiUpdateRecord['name'] = $componentDetails['component_name'];
+                    $apiUpdateRecord['component'] = $componentDetails['component_path'];
+                    $apiUpdateRecord['layout'] = $componentDetails['layout_path'];
+                    $apiUpdateRecord['title'] = $componentDetails['title_translation'];
+                    $apiUpdateRecord['caption'] = $componentDetails['caption_translation'];
+                } else {
+                    $apiUpdateRecord['name'] = $apiDisplaySingleRecord['name'];
+                    $apiUpdateRecord['component'] = $apiDisplaySingleRecord['component'];
+                    $apiUpdateRecord['layout'] = $apiDisplaySingleRecord['layout'];
+                    $apiUpdateRecord['title'] = $apiDisplaySingleRecord['title'];
+                    $apiUpdateRecord['caption'] = $apiDisplaySingleRecord['caption'];
+                }
+            }
+
+            if ($request['type'] === 'API') {
+                $apiUpdateRecord['name'] = null;
+                $apiUpdateRecord['component'] = null;
+                $apiUpdateRecord['layout'] = null;
+                $apiUpdateRecord['title'] = null;
+                $apiUpdateRecord['caption'] = null;
+            }
+
             $updatedRecord = $this->modelName->updateRecord($apiUpdateRecord, $id);
+            $apiUpdatedRecord = $this->apiResponse->generateApiResponse($updatedRecord->toArray(), 'update');
+
+            return $apiUpdatedRecord;
         }
-        $apiUpdatedRecord = $this->apiResponse->generateApiResponse($updatedRecord->toArray(), 'update');
-
-        return $apiUpdatedRecord;
     }
 
-    /**
-     * Determine the layout path based on the component's main directory.
-     * This method takes a component path and examines its main directory to determine
-     * the appropriate layout path. Depending on the main directory, it returns the
-     * corresponding layout path for either the "admin" or "client" context.
-     * @param string $path The component path used to determine the layout.
-     * @return string The layout path based on the component's main directory.
-     */
-    public function handleLayoutPath(string $path): string
-    {
-        $componentMainDirectory = ucfirst(explode('/', $path)[1]);
-
-        return 'src/layouts/' . $componentMainDirectory . 'Layout.vue';
-    }
-
-    public function handleComponentName(string $path): string
+    public function handleComponentDetails(string $path): array
     {
         $item = array_filter(explode('/', $path), 'strlen');
+
+        $layoutPath = 'src/layouts/' . ucfirst($item[1]) . 'Layout.vue';
         $componentName = '';
+        $componentPath = 'pages';
+        $titleTranslation = '';
+        $captionTranslation = '';
 
         if (substr(end($item), -1, 1) === 's') {
-            $componentName = substr(end($item), 0, -1);
+            $componentName = ucfirst(substr(end($item), 0, -1));
+        } else {
+            $componentName = ucfirst(end($item));
         }
-
         if (str_contains(end($item), '-')) {
             if (substr(end($item), -1, 1) === 's') {
                 $componentName = substr(str_replace(' ', '', ucwords(str_replace('-', ' ', end($item)))), 0, -1);
@@ -133,43 +160,35 @@ class ResourceService implements ResourceInterface
             }
         }
 
-        return $componentName . 'Page';
-    }
-
-    /**
-     * Transforms a component path into a page path.
-     * This method takes a component path, which typically represents a Vue.js
-     * component location, and converts it into a page path format. It extracts
-     * the main directory, subdirectory, and component name from the input path
-     * and constructs a page path using them.
-     * @param string $path The component path to be transformed.
-     * @return string The page path generated from the component path.
-     */
-    public function handleComponentPath(string $path): string
-    {
-        $urlParts = array_filter(explode('/', $path), 'strlen');
-        $componentPath = 'pages/';
-        foreach ($urlParts as $index => $item) {
-            if ($index === count($urlParts)) {
-                $componentName = ucfirst($item);
-                if (substr($componentName, -1, 1) === 's') {
-                    $componentName = substr($componentName, 0, -1);
-                }
-
-                if (str_contains($item, '-')) {
-                    if (substr($componentName, -1, 1) === 's') {
-                        $componentName = substr(str_replace(' ', '', ucwords(str_replace('-', ' ', $item))), 0, -1);
-                    } else {
-                        $componentName = str_replace(' ', '', ucwords(str_replace('-', ' ', $item)));
-                    }
-                }
-                $componentPath .=  $componentName . 'Page.vue';
+        foreach ($item as $key => $value) {
+            if ($key === count($item)) {
+                $componentPath .= '/' . $componentName . 'Page.vue';
             } else {
-                $componentPath .= $item . '/';
+                $componentPath .= '/' . $value;
             }
         }
-        $componentPath = rtrim($componentPath, '/');
+        $componentPath = ltrim($componentPath, '/');
 
-        return $componentPath;
+        foreach ($item as $key => $value) {
+            if (str_contains($value, '-')) {
+                $titleTranslation .= '.' . str_replace('-', '_', $value);
+                $captionTranslation .= '.' . str_replace('-', '_', $value);
+            } else {
+                $titleTranslation .= '.' . $value;
+                $captionTranslation .= '.' . $value;
+            }
+        }
+        $titleTranslation = ltrim($titleTranslation, '.');
+        $captionTranslation = ltrim($captionTranslation, '.');
+
+        $componentInformation = [
+            'layout_path' => $layoutPath,
+            'component_name' => $componentName . 'Page',
+            'component_path' => $componentPath,
+            'title_translation' => $titleTranslation . '.title',
+            'caption_translation' => $captionTranslation . '.description',
+        ];
+
+        return $componentInformation;
     }
 }

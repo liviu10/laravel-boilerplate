@@ -15,9 +15,9 @@ return new class extends Migration
             $table->id()->index('idx_id');
             $table->enum('type', ['Menu', 'API']);
             $table->string('path');
-            $table->string('name');
-            $table->string('component');
-            $table->string('layout');
+            $table->string('name')->nullable();
+            $table->string('component')->nullable();
+            $table->string('layout')->nullable();
             $table->string('title')->nullable();
             $table->string('caption')->nullable();
             $table->string('icon')->nullable();

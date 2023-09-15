@@ -39,7 +39,7 @@ class ResourceRequest extends FormRequest
                 ],
                 'path' => 'required|string|min:3|max:255',
                 'name' => 'sometimes|string|min:3|max:255|regex:/^[a-zA-Z\s]+$/',
-                'title' => 'required|string|min:3|max:100',
+                'title' => 'sometimes|string|min:3|max:100',
                 'caption' => 'sometimes|string|min:3|max:255|regex:/^[a-zA-Z\s.]+$/',
                 'icon' => 'sometimes|string|min:1|max:100|regex:/^[a-zA-Z\s]+$/',
                 'is_active' => 'required',
