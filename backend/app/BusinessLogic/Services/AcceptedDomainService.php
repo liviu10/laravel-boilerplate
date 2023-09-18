@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Library\ApiResponse;
 use App\Models\AcceptedDomain;
 use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Support\Facades\Route;
 
 /**
  * AcceptedDomainService is a service class the will implement all the methods from the AcceptedDomainInterface contract and will handle the business logic.
@@ -18,6 +19,10 @@ class AcceptedDomainService implements AcceptedDomainInterface
 
     protected $modelName;
     protected $apiResponse;
+    protected $currentRouteName;
+    protected $availableRoutes = [
+        'index'
+    ];
 
     /**
      * Instantiate the variables that will be used to get the model and table name as well as the table's columns.
@@ -25,6 +30,9 @@ class AcceptedDomainService implements AcceptedDomainInterface
      */
     public function __construct()
     {
+        $this->currentRouteName = Route::current()->getName();
+        dd($this->currentRouteName);
+
         $this->modelName = new AcceptedDomain();
         $this->apiResponse = new ApiResponse();
     }
