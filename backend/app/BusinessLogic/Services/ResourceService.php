@@ -85,6 +85,21 @@ class ResourceService implements ResourceInterface
     }
 
     /**
+     * Fetch a single record from the database.
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function handleShow($id)
+    {
+        $apiDisplaySingleRecord = $this->apiResponse->generateApiResponse(
+            $this->modelName->fetchSingleRecord($id, 'relation'),
+            'get'
+        );
+
+        return $apiDisplaySingleRecord;
+    }
+
+    /**
      * Update the specified resource in storage.
      * @param array $request An associative array of values to create a new record.
      * @param  int  $id
@@ -137,6 +152,36 @@ class ResourceService implements ResourceInterface
         }
     }
 
+    /**
+     * Delete a single record from the database
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function handleDestroy($id)
+    {
+        if (Auth::user() && Auth::user()->role_id === 1) {
+            $apiDisplaySingleRecord = $this->modelName->fetchSingleRecord($id);
+            if ($apiDisplaySingleRecord && $apiDisplaySingleRecord->isNotEmpty()) {
+                $this->modelName->deleteRecord($id);
+            }
+            $apiDeleteRecord = $this->apiResponse->generateApiResponse($apiDisplaySingleRecord, 'delete');
+
+            return $apiDeleteRecord;
+        } else {
+            return $this->apiResponse->generateApiResponse(null, 'not_allowed');
+        }
+    }
+
+    /**
+     * Parses a given path and extracts information to configure a component.
+     * @param string $path The path to be processed.
+     * @return array An associative array containing the following keys:
+     *- 'layout_path': The path to the layout Vue file.
+     *- 'component_name': The name of the component.
+     *- 'component_path': The path to the component Vue file.
+     *- 'title_translation': The translation key for the component's title.
+     *- 'caption_translation': The translation key for the component's caption.
+     */
     public function handleComponentDetails(string $path): array
     {
         $item = array_filter(explode('/', $path), 'strlen');

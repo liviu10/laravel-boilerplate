@@ -7,6 +7,7 @@ use App\BusinessLogic\Interfaces\RoleInterface;
 use App\Library\ApiResponse;
 use App\Models\Role;
 use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Support\Facades\Auth;
 
 /**
  * RoleService is a service class the will implement all the methods from the RoleInterface contract and will handle the business logic.
@@ -115,13 +116,17 @@ class RoleService implements RoleInterface
      */
     public function handleDestroy($id)
     {
-        $apiDisplaySingleRecord = $this->modelName->fetchSingleRecord($id);
-        if ($apiDisplaySingleRecord && $apiDisplaySingleRecord->isNotEmpty()) {
-            $this->modelName->deleteRecord($id);
-        }
-        $apiDeleteRecord = $this->apiResponse->generateApiResponse($apiDisplaySingleRecord, 'delete');
+        if (Auth::user() && Auth::user()->role_id === 1) {
+            $apiDisplaySingleRecord = $this->modelName->fetchSingleRecord($id);
+            if ($apiDisplaySingleRecord && $apiDisplaySingleRecord->isNotEmpty()) {
+                $this->modelName->deleteRecord($id);
+            }
+            $apiDeleteRecord = $this->apiResponse->generateApiResponse($apiDisplaySingleRecord, 'delete');
 
-        return $apiDeleteRecord;
+            return $apiDeleteRecord;
+        } else {
+            return $this->apiResponse->generateApiResponse(null, 'not_allowed');
+        }
     }
 
     /**

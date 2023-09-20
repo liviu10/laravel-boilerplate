@@ -4,8 +4,8 @@ namespace App\BusinessLogic\Services;
 
 use App\Traits\ApiStatisticalIndicators;
 use App\BusinessLogic\Interfaces\GeneralInterface;
+use Illuminate\Support\Facades\Auth;
 use App\Library\ApiResponse;
-use App\Http\Requests\GeneralRequest;
 use App\Models\General;
 use Illuminate\Database\Eloquent\Collection;
 
@@ -38,6 +38,7 @@ class GeneralService implements GeneralInterface
     {
         $apiDisplayAllRecords = $this->apiResponse->generateApiResponse(
             $this->modelName->fetchAllRecords($search),
+            'get',
             $this->modelName->getFields(),
             class_basename($this->modelName)
         );
@@ -47,53 +48,56 @@ class GeneralService implements GeneralInterface
 
     /**
      * Store a new record in the database.
-     * @param  GeneralRequest  $request
+     * @param array $request An associative array of values to create a new record.
      * @return \Illuminate\Http\Response
      */
-    public function handleStore(GeneralRequest $request)
+    public function handleStore($request)
     {
         $apiInsertRecord = [
-            'type'    => $request->get('type'),
-            'label'   => $request->get('label'),
-            'value'   => $request->get('value'),
-            'user_id' => 1,
+            'type'    => $request['type'],
+            'label'   => $request['label'],
+            'value'   => $request['value'],
+            'user_id' => Auth::user() ? Auth::user()->id : 1,
         ];
-        $saveRecord = $this->modelName->createRecord($apiInsertRecord);
+        $createdRecord = $this->modelName->createRecord($apiInsertRecord);
+        $apiCreatedRecord = $this->apiResponse->generateApiResponse($createdRecord->toArray(), 'create');
 
-        if ($saveRecord === true)
-        {
-            return response($this->handleResponse('success'), 201);
-        }
-        else
-        {
-            return response($this->handleResponse('error_message'), 500);
-        }
+        return $apiCreatedRecord;
+    }
+
+    /**
+     * Fetch a single record from the database.
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function handleShow($id)
+    {
+        $apiDisplaySingleRecord = $this->apiResponse->generateApiResponse(
+            $this->modelName->fetchSingleRecord($id, 'relation'),
+            'get'
+        );
+
+        return $apiDisplaySingleRecord;
     }
 
     /**
      * Update the specified resource in storage.
-     * @param  GeneralRequest  $request
+     * @param array $request An associative array of values to create a new record.
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function handleUpdate(GeneralRequest $request, $id)
+    public function handleUpdate($request, $id)
     {
         $apiUpdateRecord = [
-            'type'    => $request->get('type'),
-            'label'   => $request->get('label'),
-            'value'   => $request->get('value'),
-            'user_id' => 1,
+            'type'    => $request['type'],
+            'label'   => $request['label'],
+            'value'   => $request['value'],
+            'user_id' => Auth::user() ? Auth::user()->id : 1,
         ];
-        $updateRecord = $this->modelName->createRecord($apiUpdateRecord, $id);
+        $updatedRecord = $this->modelName->updateRecord($apiUpdateRecord, $id);
+        $apiUpdatedRecord = $this->apiResponse->generateApiResponse($updatedRecord->toArray(), 'update');
 
-        if ($updateRecord === true)
-        {
-            return response($this->handleResponse('success'), 201);
-        }
-        else
-        {
-            return response($this->handleResponse('error_message'), 500);
-        }
+        return $apiUpdatedRecord;
     }
 
     /**
@@ -103,23 +107,15 @@ class GeneralService implements GeneralInterface
      */
     public function handleDestroy($id)
     {
-        $apiDisplaySingleRecord = $this->modelName->fetchSingleRecord($id);
-
-        if ($apiDisplaySingleRecord instanceof Collection)
-        {
-            if ($apiDisplaySingleRecord->isEmpty())
-            {
-                return response($this->handleResponse('not_found'), 404);
-            }
-            else
-            {
+        if (Auth::user() && Auth::user()->role_id === 1) {
+            $apiDisplaySingleRecord = $this->modelName->fetchSingleRecord($id);
+            if ($apiDisplaySingleRecord && $apiDisplaySingleRecord->isNotEmpty()) {
                 $this->modelName->deleteRecord($id);
-                return response($this->handleResponse('success'), 200);
             }
-        }
-        else
-        {
-            return response($this->handleResponse('error_message'), 500);
+            $apiDeleteRecord = $this->apiResponse->generateApiResponse($apiDisplaySingleRecord, 'delete');
+            return $apiDeleteRecord;
+        } else {
+            return $this->apiResponse->generateApiResponse(null, 'not_allowed');
         }
     }
 }

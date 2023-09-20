@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use App\Traits\LogApiError;
+use Illuminate\Support\Facades\Auth;
 
 /**
  * Class BaseModel

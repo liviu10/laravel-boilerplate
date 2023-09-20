@@ -30,7 +30,9 @@ use Illuminate\Pagination\LengthAwarePaginator;
  * @property \Carbon\Carbon $updated_at
  * @method fetchAllRecords
  * @method createRecord
+ * @method fetchSingleRecord
  * @method updateRecord
+ * @method deleteRecord
  */
 class Resource extends BaseModel
 {

@@ -4,8 +4,8 @@ namespace App\BusinessLogic\Services;
 
 use App\Traits\ApiStatisticalIndicators;
 use App\BusinessLogic\Interfaces\NotificationInterface;
+use Illuminate\Support\Facades\Auth;
 use App\Library\ApiResponse;
-use App\Http\Requests\NotificationRequest;
 use App\Models\Notification;
 use Illuminate\Database\Eloquent\Collection;
 
@@ -38,8 +38,10 @@ class NotificationService implements NotificationInterface
     {
         $apiDisplayAllRecords = $this->apiResponse->generateApiResponse(
             $this->modelName->fetchAllRecords($search),
+            'get',
             $this->modelName->getFields(),
-            class_basename($this->modelName)
+            class_basename($this->modelName),
+            $this->modelName->getNotificationTypeOptions()
         );
 
         return $apiDisplayAllRecords;
@@ -47,55 +49,58 @@ class NotificationService implements NotificationInterface
 
     /**
      * Store a new record in the database.
-     * @param  NotificationRequest  $request
+     * @param array $request An associative array of values to create a new record.
      * @return \Illuminate\Http\Response
      */
-    public function handleStore(NotificationRequest $request)
+    public function handleStore($request)
     {
         $apiInsertRecord = [
-            'type'      => $request->get('type'),
-            'condition' => $request->get('condition'),
-            'title'     => $request->get('title'),
-            'content'   => $request->get('content'),
-            'user_id'   => 1,
+            'type'      => $request['type'],
+            'condition' => $request['condition'],
+            'title'     => $request['title'],
+            'content'   => $request['content'],
+            'user_id'   => Auth::user() ? Auth::user()->id : 1,
         ];
-        $saveRecord = $this->modelName->createRecord($apiInsertRecord);
+        $createdRecord = $this->modelName->createRecord($apiInsertRecord);
+        $apiCreatedRecord = $this->apiResponse->generateApiResponse($createdRecord->toArray(), 'create');
 
-        if ($saveRecord === true)
-        {
-            return response($this->handleResponse('success'), 201);
-        }
-        else
-        {
-            return response($this->handleResponse('error_message'), 500);
-        }
+        return $apiCreatedRecord;
+    }
+
+    /**
+     * Fetch a single record from the database.
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function handleShow($id)
+    {
+        $apiDisplaySingleRecord = $this->apiResponse->generateApiResponse(
+            $this->modelName->fetchSingleRecord($id, 'relation'),
+            'get'
+        );
+
+        return $apiDisplaySingleRecord;
     }
 
     /**
      * Update the specified resource in storage.
-     * @param  NotificationRequest  $request
+     * @param array $request An associative array of values to create a new record.
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function handleUpdate(NotificationRequest $request, $id)
+    public function handleUpdate($request, $id)
     {
         $apiUpdateRecord = [
-            'type'      => $request->get('type'),
-            'condition' => $request->get('condition'),
-            'title'     => $request->get('title'),
-            'content'   => $request->get('content'),
-            'user_id'   => 1,
+            'type'      => $request['type'],
+            'condition' => $request['condition'],
+            'title'     => $request['title'],
+            'content'   => $request['content'],
+            'user_id'   => Auth::user() ? Auth::user()->id : 1,
         ];
-        $updateRecord = $this->modelName->createRecord($apiUpdateRecord, $id);
+        $updatedRecord = $this->modelName->updateRecord($apiUpdateRecord, $id);
+        $apiUpdatedRecord = $this->apiResponse->generateApiResponse($updatedRecord->toArray(), 'update');
 
-        if ($updateRecord === true)
-        {
-            return response($this->handleResponse('success'), 201);
-        }
-        else
-        {
-            return response($this->handleResponse('error_message'), 500);
-        }
+        return $apiUpdatedRecord;
     }
 
     /**
@@ -105,23 +110,15 @@ class NotificationService implements NotificationInterface
      */
     public function handleDestroy($id)
     {
-        $apiDisplaySingleRecord = $this->modelName->fetchSingleRecord($id);
-
-        if ($apiDisplaySingleRecord instanceof Collection)
-        {
-            if ($apiDisplaySingleRecord->isEmpty())
-            {
-                return response($this->handleResponse('not_found'), 404);
-            }
-            else
-            {
+        if (Auth::user() && Auth::user()->role_id === 1) {
+            $apiDisplaySingleRecord = $this->modelName->fetchSingleRecord($id);
+            if ($apiDisplaySingleRecord && $apiDisplaySingleRecord->isNotEmpty()) {
                 $this->modelName->deleteRecord($id);
-                return response($this->handleResponse('success'), 200);
             }
-        }
-        else
-        {
-            return response($this->handleResponse('error_message'), 500);
+            $apiDeleteRecord = $this->apiResponse->generateApiResponse($apiDisplaySingleRecord, 'delete');
+            return $apiDeleteRecord;
+        } else {
+            return $this->apiResponse->generateApiResponse(null, 'not_allowed');
         }
     }
 }

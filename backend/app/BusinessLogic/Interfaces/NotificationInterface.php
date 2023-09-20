@@ -23,18 +23,23 @@ interface NotificationInterface
 
     /**
      * Store a new record in the database.
-     * @param App\Http\Requests\Admin\NotificationRequest $request
      * @return \Illuminate\Http\Response
      */
-    public function handleStore(NotificationRequest $request);
+    public function handleStore($request);
 
     /**
-     * Update an existing record in the database.
-     * @param App\Http\Requests\Admin\NotificationRequest $request
+     * Fetch a single record from the database.
      * @param int $id
      * @return \Illuminate\Http\Response
      */
-    public function handleUpdate(NotificationRequest $request, $id);
+    public function handleShow($id);
+
+    /**
+     * Update an existing record in the database.
+     * @param int $id
+     * @return \Illuminate\Http\Response
+     */
+    public function handleUpdate($request, $id);
 
     /**
      * Delete a single record from the database

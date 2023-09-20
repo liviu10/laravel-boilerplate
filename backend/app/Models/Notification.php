@@ -25,6 +25,7 @@ use Illuminate\Pagination\LengthAwarePaginator;
  * @property \Carbon\Carbon $updated_at
  * @method fetchAllRecords
  * @method createRecord
+ * @method fetchSingleRecord
  * @method updateRecord
  * @method deleteRecord
  */
@@ -171,6 +172,39 @@ class Notification extends BaseModel
     }
 
     /**
+     * Fetch a single record from the database by its ID.
+     * @param int $id The unique identifier of the record to fetch.
+     * @param string|null $type The fetch type: 'relation' to include
+     * related data or null for just the record.
+     * @return \Illuminate\Support\Collection|bool The fetched record or
+     * related data as a Collection, or `false` if an error occurs.
+     */
+    public function fetchSingleRecord(int $id, string|null $type = null): Collection|bool
+    {
+        try {
+            $query = $this->select('*')->where('id', '=', $id);
+
+            if ($type === 'relation') {
+                $query->with([
+                    'user' => function ($query) {
+                        $query->select('id', 'full_name');
+                    }
+                ]);
+
+                return $query->get();
+            } else {
+                return $query->get();
+            }
+        } catch (Exception $exception) {
+            $this->LogApiError($exception);
+            return false;
+        } catch (QueryException $exception) {
+            $this->LogApiError($exception);
+            return false;
+        }
+    }
+
+    /**
      * Update a record in the database.
      * @param array $payload An associative array containing the updated record data.
      * @param int $id The unique identifier of the record to update.
@@ -211,7 +245,7 @@ class Notification extends BaseModel
             'user_id'   => 'number',
         ];
 
-        $excludedFields = ['user_id'];
+        $excludedFields = ['content', 'user_id'];
 
         return $this->handleFilterAvailableFields($fieldTypes, $excludedFields);
     }

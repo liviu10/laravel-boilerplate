@@ -25,9 +25,23 @@ interface ResourceInterface
     public function handleStore($request);
 
     /**
+     * Fetch a single record from the database.
+     * @param int $id
+     * @return \Illuminate\Http\Response
+     */
+    public function handleShow($id);
+
+    /**
      * Update an existing record in the database.
      * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function handleUpdate($request, $id);
+
+    /**
+     * Delete a single record from the database
+     * @param int $id
+     * @return \Illuminate\Http\Response
+     */
+    public function handleDestroy($id);
 }

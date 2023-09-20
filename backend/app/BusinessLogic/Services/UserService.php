@@ -8,6 +8,7 @@ use App\Library\ApiResponse;
 use App\Models\User;
 use App\Models\Role;
 use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Support\Facades\Auth;
 
 /**
  * UserService is a service class the will implement all the methods from the UserInterface contract and will handle the business logic.
@@ -143,14 +144,17 @@ class UserService implements UserInterface
      */
     public function handleDestroy($id)
     {
-        $apiDisplaySingleRecord = $this->modelName->fetchSingleRecord($id);
-        if ($apiDisplaySingleRecord && $apiDisplaySingleRecord->isNotEmpty())
-        {
-            $this->modelName->deleteRecord($id);
+        if (Auth::user() && Auth::user()->role_id === 1) {
+            $apiDisplaySingleRecord = $this->modelName->fetchSingleRecord($id);
+            if ($apiDisplaySingleRecord && $apiDisplaySingleRecord->isNotEmpty()) {
+                $this->modelName->deleteRecord($id);
+            }
+            $apiDeleteRecord = $this->apiResponse->generateApiResponse($apiDisplaySingleRecord, 'delete');
+
+            return $apiDeleteRecord;
+        } else {
+            return $this->apiResponse->generateApiResponse(null, 'not_allowed');
         }
-        $apiDeleteRecord = $this->apiResponse->generateApiResponse($apiDisplaySingleRecord, 'delete');
-        
-        return $apiDeleteRecord;
     }
 
     /**
