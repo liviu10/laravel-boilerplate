@@ -5,7 +5,7 @@ namespace App\Http\Requests;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\Route;
 
-class ContactMessageRequest extends FormRequest
+class ContactResponseRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -28,7 +28,7 @@ class ContactMessageRequest extends FormRequest
         $rules = [];
 
         // Validation rules when creating
-        if ($currentRouteName === 'messages.store') {
+        if ($currentRouteName === 'responses.store') {
             $rules = [
                 'full_name' => 'required|string|min:3|max:255|regex:/^[a-zA-Z\s]+$/',
                 'email' => 'required|string|min:3|max:255',

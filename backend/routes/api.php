@@ -14,8 +14,9 @@ use Illuminate\Support\Facades\Route;
 |
 */
 // Import application's communication
-use App\Http\Controllers\ContactMessageController;
 use App\Http\Controllers\ContactSubjectController;
+use App\Http\Controllers\ContactMessageController;
+use App\Http\Controllers\ContactResponseController;
 use App\Http\Controllers\NewsletterCampaignController;
 use App\Http\Controllers\NewsletterSubscriberController;
 // Import application's management
@@ -45,7 +46,9 @@ Route::group(['prefix' => config('app.version')], function () {
             Route::group(['prefix' => '/contact'], function () {
                 Route::apiResource('/subjects', ContactSubjectController::class);
                 Route::apiResource('/messages', ContactMessageController::class);
+                Route::apiResource('/responses', ContactResponseController::class);
             });
+            // TODO: Add routes for social media (facebook pages, linkedin articles)
             // Newsletter campaign and subscribers
             Route::group(['prefix' => '/newsletter'], function () {
                 Route::apiResource('/campaigns', NewsletterCampaignController::class);
@@ -54,7 +57,7 @@ Route::group(['prefix' => config('app.version')], function () {
         });
         // Application's management endpoints
         Route::group(['prefix' => '/management'], function () {
-            // Pages
+            // Content (pages and articles)
             Route::apiResource('/contents', ContentController::class);
             // Tags
             Route::apiResource('/tags', TagController::class);
@@ -64,9 +67,11 @@ Route::group(['prefix' => config('app.version')], function () {
             Route::apiResource('/comments', CommentController::class);
             // Appreciation
             Route::apiResource('/appreciations', AppreciationController::class);
+            // TODO: Add routes for products, categories and cart
         });
         // Application's user settings api endpoints
         Route::group(['prefix' => '/settings'], function () {
+            // TODO: Add routes for google analytics
             // Accepted domains
             Route::apiResource('/accepted-domains', AcceptedDomainController::class);
             // General

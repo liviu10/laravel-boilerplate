@@ -15,6 +15,7 @@ class DatabaseSeeder extends Seeder
     {
         $this->call([
             AcceptedDomainSeeder::class,
+            ContactSubjectSeeder::class,
             NewsletterCampaignSeeder::class,
             PermissionSeeder::class,
             ResourceSeeder::class,

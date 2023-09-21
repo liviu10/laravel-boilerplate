@@ -67,8 +67,8 @@ class AcceptedDomain extends BaseModel
      */
     protected $statisticalIndicators = [
         'type',
-        'user_id',
         'is_active',
+        'user_id',
     ];
 
     /**

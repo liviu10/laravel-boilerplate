@@ -28,8 +28,7 @@ class ContactSubjectRequest extends FormRequest
         $rules = [];
 
         // Validation rules when creating
-        if ($currentRouteName === 'subjects.store')
-        {
+        if ($currentRouteName === 'subjects.store') {
             $rules = [
                 'name' => 'required|string|min:3|max:255|regex:/^[a-zA-Z\s]+$/',
                 'description' => 'sometimes|string|min:3|max:255',
@@ -38,12 +37,11 @@ class ContactSubjectRequest extends FormRequest
         }
 
         // Validation rules when updating
-        if ($currentRouteName === 'subjects.update')
-        {
+        if ($currentRouteName === 'subjects.update') {
             $rules = [
-                'name' => 'sometime|string|min:3|max:255|regex:/^[a-zA-Z\s]+$/',
+                'name' => 'sometimes|string|min:3|max:255|regex:/^[a-zA-Z\s]+$/',
                 'description' => 'sometimes|string|min:3|max:255',
-                'is_active' => 'sometime',
+                'is_active' => 'sometimes',
             ];
         }
 

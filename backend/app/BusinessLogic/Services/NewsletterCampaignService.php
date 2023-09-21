@@ -4,8 +4,8 @@ namespace App\BusinessLogic\Services;
 
 use App\Traits\ApiStatisticalIndicators;
 use App\BusinessLogic\Interfaces\NewsletterCampaignInterface;
+use Illuminate\Support\Facades\Auth;
 use App\Library\ApiResponse;
-use App\Http\Requests\NewsletterCampaignRequest;
 use App\Models\NewsletterCampaign;
 use Illuminate\Database\Eloquent\Collection;
 
@@ -37,9 +37,12 @@ class NewsletterCampaignService implements NewsletterCampaignInterface
     public function handleIndex($search)
     {
         $apiDisplayAllRecords = $this->apiResponse->generateApiResponse(
-            $this->modelName->fetchAllRecords($search),
+            $this->modelName->fetchAllRecords($search, 'paginate'),
+            'get',
             $this->modelName->getFields(),
-            class_basename($this->modelName)
+            class_basename($this->modelName),
+            null,
+            $this->getStatisticalIndicators()
         );
 
         return $apiDisplayAllRecords;
@@ -47,33 +50,27 @@ class NewsletterCampaignService implements NewsletterCampaignInterface
 
     /**
      * Store a new record in the database.
-     * @param  NewsletterCampaignRequest  $request
+     * @param array $request An associative array of values to create a new record.
      * @return \Illuminate\Http\Response
      */
-    public function handleStore(NewsletterCampaignRequest $request)
+    public function handleStore($request)
     {
         $apiInsertRecord = [
-            'name'        => $request->get('name'),
-            'description' => $request->get('description'),
-            'is_active'   => $request->get('is_active') !== null ? $request->get('is_active') : false,
-            'valid_from'  => $request->get('valid_from'),
-            'valid_to'    => $request->get('valid_to'),
-            'occur_times' => $request->get('occur_times'),
-            'occur_week'  => $request->get('occur_week'),
-            'occur_day'   => $request->get('occur_day'),
-            'occur_hour'  => $request->get('occur_hour'),
-            'user_id'     => 1,
+            'name'        => $request['name'],
+            'description' => $request['description'],
+            'is_active'   => $request['is_active'],
+            'valid_from'  => $request['valid_from'],
+            'valid_to'    => $request['valid_to'],
+            'occur_times' => $request['occur_times'],
+            'occur_week'  => $request['occur_week'],
+            'occur_day'   => $request['occur_day'],
+            'occur_hour'  => $request['occur_hour'],
+            'user_id'     => Auth::user() ? Auth::user()->id : 1,
         ];
-        $saveRecord = $this->modelName->createRecord($apiInsertRecord);
+        $createdRecord = $this->modelName->createRecord($apiInsertRecord);
+        $apiCreatedRecord = $this->apiResponse->generateApiResponse($createdRecord->toArray(), 'create');
 
-        if ($saveRecord === true)
-        {
-            return response($this->handleResponse('success'), 201);
-        }
-        else
-        {
-            return response($this->handleResponse('error_message'), 500);
-        }
+        return $apiCreatedRecord;
     }
 
     /**
@@ -83,55 +80,38 @@ class NewsletterCampaignService implements NewsletterCampaignInterface
      */
     public function handleShow($id)
     {
-        $apiDisplaySingleRecord = $this->modelName->fetchSingleRecord($id);
+        $apiDisplaySingleRecord = $this->apiResponse->generateApiResponse(
+            $this->modelName->fetchSingleRecord($id, 'relation'),
+            'get'
+        );
 
-        if ($apiDisplaySingleRecord instanceof Collection)
-        {
-            if ($apiDisplaySingleRecord->isEmpty())
-            {
-                return response($this->handleResponse('not_found'), 404);
-            }
-            else
-            {
-                return response($this->handleResponse('success', $apiDisplaySingleRecord), 200);
-            }
-        }
-        else
-        {
-            return response($this->handleResponse('error_message'), 500);
-        }
+        return $apiDisplaySingleRecord;
     }
 
     /**
      * Update the specified resource in storage.
-     * @param  NewsletterCampaignRequest  $request
+     * @param array $request An associative array of values to create a new record.
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function handleUpdate(NewsletterCampaignRequest $request, $id)
+    public function handleUpdate($request, $id)
     {
         $apiUpdateRecord = [
-            'name'        => $request->get('name'),
-            'description' => $request->get('description'),
-            'is_active'   => $request->get('is_active') !== null ? $request->get('is_active') : false,
-            'valid_from'  => $request->get('valid_from'),
-            'valid_to'    => $request->get('valid_to'),
-            'occur_times' => $request->get('occur_times'),
-            'occur_week'  => $request->get('occur_week'),
-            'occur_day'   => $request->get('occur_day'),
-            'occur_hour'  => $request->get('occur_hour'),
-            'user_id'     => 1,
+            'name'        => $request['name'],
+            'description' => $request['description'],
+            'is_active'   => $request['is_active'],
+            'valid_from'  => $request['valid_from'],
+            'valid_to'    => $request['valid_to'],
+            'occur_times' => $request['occur_times'],
+            'occur_week'  => $request['occur_week'],
+            'occur_day'   => $request['occur_day'],
+            'occur_hour'  => $request['occur_hour'],
+            'user_id'     => Auth::user() ? Auth::user()->id : 1,
         ];
-        $updateRecord = $this->modelName->createRecord($apiUpdateRecord, $id);
+        $updatedRecord = $this->modelName->updateRecord($apiUpdateRecord, $id);
+        $apiUpdatedRecord = $this->apiResponse->generateApiResponse($updatedRecord->toArray(), 'update');
 
-        if ($updateRecord === true)
-        {
-            return response($this->handleResponse('success'), 201);
-        }
-        else
-        {
-            return response($this->handleResponse('error_message'), 500);
-        }
+        return $apiUpdatedRecord;
     }
 
     /**
@@ -141,23 +121,27 @@ class NewsletterCampaignService implements NewsletterCampaignInterface
      */
     public function handleDestroy($id)
     {
-        $apiDisplaySingleRecord = $this->modelName->fetchSingleRecord($id);
-
-        if ($apiDisplaySingleRecord instanceof Collection)
-        {
-            if ($apiDisplaySingleRecord->isEmpty())
-            {
-                return response($this->handleResponse('not_found'), 404);
-            }
-            else
-            {
+        if (Auth::user() && Auth::user()->role_id === 1) {
+            $apiDisplaySingleRecord = $this->modelName->fetchSingleRecord($id);
+            if ($apiDisplaySingleRecord && $apiDisplaySingleRecord->isNotEmpty()) {
                 $this->modelName->deleteRecord($id);
-                return response($this->handleResponse('success'), 200);
             }
+            $apiDeleteRecord = $this->apiResponse->generateApiResponse($apiDisplaySingleRecord, 'delete');
+            return $apiDeleteRecord;
+        } else {
+            return $this->apiResponse->generateApiResponse(null, 'not_allowed');
         }
-        else
-        {
-            return response($this->handleResponse('error_message'), 500);
-        }
+    }
+
+    /**
+     * Retrieve statistical indicators based on the fetched record details.
+     * This function calculates and returns statistical indicators based on the data
+     * retrieved using the modelName's `fetchAllRecordDetails` and `getStatisticalIndicators` methods.
+     * @return array An associative array containing statistical indicators, where each key represents an indicator name
+     * and each value is an associative array with 'number' and 'percentage' keys (depending on the type of indicator).
+     */
+    public function getStatisticalIndicators()
+    {
+        //
     }
 }

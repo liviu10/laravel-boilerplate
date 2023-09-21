@@ -66,6 +66,19 @@ class ContactMessage extends BaseModel
     ];
 
     /**
+     * The statistical indicators.
+     * @var array<string>
+     */
+    protected $statisticalIndicators = [
+        'full_name',
+        'email',
+        'phone',
+        'message',
+        'privacy_policy',
+        'contact_subject_id',
+    ];
+
+    /**
      * The attributes that are mass assignable.
      * @var string
      */
@@ -185,16 +198,15 @@ class ContactMessage extends BaseModel
     {
         try {
             $query = $this->select('*')->where('id', '=', $id);
-                if ($type === 'relation') {
-                    // TODO: get relation content_id and user_id
-                    return $query->with([
-                        'contact_subject' => function ($query) {
-                            $query->select('id', 'name');
-                        }
-                    ])->get();
-                } else {
-                    return $query->get();
-                }
+            if ($type === 'relation') {
+                return $query->with([
+                    'contact_subject' => function ($query) {
+                        $query->select('id', 'name');
+                    }
+                ])->get();
+            } else {
+                return $query->get();
+            }
         } catch (Exception $exception) {
             $this->LogApiError($exception);
             return false;
@@ -247,6 +259,8 @@ class ContactMessage extends BaseModel
             'contact_subject_id' => 'number',
         ];
 
-        return $this->handleFilterAvailableFields($fieldTypes);
+        $excludedFields = ['contact_subject_id'];
+
+        return $this->handleFilterAvailableFields($fieldTypes, $excludedFields);
     }
 }

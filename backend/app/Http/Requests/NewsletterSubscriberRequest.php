@@ -28,7 +28,7 @@ class NewsletterSubscriberRequest extends FormRequest
         $rules = [];
 
         // Validation rules when user is subscribing to the newsletter
-        if ($currentRouteName === 'subscribe.store')
+        if ($currentRouteName === 'subscribes.store')
         {
             $rules = [
                 'full_name' => 'required|string|min:3|max:255',

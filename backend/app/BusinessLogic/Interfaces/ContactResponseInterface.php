@@ -3,14 +3,15 @@
 namespace App\BusinessLogic\Interfaces;
 
 /**
- * NotificationInterface is a contract for what methods will be used in the NotificationService class.
+ * ContactResponseInterface is a contract for what methods will be used in the UserRoleTypeService class.
  * This consists of the following CRUD operations methods:
  * - handleIndex();
  * - handleStore();
+ * - handleShow();
  * - handleUpdate();
  * - handleDelete();
  */
-interface NotificationInterface
+interface ContactResponseInterface
 {
     /**
      * Fetch all the records from the database.

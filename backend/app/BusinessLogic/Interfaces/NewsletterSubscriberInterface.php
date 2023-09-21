@@ -2,8 +2,6 @@
 
 namespace App\BusinessLogic\Interfaces;
 
-use App\Http\Requests\NewsletterSubscriberRequest;
-
 /**
  * NewsletterSubscriberInterface is a contract for what methods will be used in the NewsletterSubscriberService class.
  * This consists of the following CRUD operations methods:
@@ -24,10 +22,9 @@ interface NewsletterSubscriberInterface
 
     /**
      * Store a new record in the database.
-     * @param App\Http\Requests\Admin\NewsletterSubscriberRequest $request
      * @return \Illuminate\Http\Response
      */
-    public function handleStore(NewsletterSubscriberRequest $request);
+    public function handleStore($request);
 
     /**
      * Fetch a single record from the database.
@@ -38,16 +35,15 @@ interface NewsletterSubscriberInterface
 
     /**
      * Update an existing record in the database.
-     * @param App\Http\Requests\Admin\NewsletterSubscriberRequest $request
      * @param int $id
      * @return \Illuminate\Http\Response
      */
-    public function handleUpdate(NewsletterSubscriberRequest $request, $id);
+    public function handleUpdate($request, $id);
 
     /**
      * Delete a single record from the database
-     * @param string $string
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
-    public function handleDestroy($string);
+    public function handleDestroy($id);
 }

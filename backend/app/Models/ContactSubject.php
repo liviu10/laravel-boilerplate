@@ -9,6 +9,7 @@ use App\Traits\FilterAvailableFields;
 use Exception;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\QueryException;
+use Illuminate\Pagination\LengthAwarePaginator;
 
 /**
  * Class ContactSubject
@@ -61,6 +62,16 @@ class ContactSubject extends BaseModel
     ];
 
     /**
+     * The statistical indicators.
+     * @var array<string>
+     */
+    protected $statisticalIndicators = [
+        'name',
+        'is_active',
+        'user_id',
+    ];
+
+    /**
      * The attributes that are mass assignable.
      * @var string
      */
@@ -103,13 +114,13 @@ class ContactSubject extends BaseModel
      * Fetch records from the database based on optional search criteria.
      * @param array $search An associative array of search criteria (field => value).
      * @param string|null $type The fetch type: 'paginate'for paginated results or null for a collection.
-     * @return \Illuminate\Support\Collection|bool
+     * @return \Illuminate\Pagination\LengthAwarePaginator|\Illuminate\Support\Collection|bool
      * A paginated result, a collection, or `false` if an error occurs.
      */
-    public function fetchAllRecords(array $search = []): Collection|bool
+    public function fetchAllRecords(array $search = [], string|null $type = null): LengthAwarePaginator|Collection|bool
     {
         try {
-            $query = $this->select('id', 'name')->where('is_active', true);
+            $query = $this->select('id', 'name', 'is_active');
 
             if (!empty($search)) {
                 foreach ($search as $field => $value) {
@@ -121,7 +132,11 @@ class ContactSubject extends BaseModel
                 }
             }
 
-            return $query->get();
+            if ($type === 'paginate') {
+                return $query->paginate(15);
+            } else {
+                return $query->get();
+            }
         } catch (Exception $exception) {
             $this->LogApiError($exception);
             return false;

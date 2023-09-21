@@ -74,6 +74,23 @@ class NewsletterCampaign extends BaseModel
     ];
 
     /**
+     * The statistical indicators.
+     * @var array<string>
+     */
+    protected $statisticalIndicators = [
+        'name',
+        'description',
+        'is_active',
+        'valid_from',
+        'valid_to',
+        'occur_times',
+        'occur_week',
+        'occur_day',
+        'occur_hour',
+        'user_id',
+    ];
+
+    /**
      * The attributes that are mass assignable.
      * @var string
      */

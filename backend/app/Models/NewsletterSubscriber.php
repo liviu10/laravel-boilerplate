@@ -64,6 +64,18 @@ class NewsletterSubscriber extends BaseModel
     ];
 
     /**
+     * The statistical indicators.
+     * @var array<string>
+     */
+    protected $statisticalIndicators = [
+        'full_name',
+        'email',
+        'privacy_policy',
+        'valid_email',
+        'newsletter_campaign_id',
+    ];
+
+    /**
      * The attributes that are mass assignable.
      * @var string
      */

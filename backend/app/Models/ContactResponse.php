@@ -35,7 +35,7 @@ class ContactResponse extends BaseModel
      * The table associated with the model.
      * @var string
      */
-    protected $table = 'contact_response';
+    protected $table = 'contact_responses';
 
     /**
      * The foreign key associated with the table.
@@ -66,6 +66,18 @@ class ContactResponse extends BaseModel
      * @var array<string>
      */
     protected $fillable = [
+        'full_name',
+        'email',
+        'message',
+        'user_id',
+        'contact_message_id',
+    ];
+
+    /**
+     * The statistical indicators.
+     * @var array<string>
+     */
+    protected $statisticalIndicators = [
         'full_name',
         'email',
         'message',
@@ -117,6 +129,9 @@ class ContactResponse extends BaseModel
         try {
             $query = $this->select('id', 'message', 'user_id', 'contact_message_id')
                 ->with([
+                    'user' => function ($query) {
+                        $query->select('id', 'full_name');
+                    },
                     'contact_message' => function ($query) {
                         $query->select('id', 'full_name');
                     }
@@ -188,8 +203,11 @@ class ContactResponse extends BaseModel
 
             if ($type === 'relation') {
                 $query->with([
+                    'user' => function ($query) {
+                        $query->select('id', 'full_name');
+                    },
                     'contact_message' => function ($query) {
-                        $query->select('id', 'name');
+                        $query->select('id', 'full_name');
                     }
                 ]);
 
@@ -247,7 +265,7 @@ class ContactResponse extends BaseModel
             'contact_message_id' => 'number',
         ];
 
-        $excludedFields = ['user_id'];
+        $excludedFields = ['user_id', 'contact_message_id'];
 
         return $this->handleFilterAvailableFields($fieldTypes, $excludedFields);
     }

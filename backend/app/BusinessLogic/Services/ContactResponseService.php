@@ -3,17 +3,16 @@
 namespace App\BusinessLogic\Services;
 
 use App\Traits\ApiStatisticalIndicators;
-use App\BusinessLogic\Interfaces\NewsletterSubscriberInterface;
+use App\BusinessLogic\Interfaces\ContactResponseInterface;
 use Illuminate\Support\Facades\Auth;
 use App\Library\ApiResponse;
-use App\Models\AcceptedDomain;
-use App\Models\NewsletterSubscriber;
+use App\Models\ContactResponse;
 use Illuminate\Database\Eloquent\Collection;
 
 /**
- * NewsletterSubscriberService is a service class the will implement all the methods from the NewsletterSubscriberInterface contract and will handle the business logic.
+ * ContactResponseService is a service class the will implement all the methods from the ContactResponseInterface contract and will handle the business logic.
  */
-class NewsletterSubscriberService implements NewsletterSubscriberInterface
+class ContactResponseService implements ContactResponseInterface
 {
     use ApiStatisticalIndicators;
 
@@ -26,7 +25,7 @@ class NewsletterSubscriberService implements NewsletterSubscriberInterface
      */
     public function __construct()
     {
-        $this->modelName = new NewsletterSubscriber();
+        $this->modelName = new ContactResponse();
         $this->apiResponse = new ApiResponse();
     }
 
@@ -57,38 +56,16 @@ class NewsletterSubscriberService implements NewsletterSubscriberInterface
     public function handleStore($request)
     {
         $apiInsertRecord = [
-            'full_name' => $request['full_name'],
-            'email' => $request['email'],
-            'privacy_policy' => $request['privacy_policy'] !== null ? $request['privacy_policy'] : false,
+            'full_name'          => $request['full_name'],
+            'email'              => $request['email'],
+            'contact_message_id' => $request['contact_message_id'],
+            'message'            => $request['message'],
+            'user_id'            => Auth::user() ? Auth::user()->id : 1,
         ];
         $createdRecord = $this->modelName->createRecord($apiInsertRecord);
         $apiCreatedRecord = $this->apiResponse->generateApiResponse($createdRecord->toArray(), 'create');
 
         return $apiCreatedRecord;
-
-        // $acceptedDomain = new AcceptedDomain();
-        // $getEmailProvider = explode('.', substr(strstr($request->get('email'), '@'), 1));
-        // $checkEmailProvider = $acceptedDomain->checkEmailProvider($getEmailProvider);
-
-        // if (count($checkEmailProvider) === 2)
-        // {
-        //     $apiInsertRecord['valid_email'] = true;
-        //     $apiInsertRecord['newsletter_campaign_id'] = 1;
-        //     $saveRecord = $this->modelName->createRecord($apiInsertRecord);
-        //     // TODO: create email WelcomeNewsletter
-        //     if ($saveRecord === true)
-        //     {
-        //         return response($this->handleResponse('success'), 201);
-        //     }
-        //     else
-        //     {
-        //         return response($this->handleResponse('error_message'), 500);
-        //     }
-        // }
-        // else
-        // {
-        //     return response($this->handleResponse('warning'), 422);
-        // }
     }
 
     /**
@@ -115,7 +92,11 @@ class NewsletterSubscriberService implements NewsletterSubscriberInterface
     public function handleUpdate($request, $id)
     {
         $apiUpdateRecord = [
-            'newsletter_campaign_id' => $request['newsletter_campaign_id'],
+            'full_name'          => $request['full_name'],
+            'email'              => $request['email'],
+            'contact_message_id' => $request['contact_message_id'],
+            'message'            => $request['message'],
+            'user_id'            => Auth::user() ? Auth::user()->id : 1,
         ];
         $updatedRecord = $this->modelName->updateRecord($apiUpdateRecord, $id);
         $apiUpdatedRecord = $this->apiResponse->generateApiResponse($updatedRecord->toArray(), 'update');

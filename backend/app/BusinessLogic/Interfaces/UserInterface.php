@@ -2,8 +2,6 @@
 
 namespace App\BusinessLogic\Interfaces;
 
-use App\Http\Requests\UserRequest;
-
 /**
  * UserInterface is a contract for what methods will be used in the UserService class.
  * This consists of the following CRUD operations methods:

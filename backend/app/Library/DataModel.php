@@ -25,8 +25,7 @@ class DataModel
      */
     public function generateDataModel($type, $modelOptions = []): array
     {
-        if (!$this->modelResults || !count($this->modelResults))
-        {
+        if (!$this->modelResults || !count($this->modelResults)) {
             return [];
         }
 
@@ -45,11 +44,10 @@ class DataModel
      * @param array $data The data from which to extract field names.
      * @return array An array containing the extracted field names.
      */
-    private function getFields($data): Array
+    private function getFields($data): array
     {
         $fields = [];
-        foreach ($data as $field)
-        {
+        foreach ($data as $field) {
             $fields = array_keys($field);
         }
 
@@ -79,18 +77,20 @@ class DataModel
      * @param string $key The key or field for which to generate column style properties.
      * @return array An array containing the generated column style properties.
      */
-    private function getColumnStyle($key): Array
+    private function getColumnStyle($key): array
     {
         $columnStyleProperties = [];
-        if ($key === 'id')
-        {
+        if ($key === 'id') {
             $columnStyleProperties = [
                 'style'       => 'width: 75px',
                 'headerStyle' => 'width: 75px',
             ];
-        }
-        else
-        {
+        } elseif ($key === 'is_active') {
+            $columnStyleProperties = [
+                'style'       => 'width: 50px',
+                'headerStyle' => 'width: 50px',
+            ];
+        } else {
             $columnStyleProperties = [
                 'style'       => 'width: 100px',
                 'headerStyle' => 'width: 100px',
@@ -118,12 +118,9 @@ class DataModel
                 'deleted_at' => 'date'
             ];
 
-            if (isset($fieldTypes[$field]))
-            {
+            if (isset($fieldTypes[$field])) {
                 $filteredFields[$field] = $fieldTypes[$field];
-            }
-            elseif (isset($availableFields[$field]))
-            {
+            } elseif (isset($availableFields[$field])) {
                 $filteredFields[$field] = $availableFields[$field];
             }
         }
@@ -142,40 +139,31 @@ class DataModel
      */
     private function getModelFields($type, $dataModelId, $filteredDataFields = [], $modelOptions = [], $availableDataModel = [], $statisticalIndicators = []): array
     {
-        if ($type !== 'report')
-        {
+        if ($type !== 'report') {
             foreach ($filteredDataFields as $key => $modelField) {
-                if ($type !== 'report')
-                {
+                if ($type !== 'report') {
                     $model = [
                         'id' => $dataModelId,
                         'name' => $this->getTranslationStringName($this->modelName, $key, $type),
                         'field' => $key,
                     ];
 
-                    if ($type === 'column')
-                    {
+                    if ($type === 'column') {
                         $model += $this->getColumnStyle($key);
                     }
 
-                    if ($type === 'column')
-                    {
+                    if ($type === 'column') {
                         $model['align'] = 'center';
                         $model['label'] = $model['name'];
-                    }
-                    elseif ($type === 'model' || $type === 'filter')
-                    {
+                    } elseif ($type === 'model' || $type === 'filter') {
                         $model['is_active'] = true;
                         $model['key'] = $key;
                         $model['type'] = $modelField;
                         $model['value'] = null;
 
-                        if ($modelField === 'select')
-                        {
+                        if ($modelField === 'select') {
                             $model['options'] = $this->getDataModelOptions($modelOptions[$key]);
-                        }
-                        elseif ($modelField === 'boolean')
-                        {
+                        } elseif ($modelField === 'boolean') {
                             $model['options'] = $this->getDataModelBooleanOptions();
                         }
                     }
@@ -184,18 +172,15 @@ class DataModel
                     $availableDataModel[] = $model;
                 }
             }
-        }
-        else {
+        } else {
             foreach ($statisticalIndicators as $key => $indicatorValue) {
                 $model = [
                     'id' => $dataModelId,
                     'name' => $this->getTranslationStringName($this->modelName, $key, $type),
                 ];
 
-                if (is_array($indicatorValue) && count($indicatorValue))
-                {
-                    if (array_key_exists('number', $indicatorValue) && array_key_exists('percentage', $indicatorValue))
-                    {
+                if (is_array($indicatorValue) && count($indicatorValue)) {
+                    if (array_key_exists('number', $indicatorValue) && array_key_exists('percentage', $indicatorValue)) {
                         $model += [
                             'value' => $indicatorValue['number'],
                             'percentage' => round($indicatorValue['percentage'], 2)
@@ -205,13 +190,10 @@ class DataModel
                                 'options' => $indicatorValue['options']
                             ];
                         }
-                    }
-                    else
-                    {
+                    } else {
                         $options = [];
                         foreach ($indicatorValue as $subKey => $subValue) {
-                            if (array_key_exists('number', $subValue) && array_key_exists('percentage', $subValue))
-                            {
+                            if (array_key_exists('number', $subValue) && array_key_exists('percentage', $subValue)) {
                                 $options[] = [
                                     'key' => $subKey,
                                     'value' => $subValue['number'],
@@ -219,8 +201,7 @@ class DataModel
                                 ];
                             }
 
-                            if (array_key_exists('average', $subValue))
-                            {
+                            if (array_key_exists('average', $subValue)) {
                                 $options[count($options) - 1]['average'] = $subValue['average'];
                             }
                         }
@@ -241,7 +222,7 @@ class DataModel
      * @param array $dataModelOptions The options to be formatted.
      * @return array An array containing the mapped and formatted data model options.
      */
-    private function getDataModelOptions($dataModelOptions): Array
+    private function getDataModelOptions($dataModelOptions): array
     {
         $mappedDataModelOptions = [];
         $optionId = 1;
@@ -267,7 +248,7 @@ class DataModel
      * Get boolean options for data model fields.
      * @return array An array containing boolean options for data model fields.
      */
-    private function getDataModelBooleanOptions(): Array
+    private function getDataModelBooleanOptions(): array
     {
         $dataModelBooleanOptions = [
             [
