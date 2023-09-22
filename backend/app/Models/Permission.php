@@ -31,28 +31,12 @@ class Permission extends BaseModel
 {
     use HasFactory, LogApiError;
 
-    /**
-     * The table associated with the model.
-     * @var string
-     */
     protected $table = 'permissions';
 
-    /**
-     * The foreign key associated with the table.
-     * @var string
-     */
     protected $foreignKey = 'role_id';
 
-    /**
-     * The data type of the database table foreign key.
-     * @var string
-     */
     protected $foreignKeyType = 'int';
 
-    /**
-     * The attributes that are mass assignable.
-     * @var array<string>
-     */
     protected $fillable = [
         'name',
         'description',
@@ -60,21 +44,10 @@ class Permission extends BaseModel
         'role_id',
     ];
 
-    /**
-     * The attributes that are mass assignable.
-     * @var string
-     */
     protected $attributes = [
         'is_active' => false,
     ];
 
-    /**
-     * Get the type casts for the model attributes.
-     * This method allows you to customize the attribute type casts for the model.
-     * It merges the parent model's casts with any additional or modified casts
-     * specific to the child model.
-     * @return array
-     */
     protected function getCastAttributes()
     {
         $parentCasts = parent::getCastAttributes();
@@ -83,9 +56,6 @@ class Permission extends BaseModel
         ]);
     }
 
-    /**
-     * Eloquent relationship between permissions and roles.
-     */
     public function role()
     {
         return $this->belongsTo('App\Models\Role');

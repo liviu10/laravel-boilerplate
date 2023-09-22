@@ -29,21 +29,16 @@ use Illuminate\Pagination\LengthAwarePaginator;
  * @method fetchSingleRecord
  * @method updateRecord
  * @method deleteRecord
+ * @method getFields
+ * @method fetchUserRoles
+ * @method fetchClientRole
  */
 class Role extends BaseModel
 {
     use HasFactory, FilterAvailableFields, LogApiError;
 
-    /**
-     * The table associated with the model.
-     * @var string
-     */
     protected $table = 'roles';
 
-    /**
-     * The attributes that are mass assignable.
-     * @var array<string>
-     */
     protected $fillable = [
         'name',
         'description',
@@ -53,33 +48,19 @@ class Role extends BaseModel
         'is_active',
     ];
 
-    /**
-     * The statistical indicators.
-     * @var array<string>
-     */
     protected $statisticalIndicators = [
         'is_active',
     ];
 
-    /**
-     * The attributes that are mass assignable.
-     * @var string
-     */
     protected $attributes = [
         'is_active' => false,
     ];
 
-    /**
-     * Eloquent relationship between roles and users.
-     */
     public function users()
     {
         return $this->hasMany('App\Models\User');
     }
 
-    /**
-     * Eloquent relationship between roles and permissions.
-     */
     public function permissions()
     {
         return $this->hasMany('App\Models\Permission');

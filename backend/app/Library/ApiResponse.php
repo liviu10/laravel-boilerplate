@@ -8,12 +8,21 @@ use Illuminate\Http\Response;
 use Illuminate\Contracts\Routing\ResponseFactory;
 use App\Library\DataModel;
 
+enum Actions {
+    case get;
+    case create;
+    case update;
+    case delete;
+    case not_allowed;
+    case not_found_record;
+}
+
 class ApiResponse
 {
     /**
      * Generate an API response based on the provided records, fields, and model name.
      * @param LengthAwarePaginator|Collection|array|null $records The records to be included in the response.
-     * @param string $actionMethod A string that refers to the action method.
+     * @param Actions $action A string that refers to the action method.
      * @param array|null $fields An array of fields to include in the response.
      * @param string|null $modelName The name of the model associated with the records.
      * @param array|null $modelOptions The options of the model associated with the records.
@@ -22,7 +31,7 @@ class ApiResponse
      */
     public function generateApiResponse(
         LengthAwarePaginator|Collection|array|null $records = null,
-        string $actionMethod = 'get' | 'create' | 'update' | 'delete' | 'not_allowed',
+        Actions $action,
         array $fields = null,
         string $modelName = null,
         array $modelOptions = null,
@@ -30,7 +39,7 @@ class ApiResponse
     ): Response|ResponseFactory {
         if ($records instanceof LengthAwarePaginator || $records instanceof Collection) {
             if ($records->isEmpty()) {
-                return $this->handleNotFoundResponse($actionMethod);
+                return $this->handleNotFoundResponse($action);
             } else {
                 if (is_array($fields) && $modelName) {
                     $dataModel = new DataModel(
@@ -52,14 +61,14 @@ class ApiResponse
 
                     return $this->handleSuccessResponse(
                         $records,
-                        $actionMethod,
+                        $action,
                         $apiDataModel,
                         $apiColumnModel,
                         $apiFilterModel,
                         $apiStatisticalIndicators
                     );
                 } else {
-                    return $this->handleSuccessResponse($records, $actionMethod);
+                    return $this->handleSuccessResponse($records, $action);
                 }
             }
         } elseif (is_array($records)) {
@@ -84,28 +93,29 @@ class ApiResponse
 
                     return $this->handleSuccessResponse(
                         $records,
-                        $actionMethod,
+                        $action,
                         $apiDataModel,
                         $apiColumnModel,
                         $apiFilterModel,
                         $apiStatisticalIndicators
                     );
                 } else {
-                    return $this->handleSuccessResponse($records, $actionMethod);
+                    return $this->handleSuccessResponse($records, $action);
                 }
             } else {
-                return $this->handleNotFoundResponse($actionMethod);
+                return $this->handleNotFoundResponse($action);
             }
         } else {
-            return $this->handleErrorResponse($actionMethod);
+            return $this->handleErrorResponse($action);
         }
     }
 
     /**
      * Handle a response for a resource not found scenario.
+     * @param Actions $action A string that refers to the action method.
      * @return Response|ResponseFactory The generated response or response factory.
      */
-    private function handleNotFoundResponse(string $actionMethod = 'get' | 'create' | 'update' | 'delete' | 'not_allowed'): Response|ResponseFactory
+    private function handleNotFoundResponse(Actions $action): Response|ResponseFactory
     {
         $message = [
             'title'       => __('translations.not_found_message.title'),
@@ -118,7 +128,7 @@ class ApiResponse
     /**
      * Handle a successful response for the API request.
      * @param LengthAwarePaginator|Collection|array|null $records The records to be included in the response.
-     * @param string $actionMethod A string that refers to the action method.
+     * @param Actions $action A string that refers to the action method.
      * @param array|null $apiDataModel An array representing the data model information.
      * @param array|null $apiColumnModel An array representing the column model information.
      * @param array|null $apiFilterModel An array representing the filter model information.
@@ -127,7 +137,7 @@ class ApiResponse
      */
     private function handleSuccessResponse(
         LengthAwarePaginator|Collection|array|null $records = null,
-        string $actionMethod = 'get' | 'create' | 'update' | 'delete' | 'not_allowed',
+        Actions $action,
         array $apiDataModel = null,
         array $apiColumnModel = null,
         array $apiFilterModel = null,
@@ -155,23 +165,30 @@ class ApiResponse
             $message['reports'] = $apiStatisticalIndicators;
         }
 
-        return response($message, $actionMethod === 'create' ? 201 : 200);
+        return response($message, $action->name === 'create' ? 201 : 200);
     }
 
     /**
      * Handle an error response for the API request.
-     * @param string $actionMethod A string that refers to the action method.
+     * @param Actions $action A string that refers to the action method.
      * @return Response|ResponseFactory The generated response or response factory.
      */
-    private function handleErrorResponse(string $actionMethod = 'get' | 'create' | 'update' | 'delete' | 'not_allowed'): Response|ResponseFactory
+    private function handleErrorResponse(Actions $action): Response|ResponseFactory
     {
-        if ($actionMethod === 'not_allowed') {
+        if ($action->name === 'not_allowed') {
             $message = [
                 'title'       => __('translations.not_allowed_message.title'),
                 'description' => __('translations.not_allowed_message.description'),
             ];
 
             return response($message, 405);
+        } elseif ($action->name === 'not_found_record') {
+            $message = [
+                'title'       => __('translations.not_found_record_message.title'),
+                'description' => __('translations.not_found_record_message.description'),
+            ];
+
+            return response($message, 200);
         } else {
             $message = [
                 'title'       => __('translations.error_message.title'),

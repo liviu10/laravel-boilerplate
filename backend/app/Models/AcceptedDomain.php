@@ -27,33 +27,20 @@ use Illuminate\Pagination\LengthAwarePaginator;
  * @method fetchSingleRecord
  * @method updateRecord
  * @method deleteRecord
+ * @method checkEmailProvider
+ * @method getUniqueDomainTypes
+ * @method getFields
  */
 class AcceptedDomain extends BaseModel
 {
     use HasFactory, FilterAvailableFields, LogApiError;
 
-    /**
-     * The table associated with the model.
-     * @var string
-     */
     protected $table = 'accepted_domains';
 
-    /**
-     * The foreign key associated with the table.
-     * @var string
-     */
     protected $foreignKey = 'user_id';
 
-    /**
-     * The data type of the database table foreign key.
-     * @var string
-     */
     protected $foreignKeyType = 'int';
 
-    /**
-     * The attributes that are mass assignable.
-     * @var array<string>
-     */
     protected $fillable = [
         'domain',
         'type',
@@ -61,31 +48,16 @@ class AcceptedDomain extends BaseModel
         'is_active',
     ];
 
-    /**
-     * The statistical indicators.
-     * @var array<string>
-     */
     protected $statisticalIndicators = [
         'type',
         'is_active',
         'user_id',
     ];
 
-    /**
-     * The attributes that are mass assignable.
-     * @var string
-     */
     protected $attributes = [
         'is_active' => false,
     ];
 
-    /**
-     * Get the type casts for the model attributes.
-     * This method allows you to customize the attribute type casts for the model.
-     * It merges the parent model's casts with any additional or modified casts
-     * specific to the child model.
-     * @return array
-     */
     protected function getCastAttributes(): array
     {
         $parentCasts = parent::getCastAttributes();
@@ -94,9 +66,6 @@ class AcceptedDomain extends BaseModel
         ]);
     }
 
-    /**
-     * Eloquent relationship between accepted domains and users.
-     */
     public function user()
     {
         return $this->belongsTo('App\Models\User');

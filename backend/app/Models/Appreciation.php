@@ -28,21 +28,14 @@ use Illuminate\Pagination\LengthAwarePaginator;
  * @method fetchSingleRecord
  * @method updateRecord
  * @method deleteRecord
+ * @method getFields
  */
 class Appreciation extends BaseModel
 {
     use HasFactory, FilterAvailableFields, LogApiError;
 
-    /**
-     * The table associated with the model.
-     * @var string
-     */
     protected $table = 'appreciations';
 
-    /**
-     * The attributes that are mass assignable.
-     * @var array<string>
-     */
     protected $fillable = [
         'likes',
         'dislikes',
@@ -51,10 +44,6 @@ class Appreciation extends BaseModel
         'user_id',
     ];
 
-    /**
-     * The statistical indicators.
-     * @var array<string>
-     */
     protected $statisticalIndicators = [
         'likes',
         'dislikes',
@@ -63,13 +52,6 @@ class Appreciation extends BaseModel
         'user_id',
     ];
 
-    /**
-     * Get the type casts for the model attributes.
-     * This method allows you to customize the attribute type casts for the model.
-     * It merges the parent model's casts with any additional or modified casts
-     * specific to the child model.
-     * @return array
-     */
     protected function getCastAttributes(): array
     {
         $parentCasts = parent::getCastAttributes();

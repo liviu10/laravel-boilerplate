@@ -27,45 +27,23 @@ use Illuminate\Database\QueryException;
  * @method fetchSingleRecord
  * @method updateRecord
  * @method deleteRecord
+ * @method getFields
+ * @method getMediaTypeOptions
  */
 class Media extends BaseModel
 {
     use HasFactory, FilterAvailableFields, LogApiError;
 
-    /**
-     * The table associated with the model.
-     * @var string
-     */
     protected $table = 'medias';
 
-    /**
-     * The foreign key associated with the table.
-     * @var string
-     */
     protected $foreignKey = 'content_id';
 
-    /**
-     * The data type of the database table foreign key.
-     * @var string
-     */
     protected $foreignKeyType = 'int';
 
-    /**
-     * The foreign key associated with the table.
-     * @var string
-     */
     protected $userIdForeignKey = 'user_id';
 
-    /**
-     * The data type of the database table foreign key.
-     * @var string
-     */
     protected $userIdForeignKeyType = 'int';
 
-    /**
-     * The attributes that are mass assignable.
-     * @var array<string>
-     */
     protected $fillable = [
         'type',
         'internal_path',
@@ -74,21 +52,10 @@ class Media extends BaseModel
         'user_id',
     ];
 
-    /**
-     * The media type options.
-     * @var array<string>
-     */
     protected $mediaTypeOptions = [
         'Images', 'Documents', 'Videos', 'Audio', 'Others'
     ];
 
-    /**
-     * Get the type casts for the model attributes.
-     * This method allows you to customize the attribute type casts for the model.
-     * It merges the parent model's casts with any additional or modified casts
-     * specific to the child model.
-     * @return array
-     */
     protected function getCastAttributes()
     {
         $parentCasts = parent::getCastAttributes();
@@ -98,17 +65,11 @@ class Media extends BaseModel
         ]);
     }
 
-    /**
-     * Eloquent relationship between medias and users.
-     */
     public function user()
     {
         return $this->belongsTo('App\Models\User');
     }
 
-    /**
-     * Eloquent relationship between medias and contents.
-     */
     public function content()
     {
         return $this->belongsTo('App\Models\Content');

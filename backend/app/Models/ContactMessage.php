@@ -29,33 +29,18 @@ use Illuminate\Pagination\LengthAwarePaginator;
  * @method fetchSingleRecord
  * @method updateRecord
  * @method deleteRecord
+ * @method getFields
  */
 class ContactMessage extends BaseModel
 {
     use HasFactory, FilterAvailableFields, LogApiError;
 
-    /**
-     * The table associated with the model.
-     * @var string
-     */
     protected $table = 'contact_messages';
 
-    /**
-     * The foreign key associated with the table.
-     * @var string
-     */
     protected $foreignKey = 'contact_subject_id';
 
-    /**
-     * The data type of the database table foreign key.
-     * @var string
-     */
     protected $foreignKeyType = 'int';
 
-    /**
-     * The attributes that are mass assignable.
-     * @var array<string>
-     */
     protected $fillable = [
         'full_name',
         'email',
@@ -65,10 +50,6 @@ class ContactMessage extends BaseModel
         'contact_subject_id',
     ];
 
-    /**
-     * The statistical indicators.
-     * @var array<string>
-     */
     protected $statisticalIndicators = [
         'full_name',
         'email',
@@ -78,21 +59,10 @@ class ContactMessage extends BaseModel
         'contact_subject_id',
     ];
 
-    /**
-     * The attributes that are mass assignable.
-     * @var string
-     */
     protected $attributes = [
         'privacy_policy' => false,
     ];
 
-    /**
-     * Get the type casts for the model attributes.
-     * This method allows you to customize the attribute type casts for the model.
-     * It merges the parent model's casts with any additional or modified casts
-     * specific to the child model.
-     * @return array
-     */
     protected function getCastAttributes()
     {
         $parentCasts = parent::getCastAttributes();
@@ -102,9 +72,6 @@ class ContactMessage extends BaseModel
         ]);
     }
 
-    /**
-     * Eloquent relationship between contact messages and contact subjects.
-     */
     public function contact_subject()
     {
         return $this->belongsTo('App\Models\ContactSubject');

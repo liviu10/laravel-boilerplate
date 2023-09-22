@@ -31,21 +31,16 @@ use Illuminate\Pagination\LengthAwarePaginator;
  * @method fetchSingleRecord
  * @method updateRecord
  * @method deleteRecord
+ * @method getFields
+ * @method getCommentTypeOptions
+ * @method getCommentStatusOptions
  */
 class Comment extends BaseModel
 {
     use HasFactory, FilterAvailableFields, LogApiError;
 
-    /**
-     * The table associated with the model.
-     * @var string
-     */
     protected $table = 'comments';
 
-    /**
-     * The attributes that are mass assignable.
-     * @var array<string>
-     */
     protected $fillable = [
         'type',
         'status',
@@ -57,10 +52,6 @@ class Comment extends BaseModel
         'user_id',
     ];
 
-    /**
-     * The statistical indicators.
-     * @var array<string>
-     */
     protected $statisticalIndicators = [
         'type',
         'status',
@@ -69,37 +60,18 @@ class Comment extends BaseModel
         'user_id',
     ];
 
-    /**
-     * The comment type options.
-     * @var array<string>
-     */
     protected $commentTypeOptions = [
         'Comment', 'Reply'
     ];
 
-    /**
-     * The comment status options.
-     * @var array<string>
-     */
     protected $commentStatusOptions = [
         'Pending', 'Approved', 'Spam', 'Trash'
     ];
 
-    /**
-     * The attributes that are mass assignable.
-     * @var string
-     */
     protected $attributes = [
         'notify_new_comments' => false,
     ];
 
-    /**
-     * Get the type casts for the model attributes.
-     * This method allows you to customize the attribute type casts for the model.
-     * It merges the parent model's casts with any additional or modified casts
-     * specific to the child model.
-     * @return array
-     */
     protected function getCastAttributes()
     {
         $parentCasts = parent::getCastAttributes();

@@ -35,6 +35,7 @@ use App\Traits\FilterAvailableFields;
  * @method updateRecord
  * @method deleteRecord
  * @method getFilters
+ * @method getStatisticalIndicators
  */
 class User extends Authenticatable
 {
@@ -44,34 +45,14 @@ class User extends Authenticatable
         FilterAvailableFields,
         LogApiError;
 
-    /**
-     * The primary key associated with the table.
-     * @var string
-     */
     protected $primaryKey = 'id';
 
-    /**
-     * The data type of the auto-incrementing ID.
-     * @var string
-     */
     protected $keyType = 'int';
 
-    /**
-     * The foreign key associated with the table.
-     * @var string
-     */
     protected $foreignKey = 'role_id';
 
-    /**
-     * The data type of the database table foreign key.
-     * @var string
-     */
     protected $foreignKeyType = 'int';
 
-    /**
-     * The attributes that are mass assignable.
-     * @var array<string>
-     */
     protected $fillable = [
         'full_name',
         'first_name',
@@ -84,10 +65,6 @@ class User extends Authenticatable
         'role_id',
     ];
 
-    /**
-     * The statistical indicators.
-     * @var array<string>
-     */
     protected $statisticalIndicators = [
         'phone',
         'profile_image',
@@ -95,19 +72,11 @@ class User extends Authenticatable
         'role_id',
     ];
 
-    /**
-     * The attributes that should be hidden for serialization.
-     * @var array<int, string>
-     */
     protected $hidden = [
         'password',
         'remember_token',
     ];
 
-    /**
-     * The attributes that should be cast.
-     * @var array<string, string>
-     */
     protected $casts = [
         'id'                => 'integer',
         'email_verified_at' => 'datetime:d.m.Y H:i',
@@ -116,99 +85,62 @@ class User extends Authenticatable
         'role_id'           => 'integer',
     ];
 
-    /**
-     * The attributes that aren't mass assignable.
-     * @var array
-     */
     protected $guarded = [
         'id',
         'created_at',
         'updated_at'
     ];
 
-    /**
-     * Eloquent relationship between users and roles.
-     */
     public function role()
     {
         return $this->belongsTo('App\Models\Role');
     }
 
-    /**
-     * Eloquent relationship between users and accepted domains.
-     */
     public function accepted_domains()
     {
         return $this->hasMany('App\Models\AcceptedDomain');
     }
 
-    /**
-     * Eloquent relationship between users and application menu.
-     */
     public function application_menus()
     {
         return $this->hasMany('App\Models\ApplicationMenu');
     }
 
-    /**
-     * Eloquent relationship between users and generals.
-     */
     public function generals()
     {
         return $this->hasMany('App\Models\General');
     }
 
-    /**
-     * Eloquent relationship between users and notifications.
-     */
     public function notifications()
     {
         return $this->hasMany('App\Models\Notification');
     }
 
-    /**
-     * Eloquent relationship between users and contact responses.
-     */
     public function contact_responses()
     {
         return $this->hasMany('App\Models\ContactResponse');
     }
 
-    /**
-     * Eloquent relationship between users and contact subjects.
-     */
     public function contact_subjects()
     {
         return $this->hasMany('App\Models\ContactSubject');
     }
 
-    /**
-     * Eloquent relationship between users and newsletter campaigns.
-     */
     public function newsletter_campaigns()
     {
         return $this->hasMany('App\Models\NewsletterCampaign');
     }
 
-    /**
-     * Eloquent relationship between users and contents.
-     */
     public function contents()
     {
         return $this->hasMany('App\Models\Content');
     }
 
-    /**
-     * Eloquent relationship between users and medias.
-     */
     public function medias()
     {
         return $this->hasMany('App\Models\Media');
     }
 
-    /**
-     * Eloquent relationship between users and tags.
-     */
     public function tags()
     {
         return $this->hasMany('App\Models\Tags');
@@ -223,7 +155,7 @@ class User extends Authenticatable
      * the current authenticated user.
      */
     // TODO: Improve this when finishing with the login system
-    // public function currentAuthUser()
+    // public function fetchCurrentAuthUser()
     // {
     //     try {
     //         return collect(Auth::user())->except(['email_verified_at', 'password']);

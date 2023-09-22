@@ -31,32 +31,20 @@ use Illuminate\Pagination\LengthAwarePaginator;
  * @method fetchSingleRecord
  * @method updateRecord
  * @method deleteRecord
+ * @method getFields
+ * @method getVisibilityOptions
+ * @method getContentTypeOptions
  */
 class Content extends BaseModel
 {
     use HasFactory, FilterAvailableFields, LogApiError;
 
-    /**
-     * The table associated with the model.
-     * @var string
-     */
     protected $table = 'contents';
-    /**
-     * The foreign key associated with the table.
-     * @var string
-     */
+
     protected $foreignKey = 'user_id';
 
-    /**
-     * The data type of the database table foreign key.
-     * @var string
-     */
     protected $foreignKeyType = 'int';
 
-    /**
-     * The attributes that are mass assignable.
-     * @var array<string>
-     */
     protected $fillable = [
         'visibility',
         'content_url',
@@ -68,37 +56,18 @@ class Content extends BaseModel
         'user_id',
     ];
 
-    /**
-     * The visibility options.
-     * @var array<string>
-     */
     protected $visibilityOptions = [
         'Public', 'Private', 'Draft'
     ];
 
-    /**
-     * The content type options.
-     * @var array<string>
-     */
     protected $contentTypeOptions = [
         'Page', 'Article'
     ];
 
-    /**
-     * The attributes that are mass assignable.
-     * @var string
-     */
     protected $attributes = [
         'allow_comments' => false,
     ];
 
-    /**
-     * Get the type casts for the model attributes.
-     * This method allows you to customize the attribute type casts for the model.
-     * It merges the parent model's casts with any additional or modified casts
-     * specific to the child model.
-     * @return array
-     */
     protected function getCastAttributes()
     {
         $parentCasts = parent::getCastAttributes();
@@ -108,25 +77,16 @@ class Content extends BaseModel
         ]);
     }
 
-    /**
-     * Eloquent relationship between contact me messages and users.
-     */
     public function user()
     {
         return $this->belongsTo('App\Models\User');
     }
 
-    /**
-     * Eloquent relationship between contents and tags.
-     */
     public function tags()
     {
         return $this->hasMany('App\Models\Tag');
     }
 
-    /**
-     * Eloquent relationship between contents and medias.
-     */
     public function medias()
     {
         return $this->hasMany('App\Models\Media');

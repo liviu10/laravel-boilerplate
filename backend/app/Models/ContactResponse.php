@@ -26,45 +26,22 @@ use Illuminate\Pagination\LengthAwarePaginator;
  * @method fetchSingleRecord
  * @method updateRecord
  * @method deleteRecord
+ * @method getFields
  */
 class ContactResponse extends BaseModel
 {
     use HasFactory, FilterAvailableFields, LogApiError;
 
-    /**
-     * The table associated with the model.
-     * @var string
-     */
     protected $table = 'contact_responses';
 
-    /**
-     * The foreign key associated with the table.
-     * @var string
-     */
     protected $foreignKey = 'user_id';
 
-    /**
-     * The data type of the database table foreign key.
-     * @var string
-     */
     protected $foreignKeyType = 'int';
 
-    /**
-     * The foreign key associated with the table.
-     * @var string
-     */
     protected $contactMessageForeignKey = 'contact_message_id';
 
-    /**
-     * The data type of the database table foreign key.
-     * @var string
-     */
     protected $contactMessageForeignKeyType = 'int';
 
-    /**
-     * The attributes that are mass assignable.
-     * @var array<string>
-     */
     protected $fillable = [
         'full_name',
         'email',
@@ -73,10 +50,6 @@ class ContactResponse extends BaseModel
         'contact_message_id',
     ];
 
-    /**
-     * The statistical indicators.
-     * @var array<string>
-     */
     protected $statisticalIndicators = [
         'full_name',
         'email',
@@ -85,13 +58,6 @@ class ContactResponse extends BaseModel
         'contact_message_id',
     ];
 
-    /**
-     * Get the type casts for the model attributes.
-     * This method allows you to customize the attribute type casts for the model.
-     * It merges the parent model's casts with any additional or modified casts
-     * specific to the child model.
-     * @return array
-     */
     protected function getCastAttributes()
     {
         $parentCasts = parent::getCastAttributes();
@@ -101,17 +67,11 @@ class ContactResponse extends BaseModel
         ]);
     }
 
-    /**
-     * Eloquent relationship between contact response and users.
-     */
     public function user()
     {
         return $this->belongsTo('App\Models\User');
     }
 
-    /**
-     * Eloquent relationship between contact response and contact message.
-     */
     public function contact_message()
     {
         return $this->belongsTo('App\Models\ContactMessage');

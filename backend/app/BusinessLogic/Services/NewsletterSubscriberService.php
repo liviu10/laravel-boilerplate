@@ -2,18 +2,17 @@
 
 namespace App\BusinessLogic\Services;
 
-use App\Traits\ApiStatisticalIndicators;
+use App\BusinessLogic\Interfaces\BaseInterface;
 use App\BusinessLogic\Interfaces\NewsletterSubscriberInterface;
-use Illuminate\Support\Facades\Auth;
-use App\Library\ApiResponse;
-use App\Models\AcceptedDomain;
+use App\Traits\ApiStatisticalIndicators;
 use App\Models\NewsletterSubscriber;
-use Illuminate\Database\Eloquent\Collection;
+use App\Library\ApiResponse;
+use App\Library\Actions;
+use Illuminate\Http\Response;
+use Illuminate\Contracts\Routing\ResponseFactory;
+use Illuminate\Support\Facades\Auth;
 
-/**
- * NewsletterSubscriberService is a service class the will implement all the methods from the NewsletterSubscriberInterface contract and will handle the business logic.
- */
-class NewsletterSubscriberService implements NewsletterSubscriberInterface
+class NewsletterSubscriberService implements BaseInterface, NewsletterSubscriberInterface
 {
     use ApiStatisticalIndicators;
 
@@ -21,8 +20,8 @@ class NewsletterSubscriberService implements NewsletterSubscriberInterface
     protected $apiResponse;
 
     /**
-     * Instantiate the variables that will be used to get the model and table name as well as the table's columns.
-     * @return Collection|String|Integer
+     * Create a new instance of the NewsletterSubscriberService.
+     * This constructor initializes the service with the necessary dependencies.
      */
     public function __construct()
     {
@@ -31,30 +30,30 @@ class NewsletterSubscriberService implements NewsletterSubscriberInterface
     }
 
     /**
-     * Fetch all the records from the database.
-     * @param  array  $search
-     * @return \Illuminate\Http\Response
+     * Handle the index action for displaying a list of records.
+     * @param array $search An array of search parameters to filter records.
+     * @return Response|ResponseFactory The response containing the list of records or a response factory.
      */
-    public function handleIndex($search)
+    public function handleIndex(array $search): Response|ResponseFactory
     {
         $apiDisplayAllRecords = $this->apiResponse->generateApiResponse(
             $this->modelName->fetchAllRecords($search, 'paginate'),
-            'get',
+            Actions::get,
             $this->modelName->getFields(),
             class_basename($this->modelName),
             null,
-            $this->getStatisticalIndicators()
+            $this->handleStatisticalIndicators()
         );
 
         return $apiDisplayAllRecords;
     }
 
     /**
-     * Store a new record in the database.
-     * @param array $request An associative array of values to create a new record.
-     * @return \Illuminate\Http\Response
+     * Handle the store action for creating a new record.
+     * @param array $request The request data containing information for creating the record.
+     * @return Response|ResponseFactory The response containing the created record or a response factory.
      */
-    public function handleStore($request)
+    public function handleStore(array $request): Response|ResponseFactory
     {
         $apiInsertRecord = [
             'full_name' => $request['full_name'],
@@ -62,7 +61,7 @@ class NewsletterSubscriberService implements NewsletterSubscriberInterface
             'privacy_policy' => $request['privacy_policy'] !== null ? $request['privacy_policy'] : false,
         ];
         $createdRecord = $this->modelName->createRecord($apiInsertRecord);
-        $apiCreatedRecord = $this->apiResponse->generateApiResponse($createdRecord->toArray(), 'create');
+        $apiCreatedRecord = $this->apiResponse->generateApiResponse($createdRecord->toArray(), Actions::create);
 
         return $apiCreatedRecord;
 
@@ -92,65 +91,63 @@ class NewsletterSubscriberService implements NewsletterSubscriberInterface
     }
 
     /**
-     * Fetch a single record from the database.
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * Handle the show action for displaying a single record.
+     * @param int $id The ID of the record to retrieve and display.
+     * @return Response|ResponseFactory The response containing the single record or a response factory.
      */
-    public function handleShow($id)
+    public function handleShow(int $id): Response|ResponseFactory
     {
         $apiDisplaySingleRecord = $this->apiResponse->generateApiResponse(
             $this->modelName->fetchSingleRecord($id, 'relation'),
-            'get'
+            Actions::get
         );
 
         return $apiDisplaySingleRecord;
     }
 
     /**
-     * Update the specified resource in storage.
-     * @param array $request An associative array of values to create a new record.
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * Handle the update action for modifying an existing record.
+     * @param array $request The request data containing updated information for the record.
+     * @param int $id The ID of the record to be updated.
+     * @return Response|ResponseFactory The response containing the updated record or a response factory.
      */
-    public function handleUpdate($request, $id)
+    public function handleUpdate(array $request, int $id): Response|ResponseFactory
     {
-        $apiUpdateRecord = [
-            'newsletter_campaign_id' => $request['newsletter_campaign_id'],
-        ];
-        $updatedRecord = $this->modelName->updateRecord($apiUpdateRecord, $id);
-        $apiUpdatedRecord = $this->apiResponse->generateApiResponse($updatedRecord->toArray(), 'update');
+        $apiDisplaySingleRecord = $this->modelName->fetchSingleRecord($id);
+        if ($apiDisplaySingleRecord && $apiDisplaySingleRecord->isNotEmpty()) {
+            $apiUpdateRecord = [
+                'newsletter_campaign_id' => $request['newsletter_campaign_id'],
+            ];
+            $updatedRecord = $this->modelName->updateRecord($apiUpdateRecord, $id);
+            $apiUpdatedRecord = $this->apiResponse->generateApiResponse($updatedRecord->toArray(), Actions::update);
+        } else {
+            $apiUpdatedRecord = $this->apiResponse->generateApiResponse(null, Actions::not_found_record);
+        }
 
         return $apiUpdatedRecord;
     }
 
     /**
-     * Delete a single record from the database
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * Handle the destroy action for deleting a record.
+     * @param int $id The ID of the record to be deleted.
+     * @return Response|ResponseFactory The response indicating the result of the deletion or a response factory.
      */
-    public function handleDestroy($id)
+    public function handleDestroy(int $id): Response|ResponseFactory
     {
         if (Auth::user() && Auth::user()->role_id === 1) {
             $apiDisplaySingleRecord = $this->modelName->fetchSingleRecord($id);
             if ($apiDisplaySingleRecord && $apiDisplaySingleRecord->isNotEmpty()) {
                 $this->modelName->deleteRecord($id);
             }
-            $apiDeleteRecord = $this->apiResponse->generateApiResponse($apiDisplaySingleRecord, 'delete');
+            $apiDeleteRecord = $this->apiResponse->generateApiResponse($apiDisplaySingleRecord, Actions::delete);
             return $apiDeleteRecord;
         } else {
-            return $this->apiResponse->generateApiResponse(null, 'not_allowed');
+            return $this->apiResponse->generateApiResponse(null, Actions::not_allowed);
         }
     }
 
-    /**
-     * Retrieve statistical indicators based on the fetched record details.
-     * This function calculates and returns statistical indicators based on the data
-     * retrieved using the modelName's `fetchAllRecordDetails` and `getStatisticalIndicators` methods.
-     * @return array An associative array containing statistical indicators, where each key represents an indicator name
-     * and each value is an associative array with 'number' and 'percentage' keys (depending on the type of indicator).
-     */
-    public function getStatisticalIndicators()
+    public function handleStatisticalIndicators(): array
     {
-        //
+        return [];
     }
 }

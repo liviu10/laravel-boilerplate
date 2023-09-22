@@ -2,12 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\BusinessLogic\Interfaces\AcceptedDomainInterface;
+use App\BusinessLogic\Interfaces\BaseInterface;
 use App\Http\Requests\AcceptedDomainRequest;
 
 class AcceptedDomainController extends Controller
 {
-    protected AcceptedDomainInterface $acceptedDomainService;
+    protected BaseInterface $acceptedDomainService;
 
     /**
      * Create a new controller instance.
@@ -15,6 +15,6 @@ class AcceptedDomainController extends Controller
      */
     public function __construct()
     {
-        parent::__construct(AcceptedDomainInterface::class, AcceptedDomainRequest::class);
+        parent::__construct(BaseInterface::class, AcceptedDomainRequest::class);
     }
 }

@@ -28,33 +28,19 @@ use Illuminate\Pagination\LengthAwarePaginator;
  * @method fetchSingleRecord
  * @method updateRecord
  * @method deleteRecord
+ * @method getFields
+ * @method checkEmailSubscriber
  */
 class NewsletterSubscriber extends BaseModel
 {
     use HasFactory, FilterAvailableFields, LogApiError;
 
-    /**
-     * The table associated with the model.
-     * @var string
-     */
     protected $table = 'newsletter_subscribers';
 
-    /**
-     * The foreign key associated with the table.
-     * @var string
-     */
     protected $foreignKey = 'newsletter_campaign_id';
 
-    /**
-     * The data type of the database table foreign key.
-     * @var string
-     */
     protected $foreignKeyType = 'int';
 
-    /**
-     * The attributes that are mass assignable.
-     * @var array<string>
-     */
     protected $fillable = [
         'full_name',
         'email',
@@ -63,10 +49,6 @@ class NewsletterSubscriber extends BaseModel
         'newsletter_campaign_id',
     ];
 
-    /**
-     * The statistical indicators.
-     * @var array<string>
-     */
     protected $statisticalIndicators = [
         'full_name',
         'email',
@@ -75,22 +57,11 @@ class NewsletterSubscriber extends BaseModel
         'newsletter_campaign_id',
     ];
 
-    /**
-     * The attributes that are mass assignable.
-     * @var string
-     */
     protected $attributes = [
         'privacy_policy' => false,
         'valid_email'    => false,
     ];
 
-    /**
-     * Get the type casts for the model attributes.
-     * This method allows you to customize the attribute type casts for the model.
-     * It merges the parent model's casts with any additional or modified casts
-     * specific to the child model.
-     * @return array
-     */
     protected function getCastAttributes()
     {
         $parentCasts = parent::getCastAttributes();
@@ -101,9 +72,6 @@ class NewsletterSubscriber extends BaseModel
         ]);
     }
 
-    /**
-     * Eloquent relationship between newsletter subscribers and newsletter campaigns.
-     */
     public function newsletter_campaign()
     {
         return $this->belongsTo('App\Models\NewsletterCampaign');

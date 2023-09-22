@@ -27,33 +27,18 @@ use Illuminate\Pagination\LengthAwarePaginator;
  * @method fetchSingleRecord
  * @method updateRecord
  * @method deleteRecord
+ * @method getFields
  */
 class ContactSubject extends BaseModel
 {
     use HasFactory, FilterAvailableFields, LogApiError;
 
-    /**
-     * The table associated with the model.
-     * @var string
-     */
     protected $table = 'contact_subjects';
 
-    /**
-     * The foreign key associated with the table.
-     * @var string
-     */
     protected $foreignKey = 'user_id';
 
-    /**
-     * The data type of the database table foreign key.
-     * @var string
-     */
     protected $foreignKeyType = 'int';
 
-    /**
-     * The attributes that are mass assignable.
-     * @var array<string>
-     */
     protected $fillable = [
         'name',
         'description',
@@ -61,31 +46,16 @@ class ContactSubject extends BaseModel
         'user_id',
     ];
 
-    /**
-     * The statistical indicators.
-     * @var array<string>
-     */
     protected $statisticalIndicators = [
         'name',
         'is_active',
         'user_id',
     ];
 
-    /**
-     * The attributes that are mass assignable.
-     * @var string
-     */
     protected $attributes = [
         'is_active' => false,
     ];
 
-    /**
-     * Get the type casts for the model attributes.
-     * This method allows you to customize the attribute type casts for the model.
-     * It merges the parent model's casts with any additional or modified casts
-     * specific to the child model.
-     * @return array
-     */
     protected function getCastAttributes()
     {
         $parentCasts = parent::getCastAttributes();
@@ -94,17 +64,11 @@ class ContactSubject extends BaseModel
         ]);
     }
 
-    /**
-     * Eloquent relationship between contact me messages and users.
-     */
     public function user()
     {
         return $this->belongsTo('App\Models\User');
     }
 
-    /**
-     * Eloquent relationship between contact subjects and contact messages.
-     */
     public function contact_messages()
     {
         return $this->hasMany('App\Models\ContactMessage');

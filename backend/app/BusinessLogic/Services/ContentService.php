@@ -2,17 +2,17 @@
 
 namespace App\BusinessLogic\Services;
 
-use App\Traits\ApiStatisticalIndicators;
+use App\BusinessLogic\Interfaces\BaseInterface;
 use App\BusinessLogic\Interfaces\ContentInterface;
-use App\Library\ApiResponse;
-use App\Http\Requests\ContentRequest;
+use App\Traits\ApiStatisticalIndicators;
 use App\Models\Content;
-use Illuminate\Database\Eloquent\Collection;
+use App\Library\ApiResponse;
+use App\Library\Actions;
+use Illuminate\Http\Response;
+use Illuminate\Contracts\Routing\ResponseFactory;
+use Illuminate\Support\Facades\Auth;
 
-/**
- * ContentService is a service class the will implement all the methods from the ContentInterface contract and will handle the business logic.
- */
-class ContentService implements ContentInterface
+class ContentService implements BaseInterface, ContentInterface
 {
     use ApiStatisticalIndicators;
 
@@ -20,8 +20,8 @@ class ContentService implements ContentInterface
     protected $apiResponse;
 
     /**
-     * Instantiate the variables that will be used to get the model and table name as well as the table's columns.
-     * @return Collection|String|Integer
+     * Create a new instance of the ContactSubjectService.
+     * This constructor initializes the service with the necessary dependencies.
      */
     public function __construct()
     {
@@ -155,5 +155,10 @@ class ContentService implements ContentInterface
         {
             return response($this->handleResponse('error_message'), 500);
         }
+    }
+
+    public function handleStatisticalIndicators(): array
+    {
+        return [];
     }
 }

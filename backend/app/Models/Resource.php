@@ -33,33 +33,19 @@ use Illuminate\Pagination\LengthAwarePaginator;
  * @method fetchSingleRecord
  * @method updateRecord
  * @method deleteRecord
+ * @method getFields
+ * @method getResourceTypes
  */
 class Resource extends BaseModel
 {
     use HasFactory, FilterAvailableFields, LogApiError;
 
-    /**
-     * The table associated with the model.
-     * @var string
-     */
     protected $table = 'resources';
 
-    /**
-     * The foreign key associated with the table.
-     * @var string
-     */
     protected $foreignKey = 'user_id';
 
-    /**
-     * The data type of the database table foreign key.
-     * @var string
-     */
     protected $foreignKeyType = 'int';
 
-    /**
-     * The attributes that are mass assignable.
-     * @var array<string>
-     */
     protected $fillable = [
         'type',
         'path',
@@ -74,30 +60,15 @@ class Resource extends BaseModel
         'user_id',
     ];
 
-    /**
-     * The attributes that are mass assignable.
-     * @var string
-     */
     protected $attributes = [
         'is_active'     => false,
         'requires_auth' => false,
     ];
 
-    /**
-     * The visibility options.
-     * @var array<string>
-     */
     protected $visibilityOptions = [
         'Menu', 'API'
     ];
 
-    /**
-     * Get the type casts for the model attributes.
-     * This method allows you to customize the attribute type casts for the model.
-     * It merges the parent model's casts with any additional or modified casts
-     * specific to the child model.
-     * @return array
-     */
     protected function getCastAttributes(): array
     {
         $parentCasts = parent::getCastAttributes();
@@ -107,9 +78,6 @@ class Resource extends BaseModel
         ]);
     }
 
-    /**
-     * Eloquent relationship between accepted domains and users.
-     */
     public function user()
     {
         return $this->belongsTo('App\Models\User');

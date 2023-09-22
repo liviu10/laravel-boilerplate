@@ -2,17 +2,17 @@
 
 namespace App\BusinessLogic\Services;
 
-use App\Traits\ApiStatisticalIndicators;
+use App\BusinessLogic\Interfaces\BaseInterface;
 use App\BusinessLogic\Interfaces\TagInterface;
-use App\Library\ApiResponse;
-use App\Http\Requests\TagRequest;
+use App\Traits\ApiStatisticalIndicators;
 use App\Models\Tag;
-use Illuminate\Database\Eloquent\Collection;
+use App\Library\ApiResponse;
+use App\Library\Actions;
+use Illuminate\Http\Response;
+use Illuminate\Contracts\Routing\ResponseFactory;
+use Illuminate\Support\Facades\Auth;
 
-/**
- * TagService is a service class the will implement all the methods from the TagInterface contract and will handle the business logic.
- */
-class TagService implements TagInterface
+class TagService implements BaseInterface, TagInterface
 {
     use ApiStatisticalIndicators;
 
@@ -20,8 +20,8 @@ class TagService implements TagInterface
     protected $apiResponse;
 
     /**
-     * Instantiate the variables that will be used to get the model and table name as well as the table's columns.
-     * @return Collection|String|Integer
+     * Create a new instance of the AcceptedDomainService.
+     * This constructor initializes the service with the necessary dependencies.
      */
     public function __construct()
     {
@@ -149,5 +149,10 @@ class TagService implements TagInterface
         {
             return response($this->handleResponse('error_message'), 500);
         }
+    }
+
+    public function handleStatisticalIndicators(): array
+    {
+        return [];
     }
 }

@@ -28,33 +28,20 @@ use Illuminate\Pagination\LengthAwarePaginator;
  * @method fetchSingleRecord
  * @method updateRecord
  * @method deleteRecord
+ * @method getFields
+ * @method getNotificationTypeOptions
+ * @method getNotificationConditionOptions
  */
 class Notification extends BaseModel
 {
     use HasFactory, FilterAvailableFields, LogApiError;
 
-    /**
-     * The table associated with the model.
-     * @var string
-     */
     protected $table = 'notifications';
 
-    /**
-     * The foreign key associated with the table.
-     * @var string
-     */
     protected $foreignKey = 'user_id';
 
-    /**
-     * The data type of the database table foreign key.
-     * @var string
-     */
     protected $foreignKeyType = 'int';
 
-    /**
-     * The attributes that are mass assignable.
-     * @var array<string>
-     */
     protected $fillable = [
         'type',
         'condition',
@@ -63,19 +50,11 @@ class Notification extends BaseModel
         'user_id',
     ];
 
-    /**
-     * The notification type options.
-     * @var array<string>
-     */
     protected $notificationTypeOptions = [
         'SMS',
         'Email',
     ];
 
-    /**
-     * The notification condition options.
-     * @var array<string>
-     */
     protected $notificationConditionOptions = [
         'Read',
         'Create',
@@ -85,13 +64,6 @@ class Notification extends BaseModel
         'Restore',
     ];
 
-    /**
-     * Get the type casts for the model attributes.
-     * This method allows you to customize the attribute type casts for the model.
-     * It merges the parent model's casts with any additional or modified casts
-     * specific to the child model.
-     * @return array
-     */
     protected function getCastAttributes()
     {
         $parentCasts = parent::getCastAttributes();
@@ -100,9 +72,6 @@ class Notification extends BaseModel
         ]);
     }
 
-    /**
-     * Eloquent relationship between accepted domains and users.
-     */
     public function user()
     {
         return $this->belongsTo('App\Models\User');

@@ -2,17 +2,17 @@
 
 namespace App\BusinessLogic\Services;
 
-use App\Traits\ApiStatisticalIndicators;
+use App\BusinessLogic\Interfaces\BaseInterface;
 use App\BusinessLogic\Interfaces\AppreciationInterface;
-use App\Library\ApiResponse;
-use App\Http\Requests\AppreciationRequest;
+use App\Traits\ApiStatisticalIndicators;
 use App\Models\Appreciation;
-use Illuminate\Database\Eloquent\Collection;
+use App\Library\ApiResponse;
+use App\Library\Actions;
+use Illuminate\Http\Response;
+use Illuminate\Contracts\Routing\ResponseFactory;
+use Illuminate\Support\Facades\Auth;
 
-/**
- * AppreciationService is a service class the will implement all the methods from the AppreciationInterface contract and will handle the business logic.
- */
-class AppreciationService implements AppreciationInterface
+class AppreciationService implements BaseInterface, AppreciationInterface
 {
     use ApiStatisticalIndicators;
 
@@ -20,8 +20,8 @@ class AppreciationService implements AppreciationInterface
     protected $apiResponse;
 
     /**
-     * Instantiate the variables that will be used to get the model and table name as well as the table's columns.
-     * @return Collection|String|Integer
+     * Create a new instance of the AcceptedDomainService.
+     * This constructor initializes the service with the necessary dependencies.
      */
     public function __construct()
     {
@@ -117,29 +117,12 @@ class AppreciationService implements AppreciationInterface
             $this->modelName->deleteRecord($id);
         }
         $apiDeleteRecord = $this->apiResponse->generateApiResponse($apiDisplaySingleRecord, 'delete');
-        
+
         return $apiDeleteRecord;
     }
 
-    /**
-     * Retrieve statistical indicators based on the fetched record details.
-     * This function calculates and returns statistical indicators based on the data
-     * retrieved using the modelName's `fetchAllRecordDetails` and `getStatisticalIndicators` methods.
-     * @return array An associative array containing statistical indicators, where each key represents an indicator name
-     * and each value is an associative array with 'number' and 'percentage' keys (depending on the type of indicator).
-     */
-    public function getStatisticalIndicators()
+    public function handleStatisticalIndicators(): array
     {
-        // $apiAllRecordDetails = $this->modelName->fetchAllRecords([], 'statistics');
-        // $statisticalIndicators = $this->modelName->getStatisticalIndicators();
-        // $options = [
-        //     'role_id' => $this->modelNameRole->fetchUserRoles()
-        // ];
-
-        // return $this->handleStatisticalIndicators(
-        //     $apiAllRecordDetails,
-        //     $statisticalIndicators,
-        //     $options
-        // );
+        return [];
     }
 }

@@ -2,17 +2,17 @@
 
 namespace App\BusinessLogic\Services;
 
-use App\Traits\ApiStatisticalIndicators;
+use App\BusinessLogic\Interfaces\BaseInterface;
 use App\BusinessLogic\Interfaces\MediaInterface;
-use App\Library\ApiResponse;
-use App\Http\Requests\MediaRequest;
+use App\Traits\ApiStatisticalIndicators;
 use App\Models\Media;
-use Illuminate\Database\Eloquent\Collection;
+use App\Library\ApiResponse;
+use App\Library\Actions;
+use Illuminate\Http\Response;
+use Illuminate\Contracts\Routing\ResponseFactory;
+use Illuminate\Support\Facades\Auth;
 
-/**
- * MediaService is a service class the will implement all the methods from the MediaInterface contract and will handle the business logic.
- */
-class MediaService implements MediaInterface
+class MediaService implements BaseInterface, MediaInterface
 {
     use ApiStatisticalIndicators;
 
@@ -20,8 +20,8 @@ class MediaService implements MediaInterface
     protected $apiResponse;
 
     /**
-     * Instantiate the variables that will be used to get the model and table name as well as the table's columns.
-     * @return Collection|String|Integer
+     * Create a new instance of the AcceptedDomainService.
+     * This constructor initializes the service with the necessary dependencies.
      */
     public function __construct()
     {
@@ -149,5 +149,10 @@ class MediaService implements MediaInterface
         {
             return response($this->handleResponse('error_message'), 500);
         }
+    }
+
+    public function handleStatisticalIndicators(): array
+    {
+        return [];
     }
 }
