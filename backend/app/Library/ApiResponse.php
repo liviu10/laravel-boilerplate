@@ -8,7 +8,8 @@ use Illuminate\Http\Response;
 use Illuminate\Contracts\Routing\ResponseFactory;
 use App\Library\DataModel;
 
-enum Actions {
+enum Actions
+{
     case get;
     case create;
     case update;

@@ -18,32 +18,16 @@ class BaseModel extends Model
 {
     use LogApiError;
 
-    /**
-     * The primary key associated with the table.
-     * @var string
-     */
     protected $primaryKey = 'id';
 
-    /**
-     * The data type of the auto-incrementing ID.
-     * @var string
-     */
     protected $keyType = 'int';
 
-    /**
-     * The attributes that aren't mass assignable.
-     * @var array
-     */
     protected $guarded = [
         'id',
         'created_at',
         'updated_at',
     ];
 
-    /**
-     * The attributes that should be cast.
-     * @var array<string, string>
-     */
     protected $casts = [
         'id'         => 'integer',
         'is_active'  => 'boolean',

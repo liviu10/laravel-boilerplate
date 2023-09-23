@@ -21,7 +21,7 @@ class AppreciationRequest extends FormRequest
      *
      * @return array
      */
-    public function rules()
+    static function rules()
     {
         $rules = [
             'likes' => 'sometimes|integer',

@@ -20,7 +20,7 @@ class RoleService implements BaseInterface, RoleInterface
     protected $apiResponse;
 
     /**
-     * Create a new instance of the AcceptedDomainService.
+     * Create a new instance of the service class.
      * This constructor initializes the service with the necessary dependencies.
      */
     public function __construct()
@@ -58,8 +58,12 @@ class RoleService implements BaseInterface, RoleInterface
         $apiInsertRecord = [
             'name'        => $request['name'],
             'description' => $request['description'],
-            'bg_color'    => $request['bg_color'] ?? null,
-            'text_color'  => $request['text_color'] ?? null,
+            'bg_color'    => array_key_exists('bg_color', $request)
+                ? $request['bg_color']
+                : null,
+            'text_color'  => array_key_exists('text_color', $request)
+                ? $request['text_color']
+                : null,
             'is_active'   => $request['is_active'],
         ];
         $apiInsertRecord['slug'] = strtolower($request['name']);
@@ -95,11 +99,21 @@ class RoleService implements BaseInterface, RoleInterface
         $apiDisplaySingleRecord = $this->modelName->fetchSingleRecord($id);
         if ($apiDisplaySingleRecord && $apiDisplaySingleRecord->isNotEmpty()) {
             $apiUpdateRecord = [
-                'name'        => $request['name'] ?? $apiDisplaySingleRecord->name,
-                'description' => $request['description'] ?? $apiDisplaySingleRecord->description,
-                'bg_color'    => $request['bg_color'] ?? $apiDisplaySingleRecord->bg_color,
-                'text_color'  => $request['text_color'] ?? $apiDisplaySingleRecord->text_color,
-                'is_active'   => $request['is_active'] ?? $apiDisplaySingleRecord->is_active,
+                'name'        => array_key_exists('name', $request)
+                    ? $request['name']
+                    : $apiDisplaySingleRecord->toArray()[0]['name'],
+                'description' => array_key_exists('description', $request)
+                    ? $request['description']
+                    : $apiDisplaySingleRecord->toArray()[0]['description'],
+                'bg_color'    => array_key_exists('bg_color', $request)
+                    ? $request['bg_color']
+                    : $apiDisplaySingleRecord->toArray()[0]['bg_color'],
+                'text_color'  => array_key_exists('text_color', $request)
+                    ? $request['text_color']
+                    : $apiDisplaySingleRecord->toArray()[0]['text_color'],
+                'is_active'   => array_key_exists('is_active', $request)
+                    ? $request['is_active']
+                    : $apiDisplaySingleRecord->toArray()[0]['is_active'],
             ];
             $apiUpdateRecord['slug'] = strtolower($request['name']);
             $updatedRecord = $this->modelName->updateRecord($apiUpdateRecord, $id);

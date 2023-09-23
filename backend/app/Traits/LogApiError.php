@@ -2,19 +2,17 @@
 
 namespace App\Traits;
 
+use Exception;
 use Illuminate\Support\Facades\Log;
 
 trait LogApiError
 {
     /**
-     * Log an API error.
-     * This method logs an API error using the provided MySQL error information. It extracts
-     * the error code and description from the MySQL error object and creates a log entry
-     * with the error details using the Log::error() method.
-     * @param \Exception $mysqlError The MySQL error object.
+     * Log an API error to the application's error log.
+     * @param Exception $mysqlError The exception representing the API error.
      * @return void
      */
-    public function LogApiError($mysqlError)
+    public function LogApiError(Exception $mysqlError): void
     {
         $logError = [
             'code'        => $mysqlError->getCode(),

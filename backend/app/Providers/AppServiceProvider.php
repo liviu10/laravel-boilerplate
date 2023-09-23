@@ -20,12 +20,12 @@ use App\BusinessLogic\Interfaces\CommentInterface;
 use App\BusinessLogic\Interfaces\AppreciationInterface;
 
 // Import application's user settings
-use App\BusinessLogic\Interfaces\UserInterface;
-use App\BusinessLogic\Interfaces\RoleInterface;
-use App\BusinessLogic\Interfaces\AcceptedDomainInterface;
-use App\BusinessLogic\Interfaces\ResourceInterface;
+use App\BusinessLogic\Services\AcceptedDomainService;
 use App\BusinessLogic\Interfaces\GeneralInterface;
 use App\BusinessLogic\Interfaces\NotificationInterface;
+use App\BusinessLogic\Interfaces\ResourceInterface;
+use App\BusinessLogic\Interfaces\RoleInterface;
+use App\BusinessLogic\Interfaces\UserInterface;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -49,12 +49,12 @@ class AppServiceProvider extends ServiceProvider
         $this->app->bind( AppreciationInterface::class, AppreciationService::class );
 
         // Register application's user settings interfaces and services
-        $this->app->bind( RoleInterface::class, RoleService::class );
-        $this->app->bind( UserInterface::class, UserService::class );
-        $this->app->bind( ResourceInterface::class, ResourceService::class );
         $this->app->bind( AcceptedDomainInterface::class, AcceptedDomainService::class );
         $this->app->bind( GeneralInterface::class, GeneralService::class );
         $this->app->bind( NotificationInterface::class, NotificationService::class );
+        $this->app->bind( ResourceInterface::class, ResourceService::class );
+        $this->app->bind( RoleInterface::class, RoleService::class );
+        $this->app->bind( UserInterface::class, UserService::class );
 
         // Register laravel telescope
         if ($this->app->environment('local')) {

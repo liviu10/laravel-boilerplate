@@ -17,7 +17,7 @@ class GeneralService implements BaseInterface, GeneralInterface
     protected $apiResponse;
 
     /**
-     * Create a new instance of the AcceptedDomainService.
+     * Create a new instance of the service class.
      * This constructor initializes the service with the necessary dependencies.
      */
     public function __construct()
@@ -88,9 +88,15 @@ class GeneralService implements BaseInterface, GeneralInterface
         $apiDisplaySingleRecord = $this->modelName->fetchSingleRecord($id);
         if ($apiDisplaySingleRecord && $apiDisplaySingleRecord->isNotEmpty()) {
             $apiUpdateRecord = [
-                'type'    => $request['type'],
-                'label'   => $request['label'],
-                'value'   => $request['value'],
+                'type'    => array_key_exists('type', $request)
+                    ? $request['type']
+                    : $apiDisplaySingleRecord->toArray()[0]['type'],
+                'label'   => array_key_exists('label', $request)
+                    ? $request['label']
+                    : $apiDisplaySingleRecord->toArray()[0]['label'],
+                'value'   => array_key_exists('value', $request)
+                    ? $request['value']
+                    : $apiDisplaySingleRecord->toArray()[0]['value'],
                 'user_id' => Auth::user() ? Auth::user()->id : 1,
             ];
             $updatedRecord = $this->modelName->updateRecord($apiUpdateRecord, $id);

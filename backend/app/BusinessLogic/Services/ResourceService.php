@@ -20,7 +20,7 @@ class ResourceService implements BaseInterface, ResourceInterface
     protected $apiResponse;
 
     /**
-     * Create a new instance of the AcceptedDomainService.
+     * Create a new instance of the service class.
      * This constructor initializes the service with the necessary dependencies.
      */
     public function __construct()
@@ -109,16 +109,30 @@ class ResourceService implements BaseInterface, ResourceInterface
      */
     public function handleUpdate(array $request, int $id): Response|ResponseFactory
     {
-        $apiDisplaySingleRecord = $this->modelName->fetchSingleRecord($id)->toArray()[0];
+        $apiDisplaySingleRecord = $this->modelName->fetchSingleRecord($id);
         if ($apiDisplaySingleRecord && count($apiDisplaySingleRecord)) {
             $apiUpdateRecord = [
-                'type'          => $request['type'] ?? $apiDisplaySingleRecord['type'],
-                'path'          => $request['path'] ?? $apiDisplaySingleRecord['path'],
-                'title'         => $request['title'] ?? $apiDisplaySingleRecord['title'],
-                'caption'       => $request['caption'] ?? $apiDisplaySingleRecord['caption'],
-                'icon'          => $request['icon'] ?? $apiDisplaySingleRecord['icon'],
-                'is_active'     => $request['is_active'] ?? $apiDisplaySingleRecord['is_active'],
-                'requires_auth' => $request['requires_auth'] ?? $apiDisplaySingleRecord['requires_auth'],
+                'type'          => array_key_exists('type', $request)
+                    ? $request['type']
+                    : $apiDisplaySingleRecord->toArray()[0]['type'],
+                'path'          => array_key_exists('path', $request)
+                    ? $request['path']
+                    : $apiDisplaySingleRecord->toArray()[0]['path'],
+                'title'         => array_key_exists('title', $request)
+                    ? $request['title']
+                    : $apiDisplaySingleRecord->toArray()[0]['title'],
+                'caption'       => array_key_exists('caption', $request)
+                    ? $request['caption']
+                    : $apiDisplaySingleRecord->toArray()[0]['caption'],
+                'icon'          => array_key_exists('icon', $request)
+                    ? $request['icon']
+                    : $apiDisplaySingleRecord->toArray()[0]['icon'],
+                'is_active'     => array_key_exists('is_active', $request)
+                    ? $request['is_active']
+                    : $apiDisplaySingleRecord->toArray()[0]['is_active'],
+                'requires_auth' => array_key_exists('requires_auth', $request)
+                    ? $request['requires_auth']
+                    : $apiDisplaySingleRecord->toArray()[0]['requires_auth'],
                 'user_id'       => Auth::user() ? Auth::user()->id : 1,
             ];
 

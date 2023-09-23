@@ -20,7 +20,7 @@ class NotificationService implements BaseInterface, NotificationInterface
     protected $apiResponse;
 
     /**
-     * Create a new instance of the NotificationService.
+     * Create a new instance of the service class.
      * This constructor initializes the service with the necessary dependencies.
      */
     public function __construct()
@@ -94,10 +94,18 @@ class NotificationService implements BaseInterface, NotificationInterface
         $apiDisplaySingleRecord = $this->modelName->fetchSingleRecord($id);
         if ($apiDisplaySingleRecord && $apiDisplaySingleRecord->isNotEmpty()) {
             $apiUpdateRecord = [
-                'type'      => $request['type'],
-                'condition' => $request['condition'],
-                'title'     => $request['title'],
-                'content'   => $request['content'],
+                'type'      => array_key_exists('type', $request)
+                    ? $request['type']
+                    : $apiDisplaySingleRecord->toArray()[0]['type'],
+                'condition' => array_key_exists('condition', $request)
+                    ? $request['condition']
+                    : $apiDisplaySingleRecord->toArray()[0]['condition'],
+                'title'     => array_key_exists('title', $request)
+                    ? $request['title']
+                    : $apiDisplaySingleRecord->toArray()[0]['title'],
+                'content'   => array_key_exists('content', $request)
+                    ?$request['content']
+                    : $apiDisplaySingleRecord->toArray()[0]['content'],
                 'user_id'   => Auth::user() ? Auth::user()->id : 1,
             ];
             $updatedRecord = $this->modelName->updateRecord($apiUpdateRecord, $id);

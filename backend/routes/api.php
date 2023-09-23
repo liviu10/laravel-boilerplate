@@ -2,6 +2,7 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Middleware\CheckAuthentication;
 
 /*
 |--------------------------------------------------------------------------
@@ -26,12 +27,12 @@ use App\Http\Controllers\MediaController;
 use App\Http\Controllers\CommentController;
 use App\Http\Controllers\AppreciationController;
 // Import application's settings
-use App\Http\Controllers\UserController;
-use App\Http\Controllers\RoleController;
-use App\Http\Controllers\ResourceController;
-use App\Http\Controllers\GeneralController;
 use App\Http\Controllers\AcceptedDomainController;
+use App\Http\Controllers\GeneralController;
 use App\Http\Controllers\NotificationController;
+use App\Http\Controllers\ResourceController;
+use App\Http\Controllers\RoleController;
+use App\Http\Controllers\UserController;
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
@@ -39,7 +40,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 Route::group(['prefix' => config('app.version')], function () {
     // Application's admin api endpoints
-    Route::group(['prefix' => '/admin'], function () {
+    Route::group(['prefix' => '/admin', 'middleware' => CheckAuthentication::class], function () {
         // Application's communication endpoints
         Route::group(['prefix' => '/communication'], function () {
             // Contact subject, messages and responses

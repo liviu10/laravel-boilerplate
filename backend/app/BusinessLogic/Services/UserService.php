@@ -22,7 +22,7 @@ class UserService implements BaseInterface, UserInterface
     protected $apiResponse;
 
     /**
-     * Create a new instance of the AcceptedDomainService.
+     * Create a new instance of the service class.
      * This constructor initializes the service with the necessary dependencies.
      */
     public function __construct()
@@ -88,12 +88,18 @@ class UserService implements BaseInterface, UserInterface
         $apiInsertRecord = [
             'first_name'    => $request['first_name'],
             'last_name'     => $request['last_name'],
-            'nickname'      => $request['nickname'] ?? null,
+            'nickname'      => array_key_exists('nickname', $request)
+                ? $request['nickname']
+                : null,
             'email'         => $request['email'],
-            'phone'         => $request['phone'] ?? null,
+            'phone'         => array_key_exists('phone', $request)
+                ? $request['phone']
+                : null,
             'password'      => bcrypt($genericPassword),
-            'profile_image' => $request['profile_image'] ?? null,
-            'role_id'       => $request['role_id'] ?? 5,
+            'profile_image' => array_key_exists('profile_image', $request)
+                ? $request['profile_image']
+                : null,
+            'role_id'       => $request['role_id'],
         ];
         $apiInsertRecord['full_name'] = $request['first_name'] . ' ' . $request['last_name'];
         $createdRecord = $this->modelName->createRecord($apiInsertRecord);
@@ -128,9 +134,15 @@ class UserService implements BaseInterface, UserInterface
         $apiDisplaySingleRecord = $this->modelName->fetchSingleRecord($id);
         if ($apiDisplaySingleRecord && $apiDisplaySingleRecord->isNotEmpty()) {
             $apiUpdateRecord = [
-                'first_name' => $request['first_name'] ?? $apiDisplaySingleRecord->full_name,
-                'last_name' => $request['last_name'] ?? $apiDisplaySingleRecord->last_name,
-                'role_id' => $request['role_id'] ?? $apiDisplaySingleRecord->role_id,
+                'first_name' => array_key_exists('first_name', $request)
+                    ? $request['first_name']
+                    : $apiDisplaySingleRecord->toArray()[0]['first_name'],
+                'last_name' => array_key_exists('last_name', $request)
+                    ? $request['last_name']
+                    : $apiDisplaySingleRecord->toArray()[0]['last_name'],
+                'role_id' => array_key_exists('role_id', $request)
+                    ? $request['role_id']
+                    : $apiDisplaySingleRecord->toArray()[0]['role_id'],
             ];
             $apiUpdateRecord['full_name'] = $request['first_name'] . ' ' . $request['last_name'];
             $updatedRecord = $this->modelName->updateRecord($apiUpdateRecord, $id);

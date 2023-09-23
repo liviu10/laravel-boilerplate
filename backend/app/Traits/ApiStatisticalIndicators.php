@@ -6,6 +6,13 @@ use Illuminate\Database\Eloquent\Collection;
 
 trait ApiStatisticalIndicators
 {
+    /**
+     * Calculate statistical indicators based on API records.
+     * @param Collection|array $apiAllRecordsDetails The collection or array of API records.
+     * @param array $apiStatisticalIndicators The array of statistical indicators to calculate.
+     * @param array|null $options Additional options to customize the calculation (optional).
+     * @return array The calculated statistical indicators including counts, percentages, and options (if provided).
+     */
     public function handleStatisticalIndicators(
         Collection|array $apiAllRecordsDetails,
         array $apiStatisticalIndicators,

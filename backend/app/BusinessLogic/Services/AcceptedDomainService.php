@@ -21,7 +21,7 @@ class AcceptedDomainService implements BaseInterface, AcceptedDomainInterface
     protected $currentRouteName;
 
     /**
-     * Create a new instance of the AcceptedDomainService.
+     * Create a new instance of the service class.
      * This constructor initializes the service with the necessary dependencies.
      */
     public function __construct()
@@ -59,8 +59,8 @@ class AcceptedDomainService implements BaseInterface, AcceptedDomainInterface
         $apiInsertRecord = [
             'domain'    => '.' . $request['domain'],
             'type'      => $request['type'],
-            'user_id'   => Auth::user() ? Auth::user()->id : 1,
             'is_active' => $request['is_active'],
+            'user_id'   => Auth::user() ? Auth::user()->id : 1,
         ];
         $createdRecord = $this->modelName->createRecord($apiInsertRecord);
         $apiCreatedRecord = $this->apiResponse->generateApiResponse($createdRecord->toArray(), Actions::create);
@@ -94,10 +94,16 @@ class AcceptedDomainService implements BaseInterface, AcceptedDomainInterface
         $apiDisplaySingleRecord = $this->modelName->fetchSingleRecord($id);
         if ($apiDisplaySingleRecord && $apiDisplaySingleRecord->isNotEmpty()) {
             $apiUpdateRecord = [
-                'domain'    => $request['domain'],
-                'type'      => $request['type'],
+                'domain'    => array_key_exists('domain', $request)
+                    ? '.' . $request['domain']
+                    : $apiDisplaySingleRecord->toArray()[0]['domain'],
+                'type'      => array_key_exists('type', $request)
+                    ? $request['type']
+                    : $apiDisplaySingleRecord->toArray()[0]['type'],
+                'is_active' => array_key_exists('is_active', $request)
+                    ? $request['is_active']
+                    : $apiDisplaySingleRecord->toArray()[0]['is_active'],
                 'user_id'   => Auth::user() ? Auth::user()->id : 1,
-                'is_active' => $request['is_active'],
             ];
             $updatedRecord = $this->modelName->updateRecord($apiUpdateRecord, $id);
             $apiUpdatedRecord = $this->apiResponse->generateApiResponse($updatedRecord->toArray(), Actions::update);

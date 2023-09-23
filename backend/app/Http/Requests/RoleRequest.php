@@ -33,7 +33,7 @@ class RoleRequest extends FormRequest
             $rules = [
                 'name'        => 'required|string|min:3|max:100|regex:/^[a-zA-Z\s]+$/',
                 'description' => 'required|string|min:10|max:255',
-                'slug'        => 'required|string|min:3|max:100',
+                'slug'        => 'sometimes|string|min:3|max:100',
                 'bg_color'    => 'sometimes|string|min:3|max:7|regex:/^[a-zA-Z0-9#]+$/',
                 'text_color'  => 'sometimes|string|min:3|max:7|regex:/^[a-zA-Z0-9#]+$/',
                 'is_active'   => 'required',

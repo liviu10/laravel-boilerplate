@@ -22,7 +22,7 @@ class ContactSubjectRequest extends FormRequest
      *
      * @return array
      */
-    public function rules()
+    static function rules()
     {
         $currentRouteName = Route::current()->getName();
         $rules = [];

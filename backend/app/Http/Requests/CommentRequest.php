@@ -22,7 +22,7 @@ class CommentRequest extends FormRequest
      *
      * @return array
      */
-    public function rules()
+    static function rules()
     {
         $rules = [
             'status' => [

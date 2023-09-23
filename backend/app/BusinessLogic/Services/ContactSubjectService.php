@@ -20,7 +20,7 @@ class ContactSubjectService implements BaseInterface, ContactSubjectInterface
     protected $apiResponse;
 
     /**
-     * Create a new instance of the ContactSubjectService.
+     * Create a new instance of the service class.
      * This constructor initializes the service with the necessary dependencies.
      */
     public function __construct()
