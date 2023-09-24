@@ -102,14 +102,13 @@ class Content extends BaseModel
     public function fetchAllRecords(array $search = [], string|null $type = null): LengthAwarePaginator|Collection|bool
     {
         try {
-            $query = $this->select('id', 'visibility', 'type', 'content_url', 'title', 'content_type');
+            $query = $this->select('id', 'visibility', 'content_url', 'title', 'content_type');
 
             if (!empty($search)) {
                 foreach ($search as $field => $value) {
                     if (
                         $field === 'id' ||
                         $field === 'visibility' ||
-                        $field === 'type' ||
                         $field === 'content_type' ||
                         $field === 'allow_comments'
                     ) {
@@ -240,7 +239,6 @@ class Content extends BaseModel
     {
         $fieldTypes = [
             'visibility'     => 'select',
-            'type'           => 'select',
             'content_url'    => 'text',
             'title'          => 'text',
             'content_type'   => 'select',

@@ -58,7 +58,11 @@ class NewsletterSubscriberService implements BaseInterface, NewsletterSubscriber
         $apiInsertRecord = [
             'full_name' => $request['full_name'],
             'email' => $request['email'],
-            'privacy_policy' => $request['privacy_policy'] !== null ? $request['privacy_policy'] : false,
+            'privacy_policy' => array_key_exists('privacy_policy', $request)
+                ? $request['privacy_policy']
+                : false,
+            'valid_email' => 1, // TODO: validate email before saving to the database
+            'newsletter_campaign_id' => 1, // TODO: automatically enroll user to the welcome campaign
         ];
         $createdRecord = $this->modelName->createRecord($apiInsertRecord);
         $apiCreatedRecord = $this->apiResponse->generateApiResponse($createdRecord->toArray(), Actions::create);

@@ -41,7 +41,7 @@ class ContentService implements BaseInterface, ContentInterface
             Actions::get,
             $this->modelName->getFields(),
             class_basename($this->modelName),
-            $this->modelName->getUniqueDomainTypes(),
+            null,
             $this->handleStatisticalIndicators()
         );
 
@@ -62,7 +62,9 @@ class ContentService implements BaseInterface, ContentInterface
             'content_type'   => $request['content_type'],
             'description'    => $request['description'],
             'content'        => $request['content'],
-            'allow_comments' => $request['allow_comments'] ? $request['allow_comments'] : false,
+            'allow_comments' => array_key_exists('allow_comments', $request)
+                ? $request['allow_comments']
+                : false,
             'user_id'        => Auth::user() ? Auth::user()->id : 1,
         ];
         $createdRecord = $this->modelName->createRecord($apiInsertRecord);
@@ -97,13 +99,27 @@ class ContentService implements BaseInterface, ContentInterface
         $apiDisplaySingleRecord = $this->modelName->fetchSingleRecord($id);
         if ($apiDisplaySingleRecord && $apiDisplaySingleRecord->isNotEmpty()) {
             $apiUpdateRecord = [
-                'visibility'     => $request['visibility'],
-                'content_url'    => $request['content_url'],
-                'title'          => $request['title'],
-                'content_type'   => $request['content_type'],
-                'description'    => $request['description'],
-                'content'        => $request['content'],
-                'allow_comments' => $request['allow_comments'] ? $request['allow_comments'] : false,
+                'visibility'     => array_key_exists('visibility', $request)
+                    ? $request['visibility']
+                    : $apiDisplaySingleRecord->toArray()[0]['visibility'],
+                'content_url'    => array_key_exists('content_url', $request)
+                    ? $request['content_url']
+                    : $apiDisplaySingleRecord->toArray()[0]['content_url'],
+                'title'          => array_key_exists('title', $request)
+                    ? $request['title']
+                    : $apiDisplaySingleRecord->toArray()[0]['title'],
+                'content_type'   => array_key_exists('content_type', $request)
+                    ? $request['content_type']
+                    : $apiDisplaySingleRecord->toArray()[0]['content_type'],
+                'description'    => array_key_exists('description', $request)
+                    ? $request['description']
+                    : $apiDisplaySingleRecord->toArray()[0]['description'],
+                'content'        => array_key_exists('content', $request)
+                    ? $request['content']
+                    : $apiDisplaySingleRecord->toArray()[0]['content'],
+                'allow_comments' => array_key_exists('allow_comments', $request)
+                    ? $request['allow_comments']
+                    : $apiDisplaySingleRecord->toArray()[0]['allow_comments'],
                 'user_id'        => Auth::user() ? Auth::user()->id : 1,
             ];
             $updatedRecord = $this->modelName->updateRecord($apiUpdateRecord, $id);

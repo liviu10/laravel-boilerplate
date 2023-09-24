@@ -2,15 +2,15 @@
 
 namespace App\BusinessLogic\Services;
 
-use App\Traits\ApiStatisticalIndicators;
 use App\BusinessLogic\Interfaces\BaseInterface;
 use App\BusinessLogic\Interfaces\ContactMessageInterface;
-use Illuminate\Support\Facades\Auth;
-use App\Library\Actions;
-use App\Library\ApiResponse;
+use App\Traits\ApiStatisticalIndicators;
 use App\Models\ContactMessage;
+use App\Library\ApiResponse;
+use App\Library\Actions;
 use Illuminate\Http\Response;
 use Illuminate\Contracts\Routing\ResponseFactory;
+use Illuminate\Support\Facades\Auth;
 
 class ContactMessageService implements BaseInterface, ContactMessageInterface
 {
@@ -58,7 +58,7 @@ class ContactMessageService implements BaseInterface, ContactMessageInterface
         $apiInsertRecord = [
             'full_name'          => $request['full_name'],
             'email'              => $request['email'],
-            'phone'              => $request['phone'] ?? null,
+            'phone'              => $request['phone'] ? $request['phone'] : null,
             'contact_subject_id' => $request['contact_subject_id'],
             'message'            => $request['message'],
             'privacy_policy'     => $request['privacy_policy'] !== null ? $request['privacy_policy'] : false,
@@ -95,12 +95,24 @@ class ContactMessageService implements BaseInterface, ContactMessageInterface
         $apiDisplaySingleRecord = $this->modelName->fetchSingleRecord($id);
         if ($apiDisplaySingleRecord && $apiDisplaySingleRecord->isNotEmpty()) {
             $apiUpdateRecord = [
-                'full_name'          => $request['full_name'],
-                'email'              => $request['email'],
-                'phone'              => $request['phone'] ?? null,
-                'contact_subject_id' => $request['contact_subject_id'],
-                'message'            => $request['message'],
-                'privacy_policy'     => $request['privacy_policy'] !== null ? $request['privacy_policy'] : false,
+                'full_name'          => array_key_exists('full_name', $request)
+                    ? $request['full_name']
+                    : $apiDisplaySingleRecord->toArray()[0]['full_name'],
+                'email'              => array_key_exists('email', $request)
+                    ? $request['email']
+                    : $apiDisplaySingleRecord->toArray()[0]['email'],
+                'phone'              => array_key_exists('phone', $request)
+                    ? $request['phone']
+                    : $apiDisplaySingleRecord->toArray()[0]['phone'],
+                'contact_subject_id' => array_key_exists('contact_subject_id', $request)
+                    ? $request['contact_subject_id']
+                    : $apiDisplaySingleRecord->toArray()[0]['contact_subject_id'],
+                'message'            => array_key_exists('message', $request)
+                    ? $request['message']
+                    : $apiDisplaySingleRecord->toArray()[0]['message'],
+                'privacy_policy'     => array_key_exists('privacy_policy', $request)
+                    ? $request['privacy_policy']
+                    : $apiDisplaySingleRecord->toArray()[0]['privacy_policy'],
             ];
             $updatedRecord = $this->modelName->updateRecord($apiUpdateRecord, $id);
             $apiUpdatedRecord = $this->apiResponse->generateApiResponse($updatedRecord->toArray(), Actions::update);

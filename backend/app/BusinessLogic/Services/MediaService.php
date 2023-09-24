@@ -41,7 +41,7 @@ class MediaService implements BaseInterface, MediaInterface
             Actions::get,
             $this->modelName->getFields(),
             class_basename($this->modelName),
-            $this->modelName->getUniqueDomainTypes(),
+            null,
             $this->handleStatisticalIndicators()
         );
 
@@ -57,9 +57,13 @@ class MediaService implements BaseInterface, MediaInterface
     {
         $apiInsertRecord = [
             'type'          => $request['type'],
-            'internal_path' => $request['internal_path'],
-            'external_path' => $request['external_path'],
-            'content_id'    => 1,
+            'internal_path' => array_key_exists('internal_path', $request)
+                ? $request['internal_path']
+                : null,
+            'external_path' => array_key_exists('external_path', $request)
+                ? $request['external_path']
+                : null,
+            'content_id'    => $request['content_id'],
             'user_id'       => Auth::user() ? Auth::user()->id : 1,
         ];
         $createdRecord = $this->modelName->createRecord($apiInsertRecord);
@@ -94,10 +98,18 @@ class MediaService implements BaseInterface, MediaInterface
         $apiDisplaySingleRecord = $this->modelName->fetchSingleRecord($id);
         if ($apiDisplaySingleRecord && $apiDisplaySingleRecord->isNotEmpty()) {
             $apiUpdateRecord = [
-                'type'          => $request['type'],
-                'internal_path' => $request['internal_path'],
-                'external_path' => $request['external_path'],
-                'content_id'    => 1,
+                'type'          => array_key_exists('type', $request)
+                    ? $request['type']
+                    : $apiDisplaySingleRecord->toArray()[0]['type'],
+                'internal_path' => array_key_exists('internal_path', $request)
+                    ? $request['internal_path']
+                    : $apiDisplaySingleRecord->toArray()[0]['internal_path'],
+                'external_path' => array_key_exists('external_path', $request)
+                    ? $request['external_path']
+                    : $apiDisplaySingleRecord->toArray()[0]['external_path'],
+                'content_id'    => array_key_exists('content_id', $request)
+                    ? $request['content_id']
+                    : $apiDisplaySingleRecord->toArray()[0]['content_id'],
                 'user_id'       => Auth::user() ? Auth::user()->id : 1,
             ];
             $updatedRecord = $this->modelName->updateRecord($apiUpdateRecord, $id);

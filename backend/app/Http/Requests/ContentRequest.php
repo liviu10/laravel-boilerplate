@@ -46,7 +46,7 @@ class ContentRequest extends FormRequest
                 ],
                 'description' => 'required|string|min:10|max:255',
                 'content' => 'required|string|min:100',
-                'allow_comment' => 'required',
+                'allow_comments' => 'required',
             ];
         }
 

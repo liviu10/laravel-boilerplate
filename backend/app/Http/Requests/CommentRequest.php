@@ -4,6 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
+use Illuminate\Support\Facades\Route;
 
 class CommentRequest extends FormRequest
 {
@@ -24,17 +25,42 @@ class CommentRequest extends FormRequest
      */
     static function rules()
     {
-        $rules = [
-            'status' => [
-                'sometimes',
-                'string',
-                Rule::in(['Pending', 'Approved', 'Spam', 'Trash'])
-            ],
-            'full_name' => 'required|string|min:5|max:255',
-            'email' => 'sometimes|string|min:3|max:255',
-            'message' => 'required|string|min:5|max:255',
-            'notify_new_comments' => 'required',
-        ];
+        $currentRouteName = Route::current()->getName();
+        $rules = [];
+
+        // Validation rules when creating
+        if ($currentRouteName === 'comments.store')
+        {
+            $rules = [
+                'status' => [
+                    'sometimes',
+                    'string',
+                    Rule::in(['Pending', 'Approved', 'Spam', 'Trash'])
+                ],
+                'full_name' => 'required|string|min:5|max:255',
+                'email' => 'sometimes|string|min:3|max:255',
+                'message' => 'required|string|min:5|max:255',
+                'notify_new_comments' => 'required',
+                'content_id' => 'required',
+            ];
+        }
+
+        // Validation rules when updating
+        if ($currentRouteName === 'comments.update')
+        {
+            $rules = [
+                'status' => [
+                    'sometimes',
+                    'string',
+                    Rule::in(['Pending', 'Approved', 'Spam', 'Trash'])
+                ],
+                'full_name' => 'sometimes|string|min:5|max:255',
+                'email' => 'sometimes|string|min:3|max:255',
+                'message' => 'sometimes|string|min:5|max:255',
+                'notify_new_comments' => 'sometimes',
+                'content_id' => 'sometimes',
+            ];
+        }
 
         return $rules;
     }

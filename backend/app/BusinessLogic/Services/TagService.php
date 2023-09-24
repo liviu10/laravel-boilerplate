@@ -41,7 +41,7 @@ class TagService implements BaseInterface, TagInterface
             Actions::get,
             $this->modelName->getFields(),
             class_basename($this->modelName),
-            $this->modelName->getUniqueDomainTypes(),
+            null,
             $this->handleStatisticalIndicators()
         );
 
@@ -57,11 +57,13 @@ class TagService implements BaseInterface, TagInterface
     {
         $apiInsertRecord = [
             'name'        => $request['name'],
-            'description' => $request['description'],
-            'slug'        => $request['slug'],
-            'content_id'  => 1,
+            'description' => array_key_exists('description', $request)
+                ? $request['description']
+                : false,
+            'content_id'  => $request['content_id'],
             'user_id'     => Auth::user() ? Auth::user()->id : 1,
         ];
+        $apiInsertRecord['slug'] = strtolower($request['name']);
         $createdRecord = $this->modelName->createRecord($apiInsertRecord);
         $apiCreatedRecord = $this->apiResponse->generateApiResponse($createdRecord->toArray(), Actions::create);
 
@@ -94,10 +96,18 @@ class TagService implements BaseInterface, TagInterface
         $apiDisplaySingleRecord = $this->modelName->fetchSingleRecord($id);
         if ($apiDisplaySingleRecord && $apiDisplaySingleRecord->isNotEmpty()) {
             $apiUpdateRecord = [
-                'name'        => $request['name'],
-                'description' => $request['description'],
-                'slug'        => $request['slug'],
-                'content_id'  => 1,
+                'name'        => array_key_exists('name', $request)
+                    ? $request['name']
+                    : $apiDisplaySingleRecord->toArray()[0]['name'],
+                'description' => array_key_exists('description', $request)
+                    ? $request['description']
+                    : $apiDisplaySingleRecord->toArray()[0]['description'],
+                'slug'        => array_key_exists('slug', $request)
+                    ? strtolower($request['name'])
+                    : $apiDisplaySingleRecord->toArray()[0]['slug'],
+                'content_id'  => array_key_exists('content_id', $request)
+                    ? $request['content_id']
+                    : $apiDisplaySingleRecord->toArray()[0]['content_id'],
                 'user_id'     => Auth::user() ? Auth::user()->id : 1,
             ];
             $updatedRecord = $this->modelName->updateRecord($apiUpdateRecord, $id);

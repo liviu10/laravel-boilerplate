@@ -57,7 +57,7 @@ class ContactSubjectService implements BaseInterface, ContactSubjectInterface
     {
         $apiInsertRecord = [
             'name'        => $request['name'],
-            'description' => $request['description'] ?? null,
+            'description' => $request['description'] ? $request['description'] : null,
             'is_active'   => $request['is_active'],
             'user_id'     => Auth::user() ? Auth::user()->id : 1,
         ];
@@ -93,9 +93,15 @@ class ContactSubjectService implements BaseInterface, ContactSubjectInterface
         $apiDisplaySingleRecord = $this->modelName->fetchSingleRecord($id);
         if ($apiDisplaySingleRecord && $apiDisplaySingleRecord->isNotEmpty()) {
             $apiUpdateRecord = [
-                'name'        => $request['name'],
-                'description' => $request['description'] !== null ? $request['description'] : null,
-                'is_active'   => $request['is_active'],
+                'name'        => array_key_exists('name', $request)
+                    ? $request['name']
+                    : $apiDisplaySingleRecord->toArray()[0]['name'],
+                'description' => array_key_exists('description', $request)
+                    ? $request['description']
+                    : $apiDisplaySingleRecord->toArray()[0]['description'],
+                'is_active'   => array_key_exists('is_active', $request)
+                    ? $request['is_active']
+                    : $apiDisplaySingleRecord->toArray()[0]['is_active'],
                 'user_id'     => Auth::user() ? Auth::user()->id : 1,
             ];
             $updatedRecord = $this->modelName->updateRecord($apiUpdateRecord, $id);

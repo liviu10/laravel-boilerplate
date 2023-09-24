@@ -56,8 +56,6 @@ class ContactResponseService implements BaseInterface, ContactResponseInterface
     public function handleStore(array $request): Response|ResponseFactory
     {
         $apiInsertRecord = [
-            'full_name'          => $request['full_name'],
-            'email'              => $request['email'],
             'contact_message_id' => $request['contact_message_id'],
             'message'            => $request['message'],
             'user_id'            => Auth::user() ? Auth::user()->id : 1,
@@ -94,10 +92,12 @@ class ContactResponseService implements BaseInterface, ContactResponseInterface
         $apiDisplaySingleRecord = $this->modelName->fetchSingleRecord($id);
         if ($apiDisplaySingleRecord && $apiDisplaySingleRecord->isNotEmpty()) {
             $apiUpdateRecord = [
-                'full_name'          => $request['full_name'],
-                'email'              => $request['email'],
-                'contact_message_id' => $request['contact_message_id'],
-                'message'            => $request['message'],
+                'contact_message_id' => array_key_exists('contact_message_id', $request)
+                    ? $request['contact_message_id']
+                    : $apiDisplaySingleRecord->toArray()[0]['contact_message_id'],
+                'message'            => array_key_exists('message', $request)
+                    ? $request['message']
+                    : $apiDisplaySingleRecord->toArray()[0]['message'],
                 'user_id'            => Auth::user() ? Auth::user()->id : 1,
             ];
             $updatedRecord = $this->modelName->updateRecord($apiUpdateRecord, $id);

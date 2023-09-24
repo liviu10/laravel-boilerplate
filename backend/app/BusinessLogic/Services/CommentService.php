@@ -59,10 +59,14 @@ class CommentService implements BaseInterface, CommentInterface
             'type'                => $request['type'],
             'status'              => $request['status'],
             'full_name'           => $request['full_name'],
-            'email'               => $request['email'],
+            'email'               => array_key_exists('email', $request)
+                ? $request['email']
+                : null,
             'message'             => $request['message'],
-            'notify_new_comments' => $request['notify_new_comments'] ? $request['notify_new_comments'] : false,
-            'content_id'          => 1,
+            'notify_new_comments' => array_key_exists('notify_new_comments', $request)
+                ? $request['notify_new_comments']
+                : false,
+            'content_id'          => $request['content_id'],
             'user_id'             => Auth::user() ? Auth::user()->id : 1,
         ];
         $createdRecord = $this->modelName->createRecord($apiInsertRecord);
@@ -97,13 +101,27 @@ class CommentService implements BaseInterface, CommentInterface
         $apiDisplaySingleRecord = $this->modelName->fetchSingleRecord($id);
         if ($apiDisplaySingleRecord && $apiDisplaySingleRecord->isNotEmpty()) {
             $apiUpdateRecord = [
-                'type'                => $request['type'],
-                'status'              => $request['status'],
-                'full_name'           => $request['full_name'],
-                'email'               => $request['email'],
-                'message'             => $request['message'],
-                'notify_new_comments' => $request['notify_new_comments'] ? $request['notify_new_comments'] : false,
-                'content_id'          => 1,
+                'type'                => array_key_exists('type', $request)
+                    ? $request['type']
+                    : $apiDisplaySingleRecord->toArray()[0]['type'],
+                'status'              => array_key_exists('status', $request)
+                    ? $request['status']
+                    : $apiDisplaySingleRecord->toArray()[0]['status'],
+                'full_name'           => array_key_exists('full_name', $request)
+                    ? $request['full_name']
+                    : $apiDisplaySingleRecord->toArray()[0]['full_name'],
+                'email'               => array_key_exists('email', $request)
+                    ? $request['email']
+                    : $apiDisplaySingleRecord->toArray()[0]['email'],
+                'message'             => array_key_exists('message', $request)
+                    ? $request['message']
+                    : $apiDisplaySingleRecord->toArray()[0]['message'],
+                'notify_new_comments' => array_key_exists('notify_new_comments', $request)
+                    ? $request['notify_new_comments']
+                    : $apiDisplaySingleRecord->toArray()[0]['notify_new_comments'],
+                'content_id'          => array_key_exists('content_id', $request)
+                    ? $request['content_id']
+                    : $apiDisplaySingleRecord->toArray()[0]['content_id'],
                 'user_id'             => Auth::user() ? Auth::user()->id : 1,
             ];
             $updatedRecord = $this->modelName->updateRecord($apiUpdateRecord, $id);

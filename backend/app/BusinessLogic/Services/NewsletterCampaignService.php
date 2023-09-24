@@ -99,15 +99,33 @@ class NewsletterCampaignService implements BaseInterface, NewsletterCampaignInte
         $apiDisplaySingleRecord = $this->modelName->fetchSingleRecord($id);
         if ($apiDisplaySingleRecord && $apiDisplaySingleRecord->isNotEmpty()) {
             $apiUpdateRecord = [
-                'name'        => $request['name'],
-                'description' => $request['description'],
-                'is_active'   => $request['is_active'],
-                'valid_from'  => $request['valid_from'],
-                'valid_to'    => $request['valid_to'],
-                'occur_times' => $request['occur_times'],
-                'occur_week'  => $request['occur_week'],
-                'occur_day'   => $request['occur_day'],
-                'occur_hour'  => $request['occur_hour'],
+                'name'        => array_key_exists('name', $request)
+                    ? $request['name']
+                    : $apiDisplaySingleRecord->toArray()[0]['name'],
+                'description' => array_key_exists('description', $request)
+                    ? $request['description']
+                    : $apiDisplaySingleRecord->toArray()[0]['description'],
+                'is_active'   => array_key_exists('is_active', $request)
+                    ? $request['is_active']
+                    : $apiDisplaySingleRecord->toArray()[0]['is_active'],
+                'valid_from'  => array_key_exists('valid_from', $request)
+                    ? $request['valid_from']
+                    : $apiDisplaySingleRecord->toArray()[0]['valid_from'],
+                'valid_to'    => array_key_exists('valid_to', $request)
+                    ? $request['valid_to']
+                    : $apiDisplaySingleRecord->toArray()[0]['valid_to'],
+                'occur_times' => array_key_exists('occur_times', $request)
+                    ? $request['occur_times']
+                    : $apiDisplaySingleRecord->toArray()[0]['occur_times'],
+                'occur_week'  => array_key_exists('occur_week', $request)
+                    ? $request['occur_week']
+                    : $apiDisplaySingleRecord->toArray()[0]['occur_week'],
+                'occur_day'   => array_key_exists('occur_day', $request)
+                    ? $request['occur_day']
+                    : $apiDisplaySingleRecord->toArray()[0]['occur_day'],
+                'occur_hour'  => array_key_exists('occur_hour', $request)
+                    ? $request['occur_hour']
+                    : $apiDisplaySingleRecord->toArray()[0]['occur_hour'],
                 'user_id'     => Auth::user() ? Auth::user()->id : 1,
             ];
             $updatedRecord = $this->modelName->updateRecord($apiUpdateRecord, $id);

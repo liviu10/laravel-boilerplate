@@ -181,6 +181,7 @@ class NewsletterCampaign extends BaseModel
 
             if ($type === 'relation') {
                 $query->with([
+                    // TODO: add seeder with one subscriber to avoid error when fetching newsletter campaign details
                     'newsletter_subscribers' => function ($query) {
                         $query->select('id', 'newsletter_campaign_id', 'full_name', 'email_address', 'privacy_policy');
                     },

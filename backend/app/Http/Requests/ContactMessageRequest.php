@@ -34,7 +34,7 @@ class ContactMessageRequest extends FormRequest
                 'email' => 'required|string|min:3|max:255',
                 'phone' => 'sometimes|string|min:7|max:15|regex:/^\+?(?:[0-9][ .-]?){6,14}[0-9]$/',
                 'contact_subject_id' => 'required',
-                'message' => 'required|string|min:3|max:255|regex:/^[a-zA-Z\s]+$/',
+                'message' => 'required|string|min:3|max:255',
                 'privacy_policy' => 'sometimes',
             ];
         }
@@ -69,7 +69,6 @@ class ContactMessageRequest extends FormRequest
             'message.string' => 'The message must be a string.',
             'message.min' => 'The message must be at least :min characters.',
             'message.max' => 'The message may not be greater than :max characters.',
-            'message.regex' => 'The message may only contain letters and spaces.',
             'privacy_policy.required' => 'You must accept the privacy policy.',
         ];
     }

@@ -43,16 +43,12 @@ class ContactResponse extends BaseModel
     protected $contactMessageForeignKeyType = 'int';
 
     protected $fillable = [
-        'full_name',
-        'email',
         'message',
         'user_id',
         'contact_message_id',
     ];
 
     protected $statisticalIndicators = [
-        'full_name',
-        'email',
         'message',
         'user_id',
         'contact_message_id',
@@ -131,11 +127,9 @@ class ContactResponse extends BaseModel
     {
         try {
             $query = $this->create([
-                'full_name'          => $payload['full_name'],
-                'email'              => $payload['email'],
-                'message'            => $payload['message'],
-                'privacy_policy'     => $payload['privacy_policy'],
                 'contact_message_id' => $payload['contact_message_id'],
+                'message'            => $payload['message'],
+                'user_id'            => $payload['user_id'],
             ]);
 
             return $query;
@@ -167,7 +161,11 @@ class ContactResponse extends BaseModel
                         $query->select('id', 'full_name');
                     },
                     'contact_message' => function ($query) {
-                        $query->select('id', 'full_name');
+                        $query->select('id', 'full_name', 'contact_subject_id')->with([
+                            'contact_subject' => function ($query) {
+                                $query->select('id', 'name');
+                            }
+                        ]);
                     }
                 ]);
 
@@ -194,11 +192,9 @@ class ContactResponse extends BaseModel
     {
         try {
             $query = tap($this->find($id))->update([
-                'full_name'          => $payload['full_name'],
-                'email'              => $payload['email'],
-                'message'            => $payload['message'],
-                'privacy_policy'     => $payload['privacy_policy'],
                 'contact_message_id' => $payload['contact_message_id'],
+                'message'            => $payload['message'],
+                'user_id'            => $payload['user_id'],
             ]);
 
             return $query->fresh();

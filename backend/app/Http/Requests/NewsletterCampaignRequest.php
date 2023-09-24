@@ -32,7 +32,7 @@ class NewsletterCampaignRequest extends FormRequest
         {
             $rules = [
                 'name' => 'required|string|min:3|max:255',
-                'description' => 'required|string|min:10|max:255|',
+                'description' => 'required|string|min:10|max:255',
                 'is_active' => 'required',
                 'valid_from' => 'required',
                 'valid_to' => 'required',

@@ -56,10 +56,18 @@ class AppreciationService implements BaseInterface, AppreciationInterface
     public function handleStore(array $request): Response|ResponseFactory
     {
         $apiInsertRecord = [
-            'likes'      => $request['likes'] ??  null,
-            'dislikes'   => $request['dislikes'] ?? null,
-            'rating'     => $request['rating'] ?? null,
-            'content_id' => 1,
+            'likes'      => array_key_exists('likes', $request)
+                ? $request['likes']
+                : null,
+            'dislikes'   => array_key_exists('dislikes', $request)
+                ? $request['dislikes']
+                : null,
+            'rating'     => array_key_exists('rating', $request)
+                ? $request['rating']
+                : null,
+            'content_id' => array_key_exists('content_id', $request)
+                ? $request['content_id']
+                : null,
             'user_id'    => Auth::user() ? Auth::user()->id : 1,
         ];
         $createdRecord = $this->modelName->createRecord($apiInsertRecord);
@@ -94,10 +102,18 @@ class AppreciationService implements BaseInterface, AppreciationInterface
         $apiDisplaySingleRecord = $this->modelName->fetchSingleRecord($id);
         if ($apiDisplaySingleRecord && $apiDisplaySingleRecord->isNotEmpty()) {
             $apiUpdateRecord = [
-                'likes'      => $request['likes'] ??  null,
-                'dislikes'   => $request['dislikes'] ?? null,
-                'rating'     => $request['rating'] ?? null,
-                'content_id' => 1,
+                'likes'      => array_key_exists('likes', $request)
+                    ? $request['likes']
+                    : $apiDisplaySingleRecord->toArray()[0]['likes'],
+                'dislikes'   => array_key_exists('dislikes', $request)
+                    ? $request['dislikes']
+                    : $apiDisplaySingleRecord->toArray()[0]['dislikes'],
+                'rating'     => array_key_exists('rating', $request)
+                    ? $request['rating']
+                    : $apiDisplaySingleRecord->toArray()[0]['rating'],
+                'content_id' => array_key_exists('content_id', $request)
+                    ? $request['content_id']
+                    : $apiDisplaySingleRecord->toArray()[0]['content_id'],
                 'user_id'    => Auth::user() ? Auth::user()->id : 1,
             ];
             $updatedRecord = $this->modelName->updateRecord($apiUpdateRecord, $id);

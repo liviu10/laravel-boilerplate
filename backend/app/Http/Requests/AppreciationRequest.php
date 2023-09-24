@@ -27,6 +27,7 @@ class AppreciationRequest extends FormRequest
             'likes' => 'sometimes|integer',
             'dislikes' => 'sometimes|integer',
             'rating' => 'sometimes|integer|min:0|max:5',
+            'content_id' => 'required',
         ];
 
         return $rules;

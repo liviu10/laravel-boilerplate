@@ -14,8 +14,8 @@ return new class extends Migration
         Schema::create('medias', function (Blueprint $table) {
             $table->id()->index('idx_id');
             $table->enum('type', ['Images', 'Documents', 'Videos', 'Audio', 'Others']);
-            $table->string('internal_path');
-            $table->string('external_path');
+            $table->string('internal_path')->nullable();
+            $table->string('external_path')->nullable();
             $table->timestamps();
         });
     }

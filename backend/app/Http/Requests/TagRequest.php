@@ -33,6 +33,7 @@ class TagRequest extends FormRequest
             $rules = [
                 'name' => 'required|string|min:3|max:255',
                 'description' => 'sometimes|string|min:10|max:255',
+                'content_id' => 'required',
             ];
         }
 
@@ -42,6 +43,7 @@ class TagRequest extends FormRequest
             $rules = [
                 'name' => 'sometimes|string|min:3|max:255',
                 'description' => 'sometimes|string|min:10|max:255',
+                'content_id' => 'sometimes',
             ];
         }
 
