@@ -6,8 +6,9 @@ use App\BusinessLogic\Interfaces\BaseInterface;
 use App\BusinessLogic\Interfaces\ContentInterface;
 use App\Traits\ApiStatisticalIndicators;
 use App\Models\Content;
-use App\Library\ApiResponse;
-use App\Library\Actions;
+use App\Utilities\ApiResponse;
+use App\Utilities\ApiCheckPermission;
+use App\Utilities\Actions;
 use Illuminate\Http\Response;
 use Illuminate\Contracts\Routing\ResponseFactory;
 use Illuminate\Support\Facades\Auth;
@@ -18,6 +19,7 @@ class ContentService implements BaseInterface, ContentInterface
 
     protected $modelName;
     protected $apiResponse;
+    protected $checkPermission;
 
     /**
      * Create a new instance of the service class.
@@ -27,6 +29,7 @@ class ContentService implements BaseInterface, ContentInterface
     {
         $this->modelName = new Content();
         $this->apiResponse = new ApiResponse();
+        $this->checkPermission = new ApiCheckPermission();
     }
 
     /**
@@ -36,16 +39,20 @@ class ContentService implements BaseInterface, ContentInterface
      */
     public function handleIndex(array $search): Response|ResponseFactory
     {
-        $apiDisplayAllRecords = $this->apiResponse->generateApiResponse(
-            $this->modelName->fetchAllRecords($search, 'paginate'),
-            Actions::get,
-            $this->modelName->getFields(),
-            class_basename($this->modelName),
-            null,
-            $this->handleStatisticalIndicators()
-        );
+        if ($this->checkPermission->handleApiCheckPermission()) {
+            $apiDisplayAllRecords = $this->apiResponse->generateApiResponse(
+                $this->modelName->fetchAllRecords($search, 'paginate'),
+                Actions::get,
+                $this->modelName->getFields(),
+                class_basename($this->modelName),
+                null,
+                $this->handleStatisticalIndicators()
+            );
 
-        return $apiDisplayAllRecords;
+            return $apiDisplayAllRecords;
+        } else {
+            return $this->apiResponse->generateApiResponse(null, Actions::forbidden);
+        }
     }
 
     /**
@@ -55,22 +62,26 @@ class ContentService implements BaseInterface, ContentInterface
      */
     public function handleStore(array $request): Response|ResponseFactory
     {
-        $apiInsertRecord = [
-            'visibility'     => $request['visibility'],
-            'content_url'    => $request['content_url'],
-            'title'          => $request['title'],
-            'content_type'   => $request['content_type'],
-            'description'    => $request['description'],
-            'content'        => $request['content'],
-            'allow_comments' => array_key_exists('allow_comments', $request)
-                ? $request['allow_comments']
-                : false,
-            'user_id'        => Auth::user() ? Auth::user()->id : 1,
-        ];
-        $createdRecord = $this->modelName->createRecord($apiInsertRecord);
-        $apiCreatedRecord = $this->apiResponse->generateApiResponse($createdRecord->toArray(), Actions::create);
+        if ($this->checkPermission->handleApiCheckPermission()) {
+            $apiInsertRecord = [
+                'visibility'     => $request['visibility'],
+                'content_url'    => $request['content_url'],
+                'title'          => $request['title'],
+                'content_type'   => $request['content_type'],
+                'description'    => $request['description'],
+                'content'        => $request['content'],
+                'allow_comments' => array_key_exists('allow_comments', $request)
+                    ? $request['allow_comments']
+                    : false,
+                'user_id'        => Auth::user() ? Auth::user()->id : 1,
+            ];
+            $createdRecord = $this->modelName->createRecord($apiInsertRecord);
+            $apiCreatedRecord = $this->apiResponse->generateApiResponse($createdRecord->toArray(), Actions::create);
 
-        return $apiCreatedRecord;
+            return $apiCreatedRecord;
+        } else {
+            return $this->apiResponse->generateApiResponse(null, Actions::forbidden);
+        }
     }
 
     /**
@@ -80,12 +91,16 @@ class ContentService implements BaseInterface, ContentInterface
      */
     public function handleShow(int $id): Response|ResponseFactory
     {
-        $apiDisplaySingleRecord = $this->apiResponse->generateApiResponse(
-            $this->modelName->fetchSingleRecord($id, 'relation'),
-            Actions::get
-        );
+        if ($this->checkPermission->handleApiCheckPermission()) {
+            $apiDisplaySingleRecord = $this->apiResponse->generateApiResponse(
+                $this->modelName->fetchSingleRecord($id, 'relation'),
+                Actions::get
+            );
 
-        return $apiDisplaySingleRecord;
+            return $apiDisplaySingleRecord;
+        } else {
+            return $this->apiResponse->generateApiResponse(null, Actions::forbidden);
+        }
     }
 
     /**
@@ -96,39 +111,43 @@ class ContentService implements BaseInterface, ContentInterface
      */
     public function handleUpdate(array $request, int $id): Response|ResponseFactory
     {
-        $apiDisplaySingleRecord = $this->modelName->fetchSingleRecord($id);
-        if ($apiDisplaySingleRecord && $apiDisplaySingleRecord->isNotEmpty()) {
-            $apiUpdateRecord = [
-                'visibility'     => array_key_exists('visibility', $request)
-                    ? $request['visibility']
-                    : $apiDisplaySingleRecord->toArray()[0]['visibility'],
-                'content_url'    => array_key_exists('content_url', $request)
-                    ? $request['content_url']
-                    : $apiDisplaySingleRecord->toArray()[0]['content_url'],
-                'title'          => array_key_exists('title', $request)
-                    ? $request['title']
-                    : $apiDisplaySingleRecord->toArray()[0]['title'],
-                'content_type'   => array_key_exists('content_type', $request)
-                    ? $request['content_type']
-                    : $apiDisplaySingleRecord->toArray()[0]['content_type'],
-                'description'    => array_key_exists('description', $request)
-                    ? $request['description']
-                    : $apiDisplaySingleRecord->toArray()[0]['description'],
-                'content'        => array_key_exists('content', $request)
-                    ? $request['content']
-                    : $apiDisplaySingleRecord->toArray()[0]['content'],
-                'allow_comments' => array_key_exists('allow_comments', $request)
-                    ? $request['allow_comments']
-                    : $apiDisplaySingleRecord->toArray()[0]['allow_comments'],
-                'user_id'        => Auth::user() ? Auth::user()->id : 1,
-            ];
-            $updatedRecord = $this->modelName->updateRecord($apiUpdateRecord, $id);
-            $apiUpdatedRecord = $this->apiResponse->generateApiResponse($updatedRecord->toArray(), Actions::update);
-        } else {
-            $apiUpdatedRecord = $this->apiResponse->generateApiResponse(null, Actions::not_found_record);
-        }
+        if ($this->checkPermission->handleApiCheckPermission()) {
+            $apiDisplaySingleRecord = $this->modelName->fetchSingleRecord($id);
+            if ($apiDisplaySingleRecord && $apiDisplaySingleRecord->isNotEmpty()) {
+                $apiUpdateRecord = [
+                    'visibility'     => array_key_exists('visibility', $request)
+                        ? $request['visibility']
+                        : $apiDisplaySingleRecord->toArray()[0]['visibility'],
+                    'content_url'    => array_key_exists('content_url', $request)
+                        ? $request['content_url']
+                        : $apiDisplaySingleRecord->toArray()[0]['content_url'],
+                    'title'          => array_key_exists('title', $request)
+                        ? $request['title']
+                        : $apiDisplaySingleRecord->toArray()[0]['title'],
+                    'content_type'   => array_key_exists('content_type', $request)
+                        ? $request['content_type']
+                        : $apiDisplaySingleRecord->toArray()[0]['content_type'],
+                    'description'    => array_key_exists('description', $request)
+                        ? $request['description']
+                        : $apiDisplaySingleRecord->toArray()[0]['description'],
+                    'content'        => array_key_exists('content', $request)
+                        ? $request['content']
+                        : $apiDisplaySingleRecord->toArray()[0]['content'],
+                    'allow_comments' => array_key_exists('allow_comments', $request)
+                        ? $request['allow_comments']
+                        : $apiDisplaySingleRecord->toArray()[0]['allow_comments'],
+                    'user_id'        => Auth::user() ? Auth::user()->id : 1,
+                ];
+                $updatedRecord = $this->modelName->updateRecord($apiUpdateRecord, $id);
+                $apiUpdatedRecord = $this->apiResponse->generateApiResponse($updatedRecord->toArray(), Actions::update);
+            } else {
+                $apiUpdatedRecord = $this->apiResponse->generateApiResponse(null, Actions::not_found_record);
+            }
 
-        return $apiUpdatedRecord;
+            return $apiUpdatedRecord;
+        } else {
+            return $this->apiResponse->generateApiResponse(null, Actions::forbidden);
+        }
     }
 
     /**
@@ -138,15 +157,16 @@ class ContentService implements BaseInterface, ContentInterface
      */
     public function handleDestroy(int $id): Response|ResponseFactory
     {
-        if (Auth::user() && Auth::user()->role_id === 1) {
+        if ($this->checkPermission->handleApiCheckPermission()) {
             $apiDisplaySingleRecord = $this->modelName->fetchSingleRecord($id);
             if ($apiDisplaySingleRecord && $apiDisplaySingleRecord->isNotEmpty()) {
                 $this->modelName->deleteRecord($id);
             }
             $apiDeleteRecord = $this->apiResponse->generateApiResponse($apiDisplaySingleRecord, Actions::delete);
+
             return $apiDeleteRecord;
         } else {
-            return $this->apiResponse->generateApiResponse(null, Actions::not_allowed);
+            return $this->apiResponse->generateApiResponse(null, Actions::forbidden);
         }
     }
 

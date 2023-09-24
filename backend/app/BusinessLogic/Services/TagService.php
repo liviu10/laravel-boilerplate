@@ -6,8 +6,9 @@ use App\BusinessLogic\Interfaces\BaseInterface;
 use App\BusinessLogic\Interfaces\TagInterface;
 use App\Traits\ApiStatisticalIndicators;
 use App\Models\Tag;
-use App\Library\ApiResponse;
-use App\Library\Actions;
+use App\Utilities\ApiResponse;
+use App\Utilities\ApiCheckPermission;
+use App\Utilities\Actions;
 use Illuminate\Http\Response;
 use Illuminate\Contracts\Routing\ResponseFactory;
 use Illuminate\Support\Facades\Auth;
@@ -18,6 +19,7 @@ class TagService implements BaseInterface, TagInterface
 
     protected $modelName;
     protected $apiResponse;
+    protected $checkPermission;
 
     /**
      * Create a new instance of the service class.
@@ -27,6 +29,7 @@ class TagService implements BaseInterface, TagInterface
     {
         $this->modelName = new Tag();
         $this->apiResponse = new ApiResponse();
+        $this->checkPermission = new ApiCheckPermission();
     }
 
     /**
@@ -36,16 +39,20 @@ class TagService implements BaseInterface, TagInterface
      */
     public function handleIndex(array $search): Response|ResponseFactory
     {
-        $apiDisplayAllRecords = $this->apiResponse->generateApiResponse(
-            $this->modelName->fetchAllRecords($search, 'paginate'),
-            Actions::get,
-            $this->modelName->getFields(),
-            class_basename($this->modelName),
-            null,
-            $this->handleStatisticalIndicators()
-        );
+        if ($this->checkPermission->handleApiCheckPermission()) {
+            $apiDisplayAllRecords = $this->apiResponse->generateApiResponse(
+                $this->modelName->fetchAllRecords($search, 'paginate'),
+                Actions::get,
+                $this->modelName->getFields(),
+                class_basename($this->modelName),
+                null,
+                $this->handleStatisticalIndicators()
+            );
 
-        return $apiDisplayAllRecords;
+            return $apiDisplayAllRecords;
+        } else {
+            return $this->apiResponse->generateApiResponse(null, Actions::forbidden);
+        }
     }
 
     /**
@@ -55,19 +62,23 @@ class TagService implements BaseInterface, TagInterface
      */
     public function handleStore(array $request): Response|ResponseFactory
     {
-        $apiInsertRecord = [
-            'name'        => $request['name'],
-            'description' => array_key_exists('description', $request)
-                ? $request['description']
-                : false,
-            'content_id'  => $request['content_id'],
-            'user_id'     => Auth::user() ? Auth::user()->id : 1,
-        ];
-        $apiInsertRecord['slug'] = strtolower($request['name']);
-        $createdRecord = $this->modelName->createRecord($apiInsertRecord);
-        $apiCreatedRecord = $this->apiResponse->generateApiResponse($createdRecord->toArray(), Actions::create);
+        if ($this->checkPermission->handleApiCheckPermission()) {
+            $apiInsertRecord = [
+                'name'        => $request['name'],
+                'description' => array_key_exists('description', $request)
+                    ? $request['description']
+                    : false,
+                'content_id'  => $request['content_id'],
+                'user_id'     => Auth::user() ? Auth::user()->id : 1,
+            ];
+            $apiInsertRecord['slug'] = strtolower($request['name']);
+            $createdRecord = $this->modelName->createRecord($apiInsertRecord);
+            $apiCreatedRecord = $this->apiResponse->generateApiResponse($createdRecord->toArray(), Actions::create);
 
-        return $apiCreatedRecord;
+            return $apiCreatedRecord;
+        } else {
+            return $this->apiResponse->generateApiResponse(null, Actions::forbidden);
+        }
     }
 
     /**
@@ -77,12 +88,16 @@ class TagService implements BaseInterface, TagInterface
      */
     public function handleShow(int $id): Response|ResponseFactory
     {
-        $apiDisplaySingleRecord = $this->apiResponse->generateApiResponse(
-            $this->modelName->fetchSingleRecord($id, 'relation'),
-            Actions::get
-        );
+        if ($this->checkPermission->handleApiCheckPermission()) {
+            $apiDisplaySingleRecord = $this->apiResponse->generateApiResponse(
+                $this->modelName->fetchSingleRecord($id, 'relation'),
+                Actions::get
+            );
 
-        return $apiDisplaySingleRecord;
+            return $apiDisplaySingleRecord;
+        } else {
+            return $this->apiResponse->generateApiResponse(null, Actions::forbidden);
+        }
     }
 
     /**
@@ -93,30 +108,34 @@ class TagService implements BaseInterface, TagInterface
      */
     public function handleUpdate(array $request, int $id): Response|ResponseFactory
     {
-        $apiDisplaySingleRecord = $this->modelName->fetchSingleRecord($id);
-        if ($apiDisplaySingleRecord && $apiDisplaySingleRecord->isNotEmpty()) {
-            $apiUpdateRecord = [
-                'name'        => array_key_exists('name', $request)
-                    ? $request['name']
-                    : $apiDisplaySingleRecord->toArray()[0]['name'],
-                'description' => array_key_exists('description', $request)
-                    ? $request['description']
-                    : $apiDisplaySingleRecord->toArray()[0]['description'],
-                'slug'        => array_key_exists('slug', $request)
-                    ? strtolower($request['name'])
-                    : $apiDisplaySingleRecord->toArray()[0]['slug'],
-                'content_id'  => array_key_exists('content_id', $request)
-                    ? $request['content_id']
-                    : $apiDisplaySingleRecord->toArray()[0]['content_id'],
-                'user_id'     => Auth::user() ? Auth::user()->id : 1,
-            ];
-            $updatedRecord = $this->modelName->updateRecord($apiUpdateRecord, $id);
-            $apiUpdatedRecord = $this->apiResponse->generateApiResponse($updatedRecord->toArray(), Actions::update);
-        } else {
-            $apiUpdatedRecord = $this->apiResponse->generateApiResponse(null, Actions::not_found_record);
-        }
+        if ($this->checkPermission->handleApiCheckPermission()) {
+            $apiDisplaySingleRecord = $this->modelName->fetchSingleRecord($id);
+            if ($apiDisplaySingleRecord && $apiDisplaySingleRecord->isNotEmpty()) {
+                $apiUpdateRecord = [
+                    'name'        => array_key_exists('name', $request)
+                        ? $request['name']
+                        : $apiDisplaySingleRecord->toArray()[0]['name'],
+                    'description' => array_key_exists('description', $request)
+                        ? $request['description']
+                        : $apiDisplaySingleRecord->toArray()[0]['description'],
+                    'slug'        => array_key_exists('slug', $request)
+                        ? strtolower($request['name'])
+                        : $apiDisplaySingleRecord->toArray()[0]['slug'],
+                    'content_id'  => array_key_exists('content_id', $request)
+                        ? $request['content_id']
+                        : $apiDisplaySingleRecord->toArray()[0]['content_id'],
+                    'user_id'     => Auth::user() ? Auth::user()->id : 1,
+                ];
+                $updatedRecord = $this->modelName->updateRecord($apiUpdateRecord, $id);
+                $apiUpdatedRecord = $this->apiResponse->generateApiResponse($updatedRecord->toArray(), Actions::update);
+            } else {
+                $apiUpdatedRecord = $this->apiResponse->generateApiResponse(null, Actions::not_found_record);
+            }
 
-        return $apiUpdatedRecord;
+            return $apiUpdatedRecord;
+        } else {
+            return $this->apiResponse->generateApiResponse(null, Actions::forbidden);
+        }
     }
 
     /**
@@ -126,15 +145,16 @@ class TagService implements BaseInterface, TagInterface
      */
     public function handleDestroy(int $id): Response|ResponseFactory
     {
-        if (Auth::user() && Auth::user()->role_id === 1) {
+        if ($this->checkPermission->handleApiCheckPermission()) {
             $apiDisplaySingleRecord = $this->modelName->fetchSingleRecord($id);
             if ($apiDisplaySingleRecord && $apiDisplaySingleRecord->isNotEmpty()) {
                 $this->modelName->deleteRecord($id);
             }
             $apiDeleteRecord = $this->apiResponse->generateApiResponse($apiDisplaySingleRecord, Actions::delete);
+
             return $apiDeleteRecord;
         } else {
-            return $this->apiResponse->generateApiResponse(null, Actions::not_allowed);
+            return $this->apiResponse->generateApiResponse(null, Actions::forbidden);
         }
     }
 

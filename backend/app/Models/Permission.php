@@ -63,13 +63,35 @@ class Permission extends BaseModel
 
     /**
      * Fetch records from the database based on optional search criteria.
-     * @return \Illuminate\Pagination\LengthAwarePaginator|bool
-     * A paginated result or `false` if an error occurs.
+     * @param array $search An associative array of search criteria (field => value).
+     * @param string|null $type The fetch type: 'paginate'for paginated results or null for a collection.
+     * @return \Illuminate\Pagination\LengthAwarePaginator|\Illuminate\Support\Collection|bool
+     * A paginated result, a collection, or `false` if an error occurs.
      */
-    public function fetchAllRecords(): LengthAwarePaginator|bool
+    public function fetchAllRecords(array $search = [], string|null $type = null): LengthAwarePaginator|Collection|bool
     {
         try {
-            return $this->select('id', 'name')->paginate(15);
+            $query = $this->select(
+                'id',
+                'name',
+                'is_active'
+            );
+
+            if (!empty($search)) {
+                foreach ($search as $field => $value) {
+                    if ($field === 'id' || $field === 'is_active') {
+                        $query->where($field, '=', $value);
+                    } else {
+                        $query->where($field, 'LIKE', '%' . $value . '%');
+                    }
+                }
+            }
+
+            if ($type === 'paginate') {
+                return $query->paginate(15);
+            } else {
+                return $query->get();
+            }
         } catch (Exception $exception) {
             $this->LogApiError($exception);
             return false;
@@ -80,24 +102,22 @@ class Permission extends BaseModel
     }
 
     /**
-     * Create a new record.
-     * @param array $payload An associative array of values to create a new record.
-     * @return \App\Models\Permission|bool Returns a user object if the creation was successful,
-     * or a boolean otherwise.
-     * @throws \Exception|\Illuminate\Database\QueryException
-     * Throws an exception if an error occurs during creation.
+     * Create a new record in the database.
+     * @param array $payload An associative array containing record data.
+     * @return \App\Models\Permission|bool The newly created
+     * User instance, or `false` if an error occurs.
      */
-    public function createRecord($payload)
+    public function createRecord(array $payload): Permission|bool
     {
         try {
-            $this->create([
+            $query = $this->create([
                 'name'        => $payload['name'],
                 'description' => $payload['description'],
                 'is_active'   => $payload['is_active'],
                 'role_id'     => $payload['role_id'],
             ]);
 
-            return True;
+            return $query;
         } catch (Exception $exception) {
             $this->LogApiError($exception);
             return false;
@@ -108,45 +128,84 @@ class Permission extends BaseModel
     }
 
     /**
-     * SQL query to fetch a single record from the database.
-     * @param  int  $id
-     * @return  Collection|Bool
+     * Fetch a single record from the database by its ID.
+     * @param int $id The unique identifier of the record to fetch.
+     * @param string|null $type The fetch type: 'relation' to include
+     * related data or null for just the record.
+     * @return \Illuminate\Support\Collection|bool The fetched record or
+     * related data as a Collection, or `false` if an error occurs.
      */
-    public function fetchSingleRecord($id)
+    public function fetchSingleRecord(int $id, string|null $type = null): Collection|bool
     {
         try {
-            return $this->select('*')
-                ->where('id', '=', $id)
+            $query = $this->select('*')->where('id', '=', $id);
+
+            if ($type === 'relation') {
+                $query->with([
+                    'role' => function ($query) {
+                        $query->select('id', 'name');
+                    }
+                ]);
+
+                return $query->get();
+            } else {
+                return $query->get();
+            }
+        } catch (Exception $exception) {
+            $this->LogApiError($exception);
+            return false;
+        } catch (QueryException $exception) {
+            $this->LogApiError($exception);
+            return false;
+        }
+    }
+
+    /**
+     * Update a record in the database.
+     * @param array $payload An associative array containing the updated record data.
+     * @param int $id The unique identifier of the record to update.
+     * @return \App\Models\Permission|bool The freshly updated User instance, or `false` if an error occurs.
+     */
+    public function updateRecord(array $payload, int $id): Permission|bool
+    {
+        try {
+            $query = tap($this->find($id))->update([
+                'name'        => $payload['name'],
+                'description' => $payload['description'],
+                'is_active'   => $payload['is_active'],
+                'role_id'     => $payload['role_id'],
+            ]);
+
+            return $query->fresh();
+        } catch (Exception $exception) {
+            $this->LogApiError($exception);
+            return false;
+        } catch (QueryException $exception) {
+            $this->LogApiError($exception);
+            return false;
+        }
+    }
+
+    /**
+     * Check if a user with a given role has a specific permission.
+     * @param string $permissionName The name of the permission to check.
+     * @param int|null $roleId The ID of the role to check for permission (nullable).
+     * @return \Illuminate\Support\Collection|bool Returns true if the user has the permission, false otherwise.
+     */
+    public function checkPermission(string $permissionName, int|null $roleId): Collection|bool
+    {
+        try {
+            $result = $this->select('id', 'name', 'is_active', 'role_id')
+                ->where('name', $permissionName)
+                ->where('role_id', $roleId)
+                ->with([
+                    'role' => function ($query) {
+                        $query->select('id', 'name');
+                    }
+                ])
                 ->get();
-        } catch (Exception $exception) {
-            $this->LogApiError($exception);
-            return false;
-        } catch (QueryException $exception) {
-            $this->LogApiError($exception);
-            return false;
-        }
-    }
 
-    /**
-     * Update the record.
-     * @param array $payload An associative array of values to update the record.
-     * @param int $id The ID of the user to update.
-     * @return bool Returns true if the update was successful,
-     * or an boolean otherwise.
-     * @throws \Exception|\Illuminate\Database\QueryException
-     * Throws an exception if an error occurs during the update.
-     */
-    public function updateRecord($payload, $id)
-    {
-        try {
-            $this->find($id)->update([
-                'name'        => $payload['name'],
-                'description' => $payload['description'],
-                'is_active'   => $payload['is_active'],
-                'role_id'     => $payload['role_id'],
-            ]);
-
-            return True;
+            return $result;
         } catch (Exception $exception) {
             $this->LogApiError($exception);
             return false;

@@ -6,8 +6,9 @@ use App\BusinessLogic\Interfaces\BaseInterface;
 use App\BusinessLogic\Interfaces\MediaInterface;
 use App\Traits\ApiStatisticalIndicators;
 use App\Models\Media;
-use App\Library\ApiResponse;
-use App\Library\Actions;
+use App\Utilities\ApiResponse;
+use App\Utilities\ApiCheckPermission;
+use App\Utilities\Actions;
 use Illuminate\Http\Response;
 use Illuminate\Contracts\Routing\ResponseFactory;
 use Illuminate\Support\Facades\Auth;
@@ -18,6 +19,7 @@ class MediaService implements BaseInterface, MediaInterface
 
     protected $modelName;
     protected $apiResponse;
+    protected $checkPermission;
 
     /**
      * Create a new instance of the service class.
@@ -27,6 +29,7 @@ class MediaService implements BaseInterface, MediaInterface
     {
         $this->modelName = new Media();
         $this->apiResponse = new ApiResponse();
+        $this->checkPermission = new ApiCheckPermission();
     }
 
     /**
@@ -36,16 +39,20 @@ class MediaService implements BaseInterface, MediaInterface
      */
     public function handleIndex(array $search): Response|ResponseFactory
     {
-        $apiDisplayAllRecords = $this->apiResponse->generateApiResponse(
-            $this->modelName->fetchAllRecords($search, 'paginate'),
-            Actions::get,
-            $this->modelName->getFields(),
-            class_basename($this->modelName),
-            null,
-            $this->handleStatisticalIndicators()
-        );
+        if ($this->checkPermission->handleApiCheckPermission()) {
+            $apiDisplayAllRecords = $this->apiResponse->generateApiResponse(
+                $this->modelName->fetchAllRecords($search, 'paginate'),
+                Actions::get,
+                $this->modelName->getFields(),
+                class_basename($this->modelName),
+                null,
+                $this->handleStatisticalIndicators()
+            );
 
-        return $apiDisplayAllRecords;
+            return $apiDisplayAllRecords;
+        } else {
+            return $this->apiResponse->generateApiResponse(null, Actions::forbidden);
+        }
     }
 
     /**
@@ -55,21 +62,25 @@ class MediaService implements BaseInterface, MediaInterface
      */
     public function handleStore(array $request): Response|ResponseFactory
     {
-        $apiInsertRecord = [
-            'type'          => $request['type'],
-            'internal_path' => array_key_exists('internal_path', $request)
-                ? $request['internal_path']
-                : null,
-            'external_path' => array_key_exists('external_path', $request)
-                ? $request['external_path']
-                : null,
-            'content_id'    => $request['content_id'],
-            'user_id'       => Auth::user() ? Auth::user()->id : 1,
-        ];
-        $createdRecord = $this->modelName->createRecord($apiInsertRecord);
-        $apiCreatedRecord = $this->apiResponse->generateApiResponse($createdRecord->toArray(), Actions::create);
+        if ($this->checkPermission->handleApiCheckPermission()) {
+            $apiInsertRecord = [
+                'type'          => $request['type'],
+                'internal_path' => array_key_exists('internal_path', $request)
+                    ? $request['internal_path']
+                    : null,
+                'external_path' => array_key_exists('external_path', $request)
+                    ? $request['external_path']
+                    : null,
+                'content_id'    => $request['content_id'],
+                'user_id'       => Auth::user() ? Auth::user()->id : 1,
+            ];
+            $createdRecord = $this->modelName->createRecord($apiInsertRecord);
+            $apiCreatedRecord = $this->apiResponse->generateApiResponse($createdRecord->toArray(), Actions::create);
 
-        return $apiCreatedRecord;
+            return $apiCreatedRecord;
+        } else {
+            return $this->apiResponse->generateApiResponse(null, Actions::forbidden);
+        }
     }
 
     /**
@@ -79,12 +90,16 @@ class MediaService implements BaseInterface, MediaInterface
      */
     public function handleShow(int $id): Response|ResponseFactory
     {
-        $apiDisplaySingleRecord = $this->apiResponse->generateApiResponse(
-            $this->modelName->fetchSingleRecord($id, 'relation'),
-            Actions::get
-        );
+        if ($this->checkPermission->handleApiCheckPermission()) {
+            $apiDisplaySingleRecord = $this->apiResponse->generateApiResponse(
+                $this->modelName->fetchSingleRecord($id, 'relation'),
+                Actions::get
+            );
 
-        return $apiDisplaySingleRecord;
+            return $apiDisplaySingleRecord;
+        } else {
+            return $this->apiResponse->generateApiResponse(null, Actions::forbidden);
+        }
     }
 
     /**
@@ -95,30 +110,34 @@ class MediaService implements BaseInterface, MediaInterface
      */
     public function handleUpdate(array $request, int $id): Response|ResponseFactory
     {
-        $apiDisplaySingleRecord = $this->modelName->fetchSingleRecord($id);
-        if ($apiDisplaySingleRecord && $apiDisplaySingleRecord->isNotEmpty()) {
-            $apiUpdateRecord = [
-                'type'          => array_key_exists('type', $request)
-                    ? $request['type']
-                    : $apiDisplaySingleRecord->toArray()[0]['type'],
-                'internal_path' => array_key_exists('internal_path', $request)
-                    ? $request['internal_path']
-                    : $apiDisplaySingleRecord->toArray()[0]['internal_path'],
-                'external_path' => array_key_exists('external_path', $request)
-                    ? $request['external_path']
-                    : $apiDisplaySingleRecord->toArray()[0]['external_path'],
-                'content_id'    => array_key_exists('content_id', $request)
-                    ? $request['content_id']
-                    : $apiDisplaySingleRecord->toArray()[0]['content_id'],
-                'user_id'       => Auth::user() ? Auth::user()->id : 1,
-            ];
-            $updatedRecord = $this->modelName->updateRecord($apiUpdateRecord, $id);
-            $apiUpdatedRecord = $this->apiResponse->generateApiResponse($updatedRecord->toArray(), Actions::update);
-        } else {
-            $apiUpdatedRecord = $this->apiResponse->generateApiResponse(null, Actions::not_found_record);
-        }
+        if ($this->checkPermission->handleApiCheckPermission()) {
+            $apiDisplaySingleRecord = $this->modelName->fetchSingleRecord($id);
+            if ($apiDisplaySingleRecord && $apiDisplaySingleRecord->isNotEmpty()) {
+                $apiUpdateRecord = [
+                    'type'          => array_key_exists('type', $request)
+                        ? $request['type']
+                        : $apiDisplaySingleRecord->toArray()[0]['type'],
+                    'internal_path' => array_key_exists('internal_path', $request)
+                        ? $request['internal_path']
+                        : $apiDisplaySingleRecord->toArray()[0]['internal_path'],
+                    'external_path' => array_key_exists('external_path', $request)
+                        ? $request['external_path']
+                        : $apiDisplaySingleRecord->toArray()[0]['external_path'],
+                    'content_id'    => array_key_exists('content_id', $request)
+                        ? $request['content_id']
+                        : $apiDisplaySingleRecord->toArray()[0]['content_id'],
+                    'user_id'       => Auth::user() ? Auth::user()->id : 1,
+                ];
+                $updatedRecord = $this->modelName->updateRecord($apiUpdateRecord, $id);
+                $apiUpdatedRecord = $this->apiResponse->generateApiResponse($updatedRecord->toArray(), Actions::update);
+            } else {
+                $apiUpdatedRecord = $this->apiResponse->generateApiResponse(null, Actions::not_found_record);
+            }
 
-        return $apiUpdatedRecord;
+            return $apiUpdatedRecord;
+        } else {
+            return $this->apiResponse->generateApiResponse(null, Actions::forbidden);
+        }
     }
 
     /**
@@ -128,15 +147,16 @@ class MediaService implements BaseInterface, MediaInterface
      */
     public function handleDestroy(int $id): Response|ResponseFactory
     {
-        if (Auth::user() && Auth::user()->role_id === 1) {
+        if ($this->checkPermission->handleApiCheckPermission()) {
             $apiDisplaySingleRecord = $this->modelName->fetchSingleRecord($id);
             if ($apiDisplaySingleRecord && $apiDisplaySingleRecord->isNotEmpty()) {
                 $this->modelName->deleteRecord($id);
             }
             $apiDeleteRecord = $this->apiResponse->generateApiResponse($apiDisplaySingleRecord, Actions::delete);
+
             return $apiDeleteRecord;
         } else {
-            return $this->apiResponse->generateApiResponse(null, Actions::not_allowed);
+            return $this->apiResponse->generateApiResponse(null, Actions::forbidden);
         }
     }
 

@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Library;
+namespace App\Utilities;
 
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\Response;
 use Illuminate\Contracts\Routing\ResponseFactory;
-use App\Library\DataModel;
+use App\Utilities\ApiDataModel;
 
 enum Actions
 {
@@ -16,6 +16,7 @@ enum Actions
     case delete;
     case not_allowed;
     case not_found_record;
+    case forbidden;
 }
 
 class ApiResponse
@@ -43,7 +44,7 @@ class ApiResponse
                 return $this->handleNotFoundResponse($action);
             } else {
                 if (is_array($fields) && $modelName) {
-                    $dataModel = new DataModel(
+                    $dataModel = new ApiDataModel(
                         $records->toArray(),
                         $fields,
                         $modelName,
@@ -75,7 +76,7 @@ class ApiResponse
         } elseif (is_array($records)) {
             if (count($records)) {
                 if (is_array($fields) && $modelName) {
-                    $dataModel = new DataModel(
+                    $dataModel = new ApiDataModel(
                         $records,
                         $fields,
                         $modelName,
@@ -190,6 +191,13 @@ class ApiResponse
             ];
 
             return response($message, 200);
+        } elseif ($action->name === 'forbidden') {
+            $message = [
+                'title'       => __('translations.forbidden_message.title'),
+                'description' => __('translations.forbidden_message.description'),
+            ];
+
+            return response($message, 403);
         } else {
             $message = [
                 'title'       => __('translations.error_message.title'),

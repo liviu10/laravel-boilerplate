@@ -6,8 +6,9 @@ use App\BusinessLogic\Interfaces\BaseInterface;
 use App\BusinessLogic\Interfaces\ContactMessageInterface;
 use App\Traits\ApiStatisticalIndicators;
 use App\Models\ContactMessage;
-use App\Library\ApiResponse;
-use App\Library\Actions;
+use App\Utilities\ApiResponse;
+use App\Utilities\ApiCheckPermission;
+use App\Utilities\Actions;
 use Illuminate\Http\Response;
 use Illuminate\Contracts\Routing\ResponseFactory;
 use Illuminate\Support\Facades\Auth;
@@ -18,6 +19,7 @@ class ContactMessageService implements BaseInterface, ContactMessageInterface
 
     protected $modelName;
     protected $apiResponse;
+    protected $checkPermission;
 
     /**
      * Create a new instance of the service class.
@@ -27,6 +29,7 @@ class ContactMessageService implements BaseInterface, ContactMessageInterface
     {
         $this->modelName = new ContactMessage();
         $this->apiResponse = new ApiResponse();
+        $this->checkPermission = new ApiCheckPermission();
     }
 
     /**
@@ -36,16 +39,20 @@ class ContactMessageService implements BaseInterface, ContactMessageInterface
      */
     public function handleIndex(array $search): Response|ResponseFactory
     {
-        $apiDisplayAllRecords = $this->apiResponse->generateApiResponse(
-            $this->modelName->fetchAllRecords($search, 'paginate'),
-            Actions::get,
-            $this->modelName->getFields(),
-            class_basename($this->modelName),
-            null,
-            $this->handleStatisticalIndicators()
-        );
+        if ($this->checkPermission->handleApiCheckPermission()) {
+            $apiDisplayAllRecords = $this->apiResponse->generateApiResponse(
+                $this->modelName->fetchAllRecords($search, 'paginate'),
+                Actions::get,
+                $this->modelName->getFields(),
+                class_basename($this->modelName),
+                null,
+                $this->handleStatisticalIndicators()
+            );
 
-        return $apiDisplayAllRecords;
+            return $apiDisplayAllRecords;
+        } else {
+            return $this->apiResponse->generateApiResponse(null, Actions::forbidden);
+        }
     }
 
     /**
@@ -55,18 +62,22 @@ class ContactMessageService implements BaseInterface, ContactMessageInterface
      */
     public function handleStore(array $request): Response|ResponseFactory
     {
-        $apiInsertRecord = [
-            'full_name'          => $request['full_name'],
-            'email'              => $request['email'],
-            'phone'              => $request['phone'] ? $request['phone'] : null,
-            'contact_subject_id' => $request['contact_subject_id'],
-            'message'            => $request['message'],
-            'privacy_policy'     => $request['privacy_policy'] !== null ? $request['privacy_policy'] : false,
-        ];
-        $createdRecord = $this->modelName->createRecord($apiInsertRecord);
-        $apiCreatedRecord = $this->apiResponse->generateApiResponse($createdRecord->toArray(), Actions::create);
+        if ($this->checkPermission->handleApiCheckPermission()) {
+            $apiInsertRecord = [
+                'full_name'          => $request['full_name'],
+                'email'              => $request['email'],
+                'phone'              => $request['phone'] ? $request['phone'] : null,
+                'contact_subject_id' => $request['contact_subject_id'],
+                'message'            => $request['message'],
+                'privacy_policy'     => $request['privacy_policy'] !== null ? $request['privacy_policy'] : false,
+            ];
+            $createdRecord = $this->modelName->createRecord($apiInsertRecord);
+            $apiCreatedRecord = $this->apiResponse->generateApiResponse($createdRecord->toArray(), Actions::create);
 
-        return $apiCreatedRecord;
+            return $apiCreatedRecord;
+        } else {
+            return $this->apiResponse->generateApiResponse(null, Actions::forbidden);
+        }
     }
 
     /**
@@ -76,12 +87,16 @@ class ContactMessageService implements BaseInterface, ContactMessageInterface
      */
     public function handleShow(int $id): Response|ResponseFactory
     {
-        $apiDisplaySingleRecord = $this->apiResponse->generateApiResponse(
-            $this->modelName->fetchSingleRecord($id, 'relation'),
-            Actions::get
-        );
+        if ($this->checkPermission->handleApiCheckPermission()) {
+            $apiDisplaySingleRecord = $this->apiResponse->generateApiResponse(
+                $this->modelName->fetchSingleRecord($id, 'relation'),
+                Actions::get
+            );
 
-        return $apiDisplaySingleRecord;
+            return $apiDisplaySingleRecord;
+        } else {
+            return $this->apiResponse->generateApiResponse(null, Actions::forbidden);
+        }
     }
 
     /**
@@ -92,35 +107,39 @@ class ContactMessageService implements BaseInterface, ContactMessageInterface
      */
     public function handleUpdate(array $request, int $id): Response|ResponseFactory
     {
-        $apiDisplaySingleRecord = $this->modelName->fetchSingleRecord($id);
-        if ($apiDisplaySingleRecord && $apiDisplaySingleRecord->isNotEmpty()) {
-            $apiUpdateRecord = [
-                'full_name'          => array_key_exists('full_name', $request)
-                    ? $request['full_name']
-                    : $apiDisplaySingleRecord->toArray()[0]['full_name'],
-                'email'              => array_key_exists('email', $request)
-                    ? $request['email']
-                    : $apiDisplaySingleRecord->toArray()[0]['email'],
-                'phone'              => array_key_exists('phone', $request)
-                    ? $request['phone']
-                    : $apiDisplaySingleRecord->toArray()[0]['phone'],
-                'contact_subject_id' => array_key_exists('contact_subject_id', $request)
-                    ? $request['contact_subject_id']
-                    : $apiDisplaySingleRecord->toArray()[0]['contact_subject_id'],
-                'message'            => array_key_exists('message', $request)
-                    ? $request['message']
-                    : $apiDisplaySingleRecord->toArray()[0]['message'],
-                'privacy_policy'     => array_key_exists('privacy_policy', $request)
-                    ? $request['privacy_policy']
-                    : $apiDisplaySingleRecord->toArray()[0]['privacy_policy'],
-            ];
-            $updatedRecord = $this->modelName->updateRecord($apiUpdateRecord, $id);
-            $apiUpdatedRecord = $this->apiResponse->generateApiResponse($updatedRecord->toArray(), Actions::update);
-        } else {
-            $apiUpdatedRecord = $this->apiResponse->generateApiResponse(null, Actions::not_found_record);
-        }
+        if ($this->checkPermission->handleApiCheckPermission()) {
+            $apiDisplaySingleRecord = $this->modelName->fetchSingleRecord($id);
+            if ($apiDisplaySingleRecord && $apiDisplaySingleRecord->isNotEmpty()) {
+                $apiUpdateRecord = [
+                    'full_name'          => array_key_exists('full_name', $request)
+                        ? $request['full_name']
+                        : $apiDisplaySingleRecord->toArray()[0]['full_name'],
+                    'email'              => array_key_exists('email', $request)
+                        ? $request['email']
+                        : $apiDisplaySingleRecord->toArray()[0]['email'],
+                    'phone'              => array_key_exists('phone', $request)
+                        ? $request['phone']
+                        : $apiDisplaySingleRecord->toArray()[0]['phone'],
+                    'contact_subject_id' => array_key_exists('contact_subject_id', $request)
+                        ? $request['contact_subject_id']
+                        : $apiDisplaySingleRecord->toArray()[0]['contact_subject_id'],
+                    'message'            => array_key_exists('message', $request)
+                        ? $request['message']
+                        : $apiDisplaySingleRecord->toArray()[0]['message'],
+                    'privacy_policy'     => array_key_exists('privacy_policy', $request)
+                        ? $request['privacy_policy']
+                        : $apiDisplaySingleRecord->toArray()[0]['privacy_policy'],
+                ];
+                $updatedRecord = $this->modelName->updateRecord($apiUpdateRecord, $id);
+                $apiUpdatedRecord = $this->apiResponse->generateApiResponse($updatedRecord->toArray(), Actions::update);
+            } else {
+                $apiUpdatedRecord = $this->apiResponse->generateApiResponse(null, Actions::not_found_record);
+            }
 
-        return $apiUpdatedRecord;
+            return $apiUpdatedRecord;
+        } else {
+            return $this->apiResponse->generateApiResponse(null, Actions::forbidden);
+        }
     }
 
     /**
@@ -130,15 +149,16 @@ class ContactMessageService implements BaseInterface, ContactMessageInterface
      */
     public function handleDestroy(int $id): Response|ResponseFactory
     {
-        if (Auth::user() && Auth::user()->role_id === 1) {
+        if ($this->checkPermission->handleApiCheckPermission()) {
             $apiDisplaySingleRecord = $this->modelName->fetchSingleRecord($id);
             if ($apiDisplaySingleRecord && $apiDisplaySingleRecord->isNotEmpty()) {
                 $this->modelName->deleteRecord($id);
             }
             $apiDeleteRecord = $this->apiResponse->generateApiResponse($apiDisplaySingleRecord, Actions::delete);
+
             return $apiDeleteRecord;
         } else {
-            return $this->apiResponse->generateApiResponse(null, Actions::not_allowed);
+            return $this->apiResponse->generateApiResponse(null, Actions::forbidden);
         }
     }
 

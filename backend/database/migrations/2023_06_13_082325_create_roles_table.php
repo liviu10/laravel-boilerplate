@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('roles', function (Blueprint $table) {
             $table->id()->index('idx_id');
             $table->string('name')->unique();
-            $table->string('description');
+            $table->longText('description');
             $table->string('bg_color')->nullable();
             $table->string('text_color')->nullable();
             $table->string('slug');

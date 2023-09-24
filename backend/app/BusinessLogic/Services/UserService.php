@@ -7,8 +7,9 @@ use App\BusinessLogic\Interfaces\UserInterface;
 use App\Traits\ApiStatisticalIndicators;
 use App\Models\User;
 use App\Models\Role;
-use App\Library\ApiResponse;
-use App\Library\Actions;
+use App\Utilities\ApiResponse;
+use App\Utilities\ApiCheckPermission;
+use App\Utilities\Actions;
 use Illuminate\Http\Response;
 use Illuminate\Contracts\Routing\ResponseFactory;
 use Illuminate\Support\Facades\Auth;
@@ -20,6 +21,7 @@ class UserService implements BaseInterface, UserInterface
     protected $modelName;
     protected $modelNameRole;
     protected $apiResponse;
+    protected $checkPermission;
 
     /**
      * Create a new instance of the service class.
@@ -30,6 +32,7 @@ class UserService implements BaseInterface, UserInterface
         $this->modelName = new User();
         $this->modelNameRole = new Role();
         $this->apiResponse = new ApiResponse();
+        $this->checkPermission = new ApiCheckPermission();
     }
 
     /**
@@ -65,16 +68,20 @@ class UserService implements BaseInterface, UserInterface
      */
     public function handleIndex(array $search): Response|ResponseFactory
     {
-        $apiDisplayAllRecords = $this->apiResponse->generateApiResponse(
-            $this->modelName->fetchAllRecords($search, 'paginate'),
-            Actions::get,
-            $this->modelName->getFields(),
-            class_basename($this->modelName),
-            [],
-            $this->handleStatisticalIndicators()
-        );
+        if ($this->checkPermission->handleApiCheckPermission()) {
+            $apiDisplayAllRecords = $this->apiResponse->generateApiResponse(
+                $this->modelName->fetchAllRecords($search, 'paginate'),
+                Actions::get,
+                $this->modelName->getFields(),
+                class_basename($this->modelName),
+                [],
+                $this->handleStatisticalIndicators()
+            );
 
-        return $apiDisplayAllRecords;
+            return $apiDisplayAllRecords;
+        } else {
+            return $this->apiResponse->generateApiResponse(null, Actions::forbidden);
+        }
     }
 
     /**
@@ -84,28 +91,32 @@ class UserService implements BaseInterface, UserInterface
      */
     public function handleStore(array $request): Response|ResponseFactory
     {
-        $genericPassword = '!z1{7}2Q%94"';
-        $apiInsertRecord = [
-            'first_name'    => $request['first_name'],
-            'last_name'     => $request['last_name'],
-            'nickname'      => array_key_exists('nickname', $request)
-                ? $request['nickname']
-                : null,
-            'email'         => $request['email'],
-            'phone'         => array_key_exists('phone', $request)
-                ? $request['phone']
-                : null,
-            'password'      => bcrypt($genericPassword),
-            'profile_image' => array_key_exists('profile_image', $request)
-                ? $request['profile_image']
-                : null,
-            'role_id'       => $request['role_id'],
-        ];
-        $apiInsertRecord['full_name'] = $request['first_name'] . ' ' . $request['last_name'];
-        $createdRecord = $this->modelName->createRecord($apiInsertRecord);
-        $apiCreatedRecord = $this->apiResponse->generateApiResponse($createdRecord->toArray(), Actions::create);
+        if ($this->checkPermission->handleApiCheckPermission()) {
+            $genericPassword = '!z1{7}2Q%94"';
+            $apiInsertRecord = [
+                'first_name'    => $request['first_name'],
+                'last_name'     => $request['last_name'],
+                'nickname'      => array_key_exists('nickname', $request)
+                    ? $request['nickname']
+                    : null,
+                'email'         => $request['email'],
+                'phone'         => array_key_exists('phone', $request)
+                    ? $request['phone']
+                    : null,
+                'password'      => bcrypt($genericPassword),
+                'profile_image' => array_key_exists('profile_image', $request)
+                    ? $request['profile_image']
+                    : null,
+                'role_id'       => $request['role_id'],
+            ];
+            $apiInsertRecord['full_name'] = $request['first_name'] . ' ' . $request['last_name'];
+            $createdRecord = $this->modelName->createRecord($apiInsertRecord);
+            $apiCreatedRecord = $this->apiResponse->generateApiResponse($createdRecord->toArray(), Actions::create);
 
-        return $apiCreatedRecord;
+            return $apiCreatedRecord;
+        } else {
+            return $this->apiResponse->generateApiResponse(null, Actions::forbidden);
+        }
     }
 
     /**
@@ -115,12 +126,16 @@ class UserService implements BaseInterface, UserInterface
      */
     public function handleShow(int $id): Response|ResponseFactory
     {
-        $apiDisplaySingleRecord = $this->apiResponse->generateApiResponse(
-            $this->modelName->fetchSingleRecord($id, 'relation'),
-            Actions::get
-        );
+        if ($this->checkPermission->handleApiCheckPermission()) {
+            $apiDisplaySingleRecord = $this->apiResponse->generateApiResponse(
+                $this->modelName->fetchSingleRecord($id, 'relation'),
+                Actions::get
+            );
 
-        return $apiDisplaySingleRecord;
+            return $apiDisplaySingleRecord;
+        } else {
+            return $this->apiResponse->generateApiResponse(null, Actions::forbidden);
+        }
     }
 
     /**
@@ -131,27 +146,31 @@ class UserService implements BaseInterface, UserInterface
      */
     public function handleUpdate(array $request, int $id): Response|ResponseFactory
     {
-        $apiDisplaySingleRecord = $this->modelName->fetchSingleRecord($id);
-        if ($apiDisplaySingleRecord && $apiDisplaySingleRecord->isNotEmpty()) {
-            $apiUpdateRecord = [
-                'first_name' => array_key_exists('first_name', $request)
-                    ? $request['first_name']
-                    : $apiDisplaySingleRecord->toArray()[0]['first_name'],
-                'last_name' => array_key_exists('last_name', $request)
-                    ? $request['last_name']
-                    : $apiDisplaySingleRecord->toArray()[0]['last_name'],
-                'role_id' => array_key_exists('role_id', $request)
-                    ? $request['role_id']
-                    : $apiDisplaySingleRecord->toArray()[0]['role_id'],
-            ];
-            $apiUpdateRecord['full_name'] = $request['first_name'] . ' ' . $request['last_name'];
-            $updatedRecord = $this->modelName->updateRecord($apiUpdateRecord, $id);
-            $apiUpdatedRecord = $this->apiResponse->generateApiResponse($updatedRecord->toArray(), Actions::update);
-        } else {
-            $apiUpdatedRecord = $this->apiResponse->generateApiResponse(null, Actions::not_found_record);
-        }
+        if ($this->checkPermission->handleApiCheckPermission()) {
+            $apiDisplaySingleRecord = $this->modelName->fetchSingleRecord($id);
+            if ($apiDisplaySingleRecord && $apiDisplaySingleRecord->isNotEmpty()) {
+                $apiUpdateRecord = [
+                    'first_name' => array_key_exists('first_name', $request)
+                        ? $request['first_name']
+                        : $apiDisplaySingleRecord->toArray()[0]['first_name'],
+                    'last_name' => array_key_exists('last_name', $request)
+                        ? $request['last_name']
+                        : $apiDisplaySingleRecord->toArray()[0]['last_name'],
+                    'role_id' => array_key_exists('role_id', $request)
+                        ? $request['role_id']
+                        : $apiDisplaySingleRecord->toArray()[0]['role_id'],
+                ];
+                $apiUpdateRecord['full_name'] = $request['first_name'] . ' ' . $request['last_name'];
+                $updatedRecord = $this->modelName->updateRecord($apiUpdateRecord, $id);
+                $apiUpdatedRecord = $this->apiResponse->generateApiResponse($updatedRecord->toArray(), Actions::update);
+            } else {
+                $apiUpdatedRecord = $this->apiResponse->generateApiResponse(null, Actions::not_found_record);
+            }
 
-        return $apiUpdatedRecord;
+            return $apiUpdatedRecord;
+        } else {
+            return $this->apiResponse->generateApiResponse(null, Actions::forbidden);
+        }
     }
 
     /**
@@ -161,7 +180,7 @@ class UserService implements BaseInterface, UserInterface
      */
     public function handleDestroy(int $id): Response|ResponseFactory
     {
-        if (Auth::user() && Auth::user()->role_id === 1) {
+        if ($this->checkPermission->handleApiCheckPermission()) {
             $apiDisplaySingleRecord = $this->modelName->fetchSingleRecord($id);
             if ($apiDisplaySingleRecord && $apiDisplaySingleRecord->isNotEmpty()) {
                 $this->modelName->deleteRecord($id);
@@ -170,7 +189,7 @@ class UserService implements BaseInterface, UserInterface
 
             return $apiDeleteRecord;
         } else {
-            return $this->apiResponse->generateApiResponse(null, Actions::not_allowed);
+            return $this->apiResponse->generateApiResponse(null, Actions::forbidden);
         }
     }
 

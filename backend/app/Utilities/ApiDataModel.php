@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Library;
+namespace App\Utilities;
 
-class DataModel
+class ApiDataModel
 {
     protected $modelResults;
     protected $availableFields;

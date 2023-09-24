@@ -6,8 +6,9 @@ use App\BusinessLogic\Interfaces\BaseInterface;
 use App\BusinessLogic\Interfaces\ResourceInterface;
 use App\Traits\ApiStatisticalIndicators;
 use App\Models\Resource;
-use App\Library\ApiResponse;
-use App\Library\Actions;
+use App\Utilities\ApiResponse;
+use App\Utilities\ApiCheckPermission;
+use App\Utilities\Actions;
 use Illuminate\Http\Response;
 use Illuminate\Contracts\Routing\ResponseFactory;
 use Illuminate\Support\Facades\Auth;
@@ -18,6 +19,7 @@ class ResourceService implements BaseInterface, ResourceInterface
 
     protected $modelName;
     protected $apiResponse;
+    protected $checkPermission;
 
     /**
      * Create a new instance of the service class.
@@ -27,6 +29,7 @@ class ResourceService implements BaseInterface, ResourceInterface
     {
         $this->modelName = new Resource();
         $this->apiResponse = new ApiResponse();
+        $this->checkPermission = new ApiCheckPermission();
     }
 
     /**
@@ -36,6 +39,7 @@ class ResourceService implements BaseInterface, ResourceInterface
      */
     public function handleIndex(array $search): Response|ResponseFactory
     {
+        if ($this->checkPermission->handleApiCheckPermission()) {
         $apiDisplayAllRecords = $this->apiResponse->generateApiResponse(
             $this->modelName->fetchAllRecords($search),
             Actions::get,
@@ -45,6 +49,9 @@ class ResourceService implements BaseInterface, ResourceInterface
         );
 
         return $apiDisplayAllRecords;
+    } else {
+        return $this->apiResponse->generateApiResponse(null, Actions::forbidden);
+    }
     }
 
     /**
@@ -54,6 +61,7 @@ class ResourceService implements BaseInterface, ResourceInterface
      */
     public function handleStore(array $request): Response|ResponseFactory
     {
+        if ($this->checkPermission->handleApiCheckPermission()) {
         $apiInsertRecord = [
             'type'          => $request['type'],
             'path'          => $request['path'],
@@ -84,6 +92,9 @@ class ResourceService implements BaseInterface, ResourceInterface
         $apiCreatedRecord = $this->apiResponse->generateApiResponse($createdRecord->toArray(), Actions::create);
 
         return $apiCreatedRecord;
+    } else {
+        return $this->apiResponse->generateApiResponse(null, Actions::forbidden);
+    }
     }
 
     /**
@@ -93,12 +104,16 @@ class ResourceService implements BaseInterface, ResourceInterface
      */
     public function handleShow(int $id): Response|ResponseFactory
     {
+        if ($this->checkPermission->handleApiCheckPermission()) {
         $apiDisplaySingleRecord = $this->apiResponse->generateApiResponse(
             $this->modelName->fetchSingleRecord($id, 'relation'),
             Actions::get
         );
 
         return $apiDisplaySingleRecord;
+    } else {
+        return $this->apiResponse->generateApiResponse(null, Actions::forbidden);
+    }
     }
 
     /**
@@ -109,6 +124,7 @@ class ResourceService implements BaseInterface, ResourceInterface
      */
     public function handleUpdate(array $request, int $id): Response|ResponseFactory
     {
+        if ($this->checkPermission->handleApiCheckPermission()) {
         $apiDisplaySingleRecord = $this->modelName->fetchSingleRecord($id);
         if ($apiDisplaySingleRecord && count($apiDisplaySingleRecord)) {
             $apiUpdateRecord = [
@@ -168,6 +184,9 @@ class ResourceService implements BaseInterface, ResourceInterface
         }
 
         return $apiUpdatedRecord;
+    } else {
+        return $this->apiResponse->generateApiResponse(null, Actions::forbidden);
+    }
     }
 
     /**
@@ -177,7 +196,7 @@ class ResourceService implements BaseInterface, ResourceInterface
      */
     public function handleDestroy(int $id): Response|ResponseFactory
     {
-        if (Auth::user() && Auth::user()->role_id === 1) {
+        if ($this->checkPermission->handleApiCheckPermission()) {
             $apiDisplaySingleRecord = $this->modelName->fetchSingleRecord($id);
             if ($apiDisplaySingleRecord && $apiDisplaySingleRecord->isNotEmpty()) {
                 $this->modelName->deleteRecord($id);
@@ -186,7 +205,7 @@ class ResourceService implements BaseInterface, ResourceInterface
 
             return $apiDeleteRecord;
         } else {
-            return $this->apiResponse->generateApiResponse(null, Actions::not_allowed);
+            return $this->apiResponse->generateApiResponse(null, Actions::forbidden);
         }
     }
 

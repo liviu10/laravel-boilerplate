@@ -6,8 +6,9 @@ use App\BusinessLogic\Interfaces\BaseInterface;
 use App\BusinessLogic\Interfaces\NewsletterSubscriberInterface;
 use App\Traits\ApiStatisticalIndicators;
 use App\Models\NewsletterSubscriber;
-use App\Library\ApiResponse;
-use App\Library\Actions;
+use App\Utilities\ApiResponse;
+use App\Utilities\ApiCheckPermission;
+use App\Utilities\Actions;
 use Illuminate\Http\Response;
 use Illuminate\Contracts\Routing\ResponseFactory;
 use Illuminate\Support\Facades\Auth;
@@ -18,6 +19,7 @@ class NewsletterSubscriberService implements BaseInterface, NewsletterSubscriber
 
     protected $modelName;
     protected $apiResponse;
+    protected $checkPermission;
 
     /**
      * Create a new instance of the service class.
@@ -27,6 +29,7 @@ class NewsletterSubscriberService implements BaseInterface, NewsletterSubscriber
     {
         $this->modelName = new NewsletterSubscriber();
         $this->apiResponse = new ApiResponse();
+        $this->checkPermission = new ApiCheckPermission();
     }
 
     /**
@@ -36,16 +39,20 @@ class NewsletterSubscriberService implements BaseInterface, NewsletterSubscriber
      */
     public function handleIndex(array $search): Response|ResponseFactory
     {
-        $apiDisplayAllRecords = $this->apiResponse->generateApiResponse(
-            $this->modelName->fetchAllRecords($search, 'paginate'),
-            Actions::get,
-            $this->modelName->getFields(),
-            class_basename($this->modelName),
-            null,
-            $this->handleStatisticalIndicators()
-        );
+        if ($this->checkPermission->handleApiCheckPermission()) {
+            $apiDisplayAllRecords = $this->apiResponse->generateApiResponse(
+                $this->modelName->fetchAllRecords($search, 'paginate'),
+                Actions::get,
+                $this->modelName->getFields(),
+                class_basename($this->modelName),
+                null,
+                $this->handleStatisticalIndicators()
+            );
 
-        return $apiDisplayAllRecords;
+            return $apiDisplayAllRecords;
+        } else {
+            return $this->apiResponse->generateApiResponse(null, Actions::forbidden);
+        }
     }
 
     /**
@@ -55,43 +62,47 @@ class NewsletterSubscriberService implements BaseInterface, NewsletterSubscriber
      */
     public function handleStore(array $request): Response|ResponseFactory
     {
-        $apiInsertRecord = [
-            'full_name' => $request['full_name'],
-            'email' => $request['email'],
-            'privacy_policy' => array_key_exists('privacy_policy', $request)
-                ? $request['privacy_policy']
-                : false,
-            'valid_email' => 1, // TODO: validate email before saving to the database
-            'newsletter_campaign_id' => 1, // TODO: automatically enroll user to the welcome campaign
-        ];
-        $createdRecord = $this->modelName->createRecord($apiInsertRecord);
-        $apiCreatedRecord = $this->apiResponse->generateApiResponse($createdRecord->toArray(), Actions::create);
+        if ($this->checkPermission->handleApiCheckPermission()) {
+            $apiInsertRecord = [
+                'full_name' => $request['full_name'],
+                'email' => $request['email'],
+                'privacy_policy' => array_key_exists('privacy_policy', $request)
+                    ? $request['privacy_policy']
+                    : false,
+                'valid_email' => 1, // TODO: validate email before saving to the database
+                'newsletter_campaign_id' => 1, // TODO: automatically enroll user to the welcome campaign
+            ];
+            $createdRecord = $this->modelName->createRecord($apiInsertRecord);
+            $apiCreatedRecord = $this->apiResponse->generateApiResponse($createdRecord->toArray(), Actions::create);
 
-        return $apiCreatedRecord;
+            return $apiCreatedRecord;
 
-        // $acceptedDomain = new AcceptedDomain();
-        // $getEmailProvider = explode('.', substr(strstr($request->get('email'), '@'), 1));
-        // $checkEmailProvider = $acceptedDomain->checkEmailProvider($getEmailProvider);
+            // $acceptedDomain = new AcceptedDomain();
+            // $getEmailProvider = explode('.', substr(strstr($request->get('email'), '@'), 1));
+            // $checkEmailProvider = $acceptedDomain->checkEmailProvider($getEmailProvider);
 
-        // if (count($checkEmailProvider) === 2)
-        // {
-        //     $apiInsertRecord['valid_email'] = true;
-        //     $apiInsertRecord['newsletter_campaign_id'] = 1;
-        //     $saveRecord = $this->modelName->createRecord($apiInsertRecord);
-        //     // TODO: create email WelcomeNewsletter
-        //     if ($saveRecord === true)
-        //     {
-        //         return response($this->handleResponse('success'), 201);
-        //     }
-        //     else
-        //     {
-        //         return response($this->handleResponse('error_message'), 500);
-        //     }
-        // }
-        // else
-        // {
-        //     return response($this->handleResponse('warning'), 422);
-        // }
+            // if (count($checkEmailProvider) === 2)
+            // {
+            //     $apiInsertRecord['valid_email'] = true;
+            //     $apiInsertRecord['newsletter_campaign_id'] = 1;
+            //     $saveRecord = $this->modelName->createRecord($apiInsertRecord);
+            //     // TODO: create email WelcomeNewsletter
+            //     if ($saveRecord === true)
+            //     {
+            //         return response($this->handleResponse('success'), 201);
+            //     }
+            //     else
+            //     {
+            //         return response($this->handleResponse('error_message'), 500);
+            //     }
+            // }
+            // else
+            // {
+            //     return response($this->handleResponse('warning'), 422);
+            // }
+        } else {
+            return $this->apiResponse->generateApiResponse(null, Actions::forbidden);
+        }
     }
 
     /**
@@ -101,12 +112,16 @@ class NewsletterSubscriberService implements BaseInterface, NewsletterSubscriber
      */
     public function handleShow(int $id): Response|ResponseFactory
     {
-        $apiDisplaySingleRecord = $this->apiResponse->generateApiResponse(
-            $this->modelName->fetchSingleRecord($id, 'relation'),
-            Actions::get
-        );
+        if ($this->checkPermission->handleApiCheckPermission()) {
+            $apiDisplaySingleRecord = $this->apiResponse->generateApiResponse(
+                $this->modelName->fetchSingleRecord($id, 'relation'),
+                Actions::get
+            );
 
-        return $apiDisplaySingleRecord;
+            return $apiDisplaySingleRecord;
+        } else {
+            return $this->apiResponse->generateApiResponse(null, Actions::forbidden);
+        }
     }
 
     /**
@@ -117,18 +132,22 @@ class NewsletterSubscriberService implements BaseInterface, NewsletterSubscriber
      */
     public function handleUpdate(array $request, int $id): Response|ResponseFactory
     {
-        $apiDisplaySingleRecord = $this->modelName->fetchSingleRecord($id);
-        if ($apiDisplaySingleRecord && $apiDisplaySingleRecord->isNotEmpty()) {
-            $apiUpdateRecord = [
-                'newsletter_campaign_id' => $request['newsletter_campaign_id'],
-            ];
-            $updatedRecord = $this->modelName->updateRecord($apiUpdateRecord, $id);
-            $apiUpdatedRecord = $this->apiResponse->generateApiResponse($updatedRecord->toArray(), Actions::update);
-        } else {
-            $apiUpdatedRecord = $this->apiResponse->generateApiResponse(null, Actions::not_found_record);
-        }
+        if ($this->checkPermission->handleApiCheckPermission()) {
+            $apiDisplaySingleRecord = $this->modelName->fetchSingleRecord($id);
+            if ($apiDisplaySingleRecord && $apiDisplaySingleRecord->isNotEmpty()) {
+                $apiUpdateRecord = [
+                    'newsletter_campaign_id' => $request['newsletter_campaign_id'],
+                ];
+                $updatedRecord = $this->modelName->updateRecord($apiUpdateRecord, $id);
+                $apiUpdatedRecord = $this->apiResponse->generateApiResponse($updatedRecord->toArray(), Actions::update);
+            } else {
+                $apiUpdatedRecord = $this->apiResponse->generateApiResponse(null, Actions::not_found_record);
+            }
 
-        return $apiUpdatedRecord;
+            return $apiUpdatedRecord;
+        } else {
+            return $this->apiResponse->generateApiResponse(null, Actions::forbidden);
+        }
     }
 
     /**
@@ -138,15 +157,16 @@ class NewsletterSubscriberService implements BaseInterface, NewsletterSubscriber
      */
     public function handleDestroy(int $id): Response|ResponseFactory
     {
-        if (Auth::user() && Auth::user()->role_id === 1) {
+        if ($this->checkPermission->handleApiCheckPermission()) {
             $apiDisplaySingleRecord = $this->modelName->fetchSingleRecord($id);
             if ($apiDisplaySingleRecord && $apiDisplaySingleRecord->isNotEmpty()) {
                 $this->modelName->deleteRecord($id);
             }
             $apiDeleteRecord = $this->apiResponse->generateApiResponse($apiDisplaySingleRecord, Actions::delete);
+
             return $apiDeleteRecord;
         } else {
-            return $this->apiResponse->generateApiResponse(null, Actions::not_allowed);
+            return $this->apiResponse->generateApiResponse(null, Actions::forbidden);
         }
     }
 

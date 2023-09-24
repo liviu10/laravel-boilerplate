@@ -6,8 +6,9 @@ use App\BusinessLogic\Interfaces\BaseInterface;
 use App\BusinessLogic\Interfaces\AppreciationInterface;
 use App\Traits\ApiStatisticalIndicators;
 use App\Models\Appreciation;
-use App\Library\ApiResponse;
-use App\Library\Actions;
+use App\Utilities\ApiResponse;
+use App\Utilities\ApiCheckPermission;
+use App\Utilities\Actions;
 use Illuminate\Http\Response;
 use Illuminate\Contracts\Routing\ResponseFactory;
 use Illuminate\Support\Facades\Auth;
@@ -18,6 +19,7 @@ class AppreciationService implements BaseInterface, AppreciationInterface
 
     protected $modelName;
     protected $apiResponse;
+    protected $checkPermission;
 
     /**
      * Create a new instance of the service class.
@@ -27,6 +29,7 @@ class AppreciationService implements BaseInterface, AppreciationInterface
     {
         $this->modelName = new Appreciation();
         $this->apiResponse = new ApiResponse();
+        $this->checkPermission = new ApiCheckPermission();
     }
 
     /**
@@ -36,16 +39,20 @@ class AppreciationService implements BaseInterface, AppreciationInterface
      */
     public function handleIndex(array $search): Response|ResponseFactory
     {
-        $apiDisplayAllRecords = $this->apiResponse->generateApiResponse(
-            $this->modelName->fetchAllRecords($search, 'paginate'),
-            Actions::get,
-            $this->modelName->getFields(),
-            class_basename($this->modelName),
-            null,
-            $this->handleStatisticalIndicators()
-        );
+        if ($this->checkPermission->handleApiCheckPermission()) {
+            $apiDisplayAllRecords = $this->apiResponse->generateApiResponse(
+                $this->modelName->fetchAllRecords($search, 'paginate'),
+                Actions::get,
+                $this->modelName->getFields(),
+                class_basename($this->modelName),
+                null,
+                $this->handleStatisticalIndicators()
+            );
 
-        return $apiDisplayAllRecords;
+            return $apiDisplayAllRecords;
+        } else {
+            return $this->apiResponse->generateApiResponse(null, Actions::forbidden);
+        }
     }
 
     /**
@@ -55,25 +62,29 @@ class AppreciationService implements BaseInterface, AppreciationInterface
      */
     public function handleStore(array $request): Response|ResponseFactory
     {
-        $apiInsertRecord = [
-            'likes'      => array_key_exists('likes', $request)
-                ? $request['likes']
-                : null,
-            'dislikes'   => array_key_exists('dislikes', $request)
-                ? $request['dislikes']
-                : null,
-            'rating'     => array_key_exists('rating', $request)
-                ? $request['rating']
-                : null,
-            'content_id' => array_key_exists('content_id', $request)
-                ? $request['content_id']
-                : null,
-            'user_id'    => Auth::user() ? Auth::user()->id : 1,
-        ];
-        $createdRecord = $this->modelName->createRecord($apiInsertRecord);
-        $apiCreatedRecord = $this->apiResponse->generateApiResponse($createdRecord->toArray(), Actions::create);
+        if ($this->checkPermission->handleApiCheckPermission()) {
+            $apiInsertRecord = [
+                'likes'      => array_key_exists('likes', $request)
+                    ? $request['likes']
+                    : null,
+                'dislikes'   => array_key_exists('dislikes', $request)
+                    ? $request['dislikes']
+                    : null,
+                'rating'     => array_key_exists('rating', $request)
+                    ? $request['rating']
+                    : null,
+                'content_id' => array_key_exists('content_id', $request)
+                    ? $request['content_id']
+                    : null,
+                'user_id'    => Auth::user() ? Auth::user()->id : 1,
+            ];
+            $createdRecord = $this->modelName->createRecord($apiInsertRecord);
+            $apiCreatedRecord = $this->apiResponse->generateApiResponse($createdRecord->toArray(), Actions::create);
 
-        return $apiCreatedRecord;
+            return $apiCreatedRecord;
+        } else {
+            return $this->apiResponse->generateApiResponse(null, Actions::forbidden);
+        }
     }
 
     /**
@@ -83,12 +94,16 @@ class AppreciationService implements BaseInterface, AppreciationInterface
      */
     public function handleShow(int $id): Response|ResponseFactory
     {
-        $apiDisplaySingleRecord = $this->apiResponse->generateApiResponse(
-            $this->modelName->fetchSingleRecord($id, 'relation'),
-            Actions::get
-        );
+        if ($this->checkPermission->handleApiCheckPermission()) {
+            $apiDisplaySingleRecord = $this->apiResponse->generateApiResponse(
+                $this->modelName->fetchSingleRecord($id, 'relation'),
+                Actions::get
+            );
 
-        return $apiDisplaySingleRecord;
+            return $apiDisplaySingleRecord;
+        } else {
+            return $this->apiResponse->generateApiResponse(null, Actions::forbidden);
+        }
     }
 
     /**
@@ -99,30 +114,34 @@ class AppreciationService implements BaseInterface, AppreciationInterface
      */
     public function handleUpdate(array $request, int $id): Response|ResponseFactory
     {
-        $apiDisplaySingleRecord = $this->modelName->fetchSingleRecord($id);
-        if ($apiDisplaySingleRecord && $apiDisplaySingleRecord->isNotEmpty()) {
-            $apiUpdateRecord = [
-                'likes'      => array_key_exists('likes', $request)
-                    ? $request['likes']
-                    : $apiDisplaySingleRecord->toArray()[0]['likes'],
-                'dislikes'   => array_key_exists('dislikes', $request)
-                    ? $request['dislikes']
-                    : $apiDisplaySingleRecord->toArray()[0]['dislikes'],
-                'rating'     => array_key_exists('rating', $request)
-                    ? $request['rating']
-                    : $apiDisplaySingleRecord->toArray()[0]['rating'],
-                'content_id' => array_key_exists('content_id', $request)
-                    ? $request['content_id']
-                    : $apiDisplaySingleRecord->toArray()[0]['content_id'],
-                'user_id'    => Auth::user() ? Auth::user()->id : 1,
-            ];
-            $updatedRecord = $this->modelName->updateRecord($apiUpdateRecord, $id);
-            $apiUpdatedRecord = $this->apiResponse->generateApiResponse($updatedRecord->toArray(), Actions::update);
-        } else {
-            $apiUpdatedRecord = $this->apiResponse->generateApiResponse(null, Actions::not_found_record);
-        }
+        if ($this->checkPermission->handleApiCheckPermission()) {
+            $apiDisplaySingleRecord = $this->modelName->fetchSingleRecord($id);
+            if ($apiDisplaySingleRecord && $apiDisplaySingleRecord->isNotEmpty()) {
+                $apiUpdateRecord = [
+                    'likes'      => array_key_exists('likes', $request)
+                        ? $request['likes']
+                        : $apiDisplaySingleRecord->toArray()[0]['likes'],
+                    'dislikes'   => array_key_exists('dislikes', $request)
+                        ? $request['dislikes']
+                        : $apiDisplaySingleRecord->toArray()[0]['dislikes'],
+                    'rating'     => array_key_exists('rating', $request)
+                        ? $request['rating']
+                        : $apiDisplaySingleRecord->toArray()[0]['rating'],
+                    'content_id' => array_key_exists('content_id', $request)
+                        ? $request['content_id']
+                        : $apiDisplaySingleRecord->toArray()[0]['content_id'],
+                    'user_id'    => Auth::user() ? Auth::user()->id : 1,
+                ];
+                $updatedRecord = $this->modelName->updateRecord($apiUpdateRecord, $id);
+                $apiUpdatedRecord = $this->apiResponse->generateApiResponse($updatedRecord->toArray(), Actions::update);
+            } else {
+                $apiUpdatedRecord = $this->apiResponse->generateApiResponse(null, Actions::not_found_record);
+            }
 
-        return $apiUpdatedRecord;
+            return $apiUpdatedRecord;
+        } else {
+            return $this->apiResponse->generateApiResponse(null, Actions::forbidden);
+        }
     }
 
     /**
@@ -132,15 +151,16 @@ class AppreciationService implements BaseInterface, AppreciationInterface
      */
     public function handleDestroy(int $id): Response|ResponseFactory
     {
-        if (Auth::user() && Auth::user()->role_id === 1) {
+        if ($this->checkPermission->handleApiCheckPermission()) {
             $apiDisplaySingleRecord = $this->modelName->fetchSingleRecord($id);
             if ($apiDisplaySingleRecord && $apiDisplaySingleRecord->isNotEmpty()) {
                 $this->modelName->deleteRecord($id);
             }
             $apiDeleteRecord = $this->apiResponse->generateApiResponse($apiDisplaySingleRecord, Actions::delete);
+
             return $apiDeleteRecord;
         } else {
-            return $this->apiResponse->generateApiResponse(null, Actions::not_allowed);
+            return $this->apiResponse->generateApiResponse(null, Actions::forbidden);
         }
     }
 
