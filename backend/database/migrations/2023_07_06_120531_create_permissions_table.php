@@ -16,6 +16,8 @@ return new class extends Migration
             $table->string('name');
             $table->string('description')->nullable();
             $table->boolean('is_active')->default(false);
+            $table->boolean('need_approval')->default(false);
+            $table->integer('reports_to_role_id');
             $table->timestamps();
         });
     }

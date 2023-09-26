@@ -3,12 +3,14 @@
 namespace App\Utilities;
 
 use App\Models\Permission;
+use App\Models\Role;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 class ApiCheckPermission
 {
     protected $modelName;
+    protected $roleModelName;
     protected $currentRouteName;
     protected $currentAuthUser;
     protected $permissionDetails;
@@ -25,17 +27,20 @@ class ApiCheckPermission
     public function handleApiCheckPermission(): bool
     {
         $this->modelName = new Permission();
+        $this->roleModelName = new Role();
         $this->currentRouteName = Route::current()->getName();
         $this->currentAuthUser = Auth::user();
         $this->permissionDetails = $this->modelName->checkPermission(
             $this->currentRouteName,
-            $this->currentAuthUser ? $this->currentAuthUser->role_id : null
-        );
+            $this->currentAuthUser ? $this->currentAuthUser->role_id : 1
+        )->toArray()[0];
+        $reportsToRole = $this->roleModelName->fetchSingleRole($this->permissionDetails['reports_to_role_id']);
+        $this->permissionDetails['reports_to_role_id'] = $reportsToRole;
 
-        if ($this->permissionDetails->isNotEmpty()) {
+        if ($this->permissionDetails && count($this->permissionDetails) && $this->permissionDetails['is_active']) {
             return $this->hasPermission = true;
+        } else {
+            return $this->hasPermission = false;
         }
-
-        return $this->hasPermission = false;
     }
 }

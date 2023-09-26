@@ -24,11 +24,15 @@ class PermissionSeeder extends Seeder
         {
             if (!$firstLine) {
                 Permission::create([
-                    'id'          => $data['0'],
-                    'name'        => $data['1'],
+                    'id' => $data['0'],
+                    'name' => $data['1'],
                     'description' => $data['2'],
-                    'is_active'   => $data['3'],
-                    'role_id'     => $data['4'],
+                    'is_active' => (bool)$data[3],
+                    'need_approval' => (bool)$data[4],
+                    'created_at' => Carbon::parse($data[5]),
+                    'updated_at' => Carbon::parse($data[6]),
+                    'role_id' => (int)$data[7],
+                    'reports_to_role_id' => (int)$data[8],
                 ]);
             }
             $firstLine = false;

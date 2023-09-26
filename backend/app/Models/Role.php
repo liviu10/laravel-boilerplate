@@ -251,4 +251,28 @@ class Role extends BaseModel
             return false;
         }
     }
+
+    /**
+     * Fetches a specific role from the database.
+     * This function retrieves a role with a specified ID from the database
+     * and returns it as an array containing role information.
+     * @return array|bool An array containing role data if successful, or `false` on failure.
+     */
+    public function fetchSingleRole(int $id): array
+    {
+        try {
+            $query = $this->select('id', 'name')
+                ->where('id', $id)
+                ->get()
+                ->toArray()[0];
+
+            return $query;
+        } catch (Exception $exception) {
+            $this->LogApiError($exception);
+            return false;
+        } catch (QueryException $exception) {
+            $this->LogApiError($exception);
+            return false;
+        }
+    }
 }

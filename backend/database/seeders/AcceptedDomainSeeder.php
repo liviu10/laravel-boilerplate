@@ -24,11 +24,13 @@ class AcceptedDomainSeeder extends Seeder
         {
             if (!$firstLine) {
                 AcceptedDomain::create([
-                    'id'        => $data['0'],
-                    'domain'    => $data['1'],
-                    'type'      => $data['2'],
-                    'user_id'   => $data['3'],
-                    'is_active' => $data['4'],
+                    'id' => $data['0'],
+                    'domain' => $data['1'],
+                    'type' => $data['2'],
+                    'created_at' => Carbon::parse($data[3]),
+                    'updated_at' => Carbon::parse($data[4]),
+                    'user_id' => (int)$data['5'],
+                    'is_active' => (bool)$data['6'],
                 ]);
             }
             $firstLine = false;

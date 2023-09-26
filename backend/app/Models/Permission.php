@@ -18,7 +18,9 @@ use Illuminate\Pagination\LengthAwarePaginator;
  * @property string $name
  * @property string $description
  * @property boolean $is_active
+ * @property boolean $need_approval
  * @property int $role_id
+ * @property int $reports_to_role_id
  * @property \Carbon\Carbon $created_at
  * @property \Carbon\Carbon $updated_at
  * @method fetchAllRecords
@@ -41,11 +43,14 @@ class Permission extends BaseModel
         'name',
         'description',
         'is_active',
+        'need_approval',
         'role_id',
+        'reports_to_role_id',
     ];
 
     protected $attributes = [
         'is_active' => false,
+        'need_approval' => false,
     ];
 
     protected function getCastAttributes()
@@ -53,6 +58,7 @@ class Permission extends BaseModel
         $parentCasts = parent::getCastAttributes();
         return array_merge($parentCasts, [
             'role_id' => 'integer',
+            'reports_to_role_id' => 'integer',
         ]);
     }
 
@@ -74,7 +80,8 @@ class Permission extends BaseModel
             $query = $this->select(
                 'id',
                 'name',
-                'is_active'
+                'is_active',
+                'need_approval'
             );
 
             if (!empty($search)) {
@@ -111,10 +118,12 @@ class Permission extends BaseModel
     {
         try {
             $query = $this->create([
-                'name'        => $payload['name'],
-                'description' => $payload['description'],
-                'is_active'   => $payload['is_active'],
-                'role_id'     => $payload['role_id'],
+                'name'               => $payload['name'],
+                'description'        => $payload['description'],
+                'is_active'          => $payload['is_active'],
+                'need_approval'      => $payload['need_approval'],
+                'role_id'            => $payload['role_id'],
+                'reports_to_role_id' => $payload['reports_to_role_id'],
             ]);
 
             return $query;
@@ -170,10 +179,12 @@ class Permission extends BaseModel
     {
         try {
             $query = tap($this->find($id))->update([
-                'name'        => $payload['name'],
-                'description' => $payload['description'],
-                'is_active'   => $payload['is_active'],
-                'role_id'     => $payload['role_id'],
+                'name'               => $payload['name'],
+                'description'        => $payload['description'],
+                'is_active'          => $payload['is_active'],
+                'need_approval'      => $payload['need_approval'],
+                'role_id'            => $payload['role_id'],
+                'reports_to_role_id' => $payload['reports_to_role_id'],
             ]);
 
             return $query->fresh();
@@ -195,7 +206,7 @@ class Permission extends BaseModel
     public function checkPermission(string $permissionName, int|null $roleId): Collection|bool
     {
         try {
-            $result = $this->select('id', 'name', 'is_active', 'role_id')
+            $result = $this->select('id', 'name', 'is_active', 'need_approval', 'role_id', 'reports_to_role_id')
                 ->where('name', $permissionName)
                 ->where('role_id', $roleId)
                 ->with([

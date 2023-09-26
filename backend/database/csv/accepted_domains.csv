@@ -1,1423 +1,1423 @@
-id,domain,type,user_id,is_active
-1,.aaa,generic,1,1
-2,.aarp,generic,1,1
-3,.abarth,generic,1,1
-4,.abb,generic,1,1
-5,.abbott,generic,1,1
-6,.abbvie,generic,1,1
-7,.abc,generic,1,1
-8,.able,generic,1,1
-9,.abogado,generic,1,1
-10,.abudhabi,generic,1,1
-11,.ac,country-code,1,1
-12,.academy,generic,1,1
-13,.accenture,generic,1,1
-14,.accountant,generic,1,1
-15,.accountants,generic,1,1
-16,.aco,generic,1,1
-17,.active,generic,1,1
-18,.actor,generic,1,1
-19,.ad,country-code,1,1
-20,.adac,generic,1,1
-21,.ads,generic,1,1
-22,.adult,generic,1,1
-23,.ae,country-code,1,1
-24,.aeg,generic,1,1
-25,.aero,sponsored,1,1
-26,.aetna,generic,1,1
-27,.af,country-code,1,1
-28,.afamilycompany,generic,1,1
-29,.afl,generic,1,1
-30,.africa,generic,1,1
-31,.ag,country-code,1,1
-32,.agakhan,generic,1,1
-33,.agency,generic,1,1
-34,.ai,country-code,1,1
-35,.aig,generic,1,1
-36,.aigo,generic,1,1
-37,.airbus,generic,1,1
-38,.airforce,generic,1,1
-39,.airtel,generic,1,1
-40,.akdn,generic,1,1
-41,.al,country-code,1,1
-42,.alfaromeo,generic,1,1
-43,.alibaba,generic,1,1
-44,.alipay,generic,1,1
-45,.allfinanz,generic,1,1
-46,.allstate,generic,1,1
-47,.ally,generic,1,1
-48,.alsace,generic,1,1
-49,.alstom,generic,1,1
-50,.am,country-code,1,1
-51,.amazon,generic,1,1
-52,.americanexpress,generic,1,1
-53,.americanfamily,generic,1,1
-54,.amex,generic,1,1
-55,.amfam,generic,1,1
-56,.amica,generic,1,1
-57,.amsterdam,generic,1,1
-58,.an,country-code,1,1
-59,.analytics,generic,1,1
-60,.android,generic,1,1
-61,.anquan,generic,1,1
-62,.anz,generic,1,1
-63,.ao,country-code,1,1
-64,.aol,generic,1,1
-65,.apartments,generic,1,1
-66,.app,generic,1,1
-67,.apple,generic,1,1
-68,.aq,country-code,1,1
-69,.aquarelle,generic,1,1
-70,.ar,country-code,1,1
-71,.arab,generic,1,1
-72,.aramco,generic,1,1
-73,.archi,generic,1,1
-74,.army,generic,1,1
-75,.arpa,infrastructure,1,1
-76,.art,generic,1,1
-77,.arte,generic,1,1
-78,.as,country-code,1,1
-79,.asda,generic,1,1
-80,.asia,sponsored,1,1
-81,.associates,generic,1,1
-82,.at,country-code,1,1
-83,.athleta,generic,1,1
-84,.attorney,generic,1,1
-85,.au,country-code,1,1
-86,.auction,generic,1,1
-87,.audi,generic,1,1
-88,.audible,generic,1,1
-89,.audio,generic,1,1
-90,.auspost,generic,1,1
-91,.author,generic,1,1
-92,.auto,generic,1,1
-93,.autos,generic,1,1
-94,.avianca,generic,1,1
-95,.aw,country-code,1,1
-96,.aws,generic,1,1
-97,.ax,country-code,1,1
-98,.axa,generic,1,1
-99,.az,country-code,1,1
-100,.azure,generic,1,1
-101,.ba,country-code,1,1
-102,.baby,generic,1,1
-103,.baidu,generic,1,1
-104,.banamex,generic,1,1
-105,.bananarepublic,generic,1,1
-106,.band,generic,1,1
-107,.bank,generic,1,1
-108,.bar,generic,1,1
-109,.barcelona,generic,1,1
-110,.barclaycard,generic,1,1
-111,.barclays,generic,1,1
-112,.barefoot,generic,1,1
-113,.bargains,generic,1,1
-114,.baseball,generic,1,1
-115,.basketball,generic,1,1
-116,.bauhaus,generic,1,1
-117,.bayern,generic,1,1
-118,.bb,country-code,1,1
-119,.bbc,generic,1,1
-120,.bbt,generic,1,1
-121,.bbva,generic,1,1
-122,.bcg,generic,1,1
-123,.bcn,generic,1,1
-124,.bd,country-code,1,1
-125,.be,country-code,1,1
-126,.beats,generic,1,1
-127,.beauty,generic,1,1
-128,.beer,generic,1,1
-129,.bentley,generic,1,1
-130,.berlin,generic,1,1
-131,.best,generic,1,1
-132,.bestbuy,generic,1,1
-133,.bet,generic,1,1
-134,.bf,country-code,1,1
-135,.bg,country-code,1,1
-136,.bh,country-code,1,1
-137,.bharti,generic,1,1
-138,.bi,country-code,1,1
-139,.bible,generic,1,1
-140,.bid,generic,1,1
-141,.bike,generic,1,1
-142,.bing,generic,1,1
-143,.bingo,generic,1,1
-144,.bio,generic,1,1
-145,.biz,generic-restricted,1,1
-146,.bj,country-code,1,1
-147,.bl,country-code,1,1
-148,.black,generic,1,1
-149,.blackfriday,generic,1,1
-150,.blanco,generic,1,1
-151,.blockbuster,generic,1,1
-152,.blog,generic,1,1
-153,.bloomberg,generic,1,1
-154,.blue,generic,1,1
-155,.bm,country-code,1,1
-156,.bms,generic,1,1
-157,.bmw,generic,1,1
-158,.bn,country-code,1,1
-159,.bnl,generic,1,1
-160,.bnpparibas,generic,1,1
-161,.bo,country-code,1,1
-162,.boats,generic,1,1
-163,.boehringer,generic,1,1
-164,.bofa,generic,1,1
-165,.bom,generic,1,1
-166,.bond,generic,1,1
-167,.boo,generic,1,1
-168,.book,generic,1,1
-169,.booking,generic,1,1
-170,.boots,generic,1,1
-171,.bosch,generic,1,1
-172,.bostik,generic,1,1
-173,.boston,generic,1,1
-174,.bot,generic,1,1
-175,.boutique,generic,1,1
-176,.box,generic,1,1
-177,.bq,country-code,1,1
-178,.br,country-code,1,1
-179,.bradesco,generic,1,1
-180,.bridgestone,generic,1,1
-181,.broadway,generic,1,1
-182,.broker,generic,1,1
-183,.brother,generic,1,1
-184,.brussels,generic,1,1
-185,.bs,country-code,1,1
-186,.bt,country-code,1,1
-187,.budapest,generic,1,1
-188,.bugatti,generic,1,1
-189,.build,generic,1,1
-190,.builders,generic,1,1
-191,.business,generic,1,1
-192,.buy,generic,1,1
-193,.buzz,generic,1,1
-194,.bv,country-code,1,1
-195,.bw,country-code,1,1
-196,.by,country-code,1,1
-197,.bz,country-code,1,1
-198,.bzh,generic,1,1
-199,.ca,country-code,1,1
-200,.cab,generic,1,1
-201,.cafe,generic,1,1
-202,.cal,generic,1,1
-203,.call,generic,1,1
-204,.calvinklein,generic,1,1
-205,.cam,generic,1,1
-206,.camera,generic,1,1
-207,.camp,generic,1,1
-208,.cancerresearch,generic,1,1
-209,.canon,generic,1,1
-210,.capetown,generic,1,1
-211,.capital,generic,1,1
-212,.capitalone,generic,1,1
-213,.car,generic,1,1
-214,.caravan,generic,1,1
-215,.cards,generic,1,1
-216,.care,generic,1,1
-217,.career,generic,1,1
-218,.careers,generic,1,1
-219,.cars,generic,1,1
-220,.cartier,generic,1,1
-221,.casa,generic,1,1
-222,.case,generic,1,1
-223,.caseih,generic,1,1
-224,.cash,generic,1,1
-225,.casino,generic,1,1
-226,.cat,sponsored,1,1
-227,.catering,generic,1,1
-228,.catholic,generic,1,1
-229,.cba,generic,1,1
-230,.cbn,generic,1,1
-231,.cbre,generic,1,1
-232,.cbs,generic,1,1
-233,.cc,country-code,1,1
-234,.cd,country-code,1,1
-235,.ceb,generic,1,1
-236,.center,generic,1,1
-237,.ceo,generic,1,1
-238,.cern,generic,1,1
-239,.cf,country-code,1,1
-240,.cfa,generic,1,1
-241,.cfd,generic,1,1
-242,.cg,country-code,1,1
-243,.ch,country-code,1,1
-244,.chanel,generic,1,1
-245,.channel,generic,1,1
-246,.charity,generic,1,1
-247,.chase,generic,1,1
-248,.chat,generic,1,1
-249,.cheap,generic,1,1
-250,.chintai,generic,1,1
-251,.chloe,generic,1,1
-252,.christmas,generic,1,1
-253,.chrome,generic,1,1
-254,.chrysler,generic,1,1
-255,.church,generic,1,1
-256,.ci,country-code,1,1
-257,.cipriani,generic,1,1
-258,.circle,generic,1,1
-259,.cisco,generic,1,1
-260,.citadel,generic,1,1
-261,.citi,generic,1,1
-262,.citic,generic,1,1
-263,.city,generic,1,1
-264,.cityeats,generic,1,1
-265,.ck,country-code,1,1
-266,.cl,country-code,1,1
-267,.claims,generic,1,1
-268,.cleaning,generic,1,1
-269,.click,generic,1,1
-270,.clinic,generic,1,1
-271,.clinique,generic,1,1
-272,.clothing,generic,1,1
-273,.cloud,generic,1,1
-274,.club,generic,1,1
-275,.clubmed,generic,1,1
-276,.cm,country-code,1,1
-277,.cn,country-code,1,1
-278,.co,country-code,1,1
-279,.coach,generic,1,1
-280,.codes,generic,1,1
-281,.coffee,generic,1,1
-282,.college,generic,1,1
-283,.cologne,generic,1,1
-284,.com,generic,1,1
-285,.comcast,generic,1,1
-286,.commbank,generic,1,1
-287,.community,generic,1,1
-288,.company,generic,1,1
-289,.compare,generic,1,1
-290,.computer,generic,1,1
-291,.comsec,generic,1,1
-292,.condos,generic,1,1
-293,.construction,generic,1,1
-294,.consulting,generic,1,1
-295,.contact,generic,1,1
-296,.contractors,generic,1,1
-297,.cooking,generic,1,1
-298,.cookingchannel,generic,1,1
-299,.cool,generic,1,1
-300,.coop,sponsored,1,1
-301,.corsica,generic,1,1
-302,.country,generic,1,1
-303,.coupon,generic,1,1
-304,.coupons,generic,1,1
-305,.courses,generic,1,1
-306,.cpa,generic,1,1
-307,.cr,country-code,1,1
-308,.credit,generic,1,1
-309,.creditcard,generic,1,1
-310,.creditunion,generic,1,1
-311,.cricket,generic,1,1
-312,.crown,generic,1,1
-313,.crs,generic,1,1
-314,.cruise,generic,1,1
-315,.cruises,generic,1,1
-316,.csc,generic,1,1
-317,.cu,country-code,1,1
-318,.cuisinella,generic,1,1
-319,.cv,country-code,1,1
-320,.cw,country-code,1,1
-321,.cx,country-code,1,1
-322,.cy,country-code,1,1
-323,.cymru,generic,1,1
-324,.cyou,generic,1,1
-325,.cz,country-code,1,1
-326,.dabur,generic,1,1
-327,.dad,generic,1,1
-328,.dance,generic,1,1
-329,.data,generic,1,1
-330,.date,generic,1,1
-331,.dating,generic,1,1
-332,.datsun,generic,1,1
-333,.day,generic,1,1
-334,.dclk,generic,1,1
-335,.dds,generic,1,1
-336,.de,country-code,1,1
-337,.deal,generic,1,1
-338,.dealer,generic,1,1
-339,.deals,generic,1,1
-340,.degree,generic,1,1
-341,.delivery,generic,1,1
-342,.dell,generic,1,1
-343,.deloitte,generic,1,1
-344,.delta,generic,1,1
-345,.democrat,generic,1,1
-346,.dental,generic,1,1
-347,.dentist,generic,1,1
-348,.desi,generic,1,1
-349,.design,generic,1,1
-350,.dev,generic,1,1
-351,.dhl,generic,1,1
-352,.diamonds,generic,1,1
-353,.diet,generic,1,1
-354,.digital,generic,1,1
-355,.direct,generic,1,1
-356,.directory,generic,1,1
-357,.discount,generic,1,1
-358,.discover,generic,1,1
-359,.dish,generic,1,1
-360,.diy,generic,1,1
-361,.dj,country-code,1,1
-362,.dk,country-code,1,1
-363,.dm,country-code,1,1
-364,.dnp,generic,1,1
-365,.do,country-code,1,1
-366,.docs,generic,1,1
-367,.doctor,generic,1,1
-368,.dodge,generic,1,1
-369,.dog,generic,1,1
-370,.doha,generic,1,1
-371,.domains,generic,1,1
-372,.doosan,generic,1,1
-373,.dot,generic,1,1
-374,.download,generic,1,1
-375,.drive,generic,1,1
-376,.dtv,generic,1,1
-377,.dubai,generic,1,1
-378,.duck,generic,1,1
-379,.dunlop,generic,1,1
-380,.duns,generic,1,1
-381,.dupont,generic,1,1
-382,.durban,generic,1,1
-383,.dvag,generic,1,1
-384,.dvr,generic,1,1
-385,.dz,country-code,1,1
-386,.earth,generic,1,1
-387,.eat,generic,1,1
-388,.ec,country-code,1,1
-389,.eco,generic,1,1
-390,.edeka,generic,1,1
-391,.edu,sponsored,1,1
-392,.education,generic,1,1
-393,.ee,country-code,1,1
-394,.eg,country-code,1,1
-395,.eh,country-code,1,1
-396,.email,generic,1,1
-397,.emerck,generic,1,1
-398,.energy,generic,1,1
-399,.engineer,generic,1,1
-400,.engineering,generic,1,1
-401,.enterprises,generic,1,1
-402,.epost,generic,1,1
-403,.epson,generic,1,1
-404,.equipment,generic,1,1
-405,.er,country-code,1,1
-406,.ericsson,generic,1,1
-407,.erni,generic,1,1
-408,.es,country-code,1,1
-409,.esq,generic,1,1
-410,.estate,generic,1,1
-411,.esurance,generic,1,1
-412,.et,country-code,1,1
-413,.etisalat,generic,1,1
-414,.eu,country-code,1,1
-415,.eurovision,generic,1,1
-416,.eus,generic,1,1
-417,.events,generic,1,1
-418,.everbank,generic,1,1
-419,.exchange,generic,1,1
-420,.expert,generic,1,1
-421,.exposed,generic,1,1
-422,.express,generic,1,1
-423,.extraspace,generic,1,1
-424,.fage,generic,1,1
-425,.fail,generic,1,1
-426,.fairwinds,generic,1,1
-427,.faith,generic,1,1
-428,.family,generic,1,1
-429,.fan,generic,1,1
-430,.fans,generic,1,1
-431,.farm,generic,1,1
-432,.farmers,generic,1,1
-433,.fashion,generic,1,1
-434,.fast,generic,1,1
-435,.fedex,generic,1,1
-436,.feedback,generic,1,1
-437,.ferrari,generic,1,1
-438,.ferrero,generic,1,1
-439,.fi,country-code,1,1
-440,.fiat,generic,1,1
-441,.fidelity,generic,1,1
-442,.fido,generic,1,1
-443,.film,generic,1,1
-444,.final,generic,1,1
-445,.finance,generic,1,1
-446,.financial,generic,1,1
-447,.fire,generic,1,1
-448,.firestone,generic,1,1
-449,.firmdale,generic,1,1
-450,.fish,generic,1,1
-451,.fishing,generic,1,1
-452,.fit,generic,1,1
-453,.fitness,generic,1,1
-454,.fj,country-code,1,1
-455,.fk,country-code,1,1
-456,.flickr,generic,1,1
-457,.flights,generic,1,1
-458,.flir,generic,1,1
-459,.florist,generic,1,1
-460,.flowers,generic,1,1
-461,.flsmidth,generic,1,1
-462,.fly,generic,1,1
-463,.fm,country-code,1,1
-464,.fo,country-code,1,1
-465,.foo,generic,1,1
-466,.food,generic,1,1
-467,.foodnetwork,generic,1,1
-468,.football,generic,1,1
-469,.ford,generic,1,1
-470,.forex,generic,1,1
-471,.forsale,generic,1,1
-472,.forum,generic,1,1
-473,.foundation,generic,1,1
-474,.fox,generic,1,1
-475,.fr,country-code,1,1
-476,.free,generic,1,1
-477,.fresenius,generic,1,1
-478,.frl,generic,1,1
-479,.frogans,generic,1,1
-480,.frontdoor,generic,1,1
-481,.frontier,generic,1,1
-482,.ftr,generic,1,1
-483,.fujitsu,generic,1,1
-484,.fujixerox,generic,1,1
-485,.fun,generic,1,1
-486,.fund,generic,1,1
-487,.furniture,generic,1,1
-488,.futbol,generic,1,1
-489,.fyi,generic,1,1
-490,.ga,country-code,1,1
-491,.gal,generic,1,1
-492,.gallery,generic,1,1
-493,.gallo,generic,1,1
-494,.gallup,generic,1,1
-495,.game,generic,1,1
-496,.games,generic,1,1
-497,.gap,generic,1,1
-498,.garden,generic,1,1
-499,.gay,generic,1,1
-500,.gb,country-code,1,1
-501,.gbiz,generic,1,1
-502,.gd,country-code,1,1
-503,.gdn,generic,1,1
-504,.ge,country-code,1,1
-505,.gea,generic,1,1
-506,.gent,generic,1,1
-507,.genting,generic,1,1
-508,.george,generic,1,1
-509,.gf,country-code,1,1
-510,.gg,country-code,1,1
-511,.ggee,generic,1,1
-512,.gh,country-code,1,1
-513,.gi,country-code,1,1
-514,.gift,generic,1,1
-515,.gifts,generic,1,1
-516,.gives,generic,1,1
-517,.giving,generic,1,1
-518,.gl,country-code,1,1
-519,.glade,generic,1,1
-520,.glass,generic,1,1
-521,.gle,generic,1,1
-522,.global,generic,1,1
-523,.globo,generic,1,1
-524,.gm,country-code,1,1
-525,.gmail,generic,1,1
-526,.gmbh,generic,1,1
-527,.gmo,generic,1,1
-528,.gmx,generic,1,1
-529,.gn,country-code,1,1
-530,.godaddy,generic,1,1
-531,.gold,generic,1,1
-532,.goldpoint,generic,1,1
-533,.golf,generic,1,1
-534,.goo,generic,1,1
-535,.goodhands,generic,1,1
-536,.goodyear,generic,1,1
-537,.goog,generic,1,1
-538,.google,generic,1,1
-539,.gop,generic,1,1
-540,.got,generic,1,1
-541,.gov,sponsored,1,1
-542,.gp,country-code,1,1
-543,.gq,country-code,1,1
-544,.gr,country-code,1,1
-545,.grainger,generic,1,1
-546,.graphics,generic,1,1
-547,.gratis,generic,1,1
-548,.green,generic,1,1
-549,.gripe,generic,1,1
-550,.grocery,generic,1,1
-551,.group,generic,1,1
-552,.gs,country-code,1,1
-553,.gt,country-code,1,1
-554,.gu,country-code,1,1
-555,.guardian,generic,1,1
-556,.gucci,generic,1,1
-557,.guge,generic,1,1
-558,.guide,generic,1,1
-559,.guitars,generic,1,1
-560,.guru,generic,1,1
-561,.gw,country-code,1,1
-562,.gy,country-code,1,1
-563,.hair,generic,1,1
-564,.hamburg,generic,1,1
-565,.hangout,generic,1,1
-566,.haus,generic,1,1
-567,.hbo,generic,1,1
-568,.hdfc,generic,1,1
-569,.hdfcbank,generic,1,1
-570,.health,generic,1,1
-571,.healthcare,generic,1,1
-572,.help,generic,1,1
-573,.helsinki,generic,1,1
-574,.here,generic,1,1
-575,.hermes,generic,1,1
-576,.hgtv,generic,1,1
-577,.hiphop,generic,1,1
-578,.hisamitsu,generic,1,1
-579,.hitachi,generic,1,1
-580,.hiv,generic,1,1
-581,.hk,country-code,1,1
-582,.hkt,generic,1,1
-583,.hm,country-code,1,1
-584,.hn,country-code,1,1
-585,.hockey,generic,1,1
-586,.holdings,generic,1,1
-587,.holiday,generic,1,1
-588,.homedepot,generic,1,1
-589,.homegoods,generic,1,1
-590,.homes,generic,1,1
-591,.homesense,generic,1,1
-592,.honda,generic,1,1
-593,.honeywell,generic,1,1
-594,.horse,generic,1,1
-595,.hospital,generic,1,1
-596,.host,generic,1,1
-597,.hosting,generic,1,1
-598,.hot,generic,1,1
-599,.hoteles,generic,1,1
-600,.hotels,generic,1,1
-601,.hotmail,generic,1,1
-602,.house,generic,1,1
-603,.how,generic,1,1
-604,.hr,country-code,1,1
-605,.hsbc,generic,1,1
-606,.ht,country-code,1,1
-607,.htc,generic,1,1
-608,.hu,country-code,1,1
-609,.hughes,generic,1,1
-610,.hyatt,generic,1,1
-611,.hyundai,generic,1,1
-612,.ibm,generic,1,1
-613,.icbc,generic,1,1
-614,.ice,generic,1,1
-615,.icu,generic,1,1
-616,.id,country-code,1,1
-617,.ie,country-code,1,1
-618,.ieee,generic,1,1
-619,.ifm,generic,1,1
-620,.iinet,generic,1,1
-621,.ikano,generic,1,1
-622,.il,country-code,1,1
-623,.im,country-code,1,1
-624,.imamat,generic,1,1
-625,.imdb,generic,1,1
-626,.immo,generic,1,1
-627,.immobilien,generic,1,1
-628,.in,country-code,1,1
-629,.inc,generic,1,1
-630,.industries,generic,1,1
-631,.infiniti,generic,1,1
-632,.info,generic,1,1
-633,.ing,generic,1,1
-634,.ink,generic,1,1
-635,.institute,generic,1,1
-636,.insurance,generic,1,1
-637,.insure,generic,1,1
-638,.int,sponsored,1,1
-639,.intel,generic,1,1
-640,.international,generic,1,1
-641,.intuit,generic,1,1
-642,.investments,generic,1,1
-643,.io,country-code,1,1
-644,.ipiranga,generic,1,1
-645,.iq,country-code,1,1
-646,.ir,country-code,1,1
-647,.irish,generic,1,1
-648,.is,country-code,1,1
-649,.iselect,generic,1,1
-650,.ismaili,generic,1,1
-651,.ist,generic,1,1
-652,.istanbul,generic,1,1
-653,.it,country-code,1,1
-654,.itau,generic,1,1
-655,.itv,generic,1,1
-656,.iveco,generic,1,1
-657,.iwc,generic,1,1
-658,.jaguar,generic,1,1
-659,.java,generic,1,1
-660,.jcb,generic,1,1
-661,.jcp,generic,1,1
-662,.je,country-code,1,1
-663,.jeep,generic,1,1
-664,.jetzt,generic,1,1
-665,.jewelry,generic,1,1
-666,.jio,generic,1,1
-667,.jlc,generic,1,1
-668,.jll,generic,1,1
-669,.jm,country-code,1,1
-670,.jmp,generic,1,1
-671,.jnj,generic,1,1
-672,.jo,country-code,1,1
-673,.jobs,sponsored,1,1
-674,.joburg,generic,1,1
-675,.jot,generic,1,1
-676,.joy,generic,1,1
-677,.jp,country-code,1,1
-678,.jpmorgan,generic,1,1
-679,.jprs,generic,1,1
-680,.juegos,generic,1,1
-681,.juniper,generic,1,1
-682,.kaufen,generic,1,1
-683,.kddi,generic,1,1
-684,.ke,country-code,1,1
-685,.kerryhotels,generic,1,1
-686,.kerrylogistics,generic,1,1
-687,.kerryproperties,generic,1,1
-688,.kfh,generic,1,1
-689,.kg,country-code,1,1
-690,.kh,country-code,1,1
-691,.ki,country-code,1,1
-692,.kia,generic,1,1
-693,.kim,generic,1,1
-694,.kinder,generic,1,1
-695,.kindle,generic,1,1
-696,.kitchen,generic,1,1
-697,.kiwi,generic,1,1
-698,.km,country-code,1,1
-699,.kn,country-code,1,1
-700,.koeln,generic,1,1
-701,.komatsu,generic,1,1
-702,.kosher,generic,1,1
-703,.kp,country-code,1,1
-704,.kpmg,generic,1,1
-705,.kpn,generic,1,1
-706,.kr,country-code,1,1
-707,.krd,generic,1,1
-708,.kred,generic,1,1
-709,.kuokgroup,generic,1,1
-710,.kw,country-code,1,1
-711,.ky,country-code,1,1
-712,.kyoto,generic,1,1
-713,.kz,country-code,1,1
-714,.la,country-code,1,1
-715,.lacaixa,generic,1,1
-716,.ladbrokes,generic,1,1
-717,.lamborghini,generic,1,1
-718,.lamer,generic,1,1
-719,.lancaster,generic,1,1
-720,.lancia,generic,1,1
-721,.lancome,generic,1,1
-722,.land,generic,1,1
-723,.landrover,generic,1,1
-724,.lanxess,generic,1,1
-725,.lasalle,generic,1,1
-726,.lat,generic,1,1
-727,.latino,generic,1,1
-728,.latrobe,generic,1,1
-729,.law,generic,1,1
-730,.lawyer,generic,1,1
-731,.lb,country-code,1,1
-732,.lc,country-code,1,1
-733,.lds,generic,1,1
-734,.lease,generic,1,1
-735,.leclerc,generic,1,1
-736,.lefrak,generic,1,1
-737,.legal,generic,1,1
-738,.lego,generic,1,1
-739,.lexus,generic,1,1
-740,.lgbt,generic,1,1
-741,.li,country-code,1,1
-742,.liaison,generic,1,1
-743,.lidl,generic,1,1
-744,.life,generic,1,1
-745,.lifeinsurance,generic,1,1
-746,.lifestyle,generic,1,1
-747,.lighting,generic,1,1
-748,.like,generic,1,1
-749,.lilly,generic,1,1
-750,.limited,generic,1,1
-751,.limo,generic,1,1
-752,.lincoln,generic,1,1
-753,.linde,generic,1,1
-754,.link,generic,1,1
-755,.lipsy,generic,1,1
-756,.live,generic,1,1
-757,.living,generic,1,1
-758,.lixil,generic,1,1
-759,.lk,country-code,1,1
-760,.llc,generic,1,1
-761,.llp,generic,1,1
-762,.loan,generic,1,1
-763,.loans,generic,1,1
-764,.locker,generic,1,1
-765,.locus,generic,1,1
-766,.loft,generic,1,1
-767,.lol,generic,1,1
-768,.london,generic,1,1
-769,.lotte,generic,1,1
-770,.lotto,generic,1,1
-771,.love,generic,1,1
-772,.lpl,generic,1,1
-773,.lplfinancial,generic,1,1
-774,.lr,country-code,1,1
-775,.ls,country-code,1,1
-776,.lt,country-code,1,1
-777,.ltd,generic,1,1
-778,.ltda,generic,1,1
-779,.lu,country-code,1,1
-780,.lundbeck,generic,1,1
-781,.lupin,generic,1,1
-782,.luxe,generic,1,1
-783,.luxury,generic,1,1
-784,.lv,country-code,1,1
-785,.ly,country-code,1,1
-786,.ma,country-code,1,1
-787,.macys,generic,1,1
-788,.madrid,generic,1,1
-789,.maif,generic,1,1
-790,.maison,generic,1,1
-791,.makeup,generic,1,1
-792,.man,generic,1,1
-793,.management,generic,1,1
-794,.mango,generic,1,1
-795,.map,generic,1,1
-796,.market,generic,1,1
-797,.marketing,generic,1,1
-798,.markets,generic,1,1
-799,.marriott,generic,1,1
-800,.marshalls,generic,1,1
-801,.maserati,generic,1,1
-802,.mattel,generic,1,1
-803,.mba,generic,1,1
-804,.mc,country-code,1,1
-805,.mcd,generic,1,1
-806,.mcdonalds,generic,1,1
-807,.mckinsey,generic,1,1
-808,.md,country-code,1,1
-809,.me,country-code,1,1
-810,.med,generic,1,1
-811,.media,generic,1,1
-812,.meet,generic,1,1
-813,.melbourne,generic,1,1
-814,.meme,generic,1,1
-815,.memorial,generic,1,1
-816,.men,generic,1,1
-817,.menu,generic,1,1
-818,.meo,generic,1,1
-819,.merckmsd,generic,1,1
-820,.metlife,generic,1,1
-821,.mf,country-code,1,1
-822,.mg,country-code,1,1
-823,.mh,country-code,1,1
-824,.miami,generic,1,1
-825,.microsoft,generic,1,1
-826,.mil,sponsored,1,1
-827,.mini,generic,1,1
-828,.mint,generic,1,1
-829,.mit,generic,1,1
-830,.mitsubishi,generic,1,1
-831,.mk,country-code,1,1
-832,.ml,country-code,1,1
-833,.mlb,generic,1,1
-834,.mls,generic,1,1
-835,.mm,country-code,1,1
-836,.mma,generic,1,1
-837,.mn,country-code,1,1
-838,.mo,country-code,1,1
-839,.mobi,generic,1,1
-840,.mobile,generic,1,1
-841,.mobily,generic,1,1
-842,.moda,generic,1,1
-843,.moe,generic,1,1
-844,.moi,generic,1,1
-845,.mom,generic,1,1
-846,.monash,generic,1,1
-847,.money,generic,1,1
-848,.monster,generic,1,1
-849,.montblanc,generic,1,1
-850,.mopar,generic,1,1
-851,.mormon,generic,1,1
-852,.mortgage,generic,1,1
-853,.moscow,generic,1,1
-854,.moto,generic,1,1
-855,.motorcycles,generic,1,1
-856,.mov,generic,1,1
-857,.movie,generic,1,1
-858,.movistar,generic,1,1
-859,.mp,country-code,1,1
-860,.mq,country-code,1,1
-861,.mr,country-code,1,1
-862,.ms,country-code,1,1
-863,.msd,generic,1,1
-864,.mt,country-code,1,1
-865,.mtn,generic,1,1
-866,.mtpc,generic,1,1
-867,.mtr,generic,1,1
-868,.mu,country-code,1,1
-869,.museum,sponsored,1,1
-870,.music,generic,1,1
-871,.mutual,generic,1,1
-872,.mutuelle,generic,1,1
-873,.mv,country-code,1,1
-874,.mw,country-code,1,1
-875,.mx,country-code,1,1
-876,.my,country-code,1,1
-877,.mz,country-code,1,1
-878,.na,country-code,1,1
-879,.nab,generic,1,1
-880,.nadex,generic,1,1
-881,.nagoya,generic,1,1
-882,.name,generic-restricted,1,1
-883,.nationwide,generic,1,1
-884,.natura,generic,1,1
-885,.navy,generic,1,1
-886,.nba,generic,1,1
-887,.nc,country-code,1,1
-888,.ne,country-code,1,1
-889,.nec,generic,1,1
-890,.net,generic,1,1
-891,.netbank,generic,1,1
-892,.netflix,generic,1,1
-893,.network,generic,1,1
-894,.neustar,generic,1,1
-895,.new,generic,1,1
-896,.newholland,generic,1,1
-897,.news,generic,1,1
-898,.next,generic,1,1
-899,.nextdirect,generic,1,1
-900,.nexus,generic,1,1
-901,.nf,country-code,1,1
-902,.nfl,generic,1,1
-903,.ng,country-code,1,1
-904,.ngo,generic,1,1
-905,.nhk,generic,1,1
-906,.ni,country-code,1,1
-907,.nico,generic,1,1
-908,.nike,generic,1,1
-909,.nikon,generic,1,1
-910,.ninja,generic,1,1
-911,.nissan,generic,1,1
-912,.nissay,generic,1,1
-913,.nl,country-code,1,1
-914,.no,country-code,1,1
-915,.nokia,generic,1,1
-916,.northwesternmutual,generic,1,1
-917,.norton,generic,1,1
-918,.now,generic,1,1
-919,.nowruz,generic,1,1
-920,.nowtv,generic,1,1
-921,.np,country-code,1,1
-922,.nr,country-code,1,1
-923,.nra,generic,1,1
-924,.nrw,generic,1,1
-925,.ntt,generic,1,1
-926,.nu,country-code,1,1
-927,.nyc,generic,1,1
-928,.nz,country-code,1,1
-929,.obi,generic,1,1
-930,.observer,generic,1,1
-931,.off,generic,1,1
-932,.office,generic,1,1
-933,.okinawa,generic,1,1
-934,.olayan,generic,1,1
-935,.olayangroup,generic,1,1
-936,.oldnavy,generic,1,1
-937,.ollo,generic,1,1
-938,.om,country-code,1,1
-939,.omega,generic,1,1
-940,.one,generic,1,1
-941,.ong,generic,1,1
-942,.onl,generic,1,1
-943,.online,generic,1,1
-944,.onyourside,generic,1,1
-945,.ooo,generic,1,1
-946,.open,generic,1,1
-947,.oracle,generic,1,1
-948,.orange,generic,1,1
-949,.org,generic,1,1
-950,.organic,generic,1,1
-951,.orientexpress,generic,1,1
-952,.origins,generic,1,1
-953,.osaka,generic,1,1
-954,.otsuka,generic,1,1
-955,.ott,generic,1,1
-956,.ovh,generic,1,1
-957,.pa,country-code,1,1
-958,.page,generic,1,1
-959,.pamperedchef,generic,1,1
-960,.panasonic,generic,1,1
-961,.panerai,generic,1,1
-962,.paris,generic,1,1
-963,.pars,generic,1,1
-964,.partners,generic,1,1
-965,.parts,generic,1,1
-966,.party,generic,1,1
-967,.passagens,generic,1,1
-968,.pay,generic,1,1
-969,.pccw,generic,1,1
-970,.pe,country-code,1,1
-971,.pet,generic,1,1
-972,.pf,country-code,1,1
-973,.pfizer,generic,1,1
-974,.pg,country-code,1,1
-975,.ph,country-code,1,1
-976,.pharmacy,generic,1,1
-977,.phd,generic,1,1
-978,.philips,generic,1,1
-979,.phone,generic,1,1
-980,.photo,generic,1,1
-981,.photography,generic,1,1
-982,.photos,generic,1,1
-983,.physio,generic,1,1
-984,.piaget,generic,1,1
-985,.pics,generic,1,1
-986,.pictet,generic,1,1
-987,.pictures,generic,1,1
-988,.pid,generic,1,1
-989,.pin,generic,1,1
-990,.ping,generic,1,1
-991,.pink,generic,1,1
-992,.pioneer,generic,1,1
-993,.pizza,generic,1,1
-994,.pk,country-code,1,1
-995,.pl,country-code,1,1
-996,.place,generic,1,1
-997,.play,generic,1,1
-998,.playstation,generic,1,1
-999,.plumbing,generic,1,1
-1000,.plus,generic,1,1
-1001,.pm,country-code,1,1
-1002,.pn,country-code,1,1
-1003,.pnc,generic,1,1
-1004,.pohl,generic,1,1
-1005,.poker,generic,1,1
-1006,.politie,generic,1,1
-1007,.porn,generic,1,1
-1008,.post,sponsored,1,1
-1009,.pr,country-code,1,1
-1010,.pramerica,generic,1,1
-1011,.praxi,generic,1,1
-1012,.press,generic,1,1
-1013,.prime,generic,1,1
-1014,.pro,generic-restricted,1,1
-1015,.prod,generic,1,1
-1016,.productions,generic,1,1
-1017,.prof,generic,1,1
-1018,.progressive,generic,1,1
-1019,.promo,generic,1,1
-1020,.properties,generic,1,1
-1021,.property,generic,1,1
-1022,.protection,generic,1,1
-1023,.pru,generic,1,1
-1024,.prudential,generic,1,1
-1025,.ps,country-code,1,1
-1026,.pt,country-code,1,1
-1027,.pub,generic,1,1
-1028,.pw,country-code,1,1
-1029,.pwc,generic,1,1
-1030,.py,country-code,1,1
-1031,.qa,country-code,1,1
-1032,.qpon,generic,1,1
-1033,.quebec,generic,1,1
-1034,.quest,generic,1,1
-1035,.qvc,generic,1,1
-1036,.racing,generic,1,1
-1037,.radio,generic,1,1
-1038,.raid,generic,1,1
-1039,.re,country-code,1,1
-1040,.read,generic,1,1
-1041,.realestate,generic,1,1
-1042,.realtor,generic,1,1
-1043,.realty,generic,1,1
-1044,.recipes,generic,1,1
-1045,.red,generic,1,1
-1046,.redstone,generic,1,1
-1047,.redumbrella,generic,1,1
-1048,.rehab,generic,1,1
-1049,.reise,generic,1,1
-1050,.reisen,generic,1,1
-1051,.reit,generic,1,1
-1052,.reliance,generic,1,1
-1053,.ren,generic,1,1
-1054,.rent,generic,1,1
-1055,.rentals,generic,1,1
-1056,.repair,generic,1,1
-1057,.report,generic,1,1
-1058,.republican,generic,1,1
-1059,.rest,generic,1,1
-1060,.restaurant,generic,1,1
-1061,.review,generic,1,1
-1062,.reviews,generic,1,1
-1063,.rexroth,generic,1,1
-1064,.rich,generic,1,1
-1065,.richardli,generic,1,1
-1066,.ricoh,generic,1,1
-1067,.rightathome,generic,1,1
-1068,.ril,generic,1,1
-1069,.rio,generic,1,1
-1070,.rip,generic,1,1
-1071,.rmit,generic,1,1
-1072,.ro,country-code,1,1
-1073,.rocher,generic,1,1
-1074,.rocks,generic,1,1
-1075,.rodeo,generic,1,1
-1076,.rogers,generic,1,1
-1077,.room,generic,1,1
-1078,.rs,country-code,1,1
-1079,.rsvp,generic,1,1
-1080,.ru,country-code,1,1
-1081,.rugby,generic,1,1
-1082,.ruhr,generic,1,1
-1083,.run,generic,1,1
-1084,.rw,country-code,1,1
-1085,.rwe,generic,1,1
-1086,.ryukyu,generic,1,1
-1087,.sa,country-code,1,1
-1088,.saarland,generic,1,1
-1089,.safe,generic,1,1
-1090,.safety,generic,1,1
-1091,.sakura,generic,1,1
-1092,.sale,generic,1,1
-1093,.salon,generic,1,1
-1094,.samsclub,generic,1,1
-1095,.samsung,generic,1,1
-1096,.sandvik,generic,1,1
-1097,.sandvikcoromant,generic,1,1
-1098,.sanofi,generic,1,1
-1099,.sap,generic,1,1
-1100,.sapo,generic,1,1
-1101,.sarl,generic,1,1
-1102,.sas,generic,1,1
-1103,.save,generic,1,1
-1104,.saxo,generic,1,1
-1105,.sb,country-code,1,1
-1106,.sbi,generic,1,1
-1107,.sbs,generic,1,1
-1108,.sc,country-code,1,1
-1109,.sca,generic,1,1
-1110,.scb,generic,1,1
-1111,.schaeffler,generic,1,1
-1112,.schmidt,generic,1,1
-1113,.scholarships,generic,1,1
-1114,.school,generic,1,1
-1115,.schule,generic,1,1
-1116,.schwarz,generic,1,1
-1117,.science,generic,1,1
-1118,.scjohnson,generic,1,1
-1119,.scor,generic,1,1
-1120,.scot,generic,1,1
-1121,.sd,country-code,1,1
-1122,.se,country-code,1,1
-1123,.search,generic,1,1
-1124,.seat,generic,1,1
-1125,.secure,generic,1,1
-1126,.security,generic,1,1
-1127,.seek,generic,1,1
-1128,.select,generic,1,1
-1129,.sener,generic,1,1
-1130,.services,generic,1,1
-1131,.ses,generic,1,1
-1132,.seven,generic,1,1
-1133,.sew,generic,1,1
-1134,.sex,generic,1,1
-1135,.sexy,generic,1,1
-1136,.sfr,generic,1,1
-1137,.sg,country-code,1,1
-1138,.sh,country-code,1,1
-1139,.shangrila,generic,1,1
-1140,.sharp,generic,1,1
-1141,.shaw,generic,1,1
-1142,.shell,generic,1,1
-1143,.shia,generic,1,1
-1144,.shiksha,generic,1,1
-1145,.shoes,generic,1,1
-1146,.shop,generic,1,1
-1147,.shopping,generic,1,1
-1148,.shouji,generic,1,1
-1149,.show,generic,1,1
-1150,.showtime,generic,1,1
-1151,.shriram,generic,1,1
-1152,.si,country-code,1,1
-1153,.silk,generic,1,1
-1154,.sina,generic,1,1
-1155,.singles,generic,1,1
-1156,.site,generic,1,1
-1157,.sj,country-code,1,1
-1158,.sk,country-code,1,1
-1159,.ski,generic,1,1
-1160,.skin,generic,1,1
-1161,.sky,generic,1,1
-1162,.skype,generic,1,1
-1163,.sl,country-code,1,1
-1164,.sling,generic,1,1
-1165,.sm,country-code,1,1
-1166,.smart,generic,1,1
-1167,.smile,generic,1,1
-1168,.sn,country-code,1,1
-1169,.sncf,generic,1,1
-1170,.so,country-code,1,1
-1171,.soccer,generic,1,1
-1172,.social,generic,1,1
-1173,.softbank,generic,1,1
-1174,.software,generic,1,1
-1175,.sohu,generic,1,1
-1176,.solar,generic,1,1
-1177,.solutions,generic,1,1
-1178,.song,generic,1,1
-1179,.sony,generic,1,1
-1180,.soy,generic,1,1
-1181,.spa,generic,1,1
-1182,.space,generic,1,1
-1183,.spiegel,generic,1,1
-1184,.sport,generic,1,1
-1185,.spot,generic,1,1
-1186,.spreadbetting,generic,1,1
-1187,.sr,country-code,1,1
-1188,.srl,generic,1,1
-1189,.srt,generic,1,1
-1190,.ss,country-code,1,1
-1191,.st,country-code,1,1
-1192,.stada,generic,1,1
-1193,.staples,generic,1,1
-1194,.star,generic,1,1
-1195,.starhub,generic,1,1
-1196,.statebank,generic,1,1
-1197,.statefarm,generic,1,1
-1198,.statoil,generic,1,1
-1199,.stc,generic,1,1
-1200,.stcgroup,generic,1,1
-1201,.stockholm,generic,1,1
-1202,.storage,generic,1,1
-1203,.store,generic,1,1
-1204,.stream,generic,1,1
-1205,.studio,generic,1,1
-1206,.study,generic,1,1
-1207,.style,generic,1,1
-1208,.su,country-code,1,1
-1209,.sucks,generic,1,1
-1210,.supplies,generic,1,1
-1211,.supply,generic,1,1
-1212,.support,generic,1,1
-1213,.surf,generic,1,1
-1214,.surgery,generic,1,1
-1215,.suzuki,generic,1,1
-1216,.sv,country-code,1,1
-1217,.swatch,generic,1,1
-1218,.swiftcover,generic,1,1
-1219,.swiss,generic,1,1
-1220,.sx,country-code,1,1
-1221,.sy,country-code,1,1
-1222,.sydney,generic,1,1
-1223,.symantec,generic,1,1
-1224,.systems,generic,1,1
-1225,.sz,country-code,1,1
-1226,.tab,generic,1,1
-1227,.taipei,generic,1,1
-1228,.talk,generic,1,1
-1229,.taobao,generic,1,1
-1230,.target,generic,1,1
-1231,.tatamotors,generic,1,1
-1232,.tatar,generic,1,1
-1233,.tattoo,generic,1,1
-1234,.tax,generic,1,1
-1235,.taxi,generic,1,1
-1236,.tc,country-code,1,1
-1237,.tci,generic,1,1
-1238,.td,country-code,1,1
-1239,.tdk,generic,1,1
-1240,.team,generic,1,1
-1241,.tech,generic,1,1
-1242,.technology,generic,1,1
-1243,.tel,sponsored,1,1
-1244,.telecity,generic,1,1
-1245,.telefonica,generic,1,1
-1246,.temasek,generic,1,1
-1247,.tennis,generic,1,1
-1248,.teva,generic,1,1
-1249,.tf,country-code,1,1
-1250,.tg,country-code,1,1
-1251,.th,country-code,1,1
-1252,.thd,generic,1,1
-1253,.theater,generic,1,1
-1254,.theatre,generic,1,1
-1255,.tiaa,generic,1,1
-1256,.tickets,generic,1,1
-1257,.tienda,generic,1,1
-1258,.tiffany,generic,1,1
-1259,.tips,generic,1,1
-1260,.tires,generic,1,1
-1261,.tirol,generic,1,1
-1262,.tj,country-code,1,1
-1263,.tjmaxx,generic,1,1
-1264,.tjx,generic,1,1
-1265,.tk,country-code,1,1
-1266,.tkmaxx,generic,1,1
-1267,.tl,country-code,1,1
-1268,.tm,country-code,1,1
-1269,.tmall,generic,1,1
-1270,.tn,country-code,1,1
-1271,.to,country-code,1,1
-1272,.today,generic,1,1
-1273,.tokyo,generic,1,1
-1274,.tools,generic,1,1
-1275,.top,generic,1,1
-1276,.toray,generic,1,1
-1277,.toshiba,generic,1,1
-1278,.total,generic,1,1
-1279,.tours,generic,1,1
-1280,.town,generic,1,1
-1281,.toyota,generic,1,1
-1282,.toys,generic,1,1
-1283,.tp,country-code,1,1
-1284,.tr,country-code,1,1
-1285,.trade,generic,1,1
-1286,.trading,generic,1,1
-1287,.training,generic,1,1
-1288,.travel,sponsored,1,1
-1289,.travelchannel,generic,1,1
-1290,.travelers,generic,1,1
-1291,.travelersinsurance,generic,1,1
-1292,.trust,generic,1,1
-1293,.trv,generic,1,1
-1294,.tt,country-code,1,1
-1295,.tube,generic,1,1
-1296,.tui,generic,1,1
-1297,.tunes,generic,1,1
-1298,.tushu,generic,1,1
-1299,.tv,country-code,1,1
-1300,.tvs,generic,1,1
-1301,.tw,country-code,1,1
-1302,.tz,country-code,1,1
-1303,.ua,country-code,1,1
-1304,.ubank,generic,1,1
-1305,.ubs,generic,1,1
-1306,.uconnect,generic,1,1
-1307,.ug,country-code,1,1
-1308,.uk,country-code,1,1
-1309,.um,country-code,1,1
-1310,.unicom,generic,1,1
-1311,.university,generic,1,1
-1312,.uno,generic,1,1
-1313,.uol,generic,1,1
-1314,.ups,generic,1,1
-1315,.us,country-code,1,1
-1316,.uy,country-code,1,1
-1317,.uz,country-code,1,1
-1318,.va,country-code,1,1
-1319,.vacations,generic,1,1
-1320,.vana,generic,1,1
-1321,.vanguard,generic,1,1
-1322,.vc,country-code,1,1
-1323,.ve,country-code,1,1
-1324,.vegas,generic,1,1
-1325,.ventures,generic,1,1
-1326,.verisign,generic,1,1
-1327,.versicherung,generic,1,1
-1328,.vet,generic,1,1
-1329,.vg,country-code,1,1
-1330,.vi,country-code,1,1
-1331,.viajes,generic,1,1
-1332,.video,generic,1,1
-1333,.vig,generic,1,1
-1334,.viking,generic,1,1
-1335,.villas,generic,1,1
-1336,.vin,generic,1,1
-1337,.vip,generic,1,1
-1338,.virgin,generic,1,1
-1339,.visa,generic,1,1
-1340,.vision,generic,1,1
-1341,.vista,generic,1,1
-1342,.vistaprint,generic,1,1
-1343,.viva,generic,1,1
-1344,.vivo,generic,1,1
-1345,.vlaanderen,generic,1,1
-1346,.vn,country-code,1,1
-1347,.vodka,generic,1,1
-1348,.volkswagen,generic,1,1
-1349,.volvo,generic,1,1
-1350,.vote,generic,1,1
-1351,.voting,generic,1,1
-1352,.voto,generic,1,1
-1353,.voyage,generic,1,1
-1354,.vu,country-code,1,1
-1355,.vuelos,generic,1,1
-1356,.wales,generic,1,1
-1357,.walmart,generic,1,1
-1358,.walter,generic,1,1
-1359,.wang,generic,1,1
-1360,.wanggou,generic,1,1
-1361,.warman,generic,1,1
-1362,.watch,generic,1,1
-1363,.watches,generic,1,1
-1364,.weather,generic,1,1
-1365,.weatherchannel,generic,1,1
-1366,.webcam,generic,1,1
-1367,.weber,generic,1,1
-1368,.website,generic,1,1
-1369,.wed,generic,1,1
-1370,.wedding,generic,1,1
-1371,.weibo,generic,1,1
-1372,.weir,generic,1,1
-1373,.wf,country-code,1,1
-1374,.whoswho,generic,1,1
-1375,.wien,generic,1,1
-1376,.wiki,generic,1,1
-1377,.williamhill,generic,1,1
-1378,.win,generic,1,1
-1379,.windows,generic,1,1
-1380,.wine,generic,1,1
-1381,.winners,generic,1,1
-1382,.wme,generic,1,1
-1383,.wolterskluwer,generic,1,1
-1384,.woodside,generic,1,1
-1385,.work,generic,1,1
-1386,.works,generic,1,1
-1387,.world,generic,1,1
-1388,.wow,generic,1,1
-1389,.ws,country-code,1,1
-1390,.wtc,generic,1,1
-1391,.wtf,generic,1,1
-1392,.xbox,generic,1,1
-1393,.xerox,generic,1,1
-1394,.xfinity,generic,1,1
-1395,.xihuan,generic,1,1
-1396,.xin,generic,1,1
-1397,.xperia,generic,1,1
-1398,.xxx,sponsored,1,1
-1399,.xyz,generic,1,1
-1400,.yachts,generic,1,1
-1401,.yahoo,generic,1,1
-1402,.yamaxun,generic,1,1
-1403,.yandex,generic,1,1
-1404,.ye,country-code,1,1
-1405,.yodobashi,generic,1,1
-1406,.yoga,generic,1,1
-1407,.yokohama,generic,1,1
-1408,.you,generic,1,1
-1409,.youtube,generic,1,1
-1410,.yt,country-code,1,1
-1411,.yun,generic,1,1
-1412,.za,country-code,1,1
-1413,.zappos,generic,1,1
-1414,.zara,generic,1,1
-1415,.zero,generic,1,1
-1416,.zip,generic,1,1
-1417,.zippo,generic,1,1
-1418,.zm,country-code,1,1
-1419,.zone,generic,1,1
-1420,.zuerich,generic,1,1
-1421,.zw,country-code,1,1
-1422,.localhost,local-environment,1,1
+id,domain,type,created_at,updated_at,user_id,is_active
+1,.aaa,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+2,.aarp,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+3,.abarth,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+4,.abb,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+5,.abbott,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+6,.abbvie,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+7,.abc,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+8,.able,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+9,.abogado,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+10,.abudhabi,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+11,.ac,country-code,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+12,.academy,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+13,.accenture,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+14,.accountant,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+15,.accountants,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+16,.aco,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+17,.active,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+18,.actor,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+19,.ad,country-code,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+20,.adac,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+21,.ads,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+22,.adult,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+23,.ae,country-code,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+24,.aeg,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+25,.aero,sponsored,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+26,.aetna,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+27,.af,country-code,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+28,.afamilycompany,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+29,.afl,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+30,.africa,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+31,.ag,country-code,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+32,.agakhan,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+33,.agency,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+34,.ai,country-code,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+35,.aig,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+36,.aigo,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+37,.airbus,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+38,.airforce,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+39,.airtel,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+40,.akdn,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+41,.al,country-code,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+42,.alfaromeo,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+43,.alibaba,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+44,.alipay,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+45,.allfinanz,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+46,.allstate,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+47,.ally,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+48,.alsace,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+49,.alstom,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+50,.am,country-code,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+51,.amazon,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+52,.americanexpress,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+53,.americanfamily,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+54,.amex,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+55,.amfam,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+56,.amica,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+57,.amsterdam,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+58,.an,country-code,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+59,.analytics,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+60,.android,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+61,.anquan,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+62,.anz,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+63,.ao,country-code,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+64,.aol,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+65,.apartments,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+66,.app,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+67,.apple,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+68,.aq,country-code,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+69,.aquarelle,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+70,.ar,country-code,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+71,.arab,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+72,.aramco,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+73,.archi,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+74,.army,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+75,.arpa,infrastructure,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+76,.art,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+77,.arte,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+78,.as,country-code,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+79,.asda,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+80,.asia,sponsored,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+81,.associates,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+82,.at,country-code,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+83,.athleta,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+84,.attorney,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+85,.au,country-code,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+86,.auction,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+87,.audi,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+88,.audible,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+89,.audio,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+90,.auspost,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+91,.author,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+92,.auto,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+93,.autos,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+94,.avianca,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+95,.aw,country-code,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+96,.aws,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+97,.ax,country-code,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+98,.axa,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+99,.az,country-code,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+100,.azure,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+101,.ba,country-code,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+102,.baby,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+103,.baidu,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+104,.banamex,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+105,.bananarepublic,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+106,.band,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+107,.bank,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+108,.bar,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+109,.barcelona,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+110,.barclaycard,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+111,.barclays,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+112,.barefoot,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+113,.bargains,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+114,.baseball,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+115,.basketball,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+116,.bauhaus,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+117,.bayern,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+118,.bb,country-code,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+119,.bbc,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+120,.bbt,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+121,.bbva,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+122,.bcg,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+123,.bcn,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+124,.bd,country-code,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+125,.be,country-code,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+126,.beats,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+127,.beauty,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+128,.beer,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+129,.bentley,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+130,.berlin,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+131,.best,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+132,.bestbuy,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+133,.bet,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+134,.bf,country-code,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+135,.bg,country-code,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+136,.bh,country-code,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+137,.bharti,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+138,.bi,country-code,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+139,.bible,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+140,.bid,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+141,.bike,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+142,.bing,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+143,.bingo,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+144,.bio,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+145,.biz,generic-restricted,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+146,.bj,country-code,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+147,.bl,country-code,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+148,.black,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+149,.blackfriday,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+150,.blanco,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+151,.blockbuster,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+152,.blog,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+153,.bloomberg,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+154,.blue,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+155,.bm,country-code,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+156,.bms,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+157,.bmw,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+158,.bn,country-code,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+159,.bnl,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+160,.bnpparibas,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+161,.bo,country-code,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+162,.boats,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+163,.boehringer,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+164,.bofa,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+165,.bom,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+166,.bond,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+167,.boo,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+168,.book,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+169,.booking,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+170,.boots,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+171,.bosch,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+172,.bostik,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+173,.boston,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+174,.bot,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+175,.boutique,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+176,.box,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+177,.bq,country-code,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+178,.br,country-code,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+179,.bradesco,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+180,.bridgestone,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+181,.broadway,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+182,.broker,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+183,.brother,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+184,.brussels,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+185,.bs,country-code,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+186,.bt,country-code,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+187,.budapest,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+188,.bugatti,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+189,.build,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+190,.builders,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+191,.business,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+192,.buy,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+193,.buzz,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+194,.bv,country-code,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+195,.bw,country-code,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+196,.by,country-code,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+197,.bz,country-code,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+198,.bzh,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+199,.ca,country-code,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+200,.cab,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+201,.cafe,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+202,.cal,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+203,.call,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+204,.calvinklein,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+205,.cam,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+206,.camera,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+207,.camp,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+208,.cancerresearch,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+209,.canon,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+210,.capetown,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+211,.capital,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+212,.capitalone,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+213,.car,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+214,.caravan,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+215,.cards,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+216,.care,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+217,.career,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+218,.careers,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+219,.cars,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+220,.cartier,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+221,.casa,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+222,.case,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+223,.caseih,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+224,.cash,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+225,.casino,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+226,.cat,sponsored,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+227,.catering,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+228,.catholic,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+229,.cba,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+230,.cbn,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+231,.cbre,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+232,.cbs,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+233,.cc,country-code,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+234,.cd,country-code,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+235,.ceb,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+236,.center,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+237,.ceo,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+238,.cern,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+239,.cf,country-code,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+240,.cfa,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+241,.cfd,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+242,.cg,country-code,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+243,.ch,country-code,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+244,.chanel,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+245,.channel,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+246,.charity,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+247,.chase,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+248,.chat,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+249,.cheap,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+250,.chintai,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+251,.chloe,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+252,.christmas,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+253,.chrome,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+254,.chrysler,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+255,.church,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+256,.ci,country-code,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+257,.cipriani,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+258,.circle,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+259,.cisco,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+260,.citadel,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+261,.citi,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+262,.citic,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+263,.city,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+264,.cityeats,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+265,.ck,country-code,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+266,.cl,country-code,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+267,.claims,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+268,.cleaning,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+269,.click,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+270,.clinic,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+271,.clinique,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+272,.clothing,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+273,.cloud,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+274,.club,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+275,.clubmed,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+276,.cm,country-code,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+277,.cn,country-code,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+278,.co,country-code,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+279,.coach,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+280,.codes,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+281,.coffee,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+282,.college,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+283,.cologne,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+284,.com,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+285,.comcast,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+286,.commbank,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+287,.community,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+288,.company,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+289,.compare,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+290,.computer,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+291,.comsec,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+292,.condos,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+293,.construction,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+294,.consulting,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+295,.contact,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+296,.contractors,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+297,.cooking,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+298,.cookingchannel,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+299,.cool,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+300,.coop,sponsored,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+301,.corsica,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+302,.country,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+303,.coupon,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+304,.coupons,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+305,.courses,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+306,.cpa,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+307,.cr,country-code,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+308,.credit,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+309,.creditcard,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+310,.creditunion,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+311,.cricket,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+312,.crown,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+313,.crs,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+314,.cruise,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+315,.cruises,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+316,.csc,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+317,.cu,country-code,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+318,.cuisinella,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+319,.cv,country-code,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+320,.cw,country-code,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+321,.cx,country-code,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+322,.cy,country-code,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+323,.cymru,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+324,.cyou,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+325,.cz,country-code,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+326,.dabur,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+327,.dad,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+328,.dance,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+329,.data,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+330,.date,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+331,.dating,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+332,.datsun,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+333,.day,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+334,.dclk,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+335,.dds,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+336,.de,country-code,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+337,.deal,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+338,.dealer,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+339,.deals,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+340,.degree,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+341,.delivery,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+342,.dell,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+343,.deloitte,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+344,.delta,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+345,.democrat,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+346,.dental,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+347,.dentist,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+348,.desi,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+349,.design,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+350,.dev,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+351,.dhl,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+352,.diamonds,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+353,.diet,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+354,.digital,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+355,.direct,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+356,.directory,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+357,.discount,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+358,.discover,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+359,.dish,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+360,.diy,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+361,.dj,country-code,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+362,.dk,country-code,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+363,.dm,country-code,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+364,.dnp,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+365,.do,country-code,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+366,.docs,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+367,.doctor,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+368,.dodge,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+369,.dog,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+370,.doha,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+371,.domains,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+372,.doosan,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+373,.dot,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+374,.download,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+375,.drive,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+376,.dtv,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+377,.dubai,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+378,.duck,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+379,.dunlop,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+380,.duns,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+381,.dupont,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+382,.durban,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+383,.dvag,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+384,.dvr,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+385,.dz,country-code,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+386,.earth,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+387,.eat,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+388,.ec,country-code,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+389,.eco,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+390,.edeka,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+391,.edu,sponsored,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+392,.education,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+393,.ee,country-code,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+394,.eg,country-code,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+395,.eh,country-code,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+396,.email,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+397,.emerck,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+398,.energy,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+399,.engineer,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+400,.engineering,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+401,.enterprises,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+402,.epost,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+403,.epson,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+404,.equipment,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+405,.er,country-code,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+406,.ericsson,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+407,.erni,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+408,.es,country-code,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+409,.esq,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+410,.estate,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+411,.esurance,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+412,.et,country-code,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+413,.etisalat,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+414,.eu,country-code,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+415,.eurovision,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+416,.eus,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+417,.events,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+418,.everbank,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+419,.exchange,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+420,.expert,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+421,.exposed,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+422,.express,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+423,.extraspace,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+424,.fage,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+425,.fail,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+426,.fairwinds,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+427,.faith,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+428,.family,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+429,.fan,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+430,.fans,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+431,.farm,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+432,.farmers,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+433,.fashion,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+434,.fast,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+435,.fedex,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+436,.feedback,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+437,.ferrari,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+438,.ferrero,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+439,.fi,country-code,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+440,.fiat,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+441,.fidelity,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+442,.fido,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+443,.film,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+444,.final,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+445,.finance,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+446,.financial,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+447,.fire,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+448,.firestone,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+449,.firmdale,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+450,.fish,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+451,.fishing,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+452,.fit,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+453,.fitness,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+454,.fj,country-code,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+455,.fk,country-code,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+456,.flickr,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+457,.flights,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+458,.flir,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+459,.florist,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+460,.flowers,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+461,.flsmidth,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+462,.fly,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+463,.fm,country-code,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+464,.fo,country-code,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+465,.foo,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+466,.food,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+467,.foodnetwork,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+468,.football,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+469,.ford,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+470,.forex,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+471,.forsale,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+472,.forum,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+473,.foundation,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+474,.fox,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+475,.fr,country-code,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+476,.free,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+477,.fresenius,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+478,.frl,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+479,.frogans,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+480,.frontdoor,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+481,.frontier,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+482,.ftr,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+483,.fujitsu,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+484,.fujixerox,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+485,.fun,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+486,.fund,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+487,.furniture,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+488,.futbol,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+489,.fyi,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+490,.ga,country-code,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+491,.gal,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+492,.gallery,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+493,.gallo,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+494,.gallup,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+495,.game,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+496,.games,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+497,.gap,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+498,.garden,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+499,.gay,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+500,.gb,country-code,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+501,.gbiz,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+502,.gd,country-code,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+503,.gdn,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+504,.ge,country-code,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+505,.gea,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+506,.gent,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+507,.genting,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+508,.george,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+509,.gf,country-code,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+510,.gg,country-code,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+511,.ggee,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+512,.gh,country-code,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+513,.gi,country-code,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+514,.gift,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+515,.gifts,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+516,.gives,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+517,.giving,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+518,.gl,country-code,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+519,.glade,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+520,.glass,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+521,.gle,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+522,.global,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+523,.globo,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+524,.gm,country-code,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+525,.gmail,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+526,.gmbh,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+527,.gmo,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+528,.gmx,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+529,.gn,country-code,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+530,.godaddy,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+531,.gold,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+532,.goldpoint,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+533,.golf,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+534,.goo,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+535,.goodhands,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+536,.goodyear,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+537,.goog,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+538,.google,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+539,.gop,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+540,.got,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+541,.gov,sponsored,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+542,.gp,country-code,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+543,.gq,country-code,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+544,.gr,country-code,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+545,.grainger,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+546,.graphics,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+547,.gratis,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+548,.green,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+549,.gripe,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+550,.grocery,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+551,.group,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+552,.gs,country-code,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+553,.gt,country-code,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+554,.gu,country-code,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+555,.guardian,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+556,.gucci,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+557,.guge,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+558,.guide,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+559,.guitars,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+560,.guru,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+561,.gw,country-code,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+562,.gy,country-code,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+563,.hair,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+564,.hamburg,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+565,.hangout,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+566,.haus,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+567,.hbo,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+568,.hdfc,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+569,.hdfcbank,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+570,.health,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+571,.healthcare,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+572,.help,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+573,.helsinki,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+574,.here,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+575,.hermes,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+576,.hgtv,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+577,.hiphop,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+578,.hisamitsu,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+579,.hitachi,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+580,.hiv,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+581,.hk,country-code,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+582,.hkt,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+583,.hm,country-code,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+584,.hn,country-code,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+585,.hockey,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+586,.holdings,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+587,.holiday,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+588,.homedepot,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+589,.homegoods,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+590,.homes,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+591,.homesense,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+592,.honda,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+593,.honeywell,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+594,.horse,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+595,.hospital,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+596,.host,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+597,.hosting,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+598,.hot,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+599,.hoteles,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+600,.hotels,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+601,.hotmail,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+602,.house,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+603,.how,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+604,.hr,country-code,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+605,.hsbc,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+606,.ht,country-code,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+607,.htc,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+608,.hu,country-code,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+609,.hughes,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+610,.hyatt,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+611,.hyundai,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+612,.ibm,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+613,.icbc,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+614,.ice,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+615,.icu,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+616,.id,country-code,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+617,.ie,country-code,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+618,.ieee,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+619,.ifm,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+620,.iinet,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+621,.ikano,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+622,.il,country-code,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+623,.im,country-code,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+624,.imamat,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+625,.imdb,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+626,.immo,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+627,.immobilien,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+628,.in,country-code,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+629,.inc,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+630,.industries,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+631,.infiniti,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+632,.info,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+633,.ing,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+634,.ink,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+635,.institute,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+636,.insurance,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+637,.insure,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+638,.int,sponsored,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+639,.intel,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+640,.international,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+641,.intuit,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+642,.investments,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+643,.io,country-code,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+644,.ipiranga,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+645,.iq,country-code,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+646,.ir,country-code,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+647,.irish,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+648,.is,country-code,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+649,.iselect,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+650,.ismaili,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+651,.ist,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+652,.istanbul,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+653,.it,country-code,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+654,.itau,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+655,.itv,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+656,.iveco,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+657,.iwc,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+658,.jaguar,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+659,.java,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+660,.jcb,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+661,.jcp,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+662,.je,country-code,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+663,.jeep,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+664,.jetzt,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+665,.jewelry,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+666,.jio,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+667,.jlc,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+668,.jll,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+669,.jm,country-code,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+670,.jmp,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+671,.jnj,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+672,.jo,country-code,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+673,.jobs,sponsored,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+674,.joburg,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+675,.jot,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+676,.joy,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+677,.jp,country-code,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+678,.jpmorgan,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+679,.jprs,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+680,.juegos,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+681,.juniper,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+682,.kaufen,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+683,.kddi,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+684,.ke,country-code,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+685,.kerryhotels,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+686,.kerrylogistics,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+687,.kerryproperties,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+688,.kfh,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+689,.kg,country-code,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+690,.kh,country-code,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+691,.ki,country-code,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+692,.kia,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+693,.kim,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+694,.kinder,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+695,.kindle,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+696,.kitchen,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+697,.kiwi,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+698,.km,country-code,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+699,.kn,country-code,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+700,.koeln,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+701,.komatsu,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+702,.kosher,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+703,.kp,country-code,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+704,.kpmg,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+705,.kpn,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+706,.kr,country-code,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+707,.krd,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+708,.kred,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+709,.kuokgroup,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+710,.kw,country-code,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+711,.ky,country-code,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+712,.kyoto,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+713,.kz,country-code,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+714,.la,country-code,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+715,.lacaixa,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+716,.ladbrokes,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+717,.lamborghini,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+718,.lamer,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+719,.lancaster,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+720,.lancia,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+721,.lancome,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+722,.land,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+723,.landrover,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+724,.lanxess,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+725,.lasalle,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+726,.lat,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+727,.latino,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+728,.latrobe,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+729,.law,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+730,.lawyer,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+731,.lb,country-code,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+732,.lc,country-code,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+733,.lds,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+734,.lease,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+735,.leclerc,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+736,.lefrak,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+737,.legal,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+738,.lego,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+739,.lexus,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+740,.lgbt,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+741,.li,country-code,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+742,.liaison,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+743,.lidl,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+744,.life,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+745,.lifeinsurance,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+746,.lifestyle,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+747,.lighting,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+748,.like,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+749,.lilly,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+750,.limited,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+751,.limo,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+752,.lincoln,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+753,.linde,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+754,.link,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+755,.lipsy,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+756,.live,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+757,.living,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+758,.lixil,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+759,.lk,country-code,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+760,.llc,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+761,.llp,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+762,.loan,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+763,.loans,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+764,.locker,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+765,.locus,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+766,.loft,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+767,.lol,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+768,.london,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+769,.lotte,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+770,.lotto,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+771,.love,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+772,.lpl,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+773,.lplfinancial,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+774,.lr,country-code,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+775,.ls,country-code,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+776,.lt,country-code,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+777,.ltd,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+778,.ltda,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+779,.lu,country-code,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+780,.lundbeck,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+781,.lupin,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+782,.luxe,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+783,.luxury,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+784,.lv,country-code,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+785,.ly,country-code,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+786,.ma,country-code,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+787,.macys,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+788,.madrid,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+789,.maif,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+790,.maison,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+791,.makeup,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+792,.man,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+793,.management,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+794,.mango,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+795,.map,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+796,.market,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+797,.marketing,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+798,.markets,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+799,.marriott,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+800,.marshalls,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+801,.maserati,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+802,.mattel,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+803,.mba,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+804,.mc,country-code,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+805,.mcd,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+806,.mcdonalds,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+807,.mckinsey,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+808,.md,country-code,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+809,.me,country-code,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+810,.med,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+811,.media,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+812,.meet,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+813,.melbourne,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+814,.meme,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+815,.memorial,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+816,.men,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+817,.menu,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+818,.meo,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+819,.merckmsd,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+820,.metlife,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+821,.mf,country-code,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+822,.mg,country-code,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+823,.mh,country-code,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+824,.miami,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+825,.microsoft,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+826,.mil,sponsored,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+827,.mini,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+828,.mint,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+829,.mit,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+830,.mitsubishi,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+831,.mk,country-code,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+832,.ml,country-code,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+833,.mlb,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+834,.mls,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+835,.mm,country-code,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+836,.mma,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+837,.mn,country-code,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+838,.mo,country-code,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+839,.mobi,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+840,.mobile,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+841,.mobily,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+842,.moda,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+843,.moe,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+844,.moi,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+845,.mom,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+846,.monash,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+847,.money,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+848,.monster,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+849,.montblanc,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+850,.mopar,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+851,.mormon,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+852,.mortgage,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+853,.moscow,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+854,.moto,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+855,.motorcycles,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+856,.mov,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+857,.movie,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+858,.movistar,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+859,.mp,country-code,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+860,.mq,country-code,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+861,.mr,country-code,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+862,.ms,country-code,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+863,.msd,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+864,.mt,country-code,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+865,.mtn,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+866,.mtpc,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+867,.mtr,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+868,.mu,country-code,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+869,.museum,sponsored,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+870,.music,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+871,.mutual,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+872,.mutuelle,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+873,.mv,country-code,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+874,.mw,country-code,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+875,.mx,country-code,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+876,.my,country-code,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+877,.mz,country-code,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+878,.na,country-code,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+879,.nab,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+880,.nadex,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+881,.nagoya,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+882,.name,generic-restricted,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+883,.nationwide,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+884,.natura,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+885,.navy,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+886,.nba,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+887,.nc,country-code,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+888,.ne,country-code,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+889,.nec,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+890,.net,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+891,.netbank,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+892,.netflix,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+893,.network,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+894,.neustar,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+895,.new,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+896,.newholland,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+897,.news,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+898,.next,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+899,.nextdirect,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+900,.nexus,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+901,.nf,country-code,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+902,.nfl,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+903,.ng,country-code,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+904,.ngo,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+905,.nhk,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+906,.ni,country-code,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+907,.nico,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+908,.nike,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+909,.nikon,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+910,.ninja,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+911,.nissan,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+912,.nissay,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+913,.nl,country-code,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+914,.no,country-code,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+915,.nokia,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+916,.northwesternmutual,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+917,.norton,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+918,.now,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+919,.nowruz,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+920,.nowtv,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+921,.np,country-code,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+922,.nr,country-code,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+923,.nra,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+924,.nrw,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+925,.ntt,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+926,.nu,country-code,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+927,.nyc,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+928,.nz,country-code,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+929,.obi,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+930,.observer,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+931,.off,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+932,.office,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+933,.okinawa,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+934,.olayan,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+935,.olayangroup,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+936,.oldnavy,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+937,.ollo,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+938,.om,country-code,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+939,.omega,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+940,.one,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+941,.ong,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+942,.onl,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+943,.online,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+944,.onyourside,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+945,.ooo,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+946,.open,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+947,.oracle,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+948,.orange,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+949,.org,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+950,.organic,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+951,.orientexpress,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+952,.origins,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+953,.osaka,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+954,.otsuka,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+955,.ott,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+956,.ovh,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+957,.pa,country-code,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+958,.page,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+959,.pamperedchef,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+960,.panasonic,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+961,.panerai,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+962,.paris,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+963,.pars,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+964,.partners,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+965,.parts,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+966,.party,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+967,.passagens,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+968,.pay,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+969,.pccw,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+970,.pe,country-code,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+971,.pet,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+972,.pf,country-code,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+973,.pfizer,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+974,.pg,country-code,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+975,.ph,country-code,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+976,.pharmacy,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+977,.phd,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+978,.philips,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+979,.phone,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+980,.photo,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+981,.photography,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+982,.photos,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+983,.physio,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+984,.piaget,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+985,.pics,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+986,.pictet,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+987,.pictures,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+988,.pid,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+989,.pin,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+990,.ping,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+991,.pink,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+992,.pioneer,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+993,.pizza,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+994,.pk,country-code,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+995,.pl,country-code,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+996,.place,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+997,.play,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+998,.playstation,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+999,.plumbing,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+1000,.plus,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+1001,.pm,country-code,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+1002,.pn,country-code,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+1003,.pnc,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+1004,.pohl,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+1005,.poker,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+1006,.politie,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+1007,.porn,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+1008,.post,sponsored,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+1009,.pr,country-code,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+1010,.pramerica,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+1011,.praxi,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+1012,.press,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+1013,.prime,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+1014,.pro,generic-restricted,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+1015,.prod,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+1016,.productions,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+1017,.prof,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+1018,.progressive,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+1019,.promo,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+1020,.properties,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+1021,.property,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+1022,.protection,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+1023,.pru,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+1024,.prudential,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+1025,.ps,country-code,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+1026,.pt,country-code,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+1027,.pub,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+1028,.pw,country-code,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+1029,.pwc,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+1030,.py,country-code,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+1031,.qa,country-code,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+1032,.qpon,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+1033,.quebec,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+1034,.quest,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+1035,.qvc,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+1036,.racing,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+1037,.radio,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+1038,.raid,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+1039,.re,country-code,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+1040,.read,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+1041,.realestate,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+1042,.realtor,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+1043,.realty,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+1044,.recipes,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+1045,.red,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+1046,.redstone,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+1047,.redumbrella,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+1048,.rehab,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+1049,.reise,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+1050,.reisen,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+1051,.reit,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+1052,.reliance,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+1053,.ren,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+1054,.rent,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+1055,.rentals,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+1056,.repair,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+1057,.report,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+1058,.republican,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+1059,.rest,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+1060,.restaurant,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+1061,.review,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+1062,.reviews,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+1063,.rexroth,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+1064,.rich,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+1065,.richardli,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+1066,.ricoh,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+1067,.rightathome,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+1068,.ril,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+1069,.rio,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+1070,.rip,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+1071,.rmit,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+1072,.ro,country-code,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+1073,.rocher,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+1074,.rocks,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+1075,.rodeo,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+1076,.rogers,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+1077,.room,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+1078,.rs,country-code,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+1079,.rsvp,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+1080,.ru,country-code,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+1081,.rugby,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+1082,.ruhr,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+1083,.run,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+1084,.rw,country-code,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+1085,.rwe,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+1086,.ryukyu,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+1087,.sa,country-code,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+1088,.saarland,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+1089,.safe,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+1090,.safety,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+1091,.sakura,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+1092,.sale,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+1093,.salon,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+1094,.samsclub,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+1095,.samsung,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+1096,.sandvik,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+1097,.sandvikcoromant,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+1098,.sanofi,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+1099,.sap,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+1100,.sapo,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+1101,.sarl,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+1102,.sas,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+1103,.save,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+1104,.saxo,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+1105,.sb,country-code,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+1106,.sbi,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+1107,.sbs,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+1108,.sc,country-code,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+1109,.sca,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+1110,.scb,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+1111,.schaeffler,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+1112,.schmidt,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+1113,.scholarships,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+1114,.school,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+1115,.schule,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+1116,.schwarz,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+1117,.science,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+1118,.scjohnson,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+1119,.scor,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+1120,.scot,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+1121,.sd,country-code,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+1122,.se,country-code,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+1123,.search,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+1124,.seat,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+1125,.secure,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+1126,.security,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+1127,.seek,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+1128,.select,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+1129,.sener,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+1130,.services,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+1131,.ses,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+1132,.seven,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+1133,.sew,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+1134,.sex,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+1135,.sexy,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+1136,.sfr,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+1137,.sg,country-code,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+1138,.sh,country-code,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+1139,.shangrila,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+1140,.sharp,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+1141,.shaw,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+1142,.shell,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+1143,.shia,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+1144,.shiksha,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+1145,.shoes,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+1146,.shop,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+1147,.shopping,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+1148,.shouji,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+1149,.show,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+1150,.showtime,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+1151,.shriram,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+1152,.si,country-code,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+1153,.silk,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+1154,.sina,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+1155,.singles,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+1156,.site,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+1157,.sj,country-code,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+1158,.sk,country-code,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+1159,.ski,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+1160,.skin,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+1161,.sky,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+1162,.skype,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+1163,.sl,country-code,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+1164,.sling,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+1165,.sm,country-code,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+1166,.smart,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+1167,.smile,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+1168,.sn,country-code,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+1169,.sncf,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+1170,.so,country-code,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+1171,.soccer,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+1172,.social,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+1173,.softbank,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+1174,.software,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+1175,.sohu,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+1176,.solar,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+1177,.solutions,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+1178,.song,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+1179,.sony,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+1180,.soy,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+1181,.spa,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+1182,.space,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+1183,.spiegel,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+1184,.sport,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+1185,.spot,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+1186,.spreadbetting,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+1187,.sr,country-code,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+1188,.srl,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+1189,.srt,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+1190,.ss,country-code,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+1191,.st,country-code,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+1192,.stada,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+1193,.staples,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+1194,.star,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+1195,.starhub,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+1196,.statebank,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+1197,.statefarm,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+1198,.statoil,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+1199,.stc,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+1200,.stcgroup,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+1201,.stockholm,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+1202,.storage,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+1203,.store,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+1204,.stream,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+1205,.studio,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+1206,.study,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+1207,.style,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+1208,.su,country-code,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+1209,.sucks,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+1210,.supplies,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+1211,.supply,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+1212,.support,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+1213,.surf,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+1214,.surgery,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+1215,.suzuki,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+1216,.sv,country-code,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+1217,.swatch,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+1218,.swiftcover,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+1219,.swiss,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+1220,.sx,country-code,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+1221,.sy,country-code,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+1222,.sydney,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+1223,.symantec,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+1224,.systems,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+1225,.sz,country-code,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+1226,.tab,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+1227,.taipei,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+1228,.talk,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+1229,.taobao,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+1230,.target,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+1231,.tatamotors,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+1232,.tatar,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+1233,.tattoo,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+1234,.tax,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+1235,.taxi,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+1236,.tc,country-code,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+1237,.tci,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+1238,.td,country-code,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+1239,.tdk,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+1240,.team,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+1241,.tech,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+1242,.technology,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+1243,.tel,sponsored,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+1244,.telecity,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+1245,.telefonica,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+1246,.temasek,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+1247,.tennis,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+1248,.teva,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+1249,.tf,country-code,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+1250,.tg,country-code,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+1251,.th,country-code,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+1252,.thd,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+1253,.theater,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+1254,.theatre,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+1255,.tiaa,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+1256,.tickets,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+1257,.tienda,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+1258,.tiffany,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+1259,.tips,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+1260,.tires,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+1261,.tirol,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+1262,.tj,country-code,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+1263,.tjmaxx,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+1264,.tjx,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+1265,.tk,country-code,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+1266,.tkmaxx,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+1267,.tl,country-code,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+1268,.tm,country-code,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+1269,.tmall,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+1270,.tn,country-code,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+1271,.to,country-code,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+1272,.today,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+1273,.tokyo,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+1274,.tools,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+1275,.top,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+1276,.toray,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+1277,.toshiba,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+1278,.total,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+1279,.tours,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+1280,.town,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+1281,.toyota,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+1282,.toys,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+1283,.tp,country-code,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+1284,.tr,country-code,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+1285,.trade,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+1286,.trading,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+1287,.training,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+1288,.travel,sponsored,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+1289,.travelchannel,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+1290,.travelers,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+1291,.travelersinsurance,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+1292,.trust,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+1293,.trv,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+1294,.tt,country-code,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+1295,.tube,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+1296,.tui,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+1297,.tunes,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+1298,.tushu,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+1299,.tv,country-code,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+1300,.tvs,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+1301,.tw,country-code,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+1302,.tz,country-code,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+1303,.ua,country-code,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+1304,.ubank,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+1305,.ubs,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+1306,.uconnect,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+1307,.ug,country-code,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+1308,.uk,country-code,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+1309,.um,country-code,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+1310,.unicom,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+1311,.university,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+1312,.uno,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+1313,.uol,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+1314,.ups,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+1315,.us,country-code,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+1316,.uy,country-code,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+1317,.uz,country-code,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+1318,.va,country-code,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+1319,.vacations,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+1320,.vana,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+1321,.vanguard,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+1322,.vc,country-code,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+1323,.ve,country-code,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+1324,.vegas,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+1325,.ventures,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+1326,.verisign,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+1327,.versicherung,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+1328,.vet,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+1329,.vg,country-code,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+1330,.vi,country-code,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+1331,.viajes,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+1332,.video,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+1333,.vig,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+1334,.viking,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+1335,.villas,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+1336,.vin,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+1337,.vip,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+1338,.virgin,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+1339,.visa,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+1340,.vision,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+1341,.vista,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+1342,.vistaprint,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+1343,.viva,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+1344,.vivo,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+1345,.vlaanderen,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+1346,.vn,country-code,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+1347,.vodka,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+1348,.volkswagen,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+1349,.volvo,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+1350,.vote,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+1351,.voting,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+1352,.voto,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+1353,.voyage,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+1354,.vu,country-code,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+1355,.vuelos,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+1356,.wales,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+1357,.walmart,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+1358,.walter,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+1359,.wang,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+1360,.wanggou,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+1361,.warman,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+1362,.watch,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+1363,.watches,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+1364,.weather,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+1365,.weatherchannel,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+1366,.webcam,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+1367,.weber,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+1368,.website,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+1369,.wed,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+1370,.wedding,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+1371,.weibo,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+1372,.weir,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+1373,.wf,country-code,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+1374,.whoswho,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+1375,.wien,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+1376,.wiki,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+1377,.williamhill,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+1378,.win,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+1379,.windows,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+1380,.wine,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+1381,.winners,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+1382,.wme,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+1383,.wolterskluwer,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+1384,.woodside,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+1385,.work,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+1386,.works,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+1387,.world,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+1388,.wow,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+1389,.ws,country-code,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+1390,.wtc,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+1391,.wtf,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+1392,.xbox,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+1393,.xerox,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+1394,.xfinity,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+1395,.xihuan,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+1396,.xin,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+1397,.xperia,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+1398,.xxx,sponsored,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+1399,.xyz,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+1400,.yachts,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+1401,.yahoo,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+1402,.yamaxun,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+1403,.yandex,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+1404,.ye,country-code,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+1405,.yodobashi,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+1406,.yoga,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+1407,.yokohama,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+1408,.you,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+1409,.youtube,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+1410,.yt,country-code,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+1411,.yun,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+1412,.za,country-code,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+1413,.zappos,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+1414,.zara,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+1415,.zero,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+1416,.zip,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+1417,.zippo,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+1418,.zm,country-code,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+1419,.zone,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+1420,.zuerich,generic,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+1421,.zw,country-code,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
+1422,.localhost,local-environment,2023-09-25 08:04:16,2023-09-25 08:04:16,1,1
