@@ -171,7 +171,29 @@ class NewsletterSubscriberService implements BaseInterface, NewsletterSubscriber
     }
 
     /**
-     * Handle the unsubscribe action for deleting a record.
+     * Handle the subscribe action to the newsletter.
+     * @param array $request The request data containing information for creating the record.
+     * @return Response|ResponseFactory The response containing the created record or a response factory.
+     */
+    public function handleSubscribe(array $request): Response|ResponseFactory
+    {
+        $apiInsertRecord = [
+            'full_name' => $request['full_name'],
+            'email' => $request['email'],
+            'privacy_policy' => array_key_exists('privacy_policy', $request)
+                ? $request['privacy_policy']
+                : false,
+            'valid_email' => 1, // TODO: validate email before saving to the database
+            'newsletter_campaign_id' => 1, // TODO: automatically enroll user to the welcome campaign
+        ];
+        $createdRecord = $this->modelName->createRecord($apiInsertRecord);
+        $apiCreatedRecord = $this->apiResponse->generateApiResponse($createdRecord->toArray(), Actions::create);
+
+        return $apiCreatedRecord;
+    }
+
+    /**
+     * Handle the unsubscribe action from the newsletter.
      * @param string $email The email of the user to be deleted.
      * @return Response|ResponseFactory The response indicating the result of the deletion or a response factory.
      */

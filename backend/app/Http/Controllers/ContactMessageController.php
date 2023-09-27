@@ -23,7 +23,7 @@ class ContactMessageController extends Controller
     }
 
     /**
-     * Unsubscribe user from the newsletter. HTTP request [POST].
+     * Contact message. HTTP request [POST].
      * @param \Illuminate\Http\Request $request The HTTP request instance containing the data to be stored.
      * @return Response|ResponseFactory The response indicating the result of the deletion or a response factory.
      */
