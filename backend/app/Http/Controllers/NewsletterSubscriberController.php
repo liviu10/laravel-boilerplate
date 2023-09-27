@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\BusinessLogic\Interfaces\NewsletterSubscriberInterface;
 use App\Http\Requests\NewsletterSubscriberRequest;
-use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Contracts\Routing\ResponseFactory;
 
@@ -24,10 +23,10 @@ class NewsletterSubscriberController extends Controller
 
     /**
      * Subscribe user to the newsletter. HTTP request [POST].
-     * @param \Illuminate\Http\Request $request The HTTP request instance containing the data to be stored.
+     * @param NewsletterSubscriberRequest $request The HTTP request instance containing the data to be stored.
      * @return Response|ResponseFactory The response indicating the result of the deletion or a response factory.
      */
-    public function subscribe(Request $request): Response|ResponseFactory
+    public function subscribe(NewsletterSubscriberRequest $request): Response|ResponseFactory
     {
         return $this->newsletterSubscriberService->handleSubscribe($request->toArray());
     }

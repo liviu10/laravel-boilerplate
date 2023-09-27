@@ -93,13 +93,14 @@ Route::group(['prefix' => config('app.version')], function () {
     // Application's client api endpoints
     Route::group(['prefix' => '/client'], function () {
         // Contact message
-        Route::post('/contact-message', [ContactMessageController::class, 'contactMessage']);
+        Route::post('/messages', [ContactMessageController::class, 'contactMessage'])->name('contact.messages');
         // Newsletter
-        Route::delete('/unsubscribe/{email}', [NewsletterSubscriberController::class, 'unsubscribe']);
-        Route::apiResource('/subscribe', [NewsletterSubscriberController::class, 'subscribe']);
+        Route::post('/subscribe', [NewsletterSubscriberController::class, 'subscribe'])->name('newsletter.subscribe');
+        Route::delete('/unsubscribe/{email}', [NewsletterSubscriberController::class, 'unsubscribe'])->name('newsletter.unsubscribe');
         // Content (pages and articles)
-        Route::apiResource('/contents', ContentController::class)->only('index', 'show');
+        Route::get('/contents', [ContentController::class, 'fetchAllContents'])->name('content.all');
+        Route::get('/contents/{id}', [ContentController::class, 'fetchSingleContent'])->name('content.single');
         // Application resources
-        Route::apiResource('/resources', ResourceController::class)->only('index');
+        Route::get('/resources', [ResourceController::class, 'fetchAllResources'])->name('resource.all');
     });
 });
