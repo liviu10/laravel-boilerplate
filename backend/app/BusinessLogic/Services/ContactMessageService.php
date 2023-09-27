@@ -11,7 +11,6 @@ use App\Utilities\ApiCheckPermission;
 use App\Utilities\Actions;
 use Illuminate\Http\Response;
 use Illuminate\Contracts\Routing\ResponseFactory;
-use Illuminate\Support\Facades\Auth;
 
 class ContactMessageService implements BaseInterface, ContactMessageInterface
 {
@@ -160,6 +159,27 @@ class ContactMessageService implements BaseInterface, ContactMessageInterface
         } else {
             return $this->apiResponse->generateApiResponse(null, Actions::forbidden);
         }
+    }
+
+    /**
+     * Handle the store action for creating a new record.
+     * @param array $request The request data containing information for creating the record.
+     * @return Response|ResponseFactory The response containing the created record or a response factory.
+     */
+    public function handleContactMessage(array $request): Response|ResponseFactory
+    {
+        $apiInsertRecord = [
+            'full_name'          => $request['full_name'],
+            'email'              => $request['email'],
+            'phone'              => $request['phone'] ? $request['phone'] : null,
+            'contact_subject_id' => $request['contact_subject_id'],
+            'message'            => $request['message'],
+            'privacy_policy'     => $request['privacy_policy'] !== null ? $request['privacy_policy'] : false,
+        ];
+        $createdRecord = $this->modelName->createRecord($apiInsertRecord);
+        $apiCreatedRecord = $this->apiResponse->generateApiResponse($createdRecord->toArray(), Actions::create);
+
+        return $apiCreatedRecord;
     }
 
     public function handleStatisticalIndicators(): array

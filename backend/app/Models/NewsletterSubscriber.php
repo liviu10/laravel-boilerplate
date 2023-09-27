@@ -196,6 +196,47 @@ class NewsletterSubscriber extends BaseModel
     }
 
     /**
+     * Unsubscribe a user from the newsletter using their email address.
+     * @param string $email The email address of the user to unsubscribe.
+     * @return \App\Models\NewsletterSubscriber|bool The unsubscribed subscriber model on success, or false on failure.
+     */
+    public function unsubscribeUser(string $email): NewsletterSubscriber|bool
+    {
+        try {
+            $query = tap($this->where('email', $email))->delete();
+            return $query->fresh();
+        } catch (\Exception $exception) {
+            $this->LogApiError($exception);
+            return false;
+        } catch (\Illuminate\Database\QueryException $exception) {
+            $this->LogApiError($exception);
+            return false;
+        }
+    }
+
+    /**
+     * Fetches a subscriber by their email address.
+     * @param string $email The email address of the subscriber to fetch.
+     * @return \Illuminate\Support\Collection|bool The subscriber data as a Collection on success, or false on failure.
+     */
+    public function fetchSubscriberByEmail(string $email): Collection|bool
+    {
+        try {
+            $query = $this->select('id', 'full_name', 'email')
+                    ->where('email', '=', $email)
+                    ->get();
+
+            return $query;
+        } catch (Exception $exception) {
+            $this->LogApiError($exception);
+            return false;
+        } catch (QueryException $exception) {
+            $this->LogApiError($exception);
+            return false;
+        }
+    }
+
+    /**
      * Get the fillable fields for the model.
      * @return array An array containing the fillable fields for the model.
      */
@@ -220,7 +261,7 @@ class NewsletterSubscriber extends BaseModel
      * @return array|false An array containing associative arrays with 'id' and 'email'
      * keys for the matching subscriber(s), or false if an error occurs during the query.
      */
-    public function checkEmailSubscriber($email): array
+    public function checkEmailSubscriber(string $email): array
     {
         try {
             $result = $this->select('id', 'email')->where('email', $email)->get()->toArray();

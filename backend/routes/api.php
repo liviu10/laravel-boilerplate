@@ -92,8 +92,14 @@ Route::group(['prefix' => config('app.version')], function () {
 
     // Application's client api endpoints
     Route::group(['prefix' => '/client'], function () {
-        // Subscribe / unsubscribe to / from newsletter
-        Route::apiResource('/subscribe', NewsletterSubscriberController::class)->only('store');
-        Route::apiResource('/unsubscribe', NewsletterSubscriberController::class)->only('destroy');
+        // Newsletter
+        Route::post('/contact-message', [ContactMessageController::class, 'contactMessage']);
+        // Newsletter
+        Route::delete('/unsubscribe/{email}', [NewsletterSubscriberController::class, 'unsubscribe']);
+        Route::apiResource('/subscribers', NewsletterSubscriberController::class)->only('store');
+        // Content (pages and articles)
+        Route::apiResource('/contents', ContentController::class)->only('index', 'show');
+        // Application resources
+        Route::apiResource('/resources', ResourceController::class)->only('index');
     });
 });

@@ -170,6 +170,22 @@ class NewsletterSubscriberService implements BaseInterface, NewsletterSubscriber
         }
     }
 
+    /**
+     * Handle the unsubscribe action for deleting a record.
+     * @param string $email The email of the user to be deleted.
+     * @return Response|ResponseFactory The response indicating the result of the deletion or a response factory.
+     */
+    public function handleUnsubscribe(string $email): Response|ResponseFactory
+    {
+        $apiDisplaySingleRecord = $this->modelName->fetchSubscriberByEmail($email);
+        if ($apiDisplaySingleRecord && $apiDisplaySingleRecord->isNotEmpty()) {
+            $this->modelName->unsubscribeUser($email);
+        }
+        $apiDeleteRecord = $this->apiResponse->generateApiResponse($apiDisplaySingleRecord, Actions::delete);
+
+        return $apiDeleteRecord;
+    }
+
     public function handleStatisticalIndicators(): array
     {
         return [];

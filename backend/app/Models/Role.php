@@ -237,10 +237,14 @@ class Role extends BaseModel
      * and returns it as an array containing role information.
      * @return array|bool An array containing role data if successful, or `false` on failure.
      */
-    public function fetchClientRole(): array
+    public function fetchSubscriberRole(): array
     {
         try {
-            $query = $this->select('id')->where('id', 5)->get()->pluck('id')->toArray()[0];
+            $query = $this->select('id')
+                    ->where('id', 6)
+                    ->get()
+                    ->pluck('id')
+                    ->toArray()[0];
 
             return $query;
         } catch (Exception $exception) {

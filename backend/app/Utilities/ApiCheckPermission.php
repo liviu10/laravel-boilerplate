@@ -32,7 +32,7 @@ class ApiCheckPermission
         $this->currentAuthUser = Auth::user();
         $this->permissionDetails = $this->modelName->checkPermission(
             $this->currentRouteName,
-            $this->currentAuthUser ? $this->currentAuthUser->role_id : 1
+            $this->currentAuthUser ? $this->currentAuthUser->role_id : 1 // TODO: replace with null in order to invalidate permissions
         )->toArray()[0];
         $reportsToRole = $this->roleModelName->fetchSingleRole($this->permissionDetails['reports_to_role_id']);
         $this->permissionDetails['reports_to_role_id'] = $reportsToRole;
