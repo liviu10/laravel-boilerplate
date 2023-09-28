@@ -12,14 +12,15 @@ use Illuminate\Database\QueryException;
 use Illuminate\Pagination\LengthAwarePaginator;
 
 /**
- * Class AcceptedDomain
+ * Class Review
  * @package App\Models
 
  * @property int $id
- * @property string $domain
- * @property string $type
- * @property int $user_id
+ * @property string $full_name
+ * @property int $rating
+ * @property string $comment
  * @property boolean $is_active
+ * @property int $user_id
  * @property \Carbon\Carbon $created_at
  * @property \Carbon\Carbon $updated_at
  * @method fetchAllRecords
@@ -27,39 +28,26 @@ use Illuminate\Pagination\LengthAwarePaginator;
  * @method fetchSingleRecord
  * @method updateRecord
  * @method deleteRecord
- * @method checkEmailProvider
- * @method getUniqueDomainTypes
  * @method getFields
  */
-class AcceptedDomain extends BaseModel
+class Review extends BaseModel
 {
     use HasFactory, FilterAvailableFields, LogApiError;
 
-    protected $table = 'accepted_domains';
-
-    protected $foreignKey = 'user_id';
-
-    protected $foreignKeyType = 'int';
+    protected $table = 'reviews';
 
     protected $fillable = [
-        'domain',
-        'type',
-        'user_id',
+        'full_name',
+        'rating',
+        'comment',
         'is_active',
     ];
 
     protected $statisticalIndicators = [
-        'type',
+        'full_name',
+        'rating',
+        'comment',
         'is_active',
-        'user_id',
-    ];
-
-    protected $resourcePermissions = [
-        'accepted-domains.index',
-        'accepted-domains.create',
-        'accepted-domains.show',
-        'accepted-domains.update',
-        'accepted-domains.destroy',
     ];
 
     protected $attributes = [
@@ -70,13 +58,8 @@ class AcceptedDomain extends BaseModel
     {
         $parentCasts = parent::getCastAttributes();
         return array_merge($parentCasts, [
-            'user_id' => 'integer',
+            'rating' => 'integer',
         ]);
-    }
-
-    public function user()
-    {
-        return $this->belongsTo('App\Models\User');
     }
 
     /**
@@ -91,14 +74,14 @@ class AcceptedDomain extends BaseModel
         try {
             $query = $this->select(
                 'id',
-                'domain',
-                'type',
+                'full_name',
+                'rating',
                 'is_active'
             );
 
             if (!empty($search)) {
                 foreach ($search as $field => $value) {
-                    if ($field === 'id' || $field === 'type' || $field === 'is_active') {
+                    if ($field === 'id' || $field === 'rating' || $field === 'is_active') {
                         $query->where($field, '=', $value);
                     } else {
                         $query->where($field, 'LIKE', '%' . $value . '%');
@@ -123,17 +106,18 @@ class AcceptedDomain extends BaseModel
     /**
      * Create a new record in the database.
      * @param array $payload An associative array containing record data.
-     * @return \App\Models\AcceptedDomain|bool The newly created
+     * @return \App\Models\Review|bool The newly created
      * User instance, or `false` if an error occurs.
      */
-    public function createRecord(array $payload): AcceptedDomain|bool
+    public function createRecord(array $payload): Review|bool
     {
         try {
             $query = $this->create([
-                'domain'    => $payload['domain'],
-                'type'      => $payload['type'],
-                'user_id'   => $payload['user_id'],
+                'full_name' => $payload['full_name'],
+                'rating'    => $payload['rating'],
+                'comment'   => $payload['comment'],
                 'is_active' => $payload['is_active'],
+                'user_id'   => $payload['user_id'],
             ]);
 
             return $query;
@@ -159,17 +143,7 @@ class AcceptedDomain extends BaseModel
         try {
             $query = $this->select('*')->where('id', '=', $id);
 
-            if ($type === 'relation') {
-                $query->with([
-                    'user' => function ($query) {
-                        $query->select('id', 'full_name');
-                    }
-                ]);
-
-                return $query->get();
-            } else {
-                return $query->get();
-            }
+            return $query->get();
         } catch (Exception $exception) {
             $this->LogApiError($exception);
             return false;
@@ -183,56 +157,20 @@ class AcceptedDomain extends BaseModel
      * Update a record in the database.
      * @param array $payload An associative array containing the updated record data.
      * @param int $id The unique identifier of the record to update.
-     * @return \App\Models\AcceptedDomain|bool The freshly updated User instance, or `false` if an error occurs.
+     * @return \App\Models\Review|bool The freshly updated User instance, or `false` if an error occurs.
      */
-    public function updateRecord(array $payload, int $id): AcceptedDomain|bool
+    public function updateRecord(array $payload, int $id): Review|bool
     {
         try {
             $query = tap($this->find($id))->update([
-                'domain'    => $payload['domain'],
-                'type'      => $payload['type'],
-                'user_id'   => $payload['user_id'],
+                'full_name' => $payload['full_name'],
+                'rating'    => $payload['rating'],
+                'comment'   => $payload['comment'],
                 'is_active' => $payload['is_active'],
+                'user_id'   => $payload['user_id'],
             ]);
 
             return $query->fresh();
-        } catch (Exception $exception) {
-            $this->LogApiError($exception);
-            return false;
-        } catch (QueryException $exception) {
-            $this->LogApiError($exception);
-            return false;
-        }
-    }
-
-    /**
-     * Check if email provider domains exist in the database.
-     * @param array $domain An array containing email provider domains to check.
-     * @return array|bool An array of matching records or `false` if an error occurs.
-     */
-    public function checkEmailProvider(array $domain): array|bool
-    {
-        try {
-            $result = $this->select('id', 'domain')->whereIn('domain', ['.' . $domain[0], '.' . $domain[1]])->get()->toArray();
-            return $result;
-        } catch (Exception $exception) {
-            $this->LogApiError($exception);
-            return false;
-        } catch (QueryException $exception) {
-            $this->LogApiError($exception);
-            return false;
-        }
-    }
-
-    /**
-     * Get unique domain types from the database.
-     * @return array|bool An array containing unique domain types or `false` if an error occurs.
-     */
-    public function getUniqueDomainTypes(): array|bool
-    {
-        try {
-            $uniqueDomainTypes['type'] = $this->select('id', 'type')->get()->unique('type')->toArray();
-            return $uniqueDomainTypes;
         } catch (Exception $exception) {
             $this->LogApiError($exception);
             return false;
@@ -249,10 +187,11 @@ class AcceptedDomain extends BaseModel
     public function getFields(): array
     {
         $fieldTypes = [
-            'domain'    => 'text',
-            'type'      => 'select',
-            'user_id'   => 'number',
+            'full_name' => 'text',
+            'rating'    => 'number',
+            'comment'   => 'text',
             'is_active' => 'boolean',
+            'user_id'   => 'number',
         ];
 
         $excludedFields = ['user_id'];

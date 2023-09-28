@@ -11,6 +11,7 @@ use App\BusinessLogic\Interfaces\ContactMessageInterface;
 use App\BusinessLogic\Interfaces\ContactResponseInterface;
 use App\BusinessLogic\Interfaces\NewsletterCampaignInterface;
 use App\BusinessLogic\Interfaces\NewsletterSubscriberInterface;
+use App\BusinessLogic\Interfaces\ReviewInterface;
 
 // Import application's management settings
 use App\BusinessLogic\Interfaces\ContentInterface;
@@ -40,6 +41,7 @@ class AppServiceProvider extends ServiceProvider
         $this->app->bind( ContactResponseInterface::class, ContactResponseService::class );
         $this->app->bind( NewsletterCampaignInterface::class, NewsletterCampaignService::class );
         $this->app->bind( NewsletterSubscriberInterface::class, NewsletterSubscriberService::class );
+        $this->app->bind( ReviewInterface::class, ReviewService::class );
 
         // Register application's management settings interfaces and services
         $this->app->bind( ContentInterface::class, ContentService::class );

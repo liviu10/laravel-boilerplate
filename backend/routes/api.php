@@ -20,6 +20,7 @@ use App\Http\Controllers\ContactMessageController;
 use App\Http\Controllers\ContactResponseController;
 use App\Http\Controllers\NewsletterCampaignController;
 use App\Http\Controllers\NewsletterSubscriberController;
+use App\Http\Controllers\ReviewController;
 // Import application's management
 use App\Http\Controllers\ContentController;
 use App\Http\Controllers\TagController;
@@ -55,6 +56,8 @@ Route::group(['prefix' => config('app.version')], function () {
                 Route::apiResource('/campaigns', NewsletterCampaignController::class);
                 Route::apiResource('/subscribers', NewsletterSubscriberController::class);
             });
+            // Reviews
+            Route::apiResource('/reviews', ReviewController::class);
         });
         // Application's management endpoints
         Route::group(['prefix' => '/management'], function () {
@@ -102,5 +105,7 @@ Route::group(['prefix' => config('app.version')], function () {
         Route::get('/contents/{id}', [ContentController::class, 'fetchSingleContent'])->name('content.single');
         // Application resources
         Route::get('/resources', [ResourceController::class, 'fetchAllResources'])->name('resource.all');
+        // Reviews
+        Route::post('/reviews', [ReviewController::class, 'store'])->name('reviews.store');
     });
 });

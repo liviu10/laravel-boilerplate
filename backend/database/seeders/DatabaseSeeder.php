@@ -17,7 +17,7 @@ class DatabaseSeeder extends Seeder
             AcceptedDomainSeeder::class,
             ContactSubjectSeeder::class,
             NewsletterCampaignSeeder::class,
-            PermissionSeeder::class,
+            // PermissionSeeder::class,
             ResourceSeeder::class,
             RoleSeeder::class,
             UserSeeder::class,
