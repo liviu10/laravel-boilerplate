@@ -13,6 +13,9 @@ use Illuminate\Http\Response;
 use Illuminate\Contracts\Routing\ResponseFactory;
 use Illuminate\Support\Facades\Auth;
 
+use App\Models\User;
+use App\Models\Role;
+
 class AcceptedDomainService implements BaseInterface, AcceptedDomainInterface
 {
     use ApiStatisticalIndicators;
@@ -30,6 +33,7 @@ class AcceptedDomainService implements BaseInterface, AcceptedDomainInterface
         $this->modelName = new AcceptedDomain();
         $this->apiResponse = new ApiResponse();
         $this->checkPermission = new ApiCheckPermission();
+        $this->handleResources($this->modelName->getResources());
     }
 
     /**
@@ -154,6 +158,30 @@ class AcceptedDomainService implements BaseInterface, AcceptedDomainInterface
 
     public function handleStatisticalIndicators(): array
     {
+        return [];
+    }
+
+    public function handleResources(array $resources): array
+    {
+        $roles = new Role;
+        $roleIds = $roles->fetchUserRoles();
+        $permissions = [];
+
+        if ($roleIds && is_array($roleIds) && count($roleIds)) {
+            dd(array_search('webmaster', $roleIds, false));
+        }
+
+        foreach ($resources as $resource) {
+            $permissions[] = [
+                'name'               => $resource,
+                'description'        => null,
+                'is_active'          => 1,
+                'need_approval'      => 0,
+                'role_id'            => 1, // webmaster
+                'reports_to_role_id' => 0,
+            ];
+        }
+        dd($permissions);
         return [];
     }
 }

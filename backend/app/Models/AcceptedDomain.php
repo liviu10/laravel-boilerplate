@@ -54,7 +54,7 @@ class AcceptedDomain extends BaseModel
         'user_id',
     ];
 
-    protected $resourcePermissions = [
+    protected $resources = [
         'accepted-domains.index',
         'accepted-domains.create',
         'accepted-domains.show',
@@ -258,5 +258,14 @@ class AcceptedDomain extends BaseModel
         $excludedFields = ['user_id'];
 
         return $this->handleFilterAvailableFields($fieldTypes, $excludedFields);
+    }
+
+    /**
+     * Get the resource methods for the model.
+     * @return array An array containing the resource methods for the model.
+     */
+    public function getResources(): array
+    {
+        return $this->resources;
     }
 }
