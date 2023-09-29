@@ -164,24 +164,21 @@ class AcceptedDomainService implements BaseInterface, AcceptedDomainInterface
     public function handleResources(array $resources): array
     {
         $roles = new Role;
-        $roleIds = $roles->fetchUserRoles();
         $permissions = [];
 
-        if ($roleIds && is_array($roleIds) && count($roleIds)) {
-            dd(array_search('webmaster', $roleIds, false));
+        foreach ($roles->fetchUserRoles() as $role) {
+            foreach ($resources as $resource) {
+                $permissions[] = [
+                    'name'               => $resource,
+                    'description'        => null,
+                    'is_active'          => 1,
+                    'need_approval'      => 0,
+                    'role_id'            => $role['id'],
+                    'reports_to_role_id' => 0,
+                ];
+            }
         }
 
-        foreach ($resources as $resource) {
-            $permissions[] = [
-                'name'               => $resource,
-                'description'        => null,
-                'is_active'          => 1,
-                'need_approval'      => 0,
-                'role_id'            => 1, // webmaster
-                'reports_to_role_id' => 0,
-            ];
-        }
-        dd($permissions);
-        return [];
+        return $permissions;
     }
 }
