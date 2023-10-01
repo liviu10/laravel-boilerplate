@@ -59,6 +59,14 @@ class ContactMessage extends BaseModel
         'contact_subject_id',
     ];
 
+    protected $resources = [
+        'contact-messages.index',
+        'contact-messages.create',
+        'contact-messages.show',
+        'contact-messages.update',
+        'contact-messages.destroy',
+    ];
+
     protected $attributes = [
         'privacy_policy' => false,
     ];
@@ -229,5 +237,14 @@ class ContactMessage extends BaseModel
         $excludedFields = ['contact_subject_id'];
 
         return $this->handleFilterAvailableFields($fieldTypes, $excludedFields);
+    }
+
+    /**
+     * Get the resource methods for the model.
+     * @return array An array containing the resource methods for the model.
+     */
+    public function getResources(): array
+    {
+        return $this->resources;
     }
 }

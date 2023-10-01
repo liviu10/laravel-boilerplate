@@ -52,6 +52,14 @@ class ContactSubject extends BaseModel
         'user_id',
     ];
 
+    protected $resources = [
+        'contact-subjects.index',
+        'contact-subjects.create',
+        'contact-subjects.show',
+        'contact-subjects.update',
+        'contact-subjects.destroy',
+    ];
+
     protected $attributes = [
         'is_active' => false,
     ];
@@ -211,5 +219,14 @@ class ContactSubject extends BaseModel
         $excludedFields = ['user_id'];
 
         return $this->handleFilterAvailableFields($fieldTypes, $excludedFields);
+    }
+
+    /**
+     * Get the resource methods for the model.
+     * @return array An array containing the resource methods for the model.
+     */
+    public function getResources(): array
+    {
+        return $this->resources;
     }
 }

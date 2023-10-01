@@ -50,6 +50,14 @@ class Review extends BaseModel
         'is_active',
     ];
 
+    protected $resources = [
+        'reviews.index',
+        'reviews.create',
+        'reviews.show',
+        'reviews.update',
+        'reviews.destroy',
+    ];
+
     protected $attributes = [
         'is_active' => false,
     ];
@@ -197,5 +205,14 @@ class Review extends BaseModel
         $excludedFields = ['user_id'];
 
         return $this->handleFilterAvailableFields($fieldTypes, $excludedFields);
+    }
+
+    /**
+     * Get the resource methods for the model.
+     * @return array An array containing the resource methods for the model.
+     */
+    public function getResources(): array
+    {
+        return $this->resources;
     }
 }

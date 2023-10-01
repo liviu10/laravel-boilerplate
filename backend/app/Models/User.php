@@ -72,6 +72,14 @@ class User extends Authenticatable
         'role_id',
     ];
 
+    protected $resources = [
+        'users.index',
+        'users.create',
+        'users.show',
+        'users.update',
+        'users.destroy',
+    ];
+
     protected $hidden = [
         'password',
         'remember_token',
@@ -361,5 +369,14 @@ class User extends Authenticatable
     public function getStatisticalIndicators()
     {
         return $this->statisticalIndicators;
+    }
+
+    /**
+     * Get the resource methods for the model.
+     * @return array An array containing the resource methods for the model.
+     */
+    public function getResources(): array
+    {
+        return $this->resources;
     }
 }

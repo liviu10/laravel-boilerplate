@@ -52,6 +52,14 @@ class Tag extends BaseModel
         'user_id',
     ];
 
+    protected $resources = [
+        'tags.index',
+        'tags.create',
+        'tags.show',
+        'tags.update',
+        'tags.destroy',
+    ];
+
     protected function getCastAttributes()
     {
         $parentCasts = parent::getCastAttributes();
@@ -213,5 +221,14 @@ class Tag extends BaseModel
         $excludedFields = ['content_id', 'user_id'];
 
         return $this->handleFilterAvailableFields($fieldTypes, $excludedFields);
+    }
+
+    /**
+     * Get the resource methods for the model.
+     * @return array An array containing the resource methods for the model.
+     */
+    public function getResources(): array
+    {
+        return $this->resources;
     }
 }

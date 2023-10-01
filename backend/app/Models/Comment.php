@@ -60,6 +60,14 @@ class Comment extends BaseModel
         'user_id',
     ];
 
+    protected $resources = [
+        'comments.index',
+        'comments.create',
+        'comments.show',
+        'comments.update',
+        'comments.destroy',
+    ];
+
     protected $commentTypeOptions = [
         'Comment', 'Reply'
     ];
@@ -244,5 +252,14 @@ class Comment extends BaseModel
     public function getCommentStatusOptions(): array
     {
         return $this->commentStatusOptions;
+    }
+
+    /**
+     * Get the resource methods for the model.
+     * @return array An array containing the resource methods for the model.
+     */
+    public function getResources(): array
+    {
+        return $this->resources;
     }
 }

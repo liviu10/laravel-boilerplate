@@ -9,6 +9,7 @@ use App\Models\User;
 use App\Models\Role;
 use App\Utilities\ApiResponse;
 use App\Utilities\ApiCheckPermission;
+use App\Utilities\ApiResourcePermission;
 use App\Utilities\Actions;
 use Illuminate\Http\Response;
 use Illuminate\Contracts\Routing\ResponseFactory;
@@ -22,6 +23,7 @@ class UserService implements BaseInterface, UserInterface
     protected $modelNameRole;
     protected $apiResponse;
     protected $checkPermission;
+    protected $resourcePermissions;
 
     /**
      * Create a new instance of the service class.
@@ -33,6 +35,8 @@ class UserService implements BaseInterface, UserInterface
         $this->modelNameRole = new Role();
         $this->apiResponse = new ApiResponse();
         $this->checkPermission = new ApiCheckPermission();
+        $this->resourcePermissions = new ApiResourcePermission();
+        $this->handleResourcePermissions();
     }
 
     /**
@@ -208,5 +212,11 @@ class UserService implements BaseInterface, UserInterface
         // );
 
         return [];
+    }
+
+    public function handleResourcePermissions(): void
+    {
+        $resources = $this->modelName->getResources();
+        $this->resourcePermissions->handleApiCreateResourcePermission($resources);
     }
 }

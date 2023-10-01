@@ -52,6 +52,14 @@ class Role extends BaseModel
         'is_active',
     ];
 
+    protected $resources = [
+        'roles.index',
+        'roles.create',
+        'roles.show',
+        'roles.update',
+        'roles.destroy',
+    ];
+
     protected $attributes = [
         'is_active' => false,
     ];
@@ -278,5 +286,14 @@ class Role extends BaseModel
             $this->LogApiError($exception);
             return false;
         }
+    }
+
+    /**
+     * Get the resource methods for the model.
+     * @return array An array containing the resource methods for the model.
+     */
+    public function getResources(): array
+    {
+        return $this->resources;
     }
 }

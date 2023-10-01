@@ -56,6 +56,14 @@ class Content extends BaseModel
         'user_id',
     ];
 
+    protected $resources = [
+        'contents.index',
+        'contents.create',
+        'contents.show',
+        'contents.update',
+        'contents.destroy',
+    ];
+
     protected $visibilityOptions = [
         'Public', 'Private', 'Draft'
     ];
@@ -269,5 +277,14 @@ class Content extends BaseModel
     public function getContentTypeOptions(): array
     {
         return $this->contentTypeOptions;
+    }
+
+    /**
+     * Get the resource methods for the model.
+     * @return array An array containing the resource methods for the model.
+     */
+    public function getResources(): array
+    {
+        return $this->resources;
     }
 }

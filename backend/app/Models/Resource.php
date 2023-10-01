@@ -60,6 +60,14 @@ class Resource extends BaseModel
         'user_id',
     ];
 
+    protected $resources = [
+        'resources.index',
+        'resources.create',
+        'resources.show',
+        'resources.update',
+        'resources.destroy',
+    ];
+
     protected $attributes = [
         'is_active'     => false,
         'requires_auth' => false,
@@ -267,5 +275,14 @@ class Resource extends BaseModel
     public function getResourceTypes(): array
     {
         return $this->resourceTypes;
+    }
+
+    /**
+     * Get the resource methods for the model.
+     * @return array An array containing the resource methods for the model.
+     */
+    public function getResources(): array
+    {
+        return $this->resources;
     }
 }

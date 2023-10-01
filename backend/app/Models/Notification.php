@@ -50,6 +50,14 @@ class Notification extends BaseModel
         'user_id',
     ];
 
+    protected $resources = [
+        'notifications.index',
+        'notifications.create',
+        'notifications.show',
+        'notifications.update',
+        'notifications.destroy',
+    ];
+
     protected $notificationTypeOptions = [
         'SMS',
         'Email',
@@ -235,5 +243,14 @@ class Notification extends BaseModel
     public function getNotificationConditionOptions(): array
     {
         return $this->notificationConditionOptions;
+    }
+
+    /**
+     * Get the resource methods for the model.
+     * @return array An array containing the resource methods for the model.
+     */
+    public function getResources(): array
+    {
+        return $this->resources;
     }
 }

@@ -52,6 +52,14 @@ class Appreciation extends BaseModel
         'user_id',
     ];
 
+    protected $resources = [
+        'appreciations.index',
+        'appreciations.create',
+        'appreciations.show',
+        'appreciations.update',
+        'appreciations.destroy',
+    ];
+
     protected function getCastAttributes(): array
     {
         $parentCasts = parent::getCastAttributes();
@@ -195,5 +203,14 @@ class Appreciation extends BaseModel
         $excludedFields = ['content_id', 'user_id'];
 
         return $this->handleFilterAvailableFields($fieldTypes, $excludedFields);
+    }
+
+    /**
+     * Get the resource methods for the model.
+     * @return array An array containing the resource methods for the model.
+     */
+    public function getResources(): array
+    {
+        return $this->resources;
     }
 }

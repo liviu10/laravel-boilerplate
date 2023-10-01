@@ -54,6 +54,14 @@ class ContactResponse extends BaseModel
         'contact_message_id',
     ];
 
+    protected $resources = [
+        'contact-responses.index',
+        'contact-responses.create',
+        'contact-responses.show',
+        'contact-responses.update',
+        'contact-responses.destroy',
+    ];
+
     protected function getCastAttributes()
     {
         $parentCasts = parent::getCastAttributes();
@@ -224,5 +232,14 @@ class ContactResponse extends BaseModel
         $excludedFields = ['user_id', 'contact_message_id'];
 
         return $this->handleFilterAvailableFields($fieldTypes, $excludedFields);
+    }
+
+    /**
+     * Get the resource methods for the model.
+     * @return array An array containing the resource methods for the model.
+     */
+    public function getResources(): array
+    {
+        return $this->resources;
     }
 }

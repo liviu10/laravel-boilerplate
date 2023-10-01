@@ -8,6 +8,7 @@ use App\Traits\ApiStatisticalIndicators;
 use App\Models\Appreciation;
 use App\Utilities\ApiResponse;
 use App\Utilities\ApiCheckPermission;
+use App\Utilities\ApiResourcePermission;
 use App\Utilities\Actions;
 use Illuminate\Http\Response;
 use Illuminate\Contracts\Routing\ResponseFactory;
@@ -20,6 +21,7 @@ class AppreciationService implements BaseInterface, AppreciationInterface
     protected $modelName;
     protected $apiResponse;
     protected $checkPermission;
+    protected $resourcePermissions;
 
     /**
      * Create a new instance of the service class.
@@ -30,6 +32,8 @@ class AppreciationService implements BaseInterface, AppreciationInterface
         $this->modelName = new Appreciation();
         $this->apiResponse = new ApiResponse();
         $this->checkPermission = new ApiCheckPermission();
+        $this->resourcePermissions = new ApiResourcePermission();
+        $this->handleResourcePermissions();
     }
 
     /**
@@ -167,5 +171,11 @@ class AppreciationService implements BaseInterface, AppreciationInterface
     public function handleStatisticalIndicators(): array
     {
         return [];
+    }
+
+    public function handleResourcePermissions(): void
+    {
+        $resources = $this->modelName->getResources();
+        $this->resourcePermissions->handleApiCreateResourcePermission($resources);
     }
 }

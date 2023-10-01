@@ -16,4 +16,6 @@ interface BaseInterface
     public function handleUpdate(array $request, int $id): Response|ResponseFactory;
 
     public function handleDestroy(int $id): Response|ResponseFactory;
+
+    public function handleResourcePermissions(): void;
 }

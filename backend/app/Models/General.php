@@ -47,6 +47,14 @@ class General extends BaseModel
         'user_id',
     ];
 
+    protected $resources = [
+        'generals.index',
+        'generals.create',
+        'generals.show',
+        'generals.update',
+        'generals.destroy',
+    ];
+
     protected $generalTypeOptions = [
         'General',
         'Writing',
@@ -216,5 +224,14 @@ class General extends BaseModel
     public function getGeneralTypeOptions(): array
     {
         return $this->generalTypeOptions;
+    }
+
+    /**
+     * Get the resource methods for the model.
+     * @return array An array containing the resource methods for the model.
+     */
+    public function getResources(): array
+    {
+        return $this->resources;
     }
 }

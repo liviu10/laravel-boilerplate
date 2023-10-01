@@ -8,13 +8,11 @@ use App\Traits\ApiStatisticalIndicators;
 use App\Models\AcceptedDomain;
 use App\Utilities\ApiResponse;
 use App\Utilities\ApiCheckPermission;
+use App\Utilities\ApiResourcePermission;
 use App\Utilities\Actions;
 use Illuminate\Http\Response;
 use Illuminate\Contracts\Routing\ResponseFactory;
 use Illuminate\Support\Facades\Auth;
-
-use App\Models\User;
-use App\Models\Role;
 
 class AcceptedDomainService implements BaseInterface, AcceptedDomainInterface
 {
@@ -23,6 +21,7 @@ class AcceptedDomainService implements BaseInterface, AcceptedDomainInterface
     protected $modelName;
     protected $apiResponse;
     protected $checkPermission;
+    protected $resourcePermissions;
 
     /**
      * Create a new instance of the service class.
@@ -33,7 +32,8 @@ class AcceptedDomainService implements BaseInterface, AcceptedDomainInterface
         $this->modelName = new AcceptedDomain();
         $this->apiResponse = new ApiResponse();
         $this->checkPermission = new ApiCheckPermission();
-        $this->handleResources($this->modelName->getResources());
+        $this->resourcePermissions = new ApiResourcePermission();
+        $this->handleResourcePermissions();
     }
 
     /**
@@ -161,24 +161,9 @@ class AcceptedDomainService implements BaseInterface, AcceptedDomainInterface
         return [];
     }
 
-    public function handleResources(array $resources): array
+    public function handleResourcePermissions(): void
     {
-        $roles = new Role;
-        $permissions = [];
-
-        foreach ($roles->fetchUserRoles() as $role) {
-            foreach ($resources as $resource) {
-                $permissions[] = [
-                    'name'               => $resource,
-                    'description'        => null,
-                    'is_active'          => 1,
-                    'need_approval'      => 0,
-                    'role_id'            => $role['id'],
-                    'reports_to_role_id' => 0,
-                ];
-            }
-        }
-
-        return $permissions;
+        $resources = $this->modelName->getResources();
+        $this->resourcePermissions->handleApiCreateResourcePermission($resources);
     }
 }

@@ -52,6 +52,14 @@ class Media extends BaseModel
         'user_id',
     ];
 
+    protected $resources = [
+        'medias.index',
+        'medias.create',
+        'medias.show',
+        'medias.update',
+        'medias.destroy',
+    ];
+
     protected $mediaTypeOptions = [
         'Images', 'Documents', 'Videos', 'Audio', 'Others'
     ];
@@ -222,5 +230,14 @@ class Media extends BaseModel
     public function getMediaTypeOptions(): array
     {
         return $this->mediaTypeOptions;
+    }
+
+    /**
+     * Get the resource methods for the model.
+     * @return array An array containing the resource methods for the model.
+     */
+    public function getResources(): array
+    {
+        return $this->resources;
     }
 }

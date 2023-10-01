@@ -57,6 +57,14 @@ class NewsletterSubscriber extends BaseModel
         'newsletter_campaign_id',
     ];
 
+    protected $resources = [
+        'notification-subscribers.index',
+        'notification-subscribers.create',
+        'notification-subscribers.show',
+        'notification-subscribers.update',
+        'notification-subscribers.destroy',
+    ];
+
     protected $attributes = [
         'privacy_policy' => false,
         'valid_email'    => false,
@@ -271,5 +279,14 @@ class NewsletterSubscriber extends BaseModel
             $this->LogApiError($mysqlError);
             return false;
         }
+    }
+
+    /**
+     * Get the resource methods for the model.
+     * @return array An array containing the resource methods for the model.
+     */
+    public function getResources(): array
+    {
+        return $this->resources;
     }
 }

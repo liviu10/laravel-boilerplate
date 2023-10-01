@@ -122,8 +122,8 @@ class Permission extends BaseModel
                 'description'        => $payload['description'],
                 'is_active'          => $payload['is_active'],
                 'need_approval'      => $payload['need_approval'],
-                'role_id'            => $payload['role_id'],
                 'reports_to_role_id' => $payload['reports_to_role_id'],
+                'role_id'            => $payload['role_id'],
             ]);
 
             return $query;
@@ -183,8 +183,8 @@ class Permission extends BaseModel
                 'description'        => $payload['description'],
                 'is_active'          => $payload['is_active'],
                 'need_approval'      => $payload['need_approval'],
-                'role_id'            => $payload['role_id'],
                 'reports_to_role_id' => $payload['reports_to_role_id'],
+                'role_id'            => $payload['role_id'],
             ]);
 
             return $query->fresh();

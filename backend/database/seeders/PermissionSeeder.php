@@ -29,10 +29,10 @@ class PermissionSeeder extends Seeder
                     'description' => $data['2'],
                     'is_active' => (bool)$data[3],
                     'need_approval' => (bool)$data[4],
-                    'created_at' => Carbon::parse($data[5]),
-                    'updated_at' => Carbon::parse($data[6]),
-                    'role_id' => (int)$data[7],
-                    'reports_to_role_id' => (int)$data[8],
+                    'reports_to_role_id' => (int)$data[5],
+                    'created_at' => Carbon::parse($data[6]),
+                    'updated_at' => Carbon::parse($data[7]),
+                    'role_id' => (int)$data[8],
                 ]);
             }
             $firstLine = false;
