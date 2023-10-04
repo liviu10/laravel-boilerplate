@@ -7,8 +7,8 @@ const routes: RouteRecordRaw[] = [
     children: [
       {
         path: '/admin',
-        name: 'HomePage',
-        component: () => import('pages/admin/HomePage.vue'),
+        name: 'AdminHomePage',
+        component: () => import('pages/AdminHomePage.vue'),
         meta: {
           title: 'admin.home.title',
           caption: 'admin.home.description',

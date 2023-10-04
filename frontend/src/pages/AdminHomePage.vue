@@ -86,7 +86,7 @@ const availableResources = computed((): RouteRecordRaw[] | undefined => {
   const allResources = router.options.routes[0].children;
   const displayResources: RouteRecordRaw[] | undefined = [];
   allResources?.forEach((resource) => {
-    if (resource.name !== 'HomePage' && resource.name !== 'DocumentationPage') {
+    if (resource.name !== 'AdminHomePage') {
       displayResources.push(resource);
     }
   });

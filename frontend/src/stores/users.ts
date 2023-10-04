@@ -1,22 +1,28 @@
 import { defineStore } from 'pinia';
 import { api } from 'src/boot/axios'
-import { applicationApiSettings, acceptedDomainsEndpoint } from 'src/api/apiSettings';
-import { PaginatedResultsInterface, FilterInterface } from 'src/interfaces/ApiResponseInterface';
+import { usersEndpoint } from 'src/api/settings';
+import {
+  ColumnModelInterface,
+  FilterModelInterface,
+  DataModelInterface,
+  PaginatedResultsInterface
+} from 'src/interfaces/ApiResponseInterface';
 import { notificationSystem } from 'src/library/NotificationSystem/NotificationSystem';
-import { AcceptedDomainInterface } from 'src/interfaces/ApplicationInterface';
+import { UserInterface } from 'src/interfaces/UserInterface';
 import { saveFilterToLocalStorage } from 'src/library/FilterToLocalStorage/SaveFilterToLocalStorage';
 import { notificationSystemLog } from 'src/library/NotificationSystem/NotificationSystemLog';
 
-const fullApiUrl = applicationApiSettings + acceptedDomainsEndpoint
+const fullApiUrl = usersEndpoint
 
-const useAcceptedDomainStore = defineStore('acceptedDomainStore', {
+const useUserStore = defineStore('userStore', {
   state: () => ({
     allRecords: {} as PaginatedResultsInterface,
     userIsAuthenticated: false as boolean,
-    allFilters: [] as FilterInterface[],
-    appliedFilters: [] as Pick<FilterInterface, 'key' | 'value'>[],
+    allFilters: [] as FilterModelInterface[],
+    appliedFilters: [] as Pick<FilterModelInterface, 'key' | 'value'>[],
+    dataModel: [] as DataModelInterface[],
     createRecord: {},
-    singleRecord: {} as AcceptedDomainInterface,
+    singleRecord: {} as UserInterface,
     updateRecord: {},
     deleteRecord: {},
   }),
@@ -24,36 +30,60 @@ const useAcceptedDomainStore = defineStore('acceptedDomainStore', {
     getAllRecords: (state) => state.allRecords,
     getAllFilters: (state) => state.allFilters,
     getAppliedFilters: (state) => state.appliedFilters,
+    getDataModel: (state) => state.dataModel,
     getCreatRecord: (state) => state.createRecord,
     getSingleRecord: (state) => state.singleRecord,
     getUpdateRecord: (state) => state.updateRecord,
     getDeleteRecord: (state) => state.deleteRecord,
   },
   actions: {
-    async getRecords(search?: Pick<FilterInterface, 'key' | 'value'>[] | undefined) {
+    async getRecords(search?: Pick<FilterModelInterface, 'key' | 'value'>[] | undefined) {
       let searchQuery: Record<string, string | number | null> = {};
-      searchQuery = saveFilterToLocalStorage.value(useAcceptedDomainStore.$id, search)
+      searchQuery = saveFilterToLocalStorage.value(useUserStore.$id, search)
 
       const apiResponse: PaginatedResultsInterface | void =
         await api.get(fullApiUrl, { params: searchQuery })
           .then(response => {
             this.allRecords = response.data.results
             this.allFilters = response.data.filters
+            this.dataModel = response.data.model
             return this.allRecords
           })
           .catch((error) => {
             notificationSystem(error.name, error.message, 'negative', 'bottom', true, error.response?.data)
-            console.error(`${notificationSystemLog.value('negative', useAcceptedDomainStore.$id, error)}`)
+            console.error(`${notificationSystemLog.value('negative', useUserStore.$id, error)}`)
           })
       return apiResponse
     },
 
     async createRecord() {
-      debugger;
+      const payload: { [key: string]: string | number | null } = {};
+      this.dataModel.forEach(item => { payload[item.key] = item.value; });
+
+      const apiResponse: UserInterface | void =
+        await api.post(fullApiUrl, payload)
+          .then(response => {
+            debugger;
+            this.singleRecord = response.data.results[0]
+            return this.singleRecord
+          })
+          .catch((error) => {
+            Object.keys(error.response?.data.errors).forEach(key => {
+              const matchingItem = this.dataModel.find(item => item.key === key);
+              if (matchingItem) {
+                const errorArray = error.response?.data.errors[key];
+                matchingItem.errors = errorArray[0];
+              }
+            });
+            debugger;
+            notificationSystem(error.name, error.message, 'negative', 'bottom', true, error.response?.data)
+            console.error(`${notificationSystemLog.value('negative', useUserStore.$id, error)}`)
+          })
+      return apiResponse
     },
 
     async findRecord(recordId: number) {
-      const apiResponse: AcceptedDomainInterface | void =
+      const apiResponse: UserInterface | void =
         await api.get(fullApiUrl + '/' + recordId)
           .then(response => {
             this.singleRecord = response.data.results[0]
@@ -61,7 +91,7 @@ const useAcceptedDomainStore = defineStore('acceptedDomainStore', {
           })
           .catch((error) => {
             notificationSystem(error.name, error.message, 'negative', 'bottom', true, error.response?.data)
-            console.error(`${notificationSystemLog.value('negative', useAcceptedDomainStore.$id, error)}`)
+            console.error(`${notificationSystemLog.value('negative', useUserStore.$id, error)}`)
           })
       return apiResponse
     },
@@ -76,4 +106,4 @@ const useAcceptedDomainStore = defineStore('acceptedDomainStore', {
   },
 });
 
-export { useAcceptedDomainStore };
+export { useUserStore };

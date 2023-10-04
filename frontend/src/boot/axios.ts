@@ -9,8 +9,8 @@ declare module '@vue/runtime-core' {
 
 const apiBaseUrl =
   process.env.NODE_ENV === 'development'
-    ? process.env.DEV_API_BASE_URL
-    : process.env.PROD_API_BASE_URL;
+    ? process.env.DEV_API_BASE_URL + '/admin'
+    : process.env.PROD_API_BASE_URL + '/client';
 
 // Be careful when using SSR for cross-request state pollution
 // due to creating a Singleton instance here;
