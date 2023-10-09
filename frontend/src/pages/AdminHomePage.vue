@@ -27,6 +27,6 @@ const settings = useSettingStore();
 const router = useRouter();
 
 onMounted(async () => {
-  await settings.listRecords()
+  await settings.listRecords('resources')
 })
 </script>

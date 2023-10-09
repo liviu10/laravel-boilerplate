@@ -44,28 +44,35 @@ interface ModelInterface {
 const notificationTitle = 'Warning'
 const notificationMessage = 'Something went wrong'
 
+/**
+ * Handles the response from an Axios request and transforms it into a structured response object.
+ * @param {AxiosResponse} response - The Axios response object.
+ * @param {string} storeId - The store identifier.
+ * @returns {ListRecordsResponseInterface | null} A structured response object containing
+ * columns, description, filters, models, results, and title, or null if the response is not valid.
+ */
 const handleApiResponse = (response: AxiosResponse, storeId: string): ListRecordsResponseInterface | null => {
   const data = response.data
 
   if (response.status === 200 && data && Object.keys(data).length) {
     const description = data.description
     const title = data.title
+    const hasColumns = data.hasOwnProperty('columns') && Array.isArray(data.columns) && data.columns.length
+    const hasFilters = data.hasOwnProperty('filters') && Array.isArray(data.filters) && data.filters.length
+    const hasModels = data.hasOwnProperty('models') && Array.isArray(data.models) && data.models.length
+    const hasResults = data.hasOwnProperty('results') && Array.isArray(data.results) && data.results.length
 
-    const columns: ColumnInterface[] | [] = (data.hasOwnProperty('columns') && Array.isArray(data.columns) && data.columns.length)
-      ? data.columns
-      : []
+    // Extract columns
+    const columns: ColumnInterface[] | [] = (hasColumns) ? data.columns : []
 
-    const filters: FilterInterface[] | [] = (data.hasOwnProperty('filters') && Array.isArray(data.filters) && data.filters.length)
-      ? data.filters
-      : []
+    // Extract filters
+    const filters: FilterInterface[] | [] = (hasFilters) ? data.filters : []
 
-    const models: ModelInterface[] | [] = (data.hasOwnProperty('models') && Array.isArray(data.models) && data.models.length)
-      ? data.models
-      : []
+    // Extract models
+    const models: ModelInterface[] | [] = (hasModels) ? data.models : []
 
-    const results: object[] | [] = (data.hasOwnProperty('results') && Array.isArray(data.results) && data.results.length)
-      ? data.results
-      : []
+    // Extract results
+    const results: object[] | [] = (hasResults) ? data.results : []
 
     return { columns, description, filters, models, results, title }
   } else {
@@ -77,9 +84,9 @@ const handleApiResponse = (response: AxiosResponse, storeId: string): ListRecord
 }
 
 export {
-  ListRecordsResponseInterface,
   ColumnInterface,
   FilterInterface,
   ModelInterface,
+  ListRecordsResponseInterface,
   handleApiResponse
 }

@@ -1,11 +1,44 @@
 import { defineStore } from 'pinia'
-import { resourceEndpoint } from 'src/api/settings'
 import { api } from 'src/boot/axios'
 import { ColumnInterface, FilterInterface, ModelInterface, handleApiResponse } from 'src/library/ApiResponse/main'
 import { handleNotificationSystem, handleNotificationSystemLog } from 'src/library/NotificationSystem/main'
 import { Ref, computed, ref } from 'vue'
 
-const fullApiUrl: string = resourceEndpoint
+let fullApiUrl = ''
+const notificationTitle = 'Warning'
+const notificationMessage = 'The resource does not exist'
+const settingsResources = [
+  {
+    id: 1,
+    name: 'accepted-domains',
+    endpoint: '/admin/settings/accepted-domains'
+  },
+  {
+    id: 2,
+    name: 'general',
+    endpoint: '/admin/settings/general'
+  },
+  {
+    id: 3,
+    name: 'notifications',
+    endpoint: '/admin/settings/notifications'
+  },
+  {
+    id: 4,
+    name: 'resources',
+    endpoint: '/admin/settings/resources'
+  },
+  {
+    id: 5,
+    name: 'roles',
+    endpoint: '/admin/settings/roles'
+  },
+  {
+    id: 6,
+    name: 'users',
+    endpoint: '/admin/settings/users'
+  }
+]
 
 export const useSettingStore = defineStore('settings', () => {
   // State
@@ -25,24 +58,35 @@ export const useSettingStore = defineStore('settings', () => {
   const getResponseMessage = computed(() => responseMessage.value)
 
   // Actions
-  async function listRecords() {
-    await api.get(fullApiUrl)
-      .then(response => {
-        const data = handleApiResponse(response, useSettingStore.$id)
+  async function listRecords(resourceName: string) {
+    const resourceEndpoint = settingsResources.find((r) => r.name === resourceName)
 
-        if (data) {
-          allColumns.value = data.columns
-          responseMessage.value = data.description
-          allFilters.value = data.filters
-          allModels.value = data.models
-          allRecords.value = data.results
-          responseTitle.value = data.title
-        }
-      })
-      .catch((error) => {
-        handleNotificationSystem(error.name, error.message, 'negative', 'bottom', true, error.response?.data)
-        console.error(`${handleNotificationSystemLog.value('negative', useSettingStore.$id, error)}`)
-      })
+    if (resourceEndpoint) {
+      fullApiUrl = resourceEndpoint.endpoint;
+      await api.get(fullApiUrl)
+        .then(response => {
+          const data = handleApiResponse(response, useSettingStore.$id)
+
+          if (data) {
+            allColumns.value = data.columns
+            responseMessage.value = data.description
+            allFilters.value = data.filters
+            allModels.value = data.models
+            allRecords.value = data.results
+            responseTitle.value = data.title
+          }
+        })
+        .catch((error) => {
+          handleNotificationSystem(error.name, error.message, 'negative', 'bottom', true, error.response?.data)
+          console.error(`${handleNotificationSystemLog.value('negative', useSettingStore.$id, error)}`)
+        })
+    } else {
+      const context = {
+        message: 'Test context'
+      }
+      handleNotificationSystem(notificationTitle, notificationMessage, 'negative', 'bottom', true)
+      console.error(`${handleNotificationSystemLog.value('negative', useSettingStore.$id, context)}`)
+    }
   }
 
   return {
