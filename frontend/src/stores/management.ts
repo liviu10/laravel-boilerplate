@@ -1,6 +1,6 @@
 import { defineStore } from 'pinia'
 import { ResourceEndpointInterface } from 'src/api/interface'
-import { settingsResources } from 'src/api/settings'
+import { managementResources } from 'src/api/management'
 import { api } from 'src/boot/axios'
 import { ColumnInterface, FilterInterface, ModelInterface } from 'src/library/ApiResponse/composables/interfaces'
 import { handleApiResponse } from 'src/library/ApiResponse/main'
@@ -12,7 +12,7 @@ let resourceEndpoint: ResourceEndpointInterface | undefined = undefined
 const notificationTitle = 'Warning'
 const notificationMessage = 'The resource does not exist'
 
-export const useSettingStore = defineStore('settings', () => {
+export const useManagementStore = defineStore('management', () => {
   // State
   const allColumns: Ref<ColumnInterface[] | [] | undefined> = ref(undefined)
   const responseTitle = ref('')
@@ -20,7 +20,6 @@ export const useSettingStore = defineStore('settings', () => {
   const allModels: Ref<ModelInterface[] | [] | undefined> = ref(undefined)
   const allRecords: Ref<object[] | [] | undefined> = ref(undefined)
   const responseMessage = ref('')
-  const singleRecord: Ref<object[] | [] | undefined> = ref(undefined)
 
   // Getters
   const getAllColumns = computed(() => allColumns.value)
@@ -29,17 +28,16 @@ export const useSettingStore = defineStore('settings', () => {
   const getAllModels = computed(() => allModels.value)
   const getAllRecords = computed(() => allRecords.value)
   const getResponseMessage = computed(() => responseMessage.value)
-  const getSingleRecord = computed(() => singleRecord.value)
 
   // Actions
-  async function handleIndex(resourceName: string) {
-    resourceEndpoint = settingsResources.find((r) => r.name === resourceName)
+  async function listRecords(resourceName: string) {
+    resourceEndpoint = managementResources.find((r) => r.name === resourceName)
 
     if (resourceEndpoint) {
       fullApiUrl = resourceEndpoint.endpoint;
       await api.get(fullApiUrl)
         .then(response => {
-          const data = handleApiResponse(response, useSettingStore.$id)
+          const data = handleApiResponse(response, useManagementStore.$id)
 
           if (data) {
             allColumns.value = data.columns
@@ -52,36 +50,14 @@ export const useSettingStore = defineStore('settings', () => {
         })
         .catch((error) => {
           handleNotificationSystem(error.name, error.message, 'negative', 'bottom', true, error.response?.data)
-          console.error(`${handleNotificationSystemLog.value('negative', useSettingStore.$id, error)}`)
+          console.error(`${handleNotificationSystemLog.value('negative', useManagementStore.$id, error)}`)
         })
     } else {
       const context = {
         message: 'Test context'
       }
       handleNotificationSystem(notificationTitle, notificationMessage, 'negative', 'bottom', true)
-      console.error(`${handleNotificationSystemLog.value('negative', useSettingStore.$id, context)}`)
-    }
-  }
-
-  async function handleShow(resourceName: string, recordId: number) {
-    resourceEndpoint = settingsResources.find((r) => r.name === resourceName)
-
-    if (resourceEndpoint) {
-      fullApiUrl = `${resourceEndpoint.endpoint}/${recordId}`
-      await api.get(fullApiUrl)
-        .then(response => {
-          debugger;
-        })
-        .catch((error) => {
-          handleNotificationSystem(error.name, error.message, 'negative', 'bottom', true, error.response?.data)
-          console.error(`${handleNotificationSystemLog.value('negative', useSettingStore.$id, error)}`)
-        })
-    } else {
-      const context = {
-        message: 'Test context'
-      }
-      handleNotificationSystem(notificationTitle, notificationMessage, 'negative', 'bottom', true)
-      console.error(`${handleNotificationSystemLog.value('negative', useSettingStore.$id, context)}`)
+      console.error(`${handleNotificationSystemLog.value('negative', useManagementStore.$id, context)}`)
     }
   }
 
@@ -92,8 +68,6 @@ export const useSettingStore = defineStore('settings', () => {
     getAllModels,
     getAllRecords,
     getResponseMessage,
-    getSingleRecord,
-    handleIndex,
-    handleShow,
+    listRecords
   }
 })
