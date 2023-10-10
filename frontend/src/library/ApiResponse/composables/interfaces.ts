@@ -1,4 +1,10 @@
-import { InputType } from 'src/types/InputType'
+interface ResourceEndpointInterface {
+  id: number
+  name: string
+  endpoint: string
+}
+
+type InputType = 'number' | 'textarea' | 'time' | 'text' | 'password' | 'email' | 'search' | 'tel' | 'file' | 'url' | 'date' | undefined
 
 interface IndexResponseInterface {
   columns?: ColumnInterface[] | []
@@ -40,6 +46,8 @@ interface ModelInterface {
 }
 
 export {
+  ResourceEndpointInterface,
+  InputType,
   IndexResponseInterface,
   ColumnInterface,
   FilterInterface,

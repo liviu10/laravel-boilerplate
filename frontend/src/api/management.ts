@@ -1,4 +1,4 @@
-import { ResourceEndpointInterface } from './interface'
+import { ResourceEndpointInterface } from 'src/library/ApiResponse/composables/interfaces'
 
 const managementResources: ResourceEndpointInterface[] = [
   {

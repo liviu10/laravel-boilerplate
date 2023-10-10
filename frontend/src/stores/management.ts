@@ -1,16 +1,10 @@
 import { defineStore } from 'pinia'
-import { ResourceEndpointInterface } from 'src/api/interface'
 import { managementResources } from 'src/api/management'
 import { api } from 'src/boot/axios'
 import { ColumnInterface, FilterInterface, ModelInterface } from 'src/library/ApiResponse/composables/interfaces'
-import { handleApiResponse } from 'src/library/ApiResponse/main'
+import { handleApiResource, handleApiResponse } from 'src/library/ApiResponse/main'
 import { handleNotificationSystem, handleNotificationSystemLog } from 'src/library/NotificationSystem/main'
 import { Ref, computed, ref } from 'vue'
-
-let fullApiUrl = ''
-let resourceEndpoint: ResourceEndpointInterface | undefined = undefined
-const notificationTitle = 'Warning'
-const notificationMessage = 'The resource does not exist'
 
 export const useManagementStore = defineStore('management', () => {
   // State
@@ -20,6 +14,10 @@ export const useManagementStore = defineStore('management', () => {
   const allModels: Ref<ModelInterface[] | [] | undefined> = ref(undefined)
   const allRecords: Ref<object[] | [] | undefined> = ref(undefined)
   const responseMessage = ref('')
+  const singleRecord: Ref<object[] | [] | undefined> = ref(undefined)
+  const createdRecord: Ref<object[] | [] | undefined> = ref(undefined)
+  const updatedRecord: Ref<object[] | [] | undefined> = ref(undefined)
+  const deletedRecord: Ref<object[] | [] | undefined> = ref(undefined)
 
   // Getters
   const getAllColumns = computed(() => allColumns.value)
@@ -28,23 +26,55 @@ export const useManagementStore = defineStore('management', () => {
   const getAllModels = computed(() => allModels.value)
   const getAllRecords = computed(() => allRecords.value)
   const getResponseMessage = computed(() => responseMessage.value)
+  const getSingleRecord = computed(() => singleRecord.value)
+  const getCreatedRecord = computed(() => createdRecord.value)
+  const getUpdatedRecord = computed(() => updatedRecord.value)
+  const getDeletedRecord = computed(() => deletedRecord.value)
 
   // Actions
-  async function listRecords(resourceName: string) {
-    resourceEndpoint = managementResources.find((r) => r.name === resourceName)
+  async function handleIndex(resourceName: string) {
+    const apiEndpoint = handleApiResource(managementResources, resourceName, useManagementStore.$id)
 
-    if (resourceEndpoint) {
-      fullApiUrl = resourceEndpoint.endpoint;
-      await api.get(fullApiUrl)
+    if (apiEndpoint && apiEndpoint !== null) {
+      await api.get(apiEndpoint)
+      .then(response => {
+        const data = handleApiResponse(response, useManagementStore.$id)
+
+        if (data) {
+          allColumns.value = data.columns
+          responseMessage.value = data.description
+          allFilters.value = data.filters
+          allModels.value = data.models
+          allRecords.value = data.results
+          responseTitle.value = data.title
+        }
+      })
+      .catch((error) => {
+        handleNotificationSystem(error.name, error.message, 'negative', 'bottom', true, error.response?.data)
+        console.error(`${handleNotificationSystemLog.value('negative', useManagementStore.$id, error)}`)
+      })
+    }
+  }
+
+  async function handleStore(resourceName: string, payload: unknown) {
+    const apiEndpoint = handleApiResource(managementResources, resourceName, useManagementStore.$id)
+
+    if (apiEndpoint && apiEndpoint !== null) {
+      // Do something
+    }
+  }
+
+  async function handleShow(resourceName: string, recordId: number) {
+    const apiEndpoint = handleApiResource(managementResources, resourceName, useManagementStore.$id)
+
+    if (apiEndpoint && apiEndpoint !== null) {
+      await api.get(`${apiEndpoint}/${recordId}`)
         .then(response => {
           const data = handleApiResponse(response, useManagementStore.$id)
 
           if (data) {
-            allColumns.value = data.columns
             responseMessage.value = data.description
-            allFilters.value = data.filters
-            allModels.value = data.models
-            allRecords.value = data.results
+            singleRecord.value = data.results
             responseTitle.value = data.title
           }
         })
@@ -52,12 +82,33 @@ export const useManagementStore = defineStore('management', () => {
           handleNotificationSystem(error.name, error.message, 'negative', 'bottom', true, error.response?.data)
           console.error(`${handleNotificationSystemLog.value('negative', useManagementStore.$id, error)}`)
         })
-    } else {
-      const context = {
-        message: 'Test context'
-      }
-      handleNotificationSystem(notificationTitle, notificationMessage, 'negative', 'bottom', true)
-      console.error(`${handleNotificationSystemLog.value('negative', useManagementStore.$id, context)}`)
+    }
+  }
+
+  async function handleUpdate(resourceName: string, recordId: number, payload: unknown) {
+    const apiEndpoint = handleApiResource(managementResources, resourceName, useManagementStore.$id)
+
+    if (apiEndpoint && apiEndpoint !== null) {
+      // Do something
+    }
+  }
+
+  async function handleDestroy(resourceName: string, recordId: number) {
+    const apiEndpoint = handleApiResource(managementResources, resourceName, useManagementStore.$id)
+
+    if (apiEndpoint && apiEndpoint !== null) {
+      await api.delete(apiEndpoint)
+        .then(response => {
+          const data = handleApiResponse(response, useManagementStore.$id)
+
+          if (data) {
+            deletedRecord.value = data.results
+          }
+        })
+        .catch((error) => {
+          handleNotificationSystem(error.name, error.message, 'negative', 'bottom', true, error.response?.data)
+          console.error(`${handleNotificationSystemLog.value('negative', useManagementStore.$id, error)}`)
+        })
     }
   }
 
@@ -68,6 +119,14 @@ export const useManagementStore = defineStore('management', () => {
     getAllModels,
     getAllRecords,
     getResponseMessage,
-    listRecords
+    getSingleRecord,
+    getCreatedRecord,
+    getUpdatedRecord,
+    getDeletedRecord,
+    handleIndex,
+    handleStore,
+    handleShow,
+    handleUpdate,
+    handleDestroy,
   }
 })

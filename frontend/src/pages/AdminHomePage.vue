@@ -3,7 +3,7 @@
 
     <page-title :page-title="currentRouteTitle(router.currentRoute.value.meta)" />
 
-    <pre>list records: {{ settings.getAllColumns }}</pre>
+    <pre>list records: {{ settings.getAllRecords }}</pre>
 
   </q-page>
 </template>

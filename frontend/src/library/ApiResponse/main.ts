@@ -1,5 +1,7 @@
+import { handleApiResource } from './composables/HandleApiResource'
 import { handleApiResponse } from './composables/HandleApiResponse'
 
 export {
-  handleApiResponse
+  handleApiResource,
+  handleApiResponse,
 }
