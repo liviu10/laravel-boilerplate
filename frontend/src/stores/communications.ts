@@ -60,7 +60,20 @@ export const useCommunicationStore = defineStore('communication', () => {
     const apiEndpoint = handleApiResource(communicationResources, resourceName, useCommunicationStore.$id)
 
     if (apiEndpoint && apiEndpoint !== null) {
-      // Do something
+      await api.post(apiEndpoint, payload)
+      .then(response => {
+        const data = handleApiResponse(response, useCommunicationStore.$id)
+
+        if (data) {
+          responseMessage.value = data.description
+          createdRecord.value = data.results
+          responseTitle.value = data.title
+        }
+      })
+      .catch((error) => {
+        handleNotificationSystem(error.name, error.message, 'negative', 'bottom', true, error.response?.data)
+        console.error(`${handleNotificationSystemLog.value('negative', useCommunicationStore.$id, error)}`)
+      })
     }
   }
 
@@ -89,7 +102,20 @@ export const useCommunicationStore = defineStore('communication', () => {
     const apiEndpoint = handleApiResource(communicationResources, resourceName, useCommunicationStore.$id)
 
     if (apiEndpoint && apiEndpoint !== null) {
-      // Do something
+      await api.put(`${apiEndpoint}/${recordId}`, payload)
+      .then(response => {
+        const data = handleApiResponse(response, useCommunicationStore.$id)
+
+        if (data) {
+          responseMessage.value = data.description
+          updatedRecord.value = data.results
+          responseTitle.value = data.title
+        }
+      })
+      .catch((error) => {
+        handleNotificationSystem(error.name, error.message, 'negative', 'bottom', true, error.response?.data)
+        console.error(`${handleNotificationSystemLog.value('negative', useCommunicationStore.$id, error)}`)
+      })
     }
   }
 
@@ -97,7 +123,7 @@ export const useCommunicationStore = defineStore('communication', () => {
     const apiEndpoint = handleApiResource(communicationResources, resourceName, useCommunicationStore.$id)
 
     if (apiEndpoint && apiEndpoint !== null) {
-      await api.delete(apiEndpoint)
+      await api.delete(`${apiEndpoint}/${recordId}`)
         .then(response => {
           const data = handleApiResponse(response, useCommunicationStore.$id)
 

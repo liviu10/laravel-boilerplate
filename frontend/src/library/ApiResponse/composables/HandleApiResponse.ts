@@ -15,7 +15,7 @@ const notificationMessage = 'Something went wrong'
 const handleApiResponse = (response: AxiosResponse, storeId: string): IndexResponseInterface | null => {
   const data = response.data
 
-  if (response.status === 200 && data && Object.keys(data).length) {
+  if (response.status === 200 || response.status === 201 && data && Object.keys(data).length) {
     const description = data.description
     const title = data.title
 
