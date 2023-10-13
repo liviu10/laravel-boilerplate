@@ -1,6 +1,6 @@
-import { ResourceEndpointInterface } from 'src/library/ApiResponse/composables/interfaces'
+import { ResourceEndpoint } from 'src/library/ApiResponse/composables/interfaces'
 
-const managementResources: ResourceEndpointInterface[] = [
+const managementResources: ResourceEndpoint[] = [
   {
     id: 1,
     name: 'contents',

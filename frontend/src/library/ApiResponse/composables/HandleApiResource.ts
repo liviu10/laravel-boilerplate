@@ -1,17 +1,17 @@
 import { handleNotificationSystem, handleNotificationSystemLog } from 'src/library/NotificationSystem/main'
 
-interface ResourceEndpointInterface {
+interface ResourceEndpoint {
   id: number
   name: string
   endpoint: string
 }
 
 let apiEndpoint = ''
-let resourceEndpoint: ResourceEndpointInterface | undefined = undefined
+let resourceEndpoint: ResourceEndpoint | undefined = undefined
 const notificationTitle = 'Warning'
 const notificationMessage = 'The resource does not exist'
 
-const handleApiResource = (resourceList: ResourceEndpointInterface[], resourceName: string, storeId: string): string | null => {
+const handleApiResource = (resourceList: ResourceEndpoint[], resourceName: string, storeId: string): string | null => {
   resourceEndpoint = resourceList.find((r) => r.name === resourceName)
 
   if (resourceEndpoint) {

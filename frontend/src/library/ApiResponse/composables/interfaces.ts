@@ -1,4 +1,4 @@
-interface ResourceEndpointInterface {
+interface ResourceEndpoint {
   id: number
   name: string
   endpoint: string
@@ -6,16 +6,16 @@ interface ResourceEndpointInterface {
 
 type InputType = 'number' | 'textarea' | 'time' | 'text' | 'password' | 'email' | 'search' | 'tel' | 'file' | 'url' | 'date' | undefined
 
-interface IndexResponseInterface {
-  columns?: ColumnInterface[] | []
+interface IndexResponse {
+  columns?: Column[] | []
   description: string
-  filters?: FilterInterface[] | []
-  models?: ModelInterface[] | []
+  filters?: Filter[] | []
+  models?: Model[] | []
   results?: object[] | []
   title: string
 }
 
-interface ColumnInterface {
+interface Column {
   align: string
   field: string
   headerStyles: string
@@ -25,7 +25,7 @@ interface ColumnInterface {
   style: string
 }
 
-interface FilterInterface {
+interface Filter {
   field: string
   id: number
   is_active: boolean
@@ -35,7 +35,7 @@ interface FilterInterface {
   value: null
 }
 
-interface ModelInterface {
+interface Model {
   field: string
   id: number
   is_active: boolean
@@ -46,10 +46,10 @@ interface ModelInterface {
 }
 
 export {
-  ResourceEndpointInterface,
+  ResourceEndpoint,
   InputType,
-  IndexResponseInterface,
-  ColumnInterface,
-  FilterInterface,
-  ModelInterface,
+  IndexResponse,
+  Column,
+  Filter,
+  Model,
 }

@@ -1,6 +1,6 @@
-import { ResourceEndpointInterface } from 'src/library/ApiResponse/composables/interfaces'
+import { ResourceEndpoint } from 'src/library/ApiResponse/composables/interfaces'
 
-const settingsResources: ResourceEndpointInterface[] = [
+const settingsResources: ResourceEndpoint[] = [
   {
     id: 1,
     name: 'accepted-domains',

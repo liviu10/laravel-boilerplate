@@ -1,17 +1,17 @@
 import { defineStore } from 'pinia'
 import { managementResources } from 'src/api/management'
 import { api } from 'src/boot/axios'
-import { ColumnInterface, FilterInterface, ModelInterface } from 'src/library/ApiResponse/composables/interfaces'
+import { Column, Filter, Model } from 'src/library/ApiResponse/composables/interfaces'
 import { handleApiResource, handleApiResponse } from 'src/library/ApiResponse/main'
 import { handleNotificationSystem, handleNotificationSystemLog } from 'src/library/NotificationSystem/main'
 import { Ref, computed, ref } from 'vue'
 
 export const useManagementStore = defineStore('management', () => {
   // State
-  const allColumns: Ref<ColumnInterface[] | [] | undefined> = ref(undefined)
+  const allColumns: Ref<Column[] | [] | undefined> = ref(undefined)
   const responseTitle = ref('')
-  const allFilters: Ref<FilterInterface[] | [] | undefined> = ref(undefined)
-  const allModels: Ref<ModelInterface[] | [] | undefined> = ref(undefined)
+  const allFilters: Ref<Filter[] | [] | undefined> = ref(undefined)
+  const allModels: Ref<Model[] | [] | undefined> = ref(undefined)
   const allRecords: Ref<object[] | [] | undefined> = ref(undefined)
   const responseMessage = ref('')
   const singleRecord: Ref<object[] | [] | undefined> = ref(undefined)
