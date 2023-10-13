@@ -1,9 +1,11 @@
-import { BaseUser, BaseSingleRecord } from './BaseInterface'
+import { BaseUser, BaseSingleRecord, Timestamps } from './BaseInterface'
+
+type TypeOptions = 'Menu' | 'API'
 
 interface SingleRecord extends BaseSingleRecord {
-  results: {
+  results: (Timestamps & {
     id: number
-    type: string
+    type: TypeOptions
     path: string
     name: string
     component: string
@@ -13,25 +15,35 @@ interface SingleRecord extends BaseSingleRecord {
     icon: string
     is_active: boolean
     requires_auth: boolean
-    created_at: string
-    updated_at: string
     user_id: number
     user: BaseUser
-  }[]
+  })[]
 }
 
 interface CreateRecord {
-  type: string
-  condition: string
+  type: TypeOptions
+  path: string
+  name: string
+  component: string
+  layout: string
   title: string
-  content: string
+  caption: string
+  icon: string
+  is_active: boolean
+  requires_auth: boolean
 }
 
 interface UpdateRecord {
-  type: string
-  condition: string
+  type: TypeOptions
+  path: string
+  name: string
+  component: string
+  layout: string
   title: string
-  content: string
+  caption: string
+  icon: string
+  is_active: boolean
+  requires_auth: boolean
 }
 
 export {

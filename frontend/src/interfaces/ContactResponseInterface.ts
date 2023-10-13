@@ -1,11 +1,9 @@
-import { BaseUser, BaseSingleRecord } from './BaseInterface'
+import { BaseUser, BaseSingleRecord, Timestamps } from './BaseInterface'
 
 interface SingleRecord extends BaseSingleRecord {
-  results: {
+  results: (Timestamps & {
     id: number
     message: string
-    created_at: string
-    updated_at: string
     user_id: number
     user: BaseUser
     contact_message_id: number
@@ -13,7 +11,7 @@ interface SingleRecord extends BaseSingleRecord {
       id: number
       name: string
     }
-  }[]
+  })[]
 }
 
 interface CreateRecord {

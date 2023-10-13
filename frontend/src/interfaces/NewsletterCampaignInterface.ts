@@ -1,29 +1,53 @@
-import { BaseUser, BaseSingleRecord } from './BaseInterface'
+import { BaseUser, BaseSingleRecord, Timestamps } from './BaseInterface'
+
+interface NewsletterSubscriber {
+  id: number
+  newsletter_campaign_id: number
+  full_name: string
+  email_address: string
+  privacy_policy: boolean
+}
 
 interface SingleRecord extends BaseSingleRecord {
-  results: {
+  results: (Timestamps & {
     id: number
-    message: string
-    created_at: string
-    updated_at: string
+    name: string
+    description: string
+    is_active: boolean
+    valid_from: string
+    valid_to: string
+    occur_times: number
+    occur_week: number
+    occur_hour: string
     user_id: number
     user: BaseUser
-    contact_message_id: number
-    contact_message: {
-      id: number
-      name: string
-    }
-  }[]
+    newsletter_subscribers_id: number
+    newsletter_subscribers: NewsletterSubscriber[]
+  })[]
 }
 
 interface CreateRecord {
-  contact_message_id: number
-  message: string
+  name: string
+  description: string
+  is_active: boolean
+  valid_from: string
+  valid_to: string
+  occur_time: number
+  occur_week: number
+  occur_day: number
+  occur_hour: number
 }
 
 interface UpdateRecord {
-  contact_message_id: number
-  message: string
+  name: string
+  description: string
+  is_active: boolean
+  valid_from: string
+  valid_to: string
+  occur_time: number
+  occur_week: number
+  occur_day: number
+  occur_hour: number
 }
 
 export {

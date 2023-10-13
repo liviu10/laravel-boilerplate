@@ -1,7 +1,13 @@
-import { BaseSingleRecord } from './BaseInterface'
+import { BaseSingleRecord, Timestamps } from './BaseInterface'
+
+interface Permission {
+  id: number
+  name: string
+  role_id: number
+}
 
 interface SingleRecord extends BaseSingleRecord {
-  results: {
+  results: (Timestamps & {
     id: number
     name: string
     description: string
@@ -9,24 +15,26 @@ interface SingleRecord extends BaseSingleRecord {
     text_color: string
     slug: string
     is_active: boolean
-    created_at: string
-    updated_at: string
-    permissions: unknown[]
-  }[]
+    permissions: Permission[]
+  })[]
 }
 
 interface CreateRecord {
-  type: string
-  condition: string
-  title: string
-  content: string
+  name: string
+  description: string
+  bg_color: string
+  text_color: string
+  slug: string
+  is_active: boolean
 }
 
 interface UpdateRecord {
-  type: string
-  condition: string
-  title: string
-  content: string
+  name: string
+  description: string
+  bg_color: string
+  text_color: string
+  slug: string
+  is_active: boolean
 }
 
 export {

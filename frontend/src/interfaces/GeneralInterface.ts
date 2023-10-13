@@ -1,26 +1,26 @@
-import { BaseUser, BaseSingleRecord } from './BaseInterface'
+import { BaseUser, BaseSingleRecord, Timestamps } from './BaseInterface'
+
+type GeneralOptions = 'General' | 'Writing' | 'Reading' | 'Discussion' | 'Media' | 'Performance' | 'Notifications'
 
 interface SingleRecord extends BaseSingleRecord {
-  results: {
+  results: (Timestamps & {
     id: number
-    type: string
+    type: GeneralOptions
     label: string
     value: string
-    created_at: string
-    updated_at: string
     user_id: number
     user: BaseUser
-  }[]
+  })[]
 }
 
 interface CreateRecord {
-  type: string
+  type: GeneralOptions
   label: string
   value: string
 }
 
 interface UpdateRecord {
-  type: string
+  type: GeneralOptions
   label: string
   value: string
 }

@@ -3,6 +3,12 @@ interface BaseSingleRecord {
   description: string
 }
 
+interface Timestamps {
+  created_at: string
+  updated_at: string
+  deleted_at?: string
+}
+
 interface BaseUser {
   id: number
   full_name: string
@@ -10,5 +16,6 @@ interface BaseUser {
 
 export {
   BaseSingleRecord,
+  Timestamps,
   BaseUser,
 }

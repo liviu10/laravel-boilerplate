@@ -1,21 +1,21 @@
-import { BaseSingleRecord } from './BaseInterface'
+import { BaseSingleRecord, Timestamps } from './BaseInterface'
 
-interface PermissionInterface {
+interface Permission {
   id: number
   name: string
   is_active: true
   role_id: number
 }
 
-interface RoleInterface {
+interface Role {
   id: number
   name: string
   is_active: boolean
-  permissions: PermissionInterface[]
+  permissions: Permission[]
 }
 
 interface SingleRecord extends BaseSingleRecord {
-  results: {
+  results: (Timestamps & {
     id: number
     full_name: string
     first_name: string
@@ -25,11 +25,9 @@ interface SingleRecord extends BaseSingleRecord {
     phone: string | null
     email_verified_at: string
     profile_image: string | null
-    created_at: string
-    updated_at: string
     role_id: number
-    role: RoleInterface
-  }[]
+    role: Role
+  })[]
 }
 
 interface CreateRecord {
@@ -47,8 +45,6 @@ interface UpdateRecord {
 }
 
 export {
-  PermissionInterface,
-  RoleInterface,
   SingleRecord,
   CreateRecord,
   UpdateRecord,

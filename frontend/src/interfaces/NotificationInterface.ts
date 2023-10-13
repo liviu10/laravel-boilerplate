@@ -1,29 +1,31 @@
-import { BaseUser, BaseSingleRecord } from './BaseInterface'
+import { BaseUser, BaseSingleRecord, Timestamps } from './BaseInterface'
+
+type TypeOptions = 'SMS' | 'Email'
+
+type ConditionOptions = 'Read' | 'Create' | 'Show' | 'Update' | 'Delete' | 'Restore'
 
 interface SingleRecord extends BaseSingleRecord {
-  results: {
+  results: (Timestamps & {
     id: number
-    type: string
-    condition: string
+    type: TypeOptions
+    condition: ConditionOptions
     title: string
     content: string
-    created_at: string
-    updated_at: string
     user_id: number
     user: BaseUser
-  }[]
+  })[]
 }
 
 interface CreateRecord {
-  type: string
-  condition: string
+  type: TypeOptions
+  condition: ConditionOptions
   title: string
   content: string
 }
 
 interface UpdateRecord {
-  type: string
-  condition: string
+  type: TypeOptions
+  condition: ConditionOptions
   title: string
   content: string
 }

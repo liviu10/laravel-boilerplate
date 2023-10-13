@@ -73,7 +73,7 @@ class Resource extends BaseModel
         'requires_auth' => false,
     ];
 
-    protected $visibilityOptions = [
+    protected $resourceTypeOptions = [
         'Menu', 'API'
     ];
 
@@ -272,9 +272,9 @@ class Resource extends BaseModel
      * Get the resource types.
      * @return array An array containing the resource types.
      */
-    public function getResourceTypes(): array
+    public function getResourceTypeOptions(): array
     {
-        return $this->resourceTypes;
+        return $this->resourceTypeOptions;
     }
 
     /**

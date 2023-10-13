@@ -1,16 +1,14 @@
-import { BaseUser, BaseSingleRecord } from './BaseInterface'
+import { BaseUser, BaseSingleRecord, Timestamps } from './BaseInterface'
 
 interface SingleRecord extends BaseSingleRecord {
-  results: {
+  results: (Timestamps & {
     id: number
     domain: string
     type: string
     is_active: boolean
-    created_at: string
-    updated_at: string
     user_id: number
     user: BaseUser
-  }[]
+  })[]
 }
 
 interface CreateRecord {
