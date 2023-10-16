@@ -1,14 +1,15 @@
 import { defineStore } from 'pinia'
+import { QTableProps } from 'quasar'
 import { communicationResources } from 'src/api/communication'
 import { api } from 'src/boot/axios'
-import { Column, Filter, Model } from 'src/library/ApiResponse/composables/interfaces'
+import { Filter, Model } from 'src/library/ApiResponse/composables/interfaces'
 import { handleApiResource, handleApiResponse } from 'src/library/ApiResponse/main'
 import { handleNotificationSystem, handleNotificationSystemLog } from 'src/library/NotificationSystem/main'
 import { Ref, computed, ref } from 'vue'
 
 export const useCommunicationStore = defineStore('communication', () => {
   // State
-  const allColumns: Ref<Column[] | [] | undefined> = ref(undefined)
+  const allColumns: Ref<QTableProps['columns'] | [] | undefined> = ref(undefined)
   const responseTitle = ref('')
   const allFilters: Ref<Filter[] | [] | undefined> = ref(undefined)
   const allModels: Ref<Model[] | [] | undefined> = ref(undefined)

@@ -1,18 +1,21 @@
 import { defineStore } from 'pinia'
+import { QTableProps } from 'quasar'
 import { settingsResources } from 'src/api/settings'
 import { api } from 'src/boot/axios'
-import { Column, Filter, Model } from 'src/library/ApiResponse/composables/interfaces'
+import { AllRecords } from 'src/interfaces/UserInterface'
+import { Filter, Model } from 'src/library/ApiResponse/composables/interfaces'
 import { handleApiResource, handleApiResponse } from 'src/library/ApiResponse/main'
 import { handleNotificationSystem, handleNotificationSystemLog } from 'src/library/NotificationSystem/main'
 import { Ref, computed, ref } from 'vue'
 
 export const useSettingStore = defineStore('settings', () => {
   // State
-  const allColumns: Ref<Column[] | [] | undefined> = ref(undefined)
+  const allColumns: Ref<QTableProps['columns'] | undefined> = ref(undefined)
   const responseTitle = ref('')
   const allFilters: Ref<Filter[] | [] | undefined> = ref(undefined)
   const allModels: Ref<Model[] | [] | undefined> = ref(undefined)
-  const allRecords: Ref<object[] | [] | undefined> = ref(undefined)
+  // const allRecords: Ref<object[] | [] | undefined> = ref(undefined)
+  const allRecords: Ref<AllRecords | undefined> = ref(undefined)
   const responseMessage = ref('')
   const singleRecord: Ref<object[] | [] | undefined> = ref(undefined)
   const createdRecord: Ref<object[] | [] | undefined> = ref(undefined)
@@ -41,11 +44,11 @@ export const useSettingStore = defineStore('settings', () => {
         const data = handleApiResponse(response, useSettingStore.$id)
 
         if (data) {
-          allColumns.value = data.columns
+          allColumns.value = data.columns as unknown as QTableProps['columns']
           responseMessage.value = data.description
           allFilters.value = data.filters
           allModels.value = data.models
-          allRecords.value = data.results
+          allRecords.value = data.results as unknown as AllRecords
           responseTitle.value = data.title
         }
       })
@@ -139,6 +142,8 @@ export const useSettingStore = defineStore('settings', () => {
   }
 
   return {
+    allFilters,
+    allModels,
     getAllColumns,
     getResponseTitle,
     getAllFilters,

@@ -1,10 +1,5 @@
 import { handleNotificationSystem, handleNotificationSystemLog } from 'src/library/NotificationSystem/main'
-
-interface ResourceEndpoint {
-  id: number
-  name: string
-  endpoint: string
-}
+import { ResourceEndpoint } from './interfaces'
 
 let apiEndpoint = ''
 let resourceEndpoint: ResourceEndpoint | undefined = undefined

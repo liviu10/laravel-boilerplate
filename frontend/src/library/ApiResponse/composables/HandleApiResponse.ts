@@ -1,6 +1,7 @@
 import { AxiosResponse } from 'axios'
 import { handleNotificationSystem, handleNotificationSystemLog } from 'src/library/NotificationSystem/main'
-import { Column, Filter, IndexResponse, Model } from './interfaces'
+import { Filter, IndexResponse, Model } from './interfaces'
+import { QTableProps } from 'quasar'
 
 const notificationTitle = 'Warning'
 const notificationMessage = 'Something went wrong'
@@ -20,7 +21,7 @@ const handleApiResponse = (response: AxiosResponse, storeId: string): IndexRespo
     const title = data.title
 
     // Extract columns
-    const columns: Column[] | [] = handleExtractColumns(data)
+    const columns: QTableProps['columns'] | [] = handleExtractColumns(data)
 
     // Extract filters
     const filters: Filter[] | [] = handleExtractFilters(data)
@@ -43,9 +44,9 @@ const handleApiResponse = (response: AxiosResponse, storeId: string): IndexRespo
 /**
  * Extracts the 'columns' property from an IndexResponse object.
  * @param {IndexResponse} data - The response data containing 'columns'.
- * @returns {Column[] | []} An array of columns or an empty array if 'columns' is not found or not valid.
+ * @returns {QTableProps['columns'] | []} An array of columns or an empty array if 'columns' is not found or not valid.
  */
-const handleExtractColumns = (data: IndexResponse): Column[] | [] => {
+const handleExtractColumns = (data: IndexResponse): QTableProps['columns'] | [] => {
   return (data.hasOwnProperty('columns') && Array.isArray(data.columns) && data.columns.length)
     ? data.columns
     : [];

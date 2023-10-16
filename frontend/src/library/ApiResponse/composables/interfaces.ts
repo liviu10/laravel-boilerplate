@@ -1,3 +1,5 @@
+import { QTableProps } from 'quasar'
+
 interface ResourceEndpoint {
   id: number
   name: string
@@ -7,22 +9,12 @@ interface ResourceEndpoint {
 type InputType = 'number' | 'textarea' | 'time' | 'text' | 'password' | 'email' | 'search' | 'tel' | 'file' | 'url' | 'date' | undefined
 
 interface IndexResponse {
-  columns?: Column[] | []
+  columns?: QTableProps['columns'] | []
   description: string
   filters?: Filter[] | []
   models?: Model[] | []
   results?: object[] | []
   title: string
-}
-
-interface Column {
-  align: string
-  field: string
-  headerStyles: string
-  id: number
-  label: string
-  name: string
-  style: string
 }
 
 interface Filter {
@@ -49,7 +41,6 @@ export {
   ResourceEndpoint,
   InputType,
   IndexResponse,
-  Column,
   Filter,
   Model,
 }
