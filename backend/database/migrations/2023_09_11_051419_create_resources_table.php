@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('resources', function (Blueprint $table) {
+        Schema::create('set_resources', function (Blueprint $table) {
             $table->id()->index('idx_id');
             $table->enum('type', ['Menu', 'API']);
             $table->string('path');
@@ -32,6 +32,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('resources');
+        Schema::dropIfExists('set_resources');
     }
 };

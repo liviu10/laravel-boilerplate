@@ -33,7 +33,7 @@ class ContactSubject extends BaseModel
 {
     use HasFactory, FilterAvailableFields, LogApiError;
 
-    protected $table = 'contact_subjects';
+    protected $table = 'com_contact_subjects';
 
     protected $foreignKey = 'user_id';
 

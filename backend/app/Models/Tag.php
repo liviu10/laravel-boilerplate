@@ -34,7 +34,7 @@ class Tag extends BaseModel
 {
     use HasFactory, FilterAvailableFields, LogApiError;
 
-    protected $table = 'tags';
+    protected $table = 'man_tags';
 
     protected $foreignKey = 'content_id';
 

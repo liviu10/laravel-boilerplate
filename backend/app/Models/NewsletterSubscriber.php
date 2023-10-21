@@ -35,7 +35,7 @@ class NewsletterSubscriber extends BaseModel
 {
     use HasFactory, FilterAvailableFields, LogApiError;
 
-    protected $table = 'newsletter_subscribers';
+    protected $table = 'com_newsletter_subscribers';
 
     protected $foreignKey = 'newsletter_campaign_id';
 

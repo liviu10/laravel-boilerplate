@@ -11,8 +11,8 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('set_resources', function (Blueprint $table) {
-            $table->foreignId('user_id')->constrained()->onDelete('cascade')->onUpdate('cascade')->index('idx_resources_user_id');
+        Schema::table('man_tags', function (Blueprint $table) {
+            $table->foreignId('content_id')->constrained()->on('man_contents')->onDelete('cascade')->onUpdate('cascade')->index('idx_tags_content_id');
         });
     }
 
@@ -21,9 +21,9 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('set_resources', function (Blueprint $table) {
-            $table->dropForeign(['user_id']);
-            $table->dropColumn('user_id');
+        Schema::table('man_tags', function (Blueprint $table) {
+            $table->dropForeign(['content_id']);
+            $table->dropColumn('content_id');
         });
     }
 };

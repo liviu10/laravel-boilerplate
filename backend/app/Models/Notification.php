@@ -36,7 +36,7 @@ class Notification extends BaseModel
 {
     use HasFactory, FilterAvailableFields, LogApiError;
 
-    protected $table = 'notifications';
+    protected $table = 'set_notifications';
 
     protected $foreignKey = 'user_id';
 

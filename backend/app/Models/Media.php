@@ -34,7 +34,7 @@ class Media extends BaseModel
 {
     use HasFactory, FilterAvailableFields, LogApiError;
 
-    protected $table = 'medias';
+    protected $table = 'man_medias';
 
     protected $foreignKey = 'content_id';
 

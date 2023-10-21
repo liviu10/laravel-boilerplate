@@ -34,7 +34,7 @@ class General extends BaseModel
 {
     use HasFactory, FilterAvailableFields, LogApiError;
 
-    protected $table = 'generals';
+    protected $table = 'set_generals';
 
     protected $foreignKey = 'user_id';
 

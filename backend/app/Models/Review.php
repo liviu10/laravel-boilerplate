@@ -34,7 +34,7 @@ class Review extends BaseModel
 {
     use HasFactory, FilterAvailableFields, LogApiError;
 
-    protected $table = 'reviews';
+    protected $table = 'com_reviews';
 
     protected $fillable = [
         'full_name',

@@ -35,7 +35,7 @@ class ContactMessage extends BaseModel
 {
     use HasFactory, FilterAvailableFields, LogApiError;
 
-    protected $table = 'contact_messages';
+    protected $table = 'com_contact_messages';
 
     protected $foreignKey = 'contact_subject_id';
 

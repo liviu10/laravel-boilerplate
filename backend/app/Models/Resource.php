@@ -40,7 +40,7 @@ class Resource extends BaseModel
 {
     use HasFactory, FilterAvailableFields, LogApiError;
 
-    protected $table = 'resources';
+    protected $table = 'set_resources';
 
     protected $foreignKey = 'user_id';
 

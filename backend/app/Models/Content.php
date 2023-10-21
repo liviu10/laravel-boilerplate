@@ -39,7 +39,7 @@ class Content extends BaseModel
 {
     use HasFactory, FilterAvailableFields, LogApiError;
 
-    protected $table = 'contents';
+    protected $table = 'man_contents';
 
     protected $foreignKey = 'user_id';
 

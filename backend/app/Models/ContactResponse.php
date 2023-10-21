@@ -32,7 +32,7 @@ class ContactResponse extends BaseModel
 {
     use HasFactory, FilterAvailableFields, LogApiError;
 
-    protected $table = 'contact_responses';
+    protected $table = 'com_contact_responses';
 
     protected $foreignKey = 'user_id';
 
