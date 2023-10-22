@@ -45,11 +45,7 @@ class ContactMessageService implements BaseInterface, ContactMessageInterface
         if ($this->checkPermission->handleApiCheckPermission()) {
             $apiDisplayAllRecords = $this->apiResponse->generateApiResponse(
                 $this->modelName->fetchAllRecords($search, 'paginate'),
-                Actions::get,
-                $this->modelName->getFields(),
-                class_basename($this->modelName),
-                null,
-                $this->handleStatisticalIndicators()
+                Actions::get
             );
 
             return $apiDisplayAllRecords;

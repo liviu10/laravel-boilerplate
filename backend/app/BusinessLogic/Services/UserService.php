@@ -75,11 +75,7 @@ class UserService implements BaseInterface, UserInterface
         if ($this->checkPermission->handleApiCheckPermission()) {
             $apiDisplayAllRecords = $this->apiResponse->generateApiResponse(
                 $this->modelName->fetchAllRecords($search, 'paginate'),
-                Actions::get,
-                $this->modelName->getFields(),
-                class_basename($this->modelName),
-                [],
-                $this->handleStatisticalIndicators()
+                Actions::get
             );
 
             return $apiDisplayAllRecords;

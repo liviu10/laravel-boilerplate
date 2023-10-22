@@ -11,13 +11,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('man_tags', function (Blueprint $table) {
-            $table->foreignId('content_id')
+        Schema::table('set_configuration_columns', function (Blueprint $table) {
+            $table->foreignId('configuration_resource_id')
                 ->constrained()
-                ->on('man_contents')
+                ->on('set_configuration_resources')
                 ->onDelete('cascade')
                 ->onUpdate('cascade')
-                ->index('idx_tags_content_id');
+                ->index('idx_configuration_columns_configuration_resource_id');
         });
     }
 
@@ -26,9 +26,9 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('man_tags', function (Blueprint $table) {
-            $table->dropForeign(['content_id']);
-            $table->dropColumn('content_id');
+        Schema::table('set_configuration_columns', function (Blueprint $table) {
+            $table->dropForeign(['configuration_resource_id']);
+            $table->dropColumn('configuration_resource_id');
         });
     }
 };

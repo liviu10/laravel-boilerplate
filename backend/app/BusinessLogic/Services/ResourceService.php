@@ -46,10 +46,7 @@ class ResourceService implements BaseInterface, ResourceInterface
         if ($this->checkPermission->handleApiCheckPermission()) {
         $apiDisplayAllRecords = $this->apiResponse->generateApiResponse(
             $this->modelName->fetchAllRecords($search),
-            Actions::get,
-            $this->modelName->getFields(),
-            class_basename($this->modelName),
-            []
+            Actions::get
         );
 
         return $apiDisplayAllRecords;
