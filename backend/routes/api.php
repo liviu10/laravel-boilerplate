@@ -29,6 +29,7 @@ use App\Http\Controllers\CommentController;
 use App\Http\Controllers\AppreciationController;
 // Import application's settings
 use App\Http\Controllers\AcceptedDomainController;
+use App\Http\Controllers\ConfigurationResourceController;
 use App\Http\Controllers\GeneralController;
 use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\ResourceController;
@@ -78,6 +79,8 @@ Route::group(['prefix' => config('app.version')], function () {
             // TODO: Add routes for google analytics
             // Accepted domains
             Route::apiResource('/accepted-domains', AcceptedDomainController::class);
+            // Configurations resources
+            Route::apiResource('/configuration-resources', ConfigurationResourceController::class);
             // General
             Route::apiResource('/general', GeneralController::class);
             // Notifications

@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('set_configuration_options', function (Blueprint $table) {
             $table->id()->index('idx_id');
             $table->string('value');
+            $table->string('label');
             $table->timestamps();
         });
     }

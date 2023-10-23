@@ -114,6 +114,11 @@ class User extends Authenticatable
         return $this->hasMany('App\Models\ApplicationMenu');
     }
 
+    public function configuration_resources()
+    {
+        return $this->hasMany('App\Models\ConfigurationResource');
+    }
+
     public function generals()
     {
         return $this->hasMany('App\Models\General');
