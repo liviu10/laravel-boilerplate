@@ -33,6 +33,8 @@ use App\BusinessLogic\Services\AppreciationService;
 // Import application's user settings
 use App\BusinessLogic\Interfaces\AcceptedDomainInterface;
 use App\BusinessLogic\Services\AcceptedDomainService;
+use App\BusinessLogic\Interfaces\ConfigurationResourceInterface;
+use App\BusinessLogic\Services\ConfigurationResourceService;
 use App\BusinessLogic\Interfaces\GeneralInterface;
 use App\BusinessLogic\Services\GeneralService;
 use App\BusinessLogic\Interfaces\NotificationInterface;
@@ -70,6 +72,7 @@ class BusinessLogicProvider extends ServiceProvider
 
         // Register application's user settings interfaces and services
         $this->app->bind( AcceptedDomainInterface::class, AcceptedDomainService::class );
+        $this->app->bind( ConfigurationResourceInterface::class, ConfigurationResourceService::class );
         $this->app->bind( GeneralInterface::class, GeneralService::class );
         $this->app->bind( NotificationInterface::class, NotificationService::class );
         $this->app->bind( ResourceInterface::class, ResourceService::class );

@@ -73,6 +73,21 @@ class ConfigurationResource extends BaseModel
         return $this->hasMany('App\Models\ConfigurationType');
     }
 
+    public function configuration_columns()
+    {
+        return $this->hasMany('App\Models\ConfigurationColumn');
+    }
+
+    public function configuration_inputs()
+    {
+        return $this->hasMany('App\Models\ConfigurationInput');
+    }
+
+    public function configuration_options()
+    {
+        return $this->hasMany('App\Models\ConfigurationOption');
+    }
+
     /**
      * Fetch records from the database based on optional search criteria.
      * @param array $search An associative array of search criteria (field => value).
