@@ -15,26 +15,26 @@ use App\Http\Middleware\CheckAuthentication;
 |
 */
 // Import application's communication
-use App\Http\Controllers\ContactSubjectController;
-use App\Http\Controllers\ContactMessageController;
-use App\Http\Controllers\ContactResponseController;
-use App\Http\Controllers\NewsletterCampaignController;
-use App\Http\Controllers\NewsletterSubscriberController;
-use App\Http\Controllers\ReviewController;
+use App\Http\Controllers\Api\ContactSubjectController;
+use App\Http\Controllers\Api\ContactMessageController;
+use App\Http\Controllers\Api\ContactResponseController;
+use App\Http\Controllers\Api\NewsletterCampaignController;
+use App\Http\Controllers\Api\NewsletterSubscriberController;
+use App\Http\Controllers\Api\ReviewController;
 // Import application's management
-use App\Http\Controllers\ContentController;
-use App\Http\Controllers\TagController;
-use App\Http\Controllers\MediaController;
-use App\Http\Controllers\CommentController;
-use App\Http\Controllers\AppreciationController;
+use App\Http\Controllers\Api\ContentController;
+use App\Http\Controllers\Api\TagController;
+use App\Http\Controllers\Api\MediaController;
+use App\Http\Controllers\Api\CommentController;
+use App\Http\Controllers\Api\AppreciationController;
 // Import application's settings
-use App\Http\Controllers\AcceptedDomainController;
-use App\Http\Controllers\ConfigurationResourceController;
-use App\Http\Controllers\GeneralController;
-use App\Http\Controllers\NotificationController;
-use App\Http\Controllers\ResourceController;
-use App\Http\Controllers\RoleController;
-use App\Http\Controllers\UserController;
+use App\Http\Controllers\Api\AcceptedDomainController;
+use App\Http\Controllers\Api\ConfigurationResourceController;
+use App\Http\Controllers\Api\GeneralController;
+use App\Http\Controllers\Api\NotificationController;
+use App\Http\Controllers\Api\ResourceController;
+use App\Http\Controllers\Api\RoleController;
+use App\Http\Controllers\Api\UserController;
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
@@ -74,20 +74,20 @@ Route::group(['prefix' => config('app.version')], function () {
             Route::apiResource('/appreciations', AppreciationController::class);
             // TODO: Add routes for products, categories and cart
         });
-        // Application's user settings api endpoints
+        // Application's settings api endpoints
         Route::group(['prefix' => '/settings'], function () {
             // TODO: Add routes for google analytics
             // Accepted domains
             Route::apiResource('/accepted-domains', AcceptedDomainController::class);
-            // Configurations resources
+            // Configuration resources
             Route::apiResource('/configuration-resources', ConfigurationResourceController::class);
             // General
             Route::apiResource('/general', GeneralController::class);
             // Notifications
             Route::apiResource('/notifications', NotificationController::class);
-            // Application resources
+            // Resources
             Route::apiResource('/resources', ResourceController::class);
-            // User role types
+            // User role
             Route::apiResource('/roles', RoleController::class);
             // Users
             // TODO: Improve this when finishing with the login system
@@ -106,7 +106,7 @@ Route::group(['prefix' => config('app.version')], function () {
         // Content (pages and articles)
         Route::get('/contents', [ContentController::class, 'fetchAllContents'])->name('content.all');
         Route::get('/contents/{id}', [ContentController::class, 'fetchSingleContent'])->name('content.single');
-        // Application resources
+        // Resources
         Route::get('/resources', [ResourceController::class, 'fetchAllResources'])->name('resource.all');
         // Reviews
         Route::post('/reviews', [ReviewController::class, 'store'])->name('reviews.store');

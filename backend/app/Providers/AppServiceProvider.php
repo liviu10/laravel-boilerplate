@@ -21,8 +21,8 @@ use App\BusinessLogic\Interfaces\CommentInterface;
 use App\BusinessLogic\Interfaces\AppreciationInterface;
 
 // Import application's user settings
-use App\BusinessLogic\Services\AcceptedDomainService;
-use App\BusinessLogic\Services\ConfigurationResourceService;
+use App\BusinessLogic\Services\Api\AcceptedDomainService;
+use App\BusinessLogic\Services\Api\ConfigurationResourceService;
 use App\BusinessLogic\Interfaces\GeneralInterface;
 use App\BusinessLogic\Interfaces\NotificationInterface;
 use App\BusinessLogic\Interfaces\ResourceInterface;
