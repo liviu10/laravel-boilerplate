@@ -15,26 +15,26 @@ use App\Http\Middleware\CheckAuthentication;
 |
 */
 // Import application's communication
-use App\Http\Controllers\Api\ContactSubjectController;
-use App\Http\Controllers\Api\ContactMessageController;
-use App\Http\Controllers\Api\ContactResponseController;
-use App\Http\Controllers\Api\NewsletterCampaignController;
-use App\Http\Controllers\Api\NewsletterSubscriberController;
-use App\Http\Controllers\Api\ReviewController;
+use App\Http\Controllers\ContactSubjectController;
+use App\Http\Controllers\ContactMessageController;
+use App\Http\Controllers\ContactResponseController;
+use App\Http\Controllers\NewsletterCampaignController;
+use App\Http\Controllers\NewsletterSubscriberController;
+use App\Http\Controllers\ReviewController;
 // Import application's management
-use App\Http\Controllers\Api\ContentController;
-use App\Http\Controllers\Api\TagController;
-use App\Http\Controllers\Api\MediaController;
-use App\Http\Controllers\Api\CommentController;
-use App\Http\Controllers\Api\AppreciationController;
+use App\Http\Controllers\ContentController;
+use App\Http\Controllers\TagController;
+use App\Http\Controllers\MediaController;
+use App\Http\Controllers\CommentController;
+use App\Http\Controllers\AppreciationController;
 // Import application's settings
-use App\Http\Controllers\Api\AcceptedDomainController;
-use App\Http\Controllers\Api\ConfigurationResourceController;
-use App\Http\Controllers\Api\GeneralController;
-use App\Http\Controllers\Api\NotificationController;
-use App\Http\Controllers\Api\ResourceController;
-use App\Http\Controllers\Api\RoleController;
-use App\Http\Controllers\Api\UserController;
+use App\Http\Controllers\AcceptedDomainController;
+use App\Http\Controllers\ConfigurationResourceController;
+use App\Http\Controllers\GeneralController;
+use App\Http\Controllers\NotificationController;
+use App\Http\Controllers\ResourceController;
+use App\Http\Controllers\RoleController;
+use App\Http\Controllers\UserController;
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();

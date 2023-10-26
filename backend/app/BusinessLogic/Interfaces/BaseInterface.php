@@ -4,10 +4,11 @@ namespace App\BusinessLogic\Interfaces;
 
 use Illuminate\Http\Response;
 use Illuminate\Contracts\Routing\ResponseFactory;
+use Illuminate\View\View;
 
 interface BaseInterface
 {
-    public function handleIndex(array $search): Response|ResponseFactory;
+    public function handleIndex(array $search): Response|ResponseFactory|View;
 
     public function handleStore(array $request): Response|ResponseFactory;
 
