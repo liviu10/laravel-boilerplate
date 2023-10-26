@@ -11,7 +11,9 @@ use App\Utilities\ApiResourcePermission;
 use App\Utilities\Actions;
 use Illuminate\Http\Response;
 use Illuminate\Contracts\Routing\ResponseFactory;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\View\View;
 
 class GeneralService implements BaseInterface, GeneralInterface
 {
@@ -36,9 +38,10 @@ class GeneralService implements BaseInterface, GeneralInterface
     /**
      * Handle the index action for displaying a list of records.
      * @param array $search An array of search parameters to filter records.
-     * @return Response|ResponseFactory The response containing the list of records or a response factory.
+     * @return Response|ResponseFactory|View The response containing the list of records,
+     * a response factory or a view template.
      */
-    public function handleIndex(array $search): Response|ResponseFactory
+    public function handleIndex(array $search): Response|ResponseFactory|View
     {
         if ($this->checkPermission->handleApiCheckPermission()) {
             $apiDisplayAllRecords = $this->apiResponse->generateApiResponse(
@@ -46,7 +49,12 @@ class GeneralService implements BaseInterface, GeneralInterface
                 Actions::get
             );
 
-            return $apiDisplayAllRecords;
+            if (Request::capture()->expectsJson()) {
+                return $apiDisplayAllRecords;
+            } else {
+                $displayAllRecords = collect($apiDisplayAllRecords->original);
+                return view('pages.admin.settings.general.index', compact('displayAllRecords'));
+            }
         } else {
             return $this->apiResponse->generateApiResponse(null, Actions::forbidden);
         }

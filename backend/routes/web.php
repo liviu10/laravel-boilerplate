@@ -40,81 +40,47 @@ Route::group(['prefix' => '/admin'], function () {
     Route::group(['prefix' => '/communication'], function () {
         // Contact subjects, messages and responses
         Route::group(['prefix' => '/contact'], function () {
-            Route::get('/subjects', function () {
-                return view('pages.admin.communication.contact.subjects.index');
-            });
-            Route::get('/messages', function () {
-                return view('pages.admin.communication.contact.messages.index');
-            });
-            Route::get('/responses', function () {
-                return view('pages.admin.communication.contact.responses.index');
-            });
+            Route::resource('/subjects', ContactSubjectController::class);
+            Route::resource('/messages', ContactMessageController::class);
+            Route::resource('/responses', ContactResponseController::class);
         });
         // Newsletter campaign and subscribers
         Route::group(['prefix' => '/newsletter'], function () {
-            Route::get('/campaigns', function () {
-                return view('pages.admin.communication.newsletter.campaigns.index');
-            });
-            Route::get('/subscribers', function () {
-                return view('pages.admin.communication.newsletter.subscribers.index');
-            });
+            Route::resource('/campaigns', NewsletterCampaignController::class);
+            Route::resource('/subscribers', NewsletterSubscriberController::class);
         });
         // Reviews
-        Route::get('/reviews', function () {
-            return view('pages.admin.communication.reviews.index');
-        });
+        Route::resource('/reviews', ReviewController::class);
     });
     // Application's management web routes
     Route::group(['prefix' => '/management'], function () {
         // Content (pages and articles)
-        Route::get('/content', function () {
-            return view('pages.admin.management.content.index');
-        });
+        Route::resource('/content', ContentController::class);
         // Tags
-        Route::get('/tags', function () {
-            return view('pages.admin.management.tags.index');
-        });
+        Route::resource('/tags', TagController::class);
         // Media
-        Route::get('/media', function () {
-            return view('pages.admin.management.media.index');
-        });
+        Route::resource('/media', MediaController::class);
         // Comments
-        Route::get('/comments', function () {
-            return view('pages.admin.management.comments.index');
-        });
+        Route::resource('/comments', CommentController::class);
         // Appreciation
-        Route::get('/appreciations', function () {
-            return view('pages.admin.management.appreciations.index');
-        });
+        Route::resource('/appreciations', AppreciationController::class);
     });
     // Application's settings web routes
     Route::group(['prefix' => '/settings'], function () {
         // Accepted domains
         Route::resource('/accepted-domains', AcceptedDomainController::class);
         // Configuration resources
-        Route::get('/configuration-resources', function () {
-            return view('pages.admin.settings.configuration-resources.index');
-        });
+        Route::resource('/configuration-resources', ConfigurationResourceController::class);
         // General
-        Route::get('/general', function () {
-            return view('pages.admin.settings.general.index');
-        });
+        Route::resource('/general', GeneralController::class);
         // Notifications
-        Route::get('/notifications', function () {
-            return view('pages.admin.settings.notifications.index');
-        });
+        Route::resource('/notifications', NotificationController::class);
         // Resources
-        Route::get('/resources', function () {
-            return view('pages.admin.settings.resources.index');
-        });
+        Route::resource('/resources', ResourceController::class);
         // User roles
-        Route::get('/roles', function () {
-            return view('pages.admin.settings.roles.index');
-        });
+        Route::resource('/roles', RoleController::class);
         // Users
-        Route::get('/users', function () {
-            return view('pages.admin.settings.users.index');
-        });
+        Route::resource('/users', UserController::class);
     });
 });
 

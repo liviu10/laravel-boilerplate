@@ -41,7 +41,8 @@ class AcceptedDomainService implements BaseInterface, AcceptedDomainInterface
     /**
      * Handle the index action for displaying a list of records.
      * @param array $search An array of search parameters to filter records.
-     * @return Response|ResponseFactory The response containing the list of records or a response factory.
+     * @return Response|ResponseFactory|View The response containing the list of records,
+     * a response factory or a view template.
      */
     public function handleIndex(array $search): Response|ResponseFactory|View
     {
@@ -54,7 +55,6 @@ class AcceptedDomainService implements BaseInterface, AcceptedDomainInterface
             if (Request::capture()->expectsJson()) {
                 return $apiDisplayAllRecords;
             } else {
-                // dd(collect($apiDisplayAllRecords->original));
                 $displayAllRecords = collect($apiDisplayAllRecords->original);
                 return view('pages.admin.settings.accepted-domains.index', compact('displayAllRecords'));
             }
