@@ -1,0 +1,27 @@
+// Import components
+@import 'components/accordion.scss';
+
+.container-fluid {
+    & .alert {
+        display: flex;
+        align-items: center;
+        justify-content: flex-start;
+        margin: 0 auto;
+        padding: 16px;
+        border-radius: 0;
+        width: 50%;
+        &-icon {
+            margin-right: 8px;
+        }
+        &-body {
+            & p {
+                margin-bottom: 0;
+            }
+            & .btn-close {
+                &:focus {
+                    box-shadow: none;
+                }
+            }
+        }
+    }
+}

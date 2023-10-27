@@ -1,0 +1,40 @@
+.container-fluid .accordion-button, .container-fluid .accordion-body {
+  padding: 8px;
+}
+.container-fluid .accordion-item {
+  border-radius: 0;
+  border-color: #000000;
+}
+.container-fluid .accordion-button {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  color: #000000;
+}
+.container-fluid .accordion-button::after {
+  background-image: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%23000000'><path fill-rule='evenodd' d='M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z'/></svg>") !important;
+}
+.container-fluid .accordion-button:focus {
+  box-shadow: none;
+}
+
+.container-fluid .alert {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  margin: 0 auto;
+  padding: 16px;
+  border-radius: 0;
+  width: 50%;
+}
+.container-fluid .alert-icon {
+  margin-right: 8px;
+}
+.container-fluid .alert-body p {
+  margin-bottom: 0;
+}
+.container-fluid .alert-body .btn-close:focus {
+  box-shadow: none;
+}
+
+/*# sourceMappingURL=app.css.map */
