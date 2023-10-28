@@ -1,0 +1,21 @@
+.section {
+    & .breadcrumb {
+        display: flex;
+        align-items: center;
+        justify-content: flex-start;
+        margin: 16px 0;
+        height: 40px;
+        &-item {
+            font-weight: 700;
+            &.active {
+                color: #000000;
+            }
+        }
+        &-item:not(:first-child) {
+            &:before {
+                content: '>';
+                font-weight: 700;
+            }
+        }
+    }
+}
