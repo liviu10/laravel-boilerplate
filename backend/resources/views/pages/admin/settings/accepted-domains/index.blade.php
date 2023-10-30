@@ -1,5 +1,5 @@
 @extends('layouts.admin')
 
 @section('content')
-    <x-carousel />
+    <x-admin-navbar />
 @endsection

@@ -1,9 +1,56 @@
 // Import components
 @import 'components/accordion.scss';
+@import 'components/admin-navbar.scss';
 @import 'components/alert.scss';
 @import 'components/breadcrumb.scss';
+@import 'components/button.scss';
 @import 'components/card.scss';
+@import 'components/carousel.scss';
+@import 'components/collapse.scss';
+@import 'components/dropdown.scss';
+@import 'components/list-group.scss';
+@import 'components/modal.scss';
 
 .container-fluid {
-
+    .section--admin-navbar {
+        & .navbar {
+            padding: 0;
+            background-color: #FFFFFF;
+            border: 1px solid red;
+            & .container-fluid {
+                padding: 0;
+            }
+            &-brand {
+                color: #000000;
+            }
+            &-nav {
+                & .nav-link {
+                    color: #000000 !important;
+                }
+            }
+            &-collapse {
+                & .dropdown {
+                    & .btn {
+                        border-radius: 0;
+                    }
+                    &-menu {
+                        top: 135%;
+                        left: auto;
+                        margin-top: 0;
+                        &.show {
+                            border-radius: 0;
+                            padding: 0;
+                        }
+                    }
+                    &-item {
+                        padding: 8px;
+                        text-wrap: wrap;
+                    }
+                    &-divider {
+                        margin: 0;
+                    }
+                }
+            }
+        }
+    }
 }
