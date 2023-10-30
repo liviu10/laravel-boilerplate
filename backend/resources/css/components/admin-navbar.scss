@@ -1,0 +1,88 @@
+.section--admin-navbar {
+    & .navbar {
+        padding: 0;
+        background-color: #FFFFFF;
+        & .container-fluid {
+            padding: 0;
+        }
+        &-brand {
+            color: #000000;
+        }
+        &-nav {
+            & .nav-link {
+                color: #000000 !important;
+            }
+        }
+        &-collapse {
+            & .dropdown {
+                & .btn {
+                    border-radius: 0;
+                }
+                &-menu {
+                    top: 100%;
+                    left: auto;
+                    margin-top: 0;
+                    width: 100%;
+                    &.show {
+                        border-radius: 0;
+                        padding: 0;
+                        @media only screen and (max-width: 991px) {
+                            border: none;
+                        }
+                    }
+                }
+                &-item {
+                    text-wrap: wrap;
+                }
+                &-divider {
+                    margin: 0;
+                    @media only screen and (max-width: 991px) {
+                        display: none;
+                    }
+                }
+            }
+        }
+        &-toggler, &-toggler:focus {
+            border: 0 !important;
+            box-shadow: none !important;
+        }
+        &-toggler {
+            border-color: transparent;
+            & span {
+                display: block;
+                background-color: #000000;
+                height: 3px;
+                width: 25px;
+                margin-top: 5px;
+                margin-bottom: 5px;
+                position: relative;
+                left: 0;
+                opacity: 1;
+                transition: all 0.35s ease-out;
+                transform-origin: center left;
+                &:nth-child(1) {
+                    transform: translateY(0) rotate(45deg);
+                }
+                &:nth-child(2) {
+                    transform: translate(0, 9px) rotate(-45deg);
+                }
+                &:nth-child(3) {
+                    opacity: 0;
+                }
+            }
+            &.collapsed {
+                & span {
+                    &:nth-child(1) {
+                        transform: translate(0, 0) rotate(0deg);
+                    }
+                    &:nth-child(2) {
+                        transform: translate(0, 0) rotate(0deg);
+                    }
+                    &:nth-child(3) {
+                        opacity: 1;
+                    }
+                }
+            }
+        }
+    }
+}

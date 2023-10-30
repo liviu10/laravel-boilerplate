@@ -12,6 +12,8 @@ use Illuminate\Support\Facades\Route;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
+// Import application's home
+use App\Http\Controllers\HomeController;
 // Import application's communication
 use App\Http\Controllers\ContactSubjectController;
 use App\Http\Controllers\ContactMessageController;
@@ -36,6 +38,8 @@ use App\Http\Controllers\UserController;
 
 // Application's admin web routes
 Route::group(['prefix' => '/admin'], function () {
+    // Application's home web route
+    Route::get('/', [HomeController::class, 'index']);
     // Application's communication web routes
     Route::group(['prefix' => '/communication'], function () {
         // Contact subjects, messages and responses

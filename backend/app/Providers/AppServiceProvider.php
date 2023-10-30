@@ -5,6 +5,9 @@ namespace App\Providers;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\ServiceProvider;
 
+// Import application's home
+use App\BusinessLogic\Interfaces\HomeInterface;
+
 // Import application's communication settings
 use App\BusinessLogic\Interfaces\ContactSubjectInterface;
 use App\BusinessLogic\Interfaces\ContactMessageInterface;
@@ -36,6 +39,9 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register(): void
     {
+        // Register application's home interfaces and services
+        $this->app->bind( HomeInterface::class, HomeService::class );
+
         // Register application's communication settings interfaces and services
         $this->app->bind( ContactSubjectInterface::class, ContactSubjectService::class );
         $this->app->bind( ContactMessageInterface::class, ContactMessageService::class );

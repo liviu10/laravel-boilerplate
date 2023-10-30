@@ -10,47 +10,8 @@
 @import 'components/dropdown.scss';
 @import 'components/list-group.scss';
 @import 'components/modal.scss';
+@import 'components/table.scss';
 
 .container-fluid {
-    .section--admin-navbar {
-        & .navbar {
-            padding: 0;
-            background-color: #FFFFFF;
-            border: 1px solid red;
-            & .container-fluid {
-                padding: 0;
-            }
-            &-brand {
-                color: #000000;
-            }
-            &-nav {
-                & .nav-link {
-                    color: #000000 !important;
-                }
-            }
-            &-collapse {
-                & .dropdown {
-                    & .btn {
-                        border-radius: 0;
-                    }
-                    &-menu {
-                        top: 135%;
-                        left: auto;
-                        margin-top: 0;
-                        &.show {
-                            border-radius: 0;
-                            padding: 0;
-                        }
-                    }
-                    &-item {
-                        padding: 8px;
-                        text-wrap: wrap;
-                    }
-                    &-divider {
-                        margin: 0;
-                    }
-                }
-            }
-        }
-    }
+
 }
