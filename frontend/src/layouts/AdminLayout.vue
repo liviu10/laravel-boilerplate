@@ -19,7 +19,7 @@
     </q-header>
 
     <q-page-container class="admin-section admin-section--container">
-      <div class="admin-section__breadcrumbs">
+      <!-- <div class="admin-section__breadcrumbs">
         <q-breadcrumbs active-color="purple">
           <template v-slot:separator>
             <q-icon
@@ -33,7 +33,7 @@
           <q-breadcrumbs-el label="Components" icon="widgets" to="" />
           <q-breadcrumbs-el label="Breadcrumbs" icon="navigation" to="" />
         </q-breadcrumbs>
-      </div>
+      </div> -->
 
       <router-view />
     </q-page-container>

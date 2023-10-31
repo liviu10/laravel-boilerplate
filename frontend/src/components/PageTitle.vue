@@ -11,7 +11,7 @@
 import { computed } from 'vue';
 import { useI18n } from 'vue-i18n';
 
-interface PageTitleInterface {
+interface IPageTitle {
   pageTitle?: string | undefined;
 }
 
@@ -26,7 +26,7 @@ const displayPageTitle = computed(() => {
   }
 })
 
-withDefaults(defineProps<PageTitleInterface>(), {});
+withDefaults(defineProps<IPageTitle>(), {});
 </script>
 
 <style lang="scss" scoped>
