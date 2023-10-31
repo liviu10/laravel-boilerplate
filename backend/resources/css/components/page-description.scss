@@ -1,0 +1,7 @@
+.section--page-description {
+    margin: 24px auto;
+    & p {
+        margin-bottom: 0;
+        text-align: justify;
+    }
+}

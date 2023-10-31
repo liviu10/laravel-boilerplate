@@ -1,0 +1,10 @@
+.section--page-title {
+    margin: 32px auto;
+    & p {
+        margin-bottom: 0;
+        text-align: center;
+        font-size: 24px;
+        font-weight: 700;
+        text-transform: uppercase;
+    }
+}

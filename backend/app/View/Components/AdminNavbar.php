@@ -5,15 +5,23 @@ namespace App\View\Components;
 use Closure;
 use Illuminate\Contracts\View\View;
 use Illuminate\View\Component;
+use App\Models\Resource;
 
-class Navbar extends Component
+class AdminNavbar extends Component
 {
+    protected $modelName;
+    public $resources;
+
     /**
      * Create a new component instance.
      */
     public function __construct()
     {
-        //
+        $this->modelName = new Resource();
+        $filter = [ 'type' => 'Menu' ];
+        $this->resources = $this->modelName->fetchAllRecords($filter);
+
+        // dd($this->resources);
     }
 
     /**
@@ -21,6 +29,6 @@ class Navbar extends Component
      */
     public function render(): View|Closure|string
     {
-        return view('components.admin-navbar');
+        return view('components.admin-navbar')->with('resources', $this->resources);
     }
 }

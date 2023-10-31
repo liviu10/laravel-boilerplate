@@ -10,8 +10,26 @@
 @import 'components/dropdown.scss';
 @import 'components/list-group.scss';
 @import 'components/modal.scss';
+@import 'components/page-description.scss';
+@import 'components/page-title.scss';
 @import 'components/table.scss';
 
 .container-fluid {
-
+    & .page {
+        &__jumbotron, &__statistics {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        &__jumbotron {
+            & div {
+                width: 80%;
+            }
+        }
+        &__statistics {
+            & div {
+                width: 50%;
+            }
+        }
+    }
 }
