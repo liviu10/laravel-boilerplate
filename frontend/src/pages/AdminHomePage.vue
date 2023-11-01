@@ -5,8 +5,6 @@
 
     <page-description />
 
-    <admin-home-statistics />
-
   </q-page>
 </template>
 
@@ -16,7 +14,6 @@
 // Import library utilities, interfaces and components
 import PageTitle from 'src/components/PageTitle.vue';
 import PageDescription from 'src/components/PageDescription.vue';
-import AdminHomeStatistics from 'src/components/AdminHomeStatistics.vue'
 
 // Import Pinia's related utilities
 
