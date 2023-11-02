@@ -12,24 +12,62 @@
                 </template>
               </q-input>
             </q-form>
+            <q-btn color="primary" dense flat icon="search" round>
+              <q-popup-proxy cover transition-show="scale" transition-hide="scale">
+                <q-card>
+                  <q-card-section>
+                    Search the web application
+                  </q-card-section>
+                  <q-card-section>
+                    <q-form>
+                      <q-input dense outlined square v-model="text"/>
+                      <q-btn color="primary" dense icon="search" label="Search" square />
+                    </q-form>
+                  </q-card-section>
+                </q-card>
+              </q-popup-proxy>
+            </q-btn>
           </div>
           <div class="admin__header-menu-settings">
-            <q-btn color="primary" flat label="English" square>
-              <q-menu fit square>
+            <q-btn v-if="$q.screen.gt.sm" color="primary" flat square icon="notifications">
+              <q-tooltip>
+                Manage your notifications
+              </q-tooltip>
+            </q-btn>
+            <q-btn v-if="$q.screen.gt.sm" color="primary" flat square icon="contrast">
+              <q-tooltip>
+                Change the theme mode
+              </q-tooltip>
+            </q-btn>
+            <q-btn v-if="$q.screen.gt.sm" color="primary" flat label="English" square>
+              <q-avatar square size="24px">
+                <img src="../assets/country-flag-us.svg">
+              </q-avatar>
+              <q-tooltip>
+                Change the language
+              </q-tooltip>
+              <q-menu class="admin__header-menu-settings-language" fit square>
                 <q-list>
-                  <q-item clickable>
-                    <q-item-section style="display: flex; align-items: center; justify-content: space-around; flex-direction: row;">
+                  <q-item clickable dense>
+                    <q-item-section>
                       <q-avatar square size="24px">
                         <img src="../assets/country-flag-us.svg">
                       </q-avatar>
                       English
                     </q-item-section>
                   </q-item>
-                  <q-separator />
-                  <q-item clickable>
-                    <q-item-section style="display: flex; align-items: center; justify-content: space-around; flex-direction: row;">
+                  <q-item clickable dense>
+                    <q-item-section>
                       <q-avatar square size="24px">
-                        <img src="../assets/country-flag-romania.svg">
+                        <img src="../assets/country-flag-fr.svg">
+                      </q-avatar>
+                      French
+                    </q-item-section>
+                  </q-item>
+                  <q-item clickable dense>
+                    <q-item-section>
+                      <q-avatar square size="24px">
+                        <img src="../assets/country-flag-ro.svg">
                       </q-avatar>
                       Romanian
                     </q-item-section>
@@ -37,15 +75,74 @@
                 </q-list>
               </q-menu>
             </q-btn>
-            <q-btn color="primary" label="Welcome, John Doe" square>
-              <q-menu fit square>
+            <q-btn color="primary" flat label="Welcome, John Doe" square>
+              <q-menu class="admin__header-menu-settings-user-menu" fit square>
                 <q-list>
-                  <q-item clickable>
-                    <q-item-section>Profile</q-item-section>
+                  <q-item clickable dense>
+                    <q-item-section>
+                      <span>
+                        <q-icon name="person" />
+                        Profile
+                      </span>
+                    </q-item-section>
+                  </q-item>
+                  <q-separator v-if="$q.screen.lt.md" />
+                  <q-item clickable dense v-if="$q.screen.lt.md">
+                    <q-item-section>
+                      <span>
+                        <q-icon name="notifications" />
+                        Notifications
+                      </span>
+                    </q-item-section>
+                  </q-item>
+                  <q-item clickable dense v-if="$q.screen.lt.md">
+                    <q-item-section>
+                      <span>
+                        <q-icon name="contrast" />
+                        Theme mode
+                      </span>
+                    </q-item-section>
+                  </q-item>
+                  <q-item clickable dense v-if="$q.screen.lt.md">
+                    <q-item-section>
+                      <q-expansion-item dense label="English">
+                        <q-list>
+                          <q-item clickable dense>
+                            <q-item-section>
+                              <q-avatar square size="24px">
+                                <img src="../assets/country-flag-us.svg">
+                              </q-avatar>
+                              English
+                            </q-item-section>
+                          </q-item>
+                          <q-item clickable dense>
+                            <q-item-section>
+                              <q-avatar square size="24px">
+                                <img src="../assets/country-flag-fr.svg">
+                              </q-avatar>
+                              French
+                            </q-item-section>
+                          </q-item>
+                          <q-item clickable dense>
+                            <q-item-section>
+                              <q-avatar square size="24px">
+                                <img src="../assets/country-flag-ro.svg">
+                              </q-avatar>
+                              Romanian
+                            </q-item-section>
+                          </q-item>
+                        </q-list>
+                      </q-expansion-item>
+                    </q-item-section>
                   </q-item>
                   <q-separator />
-                  <q-item clickable>
-                    <q-item-section>Logout</q-item-section>
+                  <q-item clickable dense>
+                    <q-item-section>
+                      <span>
+                        <q-icon name="logout" />
+                        Logout
+                      </span>
+                    </q-item-section>
                   </q-item>
                 </q-list>
               </q-menu>
@@ -56,13 +153,15 @@
     </q-header>
 
     <q-drawer
-      :breakpoint="400"
+      :breakpoint="600"
       class="admin__drawer"
-      :width="250"
+      :overlay="$q.screen.lt.sm"
       show-if-above
+      :width="250"
       v-model="leftDrawerOpen"
     >
       <q-scroll-area
+        class="fit"
         style="
           height: calc(100% - 150px);
           margin-top: 150px;
@@ -163,15 +262,31 @@ const text = ref(null);
       width: 100%;
       &-search {
         margin-left: 16px;
-        & .q-form {
-          display: flex;
-          align-items: center;
-          justify-content: center;
+        @media only screen and (max-width: 474px) {
+          & .q-form {
+            display: none;
+          }
+          & .q-btn {
+            display: flex;
+          }
+        }
+        @media only screen and (min-width: 475px) {
+          & .q-btn {
+            display: none;
+          }
         }
       }
       &-settings {
         & .q-btn {
-          margin: 0 4px;
+          padding: 6px;
+          &:deep {
+            .q-btn__content {
+              flex-direction: row-reverse;
+              & .q-avatar {
+                margin-right: 4px;
+              }
+            }
+          }
         }
       }
     }
@@ -192,6 +307,75 @@ const text = ref(null);
   &__container {
     &-breadcrumbs {
       margin: 24px 12px;
+    }
+  }
+}
+@media only screen and (max-width: 475px) {
+  .q-dialog {
+    & .q-card {
+      border-radius: 0;
+      width: 100vw;
+      &__section {
+        padding: 8px;
+        font-weight: 700;
+        text-align: center;
+        & .q-form {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          flex-direction: column;
+          & .q-field {
+            width: 80%;
+          }
+          & .q-btn {
+            margin-top: 8px;
+          }
+        }
+      }
+    }
+  }
+}
+.q-menu {
+  & .q-list {
+    & .q-item {
+      padding: 8px;
+      @media only screen and (max-width: 1023px) {
+        padding: 2px 8px;
+        & .q-expansion-item {
+          &:deep {
+            .q-item {
+              padding: 0;
+              &__section {
+                display: flex;
+                align-items: center;
+                justify-content: flex-start;
+                flex-direction: row;
+                & .q-avatar {
+                  margin-right: 4px;
+                }
+              }
+              &__section--side {
+                padding-left: 0;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+  &.admin__header-menu-settings-language {
+    & .q-list {
+      & .q-item {
+        &__section {
+          display: flex;
+          align-items: center;
+          justify-content: flex-start;
+          flex-direction: row;
+          & .q-avatar {
+            margin-right: 4px;
+          }
+        }
+      }
     }
   }
 }
