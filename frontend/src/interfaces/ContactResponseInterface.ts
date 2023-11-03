@@ -1,11 +1,11 @@
-import { BaseUser, BaseSingleRecord, Timestamps } from './BaseInterface'
+import { IBaseUser, IBaseSingleRecord, IBaseTimestamps } from './BaseInterface'
 
-interface SingleRecord extends BaseSingleRecord {
-  results: (Timestamps & {
+interface ISingleRecord extends IBaseSingleRecord {
+  results: (IBaseTimestamps & {
     id: number
     message: string
     user_id: number
-    user: BaseUser
+    user: IBaseUser
     contact_message_id: number
     contact_message: {
       id: number
@@ -14,18 +14,18 @@ interface SingleRecord extends BaseSingleRecord {
   })[]
 }
 
-interface CreateRecord {
+interface ICreateRecord {
   contact_message_id: number
   message: string
 }
 
-interface UpdateRecord {
+interface IUpdateRecord {
   contact_message_id: number
   message: string
 }
 
 export {
-  SingleRecord,
-  CreateRecord,
-  UpdateRecord,
+  ISingleRecord,
+  ICreateRecord,
+  IUpdateRecord,
 }

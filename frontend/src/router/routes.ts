@@ -15,6 +15,16 @@ const routes: RouteRecordRaw[] = [
           icon: 'home',
         },
       },
+      {
+        path: '/admin/settings',
+        name: 'SettingsUserPage',
+        component: () => import('pages/SettingsUserPage.vue'),
+        meta: {
+          title: 'admin.user.title',
+          caption: 'admin.user.description',
+          icon: 'person',
+        },
+      },
     ],
   },
 

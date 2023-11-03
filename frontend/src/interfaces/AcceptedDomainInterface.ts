@@ -1,29 +1,41 @@
-import { BaseUser, BaseSingleRecord, Timestamps } from './BaseInterface'
+import { IBaseUser, IBaseSingleRecord, IBaseTimestamps, IBasePagination } from './BaseInterface'
 
-interface SingleRecord extends BaseSingleRecord {
-  results: (Timestamps & {
+type AcceptedDomainTypeOptions = 'generic' | 'country-code' | 'sponsored' | 'infrastructure' | 'generic-restricted' | 'local-environment'
+
+interface IAllRecords extends IBasePagination {
+  data: {
     id: number
     domain: string
-    type: string
+    type: AcceptedDomainTypeOptions
+    is_active: boolean
+  }[]
+}
+
+interface ISingleRecord extends IBaseSingleRecord {
+  results: (IBaseTimestamps & {
+    id: number
+    domain: string
+    type: AcceptedDomainTypeOptions
     is_active: boolean
     user_id: number
-    user: BaseUser
+    user: IBaseUser
   })[]
 }
 
-interface CreateRecord {
+interface ICreateRecord {
   domain: string
-  type: string
+  type: AcceptedDomainTypeOptions
   is_active: boolean
 }
 
-interface UpdateRecord {
-  type: string
+interface IUpdateRecord {
+  type: AcceptedDomainTypeOptions
   is_active: boolean
 }
 
 export {
-  SingleRecord,
-  CreateRecord,
-  UpdateRecord,
+  IAllRecords,
+  ISingleRecord,
+  ICreateRecord,
+  IUpdateRecord,
 }

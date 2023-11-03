@@ -1,30 +1,30 @@
-import { BaseUser, BaseSingleRecord, Timestamps } from './BaseInterface'
+import { IBaseUser, IBaseSingleRecord, IBaseTimestamps } from './BaseInterface'
 
-interface SingleRecord extends BaseSingleRecord {
-  results: (Timestamps & {
+interface ISingleRecord extends IBaseSingleRecord {
+  results: (IBaseTimestamps & {
     id: number
     name: string
     description: string
     is_active: boolean
     user_id: number
-    user: BaseUser
+    user: IBaseUser
   })[]
 }
 
-interface CreateRecord {
+interface ICreateRecord {
   name: string
   description: string
   is_active: boolean
 }
 
-interface UpdateRecord {
+interface IUpdateRecord {
   name: string
   description: string
   is_active: boolean
 }
 
 export {
-  SingleRecord,
-  CreateRecord,
-  UpdateRecord,
+  ISingleRecord,
+  ICreateRecord,
+  IUpdateRecord,
 }

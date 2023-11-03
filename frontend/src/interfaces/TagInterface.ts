@@ -1,6 +1,6 @@
-import { BaseUser, BaseSingleRecord, Timestamps } from './BaseInterface'
+import { IBaseUser, IBaseSingleRecord, IBaseTimestamps } from './BaseInterface'
 
-interface Content extends Timestamps {
+interface IContent extends IBaseTimestamps {
   id: number
   visibility: string
   content_url: string
@@ -12,33 +12,33 @@ interface Content extends Timestamps {
   user_id: number
 }
 
-interface SingleRecord extends BaseSingleRecord {
-  results: (Timestamps & {
+interface ISingleRecord extends IBaseSingleRecord {
+  results: (IBaseTimestamps & {
     id: number
     name: string
     description: string
     slug: string
     user_id: number
-    user: BaseUser
+    user: IBaseUser
     content_id: number
-    content: Content
+    content: IContent
   })[]
 }
 
-interface CreateRecord {
+interface ICreateRecord {
   name: string
   description: string
   content_id: number
 }
 
-interface UpdateRecord {
+interface IUpdateRecord {
   name: string
   description: string
   content_id: number
 }
 
 export {
-  SingleRecord,
-  CreateRecord,
-  UpdateRecord,
+  ISingleRecord,
+  ICreateRecord,
+  IUpdateRecord,
 }

@@ -1,10 +1,10 @@
-import { BaseUser, BaseSingleRecord, Timestamps } from './BaseInterface'
+import { IBaseUser, IBaseSingleRecord, IBaseTimestamps } from './BaseInterface'
 
 type VisibilityOptions = 'Public' | 'Private' | 'Draft'
 
 type ContentTypeOptions = 'Page' | 'Article'
 
-interface TagInterface extends Timestamps {
+interface ITag extends IBaseTimestamps {
   id: number
   name: string
   description: string
@@ -13,7 +13,7 @@ interface TagInterface extends Timestamps {
   content_id: number
 }
 
-interface MediaInterface extends Timestamps {
+interface IMedia extends IBaseTimestamps {
   id: number
   type: string
   internal_path: string | null
@@ -22,8 +22,8 @@ interface MediaInterface extends Timestamps {
   content_id: number
 }
 
-interface SingleRecord extends BaseSingleRecord {
-  results: (Timestamps & {
+interface ISingleRecord extends IBaseSingleRecord {
+  results: (IBaseTimestamps & {
     id: number
     visibility: VisibilityOptions
     content_url: string
@@ -33,13 +33,13 @@ interface SingleRecord extends BaseSingleRecord {
     content: string
     allow_comments: boolean
     user_id: number
-    tags: TagInterface[]
-    medias: MediaInterface[]
-    user: BaseUser
+    tags: ITag[]
+    medias: IMedia[]
+    user: IBaseUser
   })[]
 }
 
-interface CreateRecord {
+interface ICreateRecord {
   visibility: VisibilityOptions
   content_url: string
   title: string
@@ -49,7 +49,7 @@ interface CreateRecord {
   allow_comments: boolean
 }
 
-interface UpdateRecord {
+interface IUpdateRecord {
   visibility: VisibilityOptions
   content_url: string
   title: string
@@ -60,7 +60,7 @@ interface UpdateRecord {
 }
 
 export {
-  SingleRecord,
-  CreateRecord,
-  UpdateRecord,
+  ISingleRecord,
+  ICreateRecord,
+  IUpdateRecord,
 }

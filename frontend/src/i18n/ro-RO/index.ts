@@ -17,6 +17,7 @@ export default {
       notifications_label: 'Notificări',
       theme_mode_label: 'Mod tematic',
       logout_label: 'Deconectare',
+      table_no_data_label: 'Nu exista inregistrari',
     },
     home: {
       page_title: 'Dashboard',

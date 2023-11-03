@@ -1,7 +1,7 @@
-import { BaseSingleRecord, Timestamps } from './BaseInterface'
+import { IBaseSingleRecord, IBaseTimestamps } from './BaseInterface'
 
-interface SingleRecord extends BaseSingleRecord {
-  results: (Timestamps & {
+interface ISingleRecord extends IBaseSingleRecord {
+  results: (IBaseTimestamps & {
     id: number
     content_id: number
     user_id: number
@@ -11,14 +11,14 @@ interface SingleRecord extends BaseSingleRecord {
   })[]
 }
 
-interface CreateRecord {
+interface ICreateRecord {
   likes: number
   dislikes: number
   rating: number
   content_id: number
 }
 
-interface UpdateRecord {
+interface IUpdateRecord {
   likes: number
   dislikes: number
   rating: number
@@ -26,7 +26,7 @@ interface UpdateRecord {
 }
 
 export {
-  SingleRecord,
-  CreateRecord,
-  UpdateRecord,
+  ISingleRecord,
+  ICreateRecord,
+  IUpdateRecord,
 }

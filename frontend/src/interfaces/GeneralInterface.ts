@@ -1,32 +1,32 @@
-import { BaseUser, BaseSingleRecord, Timestamps } from './BaseInterface'
+import { IBaseUser, IBaseSingleRecord, IBaseTimestamps } from './BaseInterface'
 
 type GeneralOptions = 'General' | 'Writing' | 'Reading' | 'Discussion' | 'Media' | 'Performance' | 'Notifications'
 
-interface SingleRecord extends BaseSingleRecord {
-  results: (Timestamps & {
+interface ISingleRecord extends IBaseSingleRecord {
+  results: (IBaseTimestamps & {
     id: number
     type: GeneralOptions
     label: string
     value: string
     user_id: number
-    user: BaseUser
+    user: IBaseUser
   })[]
 }
 
-interface CreateRecord {
+interface ICreateRecord {
   type: GeneralOptions
   label: string
   value: string
 }
 
-interface UpdateRecord {
+interface IUpdateRecord {
   type: GeneralOptions
   label: string
   value: string
 }
 
 export {
-  SingleRecord,
-  CreateRecord,
-  UpdateRecord,
+  ISingleRecord,
+  ICreateRecord,
+  IUpdateRecord,
 }

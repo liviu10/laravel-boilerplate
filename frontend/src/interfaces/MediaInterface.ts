@@ -1,8 +1,8 @@
-import { BaseUser, BaseSingleRecord, Timestamps } from './BaseInterface'
+import { IBaseUser, IBaseSingleRecord, IBaseTimestamps } from './BaseInterface'
 
 type TypeOptions = 'Images' | 'Documents' | 'Videos' | 'Audio' | 'Others'
 
-interface ContentInterface extends Timestamps {
+interface IContent extends IBaseTimestamps {
   id: number
   visibility: string
   content_url: string
@@ -14,27 +14,27 @@ interface ContentInterface extends Timestamps {
   user_id: number
 }
 
-interface SingleRecord extends BaseSingleRecord {
-  results: (Timestamps & {
+interface ISingleRecord extends IBaseSingleRecord {
+  results: (IBaseTimestamps & {
     id: number
     type: TypeOptions
     internal_path: string | null
     external_path: string | null
     user_id: number
-    user: BaseUser
+    user: IBaseUser
     content_id: number
-    content: ContentInterface
+    content: IContent
   })[]
 }
 
-interface CreateRecord {
+interface ICreateRecord {
   type: TypeOptions
   internal_path: string | null
   external_path: string | null
   content_id: number
 }
 
-interface UpdateRecord {
+interface IUpdateRecord {
   type: TypeOptions
   internal_path: string | null
   external_path: string | null
@@ -42,7 +42,7 @@ interface UpdateRecord {
 }
 
 export {
-  SingleRecord,
-  CreateRecord,
-  UpdateRecord,
+  ISingleRecord,
+  ICreateRecord,
+  IUpdateRecord,
 }

@@ -17,6 +17,7 @@ export default {
       notifications_label: 'Notifications',
       theme_mode_label: 'Theme mode',
       logout_label: 'Logout',
+      table_no_data_label: 'No records available',
     },
     home: {
       page_title: 'Dashboard',

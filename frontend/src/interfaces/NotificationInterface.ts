@@ -1,29 +1,29 @@
-import { BaseUser, BaseSingleRecord, Timestamps } from './BaseInterface'
+import { IBaseUser, IBaseSingleRecord, IBaseTimestamps } from './BaseInterface'
 
 type TypeOptions = 'SMS' | 'Email'
 
 type ConditionOptions = 'Read' | 'Create' | 'Show' | 'Update' | 'Delete' | 'Restore'
 
-interface SingleRecord extends BaseSingleRecord {
-  results: (Timestamps & {
+interface ISingleRecord extends IBaseSingleRecord {
+  results: (IBaseTimestamps & {
     id: number
     type: TypeOptions
     condition: ConditionOptions
     title: string
     content: string
     user_id: number
-    user: BaseUser
+    user: IBaseUser
   })[]
 }
 
-interface CreateRecord {
+interface ICreateRecord {
   type: TypeOptions
   condition: ConditionOptions
   title: string
   content: string
 }
 
-interface UpdateRecord {
+interface IUpdateRecord {
   type: TypeOptions
   condition: ConditionOptions
   title: string
@@ -31,7 +31,7 @@ interface UpdateRecord {
 }
 
 export {
-  SingleRecord,
-  CreateRecord,
-  UpdateRecord,
+  ISingleRecord,
+  ICreateRecord,
+  IUpdateRecord,
 }

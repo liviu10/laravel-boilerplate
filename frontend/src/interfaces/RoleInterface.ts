@@ -1,13 +1,13 @@
-import { BaseSingleRecord, Timestamps } from './BaseInterface'
+import { IBaseSingleRecord, IBaseTimestamps } from './BaseInterface'
 
-interface Permission {
+interface IPermission {
   id: number
   name: string
   role_id: number
 }
 
-interface SingleRecord extends BaseSingleRecord {
-  results: (Timestamps & {
+interface ISingleRecord extends IBaseSingleRecord {
+  results: (IBaseTimestamps & {
     id: number
     name: string
     description: string
@@ -15,11 +15,11 @@ interface SingleRecord extends BaseSingleRecord {
     text_color: string
     slug: string
     is_active: boolean
-    permissions: Permission[]
+    IPermissions: IPermission[]
   })[]
 }
 
-interface CreateRecord {
+interface ICreateRecord {
   name: string
   description: string
   bg_color: string
@@ -28,7 +28,7 @@ interface CreateRecord {
   is_active: boolean
 }
 
-interface UpdateRecord {
+interface IUpdateRecord {
   name: string
   description: string
   bg_color: string
@@ -38,7 +38,7 @@ interface UpdateRecord {
 }
 
 export {
-  SingleRecord,
-  CreateRecord,
-  UpdateRecord,
+  ISingleRecord,
+  ICreateRecord,
+  IUpdateRecord,
 }

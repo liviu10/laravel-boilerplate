@@ -1,7 +1,6 @@
-import { BaseSingleRecord, Timestamps } from './BaseInterface'
+import { IBaseSingleRecord, IBaseTimestamps, IBasePagination } from './BaseInterface'
 
-interface AllRecords {
-  current_page: number
+interface IAllRecords extends IBasePagination {
   data: {
     created_at: string
     email: string
@@ -9,39 +8,24 @@ interface AllRecords {
     id: number
     nickname: string
   }[]
-  first_page_url: string
-  from: number
-  last_page: number
-  last_page_url: string
-  links: {
-    active: boolean
-    label: string
-    url: string | null
-  }[]
-  next_page_url: string | null
-  path: string
-  per_page: number
-  prev_page_url: string | null
-  to: number
-  total: number
 }
 
-interface Permission {
+interface IPermission {
   id: number
   name: string
   is_active: true
   role_id: number
 }
 
-interface Role {
+interface IRole {
   id: number
   name: string
   is_active: boolean
-  permissions: Permission[]
+  permissions: IPermission[]
 }
 
-interface SingleRecord extends BaseSingleRecord {
-  results: (Timestamps & {
+interface ISingleRecord extends IBaseSingleRecord {
+  results: (IBaseTimestamps & {
     id: number
     full_name: string
     first_name: string
@@ -52,11 +36,11 @@ interface SingleRecord extends BaseSingleRecord {
     email_verified_at: string
     profile_image: string | null
     role_id: number
-    role: Role
+    role: IRole
   })[]
 }
 
-interface CreateRecord {
+interface ICreateRecord {
   first_name: string
   last_name: string
   nickname: string
@@ -64,15 +48,15 @@ interface CreateRecord {
   role_id: number
 }
 
-interface UpdateRecord {
+interface IUpdateRecord {
   first_name: string
   last_name: string
   role_id: string
 }
 
 export {
-  AllRecords,
-  SingleRecord,
-  CreateRecord,
-  UpdateRecord,
+  IAllRecords,
+  ISingleRecord,
+  ICreateRecord,
+  IUpdateRecord,
 }

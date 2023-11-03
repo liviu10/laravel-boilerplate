@@ -17,6 +17,7 @@ export default {
       notifications_label: 'Notifications',
       theme_mode_label: 'Mode de thème',
       logout_label: 'Déconnexion',
+      table_no_data_label: 'Pas d\'enregistrements disponibles',
     },
     home: {
       page_title: 'Dashboard',

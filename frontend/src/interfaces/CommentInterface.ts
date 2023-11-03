@@ -1,11 +1,11 @@
-import { BaseSingleRecord, Timestamps } from './BaseInterface'
+import { IBaseSingleRecord, IBaseTimestamps } from './BaseInterface'
 
 type TypeOptions = 'Comment' | 'Reply'
 
 type StatusOptions = 'Pending' | 'Approved' | 'Spam' | 'Trash'
 
-interface SingleRecord extends BaseSingleRecord {
-  results: (Timestamps & {
+interface ISingleRecord extends IBaseSingleRecord {
+  results: (IBaseTimestamps & {
     id: number
     type: TypeOptions
     status: StatusOptions
@@ -18,7 +18,7 @@ interface SingleRecord extends BaseSingleRecord {
   })[]
 }
 
-interface CreateRecord {
+interface ICreateRecord {
   type: string
   status: string
   full_name: string
@@ -28,7 +28,7 @@ interface CreateRecord {
   content_id: number
 }
 
-interface UpdateRecord {
+interface IUpdateRecord {
   type: string
   status: string
   full_name: string
@@ -39,7 +39,7 @@ interface UpdateRecord {
 }
 
 export {
-  SingleRecord,
-  CreateRecord,
-  UpdateRecord,
+  ISingleRecord,
+  ICreateRecord,
+  IUpdateRecord,
 }

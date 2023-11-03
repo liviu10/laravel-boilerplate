@@ -13,7 +13,7 @@ export const useCommunicationStore = defineStore('communication', () => {
   const responseTitle = ref('')
   const allFilters: Ref<Filter[] | [] | undefined> = ref(undefined)
   const allModels: Ref<Model[] | [] | undefined> = ref(undefined)
-  const allRecords: Ref<object[] | [] | undefined> = ref(undefined)
+  const IAllRecords: Ref<object[] | [] | undefined> = ref(undefined)
   const responseMessage = ref('')
   const singleRecord: Ref<object[] | [] | undefined> = ref(undefined)
   const createdRecord: Ref<object[] | [] | undefined> = ref(undefined)
@@ -25,7 +25,7 @@ export const useCommunicationStore = defineStore('communication', () => {
   const getResponseTitle = computed(() => responseTitle.value)
   const getAllFilters = computed(() => allFilters.value)
   const getAllModels = computed(() => allModels.value)
-  const getAllRecords = computed(() => allRecords.value)
+  const getIAllRecords = computed(() => IAllRecords.value)
   const getResponseMessage = computed(() => responseMessage.value)
   const getSingleRecord = computed(() => singleRecord.value)
   const getCreatedRecord = computed(() => createdRecord.value)
@@ -46,7 +46,7 @@ export const useCommunicationStore = defineStore('communication', () => {
           responseMessage.value = data.description
           allFilters.value = data.filters
           allModels.value = data.models
-          allRecords.value = data.results
+          IAllRecords.value = data.results
           responseTitle.value = data.title
         }
       })
@@ -144,7 +144,7 @@ export const useCommunicationStore = defineStore('communication', () => {
     getResponseTitle,
     getAllFilters,
     getAllModels,
-    getAllRecords,
+    getIAllRecords,
     getResponseMessage,
     getSingleRecord,
     getCreatedRecord,

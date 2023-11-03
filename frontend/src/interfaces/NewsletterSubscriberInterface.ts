@@ -1,36 +1,36 @@
-import { BaseSingleRecord, Timestamps } from './BaseInterface'
+import { IBaseSingleRecord, IBaseTimestamps } from './BaseInterface'
 
-interface NewsletterCampaign {
+interface INewsletterCampaign {
   id: number
   name: string
   valid_from: string
   valid_to: string
 }
 
-interface SingleRecord extends BaseSingleRecord {
-  results: (Timestamps & {
+interface ISingleRecord extends IBaseSingleRecord {
+  results: (IBaseTimestamps & {
     id: number
     full_name: string
     email: string
     privacy_policy: boolean
     valid_email: boolean
     newsletter_campaign_id: number
-    newsletter_campaign: NewsletterCampaign
+    newsletter_campaign: INewsletterCampaign
   })[]
 }
 
-interface CreateRecord {
+interface ICreateRecord {
   full_name: string
   email: string
   privacy_policy: boolean
 }
 
-interface UpdateRecord {
+interface IUpdateRecord {
   newsletter_campaign_id: number
 }
 
 export {
-  SingleRecord,
-  CreateRecord,
-  UpdateRecord,
+  ISingleRecord,
+  ICreateRecord,
+  IUpdateRecord,
 }
