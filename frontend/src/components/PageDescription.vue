@@ -35,11 +35,19 @@ withDefaults(defineProps<IPageDescription>(), {});
     display: flex;
     justify-content: center;
     align-items: center;
-    margin: 16px 0;
+    margin: 32px 0;
   }
   &__description {
     margin-bottom: 0;
+    width: 80%;
     font-size: 16px;
+    text-align: justify;
+    @media only screen and (min-width: 475px) and (max-width: 1023px) {
+      width: 85%;
+    }
+    @media only screen and (max-width: 474px) {
+      width: 90%;
+    }
   }
 }
 </style>

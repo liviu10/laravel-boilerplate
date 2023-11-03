@@ -40,7 +40,8 @@ withDefaults(defineProps<IPageTitle>(), {});
   &__title {
     margin-bottom: 0;
     font-weight: 700;
-    font-size: 20px;
+    font-size: 24px;
+    text-transform: uppercase;
   }
 }
 </style>

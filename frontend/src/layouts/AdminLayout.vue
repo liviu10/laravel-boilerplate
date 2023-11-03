@@ -6,7 +6,13 @@
         <div class="admin__header-menu">
           <div class="admin__header-menu-search">
             <q-form>
-              <q-input dense outlined square v-model="text">
+              <q-input
+                dense
+                :label="t('admin.generic.search_the_application')"
+                outlined
+                square
+                v-model="text"
+              >
                 <template v-slot:append>
                   <q-icon name="search" class="cursor-pointer" />
                 </template>
@@ -16,12 +22,18 @@
               <q-popup-proxy cover transition-show="scale" transition-hide="scale">
                 <q-card>
                   <q-card-section>
-                    Search the web application
+                    {{ t('admin.generic.search_the_application') }}
                   </q-card-section>
                   <q-card-section>
                     <q-form>
                       <q-input dense outlined square v-model="text"/>
-                      <q-btn color="primary" dense icon="search" label="Search" square />
+                      <q-btn
+                        color="primary"
+                        dense
+                        icon="search"
+                        :label="t('admin.generic.search_button_label')"
+                        square
+                      />
                     </q-form>
                   </q-card-section>
                 </q-card>
@@ -31,12 +43,12 @@
           <div class="admin__header-menu-settings">
             <q-btn v-if="$q.screen.gt.sm" color="primary" flat square icon="notifications">
               <q-tooltip>
-                Manage your notifications
+                {{ t('admin.generic.notification_tooltip') }}
               </q-tooltip>
             </q-btn>
             <q-btn v-if="$q.screen.gt.sm" color="primary" flat square icon="contrast">
               <q-tooltip>
-                Change the theme mode
+                {{ t('admin.generic.contrast_tooltip') }}
               </q-tooltip>
             </q-btn>
             <q-btn v-if="$q.screen.gt.sm" color="primary" flat label="English" square>
@@ -44,7 +56,7 @@
                 <img src="../assets/country-flag-us.svg">
               </q-avatar>
               <q-tooltip>
-                Change the language
+                {{ t('admin.generic.language_tooltip') }}
               </q-tooltip>
               <q-menu class="admin__header-menu-settings-language" fit square>
                 <q-list>
@@ -53,7 +65,7 @@
                       <q-avatar square size="24px">
                         <img src="../assets/country-flag-us.svg">
                       </q-avatar>
-                      English
+                      {{ t('admin.generic.english_language') }}
                     </q-item-section>
                   </q-item>
                   <q-item clickable dense>
@@ -61,7 +73,7 @@
                       <q-avatar square size="24px">
                         <img src="../assets/country-flag-fr.svg">
                       </q-avatar>
-                      French
+                      {{ t('admin.generic.french_language') }}
                     </q-item-section>
                   </q-item>
                   <q-item clickable dense>
@@ -69,20 +81,25 @@
                       <q-avatar square size="24px">
                         <img src="../assets/country-flag-ro.svg">
                       </q-avatar>
-                      Romanian
+                      {{ t('admin.generic.romanian_language') }}
                     </q-item-section>
                   </q-item>
                 </q-list>
               </q-menu>
             </q-btn>
-            <q-btn color="primary" flat label="Welcome, John Doe" square>
+            <q-btn
+              color="primary"
+              flat
+              :label="t('admin.generic.welcome_message', { username: 'John Doe' })"
+              square
+            >
               <q-menu class="admin__header-menu-settings-user-menu" fit square>
                 <q-list>
                   <q-item clickable dense>
                     <q-item-section>
                       <span>
                         <q-icon name="person" />
-                        Profile
+                        {{ t('admin.generic.profile_label') }}
                       </span>
                     </q-item-section>
                   </q-item>
@@ -91,7 +108,7 @@
                     <q-item-section>
                       <span>
                         <q-icon name="notifications" />
-                        Notifications
+                        {{ t('admin.generic.notifications_label') }}
                       </span>
                     </q-item-section>
                   </q-item>
@@ -99,7 +116,7 @@
                     <q-item-section>
                       <span>
                         <q-icon name="contrast" />
-                        Theme mode
+                        {{ t('admin.generic.theme_mode_label') }}
                       </span>
                     </q-item-section>
                   </q-item>
@@ -112,7 +129,7 @@
                               <q-avatar square size="24px">
                                 <img src="../assets/country-flag-us.svg">
                               </q-avatar>
-                              English
+                              {{ t('admin.generic.english_language') }}
                             </q-item-section>
                           </q-item>
                           <q-item clickable dense>
@@ -120,7 +137,7 @@
                               <q-avatar square size="24px">
                                 <img src="../assets/country-flag-fr.svg">
                               </q-avatar>
-                              French
+                              {{ t('admin.generic.french_language') }}
                             </q-item-section>
                           </q-item>
                           <q-item clickable dense>
@@ -128,7 +145,7 @@
                               <q-avatar square size="24px">
                                 <img src="../assets/country-flag-ro.svg">
                               </q-avatar>
-                              Romanian
+                              {{ t('admin.generic.romanian_language') }}
                             </q-item-section>
                           </q-item>
                         </q-list>
@@ -140,7 +157,7 @@
                     <q-item-section>
                       <span>
                         <q-icon name="logout" />
-                        Logout
+                        {{ t('admin.generic.logout_label') }}
                       </span>
                     </q-item-section>
                   </q-item>
@@ -161,7 +178,6 @@
       v-model="leftDrawerOpen"
     >
       <q-scroll-area
-        class="fit"
         style="
           height: calc(100% - 150px);
           margin-top: 150px;
@@ -238,9 +254,13 @@
 <script setup lang="ts">
 // Import vue related utilities
 import { ref } from 'vue';
+import { useI18n } from 'vue-i18n';
 
 // Import library utilities, interfaces and components
 import { handleApplicationName } from 'src/library/CopyrightInfo/main';
+
+// Defined the translation variable
+const { t } = useI18n({});
 
 const leftDrawerOpen = ref(false);
 
@@ -279,7 +299,7 @@ const text = ref(null);
       &-settings {
         & .q-btn {
           padding: 6px;
-          &:deep {
+          &:deep() {
             .q-btn__content {
               flex-direction: row-reverse;
               & .q-avatar {
@@ -292,6 +312,19 @@ const text = ref(null);
     }
   }
   &__drawer {
+    & .q-scrollarea {
+      &:deep() {
+        .q-item {
+          padding: 12px;
+          &__section {
+            padding: 0;
+            &--avatar {
+              min-width: 40px;
+            }
+          }
+        }
+      }
+    }
     & .q-img {
       &__content {
         & .absolute-center {
@@ -342,7 +375,7 @@ const text = ref(null);
       @media only screen and (max-width: 1023px) {
         padding: 2px 8px;
         & .q-expansion-item {
-          &:deep {
+          &:deep() {
             .q-item {
               padding: 0;
               &__section {
