@@ -12,7 +12,7 @@ use Illuminate\Database\QueryException;
 use Illuminate\Pagination\LengthAwarePaginator;
 
 /**
- * Class Resource
+ * Class ResourceChildren
  * @package App\Models
 
  * @property int $id
@@ -34,17 +34,21 @@ use Illuminate\Pagination\LengthAwarePaginator;
  * @method updateRecord
  * @method deleteRecord
  * @method getFields
- * @method getResourceTypes
+ * @method getResourceChildrenTypes
  */
-class Resource extends BaseModel
+class ResourceChildren extends BaseModel
 {
     use HasFactory, FilterAvailableFields, LogApiError;
 
-    protected $table = 'set_resources';
+    protected $table = 'set_resource_children';
 
     protected $foreignKey = 'user_id';
 
     protected $foreignKeyType = 'int';
+
+    protected $resourceForeignKey = 'resource_id';
+
+    protected $resourceForeignKeyType = 'int';
 
     protected $fillable = [
         'type',
@@ -58,12 +62,11 @@ class Resource extends BaseModel
         'is_active',
         'requires_auth',
         'user_id',
+        'resource_id',
     ];
 
     protected $resources = [
-        'resources.index',
         'resources.create',
-        'resources.show',
         'resources.update',
         'resources.destroy',
     ];
@@ -83,6 +86,7 @@ class Resource extends BaseModel
         return array_merge($parentCasts, [
             'requires_auth' => 'boolean',
             'user_id'       => 'integer',
+            'resource_id'   => 'integer',
         ]);
     }
 
@@ -91,72 +95,18 @@ class Resource extends BaseModel
         return $this->belongsTo('App\Models\User');
     }
 
-    public function resource_children()
+    public function resource()
     {
-        return $this->hasMany('App\Models\ResourceChildren');
-    }
-
-    /**
-     * Fetch records from the database based on optional search criteria.
-     * @param array $search An associative array of search criteria (field => value).
-     * @param string|null $type The fetch type: 'paginate'for paginated results or null for a collection.
-     * @return \Illuminate\Pagination\LengthAwarePaginator|\Illuminate\Support\Collection|bool
-     * A paginated result, a collection, or `false` if an error occurs.
-     */
-    public function fetchAllRecords(array $search = [], string|null $type = null): LengthAwarePaginator|Collection|bool
-    {
-        try {
-            $query = $this->select(
-                'id',
-                'type',
-                'path',
-                'name',
-                'component',
-                'layout',
-                'title',
-                'caption',
-                'icon',
-                'is_active',
-                'requires_auth',
-            );
-
-            if (!empty($search)) {
-                foreach ($search as $field => $value) {
-                    if ($field === 'id' || $field === 'type' || $field === 'is_active') {
-                        $query->where($field, '=', $value);
-                    } else {
-                        $query->where($field, 'LIKE', '%' . $value . '%');
-                    }
-                }
-            }
-
-            if ($type === 'paginate') {
-                return $query->paginate(15);
-            } else {
-                return $query
-                    ->with([
-                        'resource_children' => function ($query) {
-                            $query->select('*');
-                        }
-                    ])
-                    ->get();
-            }
-        } catch (Exception $exception) {
-            $this->LogApiError($exception);
-            return false;
-        } catch (QueryException $exception) {
-            $this->LogApiError($exception);
-            return false;
-        }
+        return $this->belongsTo('App\Models\Resource');
     }
 
     /**
      * Create a new record in the database.
      * @param array $payload An associative array containing record data.
-     * @return \App\Models\Resource|bool The newly created
+     * @return \App\Models\ResourceChildren|bool The newly created
      * User instance, or `false` if an error occurs.
      */
-    public function createRecord(array $payload): Resource|bool
+    public function createRecord(array $payload): ResourceChildren|bool
     {
         try {
             $query = $this->create([
@@ -184,45 +134,12 @@ class Resource extends BaseModel
     }
 
     /**
-     * Fetch a single record from the database by its ID.
-     * @param int $id The unique identifier of the record to fetch.
-     * @param string|null $type The fetch type: 'relation' to include
-     * related data or null for just the record.
-     * @return \Illuminate\Support\Collection|bool The fetched record or
-     * related data as a Collection, or `false` if an error occurs.
-     */
-    public function fetchSingleRecord(int $id, string|null $type = null): Collection|bool
-    {
-        try {
-            $query = $this->select('*')->where('id', '=', $id);
-
-            if ($type === 'relation') {
-                $query->with([
-                    'user' => function ($query) {
-                        $query->select('id', 'full_name');
-                    }
-                ]);
-
-                return $query->get();
-            } else {
-                return $query->get();
-            }
-        } catch (Exception $exception) {
-            $this->LogApiError($exception);
-            return false;
-        } catch (QueryException $exception) {
-            $this->LogApiError($exception);
-            return false;
-        }
-    }
-
-    /**
      * Update a record in the database.
      * @param array $payload An associative array containing the updated record data.
      * @param int $id The unique identifier of the record to update.
-     * @return \App\Models\Resource|bool The freshly updated User instance, or `false` if an error occurs.
+     * @return \App\Models\ResourceChildren|bool The freshly updated User instance, or `false` if an error occurs.
      */
-    public function updateRecord(array $payload, int $id): Resource|bool
+    public function updateRecord(array $payload, int $id): ResourceChildren|bool
     {
         try {
             $query = tap($this->find($id))->update([
@@ -283,7 +200,7 @@ class Resource extends BaseModel
      * Get the resource types.
      * @return array An array containing the resource types.
      */
-    public function getResourceTypeOptions(): array
+    public function getResourceChildrenTypeOptions(): array
     {
         return $this->resourceTypeOptions;
     }
@@ -292,7 +209,7 @@ class Resource extends BaseModel
      * Get the resource methods for the model.
      * @return array An array containing the resource methods for the model.
      */
-    public function getResources(): array
+    public function getResourceChildren(): array
     {
         return $this->resources;
     }
