@@ -1,8 +1,37 @@
-import { IBaseUser, IBaseSingleRecord, IBaseTimestamps } from './BaseInterface'
+import { IRootObject, IBaseTimestamps, IBaseUser } from './BaseInterface'
 
 type TypeOptions = 'Menu' | 'API'
 
-interface ISingleRecord extends IBaseSingleRecord {
+interface IAllRecords extends IRootObject {
+  results: {
+    id: number
+    type: TypeOptions
+    path: string
+    name: string | null
+    component: string | null
+    layout: string | null
+    title: string | undefined
+    caption: string | null
+    icon: string | undefined
+    is_active: boolean
+    requires_auth: boolean
+    resource_children: {
+      id: number
+      type: TypeOptions
+      path: string
+      name: string | null
+      component: string | null
+      layout: string | null
+      title: string | undefined
+      caption: string | null
+      icon: string | undefined
+      is_active: boolean
+      requires_auth: boolean
+    }[]
+  }[]
+}
+
+interface ISingleRecord extends IRootObject {
   results: (IBaseTimestamps & {
     id: number
     type: TypeOptions
@@ -47,6 +76,7 @@ interface IUpdateRecord {
 }
 
 export {
+  IAllRecords,
   ISingleRecord,
   ICreateRecord,
   IUpdateRecord,

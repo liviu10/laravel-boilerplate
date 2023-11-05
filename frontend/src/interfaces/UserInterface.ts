@@ -1,14 +1,4 @@
-import { IBaseSingleRecord, IBaseTimestamps, IBasePagination } from './BaseInterface'
-
-interface IAllRecords extends IBasePagination {
-  data: {
-    created_at: string
-    email: string
-    full_name: string
-    id: number
-    nickname: string
-  }[]
-}
+import { IRootObject, IBasePagination, IBaseTimestamps } from './BaseInterface'
 
 interface IPermission {
   id: number
@@ -24,7 +14,18 @@ interface IRole {
   permissions: IPermission[]
 }
 
-interface ISingleRecord extends IBaseSingleRecord {
+interface IAllRecords extends IRootObject {
+  results: (IBasePagination & {
+    data: (Pick<IBaseTimestamps, 'created_at'> & {
+      id: number
+      full_name: string
+      nickname: string
+      email: string
+    }[])
+  })
+}
+
+interface ISingleRecord extends IRootObject {
   results: (IBaseTimestamps & {
     id: number
     full_name: string

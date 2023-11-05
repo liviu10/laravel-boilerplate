@@ -1,6 +1,23 @@
-import { IBaseSingleRecord, IBaseTimestamps } from './BaseInterface'
+import { IRootObject, IBasePagination, IBaseTimestamps } from './BaseInterface'
 
-interface ISingleRecord extends IBaseSingleRecord {
+interface IAllRecords extends IRootObject {
+  results: (IBasePagination & {
+    data: {
+      id: number
+      full_name: string
+      email: string
+      phone: string
+      privacy_policy: boolean
+      contact_subject_id: number
+      contact_subject: {
+        id: number
+        name: string
+      }
+    }[]
+  })
+}
+
+interface ISingleRecord extends IRootObject {
   results: (IBaseTimestamps & {
     id: number
     full_name: string
@@ -35,6 +52,7 @@ interface IUpdateRecord {
 }
 
 export {
+  IAllRecords,
   ISingleRecord,
   ICreateRecord,
   IUpdateRecord,

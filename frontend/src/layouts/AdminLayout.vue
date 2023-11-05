@@ -97,7 +97,7 @@
                 <q-list>
                   <q-item clickable dense>
                     <q-item-section>
-                      <span>
+                      <span @click="navigateToRoute('AdminSettingUserProfilePage')">
                         <q-icon name="person" />
                         {{ t('admin.generic.profile_label') }}
                       </span>
@@ -185,38 +185,28 @@
         "
       >
         <q-list>
-          <q-item clickable v-ripple>
-            <q-item-section avatar>
-              <q-icon name="inbox" />
-            </q-item-section>
-            <q-item-section> Page 1 </q-item-section>
-          </q-item>
-
-          <q-expansion-item icon="perm_identity" label="Group 1">
-            <q-item clickable v-ripple>
-              <q-item-section class="q-ml-md"> Page 1 </q-item-section>
+          <div v-for="(item, index) in getAllRecords" :key="index">
+            <q-item v-if="item.resource_children && item.resource_children.length === 0" clickable v-ripple>
+              <q-item-section avatar>
+                <q-icon :name="item.icon" />
+              </q-item-section>
+              <q-item-section @click="navigateToRoute(item.name)">
+                {{ t(item.title as string) }}
+              </q-item-section>
             </q-item>
-            <q-item clickable v-ripple>
-              <q-item-section class="q-ml-md"> Page 2 </q-item-section>
-            </q-item>
-            <q-item clickable v-ripple>
-              <q-item-section class="q-ml-md"> Page 3 </q-item-section>
-            </q-item>
-          </q-expansion-item>
-
-          <q-item clickable v-ripple>
-            <q-item-section avatar>
-              <q-icon name="send" />
-            </q-item-section>
-            <q-item-section> Page 3 </q-item-section>
-          </q-item>
-
-          <q-item clickable v-ripple>
-            <q-item-section avatar>
-              <q-icon name="drafts" />
-            </q-item-section>
-            <q-item-section> Page 4 </q-item-section>
-          </q-item>
+            <q-expansion-item
+              v-else
+              :icon="item.icon"
+              :label="t(item.title as string)"
+            >
+              <q-item clickable v-for="(i, j) in item.resource_children" :key="j" v-ripple>
+                <q-item-section avatar />
+                <q-item-section class="q-ml-md" @click="navigateToRoute(i.name)">
+                  {{ t(i.title as string) }}
+                </q-item-section>
+              </q-item>
+            </q-expansion-item>
+          </div>
         </q-list>
       </q-scroll-area>
 
@@ -253,14 +243,25 @@
 
 <script setup lang="ts">
 // Import vue related utilities
-import { ref } from 'vue';
+import { computed, onMounted, ref } from 'vue';
 import { useI18n } from 'vue-i18n';
+import { useRouter } from 'vue-router'
 
 // Import library utilities, interfaces and components
 import { handleApplicationName } from 'src/library/CopyrightInfo/main';
+import { IAllRecords } from 'src/interfaces/ResourceInterface';
+
+// Import Pinia's related utilities
+import { useSettingStore } from 'src/stores/settings';
+
+// Instantiate the pinia store
+const settings = useSettingStore();
 
 // Defined the translation variable
 const { t } = useI18n({});
+
+// Defined the router
+const router = useRouter();
 
 const leftDrawerOpen = ref(false);
 
@@ -268,148 +269,29 @@ function toggleLeftDrawer() {
   leftDrawerOpen.value = !leftDrawerOpen.value;
 }
 
+const navigateToRoute = (routeName: string | null) => {
+  if (routeName && routeName !== null) {
+    router.push({ name: routeName });
+  } else {
+    // TODO: notify the user that something went wrong
+    debugger;
+  }
+}
+
 const text = ref(null);
+
+/**
+ * Computed function that retrieves all records from the userStore.
+ * @returns {IAllRecords} An object representing paginated results
+ * containing user records.
+ */
+const getAllRecords = computed((): IAllRecords['results'] => settings.getAllRecords);
+
+onMounted(async () => {
+  await settings.handleIndex('resources')
+})
 </script>
 
 <style lang="scss" scoped>
-.admin {
-  &__header {
-    background-color: #FFFFFF !important;
-    &-menu {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      width: 100%;
-      &-search {
-        margin-left: 16px;
-        @media only screen and (max-width: 474px) {
-          & .q-form {
-            display: none;
-          }
-          & .q-btn {
-            display: flex;
-          }
-        }
-        @media only screen and (min-width: 475px) {
-          & .q-btn {
-            display: none;
-          }
-        }
-      }
-      &-settings {
-        & .q-btn {
-          padding: 6px;
-          &:deep() {
-            .q-btn__content {
-              flex-direction: row-reverse;
-              & .q-avatar {
-                margin-right: 4px;
-              }
-            }
-          }
-        }
-      }
-    }
-  }
-  &__drawer {
-    & .q-scrollarea {
-      &:deep() {
-        .q-item {
-          padding: 12px;
-          &__section {
-            padding: 0;
-            &--avatar {
-              min-width: 40px;
-            }
-          }
-        }
-      }
-    }
-    & .q-img {
-      &__content {
-        & .absolute-center {
-          width: 100%;
-          text-align: center;
-          & .q-avatar {
-            margin-bottom: 16px;
-          }
-        }
-      }
-    }
-  }
-  &__container {
-    &-breadcrumbs {
-      margin: 24px 12px;
-    }
-  }
-}
-@media only screen and (max-width: 475px) {
-  .q-dialog {
-    & .q-card {
-      border-radius: 0;
-      width: 100vw;
-      &__section {
-        padding: 8px;
-        font-weight: 700;
-        text-align: center;
-        & .q-form {
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          flex-direction: column;
-          & .q-field {
-            width: 80%;
-          }
-          & .q-btn {
-            margin-top: 8px;
-          }
-        }
-      }
-    }
-  }
-}
-.q-menu {
-  & .q-list {
-    & .q-item {
-      padding: 8px;
-      @media only screen and (max-width: 1023px) {
-        padding: 2px 8px;
-        & .q-expansion-item {
-          &:deep() {
-            .q-item {
-              padding: 0;
-              &__section {
-                display: flex;
-                align-items: center;
-                justify-content: flex-start;
-                flex-direction: row;
-                & .q-avatar {
-                  margin-right: 4px;
-                }
-              }
-              &__section--side {
-                padding-left: 0;
-              }
-            }
-          }
-        }
-      }
-    }
-  }
-  &.admin__header-menu-settings-language {
-    & .q-list {
-      & .q-item {
-        &__section {
-          display: flex;
-          align-items: center;
-          justify-content: flex-start;
-          flex-direction: row;
-          & .q-avatar {
-            margin-right: 4px;
-          }
-        }
-      }
-    }
-  }
-}
+@import 'src/css/pages/admin_home_page.scss';
 </style>

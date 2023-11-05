@@ -1,8 +1,26 @@
-import { IBaseUser, IBaseSingleRecord, IBaseTimestamps } from './BaseInterface'
+import {
+  IRootObject,
+  IBasePagination,
+  IBaseUser,
+  IBaseTimestamps
+} from './BaseInterface'
 
 type GeneralOptions = 'General' | 'Writing' | 'Reading' | 'Discussion' | 'Media' | 'Performance' | 'Notifications'
 
-interface ISingleRecord extends IBaseSingleRecord {
+interface IAllRecords extends IRootObject {
+  results: (IBasePagination & {
+    data: (IBaseTimestamps & {
+      id: number
+      type: GeneralOptions
+      label: string
+      value: string
+      user_id: number
+      user: IBaseUser
+    }[])
+  })
+}
+
+interface ISingleRecord extends IRootObject {
   results: (IBaseTimestamps & {
     id: number
     type: GeneralOptions
@@ -26,6 +44,7 @@ interface IUpdateRecord {
 }
 
 export {
+  IAllRecords,
   ISingleRecord,
   ICreateRecord,
   IUpdateRecord,

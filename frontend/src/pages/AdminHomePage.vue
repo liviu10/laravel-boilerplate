@@ -1,7 +1,7 @@
 <template>
   <q-page class="admin admin--page">
 
-    <page-title :page-title="t('admin.home.page_title')" />
+    <page-title :page-title="t('admin.home.title')" />
 
     <page-description :page-description="t('admin.home.page_description')" />
 

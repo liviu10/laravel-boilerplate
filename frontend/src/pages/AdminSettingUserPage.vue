@@ -1,9 +1,9 @@
 <template>
   <q-page class="admin admin--page">
 
-    <page-title :page-title="t('admin.users.page_title')" />
+    <page-title :page-title="t('admin.settings.users.title')" />
 
-    <page-description :page-description="t('admin.users.page_description')" />
+    <page-description :page-description="t('admin.settings.users.page_description')" />
 
     <div class="admin-section admin-section--content">
       <div class="admin-section__record-list">
@@ -41,7 +41,7 @@ import { QTableProps } from 'quasar';
 // Import library utilities, interfaces and components
 import PageTitle from 'src/components/PageTitle.vue';
 import PageDescription from 'src/components/PageDescription.vue';
-import { columns } from 'src/assets/data/columns';
+// import { columns } from 'src/assets/data/columns';
 
 // Import Pinia's related utilities
 
@@ -65,7 +65,7 @@ interface AdminPageContainerTableInterface {
 
 withDefaults(defineProps<AdminPageContainerTableInterface>(), {
   bordered: true,
-  columns: () => columns,
+  // columns: () => columns,
   customLoader: true,
   dense: true,
   square: true,

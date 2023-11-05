@@ -1,4 +1,9 @@
-import { IBaseUser, IBaseSingleRecord, IBaseTimestamps } from './BaseInterface'
+import {
+  IRootObject,
+  IBasePagination,
+  IBaseUser,
+  IBaseTimestamps
+} from './BaseInterface'
 
 interface INewsletterSubscriber {
   id: number
@@ -8,7 +13,19 @@ interface INewsletterSubscriber {
   privacy_policy: boolean
 }
 
-interface ISingleRecord extends IBaseSingleRecord {
+interface IAllRecords extends IRootObject {
+  results: (IBasePagination & {
+    data: {
+      id: number
+      name: string
+      is_active: boolean
+      valid_from: string
+      valid_to: string
+    }[]
+  })
+}
+
+interface ISingleRecord extends IRootObject {
   results: (IBaseTimestamps & {
     id: number
     name: string
@@ -51,6 +68,7 @@ interface IUpdateRecord {
 }
 
 export {
+  IAllRecords,
   ISingleRecord,
   ICreateRecord,
   IUpdateRecord,

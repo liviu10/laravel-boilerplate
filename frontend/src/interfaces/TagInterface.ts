@@ -1,4 +1,9 @@
-import { IBaseUser, IBaseSingleRecord, IBaseTimestamps } from './BaseInterface'
+import {
+  IRootObject,
+  IBasePagination,
+  IBaseUser,
+  IBaseTimestamps
+} from './BaseInterface'
 
 interface IContent extends IBaseTimestamps {
   id: number
@@ -12,7 +17,17 @@ interface IContent extends IBaseTimestamps {
   user_id: number
 }
 
-interface ISingleRecord extends IBaseSingleRecord {
+interface IAllRecords extends IRootObject {
+  results: (IBasePagination & {
+    data: {
+      id: number
+      name: string
+      description: string
+    }[]
+  })
+}
+
+interface ISingleRecord extends IRootObject {
   results: (IBaseTimestamps & {
     id: number
     name: string
@@ -38,6 +53,7 @@ interface IUpdateRecord {
 }
 
 export {
+  IAllRecords,
   ISingleRecord,
   ICreateRecord,
   IUpdateRecord,

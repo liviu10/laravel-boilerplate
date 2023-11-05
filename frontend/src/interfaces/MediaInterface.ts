@@ -1,4 +1,9 @@
-import { IBaseUser, IBaseSingleRecord, IBaseTimestamps } from './BaseInterface'
+import {
+  IRootObject,
+  IBasePagination,
+  IBaseUser,
+  IBaseTimestamps
+} from './BaseInterface'
 
 type TypeOptions = 'Images' | 'Documents' | 'Videos' | 'Audio' | 'Others'
 
@@ -14,7 +19,22 @@ interface IContent extends IBaseTimestamps {
   user_id: number
 }
 
-interface ISingleRecord extends IBaseSingleRecord {
+interface IAllRecords extends IRootObject {
+  results: (IBasePagination & {
+    data: (IBaseTimestamps & {
+      id: number
+      type: TypeOptions
+      internal_path: string | null
+      external_path: string | null
+      user_id: number
+      user: IBaseUser
+      content_id: number
+      content: IContent
+    }[])
+  })
+}
+
+interface ISingleRecord extends IRootObject {
   results: (IBaseTimestamps & {
     id: number
     type: TypeOptions
@@ -42,6 +62,7 @@ interface IUpdateRecord {
 }
 
 export {
+  IAllRecords,
   ISingleRecord,
   ICreateRecord,
   IUpdateRecord,

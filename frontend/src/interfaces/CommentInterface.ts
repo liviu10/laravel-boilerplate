@@ -1,10 +1,26 @@
-import { IBaseSingleRecord, IBaseTimestamps } from './BaseInterface'
+import { IRootObject, IBasePagination, IBaseTimestamps } from './BaseInterface'
 
 type TypeOptions = 'Comment' | 'Reply'
 
 type StatusOptions = 'Pending' | 'Approved' | 'Spam' | 'Trash'
 
-interface ISingleRecord extends IBaseSingleRecord {
+interface IAllRecords extends IRootObject {
+  results: (IBasePagination & {
+    data: (IBaseTimestamps & {
+      id: number
+      type: TypeOptions
+      status: StatusOptions
+      full_name: string
+      email: string
+      message: string
+      notify_new_comments: boolean
+      content_id: number
+      user_id: number
+    }[])
+  })
+}
+
+interface ISingleRecord extends IRootObject {
   results: (IBaseTimestamps & {
     id: number
     type: TypeOptions
@@ -39,6 +55,7 @@ interface IUpdateRecord {
 }
 
 export {
+  IAllRecords,
   ISingleRecord,
   ICreateRecord,
   IUpdateRecord,

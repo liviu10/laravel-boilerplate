@@ -1,9 +1,9 @@
 <template>
   <q-page class="admin admin--page">
 
-    <page-title :page-title="t('admin.newsletter.page_title')" />
+    <page-title :page-title="t('admin.settings.accepted_domains.title')" />
 
-    <page-description :page-description="t('admin.newsletter.page_description')" />
+    <page-description :page-description="t('admin.settings.accepted_domains.page_description')" />
 
   </q-page>
 </template>

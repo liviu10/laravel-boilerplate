@@ -1,17 +1,24 @@
-import { IBaseUser, IBaseSingleRecord, IBaseTimestamps, IBasePagination } from './BaseInterface'
+import {
+  IRootObject,
+  IBasePagination,
+  IBaseTimestamps,
+  IBaseUser
+} from './BaseInterface'
 
 type AcceptedDomainTypeOptions = 'generic' | 'country-code' | 'sponsored' | 'infrastructure' | 'generic-restricted' | 'local-environment'
 
-interface IAllRecords extends IBasePagination {
-  data: {
-    id: number
-    domain: string
-    type: AcceptedDomainTypeOptions
-    is_active: boolean
-  }[]
+interface IAllRecords extends IRootObject {
+  results: (IBasePagination & {
+    data: {
+      id: number
+      domain: string
+      type: AcceptedDomainTypeOptions
+      is_active: boolean
+    }[]
+  })
 }
 
-interface ISingleRecord extends IBaseSingleRecord {
+interface ISingleRecord extends IRootObject {
   results: (IBaseTimestamps & {
     id: number
     domain: string

@@ -20,7 +20,7 @@ const { t } = useI18n({});
 
 // Display the page title
 const displayPageTitle = computed(() => {
-  const defaultPageTitle = t('admin.generic.default_page_title')
+  const defaultPageTitle = t('admin.generic.default_title')
   return (title: string | undefined): string => {
     return title && title !== undefined ? title : defaultPageTitle;
   }

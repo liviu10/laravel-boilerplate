@@ -1,4 +1,9 @@
-import { IBaseUser, IBaseSingleRecord, IBaseTimestamps } from './BaseInterface'
+import {
+  IRootObject,
+  IBasePagination,
+  IBaseUser,
+  IBaseTimestamps
+} from './BaseInterface'
 
 type VisibilityOptions = 'Public' | 'Private' | 'Draft'
 
@@ -22,7 +27,19 @@ interface IMedia extends IBaseTimestamps {
   content_id: number
 }
 
-interface ISingleRecord extends IBaseSingleRecord {
+interface IAllRecords extends IRootObject {
+  results: (IBasePagination & {
+    data: {
+      id: number
+      visibility: VisibilityOptions
+      content_url: string
+      title: string
+      content_type: ContentTypeOptions
+    }[]
+  })
+}
+
+interface ISingleRecord extends IRootObject {
   results: (IBaseTimestamps & {
     id: number
     visibility: VisibilityOptions
@@ -60,6 +77,7 @@ interface IUpdateRecord {
 }
 
 export {
+  IAllRecords,
   ISingleRecord,
   ICreateRecord,
   IUpdateRecord,

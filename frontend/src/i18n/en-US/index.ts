@@ -18,9 +18,18 @@ export default {
       theme_mode_label: 'Theme mode',
       logout_label: 'Logout',
       table_no_data_label: 'No records available',
+      default_title: 'Default title',
+      default_page_description: `
+        Lorem ipsum dolor sit amet consectetur adipisicing elit.
+        Iste rem est voluptatem obcaecati maiores, sit quibusdam ad.
+        Qui consequatur quidem itaque et ullam, non velit unde quo
+        inventore adipisci tempora, voluptas sunt dolore vitae iure,
+        quos eligendi. Corporis id adipisci aliquam cum officia impedit
+        repudiandae, numquam, dicta earum, cupiditate consequuntur?
+      `,
     },
     home: {
-      page_title: 'Dashboard',
+      title: 'Dashboard',
       page_description: `
         Lorem ipsum dolor sit amet consectetur adipisicing elit.
         Iste rem est voluptatem obcaecati maiores, sit quibusdam ad.
@@ -37,6 +46,202 @@ export default {
       statistic_storage: 'Storage',
       statistic_appreciations: 'Likes — Dislikes — Rating',
       statistic_comments: 'Comments',
+    },
+    management: {
+      title: 'Management',
+      contents: {
+        title: 'Content',
+        page_description: `
+          Lorem ipsum dolor sit amet consectetur adipisicing elit.
+          Iste rem est voluptatem obcaecati maiores, sit quibusdam ad.
+          Qui consequatur quidem itaque et ullam, non velit unde quo
+          inventore adipisci tempora, voluptas sunt dolore vitae iure,
+          quos eligendi. Corporis id adipisci aliquam cum officia impedit
+          repudiandae, numquam, dicta earum, cupiditate consequuntur?
+        `,
+      },
+      tags: {
+        title: 'Tags',
+        page_description: `
+          Lorem ipsum dolor sit amet consectetur adipisicing elit.
+          Iste rem est voluptatem obcaecati maiores, sit quibusdam ad.
+          Qui consequatur quidem itaque et ullam, non velit unde quo
+          inventore adipisci tempora, voluptas sunt dolore vitae iure,
+          quos eligendi. Corporis id adipisci aliquam cum officia impedit
+          repudiandae, numquam, dicta earum, cupiditate consequuntur?
+        `,
+      },
+      media: {
+        title: 'Media',
+        page_description: `
+          Lorem ipsum dolor sit amet consectetur adipisicing elit.
+          Iste rem est voluptatem obcaecati maiores, sit quibusdam ad.
+          Qui consequatur quidem itaque et ullam, non velit unde quo
+          inventore adipisci tempora, voluptas sunt dolore vitae iure,
+          quos eligendi. Corporis id adipisci aliquam cum officia impedit
+          repudiandae, numquam, dicta earum, cupiditate consequuntur?
+        `,
+      },
+      comments: {
+        title: 'Comment',
+        page_description: `
+          Lorem ipsum dolor sit amet consectetur adipisicing elit.
+          Iste rem est voluptatem obcaecati maiores, sit quibusdam ad.
+          Qui consequatur quidem itaque et ullam, non velit unde quo
+          inventore adipisci tempora, voluptas sunt dolore vitae iure,
+          quos eligendi. Corporis id adipisci aliquam cum officia impedit
+          repudiandae, numquam, dicta earum, cupiditate consequuntur?
+        `,
+      },
+      appreciations: {
+        title: 'Appreciations',
+        page_description: `
+          Lorem ipsum dolor sit amet consectetur adipisicing elit.
+          Iste rem est voluptatem obcaecati maiores, sit quibusdam ad.
+          Qui consequatur quidem itaque et ullam, non velit unde quo
+          inventore adipisci tempora, voluptas sunt dolore vitae iure,
+          quos eligendi. Corporis id adipisci aliquam cum officia impedit
+          repudiandae, numquam, dicta earum, cupiditate consequuntur?
+        `,
+      }
+    },
+    communication: {
+      title: 'Communication',
+      contact: {
+        title: 'Contact',
+        page_description: `
+          Lorem ipsum dolor sit amet consectetur adipisicing elit.
+          Iste rem est voluptatem obcaecati maiores, sit quibusdam ad.
+          Qui consequatur quidem itaque et ullam, non velit unde quo
+          inventore adipisci tempora, voluptas sunt dolore vitae iure,
+          quos eligendi. Corporis id adipisci aliquam cum officia impedit
+          repudiandae, numquam, dicta earum, cupiditate consequuntur?
+        `,
+      },
+      newsletter: {
+        title: 'Newsletter',
+        page_description: `
+          Lorem ipsum dolor sit amet consectetur adipisicing elit.
+          Iste rem est voluptatem obcaecati maiores, sit quibusdam ad.
+          Qui consequatur quidem itaque et ullam, non velit unde quo
+          inventore adipisci tempora, voluptas sunt dolore vitae iure,
+          quos eligendi. Corporis id adipisci aliquam cum officia impedit
+          repudiandae, numquam, dicta earum, cupiditate consequuntur?
+        `,
+      },
+      reviews: {
+        title: 'Reviews',
+        page_description: `
+          Lorem ipsum dolor sit amet consectetur adipisicing elit.
+          Iste rem est voluptatem obcaecati maiores, sit quibusdam ad.
+          Qui consequatur quidem itaque et ullam, non velit unde quo
+          inventore adipisci tempora, voluptas sunt dolore vitae iure,
+          quos eligendi. Corporis id adipisci aliquam cum officia impedit
+          repudiandae, numquam, dicta earum, cupiditate consequuntur?
+        `,
+      }
+    },
+    documentation: {
+      title: 'Documentation',
+      page_description: `
+        Lorem ipsum dolor sit amet consectetur adipisicing elit.
+        Iste rem est voluptatem obcaecati maiores, sit quibusdam ad.
+        Qui consequatur quidem itaque et ullam, non velit unde quo
+        inventore adipisci tempora, voluptas sunt dolore vitae iure,
+        quos eligendi. Corporis id adipisci aliquam cum officia impedit
+        repudiandae, numquam, dicta earum, cupiditate consequuntur?
+      `,
+    },
+    settings: {
+      title: 'Settings',
+      user_profile: {
+        title: 'User profile',
+        page_description: `
+          Lorem ipsum dolor sit amet consectetur adipisicing elit.
+          Iste rem est voluptatem obcaecati maiores, sit quibusdam ad.
+          Qui consequatur quidem itaque et ullam, non velit unde quo
+          inventore adipisci tempora, voluptas sunt dolore vitae iure,
+          quos eligendi. Corporis id adipisci aliquam cum officia impedit
+          repudiandae, numquam, dicta earum, cupiditate consequuntur?
+        `,
+      },
+      users: {
+        title: 'Users',
+        page_description: `
+          Lorem ipsum dolor sit amet consectetur adipisicing elit.
+          Iste rem est voluptatem obcaecati maiores, sit quibusdam ad.
+          Qui consequatur quidem itaque et ullam, non velit unde quo
+          inventore adipisci tempora, voluptas sunt dolore vitae iure,
+          quos eligendi. Corporis id adipisci aliquam cum officia impedit
+          repudiandae, numquam, dicta earum, cupiditate consequuntur?
+        `,
+      },
+      roles_and_permissions: {
+        title: 'Roles and permissions',
+        page_description: `
+          Lorem ipsum dolor sit amet consectetur adipisicing elit.
+          Iste rem est voluptatem obcaecati maiores, sit quibusdam ad.
+          Qui consequatur quidem itaque et ullam, non velit unde quo
+          inventore adipisci tempora, voluptas sunt dolore vitae iure,
+          quos eligendi. Corporis id adipisci aliquam cum officia impedit
+          repudiandae, numquam, dicta earum, cupiditate consequuntur?
+        `,
+      },
+      general: {
+        title: 'General settings',
+        page_description: `
+          Lorem ipsum dolor sit amet consectetur adipisicing elit.
+          Iste rem est voluptatem obcaecati maiores, sit quibusdam ad.
+          Qui consequatur quidem itaque et ullam, non velit unde quo
+          inventore adipisci tempora, voluptas sunt dolore vitae iure,
+          quos eligendi. Corporis id adipisci aliquam cum officia impedit
+          repudiandae, numquam, dicta earum, cupiditate consequuntur?
+        `,
+      },
+      performance: {
+        title: 'Performance',
+        page_description: `
+          Lorem ipsum dolor sit amet consectetur adipisicing elit.
+          Iste rem est voluptatem obcaecati maiores, sit quibusdam ad.
+          Qui consequatur quidem itaque et ullam, non velit unde quo
+          inventore adipisci tempora, voluptas sunt dolore vitae iure,
+          quos eligendi. Corporis id adipisci aliquam cum officia impedit
+          repudiandae, numquam, dicta earum, cupiditate consequuntur?
+        `,
+      },
+      accepted_domains: {
+        title: 'Accepted domains',
+        page_description: `
+          Lorem ipsum dolor sit amet consectetur adipisicing elit.
+          Iste rem est voluptatem obcaecati maiores, sit quibusdam ad.
+          Qui consequatur quidem itaque et ullam, non velit unde quo
+          inventore adipisci tempora, voluptas sunt dolore vitae iure,
+          quos eligendi. Corporis id adipisci aliquam cum officia impedit
+          repudiandae, numquam, dicta earum, cupiditate consequuntur?
+        `,
+      },
+      notifications: {
+        title: 'Notifications',
+        page_description: `
+          Lorem ipsum dolor sit amet consectetur adipisicing elit.
+          Iste rem est voluptatem obcaecati maiores, sit quibusdam ad.
+          Qui consequatur quidem itaque et ullam, non velit unde quo
+          inventore adipisci tempora, voluptas sunt dolore vitae iure,
+          quos eligendi. Corporis id adipisci aliquam cum officia impedit
+          repudiandae, numquam, dicta earum, cupiditate consequuntur?
+        `,
+      },
+      templates: {
+        title: 'Email and SMS templates',
+        page_description: `
+          Lorem ipsum dolor sit amet consectetur adipisicing elit.
+          Iste rem est voluptatem obcaecati maiores, sit quibusdam ad.
+          Qui consequatur quidem itaque et ullam, non velit unde quo
+          inventore adipisci tempora, voluptas sunt dolore vitae iure,
+          quos eligendi. Corporis id adipisci aliquam cum officia impedit
+          repudiandae, numquam, dicta earum, cupiditate consequuntur?
+        `,
+      }
     }
   }
 };

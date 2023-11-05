@@ -1,4 +1,7 @@
 import { RouteRecordRaw } from 'vue-router';
+import management from './management';
+import communication from './communication';
+import settings from './settings';
 
 const routes: RouteRecordRaw[] = [
   {
@@ -9,22 +12,22 @@ const routes: RouteRecordRaw[] = [
         path: '/admin',
         name: 'AdminHomePage',
         component: () => import('pages/AdminHomePage.vue'),
-        meta: {
-          title: 'admin.home.title',
-          caption: 'admin.home.description',
-          icon: 'home',
-        },
       },
+
+      // Management routes
+      ...management,
+
+      // Communication routes
+      ...communication,
+
       {
-        path: '/admin/settings',
-        name: 'SettingsUserPage',
-        component: () => import('pages/SettingsUserPage.vue'),
-        meta: {
-          title: 'admin.user.title',
-          caption: 'admin.user.description',
-          icon: 'person',
-        },
+        path: '/admin/documentation',
+        name: 'AdminDocumentationPage',
+        component: () => import('pages/AdminDocumentationPage.vue'),
       },
+
+      // Settings routes
+      ...settings,
     ],
   },
 

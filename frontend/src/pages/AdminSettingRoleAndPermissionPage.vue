@@ -1,9 +1,9 @@
 <template>
   <q-page class="admin admin--page">
 
-    <page-title :page-title="t('admin.notifications.page_title')" />
+    <page-title :page-title="t('admin.settings.roles_and_permissions.title')" />
 
-    <page-description :page-description="t('admin.notifications.page_description')" />
+    <page-description :page-description="t('admin.settings.roles_and_permissions.page_description')" />
 
   </q-page>
 </template>

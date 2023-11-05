@@ -1,9 +1,9 @@
 <template>
   <q-page class="admin admin--page">
 
-    <page-title :page-title="t('admin.comment.page_title')" />
+    <page-title :page-title="t('admin.configuration_resources.title')" />
 
-    <page-description :page-description="t('admin.comment.page_description')" />
+    <page-description :page-description="t('admin.configuration_resources.page_description')" />
 
   </q-page>
 </template>

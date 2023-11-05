@@ -1,4 +1,4 @@
-import { IBaseSingleRecord, IBaseTimestamps } from './BaseInterface'
+import { IRootObject, IBasePagination, IBaseTimestamps } from './BaseInterface'
 
 interface INewsletterCampaign {
   id: number
@@ -7,7 +7,19 @@ interface INewsletterCampaign {
   valid_to: string
 }
 
-interface ISingleRecord extends IBaseSingleRecord {
+interface IAllRecords extends IRootObject {
+  results: (IBasePagination & {
+    data: {
+      id: number
+      full_name: string
+      email: string
+      privacy_policy: boolean
+      valid_email: boolean
+    }[]
+  })
+}
+
+interface ISingleRecord extends IRootObject {
   results: (IBaseTimestamps & {
     id: number
     full_name: string
@@ -30,6 +42,7 @@ interface IUpdateRecord {
 }
 
 export {
+  IAllRecords,
   ISingleRecord,
   ICreateRecord,
   IUpdateRecord,
