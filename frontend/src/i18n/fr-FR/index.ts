@@ -241,6 +241,17 @@ export default {
           quos eligendi. Corporis id adipisci aliquam cum officia impedit
           repudiandae, numquam, dicta earum, cupiditate consequuntur?
         `,
+      },
+      configuration_resources: {
+        title: 'Ressources de configuration',
+        page_description: `
+          Lorem ipsum dolor sit amet consectetur adipisicing elit.
+          Iste rem est voluptatem obcaecati maiores, sit quibusdam ad.
+          Qui consequatur quidem itaque et ullam, non velit unde quo
+          inventore adipisci tempora, voluptas sunt dolore vitae iure,
+          quos eligendi. Corporis id adipisci aliquam cum officia impedit
+          repudiandae, numquam, dicta earum, cupiditate consequuntur?
+        `,
       }
     }
   }

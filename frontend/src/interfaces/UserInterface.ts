@@ -21,7 +21,7 @@ interface IAllRecords extends IRootObject {
       full_name: string
       nickname: string
       email: string
-    }[])
+    })[]
   })
 }
 

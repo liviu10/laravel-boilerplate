@@ -9,7 +9,7 @@ interface IAllRecords extends IRootObject {
       likes: number | null
       dislikes: number | null
       rating: number | null
-    }[])
+    })[]
   })
 }
 

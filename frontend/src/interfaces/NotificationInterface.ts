@@ -19,7 +19,7 @@ interface IAllRecords extends IRootObject {
       content: string
       user_id: number
       user: IBaseUser
-    }[])
+    })[]
   })
 }
 

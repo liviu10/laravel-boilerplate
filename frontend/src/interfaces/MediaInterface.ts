@@ -30,7 +30,7 @@ interface IAllRecords extends IRootObject {
       user: IBaseUser
       content_id: number
       content: IContent
-    }[])
+    })[]
   })
 }
 

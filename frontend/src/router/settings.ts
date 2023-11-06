@@ -44,6 +44,11 @@ const routes: RouteRecordRaw[] = [
         name: 'AdminSettingTemplatePage',
         component: () => import('pages/AdminSettingTemplatePage.vue'),
       },
+      {
+        path: '/admin/settings/configuration-resources',
+        name: 'AdminSettingConfigurationResourcePage',
+        component: () => import('pages/AdminSettingConfigurationResourcePage.vue'),
+      },
     ],
   },
 

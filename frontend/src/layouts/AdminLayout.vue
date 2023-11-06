@@ -53,7 +53,7 @@
             </q-btn>
             <q-btn v-if="$q.screen.gt.sm" color="primary" flat label="English" square>
               <q-avatar square size="24px">
-                <img src="../assets/country-flag-us.svg">
+                <img src="../assets/images/country-flag-us.svg">
               </q-avatar>
               <q-tooltip>
                 {{ t('admin.generic.language_tooltip') }}
@@ -63,7 +63,7 @@
                   <q-item clickable dense>
                     <q-item-section>
                       <q-avatar square size="24px">
-                        <img src="../assets/country-flag-us.svg">
+                        <img src="../assets/images/country-flag-us.svg">
                       </q-avatar>
                       {{ t('admin.generic.english_language') }}
                     </q-item-section>
@@ -71,7 +71,7 @@
                   <q-item clickable dense>
                     <q-item-section>
                       <q-avatar square size="24px">
-                        <img src="../assets/country-flag-fr.svg">
+                        <img src="../assets/images/country-flag-fr.svg">
                       </q-avatar>
                       {{ t('admin.generic.french_language') }}
                     </q-item-section>
@@ -79,7 +79,7 @@
                   <q-item clickable dense>
                     <q-item-section>
                       <q-avatar square size="24px">
-                        <img src="../assets/country-flag-ro.svg">
+                        <img src="../assets/images/country-flag-ro.svg">
                       </q-avatar>
                       {{ t('admin.generic.romanian_language') }}
                     </q-item-section>
@@ -127,7 +127,7 @@
                           <q-item clickable dense>
                             <q-item-section>
                               <q-avatar square size="24px">
-                                <img src="../assets/country-flag-us.svg">
+                                <img src="../assets/images/country-flag-us.svg">
                               </q-avatar>
                               {{ t('admin.generic.english_language') }}
                             </q-item-section>
@@ -135,7 +135,7 @@
                           <q-item clickable dense>
                             <q-item-section>
                               <q-avatar square size="24px">
-                                <img src="../assets/country-flag-fr.svg">
+                                <img src="../assets/images/country-flag-fr.svg">
                               </q-avatar>
                               {{ t('admin.generic.french_language') }}
                             </q-item-section>
@@ -143,7 +143,7 @@
                           <q-item clickable dense>
                             <q-item-section>
                               <q-avatar square size="24px">
-                                <img src="../assets/country-flag-ro.svg">
+                                <img src="../assets/images/country-flag-ro.svg">
                               </q-avatar>
                               {{ t('admin.generic.romanian_language') }}
                             </q-item-section>
@@ -212,12 +212,12 @@
 
       <q-img
         class="absolute-top"
-        src="https://cdn.quasar.dev/img/material.png"
+        src="../assets/images/admin_navbar_img.webp"
         style="height: 150px"
       >
         <div class="absolute-center bg-transparent">
           <q-avatar class="q-mb-sm" size="56px">
-            <img src="https://cdn.quasar.dev/img/boy-avatar.png" />
+            <img src="../assets/images/admin_navbar_avatar.webp" />
           </q-avatar>
           <div class="text-weight-bold">{{ handleApplicationName }}</div>
           <div>application v1.0</div>
@@ -226,16 +226,6 @@
     </q-drawer>
 
     <q-page-container class="admin__container">
-      <div class="admin__container-breadcrumbs">
-        <q-breadcrumbs active-color="purple">
-          <template v-slot:separator>
-            <q-icon color="purple" name="arrow_forward" size="1.2em" />
-          </template>
-          <q-breadcrumbs-el icon="home" label="Home" to="" />
-          <q-breadcrumbs-el icon="widgets" label="Components" to="" />
-          <q-breadcrumbs-el icon="navigation" label="Breadcrumbs" to="" />
-        </q-breadcrumbs>
-      </div>
       <router-view />
     </q-page-container>
   </q-layout>
@@ -252,10 +242,10 @@ import { handleApplicationName } from 'src/library/CopyrightInfo/main';
 import { IAllRecords } from 'src/interfaces/ResourceInterface';
 
 // Import Pinia's related utilities
-import { useSettingStore } from 'src/stores/settings';
+import { useResourceStore } from 'src/stores/settings/resources';
 
 // Instantiate the pinia store
-const settings = useSettingStore();
+const resourceStore = useResourceStore();
 
 // Defined the translation variable
 const { t } = useI18n({});
@@ -285,10 +275,10 @@ const text = ref(null);
  * @returns {IAllRecords} An object representing paginated results
  * containing user records.
  */
-const getAllRecords = computed((): IAllRecords['results'] => settings.getAllRecords);
+const getAllRecords = computed((): IAllRecords['results'] => resourceStore.getAllRecords);
 
 onMounted(async () => {
-  await settings.handleIndex('resources')
+  await resourceStore.handleIndex()
 })
 </script>
 

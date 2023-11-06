@@ -16,7 +16,7 @@ interface IAllRecords extends IRootObject {
       notify_new_comments: boolean
       content_id: number
       user_id: number
-    }[])
+    })[]
   })
 }
 
