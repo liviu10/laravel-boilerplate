@@ -30,6 +30,8 @@
       </div>
     </div>
 
+    <page-loading :visible="loadPage" />
+
   </q-page>
 </template>
 
@@ -37,10 +39,12 @@
 // Import vue related utilities
 import { useI18n } from 'vue-i18n';
 import { QTableProps } from 'quasar';
+import { ref } from 'vue';
 
 // Import library utilities, interfaces and components
 import PageTitle from 'src/components/PageTitle.vue';
 import PageDescription from 'src/components/PageDescription.vue';
+import PageLoading from 'src/components/PageLoading.vue';
 // import { columns } from 'src/assets/data/columns';
 
 // Import Pinia's related utilities
@@ -71,6 +75,8 @@ withDefaults(defineProps<AdminPageContainerTableInterface>(), {
   square: true,
   separator: 'cell',
 });
+
+const loadPage = ref(false);
 </script>
 
 <style lang="scss" scoped></style>

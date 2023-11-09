@@ -21,6 +21,11 @@
             display: none;
           }
         }
+        & .q-form {
+          & .q-field {
+            width: 30vw;
+          }
+        }
       }
       &-settings {
         & .q-btn {

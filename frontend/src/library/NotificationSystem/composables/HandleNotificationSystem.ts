@@ -8,7 +8,7 @@ import {
   NotificationIconOptions,
   NotificationPositionType,
   NotificationColorType,
-  NotificationAdditionalMessageInterface
+  INotificationAdditionalMessage
 } from './HandleNotificationSystemType';
 
 /**
@@ -27,7 +27,7 @@ const handleNotificationSystem = (
   type: string | undefined,
   position: NotificationPositionType | undefined,
   progress?: boolean | undefined,
-  additionalMessage?: NotificationAdditionalMessageInterface | undefined,
+  additionalMessage?: INotificationAdditionalMessage | undefined,
 ) =>
   Notify.create({
     html: true,
@@ -75,7 +75,7 @@ const handleNotificationSystem = (
       title: string | undefined,
       message: string | undefined,
       type: string | undefined,
-      additionalMessage?: NotificationAdditionalMessageInterface | undefined
+      additionalMessage?: INotificationAdditionalMessage | undefined
     ): string => {
       if (!message || typeof message !== 'string') {
         return 'Generic notification message!';

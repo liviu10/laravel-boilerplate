@@ -27,13 +27,13 @@ type NotificationColorType =
   | 'black'
   | 'white'
 
-interface NotificationAdditionalMessageInterface {
+interface INotificationAdditionalMessage {
   description?: string | undefined
   message?: string | undefined
   error?: string | undefined
 }
 
-interface NotificationSystemLogInterface {
+interface INotificationSystemLog {
   message?: string | undefined
   response?: {
     data: {
@@ -47,6 +47,6 @@ export {
   NotificationIconOptions,
   NotificationPositionType,
   NotificationColorType,
-  NotificationAdditionalMessageInterface,
-  NotificationSystemLogInterface
+  INotificationAdditionalMessage,
+  INotificationSystemLog
 }

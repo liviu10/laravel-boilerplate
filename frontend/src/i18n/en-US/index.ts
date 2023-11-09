@@ -13,6 +13,7 @@ export default {
       french_language: 'French',
       romanian_language: 'Romanian',
       welcome_message: 'Welcome, {username}',
+      welcome_tooltip: 'Click here for settings',
       profile_label: 'Profile',
       notifications_label: 'Notifications',
       theme_mode_label: 'Theme mode',

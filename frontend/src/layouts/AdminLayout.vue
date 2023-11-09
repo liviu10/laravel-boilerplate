@@ -93,6 +93,9 @@
               :label="t('admin.generic.welcome_message', { username: 'John Doe' })"
               square
             >
+              <q-tooltip>
+                {{ t('admin.generic.welcome_tooltip') }}
+              </q-tooltip>
               <q-menu class="admin__header-menu-settings-user-menu" fit square>
                 <q-list>
                   <q-item clickable dense>
@@ -283,5 +286,5 @@ onMounted(async () => {
 </script>
 
 <style lang="scss" scoped>
-@import 'src/css/pages/admin_home_page.scss';
+@import 'src/css/layouts/admin.scss';
 </style>

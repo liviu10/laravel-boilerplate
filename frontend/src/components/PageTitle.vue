@@ -30,18 +30,5 @@ withDefaults(defineProps<IPageTitle>(), {});
 </script>
 
 <style lang="scss" scoped>
-.admin-section {
-  &--header {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100px;
-  }
-  &__title {
-    margin-bottom: 0;
-    font-weight: 700;
-    font-size: 24px;
-    text-transform: uppercase;
-  }
-}
+@import 'src/css/components/page_title.scss';
 </style>
