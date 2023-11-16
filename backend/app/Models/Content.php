@@ -65,7 +65,7 @@ class Content extends BaseModel
     ];
 
     protected $visibilityOptions = [
-        'Public', 'Private', 'Draft'
+        'Published', 'Draft', 'Scheduled', 'Trashed'
     ];
 
     protected $contentTypeOptions = [
@@ -110,7 +110,7 @@ class Content extends BaseModel
     public function fetchAllRecords(array $search = [], string|null $type = null): LengthAwarePaginator|Collection|bool
     {
         try {
-            $query = $this->select('id', 'visibility', 'content_url', 'title', 'content_type');
+            $query = $this->select('id', 'visibility', 'content_url', 'title', 'content_type', 'description');
 
             if (!empty($search)) {
                 foreach ($search as $field => $value) {

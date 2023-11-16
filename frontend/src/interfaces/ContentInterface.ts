@@ -35,6 +35,7 @@ interface IAllRecords extends IRootObject {
       content_url: string
       title: string
       content_type: ContentTypeOptions
+      description: string
     }[]
   })
 }

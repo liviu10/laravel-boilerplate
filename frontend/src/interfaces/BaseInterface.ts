@@ -33,9 +33,26 @@ interface IBaseUser {
   full_name: string
 }
 
+type TInput = 'number' | 'textarea' | 'time' | 'text' | 'password' | 'email' | 'search' | 'tel' | 'file' | 'url' | 'date' | undefined
+
+type TDialog = 'create' | 'show' | 'quick-edit' | 'delete' | 'advanced-filters' | 'upload' | 'download'
+
+interface IDialogAction {
+  id: number,
+  class: string,
+  color: string,
+  dense: boolean,
+  label: string,
+  square: boolean,
+  clickEvent: () => void
+}
+
 export {
   IRootObject,
   IBasePagination,
   IBaseTimestamps,
   IBaseUser,
+  TInput,
+  TDialog,
+  IDialogAction,
 }

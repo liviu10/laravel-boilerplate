@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('man_contents', function (Blueprint $table) {
             $table->id()->index('idx_id');
-            $table->enum('visibility', ['Public', 'Private', 'Draft']);
+            $table->enum('visibility', ['Published', 'Draft', 'Scheduled', 'Trashed']);
             $table->string('content_url')->nullable(false);
             $table->string('title')->nullable(false);
             $table->enum('content_type', ['Page', 'Article']);
