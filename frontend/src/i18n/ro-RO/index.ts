@@ -54,6 +54,8 @@ export default {
       configure_resource: 'Configurează resursa',
       download_label: 'Descarcă înregistrările',
       upload_label: 'Încarcă înregistrările',
+      actions_label: 'Acțiuni',
+      actions_label_tooltip: 'Faceți clic aici pentru acțiuni (afișare, editare, ștergere și altele)',
     },
     home: {
       title: 'Dashboard',

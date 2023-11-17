@@ -1,24 +1,25 @@
 <template>
   <q-page class="admin admin--page">
-
     <page-title :page-title="t('admin.management.contents.title')" />
 
-    <page-description :page-description="t('admin.management.contents.page_description')" />
+    <page-description
+      :page-description="t('admin.management.contents.page_description')"
+    />
 
     <div class="admin-section admin-section--container">
       <management-grid-table
         :columns="defaultColumns"
         resource="Content"
-        :rows="getAllRecords.results?.data || []"
         @handle-open-dialog="handleOpenDialog"
       />
+      <!-- :rows="getAllRecords.results?.data || []" -->
     </div>
 
     <dialog-card
       v-if="displayDialog"
       :action-name="actionName"
       :display-dialog="displayDialog"
-      @handle-close-dialog="() => displayDialog = false"
+      @handle-close-dialog="() => (displayDialog = false)"
       @handle-action-dialog="handleActionDialog"
     >
       <template v-slot:dialog-details>
@@ -33,7 +34,6 @@
     </dialog-card>
 
     <page-loading :visible="loadPage" />
-
   </q-page>
 </template>
 
@@ -75,27 +75,35 @@ const loadPage = ref(false);
 const getAllRecords = computed((): IAllRecords => contentStore.getAllRecords);
 
 // Display the action name & dialog
-const actionName: Ref<TDialog | undefined> = ref(undefined)
-const displayDialog = ref(false)
+const actionName: Ref<TDialog | undefined> = ref(undefined);
+const displayDialog = ref(false);
 
 // Action dialog
 async function handleOpenDialog(action: TDialog, recordId?: number): Promise<void> {
-  loadPage.value = true
+  loadPage.value = true;
   if (action === 'create') {
-    loadPage.value = false
-    actionName.value = action
-    displayDialog.value = true
-  } else if (action === 'advanced-filters' || action === 'upload' || action === 'download') {
-    loadPage.value = false
-    actionName.value = action
-    displayDialog.value = true
+    loadPage.value = false;
+    actionName.value = action;
+    displayDialog.value = true;
+  } else if (
+    action === 'advanced-filters' ||
+    action === 'upload' ||
+    action === 'download'
+  ) {
+    loadPage.value = false;
+    actionName.value = action;
+    displayDialog.value = true;
   } else {
-    const isInvalidRecordId = !recordId || typeof recordId !== 'number' || recordId === null || recordId === undefined;
+    const isInvalidRecordId =
+      !recordId ||
+      typeof recordId !== 'number' ||
+      recordId === null ||
+      recordId === undefined;
     if (isInvalidRecordId) {
       // const notificationTitle = t('admin.generic.notification_warning_title');
       // const notificationMessage = t('admin.generic.notification_warning_message', { recordId: `${recordId}` });
       // console.log(`The operation could not be performed. Invalid record id: ${recordId}!`);
-      loadPage.value = false
+      loadPage.value = false;
       // notificationSystem(notificationTitle, notificationMessage, 'warning', 'bottom', true)
     } else {
       // Pinia store get record by ID
@@ -105,7 +113,7 @@ async function handleOpenDialog(action: TDialog, recordId?: number): Promise<voi
 
 // Handle action method
 async function handleActionDialog(action: TDialog): Promise<void> {
-  loadPage.value = true
+  loadPage.value = true;
   if (action === 'create') {
     // Pinia store create record
   } else {
@@ -135,8 +143,8 @@ async function handleActionDialog(action: TDialog): Promise<void> {
 }
 
 onMounted(async () => {
-  await contentStore.handleIndex()
-})
+  await contentStore.handleIndex();
+});
 </script>
 
 <style lang="scss" scoped>

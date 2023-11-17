@@ -54,6 +54,8 @@ export default {
       configure_resource: 'Configuration des ressources',
       download_label: 'Télécharger les enregistrements',
       upload_label: 'Téléverser les enregistrements',
+      actions_label: 'Actions',
+      actions_label_tooltip: 'Cliquez ici pour les actions (afficher, éditer, supprimer et plus)',
     },
     home: {
       title: 'Dashboard',

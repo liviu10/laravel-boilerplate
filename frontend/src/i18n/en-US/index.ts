@@ -54,6 +54,8 @@ export default {
       configure_resource: 'Configure resource',
       download_label: 'Download records',
       upload_label: 'Upload records',
+      actions_label: 'Actions',
+      actions_label_tooltip: 'Click here for actions (show, edit, delete and more)',
     },
     home: {
       title: 'Dashboard',

@@ -99,54 +99,62 @@
     <!-- Body component -->
     <template v-slot:item="props">
       <div class="admin-section__grid-table-body">
-        <q-card v-if="resource === 'Content'" class="admin-section__grid-table-body-content">
+        <q-card v-if="resource === 'Content'">
           <q-card-section>
-            <div class="admin-section__grid-table-test">
-              <p v-for="col in props.cols" :key="col.name" class="test-admin-section">
-                <span v-if="col.name !== 'actions'">Column 1</span>
+            <div>
+              <p v-for="col in props.cols" :key="col.name">
+                <span v-if="col.name !== 'actions'">
+                  {{ col.name }}:
+                  {{ col.value }}
+                </span>
               </p>
-              <!-- <div v-if="col.name === 'actions'">
-                <q-btn
-                  color="info"
-                  dense
-                  :label="t('admin.generic.actions_label')"
-                  square
-                >
-                  <q-tooltip>
-                    {{ t('admin.generic.actions_label_tooltip') }}
-                  </q-tooltip>
-                  <q-menu fit square>
-                    <q-list>
-                      <q-item clickable dense @click="openDialog(actionMethods[1])">
-                        <q-item-section>
-                          <q-icon name="visibility" />
-                          {{ t('admin.generic.show_record') }}
-                        </q-item-section>
-                      </q-item>
-                      <q-item clickable dense @click="openDialog(actionMethods[2])">
-                        <q-item-section>
-                          <q-icon name="edit" />
-                          {{ t('admin.generic.quick_edit_record') }}
-                        </q-item-section>
-                      </q-item>
-                      <q-item clickable dense @click="openDialog(actionMethods[3])">
-                        <q-item-section>
-                          <q-icon name="delete" />
-                          {{ t('admin.generic.delete_record') }}
-                        </q-item-section>
-                      </q-item>
-                    </q-list>
-                  </q-menu>
-                </q-btn>
-              </div>
-              <div v-else>
-                {{ col.name }}: {{ col.value }}
-              </div> -->
             </div>
             <div>
-              <p>
-                <span>Column 2</span>
-              </p>
+              <q-btn
+                color="info"
+                dense
+                icon="arrow_drop_down"
+                :label="t('admin.generic.actions_label')"
+                square
+              >
+                <q-tooltip>
+                  {{ t('admin.generic.actions_label_tooltip') }}
+                </q-tooltip>
+                <q-menu fit square>
+                  <q-list>
+                    <q-item
+                      clickable
+                      dense
+                      @click="openDialog(actionMethods[1], props.row)"
+                    >
+                      <q-item-section>
+                        <q-icon name="visibility" />
+                        {{ t('admin.generic.show_record') }}
+                      </q-item-section>
+                    </q-item>
+                    <q-item
+                      clickable
+                      dense
+                      @click="openDialog(actionMethods[2], props.row)"
+                    >
+                      <q-item-section>
+                        <q-icon name="edit" />
+                        {{ t('admin.generic.quick_edit_record') }}
+                      </q-item-section>
+                    </q-item>
+                    <q-item
+                      clickable
+                      dense
+                      @click="openDialog(actionMethods[3], props.row)"
+                    >
+                      <q-item-section>
+                        <q-icon name="delete" />
+                        {{ t('admin.generic.delete_record') }}
+                      </q-item-section>
+                    </q-item>
+                  </q-list>
+                </q-menu>
+              </q-btn>
             </div>
           </q-card-section>
         </q-card>
@@ -190,7 +198,7 @@ withDefaults(defineProps<IManagementGridTable>(), {
   grid: true,
   rows: () => defaultRows,
   square: true,
-  rowsPerPageOptions: () => [10, 25, 50, 100, 0]
+  rowsPerPageOptions: () => [10, 25, 50, 100, 0],
 });
 
 // Action methods
@@ -205,7 +213,17 @@ const actionMethods: { [key: number]: TDialog } = {
 };
 
 // Action dialog
-const openDialog = (action: TDialog, recordId?: number): void => emit('handleOpenDialog', action, recordId);
+const openDialog = (action: TDialog, record?: unknown): void => {
+  if (record && record !== undefined) {
+    if (record.hasOwnProperty('id')) {
+      return emit('handleOpenDialog', action, (record as { id: number }).id);
+    } else {
+      // TODO: notification to user that something went wrong
+    }
+  } else {
+    return emit('handleOpenDialog', action);
+  }
+};
 
 // Search resource
 let searchResource: Ref<string | number | null | undefined> = ref(null);
@@ -218,8 +236,8 @@ const goToConfigureResource = (
   router.push({
     name: 'AdminSettingConfigurationResourcePage',
     params: {
-      resource: resource
-    }
+      resource: resource,
+    },
   });
 
 const emit = defineEmits<{
@@ -230,20 +248,25 @@ const emit = defineEmits<{
 <style lang="scss" scoped>
 @import 'src/css/components/management_grid_table.scss';
 
-.q-card__section {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-}
-.admin-section__grid-table-test {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-direction: column;
-}
-.test-admin-section {
-  display: flex;
-  align-items: center;
-  justify-content: center;
+.admin-section__grid-table-body {
+  & .q-card {
+    &__section {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      & div {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+        p {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          margin-bottom: 0;
+        }
+      }
+    }
+  }
 }
 </style>
