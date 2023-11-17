@@ -1,19 +1,11 @@
 const defaultRows = [
   {
+    content_type: 'Page',
+    content_url: '/page/test-title',
+    description: 'Page description title',
     id: 1,
-    title: 'Test title A'
-  },
-  {
-    id: 2,
-    title: 'Test title B'
-  },
-  {
-    id: 3,
-    title: 'Test title C'
-  },
-  {
-    id: 4,
-    title: 'Test title D'
+    title: 'Test title A',
+    visibility: 'Public'
   },
 ];
 

@@ -7,6 +7,7 @@
 
     <div class="admin-section admin-section--container">
       <management-grid-table
+        :columns="defaultColumns"
         resource="Content"
         :rows="getAllRecords.results?.data || []"
         @handle-open-dialog="handleOpenDialog"
@@ -42,6 +43,7 @@ import { useI18n } from 'vue-i18n';
 import { Ref, computed, onMounted, ref } from 'vue';
 
 // Import library utilities, interfaces and components
+import { defaultColumns } from 'src/assets/data/columns';
 import { TDialog } from 'src/interfaces/BaseInterface';
 import { IAllRecords } from 'src/interfaces/ContentInterface';
 import PageTitle from 'src/components/PageTitle.vue';

@@ -1,6 +1,7 @@
 <template>
   <q-table
     :bordered="bordered"
+    class="admin-section__grid-table"
     :columns="columns"
     :dense="dense"
     :grid="grid"
@@ -10,7 +11,6 @@
     row-key="id"
     :square="square"
     :rows-per-page-options="rowsPerPageOptions"
-    class="admin-section__grid-table"
   >
     <!-- Loading component -->
     <template v-slot:loading>
@@ -100,13 +100,55 @@
     <template v-slot:item="props">
       <div class="admin-section__grid-table-body">
         <q-card v-if="resource === 'Content'" class="admin-section__grid-table-body-content">
-          <q-list dense>
-            <q-item v-for="col in props.cols" :key="col.name">
-              <q-item-section>
+          <q-card-section>
+            <div class="admin-section__grid-table-test">
+              <p v-for="col in props.cols" :key="col.name" class="test-admin-section">
+                <span v-if="col.name !== 'actions'">Column 1</span>
+              </p>
+              <!-- <div v-if="col.name === 'actions'">
+                <q-btn
+                  color="info"
+                  dense
+                  :label="t('admin.generic.actions_label')"
+                  square
+                >
+                  <q-tooltip>
+                    {{ t('admin.generic.actions_label_tooltip') }}
+                  </q-tooltip>
+                  <q-menu fit square>
+                    <q-list>
+                      <q-item clickable dense @click="openDialog(actionMethods[1])">
+                        <q-item-section>
+                          <q-icon name="visibility" />
+                          {{ t('admin.generic.show_record') }}
+                        </q-item-section>
+                      </q-item>
+                      <q-item clickable dense @click="openDialog(actionMethods[2])">
+                        <q-item-section>
+                          <q-icon name="edit" />
+                          {{ t('admin.generic.quick_edit_record') }}
+                        </q-item-section>
+                      </q-item>
+                      <q-item clickable dense @click="openDialog(actionMethods[3])">
+                        <q-item-section>
+                          <q-icon name="delete" />
+                          {{ t('admin.generic.delete_record') }}
+                        </q-item-section>
+                      </q-item>
+                    </q-list>
+                  </q-menu>
+                </q-btn>
+              </div>
+              <div v-else>
                 {{ col.name }}: {{ col.value }}
-              </q-item-section>
-            </q-item>
-          </q-list>
+              </div> -->
+            </div>
+            <div>
+              <p>
+                <span>Column 2</span>
+              </p>
+            </div>
+          </q-card-section>
         </q-card>
       </div>
     </template>
@@ -187,4 +229,21 @@ const emit = defineEmits<{
 
 <style lang="scss" scoped>
 @import 'src/css/components/management_grid_table.scss';
+
+.q-card__section {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.admin-section__grid-table-test {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+.test-admin-section {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
 </style>
