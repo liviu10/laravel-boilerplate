@@ -58,30 +58,36 @@
               <q-tooltip>
                 {{ t('admin.generic.language_tooltip') }}
               </q-tooltip>
-              <q-menu class="admin__header-menu-settings-language" fit square>
+              <q-menu fit square>
                 <q-list>
                   <q-item clickable dense>
                     <q-item-section>
-                      <q-avatar square size="24px">
-                        <img src="../assets/images/country-flag-us.svg">
-                      </q-avatar>
-                      {{ t('admin.generic.english_language') }}
+                      <span>
+                        <q-avatar square size="24px">
+                          <img src="../assets/images/country-flag-us.svg">
+                        </q-avatar>
+                        {{ t('admin.generic.english_language') }}
+                      </span>
                     </q-item-section>
                   </q-item>
                   <q-item clickable dense>
                     <q-item-section>
-                      <q-avatar square size="24px">
-                        <img src="../assets/images/country-flag-fr.svg">
-                      </q-avatar>
-                      {{ t('admin.generic.french_language') }}
+                      <span>
+                        <q-avatar square size="24px">
+                          <img src="../assets/images/country-flag-fr.svg">
+                        </q-avatar>
+                        {{ t('admin.generic.french_language') }}
+                      </span>
                     </q-item-section>
                   </q-item>
                   <q-item clickable dense>
                     <q-item-section>
-                      <q-avatar square size="24px">
-                        <img src="../assets/images/country-flag-ro.svg">
-                      </q-avatar>
-                      {{ t('admin.generic.romanian_language') }}
+                      <span>
+                        <q-avatar square size="24px">
+                          <img src="../assets/images/country-flag-ro.svg">
+                        </q-avatar>
+                        {{ t('admin.generic.romanian_language') }}
+                      </span>
                     </q-item-section>
                   </q-item>
                 </q-list>
@@ -96,7 +102,7 @@
               <q-tooltip>
                 {{ t('admin.generic.welcome_tooltip') }}
               </q-tooltip>
-              <q-menu class="admin__header-menu-settings-user-menu" fit square>
+              <q-menu fit square>
                 <q-list>
                   <q-item clickable dense>
                     <q-item-section>
@@ -129,26 +135,32 @@
                         <q-list>
                           <q-item clickable dense>
                             <q-item-section>
-                              <q-avatar square size="24px">
-                                <img src="../assets/images/country-flag-us.svg">
-                              </q-avatar>
-                              {{ t('admin.generic.english_language') }}
+                              <span>
+                                <q-avatar square size="24px">
+                                  <img src="../assets/images/country-flag-us.svg">
+                                </q-avatar>
+                                {{ t('admin.generic.english_language') }}
+                              </span>
                             </q-item-section>
                           </q-item>
                           <q-item clickable dense>
                             <q-item-section>
-                              <q-avatar square size="24px">
-                                <img src="../assets/images/country-flag-fr.svg">
-                              </q-avatar>
-                              {{ t('admin.generic.french_language') }}
+                              <span>
+                                <q-avatar square size="24px">
+                                  <img src="../assets/images/country-flag-fr.svg">
+                                </q-avatar>
+                                {{ t('admin.generic.french_language') }}
+                              </span>
                             </q-item-section>
                           </q-item>
                           <q-item clickable dense>
                             <q-item-section>
-                              <q-avatar square size="24px">
-                                <img src="../assets/images/country-flag-ro.svg">
-                              </q-avatar>
-                              {{ t('admin.generic.romanian_language') }}
+                              <span>
+                                <q-avatar square size="24px">
+                                  <img src="../assets/images/country-flag-ro.svg">
+                                </q-avatar>
+                                {{ t('admin.generic.romanian_language') }}
+                              </span>
                             </q-item-section>
                           </q-item>
                         </q-list>

@@ -48,6 +48,7 @@ const routes: RouteRecordRaw[] = [
         path: '/admin/settings/configuration-resources',
         name: 'AdminSettingConfigurationResourcePage',
         component: () => import('pages/AdminSettingConfigurationResourcePage.vue'),
+        props: (route) => ({ resource: route.query.resource as string | undefined }),
       },
     ],
   },

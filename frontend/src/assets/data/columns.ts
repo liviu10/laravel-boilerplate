@@ -63,14 +63,6 @@ const defaultColumns = [
     headerStyle: 'width: 100px',
     sort: (a: string, b: string) => parseInt(a, 10) - parseInt(b, 10),
   },
-  {
-    name: 'actions',
-    label: 'Actions',
-    field: 'actions',
-    align: 'center' as 'left' | 'right' | 'center',
-    style: 'width: 100px',
-    headerStyle: 'width: 100px',
-  },
 ];
 
 export { defaultColumns }

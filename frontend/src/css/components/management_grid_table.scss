@@ -16,16 +16,31 @@
       border-bottom: none;
       box-shadow: 0 1px 5px rgba(0, 0, 0, 0.2), 0 2px 2px rgba(0, 0, 0, 0.14), 0 3px 1px -2px rgba(0, 0, 0, 0.12);
       background: #FFFFFF;
-      @media only screen and (max-width: 767px) {
+      @media only screen and (max-width: 475px) {
         padding: 6px;
+      }
+      @media only screen and (min-width: 375px) and (max-width: 767px) {
         & .q-table__control:first-child {
           margin-bottom: 8px;
         }
       }
-      @media only screen and (max-width: 475px) {
-        padding: 6px;
+      @media only screen and (max-width: 374px) {
+        & .q-table__control:first-child {
+          & .q-btn {
+            margin-bottom: 8px;
+          }
+          & .q-btn, & .admin-section__grid-table-top-left {
+            width: 100%;
+          }
+        }
       }
       & .q-table__control {
+        @media only screen and (max-width: 375px) {
+          &:last-child {
+            display: inline;
+            width: 100%;
+          }
+        }
         & .admin-section__grid-table-top-right {
           & .q-form {
             & .q-field {
@@ -46,43 +61,68 @@
     }
     .q-table__grid-content {
       flex-direction: column;
-      & .admin-section__grid-table-body {
+      & .admin-section__grid-table-content {
         & .q-card {
           border-radius: 0;
           border: 0.5px solid #000000;
           border-bottom: none;
           box-shadow: 0 1px 5px rgba(0, 0, 0, 0.2), 0 2px 2px rgba(0, 0, 0, 0.14), 0 3px 1px -2px rgba(0, 0, 0, 0.12);
-          & .q-list {
-            padding: 12px;
-            & .q-item {
+          &__section {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            @media only screen and (max-width: 599px) {
               flex-direction: column;
-              padding: 0;
-              &__section:last-child {
-                padding-left: 0;
+              padding: 12px;
+            }
+            @media only screen and (max-width: 475px) {
+              padding: 6px;
+            }
+            & .admin-section__grid-table-body {
+              display: flex;
+              align-items: flex-start;
+              justify-content: center;
+              flex-direction: column;
+              width: 95%;
+              & div {
+                display: flex;
+                align-items: flex-start;
+                justify-content: flex-start;
+                & p {
+                  margin-bottom: 0;
+                  text-align: justify;
+                  & span:first-child {
+                    margin-right: 4px;
+                    font-weight: 700;
+                  }
+                  & .q-badge {
+                    display: inline;
+                    border-radius: 0;
+                  }
+                }
+              }
+            }
+            & .admin-section__grid-table-body-actions {
+              display: flex;
+              align-items: center;
+              justify-content: center;
+              @media only screen and (min-width: 600px) {
+                width: 20%;
+              }
+              @media only screen and (max-width: 599px) {
+                margin-top: 8px;
+                width: 100%;
+                & .q-btn {
+                  width: 50%;
+                }
               }
             }
           }
         }
       }
-      & .admin-section__grid-table-body:last-child {
+      & .admin-section__grid-table-content:last-child {
         & .q-card {
           border-bottom: 0.5px solid #000000;
-        }
-      }
-    }
-  }
-}
-.q-menu {
-  & .q-list {
-    & .q-item {
-      padding: 8px;
-      &__section {
-        display: flex;
-        align-items: center;
-        justify-content: flex-start;
-        flex-direction: row;
-        & .q-icon {
-          margin-right: 4px;
         }
       }
     }

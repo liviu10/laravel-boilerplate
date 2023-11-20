@@ -81,19 +81,17 @@ const displayDialog = ref(false);
 // Action dialog
 async function handleOpenDialog(action: TDialog, recordId?: number): Promise<void> {
   loadPage.value = true;
-  if (action === 'create') {
-    loadPage.value = false;
-    actionName.value = action;
-    displayDialog.value = true;
-  } else if (
+  if (
+    action === 'create' ||
     action === 'advanced-filters' ||
     action === 'upload' ||
     action === 'download'
   ) {
-    loadPage.value = false;
     actionName.value = action;
+    loadPage.value = false;
     displayDialog.value = true;
   } else {
+    debugger;
     const isInvalidRecordId =
       !recordId ||
       typeof recordId !== 'number' ||

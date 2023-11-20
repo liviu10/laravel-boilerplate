@@ -50,7 +50,7 @@ export default {
       apply_filters_label: 'Appliquer les filtres',
       ok_label: 'OK',
       options_label: 'Plus d\'options',
-      options_label_tooltip: 'Cliquez ici pour plus d\'options',
+      options_label_tooltip: 'Cliquez ici pour plus d\'options (filtre, téléchargement, téléversement et plus encore)',
       configure_resource: 'Configuration des ressources',
       download_label: 'Télécharger les enregistrements',
       upload_label: 'Téléverser les enregistrements',

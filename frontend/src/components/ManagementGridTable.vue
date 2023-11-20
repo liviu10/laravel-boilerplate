@@ -12,72 +12,31 @@
     :square="square"
     :rows-per-page-options="rowsPerPageOptions"
   >
-    <!-- Loading component -->
+    <!-- Loading slot -->
     <template v-slot:loading>
       <q-inner-loading showing>
         <q-spinner-gears size="60px" color="primary" />
       </q-inner-loading>
     </template>
 
-    <!-- Top left component -->
+    <!-- Top left slot -->
     <template v-slot:top-left>
-      <div class="admin-section__grid-table-top-left">
-        <q-btn
-          color="primary"
-          dense
-          icon="add"
-          :label="t('admin.generic.add_new_record')"
-          square
-          @click="openDialog(actionMethods[0])"
-        >
-          <q-tooltip>
-            {{ t('admin.generic.add_new_record_tooltip') }}
-          </q-tooltip>
-        </q-btn>
-        <q-btn
-          color="info"
-          dense
-          icon="more_vert"
-          :label="t('admin.generic.options_label')"
-          square
-        >
-          <q-tooltip>
-            {{ t('admin.generic.options_label_tooltip') }}
-          </q-tooltip>
-          <q-menu fit square>
-            <q-list>
-              <q-item clickable dense @click="openDialog(actionMethods[4])">
-                <q-item-section>
-                  <q-icon name="filter_alt" />
-                  {{ t('admin.generic.advanced_filters') }}
-                </q-item-section>
-              </q-item>
-              <q-item clickable dense @click="openDialog(actionMethods[5])">
-                <q-item-section>
-                  <q-icon name="upload" />
-                  {{ t('admin.generic.upload_label') }}
-                </q-item-section>
-              </q-item>
-              <q-item clickable dense @click="openDialog(actionMethods[6])">
-                <q-item-section>
-                  <q-icon name="download" />
-                  {{ t('admin.generic.download_label') }}
-                </q-item-section>
-              </q-item>
-              <q-separator />
-              <q-item clickable dense @click="goToConfigureResource(resource)">
-                <q-item-section>
-                  <q-icon name="handyman" />
-                  {{ t('admin.generic.configure_resource') }}
-                </q-item-section>
-              </q-item>
-            </q-list>
-          </q-menu>
-        </q-btn>
-      </div>
+      <q-btn
+        color="primary"
+        dense
+        icon="add"
+        :label="t('admin.generic.add_new_record')"
+        square
+        @click="openDialog(actionMethods[0])"
+      >
+        <q-tooltip>
+          {{ t('admin.generic.add_new_record_tooltip') }}
+        </q-tooltip>
+      </q-btn>
+      <management-grid-table-top-left :action-methods="actionMethods" :more-options="moreOptions" />
     </template>
 
-    <!-- Top right component -->
+    <!-- Top right slot -->
     <template v-slot:top-right>
       <div class="admin-section__grid-table-top-right">
         <q-form>
@@ -96,66 +55,16 @@
       </div>
     </template>
 
-    <!-- Body component -->
+    <!-- Body slot -->
     <template v-slot:item="props">
-      <div class="admin-section__grid-table-body">
-        <q-card v-if="resource === 'Content'">
+      <div class="admin-section__grid-table-content">
+        <q-card>
           <q-card-section>
-            <div>
-              <p v-for="col in props.cols" :key="col.name">
-                <span v-if="col.name !== 'actions'">
-                  {{ col.name }}:
-                  {{ col.value }}
-                </span>
-              </p>
-            </div>
-            <div>
-              <q-btn
-                color="info"
-                dense
-                icon="arrow_drop_down"
-                :label="t('admin.generic.actions_label')"
-                square
-              >
-                <q-tooltip>
-                  {{ t('admin.generic.actions_label_tooltip') }}
-                </q-tooltip>
-                <q-menu fit square>
-                  <q-list>
-                    <q-item
-                      clickable
-                      dense
-                      @click="openDialog(actionMethods[1], props.row)"
-                    >
-                      <q-item-section>
-                        <q-icon name="visibility" />
-                        {{ t('admin.generic.show_record') }}
-                      </q-item-section>
-                    </q-item>
-                    <q-item
-                      clickable
-                      dense
-                      @click="openDialog(actionMethods[2], props.row)"
-                    >
-                      <q-item-section>
-                        <q-icon name="edit" />
-                        {{ t('admin.generic.quick_edit_record') }}
-                      </q-item-section>
-                    </q-item>
-                    <q-item
-                      clickable
-                      dense
-                      @click="openDialog(actionMethods[3], props.row)"
-                    >
-                      <q-item-section>
-                        <q-icon name="delete" />
-                        {{ t('admin.generic.delete_record') }}
-                      </q-item-section>
-                    </q-item>
-                  </q-list>
-                </q-menu>
-              </q-btn>
-            </div>
+            <management-grid-table-body :table-body-props="props" />
+            <management-grid-table-body-actions
+              :action-methods="actionMethods"
+              :more-actions="moreActions(props.row)"
+            />
           </q-card-section>
         </q-card>
       </div>
@@ -166,14 +75,18 @@
 <script setup lang="ts">
 // Import vue related utilities
 import { useI18n } from 'vue-i18n';
-import { Ref, ref } from 'vue';
+import { Ref, computed, ref } from 'vue';
 import { QTableProps } from 'quasar';
-import { NavigationFailure, useRouter } from 'vue-router';
+// import { NavigationFailure, useRouter } from 'vue-router';
 
 // Import library utilities, interfaces and components
 import { defaultColumns } from 'src/assets/data/columns';
 import { defaultRows } from 'src/assets/data/rows';
 import { TDialog } from 'src/interfaces/BaseInterface';
+import { HandleRoute } from 'src/utilities/HandleRoute';
+import ManagementGridTableTopLeft from './ManagementGridTableTopLeft.vue';
+import ManagementGridTableBody from './ManagementGridTableBody.vue';
+import ManagementGridTableBodyActions from './ManagementGridTableBodyActions.vue';
 
 // Defined the translation variable
 const { t } = useI18n({});
@@ -190,7 +103,7 @@ interface IManagementGridTable {
   rowsPerPageOptions?: QTableProps['rowsPerPageOptions'];
 }
 
-withDefaults(defineProps<IManagementGridTable>(), {
+const props = withDefaults(defineProps<IManagementGridTable>(), {
   bordered: true,
   columns: () => defaultColumns,
   customLoader: true,
@@ -212,6 +125,66 @@ const actionMethods: { [key: number]: TDialog } = {
   6: 'download',
 };
 
+// More options
+const moreOptions = [
+  {
+    id: 1,
+    clickEvent: () => openDialog(actionMethods[4]),
+    icon: 'filter_alt',
+    label: 'admin.generic.advanced_filters'
+  },
+  {
+    id: 2,
+    clickEvent: () => openDialog(actionMethods[5]),
+    icon: 'upload',
+    label: 'admin.generic.upload_label'
+  },
+  {
+    id: 3,
+    clickEvent: () => openDialog(actionMethods[6]),
+    icon: 'download',
+    label: 'admin.generic.download_label'
+  },
+  {
+    id: 4,
+    clickEvent: () => navigateToRoute.handleNavigateToRoute(
+      'AdminSettingConfigurationResourcePage',
+      props.resource ? JSON.parse(props.resource) : undefined
+    ),
+    icon: 'handyman',
+    label: 'admin.generic.configure_resource'
+  }
+];
+
+// Search resource
+let searchResource: Ref<string | number | null | undefined> = ref(null);
+
+// More actions
+const moreActions = computed(() => {
+  return (record: unknown) => {
+    return [
+      {
+        id: 1,
+        clickEvent: () => openDialog(actionMethods[1], record),
+        icon: 'visibility',
+        label: 'admin.generic.show_record'
+      },
+      {
+        id: 2,
+        clickEvent: () => openDialog(actionMethods[2], record),
+        icon: 'edit',
+        label: 'admin.generic.quick_edit_record'
+      },
+      {
+        id: 3,
+        clickEvent: () => openDialog(actionMethods[3], record),
+        icon: 'delete',
+        label: 'admin.generic.delete_record'
+      },
+    ];
+  }
+});
+
 // Action dialog
 const openDialog = (action: TDialog, record?: unknown): void => {
   if (record && record !== undefined) {
@@ -225,20 +198,20 @@ const openDialog = (action: TDialog, record?: unknown): void => {
   }
 };
 
-// Search resource
-let searchResource: Ref<string | number | null | undefined> = ref(null);
+// Navigate to route
+const navigateToRoute = new HandleRoute()
 
-// Configure resource
-const router = useRouter();
-const goToConfigureResource = (
-  resource: string
-): Promise<void | NavigationFailure | undefined> =>
-  router.push({
-    name: 'AdminSettingConfigurationResourcePage',
-    params: {
-      resource: resource,
-    },
-  });
+// Go to Configure resource
+// const router = useRouter();
+// const goToConfigureResource = (
+//   resourceName: string
+// ): Promise<void | NavigationFailure | undefined> =>
+//   router.push({
+//     name: 'AdminSettingConfigurationResourcePage',
+//     query: {
+//       resource: resourceName,
+//     },
+//   });
 
 const emit = defineEmits<{
   (event: 'handleOpenDialog', action: TDialog, recordId?: number): void;
@@ -247,26 +220,4 @@ const emit = defineEmits<{
 
 <style lang="scss" scoped>
 @import 'src/css/components/management_grid_table.scss';
-
-.admin-section__grid-table-body {
-  & .q-card {
-    &__section {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      & div {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        flex-direction: column;
-        p {
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          margin-bottom: 0;
-        }
-      }
-    }
-  }
-}
 </style>

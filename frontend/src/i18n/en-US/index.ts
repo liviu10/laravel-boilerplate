@@ -50,7 +50,7 @@ export default {
       apply_filters_label: 'Apply filters',
       ok_label: 'OK',
       options_label: 'More options',
-      options_label_tooltip: 'Click here for more options',
+      options_label_tooltip: 'Click here for more options (filter, upload, download and more)',
       configure_resource: 'Configure resource',
       download_label: 'Download records',
       upload_label: 'Upload records',

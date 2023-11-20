@@ -50,7 +50,7 @@ export default {
       apply_filters_label: 'Aplică filtrele',
       ok_label: 'OK',
       options_label: 'Mai multe opțiuni',
-      options_label_tooltip: 'Faceți clic aici pentru mai multe opțiuni',
+      options_label_tooltip: 'Faceți clic aici pentru mai multe opțiuni (filtrare, încărcare, descărcare și altele)',
       configure_resource: 'Configurează resursa',
       download_label: 'Descarcă înregistrările',
       upload_label: 'Încarcă înregistrările',

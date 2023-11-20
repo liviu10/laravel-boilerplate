@@ -5,9 +5,9 @@ import {
   IBaseTimestamps
 } from './BaseInterface'
 
-type VisibilityOptions = 'Public' | 'Private' | 'Draft'
+type TVisibilityOptions = 'Published' | 'Draft' | 'Scheduled' | 'Trashed'
 
-type ContentTypeOptions = 'Page' | 'Article'
+type TContentTypeOptions = 'Page' | 'Article'
 
 interface ITag extends IBaseTimestamps {
   id: number
@@ -31,10 +31,10 @@ interface IAllRecords extends IRootObject {
   results: (IBasePagination & {
     data: {
       id: number
-      visibility: VisibilityOptions
+      visibility: TVisibilityOptions
       content_url: string
       title: string
-      content_type: ContentTypeOptions
+      content_type: TContentTypeOptions
       description: string
     }[]
   })
@@ -43,10 +43,10 @@ interface IAllRecords extends IRootObject {
 interface ISingleRecord extends IRootObject {
   results: (IBaseTimestamps & {
     id: number
-    visibility: VisibilityOptions
+    visibility: TVisibilityOptions
     content_url: string
     title: string
-    content_type: ContentTypeOptions
+    content_type: TContentTypeOptions
     description: string
     content: string
     allow_comments: boolean
@@ -58,20 +58,20 @@ interface ISingleRecord extends IRootObject {
 }
 
 interface ICreateRecord {
-  visibility: VisibilityOptions
+  visibility: TVisibilityOptions
   content_url: string
   title: string
-  content_type: ContentTypeOptions
+  content_type: TContentTypeOptions
   description: string
   content: string
   allow_comments: boolean
 }
 
 interface IUpdateRecord {
-  visibility: VisibilityOptions
+  visibility: TVisibilityOptions
   content_url: string
   title: string
-  content_type: ContentTypeOptions
+  content_type: TContentTypeOptions
   description: string
   content: string
   allow_comments: boolean
@@ -82,4 +82,6 @@ export {
   ISingleRecord,
   ICreateRecord,
   IUpdateRecord,
+  TVisibilityOptions,
+  TContentTypeOptions,
 }

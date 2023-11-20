@@ -122,19 +122,4 @@
       }
     }
   }
-  &.admin__header-menu-settings-language {
-    & .q-list {
-      & .q-item {
-        &__section {
-          display: flex;
-          align-items: center;
-          justify-content: flex-start;
-          flex-direction: row;
-          & .q-avatar {
-            margin-right: 4px;
-          }
-        }
-      }
-    }
-  }
 }
