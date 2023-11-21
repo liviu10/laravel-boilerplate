@@ -33,9 +33,22 @@ interface IBaseUser {
   full_name: string
 }
 
+type TColumn = 'center' | 'left' | 'right' | undefined;
+
 type TInput = 'number' | 'textarea' | 'time' | 'text' | 'password' | 'email' | 'search' | 'tel' | 'file' | 'url' | 'date' | undefined
 
-type TDialog = 'create' | 'show' | 'quick-edit' | 'delete' | 'advanced-filters' | 'upload' | 'download'
+type TDialog = 'create' | 'show' | 'quick-edit' | 'delete' | 'advanced-filters' | 'upload' | 'download' | 'stats'
+
+const actionMethods: { [key: number]: TDialog } = {
+  0: 'create',
+  1: 'show',
+  2: 'quick-edit',
+  3: 'delete',
+  4: 'advanced-filters',
+  5: 'upload',
+  6: 'download',
+  7: 'stats',
+};
 
 interface IDialogAction {
   id: number,
@@ -52,7 +65,9 @@ export {
   IBasePagination,
   IBaseTimestamps,
   IBaseUser,
+  TColumn,
   TInput,
   TDialog,
+  actionMethods,
   IDialogAction,
 }

@@ -3,14 +3,18 @@ import {
   NavigationFailure,
   RouteMeta,
   RouteRecordName,
-  useRouter
+  Router
 } from 'vue-router';
 
 interface IHandleRoute {
   handleRouteName: (name: RouteRecordName | null | undefined) => RouteRecordName
   handleRouteTitle: (meta: RouteMeta) => string
   handleRouteDescription: (meta: RouteMeta) => string
-  handleNavigateToRoute: (resourceName: string, queryParams?: string) => Promise<void | NavigationFailure | undefined>
+  handleNavigateToRoute: (
+    router: Router,
+    resourceName: string,
+    queryParams?: LocationQueryRaw
+  ) => Promise<void | NavigationFailure | undefined>
 }
 
 export class HandleRoute implements IHandleRoute {
@@ -64,16 +68,20 @@ export class HandleRoute implements IHandleRoute {
   }
 
   /**
-   * Handles navigation to a specified route.
+   * Navigates to a specified route using the provided router instance.
+   * @param {Router} router - The Vue Router instance used for navigation.
    * @param {string} resourceName - The name of the route to navigate to.
-   * @param {string} queryParams - The query parameters for the route.
+   * @param {LocationQueryRaw} [queryParams] - Optional query parameters for the route.
    * @returns {Promise<void | NavigationFailure | undefined>} A promise that resolves when the navigation is successful,
-   * or rejects with a NavigationFailure in case of an error. It may also resolve with undefined if the navigation does not result
+   * rejects with a NavigationFailure in case of an error, or resolves with undefined if the navigation does not result
    * in a state change (e.g., navigating to the current route).
    * @throws {NavigationFailure} If the navigation to the specified route fails.
    */
-  public handleNavigateToRoute(resourceName: string, queryParams?: string): Promise<void | NavigationFailure | undefined> {
-    const router = useRouter();
+  public handleNavigateToRoute(
+    router: Router,
+    resourceName: string,
+    queryParams?: LocationQueryRaw
+  ): Promise<void | NavigationFailure | undefined> {
     return router.push({
       name: resourceName,
       query: queryParams || undefined as unknown as LocationQueryRaw,

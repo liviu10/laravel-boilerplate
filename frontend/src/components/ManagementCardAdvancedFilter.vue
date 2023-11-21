@@ -1,6 +1,8 @@
 <template>
   <div>
     Advanced filters
+
+    <pre>{{ dataModel }}</pre>
   </div>
 </template>
 
@@ -8,9 +10,10 @@
 // Import vue related utilities
 
 // Import library utilities, interfaces and components
+import { IConfigurationInput } from 'src/interfaces/ConfigurationResourceInterface';
 
 interface IManagementCardAdvancedFilter {
-  dataModel?: [];
+  dataModel?: IConfigurationInput[];
 }
 
 const props = defineProps<IManagementCardAdvancedFilter>();

@@ -56,6 +56,8 @@ export default {
       upload_label: 'Încarcă înregistrările',
       actions_label: 'Acțiuni',
       actions_label_tooltip: 'Faceți clic aici pentru acțiuni (afișare, editare, ștergere și altele)',
+      content_stats: 'Statistici conținut',
+      stats_label: 'Statistici',
     },
     home: {
       title: 'Dashboard',

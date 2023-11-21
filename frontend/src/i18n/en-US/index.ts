@@ -56,6 +56,8 @@ export default {
       upload_label: 'Upload records',
       actions_label: 'Actions',
       actions_label_tooltip: 'Click here for actions (show, edit, delete and more)',
+      content_stats: 'Content statistics',
+      stats_label: 'Statistics',
     },
     home: {
       title: 'Dashboard',

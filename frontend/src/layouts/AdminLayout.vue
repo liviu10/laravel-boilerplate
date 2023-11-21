@@ -11,7 +11,7 @@
                 :label="t('admin.generic.search_the_application')"
                 outlined
                 square
-                v-model="text"
+                v-model="searchWebsite"
               >
                 <template v-slot:append>
                   <q-icon name="search" class="cursor-pointer" />
@@ -26,7 +26,7 @@
                   </q-card-section>
                   <q-card-section>
                     <q-form>
-                      <q-input dense outlined square v-model="text"/>
+                      <q-input dense outlined square v-model="searchWebsite"/>
                       <q-btn
                         color="primary"
                         dense
@@ -283,7 +283,7 @@ const navigateToRoute = (routeName: string | null) => {
   }
 }
 
-const text = ref(null);
+let searchWebsite = ref(null);
 
 /**
  * Computed function that retrieves all records from the userStore.

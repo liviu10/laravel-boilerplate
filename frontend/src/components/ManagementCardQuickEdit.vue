@@ -3,6 +3,8 @@
     Quick edit record
 
     <q-separator class="q-my-md" />
+
+    <pre>{{ dataModel }}</pre>
   </div>
 </template>
 
@@ -10,9 +12,10 @@
 // Import vue related utilities
 
 // Import library utilities, interfaces and components
+import { IConfigurationInput } from 'src/interfaces/ConfigurationResourceInterface';
 
 interface IManagementCardQuickEdit {
-  dataModel?: [];
+  dataModel?: IConfigurationInput[];
 }
 
 const props = defineProps<IManagementCardQuickEdit>();

@@ -10,9 +10,9 @@
       <management-grid-table
         :columns="defaultColumns"
         resource="Content"
+        :rows="getAllRecords.results?.data || []"
         @handle-open-dialog="handleOpenDialog"
       />
-      <!-- :rows="getAllRecords.results?.data || []" -->
     </div>
 
     <dialog-card
@@ -23,13 +23,18 @@
       @handle-action-dialog="handleActionDialog"
     >
       <template v-slot:dialog-details>
-        <management-card-create v-if="actionName === 'create'" />
+        <management-card-create
+          v-if="actionName === 'create'"
+          :data-model="defaultDataModel"
+          resource="Content"
+        />
         <management-card-show v-if="actionName === 'show'" />
-        <management-card-quick-edit v-if="actionName === 'quick-edit'" />
+        <management-card-quick-edit v-if="actionName === 'quick-edit'" :data-model="defaultDataModel" />
         <management-card-delete v-if="actionName === 'delete'" />
-        <management-card-advanced-filter v-if="actionName === 'advanced-filters'" />
+        <management-card-advanced-filter v-if="actionName === 'advanced-filters'" :data-model="defaultDataModel" />
         <management-card-upload v-if="actionName === 'upload'" />
         <management-card-download v-if="actionName === 'download'" />
+        <management-card-stats v-if="actionName === 'stats'" />
       </template>
     </dialog-card>
 
@@ -44,6 +49,7 @@ import { Ref, computed, onMounted, ref } from 'vue';
 
 // Import library utilities, interfaces and components
 import { defaultColumns } from 'src/assets/data/columns';
+import { defaultDataModel } from 'src/assets/data/dataModel';
 import { TDialog } from 'src/interfaces/BaseInterface';
 import { IAllRecords } from 'src/interfaces/ContentInterface';
 import PageTitle from 'src/components/PageTitle.vue';
@@ -57,6 +63,7 @@ import ManagementCardDelete from 'src/components/ManagementCardDelete.vue';
 import ManagementCardAdvancedFilter from 'src/components/ManagementCardAdvancedFilter.vue';
 import ManagementCardUpload from 'src/components/ManagementCardUpload.vue';
 import ManagementCardDownload from 'src/components/ManagementCardDownload.vue';
+import ManagementCardStats from 'src/components/ManagementCardStats.vue';
 import PageLoading from 'src/components/PageLoading.vue';
 
 // Import Pinia's related utilities
@@ -112,7 +119,12 @@ async function handleOpenDialog(action: TDialog, recordId?: number): Promise<voi
 // Handle action method
 async function handleActionDialog(action: TDialog): Promise<void> {
   loadPage.value = true;
-  if (action === 'create') {
+  if (
+    action === 'create' ||
+    action === 'advanced-filters' ||
+    action === 'upload' ||
+    action === 'download'
+  ) {
     // Pinia store create record
   } else {
     // Pinia store edit or delete record

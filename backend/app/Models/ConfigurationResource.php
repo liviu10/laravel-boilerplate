@@ -187,6 +187,7 @@ class ConfigurationResource extends BaseModel
                                     'name',
                                     'position',
                                     'style',
+                                    'configuration_resource_id',
                                     'configuration_type_id',
                                 );
                             },
@@ -202,6 +203,7 @@ class ConfigurationResource extends BaseModel
                                     'position',
                                     'type',
                                     'configuration_resource_id',
+                                    'configuration_type_id',
                                 )
                                 ->where('is_active', true)
                                 ->with([
@@ -210,6 +212,8 @@ class ConfigurationResource extends BaseModel
                                             'id',
                                             'value',
                                             'label',
+                                            'configuration_resource_id',
+                                            'configuration_type_id',
                                             'configuration_input_id',
                                         );
                                     }

@@ -56,6 +56,8 @@ export default {
       upload_label: 'Téléverser les enregistrements',
       actions_label: 'Actions',
       actions_label_tooltip: 'Cliquez ici pour les actions (afficher, éditer, supprimer et plus)',
+      content_stats: 'Statistiques du contenu',
+      stats_label: 'Statistiques',
     },
     home: {
       title: 'Dashboard',

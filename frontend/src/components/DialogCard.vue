@@ -81,6 +81,8 @@ const dialogTitle = computed((): string => {
       return t('admin.generic.upload_label');
     case 'download':
       return t('admin.generic.download_label');
+    case 'stats':
+      return t('admin.generic.stats_label');
     default:
       return t('admin.generic.default_dialog_title');
   }

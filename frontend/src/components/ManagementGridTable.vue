@@ -77,12 +77,12 @@
 import { useI18n } from 'vue-i18n';
 import { Ref, computed, ref } from 'vue';
 import { QTableProps } from 'quasar';
-// import { NavigationFailure, useRouter } from 'vue-router';
+import { LocationQueryRaw, useRouter } from 'vue-router';
 
 // Import library utilities, interfaces and components
 import { defaultColumns } from 'src/assets/data/columns';
 import { defaultRows } from 'src/assets/data/rows';
-import { TDialog } from 'src/interfaces/BaseInterface';
+import { TDialog, actionMethods } from 'src/interfaces/BaseInterface';
 import { HandleRoute } from 'src/utilities/HandleRoute';
 import ManagementGridTableTopLeft from './ManagementGridTableTopLeft.vue';
 import ManagementGridTableBody from './ManagementGridTableBody.vue';
@@ -114,17 +114,6 @@ const props = withDefaults(defineProps<IManagementGridTable>(), {
   rowsPerPageOptions: () => [10, 25, 50, 100, 0],
 });
 
-// Action methods
-const actionMethods: { [key: number]: TDialog } = {
-  0: 'create',
-  1: 'show',
-  2: 'quick-edit',
-  3: 'delete',
-  4: 'advanced-filters',
-  5: 'upload',
-  6: 'download',
-};
-
 // More options
 const moreOptions = [
   {
@@ -148,8 +137,9 @@ const moreOptions = [
   {
     id: 4,
     clickEvent: () => navigateToRoute.handleNavigateToRoute(
+      router,
       'AdminSettingConfigurationResourcePage',
-      props.resource ? JSON.parse(props.resource) : undefined
+      { resource: props.resource } as unknown as LocationQueryRaw
     ),
     icon: 'handyman',
     label: 'admin.generic.configure_resource'
@@ -167,19 +157,25 @@ const moreActions = computed(() => {
         id: 1,
         clickEvent: () => openDialog(actionMethods[1], record),
         icon: 'visibility',
-        label: 'admin.generic.show_record'
+        label: 'admin.generic.show_record',
       },
       {
         id: 2,
         clickEvent: () => openDialog(actionMethods[2], record),
         icon: 'edit',
-        label: 'admin.generic.quick_edit_record'
+        label: 'admin.generic.quick_edit_record',
       },
       {
         id: 3,
         clickEvent: () => openDialog(actionMethods[3], record),
         icon: 'delete',
-        label: 'admin.generic.delete_record'
+        label: 'admin.generic.delete_record',
+      },
+      {
+        id: 4,
+        clickEvent: () => openDialog(actionMethods[7], record),
+        icon: 'query_stats',
+        label: 'admin.generic.content_stats',
       },
     ];
   }
@@ -202,16 +198,7 @@ const openDialog = (action: TDialog, record?: unknown): void => {
 const navigateToRoute = new HandleRoute()
 
 // Go to Configure resource
-// const router = useRouter();
-// const goToConfigureResource = (
-//   resourceName: string
-// ): Promise<void | NavigationFailure | undefined> =>
-//   router.push({
-//     name: 'AdminSettingConfigurationResourcePage',
-//     query: {
-//       resource: resourceName,
-//     },
-//   });
+const router = useRouter();
 
 const emit = defineEmits<{
   (event: 'handleOpenDialog', action: TDialog, recordId?: number): void;
