@@ -1,10 +1,20 @@
 <template>
   <div class="admin-section__dialog-body-content">
-    Create new record
-
-    <div v-if="dataModel && Array.isArray(dataModel) && dataModel.length">
+    <div v-if="checkIfArrayExist(dataModel)">
       <div v-for="input in dataModel" :key="input.id">
+        <q-select
+          v-if="checkIfArrayExist(input.configuration_options)"
+          dense
+          emit-value
+          :label="t(`admin.management.${resource.toLowerCase()}.data_model.${input.field}`)"
+          outlined
+          square
+          stack-label
+          v-model="input.value"
+          :options="input.configuration_options"
+        />
         <q-input
+          v-else
           dense
           :label="t(`admin.management.${resource.toLowerCase()}.data_model.${input.field}`)"
           outlined
@@ -17,9 +27,7 @@
 
     <div v-else>
       <p>
-        The data model does not exist.
-        Please configure the resource.
-        If the problem persist you can contact the administrator.
+        {{ t(`admin.management.${resource.toLowerCase()}.no_data_model`) }}
       </p>
       <q-btn
         color="primary"
@@ -38,9 +46,11 @@
 // Import vue related utilities
 import { LocationQueryRaw, NavigationFailure, useRouter } from 'vue-router';
 import { useI18n } from 'vue-i18n';
+import { computed } from 'vue';
 
 // Import library utilities, interfaces and components
 import { IConfigurationInput } from 'src/interfaces/ConfigurationResourceInterface';
+import { HandleArray } from 'src/utilities/HandleArray';
 import { HandleRoute } from 'src/utilities/HandleRoute';
 
 interface IManagementCardCreate {
@@ -52,6 +62,14 @@ const props = defineProps<IManagementCardCreate>();
 
 // Defined the translation variable
 const { t } = useI18n({});
+
+// Check if object is array
+const checkIfArray = new HandleArray()
+const checkIfArrayExist = computed(() => {
+  return (object: IConfigurationInput[] | IConfigurationInput['configuration_options'] | undefined) => {
+    return checkIfArray.handleCheckIfArray(object)
+  }
+});
 
 // Navigate to route
 const navigateToRoute = new HandleRoute()

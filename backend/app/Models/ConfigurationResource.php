@@ -194,6 +194,7 @@ class ConfigurationResource extends BaseModel
                             'configuration_inputs' => function ($query) {
                                 $query->select(
                                     'id',
+                                    'accept',
                                     'field',
                                     'is_active',
                                     'is_filter',

@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('set_configuration_inputs', function (Blueprint $table) {
             $table->id()->index('idx_id');
+            $table->string('accept')->nullable();
             $table->string('field');
             $table->boolean('is_active')->default(false);
             $table->boolean('is_filter')->default(false);

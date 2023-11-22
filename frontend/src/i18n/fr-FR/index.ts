@@ -80,7 +80,7 @@ export default {
     },
     management: {
       title: 'Gestion',
-      contents: {
+      content: {
         title: 'Contenu',
         page_description: `
           Lorem ipsum dolor sit amet consectetur adipisicing elit.
@@ -89,6 +89,12 @@ export default {
           inventore adipisci tempora, voluptas sunt dolore vitae iure,
           quos eligendi. Corporis id adipisci aliquam cum officia impedit
           repudiandae, numquam, dicta earum, cupiditate consequuntur?
+        `,
+        data_model: {},
+        no_data_model: `
+          Le modèle de données n'existe pas.
+          Veuillez configurer la ressource.
+          Si le problème persiste, vous pouvez contacter l'administrateur.
         `,
       },
       tags: {

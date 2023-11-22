@@ -14,6 +14,7 @@ use Illuminate\Database\QueryException;
  * @package App\Models
 
  * @property int $id
+ * @property string $accept
  * @property string $field
  * @property bool $is_active
  * @property bool $is_filter
@@ -46,6 +47,7 @@ class ConfigurationInput extends BaseModel
     protected $configurationTypeForeignKeyType = 'int';
 
     protected $fillable = [
+        'accept',
         'field',
         'is_active',
         'is_filter',
@@ -106,6 +108,7 @@ class ConfigurationInput extends BaseModel
     {
         try {
             $query = $this->create([
+                'accept'                    => $payload['accept'],
                 'field'                     => $payload['field'],
                 'is_active'                 => $payload['is_active'],
                 'is_filter'                 => $payload['is_filter'],

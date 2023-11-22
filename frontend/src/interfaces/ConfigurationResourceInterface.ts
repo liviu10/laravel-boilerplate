@@ -60,6 +60,7 @@ interface IConfigurationColumn {
 
 interface IConfigurationInput {
   id: number
+  accept?: string
   field: string
   is_active: boolean
   is_filter: boolean
@@ -71,7 +72,7 @@ interface IConfigurationInput {
   configuration_resource_id: number
   configuration_type_id: number
   configuration_options?: Pick<IConfigurationOptions, 'value' | 'label'>[],
-  value: null
+  value: null | { from: string, to: string }
 }
 
 interface IConfigurationOptions {

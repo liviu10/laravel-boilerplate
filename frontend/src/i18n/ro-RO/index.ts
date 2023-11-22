@@ -80,7 +80,7 @@ export default {
     },
     management: {
       title: 'Administrare',
-      contents: {
+      content: {
         title: 'Conținut',
         page_description: `
           Lorem ipsum dolor sit amet consectetur adipisicing elit.
@@ -89,6 +89,12 @@ export default {
           inventore adipisci tempora, voluptas sunt dolore vitae iure,
           quos eligendi. Corporis id adipisci aliquam cum officia impedit
           repudiandae, numquam, dicta earum, cupiditate consequuntur?
+        `,
+        data_model: {},
+        no_data_model: `
+          Modelul de date nu există.
+          Vă rugăm să configurați resursa.
+          Dacă problema persistă, puteți contacta administratorul.
         `,
       },
       tags: {

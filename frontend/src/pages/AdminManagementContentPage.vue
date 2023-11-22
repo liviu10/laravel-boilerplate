@@ -9,7 +9,7 @@
     <div class="admin-section admin-section--container">
       <management-grid-table
         :columns="defaultColumns"
-        resource="Content"
+        :resource="resourceName"
         :rows="getAllRecords.results?.data || []"
         @handle-open-dialog="handleOpenDialog"
       />
@@ -26,14 +26,30 @@
         <management-card-create
           v-if="actionName === 'create'"
           :data-model="defaultDataModel"
-          resource="Content"
+          :resource="resourceName"
         />
         <management-card-show v-if="actionName === 'show'" />
-        <management-card-quick-edit v-if="actionName === 'quick-edit'" :data-model="defaultDataModel" />
+        <management-card-quick-edit
+          v-if="actionName === 'quick-edit'"
+          :data-model="defaultDataModel"
+          :resource="resourceName"
+        />
         <management-card-delete v-if="actionName === 'delete'" />
-        <management-card-advanced-filter v-if="actionName === 'advanced-filters'" :data-model="defaultDataModel" />
-        <management-card-upload v-if="actionName === 'upload'" />
-        <management-card-download v-if="actionName === 'download'" />
+        <management-card-advanced-filter
+          v-if="actionName === 'advanced-filters'"
+          :data-model="defaultFilterModel"
+          :resource="resourceName"
+        />
+        <management-card-upload
+          v-if="actionName === 'upload'"
+          :data-model="defaultUploadModel"
+          :resource="resourceName"
+        />
+        <management-card-download
+          v-if="actionName === 'download'"
+          :data-model="defaultDownloadModel"
+          :resource="resourceName"
+        />
         <management-card-stats v-if="actionName === 'stats'" />
       </template>
     </dialog-card>
@@ -49,7 +65,12 @@ import { Ref, computed, onMounted, ref } from 'vue';
 
 // Import library utilities, interfaces and components
 import { defaultColumns } from 'src/assets/data/columns';
-import { defaultDataModel } from 'src/assets/data/dataModel';
+import {
+  defaultDataModel,
+  defaultFilterModel,
+  defaultUploadModel,
+  defaultDownloadModel
+} from 'src/assets/data/dataModel';
 import { TDialog } from 'src/interfaces/BaseInterface';
 import { IAllRecords } from 'src/interfaces/ContentInterface';
 import PageTitle from 'src/components/PageTitle.vue';
@@ -151,6 +172,8 @@ async function handleActionDialog(action: TDialog): Promise<void> {
     // }
   }
 }
+
+const resourceName = 'Content'
 
 onMounted(async () => {
   await contentStore.handleIndex();
