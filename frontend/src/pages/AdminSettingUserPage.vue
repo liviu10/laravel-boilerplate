@@ -1,9 +1,9 @@
 <template>
   <q-page class="admin admin--page">
 
-    <page-title :page-title="t('admin.settings.users.title')" />
+    <page-title :page-title="t('admin.settings.user.title')" />
 
-    <page-description :page-description="t('admin.settings.users.page_description')" />
+    <page-description :page-description="t('admin.settings.user.page_description')" />
 
     <div class="admin-section admin-section--content">
       <div class="admin-section__record-list">

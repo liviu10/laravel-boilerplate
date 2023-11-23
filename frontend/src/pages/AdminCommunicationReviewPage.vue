@@ -1,9 +1,9 @@
 <template>
   <q-page class="admin admin--page">
 
-    <page-title :page-title="t('admin.communication.reviews.title')" />
+    <page-title :page-title="t('admin.communication.review.title')" />
 
-    <page-description :page-description="t('admin.communication.reviews.page_description')" />
+    <page-description :page-description="t('admin.communication.review.page_description')" />
 
     <page-loading :visible="loadPage" />
 

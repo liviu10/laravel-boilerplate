@@ -72,7 +72,7 @@ interface IConfigurationInput {
   configuration_resource_id: number
   configuration_type_id: number
   configuration_options?: Pick<IConfigurationOptions, 'value' | 'label'>[],
-  value: null | { from: string, to: string }
+  value: null
 }
 
 interface IConfigurationOptions {

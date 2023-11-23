@@ -97,7 +97,7 @@ export default {
           If the problem persist you can contact the administrator.
         `,
       },
-      tags: {
+      tag: {
         title: 'Tags',
         page_description: `
           Lorem ipsum dolor sit amet consectetur adipisicing elit.
@@ -119,7 +119,7 @@ export default {
           repudiandae, numquam, dicta earum, cupiditate consequuntur?
         `,
       },
-      comments: {
+      comment: {
         title: 'Comment',
         page_description: `
           Lorem ipsum dolor sit amet consectetur adipisicing elit.
@@ -130,7 +130,7 @@ export default {
           repudiandae, numquam, dicta earum, cupiditate consequuntur?
         `,
       },
-      appreciations: {
+      appreciation: {
         title: 'Appreciations',
         page_description: `
           Lorem ipsum dolor sit amet consectetur adipisicing elit.
@@ -166,7 +166,7 @@ export default {
           repudiandae, numquam, dicta earum, cupiditate consequuntur?
         `,
       },
-      reviews: {
+      review: {
         title: 'Reviews',
         page_description: `
           Lorem ipsum dolor sit amet consectetur adipisicing elit.
@@ -202,7 +202,7 @@ export default {
           repudiandae, numquam, dicta earum, cupiditate consequuntur?
         `,
       },
-      users: {
+      user: {
         title: 'Users',
         page_description: `
           Lorem ipsum dolor sit amet consectetur adipisicing elit.
@@ -213,7 +213,7 @@ export default {
           repudiandae, numquam, dicta earum, cupiditate consequuntur?
         `,
       },
-      roles_and_permissions: {
+      roles_and_permission: {
         title: 'Roles and permissions',
         page_description: `
           Lorem ipsum dolor sit amet consectetur adipisicing elit.
@@ -235,18 +235,7 @@ export default {
           repudiandae, numquam, dicta earum, cupiditate consequuntur?
         `,
       },
-      performance: {
-        title: 'Performance',
-        page_description: `
-          Lorem ipsum dolor sit amet consectetur adipisicing elit.
-          Iste rem est voluptatem obcaecati maiores, sit quibusdam ad.
-          Qui consequatur quidem itaque et ullam, non velit unde quo
-          inventore adipisci tempora, voluptas sunt dolore vitae iure,
-          quos eligendi. Corporis id adipisci aliquam cum officia impedit
-          repudiandae, numquam, dicta earum, cupiditate consequuntur?
-        `,
-      },
-      accepted_domains: {
+      accepted_domain: {
         title: 'Accepted domains',
         page_description: `
           Lorem ipsum dolor sit amet consectetur adipisicing elit.
@@ -257,7 +246,7 @@ export default {
           repudiandae, numquam, dicta earum, cupiditate consequuntur?
         `,
       },
-      notifications: {
+      notification: {
         title: 'Notifications',
         page_description: `
           Lorem ipsum dolor sit amet consectetur adipisicing elit.
@@ -268,7 +257,7 @@ export default {
           repudiandae, numquam, dicta earum, cupiditate consequuntur?
         `,
       },
-      templates: {
+      template: {
         title: 'Email and SMS templates',
         page_description: `
           Lorem ipsum dolor sit amet consectetur adipisicing elit.
@@ -279,7 +268,7 @@ export default {
           repudiandae, numquam, dicta earum, cupiditate consequuntur?
         `,
       },
-      configuration_resources: {
+      configuration_resource: {
         title: 'Configuration resources',
         page_description: `
           Lorem ipsum dolor sit amet consectetur adipisicing elit.

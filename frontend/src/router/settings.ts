@@ -25,11 +25,6 @@ const routes: RouteRecordRaw[] = [
         component: () => import('pages/AdminSettingGeneralPage.vue'),
       },
       {
-        path: '/admin/settings/performance',
-        name: 'AdminSettingPerformancePage',
-        component: () => import('pages/AdminSettingPerformancePage.vue'),
-      },
-      {
         path: '/admin/settings/accepted-domains',
         name: 'AdminSettingAcceptedDomainPage',
         component: () => import('pages/AdminSettingAcceptedDomainPage.vue'),

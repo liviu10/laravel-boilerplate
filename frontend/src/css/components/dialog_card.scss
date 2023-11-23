@@ -7,6 +7,21 @@
       width: 100%;
       max-width: 100vw;
     }
+    & .q-form {
+      & .q-card__section.admin-section__dialog-body {
+        &:deep() {
+          .admin-section__dialog-body-content {
+            & div {
+              & div {
+                & .q-select, & .q-input {
+                  margin: 8px 0;
+                }
+              }
+            }
+          }
+        }
+      }
+    }
   }
   &-title {
     & div {
