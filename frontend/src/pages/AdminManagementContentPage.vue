@@ -132,36 +132,42 @@ async function handleOpenDialog(action: TDialog, recordId?: number): Promise<voi
 // Handle action method
 async function handleActionDialog(action: TDialog): Promise<void> {
   loadPage.value = true;
-  if (
-    action === 'create' ||
-    action === 'advanced-filters' ||
-    action === 'upload' ||
-    action === 'download'
-  ) {
-    // Pinia store create record
-  } else {
-    // Pinia store edit or delete record
-    // const recordId = getSingleRecord.value && Object.keys(getSingleRecord.value).length > 0 ? getSingleRecord.value.id : null;
-    // if (recordId) {
-    //   if (action === 'edit') {
-    //     await userStore.updateRecord(recordId).then(() => {
-    //       displayDialog.value = false
-    //       loadData.value = false
-    //     })
-    //   } else if (action === 'delete') {
-    //     await userStore.deleteRecord(recordId).then(() => {
-    //       displayDialog.value = false
-    //       loadData.value = false
-    //     })
-    //   }
-    // } else {
-    //   const notificationTitle = t('admin.generic.notification_warning_title');
-    //   const notificationMessage = t('admin.generic.notification_warning_message', { recordId: `${recordId}` });
-    //   console.log(
-    //     `The operation could not be performed. Invalid record id: ${recordId}!`
-    //   );
-    //   notificationSystem(notificationTitle, notificationMessage, 'warning', 'bottom', true)
-    // }
+  switch (action) {
+    case 'create':
+      contentStore.handleCreate().then(() => {
+        loadPage.value = false;
+        displayDialog.value = false;
+      });
+    case 'show':
+      loadPage.value = false;
+      displayDialog.value = false;
+    case 'quick-edit':
+      contentStore.handleUpdate().then(() => {
+        loadPage.value = false;
+        displayDialog.value = false;
+      });
+    case 'delete':
+      contentStore.handleDelete().then(() => {
+        loadPage.value = false;
+        displayDialog.value = false;
+      });
+    case 'advanced-filters':
+      contentStore.handleAdvancedFilter().then(() => {
+        loadPage.value = false;
+        displayDialog.value = false;
+      });
+    case 'upload':
+      contentStore.handleUpload().then(() => {
+        loadPage.value = false;
+        displayDialog.value = false;
+      });
+    case 'download':
+      contentStore.handleDownload().then(() => {
+        loadPage.value = false;
+        displayDialog.value = false;
+      });
+    default:
+      break;
   }
 }
 </script>

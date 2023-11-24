@@ -6,7 +6,9 @@
           v-if="checkIfArrayExist(input.configuration_options)"
           dense
           emit-value
-          :label="t(`admin.management.${resource.toLowerCase()}.data_model.${input.field}`)"
+          :label="
+            t(`admin.management.${resource.toLowerCase()}.data_model.${input.field}`)
+          "
           outlined
           square
           stack-label
@@ -16,7 +18,9 @@
         <q-input
           v-else
           dense
-          :label="t(`admin.management.${resource.toLowerCase()}.data_model.${input.field}`)"
+          :label="
+            t(`admin.management.${resource.toLowerCase()}.data_model.${input.field}`)
+          "
           outlined
           square
           stack-label
@@ -37,8 +41,6 @@
         @click="goToConfigureResource"
       />
     </div>
-
-    <pre>{{ dataModel }}</pre>
   </div>
 </template>
 
@@ -55,7 +57,7 @@ import { HandleRoute } from 'src/utilities/HandleRoute';
 
 interface IManagementCardCreate {
   dataModel?: IConfigurationInput[];
-  resource: string
+  resource: string;
 }
 
 const props = defineProps<IManagementCardCreate>();
@@ -64,22 +66,27 @@ const props = defineProps<IManagementCardCreate>();
 const { t } = useI18n({});
 
 // Check if object is array
-const checkIfArray = new HandleArray()
+const checkIfArray = new HandleArray();
 const checkIfArrayExist = computed(() => {
-  return (object: IConfigurationInput[] | IConfigurationInput['configuration_options'] | undefined) => {
-    return checkIfArray.handleCheckIfArray(object)
-  }
+  return (
+    object:
+      | IConfigurationInput[]
+      | IConfigurationInput['configuration_options']
+      | undefined
+  ) => {
+    return checkIfArray.handleCheckIfArray(object);
+  };
 });
 
 // Navigate to route
-const navigateToRoute = new HandleRoute()
+const navigateToRoute = new HandleRoute();
 const router = useRouter();
 const goToConfigureResource = (): Promise<void | NavigationFailure | undefined> =>
   navigateToRoute.handleNavigateToRoute(
     router,
     'AdminSettingConfigurationResourcePage',
-    { resource: props.resource } as unknown as LocationQueryRaw
-  )
+    ({ resource: props.resource } as unknown) as LocationQueryRaw
+  );
 </script>
 
 <style lang="scss" scoped></style>

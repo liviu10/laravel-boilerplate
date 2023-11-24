@@ -146,7 +146,7 @@ const filteredDialogActionButtons = computed((): IDialogAction[] => {
 watch(
   () => props.displayDialog,
   (newVal) => {
-    displayDialog.value = newVal;
+    displayDialog.value = newVal !== undefined ? newVal : false;
   }
 );
 
@@ -161,7 +161,8 @@ const closeDialog = (): void => emit('handleCloseDialog');
  * @param {TDialog} actionName - The type of dialog action to be handled.
  * @returns {void}
  */
-const actionDialog = (actionName: TDialog): void => emit('handleActionDialog', actionName)
+const actionDialog = (actionName: TDialog): void =>
+  emit('handleActionDialog', actionName);
 </script>
 
 <style lang="scss" scoped>

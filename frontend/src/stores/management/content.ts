@@ -5,6 +5,8 @@ import { Ref, computed, ref } from 'vue'
 import { QTableProps } from 'quasar'
 
 // Import library utilities, interfaces and components
+import { HandleApiRequestProcessor } from 'src/utilities/HandleApiRequestProcessor'
+import { defaultColumns } from 'src/assets/data/columns'
 import {
   defaultDataModel,
   defaultDownloadModel,
@@ -12,10 +14,11 @@ import {
   defaultUploadModel
 } from 'src/assets/data/dataModel'
 import { IConfigurationInput } from 'src/interfaces/ConfigurationResourceInterface'
-import { IAllRecords } from 'src/interfaces/ContentInterface'
-import { defaultColumns } from 'src/assets/data/columns'
+import { IAllRecords, ISingleRecord } from 'src/interfaces/ContentInterface'
 
 const apiEndpoint = '/admin/management/contents'
+
+const handleApiRequestProcessor = new HandleApiRequestProcessor
 
 export const useContentStore = defineStore('contentStore', () => {
   // State
@@ -26,6 +29,7 @@ export const useContentStore = defineStore('contentStore', () => {
   const filterModel: Ref<IConfigurationInput[]> = ref(defaultFilterModel as IConfigurationInput[])
   const uploadModel: Ref<IConfigurationInput[]> = ref(defaultUploadModel as IConfigurationInput[])
   const downloadModel: Ref<IConfigurationInput[]> = ref(defaultDownloadModel as IConfigurationInput[])
+  const singleRecord: Ref<ISingleRecord> = ref({} as ISingleRecord)
 
   // Getters
   const getAllRecords = computed(() => allRecords.value)
@@ -34,6 +38,7 @@ export const useContentStore = defineStore('contentStore', () => {
   const getFilterModel = computed(() => filterModel.value)
   const getUploadModel = computed(() => uploadModel.value)
   const getDownloadModel = computed(() => downloadModel.value)
+  const getSingleRecord = computed(() => singleRecord.value)
 
   // Actions
   async function handleIndex() {
@@ -48,20 +53,41 @@ export const useContentStore = defineStore('contentStore', () => {
     }
   }
 
-  async function handleFind(recordId: number) {
-    console.log('-> handleFind', recordId)
-  }
-
-  async function handleCreate(payload: IConfigurationInput[]) {
+  async function handleCreate() {
+    const payload = handleApiRequestProcessor.createPayload(dataModel.value)
     console.log('-> handleCreate', payload)
   }
 
-  async function handleUpdate(recordId: number, payload: IConfigurationInput[]) {
-    console.log('-> handleUpdate', recordId, payload)
+  async function handleShow(recordId: number) {
+    console.log('-> handleFind', recordId)
   }
 
-  async function handleDelete(recordId: number) {
-    console.log('-> handleDelete', recordId)
+  async function handleUpdate() {
+    const payload = handleApiRequestProcessor.createPayload(dataModel.value)
+    console.log('-> handleUpdate', payload)
+  }
+
+  async function handleDelete() {
+    console.log('-> handleDelete')
+  }
+
+  async function handleAdvancedFilter() {
+    const payload = handleApiRequestProcessor.createPayload(filterModel.value)
+    console.log('-> handleAdvancedFilter', payload)
+  }
+
+  async function handleUpload() {
+    const payload = handleApiRequestProcessor.createPayload(uploadModel.value)
+    console.log('-> handleUpload', payload)
+  }
+
+  async function handleDownload() {
+    const payload = handleApiRequestProcessor.createPayload(downloadModel.value)
+    console.log('-> handleDownload', payload)
+  }
+
+  async function handleStats() {
+    console.log('-> handleStats')
   }
 
   return {
@@ -73,9 +99,13 @@ export const useContentStore = defineStore('contentStore', () => {
     getUploadModel,
     getDownloadModel,
     handleIndex,
-    handleFind,
     handleCreate,
+    handleShow,
     handleUpdate,
     handleDelete,
+    handleAdvancedFilter,
+    handleUpload,
+    handleDownload,
+    handleStats,
   }
 })
