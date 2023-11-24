@@ -2,10 +2,15 @@
   <div class="admin-section__dialog-body-content">
     <div v-if="checkIfArrayExist(dataModel)">
       <div v-for="input in dataModel" :key="input.id">
-        <p>
-          {{ t(`admin.management.${resource.toLowerCase()}.data_model.${input.field}`) }}
-        </p>
-        <q-date range square v-model="input.value" />
+        <q-input
+          dense
+          :label="t(`admin.management.${resource.toLowerCase()}.data_model.${input.field}`)"
+          outlined
+          square
+          stack-label
+          :type="input.type"
+          v-model="input.value"
+        />
       </div>
     </div>
 

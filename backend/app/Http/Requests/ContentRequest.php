@@ -35,7 +35,7 @@ class ContentRequest extends FormRequest
                 'visibility' => [
                     'required',
                     'string',
-                    Rule::in(['Public', 'Private', 'Draft'])
+                    Rule::in(['Published', 'Draft', 'Scheduled', 'Trashed'])
                 ],
                 'content_url' => 'required|string|min:10|max:255',
                 'title' => 'required|string|min:10|max:255',

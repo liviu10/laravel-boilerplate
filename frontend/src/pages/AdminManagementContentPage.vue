@@ -8,9 +8,9 @@
 
     <div class="admin-section admin-section--container">
       <management-grid-table
-        :columns="defaultColumns"
-        :resource="resourceName"
-        :rows="getAllRecords.results?.data || []"
+        :columns="contentStore.getColumns"
+        :resource="contentStore.resourceName"
+        :rows="contentStore.getAllRecords.results?.data || []"
         @handle-open-dialog="handleOpenDialog"
       />
     </div>
@@ -25,30 +25,30 @@
       <template v-slot:dialog-details>
         <management-card-create
           v-if="actionName === 'create'"
-          :data-model="defaultDataModel"
-          :resource="resourceName"
+          :data-model="contentStore.getDataModel"
+          :resource="contentStore.resourceName"
         />
         <management-card-show v-if="actionName === 'show'" />
         <management-card-quick-edit
           v-if="actionName === 'quick-edit'"
-          :data-model="defaultDataModel"
-          :resource="resourceName"
+          :data-model="contentStore.getDataModel"
+          :resource="contentStore.resourceName"
         />
         <management-card-delete v-if="actionName === 'delete'" />
         <management-card-advanced-filter
           v-if="actionName === 'advanced-filters'"
-          :data-model="defaultFilterModel"
-          :resource="resourceName"
+          :data-model="contentStore.getFilterModel"
+          :resource="contentStore.resourceName"
         />
         <management-card-upload
           v-if="actionName === 'upload'"
-          :data-model="defaultUploadModel"
-          :resource="resourceName"
+          :data-model="contentStore.getUploadModel"
+          :resource="contentStore.resourceName"
         />
         <management-card-download
           v-if="actionName === 'download'"
-          :data-model="defaultDownloadModel"
-          :resource="resourceName"
+          :data-model="contentStore.getDownloadModel"
+          :resource="contentStore.resourceName"
         />
         <management-card-stats v-if="actionName === 'stats'" />
       </template>
@@ -61,18 +61,10 @@
 <script setup lang="ts">
 // Import vue related utilities
 import { useI18n } from 'vue-i18n';
-import { Ref, computed, onMounted, ref } from 'vue';
+import { Ref, ref } from 'vue';
 
 // Import library utilities, interfaces and components
-import { defaultColumns } from 'src/assets/data/columns';
-import {
-  defaultDataModel,
-  defaultFilterModel,
-  defaultUploadModel,
-  defaultDownloadModel
-} from 'src/assets/data/dataModel';
 import { TDialog } from 'src/interfaces/BaseInterface';
-import { IAllRecords } from 'src/interfaces/ContentInterface';
 import PageTitle from 'src/components/PageTitle.vue';
 import PageDescription from 'src/components/PageDescription.vue';
 import ManagementGridTable from 'src/components/ManagementGridTable.vue';
@@ -100,7 +92,7 @@ const { t } = useI18n({});
 const loadPage = ref(false);
 
 // Get all records
-const getAllRecords = computed((): IAllRecords => contentStore.getAllRecords);
+contentStore.handleIndex();
 
 // Display the action name & dialog
 const actionName: Ref<TDialog | undefined> = ref(undefined);
@@ -172,12 +164,6 @@ async function handleActionDialog(action: TDialog): Promise<void> {
     // }
   }
 }
-
-const resourceName = 'Content'
-
-onMounted(async () => {
-  await contentStore.handleIndex();
-});
 </script>
 
 <style lang="scss" scoped>

@@ -80,8 +80,6 @@ import { QTableProps } from 'quasar';
 import { LocationQueryRaw, useRouter } from 'vue-router';
 
 // Import library utilities, interfaces and components
-import { defaultColumns } from 'src/assets/data/columns';
-import { defaultRows } from 'src/assets/data/rows';
 import { TDialog, actionMethods } from 'src/interfaces/BaseInterface';
 import { HandleRoute } from 'src/utilities/HandleRoute';
 import ManagementGridTableTopLeft from './ManagementGridTableTopLeft.vue';
@@ -105,11 +103,9 @@ interface IManagementGridTable {
 
 const props = withDefaults(defineProps<IManagementGridTable>(), {
   bordered: true,
-  columns: () => defaultColumns,
   customLoader: true,
   dense: true,
   grid: true,
-  rows: () => defaultRows,
   square: true,
   rowsPerPageOptions: () => [10, 25, 50, 100, 0],
 });

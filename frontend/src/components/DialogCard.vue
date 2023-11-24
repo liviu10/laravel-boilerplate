@@ -143,14 +143,12 @@ const filteredDialogActionButtons = computed((): IDialogAction[] => {
   return actionName === 'show' ? [dialogActionButtons[0]] : dialogActionButtons;
 });
 
-
 watch(
   () => props.displayDialog,
   (newVal) => {
     displayDialog.value = newVal;
   }
 );
-
 
 /**
  * Close the action dialog by emitting the 'handleCloseDialog' event.
