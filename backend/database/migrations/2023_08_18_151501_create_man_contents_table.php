@@ -21,6 +21,7 @@ return new class extends Migration
             $table->longText('content')->nullable(false);
             $table->boolean('allow_comments')->default(false);
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id()->index('idx_id');
             $table->string('resource');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

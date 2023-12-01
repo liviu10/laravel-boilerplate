@@ -10,6 +10,7 @@ use Exception;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\QueryException;
 use Illuminate\Pagination\LengthAwarePaginator;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
  * Class General
@@ -32,7 +33,7 @@ use Illuminate\Pagination\LengthAwarePaginator;
  */
 class General extends BaseModel
 {
-    use HasFactory, FilterAvailableFields, LogApiError;
+    use HasFactory, FilterAvailableFields, LogApiError, SoftDeletes;
 
     protected $table = 'set_generals';
 
@@ -102,6 +103,8 @@ class General extends BaseModel
 
             if ($type === 'paginate') {
                 return $query->paginate(15);
+            } elseif ($type === 'restore') {
+                return $query->onlyTrashed()->get();
             } else {
                 return $query;
             }

@@ -47,8 +47,16 @@ class NewsletterSubscriberService implements BaseInterface, NewsletterSubscriber
     public function handleIndex(array $search): Response|ResponseFactory|View
     {
         if ($this->checkPermission->handleApiCheckPermission()) {
+            $type = null;
+            if ($search && count($search)) {
+                if (array_key_exists('type', $search)) {
+                    $type = $search['type'];
+                    unset($search['type']);
+                }
+            }
+
             $apiDisplayAllRecords = $this->apiResponse->generateApiResponse(
-                $this->modelName->fetchAllRecords($search, 'paginate'),
+                $this->modelName->fetchAllRecords($search, $type),
                 Actions::get
             );
 

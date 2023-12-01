@@ -9,6 +9,7 @@ use App\Traits\FilterAvailableFields;
 use Exception;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\QueryException;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
  * Class Media
@@ -32,7 +33,7 @@ use Illuminate\Database\QueryException;
  */
 class Media extends BaseModel
 {
-    use HasFactory, FilterAvailableFields, LogApiError;
+    use HasFactory, FilterAvailableFields, LogApiError, SoftDeletes;
 
     protected $table = 'man_medias';
 
@@ -90,7 +91,7 @@ class Media extends BaseModel
      * @return \Illuminate\Support\Collection|bool
      * A paginated result, a collection, or `false` if an error occurs.
      */
-    public function fetchAllRecords(array $search = []): Collection|bool
+    public function fetchAllRecords(array $search = [], string|null $type = null): Collection|bool
     {
         try {
             $query = $this->all();
@@ -105,7 +106,13 @@ class Media extends BaseModel
                 }
             }
 
-            return $query;
+            if ($type === 'paginate') {
+                return $query->paginate(15);
+            } elseif ($type === 'restore') {
+                return $query->onlyTrashed()->get();
+            } else {
+                return $query;
+            }
         } catch (Exception $exception) {
             $this->LogApiError($exception);
             return false;

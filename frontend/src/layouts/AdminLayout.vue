@@ -60,7 +60,7 @@
               </q-tooltip>
               <q-menu fit square>
                 <q-list>
-                  <q-item clickable dense>
+                  <q-item clickable dense v-close-popup>
                     <q-item-section>
                       <span>
                         <q-avatar square size="24px">
@@ -104,7 +104,7 @@
               </q-tooltip>
               <q-menu fit square>
                 <q-list>
-                  <q-item clickable dense>
+                  <q-item clickable dense v-close-popup>
                     <q-item-section>
                       <span @click="navigateToRoute('AdminSettingUserProfilePage')">
                         <q-icon name="person" />

@@ -28,6 +28,26 @@
               @click="item.clickEvent"
             />
           </div>
+          <div v-if="actionName === 'quick-show'">
+            <q-btn
+              class="q-mx-sm"
+              color="info"
+              dense
+              :label="t('admin.generic.go_to_show')"
+              square
+              @click="navigateToPage(actionName)"
+            />
+          </div>
+          <div v-if="actionName === 'quick-edit'">
+            <q-btn
+              class="q-mx-sm"
+              color="info"
+              dense
+              :label="t('admin.generic.go_to_edit')"
+              square
+              @click="navigateToPage(actionName)"
+            />
+          </div>
         </q-card-section>
       </q-form>
     </q-card>
@@ -50,7 +70,11 @@ interface IManagementCard {
 const props = defineProps<IManagementCard>();
 
 // Defines the event emitters for the component.
-const emit = defineEmits(['handleActionDialog', 'handleCloseDialog']);
+const emit = defineEmits([
+  'handleActionDialog',
+  'handleCloseDialog',
+  'handleNavigateToPage',
+]);
 
 // Defined the translation variable
 const { t } = useI18n({});
@@ -69,18 +93,20 @@ const dialogTitle = computed((): string => {
   switch (props.actionName) {
     case 'create':
       return t('admin.generic.add_new_record');
-    case 'show':
-      return t('admin.generic.show_record');
-    case 'quick-edit':
-      return t('admin.generic.quick_edit_record');
-    case 'delete':
-      return t('admin.generic.delete_record');
     case 'advanced-filters':
       return t('admin.generic.advanced_filters');
     case 'upload':
       return t('admin.generic.upload_label');
     case 'download':
       return t('admin.generic.download_label');
+    case 'restore':
+      return t('admin.generic.restore_label');
+    case 'quick-show':
+      return t('admin.generic.quick_show_record');
+    case 'quick-edit':
+      return t('admin.generic.quick_edit_record');
+    case 'delete':
+      return t('admin.generic.delete_record');
     case 'stats':
       return t('admin.generic.stats_label');
     default:
@@ -94,7 +120,7 @@ const dialogTitle = computed((): string => {
  */
 const filteredDialogActionButtons = computed((): IDialogAction[] => {
   // The default actionName is 'show' if props.actionName is not provided.
-  const actionName = props.actionName || 'show';
+  const actionName = props.actionName || 'quick-show';
 
   // Define the dialog action buttons.
   const dialogActionButtons: IDialogAction[] = [
@@ -104,7 +130,7 @@ const filteredDialogActionButtons = computed((): IDialogAction[] => {
       color: 'primary',
       dense: true,
       label:
-        actionName === 'show'
+        actionName === 'quick-show' || actionName === 'stats'
           ? 'admin.generic.close_label'
           : 'admin.generic.cancel_label',
       square: true,
@@ -123,16 +149,20 @@ const filteredDialogActionButtons = computed((): IDialogAction[] => {
       label:
         actionName === 'create'
           ? 'admin.generic.save_label'
-          : actionName === 'quick-edit'
-          ? 'admin.generic.update_label'
-          : actionName === 'delete'
-          ? 'admin.generic.delete_label'
           : actionName === 'advanced-filters'
           ? 'admin.generic.apply_filters_label'
           : actionName === 'upload'
           ? 'admin.generic.upload_label'
           : actionName === 'download'
           ? 'admin.generic.download_label'
+          : actionName === 'restore'
+          ? 'admin.generic.restore_label'
+          : actionName === 'quick-show'
+          ? 'admin.generic.show_label'
+          : actionName === 'quick-edit'
+          ? 'admin.generic.edit_label'
+          : actionName === 'delete'
+          ? 'admin.generic.delete_label'
           : 'admin.generic.ok_label',
       square: true,
       clickEvent: () => actionDialog(actionName),
@@ -140,7 +170,7 @@ const filteredDialogActionButtons = computed((): IDialogAction[] => {
   ];
 
   // Return the filtered dialog action buttons based on the actionName.
-  return actionName === 'show' ? [dialogActionButtons[0]] : dialogActionButtons;
+  return actionName === 'quick-show' || actionName === 'stats' ? [dialogActionButtons[0]] : dialogActionButtons;
 });
 
 watch(
@@ -163,6 +193,8 @@ const closeDialog = (): void => emit('handleCloseDialog');
  */
 const actionDialog = (actionName: TDialog): void =>
   emit('handleActionDialog', actionName);
+
+const navigateToPage = (actionName: TDialog): void => emit('handleNavigateToPage', actionName)
 </script>
 
 <style lang="scss" scoped>

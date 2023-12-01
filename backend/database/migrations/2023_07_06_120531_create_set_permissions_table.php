@@ -19,6 +19,7 @@ return new class extends Migration
             $table->boolean('need_approval')->default(false);
             $table->integer('reports_to_role_id');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

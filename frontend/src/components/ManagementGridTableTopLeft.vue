@@ -13,10 +13,11 @@
       <q-menu fit square>
         <q-list>
           <q-item
-            v-for="option in moreOptions.slice(0, 3)"
+            v-for="option in moreOptions.slice(0, moreOptions.length - 1)"
             :key="option.id"
             clickable
             dense
+            v-close-popup
             @click="option.clickEvent"
           >
             <q-item-section>
@@ -26,12 +27,13 @@
               </span>
             </q-item-section>
           </q-item>
-          <q-separator v-if="moreOptions.length > 3" />
+          <q-separator v-if="moreOptions.length > 1" />
           <q-item
-            v-for="option in moreOptions.slice(3)"
+            v-for="option in moreOptions.slice(-1)"
             :key="option.id"
             clickable
             dense
+            v-close-popup
             @click="option.clickEvent"
           >
             <q-item-section>

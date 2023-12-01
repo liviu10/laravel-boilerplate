@@ -37,8 +37,6 @@
         @click="goToConfigureResource"
       />
     </div>
-
-    <pre>{{ dataModel }}</pre>
   </div>
 </template>
 
@@ -50,7 +48,7 @@ import { computed } from 'vue';
 
 // Import library utilities, interfaces and components
 import { IConfigurationInput } from 'src/interfaces/ConfigurationResourceInterface';
-import { HandleArray } from 'src/utilities/HandleArray';
+import { HandleObject } from 'src/utilities/HandleObject';
 import { HandleRoute } from 'src/utilities/HandleRoute';
 
 interface IManagementCardAdvancedFilter {
@@ -64,7 +62,7 @@ const props = defineProps<IManagementCardAdvancedFilter>();
 const { t } = useI18n({});
 
 // Check if object is array
-const checkIfArray = new HandleArray()
+const checkIfArray = new HandleObject()
 const checkIfArrayExist = computed(() => {
   return (object: IConfigurationInput[] | IConfigurationInput['configuration_options'] | undefined) => {
     return checkIfArray.handleCheckIfArray(object)
@@ -78,6 +76,7 @@ const goToConfigureResource = (): Promise<void | NavigationFailure | undefined> 
   navigateToRoute.handleNavigateToRoute(
     router,
     'AdminSettingConfigurationResourcePage',
+    undefined,
     { resource: props.resource } as unknown as LocationQueryRaw
   )
 </script>

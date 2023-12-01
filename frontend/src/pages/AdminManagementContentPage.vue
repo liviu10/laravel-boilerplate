@@ -21,6 +21,7 @@
       :display-dialog="displayDialog"
       @handle-close-dialog="() => (displayDialog = false)"
       @handle-action-dialog="handleActionDialog"
+      @handle-navigate-to-page="handleNavigateToPage"
     >
       <template v-slot:dialog-details>
         <management-card-create
@@ -28,28 +29,62 @@
           :data-model="contentStore.getDataModel"
           :resource="contentStore.resourceName"
         />
-        <management-card-show v-if="actionName === 'show'" />
-        <management-card-quick-edit
-          v-if="actionName === 'quick-edit'"
-          :data-model="contentStore.getDataModel"
-          :resource="contentStore.resourceName"
-        />
-        <management-card-delete v-if="actionName === 'delete'" />
+
         <management-card-advanced-filter
           v-if="actionName === 'advanced-filters'"
           :data-model="contentStore.getFilterModel"
           :resource="contentStore.resourceName"
         />
+
         <management-card-upload
           v-if="actionName === 'upload'"
           :data-model="contentStore.getUploadModel"
           :resource="contentStore.resourceName"
         />
+
         <management-card-download
           v-if="actionName === 'download'"
           :data-model="contentStore.getDownloadModel"
           :resource="contentStore.resourceName"
         />
+
+        <management-card-restore
+          v-if="actionName === 'restore'"
+          :record-details="contentStore.getAllDeletedRecords"
+          :resource="contentStore.resourceName"
+        />
+
+        <management-card-quick-show
+          v-if="actionName === 'quick-show'"
+          :record-details="contentStore.getSingleRecord"
+          :resource="contentStore.resourceName"
+        />
+
+        <management-card-quick-edit
+          v-if="actionName === 'quick-edit'"
+          :data-model="contentStore.getDataModel"
+          :resource="contentStore.resourceName"
+        >
+          <template v-slot:record-details>
+            <management-card-quick-show
+              :record-details="contentStore.getSingleRecord"
+              :resource="contentStore.resourceName"
+            />
+          </template>
+        </management-card-quick-edit>
+
+        <management-card-delete
+          v-if="actionName === 'delete'"
+          :resource="contentStore.resourceName"
+        >
+          <template v-slot:record-details>
+            <management-card-quick-show
+              :record-details="contentStore.getSingleRecord"
+              :resource="contentStore.resourceName"
+            />
+          </template>
+        </management-card-delete>
+
         <management-card-stats v-if="actionName === 'stats'" />
       </template>
     </dialog-card>
@@ -62,20 +97,23 @@
 // Import vue related utilities
 import { useI18n } from 'vue-i18n';
 import { Ref, ref } from 'vue';
+import { RouteParamsRaw, useRouter } from 'vue-router';
 
 // Import library utilities, interfaces and components
+import { HandleRoute } from 'src/utilities/HandleRoute';
 import { TDialog } from 'src/interfaces/BaseInterface';
 import PageTitle from 'src/components/PageTitle.vue';
 import PageDescription from 'src/components/PageDescription.vue';
 import ManagementGridTable from 'src/components/ManagementGridTable.vue';
 import DialogCard from 'src/components/DialogCard.vue';
 import ManagementCardCreate from 'src/components/ManagementCardCreate.vue';
-import ManagementCardShow from 'src/components/ManagementCardShow.vue';
-import ManagementCardQuickEdit from 'src/components/ManagementCardQuickEdit.vue';
-import ManagementCardDelete from 'src/components/ManagementCardDelete.vue';
 import ManagementCardAdvancedFilter from 'src/components/ManagementCardAdvancedFilter.vue';
 import ManagementCardUpload from 'src/components/ManagementCardUpload.vue';
 import ManagementCardDownload from 'src/components/ManagementCardDownload.vue';
+import ManagementCardRestore from 'src/components/ManagementCardRestore.vue';
+import ManagementCardQuickShow from 'src/components/ManagementCardQuickShow.vue';
+import ManagementCardQuickEdit from 'src/components/ManagementCardQuickEdit.vue';
+import ManagementCardDelete from 'src/components/ManagementCardDelete.vue';
 import ManagementCardStats from 'src/components/ManagementCardStats.vue';
 import PageLoading from 'src/components/PageLoading.vue';
 
@@ -92,7 +130,7 @@ const { t } = useI18n({});
 const loadPage = ref(false);
 
 // Get all records
-contentStore.handleIndex();
+contentStore.handleIndex('paginate');
 
 // Display the action name & dialog
 const actionName: Ref<TDialog | undefined> = ref(undefined);
@@ -101,31 +139,34 @@ const displayDialog = ref(false);
 // Action dialog
 async function handleOpenDialog(action: TDialog, recordId?: number): Promise<void> {
   loadPage.value = true;
-  if (
-    action === 'create' ||
-    action === 'advanced-filters' ||
-    action === 'upload' ||
-    action === 'download'
-  ) {
-    actionName.value = action;
-    loadPage.value = false;
-    displayDialog.value = true;
-  } else {
-    debugger;
-    const isInvalidRecordId =
-      !recordId ||
-      typeof recordId !== 'number' ||
-      recordId === null ||
-      recordId === undefined;
-    if (isInvalidRecordId) {
-      // const notificationTitle = t('admin.generic.notification_warning_title');
-      // const notificationMessage = t('admin.generic.notification_warning_message', { recordId: `${recordId}` });
-      // console.log(`The operation could not be performed. Invalid record id: ${recordId}!`);
+  switch (action) {
+    case 'create':
+    case 'advanced-filters':
+    case 'upload':
+    case 'download':
+    case 'stats':
+      actionName.value = action;
       loadPage.value = false;
-      // notificationSystem(notificationTitle, notificationMessage, 'warning', 'bottom', true)
-    } else {
-      // Pinia store get record by ID
-    }
+      displayDialog.value = true;
+      break;
+    case 'quick-show':
+    case 'quick-edit':
+    case 'delete':
+      actionName.value = action;
+      contentStore.handleShow(recordId).then(() => {
+        loadPage.value = false;
+        displayDialog.value = true;
+      })
+      break;
+    case 'restore':
+      actionName.value = action;
+      contentStore.handleIndex('restore').then(() => {
+        loadPage.value = false;
+        displayDialog.value = true;
+      })
+      break;
+    default:
+      break;
   }
 }
 
@@ -135,40 +176,68 @@ async function handleActionDialog(action: TDialog): Promise<void> {
   switch (action) {
     case 'create':
       contentStore.handleCreate().then(() => {
-        loadPage.value = false;
         displayDialog.value = false;
-      });
-    case 'show':
-      loadPage.value = false;
-      displayDialog.value = false;
-    case 'quick-edit':
-      contentStore.handleUpdate().then(() => {
         loadPage.value = false;
-        displayDialog.value = false;
-      });
-    case 'delete':
-      contentStore.handleDelete().then(() => {
-        loadPage.value = false;
-        displayDialog.value = false;
       });
     case 'advanced-filters':
       contentStore.handleAdvancedFilter().then(() => {
-        loadPage.value = false;
         displayDialog.value = false;
+        loadPage.value = false;
       });
     case 'upload':
       contentStore.handleUpload().then(() => {
-        loadPage.value = false;
         displayDialog.value = false;
+        loadPage.value = false;
       });
     case 'download':
       contentStore.handleDownload().then(() => {
-        loadPage.value = false;
         displayDialog.value = false;
+        loadPage.value = false;
+      });
+    case 'restore':
+      contentStore.handleRestore().then(() => {
+        displayDialog.value = false;
+        loadPage.value = false;
+      });
+    case 'quick-show':
+      displayDialog.value = false;
+      loadPage.value = false;
+    case 'quick-edit':
+      contentStore.handleUpdate().then(() => {
+        displayDialog.value = false;
+        loadPage.value = false;
+      });
+    case 'delete':
+      contentStore.handleDelete().then(() => {
+        displayDialog.value = false;
+        loadPage.value = false;
+      });
+    case 'stats':
+      contentStore.handleStats().then(() => {
+        displayDialog.value = false;
+        loadPage.value = false;
       });
     default:
       break;
   }
+}
+
+// Go to Configure resource
+const router = useRouter();
+
+const handleNavigateToPage = (action: TDialog) => {
+  const navigateToRoute = new HandleRoute()
+  const actionWords = action.split('-');
+  if (actionWords.length >= 2) {
+    actionWords[1] = actionWords[1].charAt(0).toUpperCase() + actionWords[1].slice(1);
+  }
+  const actionName = actionWords[1];
+  const selectedRecordId = contentStore.getSingleRecord.results[0].id
+  navigateToRoute.handleNavigateToRoute(
+    router,
+    `AdminManagementContent${actionName}Page`,
+    { id: selectedRecordId } as unknown as RouteParamsRaw
+  )
 }
 </script>
 

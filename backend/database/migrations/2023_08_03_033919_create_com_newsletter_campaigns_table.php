@@ -23,6 +23,7 @@ return new class extends Migration
             $table->integer('occur_day');
             $table->time('occur_hour');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

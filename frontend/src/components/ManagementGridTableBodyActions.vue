@@ -17,6 +17,7 @@
             :key="action.id"
             clickable
             dense
+            v-close-popup
             @click="action.clickEvent"
           >
             <q-item-section>

@@ -1,4 +1,5 @@
 import {
+  RouteParamsRaw,
   LocationQueryRaw,
   NavigationFailure,
   RouteMeta,
@@ -13,7 +14,8 @@ interface IHandleRoute {
   handleNavigateToRoute: (
     router: Router,
     resourceName: string,
-    queryParams?: LocationQueryRaw
+    params?: RouteParamsRaw,
+    query?: LocationQueryRaw
   ) => Promise<void | NavigationFailure | undefined>
 }
 
@@ -71,7 +73,8 @@ export class HandleRoute implements IHandleRoute {
    * Navigates to a specified route using the provided router instance.
    * @param {Router} router - The Vue Router instance used for navigation.
    * @param {string} resourceName - The name of the route to navigate to.
-   * @param {LocationQueryRaw} [queryParams] - Optional query parameters for the route.
+   * @param {RouteParamsRaw} [params] - Optional parameters for the route.
+   * @param {LocationQueryRaw} [query] - Optional query parameters for the route.
    * @returns {Promise<void | NavigationFailure | undefined>} A promise that resolves when the navigation is successful,
    * rejects with a NavigationFailure in case of an error, or resolves with undefined if the navigation does not result
    * in a state change (e.g., navigating to the current route).
@@ -80,11 +83,13 @@ export class HandleRoute implements IHandleRoute {
   public handleNavigateToRoute(
     router: Router,
     resourceName: string,
-    queryParams?: LocationQueryRaw
+    params?: RouteParamsRaw,
+    query?: LocationQueryRaw
   ): Promise<void | NavigationFailure | undefined> {
     return router.push({
       name: resourceName,
-      query: queryParams || undefined as unknown as LocationQueryRaw,
+      params: params || undefined as unknown as RouteParamsRaw,
+      query: query || undefined as unknown as LocationQueryRaw,
     });
   }
 }

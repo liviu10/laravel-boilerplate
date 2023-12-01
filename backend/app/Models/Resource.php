@@ -10,6 +10,7 @@ use Exception;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\QueryException;
 use Illuminate\Pagination\LengthAwarePaginator;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
  * Class Resource
@@ -38,7 +39,7 @@ use Illuminate\Pagination\LengthAwarePaginator;
  */
 class Resource extends BaseModel
 {
-    use HasFactory, FilterAvailableFields, LogApiError;
+    use HasFactory, FilterAvailableFields, LogApiError, SoftDeletes;
 
     protected $table = 'set_resources';
 
@@ -130,16 +131,14 @@ class Resource extends BaseModel
                 }
             }
 
-            if ($type === 'paginate') {
-                return $query->paginate(15);
+            if ($type === 'restore') {
+                return $query->onlyTrashed()->get();
             } else {
-                return $query
-                    ->with([
-                        'resource_children' => function ($query) {
-                            $query->select('*');
-                        }
-                    ])
-                    ->get();
+                return $query->with([
+                    'resource_children' => function ($query) {
+                        $query->select('*');
+                    }
+                ])->get();
             }
         } catch (Exception $exception) {
             $this->LogApiError($exception);

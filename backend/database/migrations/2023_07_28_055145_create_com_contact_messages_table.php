@@ -19,6 +19,7 @@ return new class extends Migration
             $table->string('message');
             $table->boolean('privacy_policy')->default(false);
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

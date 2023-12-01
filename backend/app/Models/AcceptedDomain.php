@@ -10,6 +10,7 @@ use Exception;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\QueryException;
 use Illuminate\Pagination\LengthAwarePaginator;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
  * Class AcceptedDomain
@@ -33,7 +34,7 @@ use Illuminate\Pagination\LengthAwarePaginator;
  */
 class AcceptedDomain extends BaseModel
 {
-    use HasFactory, FilterAvailableFields, LogApiError;
+    use HasFactory, FilterAvailableFields, LogApiError, SoftDeletes;
 
     protected $table = 'set_accepted_domains';
 
@@ -108,6 +109,8 @@ class AcceptedDomain extends BaseModel
 
             if ($type === 'paginate') {
                 return $query->paginate(15);
+            } elseif ($type === 'restore') {
+                return $query->onlyTrashed()->get();
             } else {
                 return $query->get();
             }

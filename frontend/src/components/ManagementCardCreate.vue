@@ -1,9 +1,9 @@
 <template>
   <div class="admin-section__dialog-body-content">
-    <div v-if="checkIfArrayExist(dataModel)">
+    <div v-if="checkObject.handleCheckIfArray(dataModel)">
       <div v-for="input in dataModel" :key="input.id">
         <q-select
-          v-if="checkIfArrayExist(input.configuration_options)"
+          v-if="checkObject.handleCheckIfArray(input.configuration_options)"
           dense
           emit-value
           :label="
@@ -48,11 +48,10 @@
 // Import vue related utilities
 import { LocationQueryRaw, NavigationFailure, useRouter } from 'vue-router';
 import { useI18n } from 'vue-i18n';
-import { computed } from 'vue';
 
 // Import library utilities, interfaces and components
 import { IConfigurationInput } from 'src/interfaces/ConfigurationResourceInterface';
-import { HandleArray } from 'src/utilities/HandleArray';
+import { HandleObject } from 'src/utilities/HandleObject';
 import { HandleRoute } from 'src/utilities/HandleRoute';
 
 interface IManagementCardCreate {
@@ -66,17 +65,7 @@ const props = defineProps<IManagementCardCreate>();
 const { t } = useI18n({});
 
 // Check if object is array
-const checkIfArray = new HandleArray();
-const checkIfArrayExist = computed(() => {
-  return (
-    object:
-      | IConfigurationInput[]
-      | IConfigurationInput['configuration_options']
-      | undefined
-  ) => {
-    return checkIfArray.handleCheckIfArray(object);
-  };
-});
+const checkObject = new HandleObject();
 
 // Navigate to route
 const navigateToRoute = new HandleRoute();
@@ -85,6 +74,7 @@ const goToConfigureResource = (): Promise<void | NavigationFailure | undefined> 
   navigateToRoute.handleNavigateToRoute(
     router,
     'AdminSettingConfigurationResourcePage',
+    undefined,
     ({ resource: props.resource } as unknown) as LocationQueryRaw
   );
 </script>

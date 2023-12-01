@@ -24,6 +24,7 @@ return new class extends Migration
             $table->boolean('is_active')->default(false);
             $table->boolean('requires_auth')->default(false);
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

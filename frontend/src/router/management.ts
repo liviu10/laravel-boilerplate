@@ -6,8 +6,23 @@ const routes: RouteRecordRaw[] = [
     children: [
       {
         path: '/admin/management/contents',
-        name: 'AdminManagementContentPage',
-        component: () => import('pages/AdminManagementContentPage.vue'),
+        children: [
+          {
+            path: '',
+            name: 'AdminManagementContentPage',
+            component: () => import('pages/AdminManagementContentPage.vue'),
+          },
+          {
+            path: 'show/:id',
+            name: 'AdminManagementContentShowPage',
+            component: () => import('pages/AdminManagementContentShowPage.vue'),
+          },
+          {
+            path: 'edit/:id',
+            name: 'AdminManagementContentEditPage',
+            component: () => import('pages/AdminManagementContentEditPage.vue'),
+          },
+        ],
       },
       {
         path: '/admin/management/tags',

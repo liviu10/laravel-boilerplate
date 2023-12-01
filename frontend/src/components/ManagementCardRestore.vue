@@ -1,11 +1,11 @@
 <template>
   <div class="admin-section__dialog-body-content">
-    <slot name="record-details"></slot>
+    <pre>{{ recordDetails }}</pre>
 
     <q-separator class="q-my-md" />
 
     <div>
-      {{ t("admin.generic.delete_confirmation_message") }}
+      {{ t("admin.generic.restore_confirmation_message") }}
     </div>
   </div>
 </template>
@@ -15,13 +15,16 @@
 import { useI18n } from 'vue-i18n';
 
 // Import library utilities, interfaces and components
+import { IRootObject } from 'src/interfaces/BaseInterface';
 
-interface IManagementCardDelete {
-  recordDetails?: [];
+interface IManagementCardRestore {
+  recordDetails?: IRootObject & {
+    results: object[];
+  };
   resource: string;
 }
 
-const props = defineProps<IManagementCardDelete>();
+const props = defineProps<IManagementCardRestore>();
 
 // Defined the translation variable
 const { t } = useI18n({});

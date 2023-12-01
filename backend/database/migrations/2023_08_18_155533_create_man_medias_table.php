@@ -17,6 +17,7 @@ return new class extends Migration
             $table->string('internal_path')->nullable();
             $table->string('external_path')->nullable();
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

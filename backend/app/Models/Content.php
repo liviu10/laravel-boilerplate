@@ -10,6 +10,7 @@ use Exception;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\QueryException;
 use Illuminate\Pagination\LengthAwarePaginator;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
  * Class Content
@@ -37,7 +38,7 @@ use Illuminate\Pagination\LengthAwarePaginator;
  */
 class Content extends BaseModel
 {
-    use HasFactory, FilterAvailableFields, LogApiError;
+    use HasFactory, FilterAvailableFields, LogApiError, SoftDeletes;
 
     protected $table = 'man_contents';
 
@@ -129,6 +130,8 @@ class Content extends BaseModel
 
             if ($type === 'paginate') {
                 return $query->paginate(15);
+            } elseif ($type === 'restore') {
+                return $query->onlyTrashed()->get();
             } else {
                 return $query->get();
             }
@@ -182,7 +185,7 @@ class Content extends BaseModel
     public function fetchSingleRecord(int $id, string|null $type = null): Collection|bool
     {
         try {
-            $query = $this->select('*')->where('id', '=', $id);
+            $query = $this->select('id', 'visibility', 'content_url', 'title', 'content_type', 'description')->where('id', '=', $id);
 
             if ($type === 'relation') {
                 $query->with([

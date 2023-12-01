@@ -1,7 +1,7 @@
 interface IRootObject {
   title: string
   description: string
-}
+};
 
 interface IBasePagination {
   current_page: number
@@ -20,34 +20,35 @@ interface IBasePagination {
   prev_page_url: string | null
   to: number
   total: number
-}
+};
 
 interface IBaseTimestamps {
   created_at: string
   updated_at: string
   deleted_at?: string
-}
+};
 
 interface IBaseUser {
   id: number
   full_name: string
-}
+};
 
 type TColumn = 'center' | 'left' | 'right' | undefined;
 
-type TInput = 'number' | 'textarea' | 'time' | 'text' | 'password' | 'email' | 'search' | 'tel' | 'file' | 'url' | 'date' | undefined
+type TInput = 'number' | 'textarea' | 'time' | 'text' | 'password' | 'email' | 'search' | 'tel' | 'file' | 'url' | 'date' | undefined;
 
-type TDialog = 'create' | 'show' | 'quick-edit' | 'delete' | 'advanced-filters' | 'upload' | 'download' | 'stats'
+type TDialog = 'create' | 'quick-show' | 'quick-edit' | 'delete' | 'advanced-filters' | 'upload' | 'download' | 'stats' | 'restore';
 
 const actionMethods: { [key: number]: TDialog } = {
   0: 'create',
-  1: 'show',
+  1: 'quick-show',
   2: 'quick-edit',
   3: 'delete',
   4: 'advanced-filters',
   5: 'upload',
   6: 'download',
   7: 'stats',
+  8: 'restore',
 };
 
 interface IDialogAction {
@@ -58,7 +59,9 @@ interface IDialogAction {
   label: string,
   square: boolean,
   clickEvent: () => void
-}
+};
+
+type TResourceType = 'paginate' | 'relation' | 'restore' | undefined;
 
 export {
   IRootObject,
@@ -70,4 +73,5 @@ export {
   TDialog,
   actionMethods,
   IDialogAction,
+  TResourceType,
 }

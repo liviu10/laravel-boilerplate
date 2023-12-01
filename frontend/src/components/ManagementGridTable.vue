@@ -110,6 +110,12 @@ const props = withDefaults(defineProps<IManagementGridTable>(), {
   rowsPerPageOptions: () => [10, 25, 50, 100, 0],
 });
 
+// Navigate to route
+const navigateToRoute = new HandleRoute()
+
+// Go to Configure resource
+const router = useRouter();
+
 // More options
 const moreOptions = [
   {
@@ -132,9 +138,16 @@ const moreOptions = [
   },
   {
     id: 4,
+    clickEvent: () => openDialog(actionMethods[8]),
+    icon: 'restore_from_trash',
+    label: 'admin.generic.restore_label'
+  },
+  {
+    id: 5,
     clickEvent: () => navigateToRoute.handleNavigateToRoute(
       router,
       'AdminSettingConfigurationResourcePage',
+      undefined,
       { resource: props.resource } as unknown as LocationQueryRaw
     ),
     icon: 'handyman',
@@ -153,7 +166,7 @@ const moreActions = computed(() => {
         id: 1,
         clickEvent: () => openDialog(actionMethods[1], record),
         icon: 'visibility',
-        label: 'admin.generic.show_record',
+        label: 'admin.generic.quick_show_record',
       },
       {
         id: 2,
@@ -189,12 +202,6 @@ const openDialog = (action: TDialog, record?: unknown): void => {
     return emit('handleOpenDialog', action);
   }
 };
-
-// Navigate to route
-const navigateToRoute = new HandleRoute()
-
-// Go to Configure resource
-const router = useRouter();
 
 const emit = defineEmits<{
   (event: 'handleOpenDialog', action: TDialog, recordId?: number): void;
