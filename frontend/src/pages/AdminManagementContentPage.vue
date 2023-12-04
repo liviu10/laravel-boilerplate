@@ -2,71 +2,68 @@
   <q-page class="admin admin--page">
     <page-title :page-title="t('admin.management.content.title')" />
 
-    <page-description
-      :page-description="t('admin.management.content.page_description')"
-    />
+    <page-description :page-description="t('admin.management.content.page_description')" />
 
     <div class="admin-section admin-section--container">
-      <management-grid-table
-        :columns="contentStore.getColumns"
-        :resource="contentStore.resourceName"
-        :rows="contentStore.getAllRecords.results?.data || []"
-        @handle-open-dialog="handleOpenDialog"
-      />
+      <management-grid-table :columns="contentStore.getColumns" :resource="contentStore.resourceName"
+        :rows="contentStore.getAllRecords.results?.data || []" @handle-open-dialog="handleOpenDialog" />
     </div>
 
-    <dialog-card
-      v-if="displayDialog"
-      :action-name="actionName"
-      :display-dialog="displayDialog"
-      @handle-close-dialog="() => (displayDialog = false)"
-      @handle-action-dialog="handleActionDialog"
-      @handle-navigate-to-page="handleNavigateToPage"
-    >
+    <dialog-card v-if="displayDialog" :action-name="actionName" :display-dialog="displayDialog"
+      :disable-action-dialog-button="disableActionDialogButton" @handle-close-dialog="() => (displayDialog = false)"
+      @handle-action-dialog="handleActionDialog" @handle-navigate-to-page="handleNavigateToPage">
       <template v-slot:dialog-details>
         <management-card-create
           v-if="actionName === 'create'"
+          action-name="create"
           :data-model="contentStore.getDataModel"
           :resource="contentStore.resourceName"
         />
 
         <management-card-advanced-filter
           v-if="actionName === 'advanced-filters'"
+          action-name="advanced-filters"
           :data-model="contentStore.getFilterModel"
           :resource="contentStore.resourceName"
         />
 
         <management-card-upload
           v-if="actionName === 'upload'"
+          action-name="upload"
           :data-model="contentStore.getUploadModel"
           :resource="contentStore.resourceName"
         />
 
         <management-card-download
           v-if="actionName === 'download'"
+          action-name="download"
           :data-model="contentStore.getDownloadModel"
           :resource="contentStore.resourceName"
         />
 
         <management-card-restore
           v-if="actionName === 'restore'"
+          action-name="restore"
           :record-details="contentStore.getAllDeletedRecords"
           :resource="contentStore.resourceName"
         />
 
         <management-card-quick-show
           v-if="actionName === 'quick-show'"
+          action-name="quick-show"
           :record-details="contentStore.getSingleRecord"
           :resource="contentStore.resourceName"
         />
 
         <management-card-quick-edit
           v-if="actionName === 'quick-edit'"
+          action-name="quick-edit"
           :data-model="contentStore.getDataModel"
           :resource="contentStore.resourceName"
         >
           <template v-slot:record-details>
             <management-card-quick-show
+              action-name="quick-show"
               :record-details="contentStore.getSingleRecord"
               :resource="contentStore.resourceName"
             />
@@ -75,17 +72,22 @@
 
         <management-card-delete
           v-if="actionName === 'delete'"
+          action-name="delete"
           :resource="contentStore.resourceName"
         >
           <template v-slot:record-details>
             <management-card-quick-show
+              action-name="quick-show"
               :record-details="contentStore.getSingleRecord"
               :resource="contentStore.resourceName"
             />
           </template>
         </management-card-delete>
 
-        <management-card-stats v-if="actionName === 'stats'" />
+        <management-card-stats
+          v-if="actionName === 'stats'"
+          action-name="stats"
+        />
       </template>
     </dialog-card>
 
@@ -135,22 +137,82 @@ contentStore.handleIndex('paginate');
 // Display the action name & dialog
 const actionName: Ref<TDialog | undefined> = ref(undefined);
 const displayDialog = ref(false);
+const disableActionDialogButton: Ref<{ action: TDialog | undefined, disable: boolean }> = ref({ action: undefined, disable: false })
 
 // Action dialog
 async function handleOpenDialog(action: TDialog, recordId?: number): Promise<void> {
   loadPage.value = true;
   switch (action) {
     case 'create':
+      actionName.value = action;
+      loadPage.value = false;
+      displayDialog.value = true;
+      if (contentStore.getDataModel.length === 0) {
+        disableActionDialogButton.value = {
+          action: action,
+          disable: true,
+        }
+      }
+      break;
     case 'advanced-filters':
+      actionName.value = action;
+      loadPage.value = false;
+      displayDialog.value = true;
+      if (contentStore.getFilterModel.length === 0) {
+        disableActionDialogButton.value = {
+          action: action,
+          disable: true,
+        }
+      }
+      break;
     case 'upload':
+      actionName.value = action;
+      loadPage.value = false;
+      displayDialog.value = true;
+      if (contentStore.getUploadModel.length === 0) {
+        disableActionDialogButton.value = {
+          action: action,
+          disable: true,
+        }
+      }
+      break;
     case 'download':
+      actionName.value = action;
+      loadPage.value = false;
+      displayDialog.value = true;
+      if (contentStore.getDownloadModel.length === 0) {
+        disableActionDialogButton.value = {
+          action: action,
+          disable: true,
+        }
+      }
+      break
     case 'stats':
       actionName.value = action;
       loadPage.value = false;
       displayDialog.value = true;
       break;
     case 'quick-show':
+      actionName.value = action;
+      contentStore.handleShow(recordId).then(() => {
+        loadPage.value = false;
+        displayDialog.value = true;
+      })
+      break;
     case 'quick-edit':
+      actionName.value = action;
+      if (contentStore.getDataModel.length === 0) {
+        disableActionDialogButton.value = {
+          action: action,
+          disable: true,
+        }
+      } else {
+        contentStore.handleShow(recordId).then(() => {
+          loadPage.value = false;
+          displayDialog.value = true;
+        })
+      }
+      break;
     case 'delete':
       actionName.value = action;
       contentStore.handleShow(recordId).then(() => {
@@ -161,6 +223,12 @@ async function handleOpenDialog(action: TDialog, recordId?: number): Promise<voi
     case 'restore':
       actionName.value = action;
       contentStore.handleIndex('restore').then(() => {
+        if (contentStore.getAllDeletedRecords) {
+          disableActionDialogButton.value = {
+            action: action,
+            disable: true,
+          }
+        }
         loadPage.value = false;
         displayDialog.value = true;
       })

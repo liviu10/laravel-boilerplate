@@ -54,11 +54,12 @@ const actionMethods: { [key: number]: TDialog } = {
 interface IDialogAction {
   id: number,
   class: string,
+  clickEvent: () => void,
   color: string,
   dense: boolean,
+  disable?: boolean,
   label: string,
   square: boolean,
-  clickEvent: () => void
 };
 
 type TResourceType = 'paginate' | 'relation' | 'restore' | undefined;

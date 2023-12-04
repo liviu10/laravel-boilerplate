@@ -34,9 +34,10 @@
 import { useI18n } from 'vue-i18n';
 
 // Import library utilities, interfaces and components
-import { IRootObject } from 'src/interfaces/BaseInterface';
+import { IRootObject, TDialog } from 'src/interfaces/BaseInterface';
 
 interface IManagementCardShow {
+  actionName: TDialog | undefined;
   recordDetails?: IRootObject & {
     results: object[];
   };

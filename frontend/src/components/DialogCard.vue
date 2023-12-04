@@ -23,6 +23,7 @@
               :class="item.class"
               :color="item.color"
               :dense="item.dense"
+              :disable="item.disable"
               :label="t(item.label)"
               :square="item.square"
               @click="item.clickEvent"
@@ -61,9 +62,14 @@ import { Ref, computed, ref, watch } from 'vue';
 
 // Import library utilities, interfaces and components
 import { IDialogAction, TDialog } from 'src/interfaces/BaseInterface';
+import { HandleText } from 'src/utilities/HandleText';
 
 interface IManagementCard {
   actionName?: TDialog;
+  disableActionDialogButton?: {
+    action: TDialog | undefined
+    disable: boolean
+  };
   displayDialog?: boolean;
 }
 
@@ -90,28 +96,8 @@ const displayDialog: Ref<boolean> = ref(props.displayDialog ? true : false);
  * @returns {string} The title for the dialog.
  */
 const dialogTitle = computed((): string => {
-  switch (props.actionName) {
-    case 'create':
-      return t('admin.generic.add_new_record');
-    case 'advanced-filters':
-      return t('admin.generic.advanced_filters');
-    case 'upload':
-      return t('admin.generic.upload_label');
-    case 'download':
-      return t('admin.generic.download_label');
-    case 'restore':
-      return t('admin.generic.restore_label');
-    case 'quick-show':
-      return t('admin.generic.quick_show_record');
-    case 'quick-edit':
-      return t('admin.generic.quick_edit_record');
-    case 'delete':
-      return t('admin.generic.delete_record');
-    case 'stats':
-      return t('admin.generic.stats_label');
-    default:
-      return t('admin.generic.default_dialog_title');
-  }
+  const translationString = new HandleText();
+  return t(`admin.generic.${translationString.handleTranslationString(props.actionName)}_record_label`);
 });
 
 /**
@@ -121,12 +107,14 @@ const dialogTitle = computed((): string => {
 const filteredDialogActionButtons = computed((): IDialogAction[] => {
   // The default actionName is 'show' if props.actionName is not provided.
   const actionName = props.actionName || 'quick-show';
+  const disableActionDialogAction = props.disableActionDialogButton;
 
   // Define the dialog action buttons.
   const dialogActionButtons: IDialogAction[] = [
     {
       id: 1,
       class: 'q-mx-sm',
+      clickEvent: () => closeDialog(),
       color: 'primary',
       dense: true,
       label:
@@ -134,11 +122,11 @@ const filteredDialogActionButtons = computed((): IDialogAction[] => {
           ? 'admin.generic.close_label'
           : 'admin.generic.cancel_label',
       square: true,
-      clickEvent: () => closeDialog(),
     },
     {
       id: 2,
       class: 'q-mx-sm',
+      clickEvent: () => actionDialog(actionName),
       color:
         actionName === 'quick-edit'
           ? 'warning'
@@ -146,17 +134,20 @@ const filteredDialogActionButtons = computed((): IDialogAction[] => {
           ? 'negative'
           : 'positive',
       dense: true,
+      disable: actionName === disableActionDialogAction?.action
+        ? disableActionDialogAction.disable
+        : false,
       label:
         actionName === 'create'
           ? 'admin.generic.save_label'
           : actionName === 'advanced-filters'
           ? 'admin.generic.apply_filters_label'
           : actionName === 'upload'
-          ? 'admin.generic.upload_label'
+          ? 'admin.generic.upload_record_label'
           : actionName === 'download'
-          ? 'admin.generic.download_label'
+          ? 'admin.generic.download_record_label'
           : actionName === 'restore'
-          ? 'admin.generic.restore_label'
+          ? 'admin.generic.restore_record_label'
           : actionName === 'quick-show'
           ? 'admin.generic.show_label'
           : actionName === 'quick-edit'
@@ -165,9 +156,29 @@ const filteredDialogActionButtons = computed((): IDialogAction[] => {
           ? 'admin.generic.delete_label'
           : 'admin.generic.ok_label',
       square: true,
-      clickEvent: () => actionDialog(actionName),
     },
   ];
+
+  // Find the index of the button that matches the condition
+  const indexToDisable = dialogActionButtons.findIndex(button => button.label === 'admin.generic.close_label');
+
+  const disableActionDialogButton = props.disableActionDialogButton as {
+    action: TDialog | undefined;
+    disable: boolean;
+  };
+
+  if (
+    disableActionDialogButton &&
+    disableActionDialogButton.action !== undefined &&
+    disableActionDialogButton.disable !== undefined &&
+    indexToDisable !== -1
+  ) {
+    const indexMatchingAction = dialogActionButtons.findIndex(button => button.label === disableActionDialogButton.action);
+
+    if (indexMatchingAction !== -1) {
+      dialogActionButtons[indexMatchingAction].disable = disableActionDialogButton.disable ?? false;
+    }
+  }
 
   // Return the filtered dialog action buttons based on the actionName.
   return actionName === 'quick-show' || actionName === 'stats' ? [dialogActionButtons[0]] : dialogActionButtons;
@@ -194,7 +205,13 @@ const closeDialog = (): void => emit('handleCloseDialog');
 const actionDialog = (actionName: TDialog): void =>
   emit('handleActionDialog', actionName);
 
-const navigateToPage = (actionName: TDialog): void => emit('handleNavigateToPage', actionName)
+/**
+ * Navigates to a specific page based on the provided action name.
+ * @param {TDialog} actionName - The action name representing the page to navigate to.
+ * @returns {void}
+ */
+const navigateToPage = (actionName: TDialog): void =>
+  emit('handleNavigateToPage', actionName)
 </script>
 
 <style lang="scss" scoped>

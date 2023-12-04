@@ -1,13 +1,10 @@
 <template>
-  <div class="admin-section__dialog-body-content">
-    <slot name="record-details"></slot>
-
-    <q-separator class="q-my-md" />
-
-    <div>
-      {{ t("admin.generic.delete_confirmation_message") }}
-    </div>
-  </div>
+  <p v-if="actionName === 'restore'">
+    {{ t(`admin.generic.no_records_to_restore`) }}
+  </p>
+  <p v-else>
+    {{ t(`admin.generic.no_records_available`) }}
+  </p>
 </template>
 
 <script setup lang="ts">
@@ -17,13 +14,11 @@ import { useI18n } from 'vue-i18n';
 // Import library utilities, interfaces and components
 import { TDialog } from 'src/interfaces/BaseInterface';
 
-interface IManagementCardDelete {
+interface IManagementCardNoData {
   actionName: TDialog | undefined;
-  recordDetails?: [];
-  resource: string;
 }
 
-defineProps<IManagementCardDelete>();
+defineProps<IManagementCardNoData>();
 
 // Defined the translation variable
 const { t } = useI18n({});

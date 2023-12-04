@@ -52,7 +52,9 @@ export const useContentStore = defineStore('contentStore', () => {
         }
       })
       if (type === 'restore') {
-        allDeletedRecords.value = response.data as IAllRecordsUnpaginated
+        if (response.data && response.data.hasOwnProperty('results')) {
+          allDeletedRecords.value = response.data as IAllRecordsUnpaginated
+        }
       } else {
         allRecords.value = response.data as IAllRecords
       }

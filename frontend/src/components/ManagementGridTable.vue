@@ -25,12 +25,12 @@
         color="primary"
         dense
         icon="add"
-        :label="t('admin.generic.add_new_record')"
+        :label="t('admin.generic.create_record_label')"
         square
         @click="openDialog(actionMethods[0])"
       >
         <q-tooltip>
-          {{ t('admin.generic.add_new_record_tooltip') }}
+          {{ t('admin.generic.create_record_tooltip') }}
         </q-tooltip>
       </q-btn>
       <management-grid-table-top-left :action-methods="actionMethods" :more-options="moreOptions" />
@@ -122,25 +122,25 @@ const moreOptions = [
     id: 1,
     clickEvent: () => openDialog(actionMethods[4]),
     icon: 'filter_alt',
-    label: 'admin.generic.advanced_filters'
+    label: 'admin.generic.advanced_filters_record_label'
   },
   {
     id: 2,
     clickEvent: () => openDialog(actionMethods[5]),
     icon: 'upload',
-    label: 'admin.generic.upload_label'
+    label: 'admin.generic.upload_record_label'
   },
   {
     id: 3,
     clickEvent: () => openDialog(actionMethods[6]),
     icon: 'download',
-    label: 'admin.generic.download_label'
+    label: 'admin.generic.download_record_label'
   },
   {
     id: 4,
     clickEvent: () => openDialog(actionMethods[8]),
     icon: 'restore_from_trash',
-    label: 'admin.generic.restore_label'
+    label: 'admin.generic.restore_record_label'
   },
   {
     id: 5,
@@ -166,19 +166,19 @@ const moreActions = computed(() => {
         id: 1,
         clickEvent: () => openDialog(actionMethods[1], record),
         icon: 'visibility',
-        label: 'admin.generic.quick_show_record',
+        label: 'admin.generic.quick_show_record_label',
       },
       {
         id: 2,
         clickEvent: () => openDialog(actionMethods[2], record),
         icon: 'edit',
-        label: 'admin.generic.quick_edit_record',
+        label: 'admin.generic.quick_edit_record_label',
       },
       {
         id: 3,
         clickEvent: () => openDialog(actionMethods[3], record),
         icon: 'delete',
-        label: 'admin.generic.delete_record',
+        label: 'admin.generic.delete_record_label',
       },
       {
         id: 4,
