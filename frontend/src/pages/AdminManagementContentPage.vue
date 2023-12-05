@@ -2,16 +2,28 @@
   <q-page class="admin admin--page">
     <page-title :page-title="t('admin.management.content.title')" />
 
-    <page-description :page-description="t('admin.management.content.page_description')" />
+    <page-description
+      :page-description="t('admin.management.content.page_description')"
+    />
 
     <div class="admin-section admin-section--container">
-      <management-grid-table :columns="contentStore.getColumns" :resource="contentStore.resourceName"
-        :rows="contentStore.getAllRecords.results?.data || []" @handle-open-dialog="handleOpenDialog" />
+      <management-grid-table
+        :columns="contentStore.getColumns"
+        :resource="contentStore.resourceName"
+        :rows="contentStore.getAllRecords.results?.data || []"
+        @handle-open-dialog="handleOpenDialog"
+      />
     </div>
 
-    <dialog-card v-if="displayDialog" :action-name="actionName" :display-dialog="displayDialog"
-      :disable-action-dialog-button="disableActionDialogButton" @handle-close-dialog="() => (displayDialog = false)"
-      @handle-action-dialog="handleActionDialog" @handle-navigate-to-page="handleNavigateToPage">
+    <dialog-card
+      v-if="displayDialog"
+      :action-name="actionName"
+      :display-dialog="displayDialog"
+      :disable-action-dialog-button="disableActionDialogButton"
+      @handle-close-dialog="() => (displayDialog = false)"
+      @handle-action-dialog="handleActionDialog"
+      @handle-navigate-to-page="handleNavigateToPage"
+    >
       <template v-slot:dialog-details>
         <management-card-create
           v-if="actionName === 'create'"
@@ -84,10 +96,7 @@
           </template>
         </management-card-delete>
 
-        <management-card-stats
-          v-if="actionName === 'stats'"
-          action-name="stats"
-        />
+        <management-card-stats v-if="actionName === 'stats'" action-name="stats" />
       </template>
     </dialog-card>
 
@@ -104,6 +113,7 @@ import { RouteParamsRaw, useRouter } from 'vue-router';
 // Import library utilities, interfaces and components
 import { HandleRoute } from 'src/utilities/HandleRoute';
 import { TDialog } from 'src/interfaces/BaseInterface';
+import { HandleDialog } from 'src/utilities/HandleOpenDialog';
 import PageTitle from 'src/components/PageTitle.vue';
 import PageDescription from 'src/components/PageDescription.vue';
 import ManagementGridTable from 'src/components/ManagementGridTable.vue';
@@ -137,105 +147,117 @@ contentStore.handleIndex('paginate');
 // Display the action name & dialog
 const actionName: Ref<TDialog | undefined> = ref(undefined);
 const displayDialog = ref(false);
-const disableActionDialogButton: Ref<{ action: TDialog | undefined, disable: boolean }> = ref({ action: undefined, disable: false })
+const disableActionDialogButton: Ref<{
+  action: TDialog | undefined;
+  disable: boolean;
+}> = ref({ action: undefined, disable: false });
 
 // Action dialog
-async function handleOpenDialog(action: TDialog, recordId?: number): Promise<void> {
-  loadPage.value = true;
-  switch (action) {
-    case 'create':
-      actionName.value = action;
-      loadPage.value = false;
-      displayDialog.value = true;
-      if (contentStore.getDataModel.length === 0) {
-        disableActionDialogButton.value = {
-          action: action,
-          disable: true,
-        }
-      }
-      break;
-    case 'advanced-filters':
-      actionName.value = action;
-      loadPage.value = false;
-      displayDialog.value = true;
-      if (contentStore.getFilterModel.length === 0) {
-        disableActionDialogButton.value = {
-          action: action,
-          disable: true,
-        }
-      }
-      break;
-    case 'upload':
-      actionName.value = action;
-      loadPage.value = false;
-      displayDialog.value = true;
-      if (contentStore.getUploadModel.length === 0) {
-        disableActionDialogButton.value = {
-          action: action,
-          disable: true,
-        }
-      }
-      break;
-    case 'download':
-      actionName.value = action;
-      loadPage.value = false;
-      displayDialog.value = true;
-      if (contentStore.getDownloadModel.length === 0) {
-        disableActionDialogButton.value = {
-          action: action,
-          disable: true,
-        }
-      }
-      break
-    case 'stats':
-      actionName.value = action;
-      loadPage.value = false;
-      displayDialog.value = true;
-      break;
-    case 'quick-show':
-      actionName.value = action;
-      contentStore.handleShow(recordId).then(() => {
-        loadPage.value = false;
-        displayDialog.value = true;
-      })
-      break;
-    case 'quick-edit':
-      actionName.value = action;
-      if (contentStore.getDataModel.length === 0) {
-        disableActionDialogButton.value = {
-          action: action,
-          disable: true,
-        }
-      } else {
-        contentStore.handleShow(recordId).then(() => {
-          loadPage.value = false;
-          displayDialog.value = true;
-        })
-      }
-      break;
-    case 'delete':
-      actionName.value = action;
-      contentStore.handleShow(recordId).then(() => {
-        loadPage.value = false;
-        displayDialog.value = true;
-      })
-      break;
-    case 'restore':
-      actionName.value = action;
-      contentStore.handleIndex('restore').then(() => {
-        if (contentStore.getAllDeletedRecords) {
-          disableActionDialogButton.value = {
-            action: action,
-            disable: true,
-          }
-        }
-        loadPage.value = false;
-        displayDialog.value = true;
-      })
-      break;
-    default:
-      break;
-  }
+async function handleOpenDialog(
+  action: TDialog,
+  recordId?: number
+): Promise<void> {
+  const handleDialog = new HandleDialog();
+  actionName.value = handleDialog.handleOpenDialog(
+    loadPage,
+    action,
+    displayDialog
+  )
+  // loadPage.value = true;
+  // switch (action) {
+  //   case 'create':
+  //     actionName.value = action;
+  //     loadPage.value = false;
+  //     displayDialog.value = true;
+  //     if (contentStore.getDataModel.length === 0) {
+  //       disableActionDialogButton.value = {
+  //         action: action,
+  //         disable: true,
+  //       };
+  //     }
+  //     break;
+  //   case 'advanced-filters':
+  //     actionName.value = action;
+  //     loadPage.value = false;
+  //     displayDialog.value = true;
+  //     if (contentStore.getFilterModel.length === 0) {
+  //       disableActionDialogButton.value = {
+  //         action: action,
+  //         disable: true,
+  //       };
+  //     }
+  //     break;
+  //   case 'upload':
+  //     actionName.value = action;
+  //     loadPage.value = false;
+  //     displayDialog.value = true;
+  //     if (contentStore.getUploadModel.length === 0) {
+  //       disableActionDialogButton.value = {
+  //         action: action,
+  //         disable: true,
+  //       };
+  //     }
+  //     break;
+  //   case 'download':
+  //     actionName.value = action;
+  //     loadPage.value = false;
+  //     displayDialog.value = true;
+  //     if (contentStore.getDownloadModel.length === 0) {
+  //       disableActionDialogButton.value = {
+  //         action: action,
+  //         disable: true,
+  //       };
+  //     }
+  //     break;
+  //   case 'stats':
+  //     actionName.value = action;
+  //     loadPage.value = false;
+  //     displayDialog.value = true;
+  //     break;
+  //   case 'quick-show':
+  //     actionName.value = action;
+  //     contentStore.handleShow(recordId).then(() => {
+  //       loadPage.value = false;
+  //       displayDialog.value = true;
+  //     });
+  //     break;
+  //   case 'quick-edit':
+  //     actionName.value = action;
+  //     if (contentStore.getDataModel.length === 0) {
+  //       disableActionDialogButton.value = {
+  //         action: action,
+  //         disable: true,
+  //       };
+  //     } else {
+  //       contentStore.handleShow(recordId).then(() => {
+  //         loadPage.value = false;
+  //         displayDialog.value = true;
+  //       });
+  //     }
+  //     break;
+  //   case 'delete':
+  //     actionName.value = action;
+  //     contentStore.handleShow(recordId).then(() => {
+  //       loadPage.value = false;
+  //       displayDialog.value = true;
+  //     });
+  //     break;
+  //   case 'restore':
+  //     actionName.value = action;
+  //     contentStore.handleIndex('restore').then(() => {
+  //       if (contentStore.getAllDeletedRecords) {
+  //         disableActionDialogButton.value = {
+  //           action: action,
+  //           disable: true,
+  //         };
+  //       }
+  //       loadPage.value = false;
+  //       displayDialog.value = true;
+  //     });
+  //     break;
+  //   default:
+  //     break;
+  // }
 }
 
 // Handle action method
@@ -294,19 +316,19 @@ async function handleActionDialog(action: TDialog): Promise<void> {
 const router = useRouter();
 
 const handleNavigateToPage = (action: TDialog) => {
-  const navigateToRoute = new HandleRoute()
+  const navigateToRoute = new HandleRoute();
   const actionWords = action.split('-');
   if (actionWords.length >= 2) {
     actionWords[1] = actionWords[1].charAt(0).toUpperCase() + actionWords[1].slice(1);
   }
   const actionName = actionWords[1];
-  const selectedRecordId = contentStore.getSingleRecord.results[0].id
+  const selectedRecordId = contentStore.getSingleRecord.results[0].id;
   navigateToRoute.handleNavigateToRoute(
     router,
     `AdminManagementContent${actionName}Page`,
-    { id: selectedRecordId } as unknown as RouteParamsRaw
-  )
-}
+    ({ id: selectedRecordId } as unknown) as RouteParamsRaw
+  );
+};
 </script>
 
 <style lang="scss" scoped>

@@ -132,7 +132,19 @@ class NewsletterCampaign extends BaseModel
             if ($type === 'paginate') {
                 return $query->paginate(15);
             } elseif ($type === 'restore') {
-                return $query->onlyTrashed()->get();
+                return $query
+                    ->onlyTrashed()
+                    ->select(
+                        'id',
+                        'name',
+                        'valid_from',
+                        'valid_to',
+                        'occur_times',
+                        'occur_week',
+                        'occur_day',
+                        'occur_hour'
+                    )
+                    ->get();
             } else {
                 return $query->get();
             }

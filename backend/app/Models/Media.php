@@ -109,7 +109,7 @@ class Media extends BaseModel
             if ($type === 'paginate') {
                 return $query->paginate(15);
             } elseif ($type === 'restore') {
-                return $query->onlyTrashed()->get();
+                return $query->onlyTrashed()->select('id', 'type', 'internal_path', 'external_path')->get();
             } else {
                 return $query;
             }

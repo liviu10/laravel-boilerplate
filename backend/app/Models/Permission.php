@@ -98,7 +98,7 @@ class Permission extends BaseModel
             if ($type === 'paginate') {
                 return $query->paginate(15);
             } elseif ($type === 'restore') {
-                return $query->onlyTrashed()->get();
+                return $query->onlyTrashed()->select('id', 'name', 'role_id', 'reports_to_role_id')->get();
             } else {
                 return $query->get();
             }

@@ -123,7 +123,7 @@ class ContactMessage extends BaseModel
             if ($type === 'paginate') {
                 return $query->paginate(15);
             } elseif ($type === 'restore') {
-                return $query->onlyTrashed()->get();
+                return $query->onlyTrashed()->select('id', 'full_name')->get();
             } else {
                 return $query->get();
             }

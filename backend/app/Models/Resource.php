@@ -132,7 +132,7 @@ class Resource extends BaseModel
             }
 
             if ($type === 'restore') {
-                return $query->onlyTrashed()->get();
+                return $query->onlyTrashed()->select('id', 'type', 'title')->get();
             } else {
                 return $query->with([
                     'resource_children' => function ($query) {

@@ -110,7 +110,7 @@ class AcceptedDomain extends BaseModel
             if ($type === 'paginate') {
                 return $query->paginate(15);
             } elseif ($type === 'restore') {
-                return $query->onlyTrashed()->get();
+                return $query->onlyTrashed()->select('id', 'domain')->get();
             } else {
                 return $query->get();
             }

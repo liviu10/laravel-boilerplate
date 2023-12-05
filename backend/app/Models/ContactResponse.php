@@ -115,7 +115,7 @@ class ContactResponse extends BaseModel
             if ($type === 'paginate') {
                 return $query->paginate(15);
             } elseif ($type === 'restore') {
-                return $query->onlyTrashed()->get();
+                return $query->onlyTrashed()->select('id', 'message')->get();
             } else {
                 return $query->get();
             }
