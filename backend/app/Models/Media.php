@@ -9,6 +9,7 @@ use App\Traits\FilterAvailableFields;
 use Exception;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\QueryException;
+use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
@@ -88,13 +89,13 @@ class Media extends BaseModel
      * Fetch records from the database based on optional search criteria.
      * @param array $search An associative array of search criteria (field => value).
      * @param string|null $type The fetch type: 'paginate'for paginated results or null for a collection.
-     * @return \Illuminate\Support\Collection|bool
+     * @return \Illuminate\Pagination\LengthAwarePaginator|\Illuminate\Support\Collection|bool
      * A paginated result, a collection, or `false` if an error occurs.
      */
-    public function fetchAllRecords(array $search = [], string|null $type = null): Collection|bool
+    public function fetchAllRecords(array $search = [], string|null $type = null): LengthAwarePaginator|Collection|bool
     {
         try {
-            $query = $this->all();
+            $query = $this->select('*');
 
             if (!empty($search)) {
                 foreach ($search as $field => $value) {
