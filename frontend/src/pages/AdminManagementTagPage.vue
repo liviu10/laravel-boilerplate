@@ -335,5 +335,5 @@ const handleNavigateToPage = (action: TDialog) => {
 </script>
 
 <style lang="scss" scoped>
-@import 'src/css/pages/admin/tag.scss';
+@import 'src/css/pages/admin/management.scss';
 </style>

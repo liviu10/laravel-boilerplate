@@ -17,6 +17,12 @@ import { IConfigurationInput } from 'src/interfaces/ConfigurationResourceInterfa
 import { IAllRecords, IAllRecordsUnpaginated, ISingleRecord } from 'src/interfaces/ContentInterface'
 import { TResourceType } from 'src/interfaces/BaseInterface'
 
+// Import Pinia's related utilities
+import { useResourceStore } from 'src/stores/settings/resources';
+
+// Instantiate the pinia store
+const resourceStore = useResourceStore();
+
 const apiEndpoint = '/admin/management/contents'
 
 const handleApiRequestProcessor = new HandleApiRequestProcessor
@@ -45,6 +51,10 @@ export const useContentStore = defineStore('contentStore', () => {
 
   // Actions
   async function handleIndex(type?: TResourceType) {
+    const testApiEndpoint = await resourceStore.handleApiEndpoints()
+    const cevaApiEndpoint = resourceStore.getApiEndpoints
+    console.log('--> testApiEndpoint', testApiEndpoint);
+    debugger;
     try {
       const response = await api.get(apiEndpoint, {
         params: {

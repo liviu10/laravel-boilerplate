@@ -2,7 +2,15 @@
   <q-layout class="admin admin--layout" view="lFf Lpr lHh">
     <q-header class="admin__header" elevated>
       <q-toolbar>
-        <q-btn @click="toggleLeftDrawer" aria-label="Menu" color="primary" dense flat icon="menu" round />
+        <q-btn
+          @click="toggleLeftDrawer"
+          aria-label="Menu"
+          color="primary"
+          dense
+          flat
+          icon="menu"
+          round
+        />
         <div class="admin__header-menu">
           <div class="admin__header-menu-search">
             <q-form>
@@ -26,7 +34,7 @@
                   </q-card-section>
                   <q-card-section>
                     <q-form>
-                      <q-input dense outlined square v-model="searchWebsite"/>
+                      <q-input dense outlined square v-model="searchWebsite" />
                       <q-btn
                         color="primary"
                         dense
@@ -41,7 +49,13 @@
             </q-btn>
           </div>
           <div class="admin__header-menu-settings">
-            <q-btn v-if="$q.screen.gt.sm" color="primary" flat square icon="notifications">
+            <q-btn
+              v-if="$q.screen.gt.sm"
+              color="primary"
+              flat
+              square
+              icon="notifications"
+            >
               <q-tooltip>
                 {{ t('admin.generic.notification_tooltip') }}
               </q-tooltip>
@@ -53,7 +67,7 @@
             </q-btn>
             <q-btn v-if="$q.screen.gt.sm" color="primary" flat label="English" square>
               <q-avatar square size="24px">
-                <img src="../assets/images/country-flag-us.svg">
+                <img src="../assets/images/country-flag-us.svg" />
               </q-avatar>
               <q-tooltip>
                 {{ t('admin.generic.language_tooltip') }}
@@ -64,7 +78,7 @@
                     <q-item-section>
                       <span>
                         <q-avatar square size="24px">
-                          <img src="../assets/images/country-flag-us.svg">
+                          <img src="../assets/images/country-flag-us.svg" />
                         </q-avatar>
                         {{ t('admin.generic.english_language') }}
                       </span>
@@ -74,7 +88,7 @@
                     <q-item-section>
                       <span>
                         <q-avatar square size="24px">
-                          <img src="../assets/images/country-flag-fr.svg">
+                          <img src="../assets/images/country-flag-fr.svg" />
                         </q-avatar>
                         {{ t('admin.generic.french_language') }}
                       </span>
@@ -84,7 +98,7 @@
                     <q-item-section>
                       <span>
                         <q-avatar square size="24px">
-                          <img src="../assets/images/country-flag-ro.svg">
+                          <img src="../assets/images/country-flag-ro.svg" />
                         </q-avatar>
                         {{ t('admin.generic.romanian_language') }}
                       </span>
@@ -137,7 +151,7 @@
                             <q-item-section>
                               <span>
                                 <q-avatar square size="24px">
-                                  <img src="../assets/images/country-flag-us.svg">
+                                  <img src="../assets/images/country-flag-us.svg" />
                                 </q-avatar>
                                 {{ t('admin.generic.english_language') }}
                               </span>
@@ -147,7 +161,7 @@
                             <q-item-section>
                               <span>
                                 <q-avatar square size="24px">
-                                  <img src="../assets/images/country-flag-fr.svg">
+                                  <img src="../assets/images/country-flag-fr.svg" />
                                 </q-avatar>
                                 {{ t('admin.generic.french_language') }}
                               </span>
@@ -157,7 +171,7 @@
                             <q-item-section>
                               <span>
                                 <q-avatar square size="24px">
-                                  <img src="../assets/images/country-flag-ro.svg">
+                                  <img src="../assets/images/country-flag-ro.svg" />
                                 </q-avatar>
                                 {{ t('admin.generic.romanian_language') }}
                               </span>
@@ -200,8 +214,12 @@
         "
       >
         <q-list>
-          <div v-for="(item, index) in getAllRecords" :key="index">
-            <q-item v-if="item.resource_children && item.resource_children.length === 0" clickable v-ripple>
+          <div v-for="(item, index) in resourceStore.getMenus" :key="index">
+            <q-item
+              v-if="item.resource_children && item.resource_children.length === 0"
+              clickable
+              v-ripple
+            >
               <q-item-section avatar>
                 <q-icon :name="item.icon" />
               </q-item-section>
@@ -209,12 +227,13 @@
                 {{ t(item.title as string) }}
               </q-item-section>
             </q-item>
-            <q-expansion-item
-              v-else
-              :icon="item.icon"
-              :label="t(item.title as string)"
-            >
-              <q-item clickable v-for="(i, j) in item.resource_children" :key="j" v-ripple>
+            <q-expansion-item v-else :icon="item.icon" :label="t(item.title as string)">
+              <q-item
+                clickable
+                v-for="(i, j) in item.resource_children"
+                :key="j"
+                v-ripple
+              >
                 <q-item-section avatar />
                 <q-item-section class="q-ml-md" @click="navigateToRoute(i.name)">
                   {{ t(i.title as string) }}
@@ -248,13 +267,12 @@
 
 <script setup lang="ts">
 // Import vue related utilities
-import { computed, onMounted, ref } from 'vue';
+import { ref } from 'vue';
 import { useI18n } from 'vue-i18n';
-import { useRouter } from 'vue-router'
+import { useRouter } from 'vue-router';
 
 // Import library utilities, interfaces and components
 import { handleApplicationName } from 'src/library/CopyrightInfo/main';
-import { IAllRecords } from 'src/interfaces/ResourceInterface';
 
 // Import Pinia's related utilities
 import { useResourceStore } from 'src/stores/settings/resources';
@@ -281,20 +299,11 @@ const navigateToRoute = (routeName: string | null) => {
     // TODO: notify the user that something went wrong
     debugger;
   }
-}
+};
 
 let searchWebsite = ref(null);
 
-/**
- * Computed function that retrieves all records from the userStore.
- * @returns {IAllRecords} An object representing paginated results
- * containing user records.
- */
-const getAllRecords = computed((): IAllRecords['results'] => resourceStore.getAllRecords);
-
-onMounted(async () => {
-  await resourceStore.handleIndex()
-})
+resourceStore.handleMenu();
 </script>
 
 <style lang="scss" scoped>

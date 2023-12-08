@@ -62,7 +62,7 @@ interface IDialogAction {
   square: boolean,
 };
 
-type TResourceType = 'paginate' | 'relation' | 'restore' | undefined;
+type TResourceType = 'Menu' | 'API' | 'paginate' | 'relation' | 'restore' | undefined;
 
 export {
   IRootObject,

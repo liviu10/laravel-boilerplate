@@ -1,11 +1,13 @@
 <template>
-  <q-page class="admin admin--page">
-    Edit page
-  </q-page>
+  <q-page class="admin admin--page"> Edit page </q-page>
 </template>
 
 <script setup lang="ts">
-console.log('Component is being loaded');
+// Import vue related utilities
+
+// Import library utilities, interfaces and components
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+@import 'src/css/pages/admin/management.scss';
+</style>
