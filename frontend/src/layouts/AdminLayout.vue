@@ -214,7 +214,7 @@
         "
       >
         <q-list>
-          <div v-for="(item, index) in resourceStore.getMenus" :key="index">
+          <div v-for="(item, index) in resourceStore.getApiMenu" :key="index">
             <q-item
               v-if="item.resource_children && item.resource_children.length === 0"
               clickable

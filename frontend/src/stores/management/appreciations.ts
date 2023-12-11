@@ -5,6 +5,7 @@ import { Ref, computed, ref } from 'vue'
 import { QTableProps } from 'quasar'
 
 // Import library utilities, interfaces and components
+import { HandleApiResource } from 'src/utilities/HandleApiResource'
 import { HandleApiRequestProcessor } from 'src/utilities/HandleApiRequestProcessor'
 import { defaultColumns } from 'src/assets/data/columns'
 import {
@@ -17,13 +18,14 @@ import { IConfigurationInput } from 'src/interfaces/ConfigurationResourceInterfa
 import { IAllRecords, IAllRecordsUnpaginated, ISingleRecord } from 'src/interfaces/AppreciationInterface'
 import { TResourceType } from 'src/interfaces/BaseInterface'
 
-const apiEndpoint = '/admin/management/appreciations'
+const handleApiResource = new HandleApiResource
 
 const handleApiRequestProcessor = new HandleApiRequestProcessor
 
 export const useAppreciationStore = defineStore('appreciationStore', () => {
   // State
   const resourceName = 'Appreciation'
+  const resourceEndpoint: Ref<string> = ref('')
   const allRecords: Ref<IAllRecords> = ref({} as IAllRecords)
   const columns: Ref<QTableProps['columns']> = ref(defaultColumns as QTableProps['columns'])
   const dataModel: Ref<IConfigurationInput[]> = ref(defaultDataModel as IConfigurationInput[])
@@ -46,19 +48,28 @@ export const useAppreciationStore = defineStore('appreciationStore', () => {
   // Actions
   async function handleIndex(type?: TResourceType) {
     try {
-      const response = await api.get(apiEndpoint, {
-        params: {
-          type: type ?? undefined
+      handleApiResource.apiEndpoint(resourceName, useAppreciationStore.$id).then(
+        async (apiEndpoint) => {
+          if (apiEndpoint) {
+            resourceEndpoint.value = apiEndpoint[0].path
+            const response = await api.get(resourceEndpoint.value, {
+              params: {
+                type: type ?? undefined
+              }
+            })
+            if (type === 'restore') {
+              if (response.data && response.data.hasOwnProperty('results')) {
+                allDeletedRecords.value = response.data as IAllRecordsUnpaginated
+              }
+            } else {
+              allRecords.value = response.data as IAllRecords
+            }
+            console.log('-> handleIndex', allRecords.value)
+          } else {
+            console.log('-> apiEndpoint does not exist', apiEndpoint)
+          }
         }
-      })
-      if (type === 'restore') {
-        if (response.data && response.data.hasOwnProperty('results')) {
-          allDeletedRecords.value = response.data as IAllRecordsUnpaginated
-        }
-      } else {
-        allRecords.value = response.data as IAllRecords
-      }
-      console.log('-> handleIndex', allRecords.value)
+      )
     } catch (error) {
       console.log('-> catch', error)
     } finally {
@@ -66,19 +77,58 @@ export const useAppreciationStore = defineStore('appreciationStore', () => {
     }
   }
 
-  async function handleAdvancedFilter() {
-    const payload = handleApiRequestProcessor.createPayload(filterModel.value)
-    console.log('-> handleAdvancedFilter', payload)
+  async function handleAdvancedFilter(type?: TResourceType) {
+    const payload = handleApiRequestProcessor.createFilterPayload(filterModel.value)
+    handleApiResource.apiEndpoint(resourceName, useAppreciationStore.$id).then(
+      async (apiEndpoint) => {
+        if (apiEndpoint) {
+          resourceEndpoint.value = apiEndpoint[0].path
+          const response = await api.get(resourceEndpoint.value, {
+            params: {
+              type: type ?? undefined,
+              ...payload
+            }
+          })
+          allRecords.value = response.data as IAllRecords
+        } else {
+          console.log('-> apiEndpoint does not exist', apiEndpoint)
+        }
+      }
+    )
   }
 
   async function handleUpload() {
     const payload = handleApiRequestProcessor.createPayload(uploadModel.value)
-    console.log('-> handleUpload', payload)
+    handleApiResource.apiEndpoint(resourceName, useAppreciationStore.$id).then(
+      async (apiEndpoint) => {
+        if (apiEndpoint) {
+          resourceEndpoint.value = apiEndpoint[0].path
+          const response = await api.post(resourceEndpoint.value, {
+            ...payload
+          })
+          allRecords.value = response.data as IAllRecords
+        } else {
+          console.log('-> apiEndpoint does not exist', apiEndpoint)
+        }
+      }
+    )
   }
 
   async function handleDownload() {
     const payload = handleApiRequestProcessor.createPayload(downloadModel.value)
-    console.log('-> handleDownload', payload)
+    handleApiResource.apiEndpoint(resourceName, useAppreciationStore.$id).then(
+      async (apiEndpoint) => {
+        if (apiEndpoint) {
+          resourceEndpoint.value = apiEndpoint[0].path
+          const response = await api.post(resourceEndpoint.value, {
+            ...payload
+          })
+          allRecords.value = response.data as IAllRecords
+        } else {
+          console.log('-> apiEndpoint does not exist', apiEndpoint)
+        }
+      }
+    )
   }
 
   async function handleRestore() {
@@ -87,18 +137,39 @@ export const useAppreciationStore = defineStore('appreciationStore', () => {
 
   async function handleCreate() {
     const payload = handleApiRequestProcessor.createPayload(dataModel.value)
-    console.log('-> handleCreate', payload)
+    handleApiResource.apiEndpoint(resourceName, useAppreciationStore.$id).then(
+      async (apiEndpoint) => {
+        if (apiEndpoint) {
+          resourceEndpoint.value = apiEndpoint[0].path
+          const response = await api.post(resourceEndpoint.value, {
+            ...payload
+          })
+          allRecords.value = response.data as IAllRecords
+        } else {
+          console.log('-> apiEndpoint does not exist', apiEndpoint)
+        }
+      }
+    )
   }
 
   async function handleShow(recordId: number | undefined, type?: TResourceType) {
     try {
-      const response = await api.get(`${apiEndpoint}/${recordId}`, {
-        params: {
-          type: type ?? undefined
+      handleApiResource.apiEndpoint(resourceName, useAppreciationStore.$id).then(
+        async (apiEndpoint) => {
+          if (apiEndpoint) {
+            resourceEndpoint.value = apiEndpoint[0].path
+            const response = await api.get(`${resourceEndpoint.value}/${recordId}`, {
+              params: {
+                type: type ?? undefined
+              }
+            })
+            singleRecord.value = response.data as ISingleRecord
+            console.log('-> handleShow', singleRecord.value)
+          } else {
+            console.log('-> apiEndpoint does not exist', apiEndpoint)
+          }
         }
-      })
-      singleRecord.value = response.data as ISingleRecord
-      console.log('-> handleShow', singleRecord.value)
+      )
     } catch (error) {
       console.log('-> catch', error)
     } finally {

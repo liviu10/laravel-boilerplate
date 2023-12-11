@@ -264,7 +264,7 @@ async function handleActionDialog(action: TDialog): Promise<void> {
       });
       break;
     case 'advanced-filters':
-      mediaStore.handleAdvancedFilter().then(() => {
+      mediaStore.handleAdvancedFilter('paginate').then(() => {
         displayDialog.value = false;
         loadPage.value = false;
       });

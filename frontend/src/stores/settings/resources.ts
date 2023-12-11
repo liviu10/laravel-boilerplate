@@ -7,18 +7,18 @@ import { Ref, computed, ref } from 'vue'
 import { IAllRecords } from 'src/interfaces/ResourceInterface'
 import { TResourceType } from 'src/interfaces/BaseInterface'
 
-const apiEndpoint = '/admin/settings/resources'
+const resourceEndpoint = '/admin/settings/resources'
 
 export const useResourceStore = defineStore('resourceStore', () => {
   // State
-  const allRecords: Ref<IAllRecords['results']> = ref([])
-  const apiEndpoints: Ref<IAllRecords['results']> = ref([])
-  const menus: Ref<IAllRecords['results']> = ref([])
+  const allRecords: Ref<IAllRecords> = ref({} as IAllRecords)
+  const apiEndpoint: Ref<IAllRecords['results']> = ref([] as IAllRecords['results'])
+  const apiMenu: Ref<IAllRecords['results']> = ref([] as IAllRecords['results'])
 
   // Getters
   const getAllRecords = computed(() => allRecords.value)
-  const getApiEndpoints = computed(() => apiEndpoints.value)
-  const getMenus = computed(() => menus.value)
+  const getApiEndpoint = computed(() => apiEndpoint.value)
+  const getApiMenu = computed(() => apiMenu.value)
 
   // Actions
 
@@ -26,16 +26,16 @@ export const useResourceStore = defineStore('resourceStore', () => {
     console.log('-> handleIndex')
   }
 
-  async function handleApiEndpoints() {
+  async function handleApiEndpoint(path: string) {
     try {
-      const response = await api.get(apiEndpoint, {
+      const response = await api.get(resourceEndpoint, {
         params: {
           type: 'API' as TResourceType,
-          path: 'content'
+          path: path
         }
       })
-      apiEndpoints.value = response.data.results as IAllRecords['results']
-      console.log('-> handleIndex', apiEndpoints.value)
+      apiEndpoint.value = response.data.results as IAllRecords['results']
+      console.log('-> handleIndex', apiEndpoint.value)
     } catch (error) {
       console.log('-> catch', error)
     } finally {
@@ -45,13 +45,13 @@ export const useResourceStore = defineStore('resourceStore', () => {
 
   async function handleMenu() {
     try {
-      const response = await api.get(apiEndpoint, {
+      const response = await api.get(resourceEndpoint, {
         params: {
           type: 'Menu' as TResourceType
         }
       })
-      menus.value = response.data.results as IAllRecords['results']
-      console.log('-> handleIndex', menus.value)
+      apiMenu.value = response.data.results as IAllRecords['results']
+      console.log('-> handleIndex', apiMenu.value)
     } catch (error) {
       console.log('-> catch', error)
     } finally {
@@ -61,10 +61,10 @@ export const useResourceStore = defineStore('resourceStore', () => {
 
   return {
     getAllRecords,
-    getApiEndpoints,
-    getMenus,
+    getApiEndpoint,
+    getApiMenu,
     handleIndex,
-    handleApiEndpoints,
+    handleApiEndpoint,
     handleMenu,
   }
 })

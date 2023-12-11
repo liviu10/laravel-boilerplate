@@ -266,7 +266,7 @@ async function handleActionDialog(action: TDialog): Promise<void> {
       });
       break;
     case 'advanced-filters':
-      commentStore.handleAdvancedFilter().then(() => {
+      commentStore.handleAdvancedFilter('comment').then(() => {
         displayDialog.value = false;
         loadPage.value = false;
       });

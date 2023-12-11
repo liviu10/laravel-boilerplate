@@ -264,7 +264,7 @@ async function handleActionDialog(action: TDialog): Promise<void> {
       });
       break;
     case 'advanced-filters':
-      tagStore.handleAdvancedFilter().then(() => {
+      tagStore.handleAdvancedFilter('paginate').then(() => {
         displayDialog.value = false;
         loadPage.value = false;
       });
