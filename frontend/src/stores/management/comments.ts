@@ -79,56 +79,74 @@ export const useCommentStore = defineStore('commentStore', () => {
 
   async function handleAdvancedFilter(type?: TResourceType) {
     const payload = handleApiRequestProcessor.createFilterPayload(filterModel.value)
-    handleApiResource.apiEndpoint(resourceName, useCommentStore.$id).then(
-      async (apiEndpoint) => {
-        if (apiEndpoint) {
-          resourceEndpoint.value = apiEndpoint[0].path
-          const response = await api.get(resourceEndpoint.value, {
-            params: {
-              type: type ?? undefined,
-              ...payload
-            }
-          })
-          allRecords.value = response.data as IAllRecords
-        } else {
-          console.log('-> apiEndpoint does not exist', apiEndpoint)
+    try {
+      handleApiResource.apiEndpoint(resourceName, useCommentStore.$id).then(
+        async (apiEndpoint) => {
+          if (apiEndpoint) {
+            resourceEndpoint.value = apiEndpoint[0].path
+            const response = await api.get(resourceEndpoint.value, {
+              params: {
+                type: type ?? undefined,
+                ...payload
+              }
+            })
+            allRecords.value = response.data as IAllRecords
+          } else {
+            console.log('-> apiEndpoint does not exist', apiEndpoint)
+          }
         }
-      }
-    )
+      )
+    } catch (error) {
+      console.log('-> catch', error)
+    } finally {
+      console.log('-> finally')
+    }
   }
 
   async function handleUpload() {
     const payload = handleApiRequestProcessor.createPayload(uploadModel.value)
-    handleApiResource.apiEndpoint(resourceName, useCommentStore.$id).then(
-      async (apiEndpoint) => {
-        if (apiEndpoint) {
-          resourceEndpoint.value = apiEndpoint[0].path
-          const response = await api.post(resourceEndpoint.value, {
-            ...payload
-          })
-          allRecords.value = response.data as IAllRecords
-        } else {
-          console.log('-> apiEndpoint does not exist', apiEndpoint)
+    try {
+      handleApiResource.apiEndpoint(resourceName, useCommentStore.$id).then(
+        async (apiEndpoint) => {
+          if (apiEndpoint) {
+            resourceEndpoint.value = apiEndpoint[0].path
+            const response = await api.post(resourceEndpoint.value, {
+              ...payload
+            })
+            allRecords.value = response.data as IAllRecords
+          } else {
+            console.log('-> apiEndpoint does not exist', apiEndpoint)
+          }
         }
-      }
-    )
+      )
+    } catch (error) {
+      console.log('-> catch', error)
+    } finally {
+      console.log('-> finally')
+    }
   }
 
   async function handleDownload() {
     const payload = handleApiRequestProcessor.createPayload(downloadModel.value)
-    handleApiResource.apiEndpoint(resourceName, useCommentStore.$id).then(
-      async (apiEndpoint) => {
-        if (apiEndpoint) {
-          resourceEndpoint.value = apiEndpoint[0].path
-          const response = await api.post(resourceEndpoint.value, {
-            ...payload
-          })
-          allRecords.value = response.data as IAllRecords
-        } else {
-          console.log('-> apiEndpoint does not exist', apiEndpoint)
+    try {
+      handleApiResource.apiEndpoint(resourceName, useCommentStore.$id).then(
+        async (apiEndpoint) => {
+          if (apiEndpoint) {
+            resourceEndpoint.value = apiEndpoint[0].path
+            const response = await api.post(resourceEndpoint.value, {
+              ...payload
+            })
+            allRecords.value = response.data as IAllRecords
+          } else {
+            console.log('-> apiEndpoint does not exist', apiEndpoint)
+          }
         }
-      }
-    )
+      )
+    } catch (error) {
+      console.log('-> catch', error)
+    } finally {
+      console.log('-> finally')
+    }
   }
 
   async function handleRestore() {
@@ -137,19 +155,25 @@ export const useCommentStore = defineStore('commentStore', () => {
 
   async function handleCreate() {
     const payload = handleApiRequestProcessor.createPayload(dataModel.value)
-    handleApiResource.apiEndpoint(resourceName, useCommentStore.$id).then(
-      async (apiEndpoint) => {
-        if (apiEndpoint) {
-          resourceEndpoint.value = apiEndpoint[0].path
-          const response = await api.post(resourceEndpoint.value, {
-            ...payload
-          })
-          allRecords.value = response.data as IAllRecords
-        } else {
-          console.log('-> apiEndpoint does not exist', apiEndpoint)
+    try {
+      handleApiResource.apiEndpoint(resourceName, useCommentStore.$id).then(
+        async (apiEndpoint) => {
+          if (apiEndpoint) {
+            resourceEndpoint.value = apiEndpoint[0].path
+            const response = await api.post(resourceEndpoint.value, {
+              ...payload
+            })
+            allRecords.value = response.data as IAllRecords
+          } else {
+            console.log('-> apiEndpoint does not exist', apiEndpoint)
+          }
         }
-      }
-    )
+      )
+    } catch (error) {
+      console.log('-> catch', error)
+    } finally {
+      console.log('-> finally')
+    }
   }
 
   async function handleShow(recordId: number | undefined, type?: TResourceType) {

@@ -37,9 +37,9 @@ import { useI18n } from 'vue-i18n';
 
 // Import library utilities, interfaces and components
 import { HandleObject } from 'src/utilities/HandleObject';
-import ManagementCardGoToConfigureResource from 'src/components/ManagementCardGoToConfigureResource.vue';
 import { TDialog } from 'src/interfaces/BaseInterface';
 import { IConfigurationInput } from 'src/interfaces/ConfigurationResourceInterface';
+import ManagementCardGoToConfigureResource from 'src/components/ManagementCardGoToConfigureResource.vue';
 
 interface IManagementCardCreate {
   actionName: TDialog | undefined;

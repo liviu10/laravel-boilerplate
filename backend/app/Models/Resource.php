@@ -11,6 +11,7 @@ use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\QueryException;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Facades\Route;
 
 /**
  * Class Resource
@@ -126,7 +127,11 @@ class Resource extends BaseModel
                     if ($field === 'id' || $field === 'type' || $field === 'is_active') {
                         $query->where($field, '=', $value);
                     } else {
-                        $query->where($field, 'LIKE', '%' . $value . '%');
+                        if ($field === 'path') {
+                            $query->where($field, 'LIKE', $value);
+                        } else {
+                            $query->where($field, 'LIKE', '%' . $value . '%');
+                        }
                     }
                 }
             }

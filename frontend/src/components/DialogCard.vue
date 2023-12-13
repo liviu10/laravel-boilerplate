@@ -29,7 +29,7 @@
               @click="item.clickEvent"
             />
           </div>
-          <div v-if="actionName === 'quick-show'">
+          <div v-if="!hideGoToShowPage && actionName === 'quick-show'">
             <q-btn
               class="q-mx-sm"
               color="info"
@@ -39,7 +39,7 @@
               @click="navigateToPage(actionName)"
             />
           </div>
-          <div v-if="actionName === 'quick-edit'">
+          <div v-if="!hideGoToEditPage && actionName === 'quick-edit'">
             <q-btn
               class="q-mx-sm"
               color="info"
@@ -71,6 +71,8 @@ interface IManagementCard {
     disable: boolean
   };
   displayDialog?: boolean;
+  hideGoToShowPage?: boolean;
+  hideGoToEditPage?: boolean;
 }
 
 const props = defineProps<IManagementCard>();

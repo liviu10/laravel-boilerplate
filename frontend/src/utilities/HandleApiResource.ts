@@ -1,3 +1,6 @@
+// Import vue related utilities
+import { Cookies } from 'quasar';
+
 // Import library utilities, interfaces and components
 import { IAllRecords } from 'src/interfaces/ResourceInterface'
 
@@ -19,24 +22,29 @@ export class HandleApiResource implements IHandleApiResource {
   }
 
   /**
-   * Calls the specified API endpoint using the given path and store ID.
+   * Calls the specified API endpoint using the current path.
    * This method handles the API endpoint using the `resourceStore` and updates
    * the `apiEndpointUrl` property accordingly.
-   * @param {string} path - The path for the API endpoint.
+   * @param {string} resourceName - The name for the store resource.
    * @param {string} storeId - The store ID associated with the API call.
    * @returns {Promise<void | IAllRecords['results']>} A Promise that resolves with the API endpoint URL or void if an error occurs.
    */
-  public async apiEndpoint(path: string, storeId: string): Promise<void | IAllRecords['results']> {
-    try {
-      console.log('--> storeId:', storeId) // TODO: based on the storeId save this.apiEndpointUrl to local storage in order to avoid calling resourceStore.handleApiEndpoint
-      await resourceStore.handleApiEndpoint(path)
-      this.apiEndpointUrl = resourceStore.getApiEndpoint
+  public async apiEndpoint(resourceName: string, storeId: string): Promise<void | IAllRecords['results']> {
+    if (Cookies.has(`endpoint_${resourceName.toLowerCase()}_${storeId}`)) {
+      return this.apiEndpointUrl = Cookies.get(`endpoint_${resourceName.toLowerCase()}_${storeId}`)
+    } else {
+      try {
+        const pathName = window.location.pathname
+        await resourceStore.handleApiEndpoint(pathName)
+        this.apiEndpointUrl = resourceStore.getApiEndpoint
+        Cookies.set(`endpoint_${resourceName.toLowerCase()}_${storeId}`, JSON.stringify(this.apiEndpointUrl))
 
-      return this.apiEndpointUrl
-    } catch (error) {
-      console.log('-> catch', error)
-    } finally {
-      console.log('-> finally')
+        return this.apiEndpointUrl
+      } catch (error) {
+        console.log('-> catch', error)
+      } finally {
+        console.log('-> finally')
+      }
     }
   }
 }

@@ -13,6 +13,11 @@ const routes: RouteRecordRaw[] = [
             component: () => import('pages/AdminManagementContentPage.vue'),
           },
           {
+            path: 'create',
+            name: 'AdminManagementContentCreatePage',
+            component: () => import('pages/AdminManagementContentCreatePage.vue'),
+          },
+          {
             path: 'show/:id',
             name: 'AdminManagementContentShowPage',
             component: () => import('pages/AdminManagementContentShowPage.vue'),

@@ -18,6 +18,8 @@
       :action-name="actionName"
       :display-dialog="displayDialog"
       :disable-action-dialog-button="disableActionDialogButton"
+      :hide-go-to-show-page="hideGoToShowPage"
+      :hide-go-to-edit-page="hideGoToEditPage"
       @handle-close-dialog="() => (displayDialog = false)"
       @handle-action-dialog="handleActionDialog"
       @handle-navigate-to-page="handleNavigateToPage"
@@ -149,6 +151,8 @@ const disableActionDialogButton: Ref<{
   action: TDialog | undefined;
   disable: boolean;
 }> = ref({ action: undefined, disable: false });
+const hideGoToShowPage = ref(false);
+const hideGoToEditPage = ref(false);
 
 // Handle open dialog
 async function handleOpenDialog(action: TDialog, recordId?: number): Promise<void> {
@@ -209,6 +213,7 @@ async function handleOpenDialog(action: TDialog, recordId?: number): Promise<voi
       mediaStore.handleShow(recordId).then(() => {
         loadPage.value = false;
         displayDialog.value = true;
+        hideGoToShowPage.value = true;
       });
       break;
     case 'quick-edit':
@@ -222,6 +227,7 @@ async function handleOpenDialog(action: TDialog, recordId?: number): Promise<voi
         mediaStore.handleShow(recordId).then(() => {
           loadPage.value = false;
           displayDialog.value = true;
+          hideGoToEditPage.value = true;
         });
       }
       break;

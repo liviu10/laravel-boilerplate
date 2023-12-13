@@ -25,13 +25,6 @@
       @handle-navigate-to-page="handleNavigateToPage"
     >
       <template v-slot:dialog-details>
-        <management-card-create
-          v-if="actionName === 'create'"
-          action-name="create"
-          :data-model="contentStore.getDataModel"
-          :resource="contentStore.resourceName"
-        />
-
         <management-card-advanced-filter
           v-if="actionName === 'advanced-filters'"
           action-name="advanced-filters"
@@ -118,7 +111,6 @@ import PageTitle from 'src/components/PageTitle.vue';
 import PageDescription from 'src/components/PageDescription.vue';
 import ManagementGridTable from 'src/components/ManagementGridTable.vue';
 import DialogCard from 'src/components/DialogCard.vue';
-import ManagementCardCreate from 'src/components/ManagementCardCreate.vue';
 import ManagementCardAdvancedFilter from 'src/components/ManagementCardAdvancedFilter.vue';
 import ManagementCardUpload from 'src/components/ManagementCardUpload.vue';
 import ManagementCardDownload from 'src/components/ManagementCardDownload.vue';
@@ -160,13 +152,7 @@ async function handleOpenDialog(action: TDialog, recordId?: number): Promise<voi
     case 'create':
       actionName.value = action;
       loadPage.value = false;
-      displayDialog.value = true;
-      if (contentStore.getDataModel.length === 0) {
-        disableActionDialogButton.value = {
-          action: action,
-          disable: true,
-        };
-      }
+      handleNavigateToPage(action);
       break;
     case 'advanced-filters':
       actionName.value = action;
@@ -322,17 +308,25 @@ const router = useRouter();
 // Handle navigate to page
 const handleNavigateToPage = (action: TDialog) => {
   const navigateToRoute = new HandleRoute();
-  const actionWords = action.split('-');
-  if (actionWords.length >= 2) {
-    actionWords[1] = actionWords[1].charAt(0).toUpperCase() + actionWords[1].slice(1);
+  let actionWords;
+  let actionName;
+  if (action.includes('-')) {
+    actionWords = action.split('-')
+    actionName = actionWords[1].charAt(0).toUpperCase() + actionWords[1].slice(1);
+    const selectedRecordId = contentStore.getSingleRecord.results[0].id;
+      navigateToRoute.handleNavigateToRoute(
+      router,
+      `AdminManagementContent${actionName}Page`,
+      ({ id: selectedRecordId } as unknown) as RouteParamsRaw
+    );
+  } else {
+    actionWords = action;
+    actionName = actionWords.charAt(0).toUpperCase() + actionWords.slice(1);
+    navigateToRoute.handleNavigateToRoute(
+      router,
+      `AdminManagementContent${actionName}Page`
+    );
   }
-  const actionName = actionWords[1];
-  const selectedRecordId = contentStore.getSingleRecord.results[0].id;
-  navigateToRoute.handleNavigateToRoute(
-    router,
-    `AdminManagementContent${actionName}Page`,
-    ({ id: selectedRecordId } as unknown) as RouteParamsRaw
-  );
 };
 </script>
 

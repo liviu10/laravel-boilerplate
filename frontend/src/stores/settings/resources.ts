@@ -26,12 +26,12 @@ export const useResourceStore = defineStore('resourceStore', () => {
     console.log('-> handleIndex')
   }
 
-  async function handleApiEndpoint(path: string) {
+  async function handleApiEndpoint(path?: string) {
     try {
       const response = await api.get(resourceEndpoint, {
         params: {
           type: 'API' as TResourceType,
-          path: path
+          path: path ?? undefined
         }
       })
       apiEndpoint.value = response.data.results as IAllRecords['results']
