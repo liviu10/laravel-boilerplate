@@ -18,6 +18,15 @@ interface IAllRecords extends IRootObject {
   })
 }
 
+interface IAllRecordsUnpaginated extends IRootObject {
+  results: {
+    id: number
+    domain: string
+    type: AcceptedDomainTypeOptions
+    is_active: boolean
+  }[]
+}
+
 interface ISingleRecord extends IRootObject {
   results: (IBaseTimestamps & {
     id: number
@@ -42,6 +51,7 @@ interface IUpdateRecord {
 
 export {
   IAllRecords,
+  IAllRecordsUnpaginated,
   ISingleRecord,
   ICreateRecord,
   IUpdateRecord,

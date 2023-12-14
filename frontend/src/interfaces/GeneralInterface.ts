@@ -20,6 +20,17 @@ interface IAllRecords extends IRootObject {
   })
 }
 
+interface IAllRecordsUnpaginated extends IRootObject {
+  results: {
+    id: number
+    type: GeneralOptions
+    label: string
+    value: string
+    user_id: number
+    user: IBaseUser
+  }[]
+}
+
 interface ISingleRecord extends IRootObject {
   results: (IBaseTimestamps & {
     id: number
@@ -45,6 +56,7 @@ interface IUpdateRecord {
 
 export {
   IAllRecords,
+  IAllRecordsUnpaginated,
   ISingleRecord,
   ICreateRecord,
   IUpdateRecord,

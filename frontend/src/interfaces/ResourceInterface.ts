@@ -31,6 +31,35 @@ interface IAllRecords extends IRootObject {
   }[]
 }
 
+interface IAllRecordsUnpaginated extends IRootObject {
+  results: {
+    id: number
+    type: TypeOptions
+    path: string
+    name: string | null
+    component: string | null
+    layout: string | null
+    title: string | undefined
+    caption: string | null
+    icon: string | undefined
+    is_active: boolean
+    requires_auth: boolean
+    resource_children: {
+      id: number
+      type: TypeOptions
+      path: string
+      name: string | null
+      component: string | null
+      layout: string | null
+      title: string | undefined
+      caption: string | null
+      icon: string | undefined
+      is_active: boolean
+      requires_auth: boolean
+    }[]
+  }[]
+}
+
 interface ISingleRecord extends IRootObject {
   results: (IBaseTimestamps & {
     id: number
@@ -77,6 +106,7 @@ interface IUpdateRecord {
 
 export {
   IAllRecords,
+  IAllRecordsUnpaginated,
   ISingleRecord,
   ICreateRecord,
   IUpdateRecord,
