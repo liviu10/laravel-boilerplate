@@ -7,7 +7,7 @@
     />
 
     <div class="admin-section admin-section--container">
-      <management-grid-table
+      <grid-table
         :columns="contentStore.getColumns"
         :resource="contentStore.resourceName"
         :rows="contentStore.getAllRecords.results?.data || []"
@@ -109,7 +109,7 @@ import { TDialog } from 'src/interfaces/BaseInterface';
 import { HandleObject } from 'src/utilities/HandleObject';
 import PageTitle from 'src/components/PageTitle.vue';
 import PageDescription from 'src/components/PageDescription.vue';
-import ManagementGridTable from 'src/components/ManagementGridTable.vue';
+import GridTable from 'src/components/GridTable.vue';
 import DialogCard from 'src/components/DialogCard.vue';
 import ManagementCardAdvancedFilter from 'src/components/ManagementCardAdvancedFilter.vue';
 import ManagementCardUpload from 'src/components/ManagementCardUpload.vue';

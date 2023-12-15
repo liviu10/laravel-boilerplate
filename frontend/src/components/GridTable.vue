@@ -33,7 +33,7 @@
           {{ t('admin.generic.create_record_tooltip') }}
         </q-tooltip>
       </q-btn>
-      <management-grid-table-top-left :action-methods="actionMethods" :more-options="moreOptions" />
+      <grid-table-top-left :action-methods="actionMethods" :more-options="moreOptions" />
     </template>
 
     <!-- Top right slot -->
@@ -60,8 +60,8 @@
       <div class="admin-section__grid-table-content">
         <q-card>
           <q-card-section>
-            <management-grid-table-body :table-body-props="props" />
-            <management-grid-table-body-actions
+            <grid-table-body :table-body-props="props" />
+            <grid-table-body-actions
               :action-methods="actionMethods"
               :more-actions="moreActions(props.row)"
             />
@@ -82,9 +82,9 @@ import { LocationQueryRaw, useRouter } from 'vue-router';
 // Import library utilities, interfaces and components
 import { TDialog, actionMethods } from 'src/interfaces/BaseInterface';
 import { HandleRoute } from 'src/utilities/HandleRoute';
-import ManagementGridTableTopLeft from './ManagementGridTableTopLeft.vue';
-import ManagementGridTableBody from './ManagementGridTableBody.vue';
-import ManagementGridTableBodyActions from './ManagementGridTableBodyActions.vue';
+import GridTableTopLeft from './GridTableTopLeft.vue';
+import GridTableBody from './GridTableBody.vue';
+import GridTableBodyActions from './GridTableBodyActions.vue';
 
 // Defined the translation variable
 const { t } = useI18n({});
