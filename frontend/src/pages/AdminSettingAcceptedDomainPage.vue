@@ -1,9 +1,9 @@
 <template>
   <q-page class="admin admin--page">
 
-    <page-title :page-title="t('admin.settings.accepted_domain.title')" />
+    <page-title :page-title="t('admin.setting.accepted_domain.title')" />
 
-    <page-description :page-description="t('admin.settings.accepted_domain.page_description')" />
+    <page-description :page-description="t('admin.setting.accepted_domain.page_description')" />
 
     <div class="admin-section admin-section--content">
       <pre>{{ getAllRecords }}</pre>

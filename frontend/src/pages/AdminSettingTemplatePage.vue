@@ -1,9 +1,9 @@
 <template>
   <q-page class="admin admin--page">
 
-    <page-title :page-title="t('admin.settings.template.title')" />
+    <page-title :page-title="t('admin.setting.template.title')" />
 
-    <page-description :page-description="t('admin.settings.template.page_description')" />
+    <page-description :page-description="t('admin.setting.template.page_description')" />
 
     <page-loading :visible="loadPage" />
 

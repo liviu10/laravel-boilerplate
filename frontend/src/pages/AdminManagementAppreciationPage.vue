@@ -1,9 +1,9 @@
 <template>
   <q-page class="admin admin--page">
-    <page-title :page-title="t('admin.management.appreciation.title')" />
+    <page-title :page-title="t(`${appreciationStore.getTranslationString}.title`)" />
 
     <page-description
-      :page-description="t('admin.management.appreciation.page_description')"
+      :page-description="t(`${appreciationStore.getTranslationString}.page_description`)"
     />
 
     <div class="admin-section admin-section--container">
@@ -34,25 +34,28 @@
           :resource="appreciationStore.resourceName"
         />
 
-        <management-card-advanced-filter
+        <card-advanced-filter
           v-if="actionName === 'advanced-filters'"
           action-name="advanced-filters"
           :data-model="appreciationStore.getFilterModel"
           :resource="appreciationStore.resourceName"
+          :translation-string="appreciationStore.getTranslationString"
         />
 
-        <management-card-upload
+        <card-upload
           v-if="actionName === 'upload'"
           action-name="upload"
           :data-model="appreciationStore.getUploadModel"
           :resource="appreciationStore.resourceName"
+          :translation-string="appreciationStore.getTranslationString"
         />
 
-        <management-card-download
+        <card-download
           v-if="actionName === 'download'"
           action-name="download"
           :data-model="appreciationStore.getDownloadModel"
           :resource="appreciationStore.resourceName"
+          :translation-string="appreciationStore.getTranslationString"
         />
 
         <management-card-restore
@@ -60,6 +63,7 @@
           action-name="restore"
           :record-details="appreciationStore.getAllDeletedRecords"
           :resource="appreciationStore.resourceName"
+          :translation-string="appreciationStore.getTranslationString"
         />
 
         <management-card-quick-show
@@ -67,6 +71,7 @@
           action-name="quick-show"
           :record-details="appreciationStore.getSingleRecord"
           :resource="appreciationStore.resourceName"
+          :translation-string="appreciationStore.getTranslationString"
         />
 
         <management-card-quick-edit
@@ -74,12 +79,14 @@
           action-name="quick-edit"
           :data-model="appreciationStore.getDataModel"
           :resource="appreciationStore.resourceName"
+          :translation-string="appreciationStore.getTranslationString"
         >
           <template v-slot:record-details>
             <management-card-quick-show
               action-name="quick-show"
               :record-details="appreciationStore.getSingleRecord"
               :resource="appreciationStore.resourceName"
+              :translation-string="appreciationStore.getTranslationString"
             />
           </template>
         </management-card-quick-edit>
@@ -88,12 +95,14 @@
           v-if="actionName === 'delete'"
           action-name="delete"
           :resource="appreciationStore.resourceName"
+          :translation-string="appreciationStore.getTranslationString"
         >
           <template v-slot:record-details>
             <management-card-quick-show
               action-name="quick-show"
               :record-details="appreciationStore.getSingleRecord"
               :resource="appreciationStore.resourceName"
+              :translation-string="appreciationStore.getTranslationString"
             />
           </template>
         </management-card-delete>
@@ -121,9 +130,9 @@ import PageDescription from 'src/components/PageDescription.vue';
 import GridTable from 'src/components/GridTable.vue';
 import DialogCard from 'src/components/DialogCard.vue';
 import ManagementCardCreate from 'src/components/ManagementCardCreate.vue';
-import ManagementCardAdvancedFilter from 'src/components/ManagementCardAdvancedFilter.vue';
-import ManagementCardUpload from 'src/components/ManagementCardUpload.vue';
-import ManagementCardDownload from 'src/components/ManagementCardDownload.vue';
+import CardAdvancedFilter from 'src/components/CardAdvancedFilter.vue';
+import CardUpload from 'src/components/CardUpload.vue';
+import CardDownload from 'src/components/CardDownload.vue';
 import ManagementCardRestore from 'src/components/ManagementCardRestore.vue';
 import ManagementCardQuickShow from 'src/components/ManagementCardQuickShow.vue';
 import ManagementCardQuickEdit from 'src/components/ManagementCardQuickEdit.vue';

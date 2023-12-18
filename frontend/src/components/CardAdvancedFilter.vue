@@ -6,7 +6,7 @@
           v-if="checkObject.handleCheckIfArray(input.configuration_options)"
           dense
           emit-value
-          :label="t(`admin.management.${resource.toLowerCase()}.data_model.${input.field}`)"
+          :label="t(`${translationString}.data_model.${input.field}`)"
           outlined
           square
           stack-label
@@ -16,7 +16,7 @@
         <q-input
           v-else
           dense
-          :label="t(`admin.management.${resource.toLowerCase()}.data_model.${input.field}`)"
+          :label="t(`${translationString}.data_model.${input.field}`)"
           outlined
           square
           stack-label
@@ -26,7 +26,10 @@
     </div>
 
     <div v-else>
-      <management-card-go-to-configure-resource :resource="resource.toLowerCase()" />
+      <card-go-to-configure-resource
+        :resource="resource"
+        :translation-string="translationString"
+      />
     </div>
   </div>
 </template>
@@ -39,15 +42,16 @@ import { useI18n } from 'vue-i18n';
 import { HandleObject } from 'src/utilities/HandleObject';
 import { IConfigurationInput } from 'src/interfaces/ConfigurationResourceInterface';
 import { TDialog } from 'src/interfaces/BaseInterface';
-import ManagementCardGoToConfigureResource from 'src/components/ManagementCardGoToConfigureResource.vue';
+import CardGoToConfigureResource from 'src/components/CardGoToConfigureResource.vue';
 
-interface IManagementCardAdvancedFilter {
-  actionName: TDialog | undefined;
-  dataModel?: IConfigurationInput[];
+interface ICardAdvancedFilter {
+  actionName: TDialog | undefined
+  dataModel?: IConfigurationInput[]
   resource: string
+  translationString: string
 }
 
-defineProps<IManagementCardAdvancedFilter>();
+defineProps<ICardAdvancedFilter>();
 
 // Defined the translation variable
 const { t } = useI18n({});

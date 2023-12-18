@@ -4,7 +4,7 @@
       <q-item v-for="(value, key) in record" :key="key">
         <q-item-section>
           <q-item-label caption>
-            {{ t(`admin.management.${resource.toLowerCase()}.data_model.${key}`) }}
+            {{ t(`${translationString}.data_model.${key}`) }}
           </q-item-label>
           <q-item-label>
             <template v-if="key === 'visibility'">
@@ -37,11 +37,12 @@ import { useI18n } from 'vue-i18n';
 import { IRootObject, TDialog } from 'src/interfaces/BaseInterface';
 
 interface IManagementCardShow {
-  actionName: TDialog | undefined;
+  actionName: TDialog | undefined
   recordDetails?: IRootObject & {
-    results: object[];
+    results: object[]
   };
-  resource: string;
+  resource: string
+  translationString: string
 }
 
 defineProps<IManagementCardShow>();

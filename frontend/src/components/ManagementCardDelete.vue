@@ -18,9 +18,10 @@ import { useI18n } from 'vue-i18n';
 import { TDialog } from 'src/interfaces/BaseInterface';
 
 interface IManagementCardDelete {
-  actionName: TDialog | undefined;
-  recordDetails?: [];
-  resource: string;
+  actionName: TDialog | undefined
+  recordDetails?: []
+  resource: string
+  translationString: string
 }
 
 defineProps<IManagementCardDelete>();

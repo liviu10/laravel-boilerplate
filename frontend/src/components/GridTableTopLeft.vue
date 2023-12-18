@@ -66,12 +66,12 @@ interface IMoreOptions {
   label: string
 }
 
-interface IManagementGridTableTopLeft {
+interface IGridTableTopLeft {
   actionMethods: { [key: number]: TDialog }
   moreOptions: IMoreOptions[]
 }
 
-withDefaults(defineProps<IManagementGridTableTopLeft>(), {});
+withDefaults(defineProps<IGridTableTopLeft>(), {});
 </script>
 
 <style lang="scss" scoped>

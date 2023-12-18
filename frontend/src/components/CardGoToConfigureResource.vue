@@ -1,6 +1,6 @@
 <template>
   <p>
-    {{ t(`admin.management.${resource}.no_data_model`) }}
+    {{ t(`${translationString}.no_data_model`) }}
     <a href="" @click="goToConfigureResource">{{ t('admin.generic.configure_resource') }}</a>
   </p>
 </template>
@@ -13,11 +13,12 @@ import { useI18n } from 'vue-i18n';
 // Import library utilities, interfaces and components
 import { HandleRoute } from 'src/utilities/HandleRoute';
 
-interface IManagementCardGoToConfigureResource {
+interface ICardGoToConfigureResource {
+  translationString: string;
   resource: string;
 }
 
-const props = defineProps<IManagementCardGoToConfigureResource>();
+const props = defineProps<ICardGoToConfigureResource>();
 
 // Defined the translation variable
 const { t } = useI18n({});

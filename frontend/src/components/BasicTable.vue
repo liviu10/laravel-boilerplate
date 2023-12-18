@@ -99,7 +99,7 @@ import GridTableBodyActions from './GridTableBodyActions.vue';
 // Defined the translation variable
 const { t } = useI18n({});
 
-interface IManagementGridTable {
+interface IBasicTable {
   bordered?: boolean;
   columns?: QTableProps['columns'];
   dense?: boolean;
@@ -111,7 +111,7 @@ interface IManagementGridTable {
   rowsPerPageOptions?: QTableProps['rowsPerPageOptions'];
 }
 
-const props = withDefaults(defineProps<IManagementGridTable>(), {
+const props = withDefaults(defineProps<IBasicTable>(), {
   bordered: true,
   customLoader: true,
   dense: true,

@@ -5,7 +5,7 @@
         <q-file
           :accept="input.accept"
           dense
-          :label="t(`admin.management.${resource.toLowerCase()}.data_model.${input.field}`)"
+          :label="t(`${translationString}.data_model.${input.field}`)"
           outlined
           square
           stack-label
@@ -15,7 +15,10 @@
     </div>
 
     <div v-else>
-      <management-card-go-to-configure-resource :resource="resource.toLowerCase()" />
+      <card-go-to-configure-resource
+        :resource="resource"
+        :translation-string="translationString"
+      />
     </div>
   </div>
 </template>
@@ -28,14 +31,16 @@ import { useI18n } from 'vue-i18n';
 import { HandleObject } from 'src/utilities/HandleObject';
 import { TDialog } from 'src/interfaces/BaseInterface';
 import { IConfigurationInput } from 'src/interfaces/ConfigurationResourceInterface';
+import CardGoToConfigureResource from 'src/components/CardGoToConfigureResource.vue';
 
-interface IManagementCardUpload {
-  actionName: TDialog | undefined;
-  dataModel?: IConfigurationInput[];
+interface ICardUpload {
+  actionName: TDialog | undefined
+  dataModel?: IConfigurationInput[]
   resource: string
+  translationString: string
 }
 
-defineProps<IManagementCardUpload>();
+defineProps<ICardUpload>();
 
 // Defined the translation variable
 const { t } = useI18n({});

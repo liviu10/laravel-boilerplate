@@ -87,7 +87,7 @@ export default {
     },
     management: {
       title: 'Gestion',
-      content: {
+      contents: {
         title: 'Contenu',
         page_description: `
           Lorem ipsum dolor sit amet consectetur adipisicing elit.
@@ -104,7 +104,7 @@ export default {
           Si le problème persiste, vous pouvez contacter l'administrateur.
         `,
       },
-      tag: {
+      tags: {
         title: 'Étiquettes',
         page_description: `
           Lorem ipsum dolor sit amet consectetur adipisicing elit.
@@ -126,7 +126,7 @@ export default {
           repudiandae, numquam, dicta earum, cupiditate consequuntur?
         `,
       },
-      comment: {
+      comments: {
         title: 'Commentaires',
         page_description: `
           Lorem ipsum dolor sit amet consectetur adipisicing elit.
@@ -137,7 +137,7 @@ export default {
           repudiandae, numquam, dicta earum, cupiditate consequuntur?
         `,
       },
-      appreciation: {
+      appreciations: {
         title: 'Appréciations',
         page_description: `
           Lorem ipsum dolor sit amet consectetur adipisicing elit.
@@ -196,7 +196,7 @@ export default {
         repudiandae, numquam, dicta earum, cupiditate consequuntur?
       `,
     },
-    settings: {
+    setting: {
       title: 'Paramètres',
       user_profile: {
         title: 'Profil utilisateur',

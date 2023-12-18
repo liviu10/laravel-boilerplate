@@ -64,7 +64,7 @@ import { Ref, computed, ref, watch } from 'vue';
 import { IDialogAction, TDialog } from 'src/interfaces/BaseInterface';
 import { HandleText } from 'src/utilities/HandleText';
 
-interface IManagementCard {
+interface IDialogCard {
   actionName?: TDialog;
   disableActionDialogButton?: {
     action: TDialog | undefined
@@ -75,7 +75,7 @@ interface IManagementCard {
   hideGoToEditPage?: boolean;
 }
 
-const props = defineProps<IManagementCard>();
+const props = defineProps<IDialogCard>();
 
 // Defines the event emitters for the component.
 const emit = defineEmits([

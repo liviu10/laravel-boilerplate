@@ -32,7 +32,7 @@ import { QTableSlots } from 'quasar';
 // Import library utilities, interfaces and components
 // import { HandleRoute } from 'src/utilities/HandleRoute';
 
-interface IManagementGridTableBody {
+interface IGridTableBody {
   resource?: string
   tableBodyProps: Omit<QTableSlots['item'], 'cols'> & { cols: {
     name: string
@@ -41,7 +41,7 @@ interface IManagementGridTableBody {
   }[] };
 }
 
-withDefaults(defineProps<IManagementGridTableBody>(), {});
+withDefaults(defineProps<IGridTableBody>(), {});
 
 // Navigate to route
 // const navigateToRoute = new HandleRoute()

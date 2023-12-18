@@ -1,9 +1,9 @@
 <template>
   <q-page class="admin admin--page">
-    <page-title :page-title="t('admin.management.comment.title')" />
+    <page-title :page-title="t(`${commentStore.getTranslationString}.title`)" />
 
     <page-description
-      :page-description="t('admin.management.comment.page_description')"
+      :page-description="t(`${commentStore.getTranslationString}.page_description`)"
     />
 
     <div class="admin-section admin-section--container">
@@ -34,25 +34,28 @@
           :resource="commentStore.resourceName"
         />
 
-        <management-card-advanced-filter
+        <card-advanced-filter
           v-if="actionName === 'advanced-filters'"
           action-name="advanced-filters"
           :data-model="commentStore.getFilterModel"
           :resource="commentStore.resourceName"
+          :translation-string="commentStore.getTranslationString"
         />
 
-        <management-card-upload
+        <card-upload
           v-if="actionName === 'upload'"
           action-name="upload"
           :data-model="commentStore.getUploadModel"
           :resource="commentStore.resourceName"
+          :translation-string="commentStore.getTranslationString"
         />
 
-        <management-card-download
+        <card-download
           v-if="actionName === 'download'"
           action-name="download"
           :data-model="commentStore.getDownloadModel"
           :resource="commentStore.resourceName"
+          :translation-string="commentStore.getTranslationString"
         />
 
         <management-card-restore
@@ -60,6 +63,7 @@
           action-name="restore"
           :record-details="commentStore.getAllDeletedRecords"
           :resource="commentStore.resourceName"
+          :translation-string="commentStore.getTranslationString"
         />
 
         <management-card-quick-show
@@ -67,6 +71,7 @@
           action-name="quick-show"
           :record-details="commentStore.getSingleRecord"
           :resource="commentStore.resourceName"
+          :translation-string="commentStore.getTranslationString"
         />
 
         <management-card-quick-edit
@@ -74,12 +79,14 @@
           action-name="quick-edit"
           :data-model="commentStore.getDataModel"
           :resource="commentStore.resourceName"
+          :translation-string="commentStore.getTranslationString"
         >
           <template v-slot:record-details>
             <management-card-quick-show
               action-name="quick-show"
               :record-details="commentStore.getSingleRecord"
               :resource="commentStore.resourceName"
+              :translation-string="commentStore.getTranslationString"
             />
           </template>
         </management-card-quick-edit>
@@ -88,12 +95,14 @@
           v-if="actionName === 'delete'"
           action-name="delete"
           :resource="commentStore.resourceName"
+          :translation-string="commentStore.getTranslationString"
         >
           <template v-slot:record-details>
             <management-card-quick-show
               action-name="quick-show"
               :record-details="commentStore.getSingleRecord"
               :resource="commentStore.resourceName"
+              :translation-string="commentStore.getTranslationString"
             />
           </template>
         </management-card-delete>
@@ -121,9 +130,9 @@ import PageDescription from 'src/components/PageDescription.vue';
 import GridTable from 'src/components/GridTable.vue';
 import DialogCard from 'src/components/DialogCard.vue';
 import ManagementCardCreate from 'src/components/ManagementCardCreate.vue';
-import ManagementCardAdvancedFilter from 'src/components/ManagementCardAdvancedFilter.vue';
-import ManagementCardUpload from 'src/components/ManagementCardUpload.vue';
-import ManagementCardDownload from 'src/components/ManagementCardDownload.vue';
+import CardAdvancedFilter from 'src/components/CardAdvancedFilter.vue';
+import CardUpload from 'src/components/CardUpload.vue';
+import CardDownload from 'src/components/CardDownload.vue';
 import ManagementCardRestore from 'src/components/ManagementCardRestore.vue';
 import ManagementCardQuickShow from 'src/components/ManagementCardQuickShow.vue';
 import ManagementCardQuickEdit from 'src/components/ManagementCardQuickEdit.vue';

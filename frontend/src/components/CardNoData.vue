@@ -14,11 +14,11 @@ import { useI18n } from 'vue-i18n';
 // Import library utilities, interfaces and components
 import { TDialog } from 'src/interfaces/BaseInterface';
 
-interface IManagementCardNoData {
+interface ICardNoData {
   actionName: TDialog | undefined;
 }
 
-defineProps<IManagementCardNoData>();
+defineProps<ICardNoData>();
 
 // Defined the translation variable
 const { t } = useI18n({});

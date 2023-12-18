@@ -50,12 +50,12 @@ interface IMoreActions {
   label: string
 }
 
-interface IManagementGridTableBodyActions {
+interface IGridTableBodyActions {
   actionMethods: { [key: number]: TDialog }
   moreActions: IMoreActions[]
 }
 
-withDefaults(defineProps<IManagementGridTableBodyActions>(), {});
+withDefaults(defineProps<IGridTableBodyActions>(), {});
 </script>
 
 <style lang="scss" scoped>

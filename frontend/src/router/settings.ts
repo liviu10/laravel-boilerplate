@@ -41,9 +41,29 @@ const routes: RouteRecordRaw[] = [
       },
       {
         path: '/admin/settings/configuration-resources',
-        name: 'AdminSettingConfigurationResourcePage',
-        component: () => import('pages/AdminSettingConfigurationResourcePage.vue'),
-        props: (route) => ({ resource: route.query.resource as string | undefined }),
+        children: [
+          {
+            path: '',
+            name: 'AdminSettingConfigurationResourcePage',
+            component: () => import('pages/AdminSettingConfigurationResourcePage.vue'),
+            props: (route) => ({ resource: route.query.resource as string | undefined }),
+          },
+          {
+            path: 'create',
+            name: 'AdminSettingConfigurationResourceCreatePage',
+            component: () => import('pages/AdminSettingConfigurationResourceCreatePage.vue'),
+          },
+          {
+            path: 'show/:id',
+            name: 'AdminSettingConfigurationResourceShowPage',
+            component: () => import('pages/AdminSettingConfigurationResourceShowPage.vue'),
+          },
+          {
+            path: 'edit/:id',
+            name: 'AdminSettingConfigurationResourceEditPage',
+            component: () => import('pages/AdminSettingConfigurationResourceEditPage.vue'),
+          },
+        ]
       },
     ],
   },

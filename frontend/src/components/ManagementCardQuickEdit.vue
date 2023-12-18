@@ -11,7 +11,7 @@
           dense
           emit-value
           :label="
-            t(`admin.management.${resource.toLowerCase()}.data_model.${input.field}`)
+            t(`${translationString}.data_model.${input.field}`)
           "
           outlined
           square
@@ -23,7 +23,7 @@
           v-else
           dense
           :label="
-            t(`admin.management.${resource.toLowerCase()}.data_model.${input.field}`)
+            t(`${translationString}.data_model.${input.field}`)
           "
           outlined
           square
@@ -34,7 +34,10 @@
     </div>
 
     <div v-else>
-      <management-card-go-to-configure-resource :resource="resource.toLowerCase()" />
+      <card-go-to-configure-resource
+        :translation-string="translationString"
+        :resource="resource"
+      />
     </div>
   </div>
 </template>
@@ -47,11 +50,13 @@ import { useI18n } from 'vue-i18n';
 import { HandleObject } from 'src/utilities/HandleObject';
 import { TDialog } from 'src/interfaces/BaseInterface';
 import { IConfigurationInput } from 'src/interfaces/ConfigurationResourceInterface';
+import CardGoToConfigureResource from 'src/components/CardGoToConfigureResource.vue';
 
 interface IManagementCardQuickEdit {
-  actionName: TDialog | undefined;
-  dataModel?: IConfigurationInput[];
-  resource: string;
+  actionName: TDialog | undefined
+  dataModel?: IConfigurationInput[]
+  resource: string
+  translationString: string
 }
 
 defineProps<IManagementCardQuickEdit>();

@@ -5,7 +5,7 @@
         <q-item v-for="(value, key) in record" :key="key">
           <q-item-section>
             <q-item-label caption>
-              {{ t(`admin.management.${resource.toLowerCase()}.data_model.${key}`) }}
+              {{ t(`${translationString}.data_model.${key}`) }}
             </q-item-label>
             <q-item-label>
               {{ value }}
@@ -20,7 +20,7 @@
     </div>
 
     <div v-else>
-      <management-card-no-data :action-name="actionName" />
+      <card-no-data :action-name="actionName" />
     </div>
   </div>
 </template>
@@ -32,14 +32,15 @@ import { useI18n } from 'vue-i18n';
 // Import library utilities, interfaces and components
 import { HandleObject } from 'src/utilities/HandleObject';
 import { IRootObject, TDialog } from 'src/interfaces/BaseInterface';
-import ManagementCardNoData from 'src/components/ManagementCardNoData.vue';
+import CardNoData from 'src/components/CardNoData.vue';
 
 interface IManagementCardRestore {
-  actionName: TDialog | undefined;
+  actionName: TDialog | undefined
   recordDetails?: IRootObject & {
-    results: object[];
-  };
-  resource: string;
+    results: object[]
+  }
+  resource: string
+  translationString: string
 }
 
 defineProps<IManagementCardRestore>();

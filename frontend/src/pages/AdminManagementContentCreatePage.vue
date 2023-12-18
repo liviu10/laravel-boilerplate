@@ -1,8 +1,10 @@
 <template>
   <q-page class="admin admin--page">
-    <page-title :page-title="t('admin.management.content.title')" />
+    <page-title :page-title="t(`${contentStore.getTranslationString}.title`)" />
 
-    <page-description :page-description="t('admin.management.content.page_description')" />
+    <page-description
+      :page-description="t(`${contentStore.getTranslationString}.page_description`)"
+    />
 
     <div class="admin-section admin-section--container-create">
       <div v-if="checkObject.handleCheckIfArray(contentStore.getDataModel)">
@@ -11,7 +13,7 @@
             v-if="checkObject.handleCheckIfArray(input.configuration_options)"
             dense
             emit-value
-            :label="t(`admin.management.${contentStore.resourceName.toLowerCase()}.data_model.${input.field}`)"
+            :label="t(`${contentStore.getTranslationString}.data_model.${input.field}`)"
             outlined
             square
             stack-label
@@ -21,7 +23,7 @@
           <q-input
             v-else
             dense
-            :label="t(`admin.management.${contentStore.resourceName.toLowerCase()}.data_model.${input.field}`)"
+            :label="t(`${contentStore.getTranslationString}.data_model.${input.field}`)"
             outlined
             square
             stack-label
@@ -31,11 +33,11 @@
       </div>
 
       <div v-else>
-        <management-card-go-to-configure-resource :resource="contentStore.resourceName.toLowerCase()" />
+        <card-go-to-configure-resource :resource="contentStore.resourceName.toLowerCase()" />
       </div>
 
       <div v-if="checkObject.handleCheckIfArray(tagStore.getDataModel)">
-        <q-expansion-item v-model="tagExpansionItem" :label="t(`admin.management.${tagStore.resourceName.toLowerCase()}.title`)">
+        <q-expansion-item v-model="tagExpansionItem" :label="t(`${tagStore.getTranslationString}.title`)">
           <q-card>
             <q-card-section>
               <div v-for="input in tagStore.getDataModel" :key="input.id">
@@ -43,7 +45,7 @@
                   v-if="checkObject.handleCheckIfArray(input.configuration_options)"
                   dense
                   emit-value
-                  :label="t(`admin.management.${tagStore.resourceName.toLowerCase()}.data_model.${input.field}`)"
+                  :label="t(`${tagStore.getTranslationString}.data_model.${input.field}`)"
                   outlined
                   square
                   stack-label
@@ -53,7 +55,7 @@
                 <q-input
                   v-else
                   dense
-                  :label="t(`admin.management.${tagStore.resourceName.toLowerCase()}.data_model.${input.field}`)"
+                  :label="t(`${tagStore.getTranslationString}.data_model.${input.field}`)"
                   outlined
                   square
                   stack-label
@@ -66,7 +68,7 @@
       </div>
 
       <div v-if="checkObject.handleCheckIfArray(mediaStore.getDataModel)">
-        <q-expansion-item v-model="mediaExpansionItem" :label="t(`admin.management.${mediaStore.resourceName.toLowerCase()}.title`)">
+        <q-expansion-item v-model="mediaExpansionItem" :label="t(`${mediaStore.getTranslationString}.title`)">
           <q-card>
             <q-card-section>
               <div v-for="input in mediaStore.getDataModel" :key="input.id">
@@ -74,7 +76,7 @@
                   v-if="checkObject.handleCheckIfArray(input.configuration_options)"
                   dense
                   emit-value
-                  :label="t(`admin.management.${mediaStore.resourceName.toLowerCase()}.data_model.${input.field}`)"
+                  :label="t(`${mediaStore.getTranslationString}.data_model.${input.field}`)"
                   outlined
                   square
                   stack-label
@@ -84,7 +86,7 @@
                 <q-input
                   v-else
                   dense
-                  :label="t(`admin.management.${mediaStore.resourceName.toLowerCase()}.data_model.${input.field}`)"
+                  :label="t(`${mediaStore.getTranslationString}.data_model.${input.field}`)"
                   outlined
                   square
                   stack-label
@@ -108,7 +110,7 @@ import { useI18n } from 'vue-i18n';
 import { HandleObject } from 'src/utilities/HandleObject';
 import PageTitle from 'src/components/PageTitle.vue';
 import PageDescription from 'src/components/PageDescription.vue';
-import ManagementCardGoToConfigureResource from 'src/components/ManagementCardGoToConfigureResource.vue';
+import CardGoToConfigureResource from 'src/components/CardGoToConfigureResource.vue';
 
 // Import Pinia's related utilities
 import { useContentStore } from 'src/stores/management/content';

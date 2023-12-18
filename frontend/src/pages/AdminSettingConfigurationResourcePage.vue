@@ -1,19 +1,97 @@
 <template>
   <q-page class="admin admin--page">
-    <page-title :page-title="t('admin.settings.configuration_resource.title')" />
+    <page-title :page-title="t('admin.setting.configuration_resource.title')" />
 
     <page-description
-      :page-description="t('admin.settings.configuration_resource.page_description')"
+      :page-description="t('admin.setting.configuration_resource.page_description')"
     />
 
     <div class="admin-section admin-section--container">
-      <basic-table
+      <grid-table
         :columns="configurationResourceStore.getColumns"
         :resource="configurationResourceStore.resourceName"
         :rows="configurationResourceStore.getAllRecords.results?.data || []"
         @handle-open-dialog="handleOpenDialog"
       />
     </div>
+
+    <dialog-card
+      v-if="displayDialog"
+      :action-name="actionName"
+      :display-dialog="displayDialog"
+      :disable-action-dialog-button="disableActionDialogButton"
+      @handle-close-dialog="() => (displayDialog = false)"
+      @handle-action-dialog="handleActionDialog"
+      @handle-navigate-to-page="handleNavigateToPage"
+    >
+      <template v-slot:dialog-details>
+        <card-advanced-filter
+          v-if="actionName === 'advanced-filters'"
+          action-name="advanced-filters"
+          :data-model="configurationResourceStore.getFilterModel"
+          :resource="configurationResourceStore.resourceName"
+        />
+
+        <card-upload
+          v-if="actionName === 'upload'"
+          action-name="upload"
+          :data-model="configurationResourceStore.getUploadModel"
+          :resource="configurationResourceStore.resourceName"
+        />
+
+        <card-download
+          v-if="actionName === 'download'"
+          action-name="download"
+          :data-model="configurationResourceStore.getDownloadModel"
+          :resource="configurationResourceStore.resourceName"
+        />
+
+        <management-card-restore
+          v-if="actionName === 'restore'"
+          action-name="restore"
+          :record-details="configurationResourceStore.getAllDeletedRecords"
+          :resource="configurationResourceStore.resourceName"
+        />
+
+        <management-card-quick-show
+          v-if="actionName === 'quick-show'"
+          action-name="quick-show"
+          :record-details="configurationResourceStore.getSingleRecord"
+          :resource="configurationResourceStore.resourceName"
+        />
+
+        <management-card-quick-edit
+          v-if="actionName === 'quick-edit'"
+          action-name="quick-edit"
+          :data-model="configurationResourceStore.getDataModel"
+          :resource="configurationResourceStore.resourceName"
+        >
+          <template v-slot:record-details>
+            <management-card-quick-show
+              action-name="quick-show"
+              :record-details="configurationResourceStore.getSingleRecord"
+              :resource="configurationResourceStore.resourceName"
+            />
+          </template>
+        </management-card-quick-edit>
+
+        <management-card-delete
+          v-if="actionName === 'delete'"
+          action-name="delete"
+          :resource="configurationResourceStore.resourceName"
+        >
+          <template v-slot:record-details>
+            <management-card-quick-show
+              action-name="quick-show"
+              :record-details="configurationResourceStore.getSingleRecord"
+              :resource="configurationResourceStore.resourceName"
+            />
+          </template>
+        </management-card-delete>
+
+        <management-card-stats v-if="actionName === 'stats'" action-name="stats" />
+      </template>
+    </dialog-card>
 
     <page-loading :visible="loadPage" />
   </q-page>
@@ -26,13 +104,22 @@ import { Ref, ref } from 'vue';
 import { RouteParamsRaw, useRouter } from 'vue-router';
 
 // Import library utilities, interfaces and components
-import { HandleObject } from 'src/utilities/HandleObject';
 import { HandleRoute } from 'src/utilities/HandleRoute';
 import { TDialog } from 'src/interfaces/BaseInterface';
+import { HandleObject } from 'src/utilities/HandleObject';
 import PageTitle from 'src/components/PageTitle.vue';
 import PageDescription from 'src/components/PageDescription.vue';
+import GridTable from 'src/components/GridTable.vue';
+import DialogCard from 'src/components/DialogCard.vue';
+import CardAdvancedFilter from 'src/components/CardAdvancedFilter.vue';
+import CardUpload from 'src/components/CardUpload.vue';
+import CardDownload from 'src/components/CardDownload.vue';
+import ManagementCardRestore from 'src/components/ManagementCardRestore.vue';
+import ManagementCardQuickShow from 'src/components/ManagementCardQuickShow.vue';
+import ManagementCardQuickEdit from 'src/components/ManagementCardQuickEdit.vue';
+import ManagementCardDelete from 'src/components/ManagementCardDelete.vue';
+import ManagementCardStats from 'src/components/ManagementCardStats.vue';
 import PageLoading from 'src/components/PageLoading.vue';
-import BasicTable from 'src/components/BasicTable.vue';
 
 // Import Pinia's related utilities
 import { useConfigurationResourceStore } from 'src/stores/settings/configuration_resources';
@@ -43,6 +130,7 @@ const configurationResourceStore = useConfigurationResourceStore();
 // Defined the translation variable
 const { t } = useI18n({});
 
+// Load page
 const loadPage = ref(false);
 
 // Get all records
@@ -136,12 +224,8 @@ async function handleOpenDialog(action: TDialog, recordId?: number): Promise<voi
       actionName.value = action;
       configurationResourceStore.handleIndex('restore').then(() => {
         if (
-          !checkObject.handleCheckIfObject(
-            configurationResourceStore.getAllDeletedRecords
-          ) &&
-          !checkObject.handleCheckIfArray(
-            configurationResourceStore.getAllDeletedRecords.results
-          )
+          !checkObject.handleCheckIfObject(configurationResourceStore.getAllDeletedRecords) &&
+          !checkObject.handleCheckIfArray(configurationResourceStore.getAllDeletedRecords.results)
         ) {
           disableActionDialogButton.value = {
             action: action,
@@ -227,12 +311,12 @@ const handleNavigateToPage = (action: TDialog) => {
   let actionWords;
   let actionName;
   if (action.includes('-')) {
-    actionWords = action.split('-');
+    actionWords = action.split('-')
     actionName = actionWords[1].charAt(0).toUpperCase() + actionWords[1].slice(1);
     const selectedRecordId = configurationResourceStore.getSingleRecord.results[0].id;
-    navigateToRoute.handleNavigateToRoute(
+      navigateToRoute.handleNavigateToRoute(
       router,
-      `AdminManagementContent${actionName}Page`,
+      `AdminSettingConfigurationResource${actionName}Page`,
       ({ id: selectedRecordId } as unknown) as RouteParamsRaw
     );
   } else {
@@ -240,10 +324,12 @@ const handleNavigateToPage = (action: TDialog) => {
     actionName = actionWords.charAt(0).toUpperCase() + actionWords.slice(1);
     navigateToRoute.handleNavigateToRoute(
       router,
-      `AdminManagementContent${actionName}Page`
+      `AdminSettingConfigurationResource${actionName}Page`
     );
   }
 };
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+@import 'src/css/pages/admin/settings.scss';
+</style>

@@ -26,7 +26,7 @@
     </div>
 
     <div v-else>
-      <management-card-go-to-configure-resource :resource="resource.toLowerCase()" />
+      <card-go-to-configure-resource :resource="resource.toLowerCase()" />
     </div>
   </div>
 </template>
@@ -39,7 +39,7 @@ import { useI18n } from 'vue-i18n';
 import { HandleObject } from 'src/utilities/HandleObject';
 import { TDialog } from 'src/interfaces/BaseInterface';
 import { IConfigurationInput } from 'src/interfaces/ConfigurationResourceInterface';
-import ManagementCardGoToConfigureResource from 'src/components/ManagementCardGoToConfigureResource.vue';
+import CardGoToConfigureResource from 'src/components/CardGoToConfigureResource.vue';
 
 interface IManagementCardCreate {
   actionName: TDialog | undefined;

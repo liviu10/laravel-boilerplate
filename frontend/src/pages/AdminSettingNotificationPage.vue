@@ -1,9 +1,9 @@
 <template>
   <q-page class="admin admin--page">
 
-    <page-title :page-title="t('admin.settings.notification.title')" />
+    <page-title :page-title="t('admin.setting.notification.title')" />
 
-    <page-description :page-description="t('admin.settings.notification.page_description')" />
+    <page-description :page-description="t('admin.setting.notification.page_description')" />
 
     <page-loading :visible="loadPage" />
 

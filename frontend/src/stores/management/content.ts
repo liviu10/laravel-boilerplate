@@ -26,6 +26,7 @@ export const useContentStore = defineStore('contentStore', () => {
   // State
   const resourceName = 'Content'
   const resourceEndpoint: Ref<string> = ref('')
+  const translationString: Ref<string> = ref('')
   const allRecords: Ref<IAllRecords> = ref({} as IAllRecords)
   const columns: Ref<QTableProps['columns']> = ref(defaultColumns as QTableProps['columns'])
   const dataModel: Ref<IConfigurationInput[]> = ref(defaultDataModel as IConfigurationInput[])
@@ -36,6 +37,14 @@ export const useContentStore = defineStore('contentStore', () => {
   const singleRecord: Ref<ISingleRecord> = ref({} as ISingleRecord)
 
   // Getters
+  const getTranslationString = computed(() => {
+    translationString.value = window.location.pathname
+      .replace(/\//g, '.')
+      .substring(1)
+      .replace(/\b(create|show|edit)\b/g, '')
+      .replace(/\.$/, '');
+    return translationString.value
+  })
   const getAllRecords = computed(() => allRecords.value)
   const getColumns = computed(() => columns.value)
   const getDataModel = computed(() => dataModel.value)
@@ -216,6 +225,7 @@ export const useContentStore = defineStore('contentStore', () => {
 
   return {
     resourceName,
+    getTranslationString,
     getAllRecords,
     getColumns,
     getDataModel,
