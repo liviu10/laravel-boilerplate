@@ -6,7 +6,9 @@
           v-if="checkObject.handleCheckIfArray(input.configuration_options)"
           dense
           emit-value
-          :label="t(`admin.management.${resource.toLowerCase()}.data_model.${input.field}`)"
+          :label="
+            t(`admin.management.${resource.toLowerCase()}.data_model.${input.field}`)
+          "
           outlined
           square
           stack-label
@@ -16,7 +18,9 @@
         <q-input
           v-else
           dense
-          :label="t(`admin.management.${resource.toLowerCase()}.data_model.${input.field}`)"
+          :label="
+            t(`admin.management.${resource.toLowerCase()}.data_model.${input.field}`)
+          "
           outlined
           square
           stack-label
@@ -26,7 +30,10 @@
     </div>
 
     <div v-else>
-      <card-go-to-configure-resource :resource="resource.toLowerCase()" />
+      <card-go-to-configure-resource
+        :resource="resource"
+        :translation-string="translationString"
+      />
     </div>
   </div>
 </template>
@@ -45,6 +52,7 @@ interface IManagementCardCreate {
   actionName: TDialog | undefined;
   dataModel?: IConfigurationInput[];
   resource: string;
+  translationString: string;
 }
 
 defineProps<IManagementCardCreate>();

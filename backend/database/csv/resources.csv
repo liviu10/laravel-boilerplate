@@ -3,7 +3,7 @@ id,type,path,name,component,layout,title,caption,icon,is_active,requires_auth,us
 2,Menu,/admin/management,AdminManagementPage,pages/admin/AdminManagementPage.vue,src/layouts/AdminLayout.vue,admin.management.title,admin.management.description,group_work,1,1,1,2023-09-15,2023-09-15
 3,Menu,/admin/communication,AdminCommunicationPage,pages/admin/AdminCommunicationPage.vue,src/layouts/AdminLayout.vue,admin.communication.title,admin.communication.description,subscriptions,1,1,1,2023-09-15,2023-09-15
 4,Menu,/admin/documentation,AdminDocumentationPage,pages/admin/AdminDocumentationPage.vue,src/layouts/AdminLayout.vue,admin.documentation.title,admin.documentation.description,description,1,1,1,2023-09-15,2023-09-15
-5,Menu,/admin/settings,AdminSettingPage,pages/admin/AdminSettingPage.vue,src/layouts/AdminLayout.vue,admin.setting.title,admin.setting.description,settings,1,1,1,2023-09-15,2023-09-15
+5,Menu,/admin/settings,AdminSettingPage,pages/admin/AdminSettingPage.vue,src/layouts/AdminLayout.vue,admin.settings.title,admin.settings.description,settings,1,1,1,2023-09-15,2023-09-15
 6,API,/admin/management,null,null,null,null,null,null,1,1,1,2023-09-15,2023-09-15
 7,API,/admin/management/contents,null,null,null,null,null,null,1,1,1,2023-09-15,2023-09-15
 8,API,/admin/management/tags,null,null,null,null,null,null,1,1,1,2023-09-15,2023-09-15

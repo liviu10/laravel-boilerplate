@@ -33,11 +33,17 @@
       </div>
 
       <div v-else>
-        <card-go-to-configure-resource :resource="contentStore.resourceName.toLowerCase()" />
+        <card-go-to-configure-resource
+          :resource="contentStore.resourceName.toLowerCase()"
+          :translation-string="contentStore.getTranslationString"
+        />
       </div>
 
       <div v-if="checkObject.handleCheckIfArray(tagStore.getDataModel)">
-        <q-expansion-item v-model="tagExpansionItem" :label="t(`${tagStore.getTranslationString}.title`)">
+        <q-expansion-item
+          v-model="tagExpansionItem"
+          :label="t(`${tagStore.getTranslationString}.title`)"
+        >
           <q-card>
             <q-card-section>
               <div v-for="input in tagStore.getDataModel" :key="input.id">
@@ -67,8 +73,13 @@
         </q-expansion-item>
       </div>
 
+      {{ mediaStore.getTranslationString }}
+
       <div v-if="checkObject.handleCheckIfArray(mediaStore.getDataModel)">
-        <q-expansion-item v-model="mediaExpansionItem" :label="t(`${mediaStore.getTranslationString}.title`)">
+        <q-expansion-item
+          v-model="mediaExpansionItem"
+          :label="t(`${mediaStore.getTranslationString}.title`)"
+        >
           <q-card>
             <q-card-section>
               <div v-for="input in mediaStore.getDataModel" :key="input.id">
@@ -76,7 +87,9 @@
                   v-if="checkObject.handleCheckIfArray(input.configuration_options)"
                   dense
                   emit-value
-                  :label="t(`${mediaStore.getTranslationString}.data_model.${input.field}`)"
+                  :label="
+                    t(`${mediaStore.getTranslationString}.data_model.${input.field}`)
+                  "
                   outlined
                   square
                   stack-label
@@ -86,7 +99,9 @@
                 <q-input
                   v-else
                   dense
-                  :label="t(`${mediaStore.getTranslationString}.data_model.${input.field}`)"
+                  :label="
+                    t(`${mediaStore.getTranslationString}.data_model.${input.field}`)
+                  "
                   outlined
                   square
                   stack-label

@@ -196,7 +196,7 @@ export default {
         repudiandae, numquam, dicta earum, cupiditate consequuntur?
       `,
     },
-    setting: {
+    settings: {
       title: 'Settings',
       user_profile: {
         title: 'User profile',
