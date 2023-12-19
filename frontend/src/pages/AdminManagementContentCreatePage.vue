@@ -34,7 +34,7 @@
 
       <div v-else>
         <card-go-to-configure-resource
-          :resource="contentStore.resourceName.toLowerCase()"
+          :resource="contentStore.getResourceName.toLowerCase()"
           :translation-string="contentStore.getTranslationString"
         />
       </div>
@@ -72,8 +72,6 @@
           </q-card>
         </q-expansion-item>
       </div>
-
-      {{ mediaStore.getTranslationString }}
 
       <div v-if="checkObject.handleCheckIfArray(mediaStore.getDataModel)">
         <q-expansion-item

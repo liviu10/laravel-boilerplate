@@ -275,7 +275,7 @@ export default {
           repudiandae, numquam, dicta earum, cupiditate consequuntur?
         `,
       },
-      configuration_resource: {
+      configuration_resources: {
         title: 'Configuration resources',
         page_description: `
           Lorem ipsum dolor sit amet consectetur adipisicing elit.

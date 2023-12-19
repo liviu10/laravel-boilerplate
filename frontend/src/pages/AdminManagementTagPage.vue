@@ -9,7 +9,7 @@
     <div class="admin-section admin-section--container">
       <grid-table
         :columns="tagStore.getColumns"
-        :resource="tagStore.resourceName"
+        :resource="tagStore.getResourceName"
         :rows="tagStore.getAllRecords.results?.data || []"
         @handle-open-dialog="handleOpenDialog"
       />
@@ -31,7 +31,7 @@
           v-if="actionName === 'create'"
           action-name="create"
           :data-model="tagStore.getDataModel"
-          :resource="tagStore.resourceName"
+          :resource="tagStore.getResourceName"
           :translation-string="tagStore.getTranslationString"
         />
 
@@ -39,7 +39,7 @@
           v-if="actionName === 'advanced-filters'"
           action-name="advanced-filters"
           :data-model="tagStore.getFilterModel"
-          :resource="tagStore.resourceName"
+          :resource="tagStore.getResourceName"
           :translation-string="tagStore.getTranslationString"
         />
 
@@ -47,7 +47,7 @@
           v-if="actionName === 'upload'"
           action-name="upload"
           :data-model="tagStore.getUploadModel"
-          :resource="tagStore.resourceName"
+          :resource="tagStore.getResourceName"
           :translation-string="tagStore.getTranslationString"
         />
 
@@ -55,7 +55,7 @@
           v-if="actionName === 'download'"
           action-name="download"
           :data-model="tagStore.getDownloadModel"
-          :resource="tagStore.resourceName"
+          :resource="tagStore.getResourceName"
           :translation-string="tagStore.getTranslationString"
         />
 
@@ -63,7 +63,7 @@
           v-if="actionName === 'restore'"
           action-name="restore"
           :record-details="tagStore.getAllDeletedRecords"
-          :resource="tagStore.resourceName"
+          :resource="tagStore.getResourceName"
           :translation-string="tagStore.getTranslationString"
         />
 
@@ -71,7 +71,7 @@
           v-if="actionName === 'quick-show'"
           action-name="quick-show"
           :record-details="tagStore.getSingleRecord"
-          :resource="tagStore.resourceName"
+          :resource="tagStore.getResourceName"
           :translation-string="tagStore.getTranslationString"
         />
 
@@ -79,14 +79,14 @@
           v-if="actionName === 'quick-edit'"
           action-name="quick-edit"
           :data-model="tagStore.getDataModel"
-          :resource="tagStore.resourceName"
+          :resource="tagStore.getResourceName"
           :translation-string="tagStore.getTranslationString"
         >
           <template v-slot:record-details>
             <management-card-quick-show
               action-name="quick-show"
               :record-details="tagStore.getSingleRecord"
-              :resource="tagStore.resourceName"
+              :resource="tagStore.getResourceName"
               :translation-string="tagStore.getTranslationString"
             />
           </template>
@@ -95,14 +95,14 @@
         <management-card-delete
           v-if="actionName === 'delete'"
           action-name="delete"
-          :resource="tagStore.resourceName"
+          :resource="tagStore.getResourceName"
           :translation-string="tagStore.getTranslationString"
         >
           <template v-slot:record-details>
             <management-card-quick-show
               action-name="quick-show"
               :record-details="tagStore.getSingleRecord"
-              :resource="tagStore.resourceName"
+              :resource="tagStore.getResourceName"
               :translation-string="tagStore.getTranslationString"
             />
           </template>

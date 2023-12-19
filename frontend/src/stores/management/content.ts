@@ -7,6 +7,7 @@ import { QTableProps } from 'quasar'
 // Import library utilities, interfaces and components
 import { HandleApiResource } from 'src/utilities/HandleApiResource'
 import { HandleApiRequestProcessor } from 'src/utilities/HandleApiRequestProcessor'
+import { HandleRoute } from 'src/utilities/HandleRoute'
 import { defaultColumns } from 'src/assets/data/columns'
 import {
   defaultDataModel,
@@ -22,9 +23,11 @@ const handleApiResource = new HandleApiResource
 
 const handleApiRequestProcessor = new HandleApiRequestProcessor
 
+const handleRoute = new HandleRoute
+
 export const useContentStore = defineStore('contentStore', () => {
   // State
-  const resourceName = 'Content'
+  const resourceName: Ref<string> = ref('')
   const resourceEndpoint: Ref<string> = ref('')
   const translationString: Ref<string> = ref('')
   const allRecords: Ref<IAllRecords> = ref({} as IAllRecords)
@@ -37,14 +40,8 @@ export const useContentStore = defineStore('contentStore', () => {
   const singleRecord: Ref<ISingleRecord> = ref({} as ISingleRecord)
 
   // Getters
-  const getTranslationString = computed(() => {
-    translationString.value = window.location.pathname
-      .replace(/\//g, '.')
-      .substring(1)
-      .replace(/\b(create|show|edit)\b/g, '')
-      .replace(/\.$/, '');
-    return translationString.value
-  })
+  const getResourceName = computed(() => resourceName.value = handleRoute.handleResourceNameFromRoute())
+  const getTranslationString = computed(() => translationString.value = handleRoute.handleTranslationFromRoute())
   const getAllRecords = computed(() => allRecords.value)
   const getColumns = computed(() => columns.value)
   const getDataModel = computed(() => dataModel.value)
@@ -57,7 +54,7 @@ export const useContentStore = defineStore('contentStore', () => {
   // Actions
   async function handleIndex(type?: TResourceType) {
     try {
-      handleApiResource.apiEndpoint(resourceName, useContentStore.$id).then(
+      handleApiResource.apiEndpoint(resourceName.value, useContentStore.$id).then(
         async (apiEndpoint) => {
           if (apiEndpoint) {
             resourceEndpoint.value = apiEndpoint[0].path
@@ -89,7 +86,7 @@ export const useContentStore = defineStore('contentStore', () => {
   async function handleAdvancedFilter(type?: TResourceType) {
     const payload = handleApiRequestProcessor.createFilterPayload(filterModel.value)
     try {
-      handleApiResource.apiEndpoint(resourceName, useContentStore.$id).then(
+      handleApiResource.apiEndpoint(resourceName.value, useContentStore.$id).then(
         async (apiEndpoint) => {
           if (apiEndpoint) {
             resourceEndpoint.value = apiEndpoint[0].path
@@ -115,7 +112,7 @@ export const useContentStore = defineStore('contentStore', () => {
   async function handleUpload() {
     const payload = handleApiRequestProcessor.createPayload(uploadModel.value)
     try {
-      handleApiResource.apiEndpoint(resourceName, useContentStore.$id).then(
+      handleApiResource.apiEndpoint(resourceName.value, useContentStore.$id).then(
         async (apiEndpoint) => {
           if (apiEndpoint) {
             resourceEndpoint.value = apiEndpoint[0].path
@@ -138,7 +135,7 @@ export const useContentStore = defineStore('contentStore', () => {
   async function handleDownload() {
     const payload = handleApiRequestProcessor.createPayload(downloadModel.value)
     try {
-      handleApiResource.apiEndpoint(resourceName, useContentStore.$id).then(
+      handleApiResource.apiEndpoint(resourceName.value, useContentStore.$id).then(
         async (apiEndpoint) => {
           if (apiEndpoint) {
             resourceEndpoint.value = apiEndpoint[0].path
@@ -165,7 +162,7 @@ export const useContentStore = defineStore('contentStore', () => {
   async function handleCreate() {
     const payload = handleApiRequestProcessor.createPayload(dataModel.value)
     try {
-      handleApiResource.apiEndpoint(resourceName, useContentStore.$id).then(
+      handleApiResource.apiEndpoint(resourceName.value, useContentStore.$id).then(
         async (apiEndpoint) => {
           if (apiEndpoint) {
             resourceEndpoint.value = apiEndpoint[0].path
@@ -187,7 +184,7 @@ export const useContentStore = defineStore('contentStore', () => {
 
   async function handleShow(recordId: number | undefined, type?: TResourceType) {
     try {
-      handleApiResource.apiEndpoint(resourceName, useContentStore.$id).then(
+      handleApiResource.apiEndpoint(resourceName.value, useContentStore.$id).then(
         async (apiEndpoint) => {
           if (apiEndpoint) {
             resourceEndpoint.value = apiEndpoint[0].path
@@ -224,7 +221,7 @@ export const useContentStore = defineStore('contentStore', () => {
   }
 
   return {
-    resourceName,
+    getResourceName,
     getTranslationString,
     getAllRecords,
     getColumns,

@@ -1,15 +1,15 @@
 <template>
   <q-page class="admin admin--page">
-    <page-title :page-title="t('admin.setting.configuration_resource.title')" />
+    <page-title :page-title="t(`${configurationResourceStore.getTranslationString}.title`)" />
 
     <page-description
-      :page-description="t('admin.setting.configuration_resource.page_description')"
+      :page-description="t(`${configurationResourceStore.getTranslationString}.page_description`)"
     />
 
     <div class="admin-section admin-section--container">
       <grid-table
         :columns="configurationResourceStore.getColumns"
-        :resource="configurationResourceStore.resourceName"
+        :resource="configurationResourceStore.getResourceName"
         :rows="configurationResourceStore.getAllRecords.results?.data || []"
         @handle-open-dialog="handleOpenDialog"
       />
@@ -29,48 +29,55 @@
           v-if="actionName === 'advanced-filters'"
           action-name="advanced-filters"
           :data-model="configurationResourceStore.getFilterModel"
-          :resource="configurationResourceStore.resourceName"
+          :resource="configurationResourceStore.getResourceName"
+          :translation-string="configurationResourceStore.getTranslationString"
         />
 
         <card-upload
           v-if="actionName === 'upload'"
           action-name="upload"
           :data-model="configurationResourceStore.getUploadModel"
-          :resource="configurationResourceStore.resourceName"
+          :resource="configurationResourceStore.getResourceName"
+          :translation-string="configurationResourceStore.getTranslationString"
         />
 
         <card-download
           v-if="actionName === 'download'"
           action-name="download"
           :data-model="configurationResourceStore.getDownloadModel"
-          :resource="configurationResourceStore.resourceName"
+          :resource="configurationResourceStore.getResourceName"
+          :translation-string="configurationResourceStore.getTranslationString"
         />
 
         <management-card-restore
           v-if="actionName === 'restore'"
           action-name="restore"
           :record-details="configurationResourceStore.getAllDeletedRecords"
-          :resource="configurationResourceStore.resourceName"
+          :resource="configurationResourceStore.getResourceName"
+          :translation-string="configurationResourceStore.getTranslationString"
         />
 
         <management-card-quick-show
           v-if="actionName === 'quick-show'"
           action-name="quick-show"
           :record-details="configurationResourceStore.getSingleRecord"
-          :resource="configurationResourceStore.resourceName"
+          :resource="configurationResourceStore.getResourceName"
+          :translation-string="configurationResourceStore.getTranslationString"
         />
 
         <management-card-quick-edit
           v-if="actionName === 'quick-edit'"
           action-name="quick-edit"
           :data-model="configurationResourceStore.getDataModel"
-          :resource="configurationResourceStore.resourceName"
+          :resource="configurationResourceStore.getResourceName"
+          :translation-string="configurationResourceStore.getTranslationString"
         >
           <template v-slot:record-details>
             <management-card-quick-show
               action-name="quick-show"
               :record-details="configurationResourceStore.getSingleRecord"
-              :resource="configurationResourceStore.resourceName"
+              :resource="configurationResourceStore.getResourceName"
+              :translation-string="configurationResourceStore.getTranslationString"
             />
           </template>
         </management-card-quick-edit>
@@ -78,13 +85,15 @@
         <management-card-delete
           v-if="actionName === 'delete'"
           action-name="delete"
-          :resource="configurationResourceStore.resourceName"
+          :resource="configurationResourceStore.getResourceName"
+          :translation-string="configurationResourceStore.getTranslationString"
         >
           <template v-slot:record-details>
             <management-card-quick-show
               action-name="quick-show"
               :record-details="configurationResourceStore.getSingleRecord"
-              :resource="configurationResourceStore.resourceName"
+              :resource="configurationResourceStore.getResourceName"
+              :translation-string="configurationResourceStore.getTranslationString"
             />
           </template>
         </management-card-delete>

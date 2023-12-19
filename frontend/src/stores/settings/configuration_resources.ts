@@ -7,6 +7,7 @@ import { QTableProps } from 'quasar'
 // Import library utilities, interfaces and components
 import { HandleApiResource } from 'src/utilities/HandleApiResource'
 import { HandleApiRequestProcessor } from 'src/utilities/HandleApiRequestProcessor'
+import { HandleRoute } from 'src/utilities/HandleRoute'
 import { defaultColumns } from 'src/assets/data/columns'
 import {
   defaultDataModel,
@@ -26,10 +27,13 @@ const handleApiResource = new HandleApiResource
 
 const handleApiRequestProcessor = new HandleApiRequestProcessor
 
+const handleRoute = new HandleRoute
+
 export const useConfigurationResourceStore = defineStore('configurationResourceStore', () => {
   // State
-  const resourceName = 'Configuration'
+  const resourceName: Ref<string> = ref('')
   const resourceEndpoint: Ref<string> = ref('')
+  const translationString: Ref<string> = ref('')
   const allRecords: Ref<IAllRecords> = ref({} as IAllRecords)
   const columns: Ref<QTableProps['columns']> = ref(defaultColumns as QTableProps['columns'])
   const dataModel: Ref<IConfigurationInput[]> = ref(defaultDataModel as IConfigurationInput[])
@@ -40,6 +44,8 @@ export const useConfigurationResourceStore = defineStore('configurationResourceS
   const singleRecord: Ref<ISingleRecord> = ref({} as ISingleRecord)
 
   // Getters
+  const getResourceName = computed(() => resourceName.value = handleRoute.handleResourceNameFromRoute())
+  const getTranslationString = computed(() => translationString.value = handleRoute.handleTranslationFromRoute())
   const getAllRecords = computed(() => allRecords.value)
   const getColumns = computed(() => columns.value)
   const getDataModel = computed(() => dataModel.value)
@@ -52,7 +58,7 @@ export const useConfigurationResourceStore = defineStore('configurationResourceS
   // Actions
   async function handleIndex(type?: TResourceType) {
     try {
-      handleApiResource.apiEndpoint(resourceName, useConfigurationResourceStore.$id).then(
+      handleApiResource.apiEndpoint(resourceName.value, useConfigurationResourceStore.$id).then(
         async (apiEndpoint) => {
           if (apiEndpoint) {
             resourceEndpoint.value = apiEndpoint[0].path
@@ -84,7 +90,7 @@ export const useConfigurationResourceStore = defineStore('configurationResourceS
   async function handleAdvancedFilter(type?: TResourceType) {
     const payload = handleApiRequestProcessor.createFilterPayload(filterModel.value)
     try {
-      handleApiResource.apiEndpoint(resourceName, useConfigurationResourceStore.$id).then(
+      handleApiResource.apiEndpoint(resourceName.value, useConfigurationResourceStore.$id).then(
         async (apiEndpoint) => {
           if (apiEndpoint) {
             resourceEndpoint.value = apiEndpoint[0].path
@@ -110,7 +116,7 @@ export const useConfigurationResourceStore = defineStore('configurationResourceS
   async function handleUpload() {
     const payload = handleApiRequestProcessor.createPayload(uploadModel.value)
     try {
-      handleApiResource.apiEndpoint(resourceName, useConfigurationResourceStore.$id).then(
+      handleApiResource.apiEndpoint(resourceName.value, useConfigurationResourceStore.$id).then(
         async (apiEndpoint) => {
           if (apiEndpoint) {
             resourceEndpoint.value = apiEndpoint[0].path
@@ -133,7 +139,7 @@ export const useConfigurationResourceStore = defineStore('configurationResourceS
   async function handleDownload() {
     const payload = handleApiRequestProcessor.createPayload(downloadModel.value)
     try {
-      handleApiResource.apiEndpoint(resourceName, useConfigurationResourceStore.$id).then(
+      handleApiResource.apiEndpoint(resourceName.value, useConfigurationResourceStore.$id).then(
         async (apiEndpoint) => {
           if (apiEndpoint) {
             resourceEndpoint.value = apiEndpoint[0].path
@@ -160,7 +166,7 @@ export const useConfigurationResourceStore = defineStore('configurationResourceS
   async function handleCreate() {
     const payload = handleApiRequestProcessor.createPayload(dataModel.value)
     try {
-      handleApiResource.apiEndpoint(resourceName, useConfigurationResourceStore.$id).then(
+      handleApiResource.apiEndpoint(resourceName.value, useConfigurationResourceStore.$id).then(
         async (apiEndpoint) => {
           if (apiEndpoint) {
             resourceEndpoint.value = apiEndpoint[0].path
@@ -182,7 +188,7 @@ export const useConfigurationResourceStore = defineStore('configurationResourceS
 
   async function handleShow(recordId: number | undefined, type?: TResourceType) {
     try {
-      handleApiResource.apiEndpoint(resourceName, useConfigurationResourceStore.$id).then(
+      handleApiResource.apiEndpoint(resourceName.value, useConfigurationResourceStore.$id).then(
         async (apiEndpoint) => {
           if (apiEndpoint) {
             resourceEndpoint.value = apiEndpoint[0].path
@@ -219,7 +225,8 @@ export const useConfigurationResourceStore = defineStore('configurationResourceS
   }
 
   return {
-    resourceName,
+    getResourceName,
+    getTranslationString,
     getAllRecords,
     getColumns,
     getDataModel,

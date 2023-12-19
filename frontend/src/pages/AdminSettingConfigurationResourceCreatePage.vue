@@ -1,8 +1,10 @@
 <template>
   <q-page class="admin admin--page">
-    <page-title :page-title="t('admin.setting.configuration_resource.title')" />
+    <page-title :page-title="t(`${configurationResourceStore.getTranslationString}.title`)" />
 
-    <page-description :page-description="t('admin.setting.configuration_resource.page_description')" />
+    <page-description
+      :page-description="t(`${configurationResourceStore.getTranslationString}.page_description`)"
+    />
 
     <div class="admin-section admin-section--container">
       CREATE
@@ -17,6 +19,12 @@ import { useI18n } from 'vue-i18n';
 // Import library utilities, interfaces and components
 import PageTitle from 'src/components/PageTitle.vue';
 import PageDescription from 'src/components/PageDescription.vue';
+
+// Import Pinia's related utilities
+import { useConfigurationResourceStore } from 'src/stores/settings/configuration_resources';
+
+// Instantiate the pinia store
+const configurationResourceStore = useConfigurationResourceStore();
 
 // Defined the translation variable
 const { t } = useI18n({});

@@ -9,7 +9,7 @@
     <div class="admin-section admin-section--container">
       <grid-table
         :columns="contentStore.getColumns"
-        :resource="contentStore.resourceName"
+        :resource="contentStore.getResourceName"
         :rows="contentStore.getAllRecords.results?.data || []"
         @handle-open-dialog="handleOpenDialog"
       />
@@ -29,7 +29,7 @@
           v-if="actionName === 'advanced-filters'"
           action-name="advanced-filters"
           :data-model="contentStore.getFilterModel"
-          :resource="contentStore.resourceName"
+          :resource="contentStore.getResourceName"
           :translation-string="contentStore.getTranslationString"
         />
 
@@ -37,7 +37,7 @@
           v-if="actionName === 'upload'"
           action-name="upload"
           :data-model="contentStore.getUploadModel"
-          :resource="contentStore.resourceName"
+          :resource="contentStore.getResourceName"
           :translation-string="contentStore.getTranslationString"
         />
 
@@ -45,7 +45,7 @@
           v-if="actionName === 'download'"
           action-name="download"
           :data-model="contentStore.getDownloadModel"
-          :resource="contentStore.resourceName"
+          :resource="contentStore.getResourceName"
           :translation-string="contentStore.getTranslationString"
         />
 
@@ -53,7 +53,7 @@
           v-if="actionName === 'restore'"
           action-name="restore"
           :record-details="contentStore.getAllDeletedRecords"
-          :resource="contentStore.resourceName"
+          :resource="contentStore.getResourceName"
           :translation-string="contentStore.getTranslationString"
         />
 
@@ -61,7 +61,7 @@
           v-if="actionName === 'quick-show'"
           action-name="quick-show"
           :record-details="contentStore.getSingleRecord"
-          :resource="contentStore.resourceName"
+          :resource="contentStore.getResourceName"
           :translation-string="contentStore.getTranslationString"
         />
 
@@ -69,14 +69,14 @@
           v-if="actionName === 'quick-edit'"
           action-name="quick-edit"
           :data-model="contentStore.getDataModel"
-          :resource="contentStore.resourceName"
+          :resource="contentStore.getResourceName"
           :translation-string="contentStore.getTranslationString"
         >
           <template v-slot:record-details>
             <management-card-quick-show
               action-name="quick-show"
               :record-details="contentStore.getSingleRecord"
-              :resource="contentStore.resourceName"
+              :resource="contentStore.getResourceName"
               :translation-string="contentStore.getTranslationString"
             />
           </template>
@@ -85,14 +85,14 @@
         <management-card-delete
           v-if="actionName === 'delete'"
           action-name="delete"
-          :resource="contentStore.resourceName"
+          :resource="contentStore.getResourceName"
           :translation-string="contentStore.getTranslationString"
         >
           <template v-slot:record-details>
             <management-card-quick-show
               action-name="quick-show"
               :record-details="contentStore.getSingleRecord"
-              :resource="contentStore.resourceName"
+              :resource="contentStore.getResourceName"
               :translation-string="contentStore.getTranslationString"
             />
           </template>

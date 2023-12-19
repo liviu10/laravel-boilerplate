@@ -9,7 +9,7 @@
     <div class="admin-section admin-section--container">
       <grid-table
         :columns="commentStore.getColumns"
-        :resource="commentStore.resourceName"
+        :resource="commentStore.getResourceName"
         :rows="commentStore.getAllRecords.results?.data || []"
         @handle-open-dialog="handleOpenDialog"
       />
@@ -31,14 +31,15 @@
           v-if="actionName === 'create'"
           action-name="create"
           :data-model="commentStore.getDataModel"
-          :resource="commentStore.resourceName"
+          :resource="commentStore.getResourceName"
+          :translation-string="commentStore.getTranslationString"
         />
 
         <card-advanced-filter
           v-if="actionName === 'advanced-filters'"
           action-name="advanced-filters"
           :data-model="commentStore.getFilterModel"
-          :resource="commentStore.resourceName"
+          :resource="commentStore.getResourceName"
           :translation-string="commentStore.getTranslationString"
         />
 
@@ -46,7 +47,7 @@
           v-if="actionName === 'upload'"
           action-name="upload"
           :data-model="commentStore.getUploadModel"
-          :resource="commentStore.resourceName"
+          :resource="commentStore.getResourceName"
           :translation-string="commentStore.getTranslationString"
         />
 
@@ -54,7 +55,7 @@
           v-if="actionName === 'download'"
           action-name="download"
           :data-model="commentStore.getDownloadModel"
-          :resource="commentStore.resourceName"
+          :resource="commentStore.getResourceName"
           :translation-string="commentStore.getTranslationString"
         />
 
@@ -62,7 +63,7 @@
           v-if="actionName === 'restore'"
           action-name="restore"
           :record-details="commentStore.getAllDeletedRecords"
-          :resource="commentStore.resourceName"
+          :resource="commentStore.getResourceName"
           :translation-string="commentStore.getTranslationString"
         />
 
@@ -70,7 +71,7 @@
           v-if="actionName === 'quick-show'"
           action-name="quick-show"
           :record-details="commentStore.getSingleRecord"
-          :resource="commentStore.resourceName"
+          :resource="commentStore.getResourceName"
           :translation-string="commentStore.getTranslationString"
         />
 
@@ -78,14 +79,14 @@
           v-if="actionName === 'quick-edit'"
           action-name="quick-edit"
           :data-model="commentStore.getDataModel"
-          :resource="commentStore.resourceName"
+          :resource="commentStore.getResourceName"
           :translation-string="commentStore.getTranslationString"
         >
           <template v-slot:record-details>
             <management-card-quick-show
               action-name="quick-show"
               :record-details="commentStore.getSingleRecord"
-              :resource="commentStore.resourceName"
+              :resource="commentStore.getResourceName"
               :translation-string="commentStore.getTranslationString"
             />
           </template>
@@ -94,14 +95,14 @@
         <management-card-delete
           v-if="actionName === 'delete'"
           action-name="delete"
-          :resource="commentStore.resourceName"
+          :resource="commentStore.getResourceName"
           :translation-string="commentStore.getTranslationString"
         >
           <template v-slot:record-details>
             <management-card-quick-show
               action-name="quick-show"
               :record-details="commentStore.getSingleRecord"
-              :resource="commentStore.resourceName"
+              :resource="commentStore.getResourceName"
               :translation-string="commentStore.getTranslationString"
             />
           </template>

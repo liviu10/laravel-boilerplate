@@ -9,7 +9,7 @@
     <div class="admin-section admin-section--container">
       <grid-table
         :columns="appreciationStore.getColumns"
-        :resource="appreciationStore.resourceName"
+        :resource="appreciationStore.getResourceName"
         :rows="appreciationStore.getAllRecords.results?.data || []"
         @handle-open-dialog="handleOpenDialog"
       />
@@ -31,14 +31,15 @@
           v-if="actionName === 'create'"
           action-name="create"
           :data-model="appreciationStore.getDataModel"
-          :resource="appreciationStore.resourceName"
+          :resource="appreciationStore.getResourceName"
+          :translation-string="appreciationStore.getTranslationString"
         />
 
         <card-advanced-filter
           v-if="actionName === 'advanced-filters'"
           action-name="advanced-filters"
           :data-model="appreciationStore.getFilterModel"
-          :resource="appreciationStore.resourceName"
+          :resource="appreciationStore.getResourceName"
           :translation-string="appreciationStore.getTranslationString"
         />
 
@@ -46,7 +47,7 @@
           v-if="actionName === 'upload'"
           action-name="upload"
           :data-model="appreciationStore.getUploadModel"
-          :resource="appreciationStore.resourceName"
+          :resource="appreciationStore.getResourceName"
           :translation-string="appreciationStore.getTranslationString"
         />
 
@@ -54,7 +55,7 @@
           v-if="actionName === 'download'"
           action-name="download"
           :data-model="appreciationStore.getDownloadModel"
-          :resource="appreciationStore.resourceName"
+          :resource="appreciationStore.getResourceName"
           :translation-string="appreciationStore.getTranslationString"
         />
 
@@ -62,7 +63,7 @@
           v-if="actionName === 'restore'"
           action-name="restore"
           :record-details="appreciationStore.getAllDeletedRecords"
-          :resource="appreciationStore.resourceName"
+          :resource="appreciationStore.getResourceName"
           :translation-string="appreciationStore.getTranslationString"
         />
 
@@ -70,7 +71,7 @@
           v-if="actionName === 'quick-show'"
           action-name="quick-show"
           :record-details="appreciationStore.getSingleRecord"
-          :resource="appreciationStore.resourceName"
+          :resource="appreciationStore.getResourceName"
           :translation-string="appreciationStore.getTranslationString"
         />
 
@@ -78,14 +79,14 @@
           v-if="actionName === 'quick-edit'"
           action-name="quick-edit"
           :data-model="appreciationStore.getDataModel"
-          :resource="appreciationStore.resourceName"
+          :resource="appreciationStore.getResourceName"
           :translation-string="appreciationStore.getTranslationString"
         >
           <template v-slot:record-details>
             <management-card-quick-show
               action-name="quick-show"
               :record-details="appreciationStore.getSingleRecord"
-              :resource="appreciationStore.resourceName"
+              :resource="appreciationStore.getResourceName"
               :translation-string="appreciationStore.getTranslationString"
             />
           </template>
@@ -94,14 +95,14 @@
         <management-card-delete
           v-if="actionName === 'delete'"
           action-name="delete"
-          :resource="appreciationStore.resourceName"
+          :resource="appreciationStore.getResourceName"
           :translation-string="appreciationStore.getTranslationString"
         >
           <template v-slot:record-details>
             <management-card-quick-show
               action-name="quick-show"
               :record-details="appreciationStore.getSingleRecord"
-              :resource="appreciationStore.resourceName"
+              :resource="appreciationStore.getResourceName"
               :translation-string="appreciationStore.getTranslationString"
             />
           </template>
