@@ -15,6 +15,10 @@ class DatabaseSeeder extends Seeder
     {
         $this->call([
             AcceptedDomainSeeder::class,
+            ConfigurationColumnSeeder::class,
+            ConfigurationInputSeeder::class,
+            ConfigurationResourceSeeder::class,
+            ConfigurationTypeSeeder::class,
             ContactSubjectSeeder::class,
             NewsletterCampaignSeeder::class,
             PermissionSeeder::class,

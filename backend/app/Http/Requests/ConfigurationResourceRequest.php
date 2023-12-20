@@ -32,6 +32,7 @@ class ConfigurationResourceRequest extends FormRequest
         {
             $rules = [
                 'resource' => 'required|string',
+                'key'      => 'required|string',
             ];
         }
 
@@ -40,6 +41,7 @@ class ConfigurationResourceRequest extends FormRequest
         {
             $rules = [
                 'resource' => 'sometimes|string',
+                'key'      => 'sometimes|string',
             ];
         }
 
@@ -56,6 +58,8 @@ class ConfigurationResourceRequest extends FormRequest
         return [
             'resource.required' => 'The domain field is required.',
             'resource.string' => 'The domain must be a string.',
+            'key.required' => 'The key field is required.',
+            'key.string' => 'The key must be a string.',
         ];
     }
 }

@@ -18,6 +18,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
  * @property int $id
  * @property string $resource
+ * @property string $key
  * @property int $user_id
  * @property \Carbon\Carbon $created_at
  * @property \Carbon\Carbon $updated_at
@@ -40,6 +41,7 @@ class ConfigurationResource extends BaseModel
 
     protected $fillable = [
         'resource',
+        'key',
         'user_id',
     ];
 
@@ -102,6 +104,7 @@ class ConfigurationResource extends BaseModel
             $query = $this->select(
                 'id',
                 'resource',
+                'key',
                 'created_at',
                 'updated_at'
             );
@@ -111,7 +114,11 @@ class ConfigurationResource extends BaseModel
                     if ($field === 'id') {
                         $query->where($field, '=', $value);
                     } else {
-                        $query->where($field, 'LIKE', '%' . $value . '%');
+                        if ($field === 'key') {
+                            $query->where($field, 'LIKE', $value);
+                        } else {
+                            $query->where($field, 'LIKE', '%' . $value . '%');
+                        }
                     }
                 }
             }
@@ -143,6 +150,7 @@ class ConfigurationResource extends BaseModel
         try {
             $query = $this->create([
                 'resource' => $payload['resource'],
+                'key'      => $payload['key'],
                 'user_id'  => $payload['user_id'],
             ]);
 
@@ -192,7 +200,19 @@ class ConfigurationResource extends BaseModel
                                     'style',
                                     'configuration_resource_id',
                                     'configuration_type_id',
-                                );
+                                )
+                                ->with([
+                                    'configuration_options' => function ($query) {
+                                        $query->select(
+                                            'id',
+                                            'value',
+                                            'label',
+                                            'configuration_resource_id',
+                                            'configuration_type_id',
+                                            'configuration_input_id',
+                                        );
+                                    }
+                                ]);
                             },
                             'configuration_inputs' => function ($query) {
                                 $query->select(
@@ -209,7 +229,6 @@ class ConfigurationResource extends BaseModel
                                     'configuration_resource_id',
                                     'configuration_type_id',
                                 )
-                                ->where('is_active', true)
                                 ->with([
                                     'configuration_options' => function ($query) {
                                         $query->select(
@@ -254,6 +273,7 @@ class ConfigurationResource extends BaseModel
         try {
             $query = tap($this->find($id))->update([
                 'resource' => $payload['resource'],
+                'key'      => $payload['key'],
                 'user_id'  => $payload['user_id'],
             ]);
 
@@ -275,6 +295,7 @@ class ConfigurationResource extends BaseModel
     {
         $fieldTypes = [
             'resource'  => 'text',
+            'key'       => 'text',
             'user_id'   => 'number',
         ];
 

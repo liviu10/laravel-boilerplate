@@ -81,6 +81,7 @@ class ConfigurationResourceService implements BaseInterface, ConfigurationResour
         if ($this->checkPermission->handleApiCheckPermission()) {
             $apiInsertRecord = [
                 'resource' => $request['resource'],
+                'key'      => $request['key'],
                 'user_id'  => Auth::user() ? Auth::user()->id : 1,
             ];
             $createdRecord = $this->modelName->createRecord($apiInsertRecord);
@@ -123,10 +124,13 @@ class ConfigurationResourceService implements BaseInterface, ConfigurationResour
             $apiDisplaySingleRecord = $this->modelName->fetchSingleRecord($id);
             if ($apiDisplaySingleRecord && $apiDisplaySingleRecord->isNotEmpty()) {
                 $apiUpdateRecord = [
-                    'resource'    => array_key_exists('resource', $request)
+                    'resource' => array_key_exists('resource', $request)
                         ? '.' . $request['resource']
                         : $apiDisplaySingleRecord->toArray()[0]['resource'],
-                    'user_id'   => Auth::user() ? Auth::user()->id : 1,
+                    'key' => array_key_exists('key', $request)
+                        ? '.' . $request['key']
+                        : $apiDisplaySingleRecord->toArray()[0]['key'],
+                    'user_id' => Auth::user() ? Auth::user()->id : 1,
                 ];
                 $updatedRecord = $this->modelName->updateRecord($apiUpdateRecord, $id);
                 $apiUpdatedRecord = $this->apiResponse->generateApiResponse($updatedRecord->toArray(), Actions::update);

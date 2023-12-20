@@ -83,6 +83,11 @@ class ConfigurationColumn extends BaseModel
         return $this->belongsTo('App\Models\ConfigurationType');
     }
 
+    public function configuration_options()
+    {
+        return $this->hasMany('App\Models\ConfigurationOption');
+    }
+
     /**
      * Create a new record in the database.
      * @param array $payload An associative array containing record data.

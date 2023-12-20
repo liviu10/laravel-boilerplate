@@ -27,8 +27,8 @@ return new class extends Migration
     public function down(): void
     {
         Schema::table('set_configuration_options', function (Blueprint $table) {
-            $table->dropForeign(['configuration_resource_id']);
-            $table->dropColumn('configuration_resource_id');
+            $table->dropForeign(['configuration_input_id']);
+            $table->dropColumn('configuration_input_id');
         });
     }
 };

@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('set_configuration_resources', function (Blueprint $table) {
             $table->id()->index('idx_id');
             $table->string('resource');
+            $table->string('key');
             $table->timestamps();
             $table->softDeletes();
         });
