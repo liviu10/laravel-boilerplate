@@ -80,11 +80,6 @@ class ConfigurationOption extends BaseModel
         return $this->belongsTo('App\Models\ConfigurationType');
     }
 
-    public function configuration_column()
-    {
-        return $this->belongsTo('App\Models\ConfigurationColumn');
-    }
-
     public function configuration_input()
     {
         return $this->belongsTo('App\Models\ConfigurationInput');

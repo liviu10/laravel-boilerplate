@@ -200,19 +200,7 @@ class ConfigurationResource extends BaseModel
                                     'style',
                                     'configuration_resource_id',
                                     'configuration_type_id',
-                                )
-                                ->with([
-                                    'configuration_options' => function ($query) {
-                                        $query->select(
-                                            'id',
-                                            'value',
-                                            'label',
-                                            'configuration_resource_id',
-                                            'configuration_type_id',
-                                            'configuration_input_id',
-                                        );
-                                    }
-                                ]);
+                                );
                             },
                             'configuration_inputs' => function ($query) {
                                 $query->select(
