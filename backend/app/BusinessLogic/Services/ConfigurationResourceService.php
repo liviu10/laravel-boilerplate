@@ -178,9 +178,15 @@ class ConfigurationResourceService implements BaseInterface, ConfigurationResour
     public function handleGetConfigurations(array $key): Response|ResponseFactory
     {
         $results = $this->handleIndex($key);
+        dd($results);
         $resourceConfigurationId = collect($results->original)->toArray()['results'][0]['id'];
         $configuration = $this->handleShow($resourceConfigurationId);
 
-        dd(collect($configuration->original)->toArray()['results']);
+        $apiDisplayAllRecords = $this->apiResponse->generateApiResponse(
+            collect($configuration->original)->toArray()['results'],
+            Actions::get
+        );
+
+        return $apiDisplayAllRecords;
     }
 }
