@@ -143,6 +143,7 @@ const { t } = useI18n({});
 const loadPage = ref(false);
 
 // Get all records
+configurationResourceStore.handleIndex();
 configurationResourceStore.handleIndex('paginate');
 
 // Display the action name & dialog

@@ -174,4 +174,13 @@ class ConfigurationResourceService implements BaseInterface, ConfigurationResour
         $resources = $this->modelName->getResources();
         $this->resourcePermissions->handleApiCreateResourcePermission($resources);
     }
+
+    public function handleGetConfigurations(array $key): Response|ResponseFactory
+    {
+        $results = $this->handleIndex($key);
+        $resourceConfigurationId = collect($results->original)->toArray()['results'][0]['id'];
+        $configuration = $this->handleShow($resourceConfigurationId);
+
+        dd(collect($configuration->original)->toArray()['results']);
+    }
 }

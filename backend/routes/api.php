@@ -80,6 +80,7 @@ Route::group(['prefix' => config('app.version')], function () {
             // Accepted domains
             Route::apiResource('/accepted-domains', AcceptedDomainController::class);
             // Configuration resources
+            Route::get('/get-configurations', [ConfigurationResourceController::class, 'getConfigurations']);
             Route::apiResource('/configuration-resources', ConfigurationResourceController::class);
             // General
             Route::apiResource('/general', GeneralController::class);
