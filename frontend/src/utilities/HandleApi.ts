@@ -3,7 +3,7 @@ import { Cookies } from 'quasar';
 
 // Import library utilities, interfaces and components
 import { IAllRecords } from 'src/interfaces/ResourceInterface'
-import { IConfiguration } from 'src/interfaces/ConfigurationResourceInterface';
+import { IConfiguration, IConfigurationColumn, IConfigurationInput } from 'src/interfaces/ConfigurationResourceInterface';
 
 // Import Pinia's related utilities
 import { useResourceStore } from 'src/stores/settings/resources';
@@ -12,6 +12,11 @@ import { useConfigurationResourceStore } from 'src/stores/settings/configuration
 interface IHandleApi {
   getEndpoint: (path: string, storeId: string) => Promise<void | IAllRecords['results']>;
   getConfiguration: (resourceName: string, storeId: string) => Promise<void | IConfiguration['results']>;
+  getColumnConfiguration: (configuration: IConfiguration['results']) => IConfigurationColumn[];
+  getDataModelConfiguration: (configuration: IConfiguration['results']) => IConfigurationInput[];
+  getFilterModelConfiguration: (configuration: IConfiguration['results']) => IConfigurationInput[];
+  getUploadModelConfiguration: (configuration: IConfiguration['results']) => IConfigurationInput[];
+  getDownloadModelConfiguration: (configuration: IConfiguration['results']) => IConfigurationInput[];
 }
 
 export class HandleApi implements IHandleApi {
@@ -83,5 +88,76 @@ export class HandleApi implements IHandleApi {
         console.log('-> finally')
       }
     }
+  }
+
+  /**
+   * Gets the column configuration from the provided IConfiguration 'results'.
+   * @param {IConfiguration['results']} configuration - The configuration results containing information about columns.
+   * @returns {IConfigurationColumn[]} - An array of IConfigurationColumn representing the configuration columns.
+   */
+  public getColumnConfiguration(configuration: IConfiguration['results']): IConfigurationColumn[] {
+    const columns = configuration[0].configuration_types[0].configuration_columns
+
+    return columns
+  }
+
+  /**
+   * Gets the input configuration from the provided IConfiguration 'results' and filters out inactive inputs.
+   * @param {IConfiguration['results']} configuration - The configuration results containing information about inputs.
+   * @returns {IConfigurationInput[]} - An array of active IConfigurationInput representing the input configuration.
+   */
+  private getInputConfiguration(configuration: IConfiguration['results']): IConfigurationInput[] {
+    const input = configuration[0].configuration_types[1].configuration_inputs.filter(input => input.is_active);
+
+    return input
+  }
+
+  /**
+   * Gets the data model configuration from the provided IConfiguration 'results' and filters out inactive and non-model inputs.
+   * @param {IConfiguration['results']} configuration - The configuration results containing information about inputs.
+   * @returns {IConfigurationInput[]} - An array of active and model IConfigurationInput representing the data model configuration.
+   */
+  public getDataModelConfiguration(configuration: IConfiguration['results']): IConfigurationInput[] {
+    let dataModel = this.getInputConfiguration(configuration)
+    dataModel = dataModel.filter(model => model.is_model && model.key !== 'upload' && model.key !== 'date_to' && model.key !== 'date_from')
+
+    return dataModel
+  }
+
+  /**
+   * Gets the filter model configuration from the provided IConfiguration 'results' and filters out inactive and non-filter inputs.
+   * @param {IConfiguration['results']} configuration - The configuration results containing information about inputs.
+   * @returns {IConfigurationInput[]} - An array of active and filter IConfigurationInput representing the filter model configuration.
+   */
+  public getFilterModelConfiguration(configuration: IConfiguration['results']): IConfigurationInput[] {
+    let filterModel = this.getInputConfiguration(configuration)
+    filterModel = filterModel.filter(filter => filter.is_filter && filter.key !== 'upload' && filter.key !== 'date_to' && filter.key !== 'date_from')
+
+    return filterModel
+  }
+
+  /**
+   * Gets the upload model configuration from the provided IConfiguration 'results'.
+   * @param {IConfiguration['results']} configuration - The configuration results containing information about inputs.
+   * @returns {IConfigurationInput[]} - An array of IConfigurationInput representing the upload model configuration.
+   */
+  public getUploadModelConfiguration(configuration: IConfiguration['results']): IConfigurationInput[] {
+    let uploadModel = this.getInputConfiguration(configuration)
+    uploadModel = uploadModel.filter(model => model.key === 'upload')
+
+    return uploadModel
+  }
+
+
+  /**
+   * Gets the download model configuration from the provided IConfiguration 'results'.
+   * @param {IConfiguration['results']} configuration - The configuration results containing information about inputs.
+   * @returns {IConfigurationInput[]} - An array of IConfigurationInput representing the download model configuration.
+   */
+  public getDownloadModelConfiguration(configuration: IConfiguration['results']): IConfigurationInput[] {
+    let downloadModel = this.getInputConfiguration(configuration)
+    downloadModel = downloadModel.filter(model => model.key === 'date_to' || model.key === 'date_from')
+
+    return downloadModel
   }
 }

@@ -62,6 +62,12 @@ export const useConfigurationResourceStore = defineStore('configurationResourceS
               async (apiConfiguration) => {
                 if (apiConfiguration) {
                   resourceEndpoint.value = apiEndpoint[0].path
+                  resourceConfiguration.value = apiConfiguration
+                  columns.value = handleApi.getColumnConfiguration(resourceConfiguration.value)
+                  dataModel.value = handleApi.getDataModelConfiguration(resourceConfiguration.value)
+                  filterModel.value = handleApi.getFilterModelConfiguration(resourceConfiguration.value)
+                  uploadModel.value = handleApi.getUploadModelConfiguration(resourceConfiguration.value)
+                  downloadModel.value = handleApi.getDownloadModelConfiguration(resourceConfiguration.value)
                   const response = await api.get(resourceEndpoint.value, {
                     params: {
                       type: type ?? undefined

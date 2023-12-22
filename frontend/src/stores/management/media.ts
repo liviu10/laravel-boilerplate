@@ -57,6 +57,7 @@ export const useMediaStore = defineStore('mediaStore', () => {
               async (apiConfiguration) => {
                 if (apiConfiguration) {
                   resourceEndpoint.value = apiEndpoint[0].path
+                  resourceConfiguration.value = apiConfiguration
                   const response = await api.get(resourceEndpoint.value, {
                     params: {
                       type: type ?? undefined
