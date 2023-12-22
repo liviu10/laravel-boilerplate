@@ -1,3 +1,7 @@
 id,accept,field,is_active,is_filter,is_model,key,name,position,type,created_at,updated_at,configuration_resource_id,configuration_type_id
 1,,resource,1,1,1,resource,admin.settings.configuration_resources.input.resource,1,text,9/25/2023 8:04,9/25/2023 8:04,7,14
 2,,key,1,1,1,key,admin.settings.configuration_resources.input.key,2,text,9/25/2023 8:04,9/25/2023 8:04,7,14
+3,,upload,1,0,1,upload,admin.generic.input.upload,3,file,9/25/2023 8:04,9/25/2023 8:04,7,14
+4,,date_to,1,0,1,date_to,admin.generic.input.date_to,4,date,9/25/2023 8:04,9/25/2023 8:04,7,14
+5,,date_from,1,0,1,date_from,admin.generic.input.date_from,5,date,9/25/2023 8:04,9/25/2023 8:04,7,14
+
