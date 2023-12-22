@@ -5,7 +5,7 @@ import { Ref, computed, ref } from 'vue'
 import { QTableProps } from 'quasar'
 
 // Import library utilities, interfaces and components
-import { HandleApiResource } from 'src/utilities/HandleApiResource'
+import { HandleApi } from 'src/utilities/HandleApi'
 import { HandleApiRequestProcessor } from 'src/utilities/HandleApiRequestProcessor'
 import { HandleRoute } from 'src/utilities/HandleRoute'
 import { defaultColumns } from 'src/assets/data/columns'
@@ -19,7 +19,7 @@ import { IConfigurationInput } from 'src/interfaces/ConfigurationResourceInterfa
 import { IAllRecords, IAllRecordsUnpaginated, ISingleRecord } from 'src/interfaces/ContentInterface'
 import { TResourceType } from 'src/interfaces/BaseInterface'
 
-const handleApiResource = new HandleApiResource
+const handleApi = new HandleApi
 
 const handleApiRequestProcessor = new HandleApiRequestProcessor
 
@@ -54,7 +54,7 @@ export const useContentStore = defineStore('contentStore', () => {
   // Actions
   async function handleIndex(type?: TResourceType) {
     try {
-      handleApiResource.apiEndpoint(resourceName.value, useContentStore.$id).then(
+      handleApi.getEndpoint(resourceName.value, useContentStore.$id).then(
         async (apiEndpoint) => {
           if (apiEndpoint) {
             resourceEndpoint.value = apiEndpoint[0].path
@@ -86,7 +86,7 @@ export const useContentStore = defineStore('contentStore', () => {
   async function handleAdvancedFilter(type?: TResourceType) {
     const payload = handleApiRequestProcessor.createFilterPayload(filterModel.value)
     try {
-      handleApiResource.apiEndpoint(resourceName.value, useContentStore.$id).then(
+      handleApi.getEndpoint(resourceName.value, useContentStore.$id).then(
         async (apiEndpoint) => {
           if (apiEndpoint) {
             resourceEndpoint.value = apiEndpoint[0].path
@@ -112,7 +112,7 @@ export const useContentStore = defineStore('contentStore', () => {
   async function handleUpload() {
     const payload = handleApiRequestProcessor.createPayload(uploadModel.value)
     try {
-      handleApiResource.apiEndpoint(resourceName.value, useContentStore.$id).then(
+      handleApi.getEndpoint(resourceName.value, useContentStore.$id).then(
         async (apiEndpoint) => {
           if (apiEndpoint) {
             resourceEndpoint.value = apiEndpoint[0].path
@@ -135,7 +135,7 @@ export const useContentStore = defineStore('contentStore', () => {
   async function handleDownload() {
     const payload = handleApiRequestProcessor.createPayload(downloadModel.value)
     try {
-      handleApiResource.apiEndpoint(resourceName.value, useContentStore.$id).then(
+      handleApi.getEndpoint(resourceName.value, useContentStore.$id).then(
         async (apiEndpoint) => {
           if (apiEndpoint) {
             resourceEndpoint.value = apiEndpoint[0].path
@@ -162,7 +162,7 @@ export const useContentStore = defineStore('contentStore', () => {
   async function handleCreate() {
     const payload = handleApiRequestProcessor.createPayload(dataModel.value)
     try {
-      handleApiResource.apiEndpoint(resourceName.value, useContentStore.$id).then(
+      handleApi.getEndpoint(resourceName.value, useContentStore.$id).then(
         async (apiEndpoint) => {
           if (apiEndpoint) {
             resourceEndpoint.value = apiEndpoint[0].path
@@ -184,7 +184,7 @@ export const useContentStore = defineStore('contentStore', () => {
 
   async function handleShow(recordId: number | undefined, type?: TResourceType) {
     try {
-      handleApiResource.apiEndpoint(resourceName.value, useContentStore.$id).then(
+      handleApi.getEndpoint(resourceName.value, useContentStore.$id).then(
         async (apiEndpoint) => {
           if (apiEndpoint) {
             resourceEndpoint.value = apiEndpoint[0].path

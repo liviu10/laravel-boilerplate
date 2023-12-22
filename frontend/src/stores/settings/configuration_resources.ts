@@ -5,7 +5,7 @@ import { Ref, computed, ref } from 'vue'
 import { QTableProps } from 'quasar'
 
 // Import library utilities, interfaces and components
-import { HandleApiResource } from 'src/utilities/HandleApiResource'
+import { HandleApi } from 'src/utilities/HandleApi'
 import { HandleApiRequestProcessor } from 'src/utilities/HandleApiRequestProcessor'
 import { HandleRoute } from 'src/utilities/HandleRoute'
 import { defaultColumns } from 'src/assets/data/columns'
@@ -23,7 +23,7 @@ import {
 } from 'src/interfaces/ConfigurationResourceInterface'
 import { TResourceType } from 'src/interfaces/BaseInterface'
 
-const handleApiResource = new HandleApiResource
+const handleApi = new HandleApi
 
 const handleApiRequestProcessor = new HandleApiRequestProcessor
 
@@ -56,9 +56,34 @@ export const useConfigurationResourceStore = defineStore('configurationResourceS
   const getSingleRecord = computed(() => singleRecord.value)
 
   // Actions
+  async function handleGetConfigurations() {
+    try {
+      handleApi.getEndpoint(resourceName.value, useConfigurationResourceStore.$id).then(
+        async (apiEndpoint) => {
+          if (apiEndpoint) {
+            resourceEndpoint.value = apiEndpoint[0].path
+            const response = await api.get('admin/settings/get-configurations', {
+              params: {
+                key: resourceName.value ?? undefined
+              }
+            })
+            singleRecord.value = response.data as ISingleRecord
+            console.log('-> handleShow', singleRecord.value)
+          } else {
+            console.log('-> apiEndpoint does not exist', apiEndpoint)
+          }
+        }
+      )
+    } catch (error) {
+      console.log('-> catch', error)
+    } finally {
+      console.log('-> finally')
+    }
+  }
+
   async function handleIndex(type?: TResourceType) {
     try {
-      handleApiResource.apiEndpoint(resourceName.value, useConfigurationResourceStore.$id).then(
+      handleApi.getEndpoint(resourceName.value, useConfigurationResourceStore.$id).then(
         async (apiEndpoint) => {
           if (apiEndpoint) {
             resourceEndpoint.value = apiEndpoint[0].path
@@ -90,7 +115,7 @@ export const useConfigurationResourceStore = defineStore('configurationResourceS
   async function handleAdvancedFilter(type?: TResourceType) {
     const payload = handleApiRequestProcessor.createFilterPayload(filterModel.value)
     try {
-      handleApiResource.apiEndpoint(resourceName.value, useConfigurationResourceStore.$id).then(
+      handleApi.getEndpoint(resourceName.value, useConfigurationResourceStore.$id).then(
         async (apiEndpoint) => {
           if (apiEndpoint) {
             resourceEndpoint.value = apiEndpoint[0].path
@@ -116,7 +141,7 @@ export const useConfigurationResourceStore = defineStore('configurationResourceS
   async function handleUpload() {
     const payload = handleApiRequestProcessor.createPayload(uploadModel.value)
     try {
-      handleApiResource.apiEndpoint(resourceName.value, useConfigurationResourceStore.$id).then(
+      handleApi.getEndpoint(resourceName.value, useConfigurationResourceStore.$id).then(
         async (apiEndpoint) => {
           if (apiEndpoint) {
             resourceEndpoint.value = apiEndpoint[0].path
@@ -139,7 +164,7 @@ export const useConfigurationResourceStore = defineStore('configurationResourceS
   async function handleDownload() {
     const payload = handleApiRequestProcessor.createPayload(downloadModel.value)
     try {
-      handleApiResource.apiEndpoint(resourceName.value, useConfigurationResourceStore.$id).then(
+      handleApi.getEndpoint(resourceName.value, useConfigurationResourceStore.$id).then(
         async (apiEndpoint) => {
           if (apiEndpoint) {
             resourceEndpoint.value = apiEndpoint[0].path
@@ -166,7 +191,7 @@ export const useConfigurationResourceStore = defineStore('configurationResourceS
   async function handleCreate() {
     const payload = handleApiRequestProcessor.createPayload(dataModel.value)
     try {
-      handleApiResource.apiEndpoint(resourceName.value, useConfigurationResourceStore.$id).then(
+      handleApi.getEndpoint(resourceName.value, useConfigurationResourceStore.$id).then(
         async (apiEndpoint) => {
           if (apiEndpoint) {
             resourceEndpoint.value = apiEndpoint[0].path
@@ -188,7 +213,7 @@ export const useConfigurationResourceStore = defineStore('configurationResourceS
 
   async function handleShow(recordId: number | undefined, type?: TResourceType) {
     try {
-      handleApiResource.apiEndpoint(resourceName.value, useConfigurationResourceStore.$id).then(
+      handleApi.getEndpoint(resourceName.value, useConfigurationResourceStore.$id).then(
         async (apiEndpoint) => {
           if (apiEndpoint) {
             resourceEndpoint.value = apiEndpoint[0].path
@@ -235,6 +260,7 @@ export const useConfigurationResourceStore = defineStore('configurationResourceS
     getDownloadModel,
     getAllDeletedRecords,
     getSingleRecord,
+    handleGetConfigurations,
     handleIndex,
     handleAdvancedFilter,
     handleUpload,

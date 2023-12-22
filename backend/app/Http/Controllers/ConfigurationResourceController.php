@@ -22,8 +22,8 @@ class ConfigurationResourceController extends Controller
         parent::__construct(ConfigurationResourceInterface::class, ConfigurationResourceRequest::class);
     }
 
-    public function getConfigurations(Request $request): Response|ResponseFactory
+    public function getConfiguration(Request $request): Response|ResponseFactory
     {
-        return $this->configurationResourceService->handleGetConfigurations($request->all());
+        return $this->configurationResourceService->handleGetConfiguration($request->all());
     }
 }

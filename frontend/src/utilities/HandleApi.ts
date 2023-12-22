@@ -10,11 +10,12 @@ import { useResourceStore } from 'src/stores/settings/resources';
 // Instantiate the pinia store
 const resourceStore = useResourceStore();
 
-interface IHandleApiResource {
-  apiEndpoint: (path: string, storeId: string) => Promise<void | IAllRecords['results']>;
+interface IHandleApi {
+  getEndpoint: (path: string, storeId: string) => Promise<void | IAllRecords['results']>;
+  getConfiguration: (path: string, storeId: string) => Promise<void>;
 }
 
-export class HandleApiResource implements IHandleApiResource {
+export class HandleApi implements IHandleApi {
   apiEndpointUrl: IAllRecords['results']
 
   public constructor() {
@@ -29,7 +30,7 @@ export class HandleApiResource implements IHandleApiResource {
    * @param {string} storeId - The store ID associated with the API call.
    * @returns {Promise<void | IAllRecords['results']>} A Promise that resolves with the API endpoint URL or void if an error occurs.
    */
-  public async apiEndpoint(resourceName: string, storeId: string): Promise<void | IAllRecords['results']> {
+  public async getEndpoint(resourceName: string, storeId: string): Promise<void | IAllRecords['results']> {
     if (Cookies.has(`endpoint_${resourceName.toLowerCase()}_${storeId}`)) {
       return this.apiEndpointUrl = Cookies.get(`endpoint_${resourceName.toLowerCase()}_${storeId}`)
     } else {
@@ -46,5 +47,9 @@ export class HandleApiResource implements IHandleApiResource {
         console.log('-> finally')
       }
     }
+  }
+
+  public async getConfiguration(resourceName: string, storeId: string): Promise<void> {
+
   }
 }

@@ -175,18 +175,25 @@ class ConfigurationResourceService implements BaseInterface, ConfigurationResour
         $this->resourcePermissions->handleApiCreateResourcePermission($resources);
     }
 
-    public function handleGetConfigurations(array $key): Response|ResponseFactory
+    /**
+     * Handle the GET request to retrieve configuration.
+     * @param array $key An array of keys for configuration retrieval.
+     * @return Response|ResponseFactory The HTTP response or response factory.
+     */
+    public function handleGetConfiguration(array $key): Response|ResponseFactory
     {
-        $results = $this->handleIndex($key);
-        dd($results);
-        $resourceConfigurationId = collect($results->original)->toArray()['results'][0]['id'];
-        $configuration = $this->handleShow($resourceConfigurationId);
+        if ($this->checkPermission->handleApiCheckPermission()) {
+            $allConfigurations = $this->handleIndex($key);
+            $resourceConfigurationId = collect($allConfigurations->original)->toArray()['results'][0]['id'];
 
-        $apiDisplayAllRecords = $this->apiResponse->generateApiResponse(
-            collect($configuration->original)->toArray()['results'],
-            Actions::get
-        );
+            $apiDisplayAllRecords = $this->apiResponse->generateApiResponse(
+                $this->modelName->fetchConfiguration($resourceConfigurationId, 'relation'),
+                Actions::get
+            );
 
-        return $apiDisplayAllRecords;
+            return $apiDisplayAllRecords;
+        } else {
+            return $this->apiResponse->generateApiResponse(null, Actions::forbidden);
+        }
     }
 }

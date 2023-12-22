@@ -250,6 +250,81 @@ class ConfigurationResource extends BaseModel
         }
     }
 
+    public function fetchConfiguration(int $id, string|null $type = null): Collection|bool
+    {
+        try {
+            $query = $this->select('id')->where('id', '=', $id);
+
+            if ($type === 'relation') {
+                $query->with([
+                    'configuration_types' => function ($query) {
+                        $query->select(
+                            'id',
+                            'name',
+                            'is_active',
+                            'configuration_resource_id',
+                        )
+                        ->where('is_active', true)
+                        ->with([
+                            'configuration_columns' => function ($query) {
+                                $query->select(
+                                    'id',
+                                    'align',
+                                    'field',
+                                    'header_style',
+                                    'label',
+                                    'name',
+                                    'position',
+                                    'style',
+                                    'configuration_resource_id',
+                                    'configuration_type_id',
+                                );
+                            },
+                            'configuration_inputs' => function ($query) {
+                                $query->select(
+                                    'id',
+                                    'accept',
+                                    'field',
+                                    'is_active',
+                                    'is_filter',
+                                    'is_model',
+                                    'key',
+                                    'name',
+                                    'position',
+                                    'type',
+                                    'configuration_resource_id',
+                                    'configuration_type_id',
+                                )
+                                ->with([
+                                    'configuration_options' => function ($query) {
+                                        $query->select(
+                                            'id',
+                                            'value',
+                                            'label',
+                                            'configuration_resource_id',
+                                            'configuration_type_id',
+                                            'configuration_input_id',
+                                        );
+                                    }
+                                ]);
+                            },
+                        ]);
+                    }
+                ]);
+
+                return $query->get();
+            } else {
+                return $query->get();
+            }
+        } catch (Exception $exception) {
+            $this->LogApiError($exception);
+            return false;
+        } catch (QueryException $exception) {
+            $this->LogApiError($exception);
+            return false;
+        }
+    }
+
     /**
      * Update a record in the database.
      * @param array $payload An associative array containing the updated record data.

@@ -9,5 +9,5 @@ interface ConfigurationResourceInterface
 {
     public function handleStatisticalIndicators(): array;
 
-    public function handleGetConfigurations(array $key): Response|ResponseFactory;
+    public function handleGetConfiguration(array $key): Response|ResponseFactory;
 }

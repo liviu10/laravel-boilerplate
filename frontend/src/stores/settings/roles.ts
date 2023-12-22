@@ -5,7 +5,7 @@ import { Ref, computed, ref } from 'vue'
 import { QTableProps } from 'quasar'
 
 // Import library utilities, interfaces and components
-import { HandleApiResource } from 'src/utilities/HandleApiResource'
+import { HandleApi } from 'src/utilities/HandleApi'
 import { HandleApiRequestProcessor } from 'src/utilities/HandleApiRequestProcessor'
 import { defaultColumns } from 'src/assets/data/columns'
 import {
@@ -18,7 +18,7 @@ import { IAllRecords, IAllRecordsUnpaginated, ISingleRecord } from 'src/interfac
 import { IConfigurationInput } from 'src/interfaces/ConfigurationResourceInterface'
 import { TResourceType } from 'src/interfaces/BaseInterface'
 
-const handleApiResource = new HandleApiResource
+const handleApi = new HandleApi
 
 const handleApiRequestProcessor = new HandleApiRequestProcessor
 
@@ -48,7 +48,7 @@ export const useRoleStore = defineStore('roleStore', () => {
   // Actions
   async function handleIndex(type?: TResourceType) {
     try {
-      handleApiResource.apiEndpoint(resourceName, useRoleStore.$id).then(
+      handleApi.getEndpoint(resourceName, useRoleStore.$id).then(
         async (apiEndpoint) => {
           if (apiEndpoint) {
             resourceEndpoint.value = apiEndpoint[0].path
@@ -80,7 +80,7 @@ export const useRoleStore = defineStore('roleStore', () => {
   async function handleAdvancedFilter(type?: TResourceType) {
     const payload = handleApiRequestProcessor.createFilterPayload(filterModel.value)
     try {
-      handleApiResource.apiEndpoint(resourceName, useRoleStore.$id).then(
+      handleApi.getEndpoint(resourceName, useRoleStore.$id).then(
         async (apiEndpoint) => {
           if (apiEndpoint) {
             resourceEndpoint.value = apiEndpoint[0].path
@@ -106,7 +106,7 @@ export const useRoleStore = defineStore('roleStore', () => {
   async function handleUpload() {
     const payload = handleApiRequestProcessor.createPayload(uploadModel.value)
     try {
-      handleApiResource.apiEndpoint(resourceName, useRoleStore.$id).then(
+      handleApi.getEndpoint(resourceName, useRoleStore.$id).then(
         async (apiEndpoint) => {
           if (apiEndpoint) {
             resourceEndpoint.value = apiEndpoint[0].path
@@ -129,7 +129,7 @@ export const useRoleStore = defineStore('roleStore', () => {
   async function handleDownload() {
     const payload = handleApiRequestProcessor.createPayload(downloadModel.value)
     try {
-      handleApiResource.apiEndpoint(resourceName, useRoleStore.$id).then(
+      handleApi.getEndpoint(resourceName, useRoleStore.$id).then(
         async (apiEndpoint) => {
           if (apiEndpoint) {
             resourceEndpoint.value = apiEndpoint[0].path
@@ -156,7 +156,7 @@ export const useRoleStore = defineStore('roleStore', () => {
   async function handleCreate() {
     const payload = handleApiRequestProcessor.createPayload(dataModel.value)
     try {
-      handleApiResource.apiEndpoint(resourceName, useRoleStore.$id).then(
+      handleApi.getEndpoint(resourceName, useRoleStore.$id).then(
         async (apiEndpoint) => {
           if (apiEndpoint) {
             resourceEndpoint.value = apiEndpoint[0].path
@@ -178,7 +178,7 @@ export const useRoleStore = defineStore('roleStore', () => {
 
   async function handleShow(recordId: number | undefined, type?: TResourceType) {
     try {
-      handleApiResource.apiEndpoint(resourceName, useRoleStore.$id).then(
+      handleApi.getEndpoint(resourceName, useRoleStore.$id).then(
         async (apiEndpoint) => {
           if (apiEndpoint) {
             resourceEndpoint.value = apiEndpoint[0].path
