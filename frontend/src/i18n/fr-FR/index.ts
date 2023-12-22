@@ -65,6 +65,11 @@ export default {
       restore_confirmation_message: 'Êtes-vous sûr de vouloir restaurer ces enregistrements ?',
       no_records_to_restore: 'Il n\'y a aucun enregistrement disponible à restaurer!',
       no_records_available: 'Aucun enregistrement disponible à afficher!',
+      no_data_model: `
+        Le modèle de données n'existe pas.
+        Veuillez configurer la ressource.
+        Si le problème persiste, vous pouvez contacter l'administrateur.
+      `,
     },
     home: {
       title: 'Dashboard',
@@ -98,11 +103,6 @@ export default {
           repudiandae, numquam, dicta earum, cupiditate consequuntur?
         `,
         data_model: {},
-        no_data_model: `
-          Le modèle de données n'existe pas.
-          Veuillez configurer la ressource.
-          Si le problème persiste, vous pouvez contacter l'administrateur.
-        `,
       },
       tags: {
         title: 'Étiquettes',

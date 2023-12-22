@@ -8,39 +8,35 @@ import { QTableProps } from 'quasar'
 import { HandleApi } from 'src/utilities/HandleApi'
 import { HandleApiRequestProcessor } from 'src/utilities/HandleApiRequestProcessor'
 import { HandleRoute } from 'src/utilities/HandleRoute'
-import { defaultColumns } from 'src/assets/data/columns'
-import {
-  defaultDataModel,
-  defaultDownloadModel,
-  defaultFilterModel,
-  defaultUploadModel
-} from 'src/assets/data/dataModel'
 import {
   IAllRecords,
   IAllRecordsUnpaginated,
   ISingleRecord,
-  IConfigurationInput
+  IConfigurationInput,
+  IConfiguration
 } from 'src/interfaces/ConfigurationResourceInterface'
 import { TResourceType } from 'src/interfaces/BaseInterface'
-
-const handleApi = new HandleApi
 
 const handleApiRequestProcessor = new HandleApiRequestProcessor
 
 const handleRoute = new HandleRoute
 
 export const useConfigurationResourceStore = defineStore('configurationResourceStore', () => {
+  // Handle API
+  const handleApi = new HandleApi
+
   // State
   const resourceName: Ref<string> = ref('')
   const resourceEndpoint: Ref<string> = ref('')
   const translationString: Ref<string> = ref('')
   const allRecords: Ref<IAllRecords> = ref({} as IAllRecords)
-  const columns: Ref<QTableProps['columns']> = ref(defaultColumns as QTableProps['columns'])
-  const dataModel: Ref<IConfigurationInput[]> = ref(defaultDataModel as IConfigurationInput[])
-  const filterModel: Ref<IConfigurationInput[]> = ref(defaultFilterModel as IConfigurationInput[])
-  const uploadModel: Ref<IConfigurationInput[]> = ref(defaultUploadModel as IConfigurationInput[])
-  const downloadModel: Ref<IConfigurationInput[]> = ref(defaultDownloadModel as IConfigurationInput[])
+  const columns: Ref<QTableProps['columns']> = ref([] as QTableProps['columns'])
+  const dataModel: Ref<IConfigurationInput[]> = ref([] as IConfigurationInput[])
+  const filterModel: Ref<IConfigurationInput[]> = ref([] as IConfigurationInput[])
+  const uploadModel: Ref<IConfigurationInput[]> = ref([] as IConfigurationInput[])
+  const downloadModel: Ref<IConfigurationInput[]> = ref([] as IConfigurationInput[])
   const allDeletedRecords: Ref<IAllRecordsUnpaginated> = ref({} as IAllRecordsUnpaginated)
+  const resourceConfiguration: Ref<IConfiguration['results']> = ref([] as IConfiguration['results'])
   const singleRecord: Ref<ISingleRecord> = ref({} as ISingleRecord)
 
   // Getters
@@ -53,53 +49,37 @@ export const useConfigurationResourceStore = defineStore('configurationResourceS
   const getUploadModel = computed(() => uploadModel.value)
   const getDownloadModel = computed(() => downloadModel.value)
   const getAllDeletedRecords = computed(() => allDeletedRecords.value)
+  const getResourceConfiguration = computed(() => resourceConfiguration.value)
   const getSingleRecord = computed(() => singleRecord.value)
 
   // Actions
-  async function handleGetConfigurations() {
-    try {
-      handleApi.getEndpoint(resourceName.value, useConfigurationResourceStore.$id).then(
-        async (apiEndpoint) => {
-          if (apiEndpoint) {
-            resourceEndpoint.value = apiEndpoint[0].path
-            const response = await api.get('admin/settings/get-configurations', {
-              params: {
-                key: resourceName.value ?? undefined
-              }
-            })
-            singleRecord.value = response.data as ISingleRecord
-            console.log('-> handleShow', singleRecord.value)
-          } else {
-            console.log('-> apiEndpoint does not exist', apiEndpoint)
-          }
-        }
-      )
-    } catch (error) {
-      console.log('-> catch', error)
-    } finally {
-      console.log('-> finally')
-    }
-  }
-
   async function handleIndex(type?: TResourceType) {
     try {
-      handleApi.getEndpoint(resourceName.value, useConfigurationResourceStore.$id).then(
+      handleApi.getEndpoint(getResourceName.value, useConfigurationResourceStore.$id).then(
         async (apiEndpoint) => {
           if (apiEndpoint) {
-            resourceEndpoint.value = apiEndpoint[0].path
-            const response = await api.get(resourceEndpoint.value, {
-              params: {
-                type: type ?? undefined
+            handleApi.getConfiguration(getResourceName.value, useConfigurationResourceStore.$id).then(
+              async (apiConfiguration) => {
+                if (apiConfiguration) {
+                  resourceEndpoint.value = apiEndpoint[0].path
+                  const response = await api.get(resourceEndpoint.value, {
+                    params: {
+                      type: type ?? undefined
+                    }
+                  })
+                  if (type === 'restore') {
+                    if (response.data && response.data.hasOwnProperty('results')) {
+                      allDeletedRecords.value = response.data as IAllRecordsUnpaginated
+                    }
+                  } else {
+                    allRecords.value = response.data as IAllRecords
+                  }
+                  console.log('-> handleIndex', allRecords.value)
+                } else {
+                  console.log('-> apiConfiguration does not exist', apiConfiguration)
+                }
               }
-            })
-            if (type === 'restore') {
-              if (response.data && response.data.hasOwnProperty('results')) {
-                allDeletedRecords.value = response.data as IAllRecordsUnpaginated
-              }
-            } else {
-              allRecords.value = response.data as IAllRecords
-            }
-            console.log('-> handleIndex', allRecords.value)
+            )
           } else {
             console.log('-> apiEndpoint does not exist', apiEndpoint)
           }
@@ -211,6 +191,22 @@ export const useConfigurationResourceStore = defineStore('configurationResourceS
     }
   }
 
+  async function handleGetConfigurations(key: string) {
+    try {
+      const response = await api.get('admin/settings/get-configuration', {
+        params: {
+          key: key ?? undefined
+        }
+      })
+      resourceConfiguration.value = response.data.results as IConfiguration['results']
+      console.log('-> handleShow', resourceConfiguration.value)
+    } catch (error) {
+      console.log('-> catch', error)
+    } finally {
+      console.log('-> finally')
+    }
+  }
+
   async function handleShow(recordId: number | undefined, type?: TResourceType) {
     try {
       handleApi.getEndpoint(resourceName.value, useConfigurationResourceStore.$id).then(
@@ -259,14 +255,15 @@ export const useConfigurationResourceStore = defineStore('configurationResourceS
     getUploadModel,
     getDownloadModel,
     getAllDeletedRecords,
+    getResourceConfiguration,
     getSingleRecord,
-    handleGetConfigurations,
     handleIndex,
     handleAdvancedFilter,
     handleUpload,
     handleDownload,
     handleRestore,
     handleCreate,
+    handleGetConfigurations,
     handleShow,
     handleUpdate,
     handleDelete,

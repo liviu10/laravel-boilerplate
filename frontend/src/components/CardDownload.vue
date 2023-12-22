@@ -15,10 +15,7 @@
     </div>
 
     <div v-else>
-      <card-go-to-configure-resource
-        :resource="resource"
-        :translation-string="translationString"
-      />
+      <card-go-to-configure-resource :resource="resource" />
     </div>
   </div>
 </template>
@@ -34,10 +31,10 @@ import { IConfigurationInput } from 'src/interfaces/ConfigurationResourceInterfa
 import CardGoToConfigureResource from 'src/components/CardGoToConfigureResource.vue';
 
 interface ICardDownload {
-  actionName: TDialog | undefined
-  dataModel?: IConfigurationInput[]
-  resource: string
-  translationString: string
+  actionName: TDialog | undefined;
+  dataModel?: IConfigurationInput[];
+  resource: string;
+  translationString: string;
 }
 
 defineProps<ICardDownload>();

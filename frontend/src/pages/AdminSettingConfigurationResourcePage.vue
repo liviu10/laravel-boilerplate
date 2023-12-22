@@ -1,9 +1,13 @@
 <template>
   <q-page class="admin admin--page">
-    <page-title :page-title="t(`${configurationResourceStore.getTranslationString}.title`)" />
+    <page-title
+      :page-title="t(`${configurationResourceStore.getTranslationString}.title`)"
+    />
 
     <page-description
-      :page-description="t(`${configurationResourceStore.getTranslationString}.page_description`)"
+      :page-description="
+        t(`${configurationResourceStore.getTranslationString}.page_description`)
+      "
     />
 
     <div class="admin-section admin-section--container">
@@ -143,10 +147,7 @@ const { t } = useI18n({});
 const loadPage = ref(false);
 
 // Get all records
-configurationResourceStore.handleGetConfigurations()
-  .then(
-    () => configurationResourceStore.handleIndex('paginate')
-  );
+configurationResourceStore.handleIndex('paginate');
 
 // Display the action name & dialog
 const actionName: Ref<TDialog | undefined> = ref(undefined);
@@ -236,8 +237,12 @@ async function handleOpenDialog(action: TDialog, recordId?: number): Promise<voi
       actionName.value = action;
       configurationResourceStore.handleIndex('restore').then(() => {
         if (
-          !checkObject.handleCheckIfObject(configurationResourceStore.getAllDeletedRecords) &&
-          !checkObject.handleCheckIfArray(configurationResourceStore.getAllDeletedRecords.results)
+          !checkObject.handleCheckIfObject(
+            configurationResourceStore.getAllDeletedRecords
+          ) &&
+          !checkObject.handleCheckIfArray(
+            configurationResourceStore.getAllDeletedRecords.results
+          )
         ) {
           disableActionDialogButton.value = {
             action: action,
@@ -323,10 +328,10 @@ const handleNavigateToPage = (action: TDialog) => {
   let actionWords;
   let actionName;
   if (action.includes('-')) {
-    actionWords = action.split('-')
+    actionWords = action.split('-');
     actionName = actionWords[1].charAt(0).toUpperCase() + actionWords[1].slice(1);
     const selectedRecordId = configurationResourceStore.getSingleRecord.results[0].id;
-      navigateToRoute.handleNavigateToRoute(
+    navigateToRoute.handleNavigateToRoute(
       router,
       `AdminSettingConfigurationResource${actionName}Page`,
       ({ id: selectedRecordId } as unknown) as RouteParamsRaw

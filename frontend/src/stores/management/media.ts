@@ -8,35 +8,30 @@ import { QTableProps } from 'quasar'
 import { HandleApi } from 'src/utilities/HandleApi'
 import { HandleApiRequestProcessor } from 'src/utilities/HandleApiRequestProcessor'
 import { HandleRoute } from 'src/utilities/HandleRoute'
-import { defaultColumns } from 'src/assets/data/columns'
-import {
-  defaultDataModel,
-  defaultDownloadModel,
-  defaultFilterModel,
-  defaultUploadModel
-} from 'src/assets/data/dataModel'
-import { IConfigurationInput } from 'src/interfaces/ConfigurationResourceInterface'
+import { IConfiguration, IConfigurationInput } from 'src/interfaces/ConfigurationResourceInterface'
 import { IAllRecords, IAllRecordsUnpaginated, ISingleRecord } from 'src/interfaces/MediaInterface'
 import { TResourceType } from 'src/interfaces/BaseInterface'
-
-const handleApi = new HandleApi
 
 const handleApiRequestProcessor = new HandleApiRequestProcessor
 
 const handleRoute = new HandleRoute
 
 export const useMediaStore = defineStore('mediaStore', () => {
+  // Handle API
+  const handleApi = new HandleApi
+
   // State
   const resourceName: Ref<string> = ref('')
   const resourceEndpoint: Ref<string> = ref('')
   const translationString: Ref<string> = ref('')
   const allRecords: Ref<IAllRecords> = ref({} as IAllRecords)
-  const columns: Ref<QTableProps['columns']> = ref(defaultColumns as QTableProps['columns'])
-  const dataModel: Ref<IConfigurationInput[]> = ref(defaultDataModel as IConfigurationInput[])
-  const filterModel: Ref<IConfigurationInput[]> = ref(defaultFilterModel as IConfigurationInput[])
-  const uploadModel: Ref<IConfigurationInput[]> = ref(defaultUploadModel as IConfigurationInput[])
-  const downloadModel: Ref<IConfigurationInput[]> = ref(defaultDownloadModel as IConfigurationInput[])
+  const columns: Ref<QTableProps['columns']> = ref([] as QTableProps['columns'])
+  const dataModel: Ref<IConfigurationInput[]> = ref([] as IConfigurationInput[])
+  const filterModel: Ref<IConfigurationInput[]> = ref([] as IConfigurationInput[])
+  const uploadModel: Ref<IConfigurationInput[]> = ref([] as IConfigurationInput[])
+  const downloadModel: Ref<IConfigurationInput[]> = ref([] as IConfigurationInput[])
   const allDeletedRecords: Ref<IAllRecordsUnpaginated> = ref({} as IAllRecordsUnpaginated)
+  const resourceConfiguration: Ref<IConfiguration['results']> = ref([] as IConfiguration['results'])
   const singleRecord: Ref<ISingleRecord> = ref({} as ISingleRecord)
 
   // Getters
@@ -49,28 +44,37 @@ export const useMediaStore = defineStore('mediaStore', () => {
   const getUploadModel = computed(() => uploadModel.value)
   const getDownloadModel = computed(() => downloadModel.value)
   const getAllDeletedRecords = computed(() => allDeletedRecords.value)
+  const getResourceConfiguration = computed(() => resourceConfiguration.value)
   const getSingleRecord = computed(() => singleRecord.value)
 
   // Actions
   async function handleIndex(type?: TResourceType) {
     try {
-      handleApi.getEndpoint(resourceName.value, useMediaStore.$id).then(
+      handleApi.getEndpoint(getResourceName.value, useMediaStore.$id).then(
         async (apiEndpoint) => {
           if (apiEndpoint) {
-            resourceEndpoint.value = apiEndpoint[0].path
-            const response = await api.get(resourceEndpoint.value, {
-              params: {
-                type: type ?? undefined
+            handleApi.getConfiguration(getResourceName.value, useMediaStore.$id).then(
+              async (apiConfiguration) => {
+                if (apiConfiguration) {
+                  resourceEndpoint.value = apiEndpoint[0].path
+                  const response = await api.get(resourceEndpoint.value, {
+                    params: {
+                      type: type ?? undefined
+                    }
+                  })
+                  if (type === 'restore') {
+                    if (response.data && response.data.hasOwnProperty('results')) {
+                      allDeletedRecords.value = response.data as IAllRecordsUnpaginated
+                    }
+                  } else {
+                    allRecords.value = response.data as IAllRecords
+                  }
+                  console.log('-> handleIndex', allRecords.value)
+                } else {
+                  console.log('-> apiConfiguration does not exist', apiConfiguration)
+                }
               }
-            })
-            if (type === 'restore') {
-              if (response.data && response.data.hasOwnProperty('results')) {
-                allDeletedRecords.value = response.data as IAllRecordsUnpaginated
-              }
-            } else {
-              allRecords.value = response.data as IAllRecords
-            }
-            console.log('-> handleIndex', allRecords.value)
+            )
           } else {
             console.log('-> apiEndpoint does not exist', apiEndpoint)
           }
@@ -230,6 +234,7 @@ export const useMediaStore = defineStore('mediaStore', () => {
     getUploadModel,
     getDownloadModel,
     getAllDeletedRecords,
+    getResourceConfiguration,
     getSingleRecord,
     handleIndex,
     handleAdvancedFilter,

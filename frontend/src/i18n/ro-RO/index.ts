@@ -65,6 +65,11 @@ export default {
       restore_confirmation_message: 'Sunteți sigur că doriți să restaurați aceste înregistrări?',
       no_records_to_restore: 'Nu există înregistrări disponibile pentru restaurare!',
       no_records_available: 'Nu există înregistrări disponibile pentru afișare!',
+      no_data_model: `
+        Modelul de date nu există.
+        Vă rugăm să configurați resursa.
+        Dacă problema persistă, puteți contacta administratorul.
+      `,
     },
     home: {
       title: 'Dashboard',
@@ -98,11 +103,6 @@ export default {
           repudiandae, numquam, dicta earum, cupiditate consequuntur?
         `,
         data_model: {},
-        no_data_model: `
-          Modelul de date nu există.
-          Vă rugăm să configurați resursa.
-          Dacă problema persistă, puteți contacta administratorul.
-        `,
       },
       tags: {
         title: 'Etichete',

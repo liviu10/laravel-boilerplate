@@ -65,6 +65,11 @@ export default {
       restore_confirmation_message: 'Are you sure you want to restore these records?',
       no_records_to_restore: 'There are no available records to restore!',
       no_records_available: 'There are no record(s) available to be displayed!',
+      no_data_model: `
+        The data model does not exist.
+        Please configure the resource.
+        If the problem persist you can contact the administrator.
+      `,
     },
     home: {
       title: 'Dashboard',
@@ -98,11 +103,6 @@ export default {
           repudiandae, numquam, dicta earum, cupiditate consequuntur?
         `,
         data_model: {},
-        no_data_model: `
-          The data model does not exist.
-          Please configure the resource.
-          If the problem persist you can contact the administrator.
-        `,
       },
       tags: {
         title: 'Tags',

@@ -33,6 +33,13 @@ interface ISingleRecord extends IRootObject {
   })[]
 }
 
+interface IConfiguration extends IRootObject {
+  results: {
+    id: number
+    configuration_types: IConfigurationType[]
+  }[]
+}
+
 interface ICreateRecord {
   id: number
   resource: string
@@ -95,6 +102,7 @@ export {
   IAllRecords,
   IAllRecordsUnpaginated,
   ISingleRecord,
+  IConfiguration,
   ICreateRecord,
   IUpdateRecord,
   IConfigurationType,

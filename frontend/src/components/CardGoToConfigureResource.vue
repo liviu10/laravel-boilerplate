@@ -1,7 +1,9 @@
 <template>
   <p>
-    {{ t(`${translationString}.no_data_model`) }}
-    <a href="" @click="goToConfigureResource">{{ t('admin.generic.configure_resource') }}</a>
+    {{ t(`admin.generic.no_data_model`) }}
+    <a href="" @click="goToConfigureResource">
+      {{ t('admin.generic.configure_resource') }}
+    </a>
   </p>
 </template>
 
@@ -14,8 +16,8 @@ import { useI18n } from 'vue-i18n';
 import { HandleRoute } from 'src/utilities/HandleRoute';
 
 interface ICardGoToConfigureResource {
-  translationString: string;
   resource: string;
+  translationString?: string;
 }
 
 const props = defineProps<ICardGoToConfigureResource>();

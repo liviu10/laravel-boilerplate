@@ -10,9 +10,7 @@
           v-if="checkObject.handleCheckIfArray(input.configuration_options)"
           dense
           emit-value
-          :label="
-            t(`${translationString}.data_model.${input.field}`)
-          "
+          :label="t(`${translationString}.data_model.${input.field}`)"
           outlined
           square
           stack-label
@@ -22,9 +20,7 @@
         <q-input
           v-else
           dense
-          :label="
-            t(`${translationString}.data_model.${input.field}`)
-          "
+          :label="t(`${translationString}.data_model.${input.field}`)"
           outlined
           square
           stack-label
@@ -34,10 +30,7 @@
     </div>
 
     <div v-else>
-      <card-go-to-configure-resource
-        :translation-string="translationString"
-        :resource="resource"
-      />
+      <card-go-to-configure-resource :resource="resource" />
     </div>
   </div>
 </template>
@@ -53,10 +46,10 @@ import { IConfigurationInput } from 'src/interfaces/ConfigurationResourceInterfa
 import CardGoToConfigureResource from 'src/components/CardGoToConfigureResource.vue';
 
 interface IManagementCardQuickEdit {
-  actionName: TDialog | undefined
-  dataModel?: IConfigurationInput[]
-  resource: string
-  translationString: string
+  actionName: TDialog | undefined;
+  dataModel?: IConfigurationInput[];
+  resource: string;
+  translationString: string;
 }
 
 defineProps<IManagementCardQuickEdit>();
