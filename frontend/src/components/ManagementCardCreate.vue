@@ -7,6 +7,7 @@
           dense
           emit-value
           :label="t(`t(${translationString}.data_model.${input.field}`)"
+          map-options
           outlined
           square
           stack-label

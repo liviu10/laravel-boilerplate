@@ -100,6 +100,7 @@ export const useConfigurationResourceStore = defineStore('configurationResourceS
 
   async function handleAdvancedFilter(type?: TResourceType) {
     const payload = handleApiRequestProcessor.createFilterPayload(filterModel.value)
+    debugger
     try {
       handleApi.getEndpoint(resourceName.value, useConfigurationResourceStore.$id).then(
         async (apiEndpoint) => {

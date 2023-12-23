@@ -52,7 +52,7 @@ export class HandleApi implements IHandleApi {
         const pathName = window.location.pathname
         await resourceStore.handleApiEndpoint(pathName)
         this.endpointUrl = resourceStore.getApiEndpoint
-        Cookies.set(`endpoint_${resourceName}_${storeId}`, JSON.stringify(this.endpointUrl))
+        Cookies.set(`endpoint_${resourceName}_${storeId}`, JSON.stringify(this.endpointUrl)) // TODO: if cookie size is too big the cookie is not set
 
         return this.endpointUrl
       } catch (error) {
@@ -79,7 +79,13 @@ export class HandleApi implements IHandleApi {
       try {
         await configurationResourceStore.handleGetConfigurations(resourceName)
         this.configuration = configurationResourceStore.getResourceConfiguration
-        Cookies.set(`configuration_${resourceName}_${storeId}`, JSON.stringify(this.configuration))
+        Cookies.set(`configuration_${resourceName}_${storeId}`, JSON.stringify(this.configuration)) // TODO: if cookie size is too big the cookie is not set
+        // TODO: Call these function and set cookies for each of the returns
+        // this.getColumnConfiguration(),
+        // this.getDataModelConfiguration(),
+        // this.getFilterModelConfiguration(),
+        // this.getUploadModelConfiguration,
+        // this.getDownloadModelConfiguration
 
         return this.configuration
       } catch (error) {

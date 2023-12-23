@@ -17,6 +17,7 @@ class DatabaseSeeder extends Seeder
             AcceptedDomainSeeder::class,
             ConfigurationColumnSeeder::class,
             ConfigurationInputSeeder::class,
+            ConfigurationOptionSeeder::class,
             ConfigurationResourceSeeder::class,
             ConfigurationTypeSeeder::class,
             ContactSubjectSeeder::class,
