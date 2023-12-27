@@ -1,17 +1,17 @@
 interface IHandleText {
-  handleFormatText: (text?: string | undefined) => string
-  handleTranslationString: (text?: string | undefined) => string
+  handleFormatText: (text?: string | undefined) => string;
+  handleTranslationString: (text?: string | undefined) => string;
 }
 
 export class HandleText implements IHandleText {
-  pattern: RegExp
-  basicText: string
-  defaultTranslationString: string
+  pattern: RegExp;
+  basicText: string;
+  defaultTranslationString: string;
 
   public constructor() {
-    this.pattern = /[^a-zA-Z ]/g
-    this.basicText = 'Basic text'
-    this.defaultTranslationString = 'default_label'
+    this.pattern = /[^a-zA-Z ]/g;
+    this.basicText = 'Basic text';
+    this.defaultTranslationString = 'default_label';
   }
 
   /**
@@ -21,9 +21,11 @@ export class HandleText implements IHandleText {
    */
   public handleFormatText(text?: string | undefined): string {
     if (text && text !== undefined) {
-      return text.charAt(0).toUpperCase() + text.slice(1).replace(this.pattern, ' ')
+      return (
+        text.charAt(0).toUpperCase() + text.slice(1).replace(this.pattern, ' ')
+      );
     } else {
-      return this.basicText
+      return this.basicText;
     }
   }
 
@@ -36,7 +38,7 @@ export class HandleText implements IHandleText {
     if (text && text !== undefined) {
       return text.replace('-', '_');
     } else {
-      return this.defaultTranslationString
+      return this.defaultTranslationString;
     }
   }
 }

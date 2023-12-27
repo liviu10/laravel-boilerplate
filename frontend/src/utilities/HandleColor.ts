@@ -1,11 +1,19 @@
-type TColor = 'primary' | 'secondary' | 'accent' | 'dark' | 'positive' | 'negative' | 'info' | 'warning'
+type TColor =
+  | 'primary'
+  | 'secondary'
+  | 'accent'
+  | 'dark'
+  | 'positive'
+  | 'negative'
+  | 'info'
+  | 'warning';
 
 interface IHandleColor {
-  handleTextColor: (textColor?: TColor | undefined) => string
+  handleTextColor: (textColor?: TColor | undefined) => string;
 }
 
 export class HandleColor implements IHandleColor {
-  colors: { [key: number]: TColor }
+  colors: { [key: number]: TColor };
 
   public constructor() {
     this.colors = {
@@ -17,7 +25,7 @@ export class HandleColor implements IHandleColor {
       5: 'negative',
       6: 'info',
       7: 'warning',
-    }
+    };
   }
 
   /**
@@ -35,14 +43,14 @@ export class HandleColor implements IHandleColor {
       case 'accent':
       case 'dark':
       case 'negative':
-        return 'color: #FFFFFF'
+        return 'color: #FFFFFF';
       case 'secondary':
       case 'positive':
       case 'info':
       case 'warning':
-        return 'color: #000000'
+        return 'color: #000000';
       default:
-        return 'color: #000000'
+        return 'color: #000000';
     }
   }
 }

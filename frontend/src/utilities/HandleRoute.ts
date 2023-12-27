@@ -4,36 +4,38 @@ import {
   NavigationFailure,
   RouteMeta,
   RouteRecordName,
-  Router
+  Router,
 } from 'vue-router';
 
 interface IHandleRoute {
-  handleRouteName: (name: RouteRecordName | null | undefined) => RouteRecordName
-  handleRouteTitle: (meta: RouteMeta) => string
-  handleRouteDescription: (meta: RouteMeta) => string
+  handleRouteName: (
+    name: RouteRecordName | null | undefined
+  ) => RouteRecordName;
+  handleRouteTitle: (meta: RouteMeta) => string;
+  handleRouteDescription: (meta: RouteMeta) => string;
   handleNavigateToRoute: (
     router: Router,
     resourceName: string,
     params?: RouteParamsRaw,
     query?: LocationQueryRaw
-  ) => Promise<void | NavigationFailure | undefined>
-  handleResourceNameFromRoute: () => string
-  handleTranslationFromRoute: () => string
+  ) => Promise<void | NavigationFailure | undefined>;
+  handleResourceNameFromRoute: () => string;
+  handleTranslationFromRoute: () => string;
 }
 
 export class HandleRoute implements IHandleRoute {
-  basicRouteName: string
-  basicRouteTitle: string
-  basicRouteDescription: string
-  resourceName: string[] | string | undefined
-  translationFromRoute: string
+  basicRouteName: string;
+  basicRouteTitle: string;
+  basicRouteDescription: string;
+  resourceName: string[] | string | undefined;
+  translationFromRoute: string;
 
-  public constructor () {
-    this.basicRouteName = 'BasicRouteName'
-    this.basicRouteTitle = 'BasicRouteTitle'
-    this.basicRouteDescription = 'BasicRouteDescription'
-    this.resourceName = ''
-    this.translationFromRoute = ''
+  public constructor() {
+    this.basicRouteName = 'BasicRouteName';
+    this.basicRouteTitle = 'BasicRouteTitle';
+    this.basicRouteDescription = 'BasicRouteDescription';
+    this.resourceName = '';
+    this.translationFromRoute = '';
   }
 
   /**
@@ -41,7 +43,9 @@ export class HandleRoute implements IHandleRoute {
    * @param {RouteRecordName | null | undefined} name - The route name to be validated.
    * @returns {RouteRecordName} The validated route name. If not provided, the default basic route name is returned.
    */
-  public handleRouteName(name: RouteRecordName | null | undefined): RouteRecordName {
+  public handleRouteName(
+    name: RouteRecordName | null | undefined
+  ): RouteRecordName {
     if (name && name !== null && name !== undefined) {
       return name;
     } else {
@@ -94,8 +98,8 @@ export class HandleRoute implements IHandleRoute {
   ): Promise<void | NavigationFailure | undefined> {
     return router.push({
       name: resourceName,
-      params: params || undefined as unknown as RouteParamsRaw,
-      query: query || undefined as unknown as LocationQueryRaw,
+      params: params || (undefined as unknown as RouteParamsRaw),
+      query: query || (undefined as unknown as LocationQueryRaw),
     });
   }
 
@@ -104,13 +108,19 @@ export class HandleRoute implements IHandleRoute {
    * @returns {string} The extracted resource name.
    */
   public handleResourceNameFromRoute(): string {
-    const pathName = window.location.pathname
-    if (pathName.includes('create') || pathName.includes('show') || pathName.includes('edit')) {
-      this.resourceName = pathName.replace(/\b(create|show|edit)\b/g, '').split('/');
+    const pathName = window.location.pathname;
+    if (
+      pathName.includes('create') ||
+      pathName.includes('show') ||
+      pathName.includes('edit')
+    ) {
+      this.resourceName = pathName
+        .replace(/\b(create|show|edit)\b/g, '')
+        .split('/');
       if (this.resourceName[this.resourceName.length - 1] !== '') {
-        this.resourceName = this.resourceName.slice(0, -2)
+        this.resourceName = this.resourceName.slice(0, -2);
       } else {
-        this.resourceName = this.resourceName.slice(0, -1)
+        this.resourceName = this.resourceName.slice(0, -1);
       }
       this.resourceName = this.resourceName.pop();
     } else {
@@ -118,10 +128,10 @@ export class HandleRoute implements IHandleRoute {
     }
 
     if (this.resourceName) {
-      return this.resourceName
+      return this.resourceName;
     } else {
       console.log('-> handleResourceNameFromRoute', this.resourceName);
-      return ''
+      return '';
     }
   }
 
@@ -137,6 +147,6 @@ export class HandleRoute implements IHandleRoute {
       .replace(/\b(create|show|edit)\b/g, '')
       .replace(/\.$/, '');
 
-      return this.translationFromRoute;
+    return this.translationFromRoute;
   }
 }

@@ -1,6 +1,6 @@
 interface IHandleObject {
-  handleCheckIfArray: (array: unknown | undefined) => boolean
-  handleCheckIfObject: (object: unknown | undefined) => boolean
+  handleCheckIfArray: (array: unknown | undefined) => boolean;
+  handleCheckIfObject: (object: unknown | undefined) => boolean;
 }
 
 export class HandleObject implements IHandleObject {
@@ -10,7 +10,12 @@ export class HandleObject implements IHandleObject {
    * @returns {boolean} Returns true if the value is a non-empty array, false otherwise.
    */
   public handleCheckIfArray(array: unknown | undefined): boolean {
-    return !!array && typeof array === 'object' && Array.isArray(array) && array.length > 0;
+    return (
+      !!array &&
+      typeof array === 'object' &&
+      Array.isArray(array) &&
+      array.length > 0
+    );
   }
 
   /**
@@ -19,6 +24,8 @@ export class HandleObject implements IHandleObject {
    * @returns {boolean} Returns true if the object is a non-empty object, false otherwise.
    */
   public handleCheckIfObject(object: unknown | undefined): boolean {
-    return !!object && typeof object === 'object' && Object.keys(object).length > 0;
+    return (
+      !!object && typeof object === 'object' && Object.keys(object).length > 0
+    );
   }
 }
