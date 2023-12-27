@@ -6,7 +6,6 @@ import { QTableProps } from 'quasar'
 
 // Import library utilities, interfaces and components
 import { HandleApi } from 'src/utilities/HandleApi'
-import { HandleApiRequestProcessor } from 'src/utilities/HandleApiRequestProcessor'
 import { HandleRoute } from 'src/utilities/HandleRoute'
 import {
   IAllRecords,
@@ -16,8 +15,6 @@ import {
   IConfiguration
 } from 'src/interfaces/ConfigurationResourceInterface'
 import { TResourceType } from 'src/interfaces/BaseInterface'
-
-const handleApiRequestProcessor = new HandleApiRequestProcessor
 
 const handleRoute = new HandleRoute
 
@@ -99,7 +96,7 @@ export const useConfigurationResourceStore = defineStore('configurationResourceS
   }
 
   async function handleAdvancedFilter(type?: TResourceType) {
-    const payload = handleApiRequestProcessor.createFilterPayload(filterModel.value)
+    const payload = handleApi.createFilterPayload(filterModel.value)
     debugger
     try {
       handleApi.getEndpoint(resourceName.value, useConfigurationResourceStore.$id).then(
@@ -126,7 +123,7 @@ export const useConfigurationResourceStore = defineStore('configurationResourceS
   }
 
   async function handleUpload() {
-    const payload = handleApiRequestProcessor.createPayload(uploadModel.value)
+    const payload = handleApi.createPayload(uploadModel.value)
     try {
       handleApi.getEndpoint(resourceName.value, useConfigurationResourceStore.$id).then(
         async (apiEndpoint) => {
@@ -149,7 +146,7 @@ export const useConfigurationResourceStore = defineStore('configurationResourceS
   }
 
   async function handleDownload() {
-    const payload = handleApiRequestProcessor.createPayload(downloadModel.value)
+    const payload = handleApi.createPayload(downloadModel.value)
     try {
       handleApi.getEndpoint(resourceName.value, useConfigurationResourceStore.$id).then(
         async (apiEndpoint) => {
@@ -176,7 +173,7 @@ export const useConfigurationResourceStore = defineStore('configurationResourceS
   }
 
   async function handleCreate() {
-    const payload = handleApiRequestProcessor.createPayload(dataModel.value)
+    const payload = handleApi.createPayload(dataModel.value)
     try {
       handleApi.getEndpoint(resourceName.value, useConfigurationResourceStore.$id).then(
         async (apiEndpoint) => {
@@ -240,7 +237,7 @@ export const useConfigurationResourceStore = defineStore('configurationResourceS
   }
 
   async function handleUpdate() {
-    const payload = handleApiRequestProcessor.createPayload(dataModel.value)
+    const payload = handleApi.createPayload(dataModel.value)
     console.log('-> handleUpdate', payload)
   }
 

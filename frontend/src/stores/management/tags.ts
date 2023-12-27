@@ -6,13 +6,10 @@ import { QTableProps } from 'quasar'
 
 // Import library utilities, interfaces and components
 import { HandleApi } from 'src/utilities/HandleApi'
-import { HandleApiRequestProcessor } from 'src/utilities/HandleApiRequestProcessor'
 import { HandleRoute } from 'src/utilities/HandleRoute'
 import { IConfiguration, IConfigurationInput } from 'src/interfaces/ConfigurationResourceInterface'
 import { IAllRecords, IAllRecordsUnpaginated, ISingleRecord } from 'src/interfaces/TagInterface'
 import { TResourceType } from 'src/interfaces/BaseInterface'
-
-const handleApiRequestProcessor = new HandleApiRequestProcessor
 
 const handleRoute = new HandleRoute
 
@@ -89,7 +86,7 @@ export const useTagStore = defineStore('tagStore', () => {
   }
 
   async function handleAdvancedFilter(type?: TResourceType) {
-    const payload = handleApiRequestProcessor.createFilterPayload(filterModel.value)
+    const payload = handleApi.createFilterPayload(filterModel.value)
     try {
       handleApi.getEndpoint(resourceName.value, useTagStore.$id).then(
         async (apiEndpoint) => {
@@ -115,7 +112,7 @@ export const useTagStore = defineStore('tagStore', () => {
   }
 
   async function handleUpload() {
-    const payload = handleApiRequestProcessor.createPayload(uploadModel.value)
+    const payload = handleApi.createPayload(uploadModel.value)
     try {
       handleApi.getEndpoint(resourceName.value, useTagStore.$id).then(
         async (apiEndpoint) => {
@@ -138,7 +135,7 @@ export const useTagStore = defineStore('tagStore', () => {
   }
 
   async function handleDownload() {
-    const payload = handleApiRequestProcessor.createPayload(downloadModel.value)
+    const payload = handleApi.createPayload(downloadModel.value)
     try {
       handleApi.getEndpoint(resourceName.value, useTagStore.$id).then(
         async (apiEndpoint) => {
@@ -165,7 +162,7 @@ export const useTagStore = defineStore('tagStore', () => {
   }
 
   async function handleCreate() {
-    const payload = handleApiRequestProcessor.createPayload(dataModel.value)
+    const payload = handleApi.createPayload(dataModel.value)
     try {
       handleApi.getEndpoint(resourceName.value, useTagStore.$id).then(
         async (apiEndpoint) => {
@@ -213,7 +210,7 @@ export const useTagStore = defineStore('tagStore', () => {
   }
 
   async function handleUpdate() {
-    const payload = handleApiRequestProcessor.createPayload(dataModel.value)
+    const payload = handleApi.createPayload(dataModel.value)
     console.log('-> handleUpdate', payload)
   }
 

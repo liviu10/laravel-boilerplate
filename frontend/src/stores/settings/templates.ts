@@ -6,7 +6,6 @@ import { QTableProps } from 'quasar'
 
 // Import library utilities, interfaces and components
 import { HandleApi } from 'src/utilities/HandleApi'
-import { HandleApiRequestProcessor } from 'src/utilities/HandleApiRequestProcessor'
 import { defaultColumns } from 'src/assets/data/columns'
 import {
   defaultDataModel,
@@ -19,8 +18,6 @@ import { IConfigurationInput } from 'src/interfaces/ConfigurationResourceInterfa
 import { TResourceType } from 'src/interfaces/BaseInterface'
 
 const handleApi = new HandleApi
-
-const handleApiRequestProcessor = new HandleApiRequestProcessor
 
 export const useTemplateStore = defineStore('templateStore', () => {
   // State
@@ -78,7 +75,7 @@ export const useTemplateStore = defineStore('templateStore', () => {
   }
 
   async function handleAdvancedFilter(type?: TResourceType) {
-    const payload = handleApiRequestProcessor.createFilterPayload(filterModel.value)
+    const payload = handleApi.createFilterPayload(filterModel.value)
     try {
       handleApi.getEndpoint(resourceName, useTemplateStore.$id).then(
         async (apiEndpoint) => {
@@ -104,7 +101,7 @@ export const useTemplateStore = defineStore('templateStore', () => {
   }
 
   async function handleUpload() {
-    const payload = handleApiRequestProcessor.createPayload(uploadModel.value)
+    const payload = handleApi.createPayload(uploadModel.value)
     try {
       handleApi.getEndpoint(resourceName, useTemplateStore.$id).then(
         async (apiEndpoint) => {
@@ -127,7 +124,7 @@ export const useTemplateStore = defineStore('templateStore', () => {
   }
 
   async function handleDownload() {
-    const payload = handleApiRequestProcessor.createPayload(downloadModel.value)
+    const payload = handleApi.createPayload(downloadModel.value)
     try {
       handleApi.getEndpoint(resourceName, useTemplateStore.$id).then(
         async (apiEndpoint) => {
@@ -154,7 +151,7 @@ export const useTemplateStore = defineStore('templateStore', () => {
   }
 
   async function handleCreate() {
-    const payload = handleApiRequestProcessor.createPayload(dataModel.value)
+    const payload = handleApi.createPayload(dataModel.value)
     try {
       handleApi.getEndpoint(resourceName, useTemplateStore.$id).then(
         async (apiEndpoint) => {
@@ -202,7 +199,7 @@ export const useTemplateStore = defineStore('templateStore', () => {
   }
 
   async function handleUpdate() {
-    const payload = handleApiRequestProcessor.createPayload(dataModel.value)
+    const payload = handleApi.createPayload(dataModel.value)
     console.log('-> handleUpdate', payload)
   }
 

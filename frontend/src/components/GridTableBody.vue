@@ -1,23 +1,23 @@
 <template>
   <div class="admin-section__grid-table-body">
-    <div v-for="col in tableBodyProps.cols" :key="col.name">
-      <p v-if="col.name === 'content_type'">
-        <span>{{ col.label }}:</span>
+    <div v-for="col in tableBodyProps.cols" :key="col.label">
+      <p v-if="col.label === 'content_type'">
+        <span>{{ col.name }}:</span>
         <q-badge :label="col.value" />
       </p>
-      <p v-else-if="col.name === 'content_url'">
-        <span>{{ col.label }}:</span>
+      <p v-else-if="col.label === 'content_url'">
+        <span>{{ col.name }}:</span>
         <span>{{ col.value }}</span>
         <!-- <router-view :to="navigateToRoute.handleNavigateToRoute(col.value)">
           {{ col.value }}
         </router-view> -->
       </p>
-      <p v-else-if="col.name === 'visibility'">
-        <span>{{ col.label }}:</span>
+      <p v-else-if="col.label === 'visibility'">
+        <span>{{ col.name }}:</span>
         <q-badge :label="col.value" />
       </p>
       <p v-else>
-        <span>{{ col.label }}:</span>
+        <span>{{ col.name }}:</span>
         <span>{{ col.value }}</span>
       </p>
     </div>

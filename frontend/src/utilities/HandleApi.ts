@@ -17,6 +17,13 @@ interface IHandleApi {
   getFilterModelConfiguration: (configuration: IConfiguration['results']) => IConfigurationInput[];
   getUploadModelConfiguration: (configuration: IConfiguration['results']) => IConfigurationInput[];
   getDownloadModelConfiguration: (configuration: IConfiguration['results']) => IConfigurationInput[];
+  createFilterPayload: <T extends IConfigInput>(model: T[]) => Record<string, string | null>;
+  createPayload: <T extends IConfigInput>(model: T[]) => Record<string, string | null>;
+}
+
+interface IConfigInput {
+  key: string;
+  value: string | null;
 }
 
 export class HandleApi implements IHandleApi {
@@ -52,7 +59,7 @@ export class HandleApi implements IHandleApi {
         const pathName = window.location.pathname
         await resourceStore.handleApiEndpoint(pathName)
         this.endpointUrl = resourceStore.getApiEndpoint
-        Cookies.set(`endpoint_${resourceName}_${storeId}`, JSON.stringify(this.endpointUrl)) // TODO: if cookie size is too big the cookie is not set
+        Cookies.set(`endpoint_${resourceName}_${storeId}`, JSON.stringify(this.endpointUrl[0].path)) // TODO: if cookie size is too big the cookie is not set
 
         return this.endpointUrl
       } catch (error) {
@@ -165,5 +172,35 @@ export class HandleApi implements IHandleApi {
     downloadModel = downloadModel.filter(model => model.key === 'date_to' || model.key === 'date_from')
 
     return downloadModel
+  }
+
+  /**
+   * Creates a filter payload from an array of configuration inputs.
+   * @template T - The type of the configuration input elements.
+   * @param {T[]} model - The array of configuration input elements.
+   * @returns {Record<string, string | null>} - The created filter payload with keys and non-null values.
+   */
+  public createFilterPayload<T extends IConfigInput>(model: T[]): Record<string, string | null> {
+    return model.reduce((acc, configInput) => {
+      if (configInput.value !== null) {
+        acc[configInput.key] = configInput.value;
+      }
+      return acc;
+    }, {} as Record<string, string | null>);
+  }
+
+  /**
+   * Creates a payload from an array of configuration inputs.
+   * @template T - The type of the configuration input elements.
+   * @param {T[]} model - The array of configuration input elements.
+   * @returns {Record<string, string | null>} - The created payload with keys and values.
+   */
+  public createPayload<T extends IConfigInput>(model: T[]): Record<string, string | null> {
+    return model.reduce((acc, configInput) => {
+      if (configInput.value !== null) {
+        acc[configInput.key] = configInput.value;
+      }
+      return acc;
+    }, {} as Record<string, string | null>);
   }
 }
