@@ -119,6 +119,11 @@ class User extends Authenticatable
         return $this->hasMany('App\Models\ConfigurationResource');
     }
 
+    public function configuration_translation_locales()
+    {
+        return $this->hasMany('App\Models\ConfigurationTranslationLocale');
+    }
+
     public function generals()
     {
         return $this->hasMany('App\Models\General');

@@ -1,0 +1,185 @@
+id,code,country,created_at,updated_at,user_id
+1,en-US,English (United States),09/25/23 08:04,09/25/23 08:04,1
+2,en-CA,English (Canada),09/25/23 08:04,09/25/23 08:04,1
+3,ar-BH,Arabic (Bahrain),09/25/23 08:04,09/25/23 08:04,1
+4,ar-KW,Arabic (Kuwait),09/25/23 08:04,09/25/23 08:04,1
+5,ar-LB,Arabic (Lebanon),09/25/23 08:04,09/25/23 08:04,1
+6,ar-OM,Arabic (Oman),09/25/23 08:04,09/25/23 08:04,1
+7,ar-QA,Arabic (Qatar),09/25/23 08:04,09/25/23 08:04,1
+8,ar-SA,Arabic (Saudi Arabia),09/25/23 08:04,09/25/23 08:04,1
+9,ar-AE,Arabic (UAE),09/25/23 08:04,09/25/23 08:04,1
+10,bs-BA,Bosnian (Bosnia and Herzegovina),09/25/23 08:04,09/25/23 08:04,1
+11,bg-BG,Bulgarian (Bulgaria),09/25/23 08:04,09/25/23 08:04,1
+12,ca-ES,Catalan (Spain),09/25/23 08:04,09/25/23 08:04,1
+13,hr-HR,Croatian (Croatia),09/25/23 08:04,09/25/23 08:04,1
+14,cs-CZ,Czech (Czech Republic),09/25/23 08:04,09/25/23 08:04,1
+15,da-DK,Danish (Denmark),09/25/23 08:04,09/25/23 08:04,1
+16,de-AT,German (Austria),09/25/23 08:04,09/25/23 08:04,1
+17,de-CH,German (Switzerland),09/25/23 08:04,09/25/23 08:04,1
+18,de-DE,German (Germany),09/25/23 08:04,09/25/23 08:04,1
+19,de-LU,German (Luxembourg),09/25/23 08:04,09/25/23 08:04,1
+20,el-GR,Greek (Greece),09/25/23 08:04,09/25/23 08:04,1
+21,en-AE,English (UAE),09/25/23 08:04,09/25/23 08:04,1
+22,en-AR,English (Argentina),09/25/23 08:04,09/25/23 08:04,1
+23,en-AU,English (Australia),09/25/23 08:04,09/25/23 08:04,1
+24,en-AT,English (Austria),09/25/23 08:04,09/25/23 08:04,1
+25,en-BG,English (Bulgaria),09/25/23 08:04,09/25/23 08:04,1
+26,en-BH,English (Bahrain),09/25/23 08:04,09/25/23 08:04,1
+27,en-BR,English (Brazil),09/25/23 08:04,09/25/23 08:04,1
+28,en-CL,English (Chile),09/25/23 08:04,09/25/23 08:04,1
+29,en-CO,English (Colombia),09/25/23 08:04,09/25/23 08:04,1
+30,en-HR,English (Croatia),09/25/23 08:04,09/25/23 08:04,1
+31,en-CY,English (Cyprus),09/25/23 08:04,09/25/23 08:04,1
+32,en-CZ,English (Czech Republic),09/25/23 08:04,09/25/23 08:04,1
+33,en-DK,English (Denmark),09/25/23 08:04,09/25/23 08:04,1
+34,en-FI,English (Finland),09/25/23 08:04,09/25/23 08:04,1
+35,en-DE,English (Germany),09/25/23 08:04,09/25/23 08:04,1
+36,en-GB,English (Great Britain),09/25/23 08:04,09/25/23 08:04,1
+37,en-GR,English (Greece),09/25/23 08:04,09/25/23 08:04,1
+38,en-HK,English (Hong Kong),09/25/23 08:04,09/25/23 08:04,1
+39,en-HU,English (Hungary),09/25/23 08:04,09/25/23 08:04,1
+40,en-IS,English (Iceland),09/25/23 08:04,09/25/23 08:04,1
+41,en-IN,English (India),09/25/23 08:04,09/25/23 08:04,1
+42,en-ID,English (Indonesia),09/25/23 08:04,09/25/23 08:04,1
+43,en-IE,English (Ireland),09/25/23 08:04,09/25/23 08:04,1
+44,en-IL,English (Israel),09/25/23 08:04,09/25/23 08:04,1
+45,en-KW,English (Kuwait),09/25/23 08:04,09/25/23 08:04,1
+46,en-LV,English (Latvia),09/25/23 08:04,09/25/23 08:04,1
+47,en-LB,English (Lebanon),09/25/23 08:04,09/25/23 08:04,1
+48,en-MY,English (Malaysia),09/25/23 08:04,09/25/23 08:04,1
+49,en-MT,English (Malta),09/25/23 08:04,09/25/23 08:04,1
+50,en-MX,English (Mexico),09/25/23 08:04,09/25/23 08:04,1
+51,en-NL,English (Netherlands),09/25/23 08:04,09/25/23 08:04,1
+52,en-NZ,English (New Zealand),09/25/23 08:04,09/25/23 08:04,1
+53,en-NO,English (Norway),09/25/23 08:04,09/25/23 08:04,1
+54,en-OM,English (Oman),09/25/23 08:04,09/25/23 08:04,1
+55,en-PE,English (Peru),09/25/23 08:04,09/25/23 08:04,1
+56,en-PL,English (Poland),09/25/23 08:04,09/25/23 08:04,1
+57,en-QA,English (Qatar),09/25/23 08:04,09/25/23 08:04,1
+58,en-RO,English (Romania),09/25/23 08:04,09/25/23 08:04,1
+59,en-SA,English (Saudi Arabia),09/25/23 08:04,09/25/23 08:04,1
+60,en-SE,English (Sweden),09/25/23 08:04,09/25/23 08:04,1
+61,en-SG,English (Singapore),09/25/23 08:04,09/25/23 08:04,1
+62,en-SK,English (Slovakia),09/25/23 08:04,09/25/23 08:04,1
+63,en-SI,English (Slovenia),09/25/23 08:04,09/25/23 08:04,1
+64,en-TW,English (Taiwan),09/25/23 08:04,09/25/23 08:04,1
+65,en-TH,English (Thailand),09/25/23 08:04,09/25/23 08:04,1
+66,en-TR,English (Turkey),09/25/23 08:04,09/25/23 08:04,1
+67,en-ZA,English (South Africa),09/25/23 08:04,09/25/23 08:04,1
+68,et-EE,Estonian (Estonia),09/25/23 08:04,09/25/23 08:04,1
+69,fi-FI,Finnish (Finland),09/25/23 08:04,09/25/23 08:04,1
+70,fr-BE,French (Belgium),09/25/23 08:04,09/25/23 08:04,1
+71,fr-CA,French (Canada),09/25/23 08:04,09/25/23 08:04,1
+72,fr-FR,French (France),09/25/23 08:04,09/25/23 08:04,1
+73,fr-LU,French (Luxembourg),09/25/23 08:04,09/25/23 08:04,1
+74,fr-CH,French (Switzerland),09/25/23 08:04,09/25/23 08:04,1
+75,he-IL,Hebrew (Israel),09/25/23 08:04,09/25/23 08:04,1
+76,hi-IN,Hindi (India),09/25/23 08:04,09/25/23 08:04,1
+77,hu-HU,Hungarian (Hungary),09/25/23 08:04,09/25/23 08:04,1
+78,is-IS,Icelandic (Iceland),09/25/23 08:04,09/25/23 08:04,1
+79,id-ID,Indonesian (Indonesia),09/25/23 08:04,09/25/23 08:04,1
+80,it-CH,Italian (Switzerland),09/25/23 08:04,09/25/23 08:04,1
+81,it-IT,Italian (Italy),09/25/23 08:04,09/25/23 08:04,1
+82,ja-JP,Japanese (Japan),09/25/23 08:04,09/25/23 08:04,1
+83,kk-KZ,Kazakh (Kazakhstan),09/25/23 08:04,09/25/23 08:04,1
+84,ko-KR,Korean (Korea),09/25/23 08:04,09/25/23 08:04,1
+85,lt-LT,Lithuanian (Lithuania),09/25/23 08:04,09/25/23 08:04,1
+86,lv-LV,Latvian (Latvia),09/25/23 08:04,09/25/23 08:04,1
+87,mg-MG,Malagasy (Madagascar),09/25/23 08:04,09/25/23 08:04,1
+88,mk-MK,Macedonian (Macedonia),09/25/23 08:04,09/25/23 08:04,1
+89,ms-MY,Malay (Malaysia),09/25/23 08:04,09/25/23 08:04,1
+90,nb-NO,Norwegian Bokmal (Norway),09/25/23 08:04,09/25/23 08:04,1
+91,nl-BE,Dutch (Belgium),09/25/23 08:04,09/25/23 08:04,1
+92,nl-NL,Dutch (Netherlands),09/25/23 08:04,09/25/23 08:04,1
+93,nn-NO,Norwegian Nynorsk (Norway),09/25/23 08:04,09/25/23 08:04,1
+94,no-NO,Norwegian (Norway),09/25/23 08:04,09/25/23 08:04,1
+95,fa-IR,Persian (Iran),09/25/23 08:04,09/25/23 08:04,1
+96,pl-PL,Polish (Poland),09/25/23 08:04,09/25/23 08:04,1
+97,pt-BR,Portuguese (Brazil),09/25/23 08:04,09/25/23 08:04,1
+98,pt-PT,Portuguese (Portugal),09/25/23 08:04,09/25/23 08:04,1
+99,ro-RO,Romanian (Romania),09/25/23 08:04,09/25/23 08:04,1
+100,ru-RU,Russian (Russia),09/25/23 08:04,09/25/23 08:04,1
+101,ru-UA,Russian (Ukraine),09/25/23 08:04,09/25/23 08:04,1
+102,zh-CN,Simplified Chinese (China),09/25/23 08:04,09/25/23 08:04,1
+103,zh-HK,Simplified Chinese (Hong Kong),09/25/23 08:04,09/25/23 08:04,1
+104,zh-TW,Simplified Chinese (Taiwan),09/25/23 08:04,09/25/23 08:04,1
+105,sr-ME,Serbian (Montenegro),09/25/23 08:04,09/25/23 08:04,1
+106,sr-RS,Serbian (Serbia),09/25/23 08:04,09/25/23 08:04,1
+107,sk-SK,Slovak (Slovakia),09/25/23 08:04,09/25/23 08:04,1
+108,sl-SI,Slovenian (Slovenia),09/25/23 08:04,09/25/23 08:04,1
+109,es-AR,Spanish (Argentina),09/25/23 08:04,09/25/23 08:04,1
+110,es-BO,Spanish (Bolivia),09/25/23 08:04,09/25/23 08:04,1
+111,es-CL,Spanish (Chile),09/25/23 08:04,09/25/23 08:04,1
+112,es-CO,Spanish (Colombia),09/25/23 08:04,09/25/23 08:04,1
+113,es-CR,Spanish (Costa Rica),09/25/23 08:04,09/25/23 08:04,1
+114,es-DO,Spanish (Dominican Republic),09/25/23 08:04,09/25/23 08:04,1
+115,es-EC,Spanish (Ecuador),09/25/23 08:04,09/25/23 08:04,1
+116,es-SV,Spanish (El Salvador),09/25/23 08:04,09/25/23 08:04,1
+117,es-GT,Spanish (Guatemala),09/25/23 08:04,09/25/23 08:04,1
+118,es-HN,Spanish (Honduras),09/25/23 08:04,09/25/23 08:04,1
+119,es-LA,Spanish (Latinerica),09/25/23 08:04,09/25/23 08:04,1
+120,es-MX,Spanish (Mexico),09/25/23 08:04,09/25/23 08:04,1
+121,es-NI,Spanish (Nicaragua),09/25/23 08:04,09/25/23 08:04,1
+122,es-PA,Spanish (Panama),09/25/23 08:04,09/25/23 08:04,1
+123,es-PE,Spanish (Peru),09/25/23 08:04,09/25/23 08:04,1
+124,es-PY,Spanish (Paraguay),09/25/23 08:04,09/25/23 08:04,1
+125,es-ES,Spanish (Spain),09/25/23 08:04,09/25/23 08:04,1
+126,es-US,Spanish (United States),09/25/23 08:04,09/25/23 08:04,1
+127,es-UY,Spanish (Uruguay),09/25/23 08:04,09/25/23 08:04,1
+128,sv-SE,Swedish (Sweden),09/25/23 08:04,09/25/23 08:04,1
+129,tl-PH,Tagalog (Philippines),09/25/23 08:04,09/25/23 08:04,1
+130,th-TH,Thai (Thailand),09/25/23 08:04,09/25/23 08:04,1
+131,ch-HK,Traditional Chinese (Hong Kong),09/25/23 08:04,09/25/23 08:04,1
+132,ch-TW,Traditional Chinese (Taiwan),09/25/23 08:04,09/25/23 08:04,1
+133,tr-TR,Turkish (Turkey),09/25/23 08:04,09/25/23 08:04,1
+134,uk-UA,Ukrainian (Ukraine),09/25/23 08:04,09/25/23 08:04,1
+135,vi-VN,Vietnamese (Vietnam),09/25/23 08:04,09/25/23 08:04,1
+136,af-ZA,Afrikaans (South Africa),09/25/23 08:04,09/25/23 08:04,1
+137,ar-EG,Arabic (Egypt),09/25/23 08:04,09/25/23 08:04,1
+138,as-IN,Assamese (India),09/25/23 08:04,09/25/23 08:04,1
+139,az-AZ,Azerbaijani (Azerbaijan),09/25/23 08:04,09/25/23 08:04,1
+140,bn-BD,Bengali (Bangladesh),09/25/23 08:04,09/25/23 08:04,1
+141,cy-GB,Welsh (Wales),09/25/23 08:04,09/25/23 08:04,1
+142,eu-ES,Basque (Spain),09/25/23 08:04,09/25/23 08:04,1
+143,ff-SN,Fula (Senegal),09/25/23 08:04,09/25/23 08:04,1
+144,gl-ES,Galician (Spain),09/25/23 08:04,09/25/23 08:04,1
+145,gu-IN,Gujarati (India),09/25/23 08:04,09/25/23 08:04,1
+146,ha-NG,Hausa (Nigeria),09/25/23 08:04,09/25/23 08:04,1
+147,hy-AM,Armenian (Armenia),09/25/23 08:04,09/25/23 08:04,1
+148,ig-NG,Igbo (Nigeria),09/25/23 08:04,09/25/23 08:04,1
+149,jv-ID,Javanese (Indonesia),09/25/23 08:04,09/25/23 08:04,1
+150,ka-GE,Georgian (Georgia),09/25/23 08:04,09/25/23 08:04,1
+151,km-KH,Khmer (Cambodia),09/25/23 08:04,09/25/23 08:04,1
+152,kn-IN,Kannada (India),09/25/23 08:04,09/25/23 08:04,1
+153,ku-TR,Kurdish (Turkey),09/25/23 08:04,09/25/23 08:04,1
+154,ky-KG,Kyrgyz (Kyrgyzstan),09/25/23 08:04,09/25/23 08:04,1
+155,ml-IN,Malayalam (India),09/25/23 08:04,09/25/23 08:04,1
+156,mn-MN,Mongolian (Mongolia),09/25/23 08:04,09/25/23 08:04,1
+157,mr-IN,Marathi (India),09/25/23 08:04,09/25/23 08:04,1
+158,my-MM,Burmese (Myanmar),09/25/23 08:04,09/25/23 08:04,1
+159,ne-NP,Nepali (Nepal),09/25/23 08:04,09/25/23 08:04,1
+160,om-ET,Oromo (Ethiopia),09/25/23 08:04,09/25/23 08:04,1
+161,pa-IN,Punjabi (India),09/25/23 08:04,09/25/23 08:04,1
+162,pa-PK,Punjabi (Pakistan),09/25/23 08:04,09/25/23 08:04,1
+163,sd-IN,Sindhi (India),09/25/23 08:04,09/25/23 08:04,1
+164,si-LK,Sinhala (Sri Lanka),09/25/23 08:04,09/25/23 08:04,1
+165,sn-ZW,Shona (Zimbabwe),09/25/23 08:04,09/25/23 08:04,1
+166,so-SO,Somali (Somalia),09/25/23 08:04,09/25/23 08:04,1
+167,sq-AL,Albanian (Albania),09/25/23 08:04,09/25/23 08:04,1
+168,su-ID,Sundanese (Indonesia),09/25/23 08:04,09/25/23 08:04,1
+169,sw-KE,Swahili (Kenya),09/25/23 08:04,09/25/23 08:04,1
+170,ta-IN,Tamil (India),09/25/23 08:04,09/25/23 08:04,1
+171,te-IN,Telugu (India),09/25/23 08:04,09/25/23 08:04,1
+172,ur-PK,Urdu (Pakistan),09/25/23 08:04,09/25/23 08:04,1
+173,uz-UZ,Uzbek (Uzbekistan),09/25/23 08:04,09/25/23 08:04,1
+174,wo-SN,Wolof (Senegal),09/25/23 08:04,09/25/23 08:04,1
+175,xh-ZA,Xhosa (South Africa),09/25/23 08:04,09/25/23 08:04,1
+176,yo-NG,Yoruba (Nigeria),09/25/23 08:04,09/25/23 08:04,1
+177,zu-ZA,Zulu (South Africa),09/25/23 08:04,09/25/23 08:04,1
+178,es-419,Spanish (Latinerica),09/25/23 08:04,09/25/23 08:04,1
+179,zh-Hans-HK,Simplified Chinese (Hong Kong),09/25/23 08:04,09/25/23 08:04,1
+180,zh-Hant-HK,Traditional Chinese (Hong Kong),09/25/23 08:04,09/25/23 08:04,1
+181,zh-Hans-TW,Simplified Chinese (Taiwan),09/25/23 08:04,09/25/23 08:04,1
+182,zh-Hant-TW,Traditional Chinese (Taiwan),09/25/23 08:04,09/25/23 08:04,1
+183,ceb-PH,Cebuano (Philippines),09/25/23 08:04,09/25/23 08:04,1
+184,mai-IN,Maithili (India),09/25/23 08:04,09/25/23 08:04,1

@@ -11,12 +11,10 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('set_configuration_translations', function (Blueprint $table) {
+        Schema::create('set_configuration_translation_locales', function (Blueprint $table) {
             $table->id()->index('idx_id');
-            $table->string('key');
-            $table->longText('translation');
-            $table->string('related_model_name')->nullable();
-            $table->integer('related_model_id')->nullable();
+            $table->string('code')->unique();
+            $table->string('country');
             $table->timestamps();
         });
     }
@@ -26,6 +24,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('set_configuration_translations');
+        Schema::dropIfExists('set_configuration_translation_locales');
     }
 };
