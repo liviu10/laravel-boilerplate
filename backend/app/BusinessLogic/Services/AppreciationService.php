@@ -180,11 +180,6 @@ class AppreciationService implements BaseInterface, AppreciationInterface
         }
     }
 
-    public function handleStatisticalIndicators(): array
-    {
-        return [];
-    }
-
     public function handleResourcePermissions(): void
     {
         $resources = $this->modelName->getResources();

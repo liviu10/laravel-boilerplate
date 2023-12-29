@@ -164,11 +164,6 @@ class ContactResponseService implements BaseInterface, ContactResponseInterface
         }
     }
 
-    public function handleStatisticalIndicators(): array
-    {
-        return [];
-    }
-
     public function handleResourcePermissions(): void
     {
         $resources = $this->modelName->getResources();

@@ -5,7 +5,6 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use App\Models\BaseModel;
 use App\Traits\LogApiError;
-use App\Traits\FilterAvailableFields;
 use Exception;
 use Illuminate\Database\QueryException;
 
@@ -24,11 +23,10 @@ use Illuminate\Database\QueryException;
  * @method createRecord
  * @method updateRecord
  * @method deleteRecord
- * @method getFields
  */
 class ConfigurationOption extends BaseModel
 {
-    use HasFactory, FilterAvailableFields, LogApiError;
+    use HasFactory, LogApiError;
 
     protected $table = 'set_configuration_options';
 
@@ -51,8 +49,6 @@ class ConfigurationOption extends BaseModel
         'configuration_type_id',
         'configuration_input_id',
     ];
-
-    protected $statisticalIndicators = [];
 
     protected $resources = [
         'configuration-options.create',
@@ -137,22 +133,6 @@ class ConfigurationOption extends BaseModel
             $this->LogApiError($exception);
             return false;
         }
-    }
-
-    /**
-     * Get the fillable fields for the model.
-     * @return array An array containing the fillable fields for the model.
-     */
-    public function getFields(): array
-    {
-        $fieldTypes = [
-            'resource'  => 'text',
-            'configuration_resource_id'   => 'number',
-        ];
-
-        $excludedFields = ['configuration_resource_id'];
-
-        return $this->handleFilterAvailableFields($fieldTypes, $excludedFields);
     }
 
     /**

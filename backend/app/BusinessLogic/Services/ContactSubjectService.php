@@ -168,11 +168,6 @@ class ContactSubjectService implements BaseInterface, ContactSubjectInterface
         }
     }
 
-    public function handleStatisticalIndicators(): array
-    {
-        return [];
-    }
-
     public function handleResourcePermissions(): void
     {
         $resources = $this->modelName->getResources();

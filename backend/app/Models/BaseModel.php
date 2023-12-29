@@ -10,9 +10,9 @@ use Illuminate\Support\Facades\Auth;
  * Class BaseModel
  * @package App\Models
 
+ * @property int $id
  * @property \Carbon\Carbon $created_at
  * @property \Carbon\Carbon $updated_at
- * @method getStatisticalIndicators
  */
 class BaseModel extends Model
 {
@@ -53,14 +53,5 @@ class BaseModel extends Model
             $this->LogApiError($exception);
             return false;
         }
-    }
-
-    /**
-     * Get the statistical indicators for the model.
-     * @return array An array containing the statistical indicators for the model.
-     */
-    public function getStatisticalIndicators(): array
-    {
-        return $this->statisticalIndicators;
     }
 }

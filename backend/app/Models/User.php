@@ -9,7 +9,6 @@ use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Facades\Auth;
 use Laravel\Sanctum\HasApiTokens;
 use App\Traits\LogApiError;
-use App\Traits\FilterAvailableFields;
 
 /**
  * Class User
@@ -34,15 +33,12 @@ use App\Traits\FilterAvailableFields;
  * @method fetchSingleRecord
  * @method updateRecord
  * @method deleteRecord
- * @method getFilters
- * @method getStatisticalIndicators
  */
 class User extends Authenticatable
 {
     use HasApiTokens,
         HasFactory,
         Notifiable,
-        FilterAvailableFields,
         LogApiError;
 
     protected $primaryKey = 'id';
@@ -62,13 +58,6 @@ class User extends Authenticatable
         'phone',
         'password',
         'profile_image',
-        'role_id',
-    ];
-
-    protected $statisticalIndicators = [
-        'phone',
-        'profile_image',
-        'email_verified_at',
         'role_id',
     ];
 
@@ -347,38 +336,6 @@ class User extends Authenticatable
             $this->LogApiError($exception);
             return false;
         }
-    }
-
-    /**
-     * Get the fillable fields for the model.
-     * @return array An array containing the fillable fields for the model.
-     */
-    public function getFields()
-    {
-        $fieldTypes = [
-            'full_name'     => 'text',
-            'first_name'    => 'text',
-            'last_name'     => 'text',
-            'nickname'      => 'text',
-            'email'         => 'email',
-            'phone'         => 'tel',
-            'password'      => 'password',
-            'profile_image' => 'file',
-            'role_id'       => 'number',
-        ];
-
-        $excludedFields = ['role_id'];
-
-        return $this->handleFilterAvailableFields($fieldTypes, $excludedFields);
-    }
-
-    /**
-     * Get the statistical indicators for the model.
-     * @return array An array containing the statistical indicators for the model.
-     */
-    public function getStatisticalIndicators()
-    {
-        return $this->statisticalIndicators;
     }
 
     /**

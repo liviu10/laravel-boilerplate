@@ -5,7 +5,6 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use App\Models\BaseModel;
 use App\Traits\LogApiError;
-use App\Traits\FilterAvailableFields;
 use Exception;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\QueryException;
@@ -29,13 +28,12 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @method fetchSingleRecord
  * @method updateRecord
  * @method deleteRecord
- * @method getFields
  * @method getNotificationTypeOptions
  * @method getNotificationConditionOptions
  */
 class Notification extends BaseModel
 {
-    use HasFactory, FilterAvailableFields, LogApiError, SoftDeletes;
+    use HasFactory, LogApiError, SoftDeletes;
 
     protected $table = 'set_notifications';
 
@@ -209,25 +207,6 @@ class Notification extends BaseModel
             $this->LogApiError($exception);
             return false;
         }
-    }
-
-    /**
-     * Get the fillable fields for the model.
-     * @return array An array containing the fillable fields for the model.
-     */
-    public function getFields(): array
-    {
-        $fieldTypes = [
-            'type'      => 'text',
-            'condition' => 'text',
-            'title'     => 'text',
-            'content'   => 'text',
-            'user_id'   => 'number',
-        ];
-
-        $excludedFields = ['content', 'user_id'];
-
-        return $this->handleFilterAvailableFields($fieldTypes, $excludedFields);
     }
 
     /**

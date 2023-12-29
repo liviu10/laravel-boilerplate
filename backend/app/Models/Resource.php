@@ -5,7 +5,6 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use App\Models\BaseModel;
 use App\Traits\LogApiError;
-use App\Traits\FilterAvailableFields;
 use Exception;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\QueryException;
@@ -35,12 +34,11 @@ use Illuminate\Support\Facades\Route;
  * @method fetchSingleRecord
  * @method updateRecord
  * @method deleteRecord
- * @method getFields
  * @method getResourceTypes
  */
 class Resource extends BaseModel
 {
-    use HasFactory, FilterAvailableFields, LogApiError, SoftDeletes;
+    use HasFactory, LogApiError, SoftDeletes;
 
     protected $table = 'set_resources';
 
@@ -251,36 +249,6 @@ class Resource extends BaseModel
             $this->LogApiError($exception);
             return false;
         }
-    }
-
-    /**
-     * Get the fillable fields for the model.
-     * @return array An array containing the fillable fields for the model.
-     */
-    public function getFields(): array
-    {
-        $fieldTypes = [
-            'path'          => 'text',
-            'name'          => 'text',
-            'component'     => 'text',
-            'layout'        => 'text',
-            'title'         => 'text',
-            'caption'       => 'text',
-            'icon'          => 'text',
-            'is_active'     => 'boolean',
-            'requires_auth' => 'boolean',
-            'user_id'       => 'number',
-        ];
-
-        $excludedFields = [
-            'component',
-            'layout',
-            'caption',
-            'icon',
-            'user_id'
-        ];
-
-        return $this->handleFilterAvailableFields($fieldTypes, $excludedFields);
     }
 
     /**

@@ -4,7 +4,6 @@ namespace App\BusinessLogic\Services;
 
 use App\BusinessLogic\Interfaces\BaseInterface;
 use App\BusinessLogic\Interfaces\AcceptedDomainInterface;
-use App\Traits\ApiStatisticalIndicators;
 use App\Models\AcceptedDomain;
 use App\Utilities\ApiResponse;
 use App\Utilities\ApiCheckPermission;
@@ -18,8 +17,6 @@ use Illuminate\View\View;
 
 class AcceptedDomainService implements BaseInterface, AcceptedDomainInterface
 {
-    use ApiStatisticalIndicators;
-
     protected $modelName;
     protected $apiResponse;
     protected $checkPermission;
@@ -166,11 +163,6 @@ class AcceptedDomainService implements BaseInterface, AcceptedDomainInterface
         } else {
             return $this->apiResponse->generateApiResponse(null, Actions::forbidden);
         }
-    }
-
-    public function handleStatisticalIndicators(): array
-    {
-        return [];
     }
 
     public function handleResourcePermissions(): void

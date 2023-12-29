@@ -5,7 +5,6 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use App\Models\BaseModel;
 use App\Traits\LogApiError;
-use App\Traits\FilterAvailableFields;
 use Exception;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\QueryException;
@@ -30,11 +29,10 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @method fetchSingleRecord
  * @method updateRecord
  * @method deleteRecord
- * @method getFields
  */
 class ContactMessage extends BaseModel
 {
-    use HasFactory, FilterAvailableFields, LogApiError, SoftDeletes;
+    use HasFactory, LogApiError, SoftDeletes;
 
     protected $table = 'com_contact_messages';
 
@@ -43,15 +41,6 @@ class ContactMessage extends BaseModel
     protected $foreignKeyType = 'int';
 
     protected $fillable = [
-        'full_name',
-        'email',
-        'phone',
-        'message',
-        'privacy_policy',
-        'contact_subject_id',
-    ];
-
-    protected $statisticalIndicators = [
         'full_name',
         'email',
         'phone',
@@ -220,26 +209,6 @@ class ContactMessage extends BaseModel
             $this->LogApiError($exception);
             return false;
         }
-    }
-
-    /**
-     * Get the fillable fields for the model.
-     * @return array An array containing the fillable fields for the model.
-     */
-    public function getFields(): array
-    {
-        $fieldTypes = [
-            'full_name'          => 'text',
-            'email'              => 'text',
-            'phone'              => 'text',
-            'message'            => 'text',
-            'privacy_policy'     => 'boolean',
-            'contact_subject_id' => 'number',
-        ];
-
-        $excludedFields = ['contact_subject_id'];
-
-        return $this->handleFilterAvailableFields($fieldTypes, $excludedFields);
     }
 
     /**

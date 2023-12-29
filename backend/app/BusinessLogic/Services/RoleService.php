@@ -4,7 +4,6 @@ namespace App\BusinessLogic\Services;
 
 use App\BusinessLogic\Interfaces\BaseInterface;
 use App\BusinessLogic\Interfaces\RoleInterface;
-use App\Traits\ApiStatisticalIndicators;
 use App\Models\Role;
 use App\Utilities\ApiResponse;
 use App\Utilities\ApiCheckPermission;
@@ -18,8 +17,6 @@ use Illuminate\View\View;
 
 class RoleService implements BaseInterface, RoleInterface
 {
-    use ApiStatisticalIndicators;
-
     protected $modelName;
     protected $apiResponse;
     protected $checkPermission;
@@ -178,11 +175,6 @@ class RoleService implements BaseInterface, RoleInterface
         } else {
             return $this->apiResponse->generateApiResponse(null, Actions::forbidden);
         }
-    }
-
-    public function handleStatisticalIndicators(): array
-    {
-        return [];
     }
 
     public function handleResourcePermissions(): void

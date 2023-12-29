@@ -191,11 +191,6 @@ class ContentService implements BaseInterface, ContentInterface
         }
     }
 
-    public function handleStatisticalIndicators(): array
-    {
-        return [];
-    }
-
     public function handleResourcePermissions(): void
     {
         $resources = $this->modelName->getResources();

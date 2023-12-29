@@ -188,11 +188,6 @@ class CommentService implements BaseInterface, CommentInterface
         }
     }
 
-    public function handleStatisticalIndicators(): array
-    {
-        return [];
-    }
-
     public function handleResourcePermissions(): void
     {
         $resources = $this->modelName->getResources();

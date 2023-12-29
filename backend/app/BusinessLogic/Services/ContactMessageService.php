@@ -199,11 +199,6 @@ class ContactMessageService implements BaseInterface, ContactMessageInterface
         return $apiCreatedRecord;
     }
 
-    public function handleStatisticalIndicators(): array
-    {
-        return [];
-    }
-
     public function handleResourcePermissions(): void
     {
         $resources = $this->modelName->getResources();

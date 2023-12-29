@@ -154,11 +154,6 @@ class ReviewService implements BaseInterface, ReviewInterface
         }
     }
 
-    public function handleStatisticalIndicators(): array
-    {
-        return [];
-    }
-
     public function handleResourcePermissions(): void
     {
         $resources = $this->modelName->getResources();

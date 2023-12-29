@@ -164,11 +164,6 @@ class ConfigurationResourceService implements BaseInterface, ConfigurationResour
         }
     }
 
-    public function handleStatisticalIndicators(): array
-    {
-        return [];
-    }
-
     public function handleResourcePermissions(): void
     {
         $resources = $this->modelName->getResources();

@@ -5,7 +5,6 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use App\Models\BaseModel;
 use App\Traits\LogApiError;
-use App\Traits\FilterAvailableFields;
 use Exception;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\QueryException;
@@ -28,22 +27,14 @@ use Illuminate\Pagination\LengthAwarePaginator;
  * @method fetchSingleRecord
  * @method updateRecord
  * @method deleteRecord
- * @method getFields
  */
 class Review extends BaseModel
 {
-    use HasFactory, FilterAvailableFields, LogApiError;
+    use HasFactory, LogApiError;
 
     protected $table = 'com_reviews';
 
     protected $fillable = [
-        'full_name',
-        'rating',
-        'comment',
-        'is_active',
-    ];
-
-    protected $statisticalIndicators = [
         'full_name',
         'rating',
         'comment',
@@ -186,25 +177,6 @@ class Review extends BaseModel
             $this->LogApiError($exception);
             return false;
         }
-    }
-
-    /**
-     * Get the fillable fields for the model.
-     * @return array An array containing the fillable fields for the model.
-     */
-    public function getFields(): array
-    {
-        $fieldTypes = [
-            'full_name' => 'text',
-            'rating'    => 'number',
-            'comment'   => 'text',
-            'is_active' => 'boolean',
-            'user_id'   => 'number',
-        ];
-
-        $excludedFields = ['user_id'];
-
-        return $this->handleFilterAvailableFields($fieldTypes, $excludedFields);
     }
 
     /**

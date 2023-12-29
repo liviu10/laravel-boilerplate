@@ -192,11 +192,6 @@ class NewsletterCampaignService implements BaseInterface, NewsletterCampaignInte
         }
     }
 
-    public function handleStatisticalIndicators(): array
-    {
-        return [];
-    }
-
     public function handleResourcePermissions(): void
     {
         $resources = $this->modelName->getResources();

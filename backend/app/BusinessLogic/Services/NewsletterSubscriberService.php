@@ -224,11 +224,6 @@ class NewsletterSubscriberService implements BaseInterface, NewsletterSubscriber
         return $apiDeleteRecord;
     }
 
-    public function handleStatisticalIndicators(): array
-    {
-        return [];
-    }
-
     public function handleResourcePermissions(): void
     {
         $resources = $this->modelName->getResources();

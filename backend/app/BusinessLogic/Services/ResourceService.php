@@ -279,11 +279,6 @@ class ResourceService implements BaseInterface, ResourceInterface
         return $componentInformation;
     }
 
-    public function handleStatisticalIndicators(): array
-    {
-        return [];
-    }
-
     public function handleResourcePermissions(): void
     {
         $resources = $this->modelName->getResources();

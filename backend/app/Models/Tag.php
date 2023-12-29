@@ -5,7 +5,6 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use App\Models\BaseModel;
 use App\Traits\LogApiError;
-use App\Traits\FilterAvailableFields;
 use Exception;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\QueryException;
@@ -29,11 +28,10 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @method fetchSingleRecord
  * @method updateRecord
  * @method deleteRecord
- * @method getFields
  */
 class Tag extends BaseModel
 {
-    use HasFactory, FilterAvailableFields, LogApiError, SoftDeletes;
+    use HasFactory, LogApiError, SoftDeletes;
 
     protected $table = 'man_tags';
 
@@ -205,25 +203,6 @@ class Tag extends BaseModel
             $this->LogApiError($exception);
             return false;
         }
-    }
-
-    /**
-     * Get the fillable fields for the model.
-     * @return array An array containing the fillable fields for the model.
-     */
-    public function getFields(): array
-    {
-        $fieldTypes = [
-            'name'        => 'text',
-            'description' => 'text',
-            'slug'        => 'text',
-            'content_id'  => 'number',
-            'user_id'     => 'number',
-        ];
-
-        $excludedFields = ['content_id', 'user_id'];
-
-        return $this->handleFilterAvailableFields($fieldTypes, $excludedFields);
     }
 
     /**

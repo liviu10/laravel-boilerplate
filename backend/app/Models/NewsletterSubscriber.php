@@ -5,7 +5,6 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use App\Models\BaseModel;
 use App\Traits\LogApiError;
-use App\Traits\FilterAvailableFields;
 use Exception;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\QueryException;
@@ -28,12 +27,11 @@ use Illuminate\Pagination\LengthAwarePaginator;
  * @method fetchSingleRecord
  * @method updateRecord
  * @method deleteRecord
- * @method getFields
  * @method checkEmailSubscriber
  */
 class NewsletterSubscriber extends BaseModel
 {
-    use HasFactory, FilterAvailableFields, LogApiError;
+    use HasFactory, LogApiError;
 
     protected $table = 'com_newsletter_subscribers';
 
@@ -42,14 +40,6 @@ class NewsletterSubscriber extends BaseModel
     protected $foreignKeyType = 'int';
 
     protected $fillable = [
-        'full_name',
-        'email',
-        'privacy_policy',
-        'valid_email',
-        'newsletter_campaign_id',
-    ];
-
-    protected $statisticalIndicators = [
         'full_name',
         'email',
         'privacy_policy',
@@ -242,25 +232,6 @@ class NewsletterSubscriber extends BaseModel
             $this->LogApiError($exception);
             return false;
         }
-    }
-
-    /**
-     * Get the fillable fields for the model.
-     * @return array An array containing the fillable fields for the model.
-     */
-    public function getFields(): array
-    {
-        $fieldTypes = [
-            'full_name'              => 'text',
-            'email'                  => 'text',
-            'privacy_policy'         => 'boolean',
-            'valid_email'            => 'boolean',
-            'newsletter_campaign_id' => 'number',
-        ];
-
-        $excludedFields = ['newsletter_campaign_id'];
-
-        return $this->handleFilterAvailableFields($fieldTypes, $excludedFields);
     }
 
     /**

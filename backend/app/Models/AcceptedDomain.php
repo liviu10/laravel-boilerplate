@@ -5,7 +5,6 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use App\Models\BaseModel;
 use App\Traits\LogApiError;
-use App\Traits\FilterAvailableFields;
 use Exception;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\QueryException;
@@ -30,11 +29,10 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @method deleteRecord
  * @method checkEmailProvider
  * @method getUniqueDomainTypes
- * @method getFields
  */
 class AcceptedDomain extends BaseModel
 {
-    use HasFactory, FilterAvailableFields, LogApiError, SoftDeletes;
+    use HasFactory, LogApiError, SoftDeletes;
 
     protected $table = 'set_accepted_domains';
 
@@ -47,12 +45,6 @@ class AcceptedDomain extends BaseModel
         'type',
         'user_id',
         'is_active',
-    ];
-
-    protected $statisticalIndicators = [
-        'type',
-        'is_active',
-        'user_id',
     ];
 
     protected $resources = [
@@ -243,24 +235,6 @@ class AcceptedDomain extends BaseModel
             $this->LogApiError($exception);
             return false;
         }
-    }
-
-    /**
-     * Get the fillable fields for the model.
-     * @return array An array containing the fillable fields for the model.
-     */
-    public function getFields(): array
-    {
-        $fieldTypes = [
-            'domain'    => 'text',
-            'type'      => 'select',
-            'user_id'   => 'number',
-            'is_active' => 'boolean',
-        ];
-
-        $excludedFields = ['user_id'];
-
-        return $this->handleFilterAvailableFields($fieldTypes, $excludedFields);
     }
 
     /**

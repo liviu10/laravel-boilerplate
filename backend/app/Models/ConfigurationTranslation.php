@@ -5,7 +5,6 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use App\Models\BaseModel;
 use App\Traits\LogApiError;
-use App\Traits\FilterAvailableFields;
 use Exception;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\QueryException;
@@ -30,11 +29,10 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @method fetchSingleRecord
  * @method updateRecord
  * @method deleteRecord
- * @method getFields
  */
 class ConfigurationTranslation extends BaseModel
 {
-    use HasFactory, FilterAvailableFields, LogApiError, SoftDeletes;
+    use HasFactory, LogApiError, SoftDeletes;
 
     protected $table = 'set_configuration_translations';
 
@@ -52,12 +50,6 @@ class ConfigurationTranslation extends BaseModel
         'related_model_name',
         'related_model_id',
         'configuration_translation_locale_id',
-        'user_id',
-    ];
-
-    protected $statisticalIndicators = [
-        'key',
-        'translation',
         'user_id',
     ];
 
@@ -223,24 +215,6 @@ class ConfigurationTranslation extends BaseModel
             $this->LogApiError($exception);
             return false;
         }
-    }
-
-    /**
-     * Get the fillable fields for the model.
-     * @return array An array containing the fillable fields for the model.
-     */
-    public function getFields(): array
-    {
-        $fieldTypes = [
-            'translation'        => 'text',
-            'related_model_name' => 'text',
-            'related_model_id'   => 'number',
-            'user_id'            => 'number',
-        ];
-
-        $excludedFields = ['user_id'];
-
-        return $this->handleFilterAvailableFields($fieldTypes, $excludedFields);
     }
 
     /**

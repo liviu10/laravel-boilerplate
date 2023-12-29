@@ -172,11 +172,6 @@ class NotificationService implements BaseInterface, NotificationInterface
         }
     }
 
-    public function handleStatisticalIndicators(): array
-    {
-        return [];
-    }
-
     public function handleResourcePermissions(): void
     {
         $resources = $this->modelName->getResources();
