@@ -79,9 +79,22 @@ Route::group(['prefix' => config('app.version')], function () {
             // TODO: Add routes for google analytics
             // Accepted domains
             Route::apiResource('/accepted-domains', AcceptedDomainController::class);
-            // Configuration resources
+            // Configurations
             Route::get('/get-configuration', [ConfigurationResourceController::class, 'getConfiguration']);
-            Route::apiResource('/configuration-resources', ConfigurationResourceController::class);
+            Route::group(['prefix' => '/configuration'], function () {
+                // Resources
+                Route::apiResource('/resources', ConfigurationResourceController::class);
+                // Types
+                Route::apiResource('/types', ConfigurationTypeController::class)->except('index');
+                // Columns
+                Route::apiResource('/columns', ConfigurationColumnController::class)->except('index');
+                // Inputs
+                Route::apiResource('/inputs', ConfigurationInputController::class)->except('index');
+                // Options
+                Route::apiResource('/options', ConfigurationOptionController::class)->except('index');
+                // Translations
+                Route::apiResource('/translations', ConfigurationTranslationController::class)->except('index');
+            });
             // General
             Route::apiResource('/general', GeneralController::class);
             // Notifications
