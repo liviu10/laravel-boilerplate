@@ -4,7 +4,6 @@ namespace App\BusinessLogic\Services;
 
 use App\BusinessLogic\Interfaces\BaseInterface;
 use App\BusinessLogic\Interfaces\CommentInterface;
-use App\Traits\ApiStatisticalIndicators;
 use App\Models\Comment;
 use App\Utilities\ApiResponse;
 use App\Utilities\ApiCheckPermission;
@@ -18,8 +17,6 @@ use Illuminate\View\View;
 
 class CommentService implements BaseInterface, CommentInterface
 {
-    use ApiStatisticalIndicators;
-
     protected $modelName;
     protected $apiResponse;
     protected $checkPermission;

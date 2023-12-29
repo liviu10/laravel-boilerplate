@@ -4,7 +4,6 @@ namespace App\BusinessLogic\Services;
 
 use App\BusinessLogic\Interfaces\BaseInterface;
 use App\BusinessLogic\Interfaces\ContactSubjectInterface;
-use App\Traits\ApiStatisticalIndicators;
 use App\Models\ContactSubject;
 use App\Utilities\ApiResponse;
 use App\Utilities\ApiCheckPermission;
@@ -18,8 +17,6 @@ use Illuminate\View\View;
 
 class ContactSubjectService implements BaseInterface, ContactSubjectInterface
 {
-    use ApiStatisticalIndicators;
-
     protected $modelName;
     protected $apiResponse;
     protected $checkPermission;

@@ -4,7 +4,6 @@ namespace App\BusinessLogic\Services;
 
 use App\BusinessLogic\Interfaces\BaseInterface;
 use App\BusinessLogic\Interfaces\NewsletterCampaignInterface;
-use App\Traits\ApiStatisticalIndicators;
 use App\Models\NewsletterCampaign;
 use App\Utilities\ApiResponse;
 use App\Utilities\ApiCheckPermission;
@@ -18,8 +17,6 @@ use Illuminate\View\View;
 
 class NewsletterCampaignService implements BaseInterface, NewsletterCampaignInterface
 {
-    use ApiStatisticalIndicators;
-
     protected $modelName;
     protected $apiResponse;
     protected $checkPermission;

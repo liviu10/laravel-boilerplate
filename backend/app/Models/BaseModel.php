@@ -54,4 +54,9 @@ class BaseModel extends Model
             return false;
         }
     }
+
+    public function getTableName()
+    {
+        return $this->table;
+    }
 }

@@ -4,7 +4,6 @@ namespace App\BusinessLogic\Services;
 
 use App\BusinessLogic\Interfaces\BaseInterface;
 use App\BusinessLogic\Interfaces\UserInterface;
-use App\Traits\ApiStatisticalIndicators;
 use App\Models\User;
 use App\Models\Role;
 use App\Utilities\ApiResponse;
@@ -19,8 +18,6 @@ use Illuminate\View\View;
 
 class UserService implements BaseInterface, UserInterface
 {
-    use ApiStatisticalIndicators;
-
     protected $modelName;
     protected $modelNameRole;
     protected $apiResponse;

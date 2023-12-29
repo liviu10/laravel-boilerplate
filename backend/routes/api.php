@@ -27,6 +27,8 @@ use App\Http\Controllers\TagController;
 use App\Http\Controllers\MediaController;
 use App\Http\Controllers\CommentController;
 use App\Http\Controllers\AppreciationController;
+// import application's reports
+use App\Http\Controllers\ReportController;
 // Import application's settings
 use App\Http\Controllers\AcceptedDomainController;
 use App\Http\Controllers\ConfigurationResourceController;
@@ -74,6 +76,8 @@ Route::group(['prefix' => config('app.version')], function () {
             Route::apiResource('/appreciations', AppreciationController::class);
             // TODO: Add routes for products, categories and cart
         });
+        // Application's reports api endpoint
+        Route::get('/reports', [ReportController::class, 'getReport']);
         // Application's settings api endpoints
         Route::group(['prefix' => '/settings'], function () {
             // TODO: Add routes for google analytics

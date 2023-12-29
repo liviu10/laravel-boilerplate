@@ -23,6 +23,9 @@ use App\BusinessLogic\Interfaces\MediaInterface;
 use App\BusinessLogic\Interfaces\CommentInterface;
 use App\BusinessLogic\Interfaces\AppreciationInterface;
 
+// Import application's reports
+use App\BusinessLogic\Interface\ReportInterface;
+
 // Import application's user settings
 use App\BusinessLogic\Interfaces\AcceptedDomainService;
 use App\BusinessLogic\Interfaces\ConfigurationResourceService;
@@ -56,6 +59,9 @@ class AppServiceProvider extends ServiceProvider
         $this->app->bind( MediaInterface::class, MediaService::class );
         $this->app->bind( CommentInterface::class, CommentService::class );
         $this->app->bind( AppreciationInterface::class, AppreciationService::class );
+
+        // Register application's reports interfaces and services
+        $this->app->bind( ReportInterface::class, ReportService::class );
 
         // Register application's user settings interfaces and services
         $this->app->bind( AcceptedDomainInterface::class, AcceptedDomainService::class );
