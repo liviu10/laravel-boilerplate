@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use App\Models\BaseModel;
 use App\Traits\LogApiError;
 use Exception;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\QueryException;
 
 /**
@@ -56,6 +57,7 @@ class ConfigurationColumn extends BaseModel
 
     protected $resources = [
         'configuration-types.create',
+        'configuration-types.show',
         'configuration-types.update',
         'configuration-types.destroy',
     ];
@@ -106,6 +108,27 @@ class ConfigurationColumn extends BaseModel
             ]);
 
             return $query;
+        } catch (Exception $exception) {
+            $this->LogApiError($exception);
+            return false;
+        } catch (QueryException $exception) {
+            $this->LogApiError($exception);
+            return false;
+        }
+    }
+
+    /**
+     * Fetch configuration columns from the database by its configuration resource ID.
+     * @param int $id The unique identifier of the record to fetch.
+     * @return \Illuminate\Support\Collection|bool The fetched record or
+     * related data as a Collection, or `false` if an error occurs.
+     */
+    public function fetchConfigurationColumns(int $id): Collection|bool
+    {
+        try {
+            $query = $this->select('*')->where('configuration_resource_id', '=', $id);
+
+            return $query->get();
         } catch (Exception $exception) {
             $this->LogApiError($exception);
             return false;

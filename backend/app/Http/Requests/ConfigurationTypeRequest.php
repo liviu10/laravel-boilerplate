@@ -5,7 +5,7 @@ namespace App\Http\Requests;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\Route;
 
-class ConfigurationResourceRequest extends FormRequest
+class ConfigurationTypeRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -28,20 +28,20 @@ class ConfigurationResourceRequest extends FormRequest
         $rules = [];
 
         // Validation rules when creating
-        if ($currentRouteName === 'resources.store')
-        {
+        if ($currentRouteName === 'types.store') {
             $rules = [
-                'resource' => 'required|string',
-                'key'      => 'required|string',
+                'name' => 'required|string',
+                'is_active' => 'required',
+                'configuration_resource_id' => 'required|integer',
             ];
         }
 
         // Validation rules when updating
-        if ($currentRouteName === 'resources.update')
-        {
+        if ($currentRouteName === 'types.update') {
             $rules = [
-                'resource' => 'sometimes|string',
-                'key'      => 'sometimes|string',
+                'name' => 'sometimes|string',
+                'is_active' => 'sometimes',
+                'configuration_resource_id' => 'sometimes|integer',
             ];
         }
 
@@ -56,10 +56,11 @@ class ConfigurationResourceRequest extends FormRequest
     public function messages()
     {
         return [
-            'resource.required' => 'The domain field is required.',
-            'resource.string' => 'The domain must be a string.',
-            'key.required' => 'The key field is required.',
-            'key.string' => 'The key must be a string.',
+            'name.required' => 'The name field is required.',
+            'name.string' => 'The name must be a string.',
+            'is_active.required' => 'The is_active field is required.',
+            'configuration_resource_id.required' => 'The configuration resource ID field is required.',
+            'configuration_resource_id.integer' => 'The configuration resource ID must be an integer.',
         ];
     }
 }

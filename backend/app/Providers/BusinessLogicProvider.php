@@ -43,6 +43,16 @@ use App\BusinessLogic\Interfaces\AcceptedDomainInterface;
 use App\BusinessLogic\Services\AcceptedDomainService;
 use App\BusinessLogic\Interfaces\ConfigurationResourceInterface;
 use App\BusinessLogic\Services\ConfigurationResourceService;
+use App\BusinessLogic\Interfaces\ConfigurationTypeInterface;
+use App\BusinessLogic\Services\ConfigurationTypeService;
+use App\BusinessLogic\Interfaces\ConfigurationColumnInterface;
+use App\BusinessLogic\Services\ConfigurationColumnService;
+use App\BusinessLogic\Interfaces\ConfigurationInputInterface;
+use App\BusinessLogic\Services\ConfigurationInputService;
+use App\BusinessLogic\Interfaces\ConfigurationOptionInterface;
+use App\BusinessLogic\Services\ConfigurationOptionService;
+use App\BusinessLogic\Interfaces\ConfigurationTranslationInterface;
+use App\BusinessLogic\Services\ConfigurationTranslationService;
 use App\BusinessLogic\Interfaces\GeneralInterface;
 use App\BusinessLogic\Services\GeneralService;
 use App\BusinessLogic\Interfaces\NotificationInterface;
@@ -87,6 +97,11 @@ class BusinessLogicProvider extends ServiceProvider
         // Register application's user settings interfaces and services
         $this->app->bind( AcceptedDomainInterface::class, AcceptedDomainService::class );
         $this->app->bind( ConfigurationResourceInterface::class, ConfigurationResourceService::class );
+        $this->app->bind( ConfigurationTypeInterface::class, ConfigurationTypeService::class );
+        $this->app->bind( ConfigurationColumnInterface::class, ConfigurationColumnService::class );
+        $this->app->bind( ConfigurationInputInterface::class, ConfigurationInputService::class );
+        $this->app->bind( ConfigurationOptionInterface::class, ConfigurationOptionService::class );
+        $this->app->bind( ConfigurationTranslationInterface::class, ConfigurationTranslationService::class );
         $this->app->bind( GeneralInterface::class, GeneralService::class );
         $this->app->bind( NotificationInterface::class, NotificationService::class );
         $this->app->bind( ResourceInterface::class, ResourceService::class );

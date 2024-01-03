@@ -5,7 +5,7 @@ namespace App\BusinessLogic\Interfaces;
 use Illuminate\Http\Response;
 use Illuminate\Contracts\Routing\ResponseFactory;
 
-interface ConfigurationResourceInterface
+interface ConfigurationTypeInterface
 {
-    public function handleGetConfigurationResourceId(array $key): Response|ResponseFactory;
+    //
 }

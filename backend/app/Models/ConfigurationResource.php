@@ -160,80 +160,15 @@ class ConfigurationResource extends BaseModel
     /**
      * Fetch a single record from the database by its ID.
      * @param int $id The unique identifier of the record to fetch.
-     * @param string|null $type The fetch type: 'relation' to include
-     * related data or null for just the record.
      * @return \Illuminate\Support\Collection|bool The fetched record or
      * related data as a Collection, or `false` if an error occurs.
      */
-    public function fetchSingleRecord(int $id, string|null $type = null): Collection|bool
+    public function fetchSingleRecord(int $id): Collection|bool
     {
         try {
             $query = $this->select('*')->where('id', '=', $id);
 
-            if ($type === 'relation') {
-                $query->with([
-                    'configuration_types' => function ($query) {
-                        $query->select(
-                            'id',
-                            'name',
-                            'is_active',
-                            'configuration_resource_id',
-                        )
-                        ->where('is_active', true)
-                        ->with([
-                            'configuration_columns' => function ($query) {
-                                $query->select(
-                                    'id',
-                                    'align',
-                                    'field',
-                                    'header_style',
-                                    'label',
-                                    'name',
-                                    'position',
-                                    'style',
-                                    'configuration_resource_id',
-                                    'configuration_type_id',
-                                );
-                            },
-                            'configuration_inputs' => function ($query) {
-                                $query->select(
-                                    'id',
-                                    'accept',
-                                    'field',
-                                    'is_active',
-                                    'is_filter',
-                                    'is_model',
-                                    'key',
-                                    'name',
-                                    'position',
-                                    'type',
-                                    'configuration_resource_id',
-                                    'configuration_type_id',
-                                )
-                                ->with([
-                                    'configuration_options' => function ($query) {
-                                        $query->select(
-                                            'id',
-                                            'value',
-                                            'label',
-                                            'configuration_resource_id',
-                                            'configuration_type_id',
-                                            'configuration_input_id',
-                                        );
-                                    }
-                                ]);
-                            },
-                        ]);
-                    },
-                    'user' => function ($query) {
-                        $query->select('id', 'full_name');
-                    }
-                ]);
-
-                return $query->get();
-            } else {
-                return $query->get();
-            }
+            return $query->get();
         } catch (Exception $exception) {
             $this->LogApiError($exception);
             return false;
@@ -243,72 +178,18 @@ class ConfigurationResource extends BaseModel
         }
     }
 
-    public function fetchConfiguration(int $id, string|null $type = null): Collection|bool
+    /**
+     * Fetches the configuration resource ID based on the given ID.
+     * @param int $id The ID to retrieve the configuration resource ID.
+     * @return \Illuminate\Support\Collection|bool Returns a collection containing the configuration resource ID if successful,
+     * or `false` if an exception occurs during the query.
+     */
+    public function fetchConfigurationResourceId(int $id): Collection|bool
     {
         try {
             $query = $this->select('id')->where('id', '=', $id);
 
-            if ($type === 'relation') {
-                $query->with([
-                    'configuration_types' => function ($query) {
-                        $query->select(
-                            'id',
-                            'name',
-                            'is_active',
-                            'configuration_resource_id',
-                        )
-                        ->where('is_active', true)
-                        ->with([
-                            'configuration_columns' => function ($query) {
-                                $query->select(
-                                    'id',
-                                    'align',
-                                    'field',
-                                    'header_style',
-                                    'label',
-                                    'name',
-                                    'position',
-                                    'style',
-                                    'configuration_resource_id',
-                                    'configuration_type_id',
-                                );
-                            },
-                            'configuration_inputs' => function ($query) {
-                                $query->select(
-                                    'id',
-                                    'accept',
-                                    'field',
-                                    'is_active',
-                                    'is_filter',
-                                    'is_model',
-                                    'key',
-                                    'name',
-                                    'position',
-                                    'type',
-                                    'configuration_resource_id',
-                                    'configuration_type_id',
-                                )
-                                ->with([
-                                    'configuration_options' => function ($query) {
-                                        $query->select(
-                                            'id',
-                                            'value',
-                                            'label',
-                                            'configuration_resource_id',
-                                            'configuration_type_id',
-                                            'configuration_input_id',
-                                        );
-                                    }
-                                ]);
-                            },
-                        ]);
-                    }
-                ]);
-
-                return $query->get();
-            } else {
-                return $query->get();
-            }
+            return $query->get();
         } catch (Exception $exception) {
             $this->LogApiError($exception);
             return false;

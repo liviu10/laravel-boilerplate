@@ -3,8 +3,8 @@
 namespace App\BusinessLogic\Services;
 
 use App\BusinessLogic\Interfaces\BaseInterface;
-use App\BusinessLogic\Interfaces\ConfigurationResourceInterface;
-use App\Models\ConfigurationResource;
+use App\BusinessLogic\Interfaces\ConfigurationOptionInterface;
+use App\Models\ConfigurationOption;
 use App\Utilities\ApiResponse;
 use App\Utilities\ApiCheckPermission;
 use App\Utilities\ApiResourcePermission;
@@ -15,7 +15,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\View\View;
 
-class ConfigurationResourceService implements BaseInterface, ConfigurationResourceInterface
+class ConfigurationOptionService implements BaseInterface, ConfigurationOptionInterface
 {
     protected $modelName;
     protected $apiResponse;
@@ -28,7 +28,7 @@ class ConfigurationResourceService implements BaseInterface, ConfigurationResour
      */
     public function __construct()
     {
-        $this->modelName = new ConfigurationResource();
+        $this->modelName = new ConfigurationOption();
         $this->apiResponse = new ApiResponse();
         $this->checkPermission = new ApiCheckPermission();
         $this->resourcePermissions = new ApiResourcePermission();
@@ -77,9 +77,12 @@ class ConfigurationResourceService implements BaseInterface, ConfigurationResour
     {
         if ($this->checkPermission->handleApiCheckPermission()) {
             $apiInsertRecord = [
-                'resource' => $request['resource'],
-                'key' => $request['key'],
-                'user_id'  => Auth::user() ? Auth::user()->id : 1,
+                'value' => $request['value'],
+                'label' => $request['label'],
+                'configuration_resource_id' => $request['configuration_resource_id'],
+                'configuration_type_id' => $request['configuration_type_id'],
+                'configuration_input_id' => $request['configuration_input_id'],
+                // 'user_id'   => Auth::user() ? Auth::user()->id : 1,
             ];
             $createdRecord = $this->modelName->createRecord($apiInsertRecord);
             $apiCreatedRecord = $this->apiResponse->generateApiResponse($createdRecord->toArray(), Actions::create);
@@ -99,7 +102,7 @@ class ConfigurationResourceService implements BaseInterface, ConfigurationResour
     {
         if ($this->checkPermission->handleApiCheckPermission()) {
             $apiDisplaySingleRecord = $this->apiResponse->generateApiResponse(
-                $this->modelName->fetchSingleRecord($id, 'relation'),
+                $this->modelName->fetchConfigurationOptions($id),
                 Actions::get
             );
 
@@ -121,13 +124,22 @@ class ConfigurationResourceService implements BaseInterface, ConfigurationResour
             $apiDisplaySingleRecord = $this->modelName->fetchSingleRecord($id);
             if ($apiDisplaySingleRecord && $apiDisplaySingleRecord->isNotEmpty()) {
                 $apiUpdateRecord = [
-                    'resource' => array_key_exists('resource', $request)
-                        ? $request['resource']
-                        : $apiDisplaySingleRecord->toArray()[0]['resource'],
-                    'key' => array_key_exists('key', $request)
-                        ? $request['key']
-                        : $apiDisplaySingleRecord->toArray()[0]['key'],
-                    'user_id' => Auth::user() ? Auth::user()->id : 1,
+                    'value' => array_key_exists('value', $request)
+                        ? $request['value']
+                        : $apiDisplaySingleRecord->toArray()[0]['value'],
+                    'label' => array_key_exists('label', $request)
+                        ? $request['label']
+                        : $apiDisplaySingleRecord->toArray()[0]['label'],
+                    'configuration_resource_id' => array_key_exists('configuration_resource_id', $request)
+                        ? $request['configuration_resource_id']
+                        : $apiDisplaySingleRecord->toArray()[0]['configuration_resource_id'],
+                    'configuration_type_id' => array_key_exists('configuration_type_id', $request)
+                        ? $request['configuration_type_id']
+                        : $apiDisplaySingleRecord->toArray()[0]['configuration_type_id'],
+                    'configuration_input_id' => array_key_exists('configuration_input_id', $request)
+                        ? $request['configuration_input_id']
+                        : $apiDisplaySingleRecord->toArray()[0]['configuration_input_id'],
+                    // 'user_id' => Auth::user() ? Auth::user()->id : 1,
                 ];
                 $updatedRecord = $this->modelName->updateRecord($apiUpdateRecord, $id);
                 $apiUpdatedRecord = $this->apiResponse->generateApiResponse($updatedRecord->toArray(), Actions::update);
@@ -165,27 +177,5 @@ class ConfigurationResourceService implements BaseInterface, ConfigurationResour
     {
         $resources = $this->modelName->getResources();
         $this->resourcePermissions->handleApiCreateResourcePermission($resources);
-    }
-
-    /**
-     * Handle the GET request to retrieve configuration.
-     * @param array $key An array of keys for configuration retrieval.
-     * @return Response|ResponseFactory The HTTP response or response factory.
-     */
-    public function handleGetConfigurationResourceId(array $key): Response|ResponseFactory
-    {
-        if ($this->checkPermission->handleApiCheckPermission()) {
-            $allConfigurations = $this->handleIndex($key);
-            $resourceConfigurationId = collect($allConfigurations->original)->toArray()['results'][0]['id'];
-
-            $apiDisplayAllRecords = $this->apiResponse->generateApiResponse(
-                $this->modelName->fetchConfigurationResourceId($resourceConfigurationId),
-                Actions::get
-            );
-
-            return $apiDisplayAllRecords;
-        } else {
-            return $this->apiResponse->generateApiResponse(null, Actions::forbidden);
-        }
     }
 }

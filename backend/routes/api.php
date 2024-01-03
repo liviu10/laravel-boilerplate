@@ -32,6 +32,11 @@ use App\Http\Controllers\ReportController;
 // Import application's settings
 use App\Http\Controllers\AcceptedDomainController;
 use App\Http\Controllers\ConfigurationResourceController;
+use App\Http\Controllers\ConfigurationTypeController;
+use App\Http\Controllers\ConfigurationColumnController;
+use App\Http\Controllers\ConfigurationInputController;
+use App\Http\Controllers\ConfigurationOptionController;
+use App\Http\Controllers\ConfigurationTranslationController;
 use App\Http\Controllers\GeneralController;
 use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\ResourceController;
@@ -84,20 +89,20 @@ Route::group(['prefix' => config('app.version')], function () {
             // Accepted domains
             Route::apiResource('/accepted-domains', AcceptedDomainController::class);
             // Configurations
-            Route::get('/get-configuration', [ConfigurationResourceController::class, 'getConfiguration']);
             Route::group(['prefix' => '/configuration'], function () {
                 // Resources
+                Route::get('/get-resource-id', [ConfigurationResourceController::class, 'getConfigurationResourceId']);
                 Route::apiResource('/resources', ConfigurationResourceController::class);
                 // Types
-                Route::apiResource('/types', ConfigurationTypeController::class)->except('index');
+                Route::apiResource('/types', ConfigurationTypeController::class);
                 // Columns
-                Route::apiResource('/columns', ConfigurationColumnController::class)->except('index');
+                Route::apiResource('/columns', ConfigurationColumnController::class);
                 // Inputs
-                Route::apiResource('/inputs', ConfigurationInputController::class)->except('index');
+                Route::apiResource('/inputs', ConfigurationInputController::class);
                 // Options
-                Route::apiResource('/options', ConfigurationOptionController::class)->except('index');
+                Route::apiResource('/options', ConfigurationOptionController::class);
                 // Translations
-                Route::apiResource('/translations', ConfigurationTranslationController::class)->except('index');
+                Route::apiResource('/translations', ConfigurationTranslationController::class);
             });
             // General
             Route::apiResource('/general', GeneralController::class);

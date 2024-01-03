@@ -7,33 +7,63 @@ use Illuminate\Support\ServiceProvider;
 
 // Import application's home
 use App\BusinessLogic\Interfaces\HomeInterface;
+use App\BusinessLogic\Services\HomeService;
 
 // Import application's communication settings
 use App\BusinessLogic\Interfaces\ContactSubjectInterface;
+use App\BusinessLogic\Services\ContactSubjectService;
 use App\BusinessLogic\Interfaces\ContactMessageInterface;
+use App\BusinessLogic\Services\ContactMessageService;
 use App\BusinessLogic\Interfaces\ContactResponseInterface;
+use App\BusinessLogic\Services\ContactResponseService;
 use App\BusinessLogic\Interfaces\NewsletterCampaignInterface;
+use App\BusinessLogic\Services\NewsletterCampaignService;
 use App\BusinessLogic\Interfaces\NewsletterSubscriberInterface;
+use App\BusinessLogic\Services\NewsletterSubscriberService;
 use App\BusinessLogic\Interfaces\ReviewInterface;
+use App\BusinessLogic\Services\ReviewService;
 
 // Import application's management settings
 use App\BusinessLogic\Interfaces\ContentInterface;
+use App\BusinessLogic\Services\ContentService;
 use App\BusinessLogic\Interfaces\TagInterface;
+use App\BusinessLogic\Services\TagService;
 use App\BusinessLogic\Interfaces\MediaInterface;
+use App\BusinessLogic\Services\MediaService;
 use App\BusinessLogic\Interfaces\CommentInterface;
+use App\BusinessLogic\Services\CommentService;
 use App\BusinessLogic\Interfaces\AppreciationInterface;
+use App\BusinessLogic\Services\AppreciationService;
 
 // Import application's reports
-use App\BusinessLogic\Interface\ReportInterface;
+use App\BusinessLogic\Interfaces\ReportInterface;
+use App\BusinessLogic\Services\ReportService;
 
 // Import application's user settings
-use App\BusinessLogic\Interfaces\AcceptedDomainService;
-use App\BusinessLogic\Interfaces\ConfigurationResourceService;
+use App\BusinessLogic\Interfaces\AcceptedDomainInterface;
+use App\BusinessLogic\Services\AcceptedDomainService;
+use App\BusinessLogic\Interfaces\ConfigurationResourceInterface;
+use App\BusinessLogic\Services\ConfigurationResourceService;
+use App\BusinessLogic\Interfaces\ConfigurationTypeInterface;
+use App\BusinessLogic\Services\ConfigurationTypeService;
+use App\BusinessLogic\Interfaces\ConfigurationColumnInterface;
+use App\BusinessLogic\Services\ConfigurationColumnService;
+use App\BusinessLogic\Interfaces\ConfigurationInputInterface;
+use App\BusinessLogic\Services\ConfigurationInputService;
+use App\BusinessLogic\Interfaces\ConfigurationOptionInterface;
+use App\BusinessLogic\Services\ConfigurationOptionService;
+use App\BusinessLogic\Interfaces\ConfigurationTranslationInterface;
+use App\BusinessLogic\Services\ConfigurationTranslationService;
 use App\BusinessLogic\Interfaces\GeneralInterface;
+use App\BusinessLogic\Services\GeneralService;
 use App\BusinessLogic\Interfaces\NotificationInterface;
+use App\BusinessLogic\Services\NotificationService;
 use App\BusinessLogic\Interfaces\ResourceInterface;
+use App\BusinessLogic\Services\ResourceService;
 use App\BusinessLogic\Interfaces\RoleInterface;
+use App\BusinessLogic\Services\RoleService;
 use App\BusinessLogic\Interfaces\UserInterface;
+use App\BusinessLogic\Services\UserService;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -66,6 +96,11 @@ class AppServiceProvider extends ServiceProvider
         // Register application's user settings interfaces and services
         $this->app->bind( AcceptedDomainInterface::class, AcceptedDomainService::class );
         $this->app->bind( ConfigurationResourceInterface::class, ConfigurationResourceService::class );
+        $this->app->bind( ConfigurationTypeInterface::class, ConfigurationTypeService::class );
+        $this->app->bind( ConfigurationColumnInterface::class, ConfigurationColumnService::class );
+        $this->app->bind( ConfigurationInputInterface::class, ConfigurationInputService::class );
+        $this->app->bind( ConfigurationOptionInterface::class, ConfigurationOptionService::class );
+        $this->app->bind( ConfigurationTranslationInterface::class, ConfigurationTranslationService::class );
         $this->app->bind( GeneralInterface::class, GeneralService::class );
         $this->app->bind( NotificationInterface::class, NotificationService::class );
         $this->app->bind( ResourceInterface::class, ResourceService::class );
