@@ -8,6 +8,7 @@ use App\Traits\LogApiError;
 use Exception;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\QueryException;
+use Illuminate\Pagination\LengthAwarePaginator;
 
 /**
  * Class ConfigurationOption
@@ -84,6 +85,42 @@ class ConfigurationOption extends BaseModel
     }
 
     /**
+     * Fetch records from the database based on optional search criteria.
+     * @param array $search An associative array of search criteria (field => value).
+     * @param string|null $type The fetch type: 'paginate'for paginated results or null for a collection.
+     * @return \Illuminate\Pagination\LengthAwarePaginator|\Illuminate\Support\Collection|bool
+     * A paginated result, a collection, or `false` if an error occurs.
+     */
+    public function fetchAllRecords(array $search = [], string|null $type = null): LengthAwarePaginator|Collection|bool
+    {
+        try {
+            $query = $this->select('value', 'label');
+
+            if (!empty($search)) {
+                foreach ($search as $field => $value) {
+                    if ($field === 'id' || $field === 'is_active') {
+                        $query->where($field, '=', $value);
+                    } else {
+                        $query->where($field, 'LIKE', '%' . $value . '%');
+                    }
+                }
+            }
+
+            if ($type === 'restore') {
+                return $query->onlyTrashed()->select('id', 'resource')->get();
+            } else {
+                return $query->get();
+            }
+        } catch (Exception $exception) {
+            $this->LogApiError($exception);
+            return false;
+        } catch (QueryException $exception) {
+            $this->LogApiError($exception);
+            return false;
+        }
+    }
+
+    /**
      * Create a new record in the database.
      * @param array $payload An associative array containing record data.
      * @return \App\Models\ConfigurationOption|bool The newly created
@@ -111,15 +148,15 @@ class ConfigurationOption extends BaseModel
     }
 
     /**
-     * Fetch configuration options from the database by its configuration resource ID.
+     * Fetch a record from the database by its ID.
      * @param int $id The unique identifier of the record to fetch.
      * @return \Illuminate\Support\Collection|bool The fetched record or
      * related data as a Collection, or `false` if an error occurs.
      */
-    public function fetchConfigurationOptions(int $id): Collection|bool
+    public function fetchSingleRecord(int $id): Collection|bool
     {
         try {
-            $query = $this->select('*')->where('configuration_resource_id', '=', $id);
+            $query = $this->select('*')->where('id', '=', $id);
 
             return $query->get();
         } catch (Exception $exception) {

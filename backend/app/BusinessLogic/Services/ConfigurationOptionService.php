@@ -102,7 +102,7 @@ class ConfigurationOptionService implements BaseInterface, ConfigurationOptionIn
     {
         if ($this->checkPermission->handleApiCheckPermission()) {
             $apiDisplaySingleRecord = $this->apiResponse->generateApiResponse(
-                $this->modelName->fetchConfigurationOptions($id),
+                $this->modelName->fetchSingleRecord($id),
                 Actions::get
             );
 

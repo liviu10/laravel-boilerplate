@@ -116,7 +116,7 @@ class ConfigurationInputService implements BaseInterface, ConfigurationInputInte
     {
         if ($this->checkPermission->handleApiCheckPermission()) {
             $apiDisplaySingleRecord = $this->apiResponse->generateApiResponse(
-                $this->modelName->fetchConfigurationInputs($id),
+                $this->modelName->fetchSingleRecord($id),
                 Actions::get
             );
 

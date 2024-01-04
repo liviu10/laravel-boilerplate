@@ -106,7 +106,7 @@ class ConfigurationColumnService implements BaseInterface, ConfigurationColumnIn
     {
         if ($this->checkPermission->handleApiCheckPermission()) {
             $apiDisplaySingleRecord = $this->apiResponse->generateApiResponse(
-                $this->modelName->fetchConfigurationColumns($id),
+                $this->modelName->fetchSingleRecord($id),
                 Actions::get
             );
 

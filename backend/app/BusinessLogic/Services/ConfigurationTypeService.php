@@ -100,7 +100,7 @@ class ConfigurationTypeService implements BaseInterface, ConfigurationTypeInterf
     {
         if ($this->checkPermission->handleApiCheckPermission()) {
             $apiDisplaySingleRecord = $this->apiResponse->generateApiResponse(
-                $this->modelName->fetchConfigurationTypes($id),
+                $this->modelName->fetchSingleRecord($id),
                 Actions::get
             );
 

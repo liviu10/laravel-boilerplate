@@ -179,27 +179,6 @@ class ConfigurationResource extends BaseModel
     }
 
     /**
-     * Fetches the configuration resource ID based on the given ID.
-     * @param int $id The ID to retrieve the configuration resource ID.
-     * @return \Illuminate\Support\Collection|bool Returns a collection containing the configuration resource ID if successful,
-     * or `false` if an exception occurs during the query.
-     */
-    public function fetchConfigurationResourceId(int $id): Collection|bool
-    {
-        try {
-            $query = $this->select('id')->where('id', '=', $id);
-
-            return $query->get();
-        } catch (Exception $exception) {
-            $this->LogApiError($exception);
-            return false;
-        } catch (QueryException $exception) {
-            $this->LogApiError($exception);
-            return false;
-        }
-    }
-
-    /**
      * Update a record in the database.
      * @param array $payload An associative array containing the updated record data.
      * @param int $id The unique identifier of the record to update.

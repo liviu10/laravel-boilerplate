@@ -9,7 +9,6 @@ use Exception;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\QueryException;
 use Illuminate\Pagination\LengthAwarePaginator;
-use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
  * Class ConfigurationTranslation
@@ -32,7 +31,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  */
 class ConfigurationTranslation extends BaseModel
 {
-    use HasFactory, LogApiError, SoftDeletes;
+    use HasFactory, LogApiError;
 
     protected $table = 'set_configuration_translations';
 
