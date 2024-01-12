@@ -21,6 +21,7 @@ interface IHandleRoute {
   ) => Promise<void | NavigationFailure | undefined>;
   handleResourceNameFromRoute: () => string;
   handleTranslationFromRoute: () => string;
+  handleGetIdFromRoute: () => number | null;
 }
 
 export class HandleRoute implements IHandleRoute {
@@ -29,6 +30,7 @@ export class HandleRoute implements IHandleRoute {
   basicRouteDescription: string;
   resourceName: string[] | string | undefined;
   translationFromRoute: string;
+  recordId: number | null;
 
   public constructor() {
     this.basicRouteName = 'BasicRouteName';
@@ -36,6 +38,7 @@ export class HandleRoute implements IHandleRoute {
     this.basicRouteDescription = 'BasicRouteDescription';
     this.resourceName = '';
     this.translationFromRoute = '';
+    this.recordId = null;
   }
 
   /**
@@ -140,13 +143,42 @@ export class HandleRoute implements IHandleRoute {
    * @returns {string} The translation key generated from the pathname.
    */
   public handleTranslationFromRoute(): string {
-    this.translationFromRoute = window.location.pathname
-      .replace(/\//g, '.')
-      .replace(/-/g, '_')
-      .substring(1)
-      .replace(/\b(create|show|edit)\b/g, '')
-      .replace(/\.$/, '');
+    const pathSegments = window.location.pathname.split('/').filter(segment => segment !== '');
+    if (pathSegments.length > 0) {
+      if (['create', 'show', 'edit'].includes(pathSegments[pathSegments.length - 1])) {
+        pathSegments.pop();
+      }
+      this.translationFromRoute = pathSegments.join('.');
+    } else {
+      this.translationFromRoute = '';
+    }
 
     return this.translationFromRoute;
+  }
+
+  /**
+   * Extracts and returns the ID from the current window location pathname based on specified keywords.
+   * @returns {number | null} The extracted ID, or null if no valid ID is found.
+   */
+  public handleGetIdFromRoute(): number | null {
+    const pathSegments = window.location.pathname.split('/').filter(segment => segment !== '');
+    const keywordsToFind = ['show', 'edit'];
+    let id: number | null = null;
+
+    for (let i = 0; i < pathSegments.length - 1; i++) {
+      const currentSegment = pathSegments[i];
+      if (keywordsToFind.includes(currentSegment)) {
+        const nextSegment = pathSegments[i + 1];
+        const parsedId = parseInt(nextSegment, 10);
+        if (!isNaN(parsedId)) {
+          id = parsedId;
+        } else {
+          id = null
+        }
+      }
+    }
+    this.recordId = id;
+
+    return this.recordId;
   }
 }

@@ -4,3 +4,4 @@
 3,".xls,.xlsx,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,.ods,application/vnd.oasis.opendocument.spreadsheet,.txt,.csv","upload",1,0,1,"upload","admin.generic.input.upload",3,"file","2023-09-25 08:04:00","2023-09-25 08:04:00",7,14
 4,"","date_to",1,0,1,"date_to","admin.generic.input.date_to",4,"date","2023-09-25 08:04:00","2023-09-25 08:04:00",7,14
 5,"","date_from",1,0,1,"date_from","admin.generic.input.date_from",5,"date","2023-09-25 08:04:00","2023-09-25 08:04:00",7,14
+6,"","search_resource",1,1,1,"search_resource","admin.generic.input.search_the_resource",6,"text","2023-09-25 08:04:00","2023-09-25 08:04:00",7,14

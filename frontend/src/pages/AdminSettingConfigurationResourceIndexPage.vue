@@ -13,9 +13,11 @@
     <div class="admin-section admin-section--container">
       <grid-table
         :columns="configurationResourceStore.getColumns"
+        :search-resource="configurationResourceStore.getSearchResourceModel"
         :resource="configurationResourceStore.getResourceName"
         :rows="configurationResourceStore.getAllRecords.results?.data || []"
         @handle-open-dialog="handleOpenDialog"
+        @handle-search-the-resource="handleSearchTheResource"
       />
     </div>
 
@@ -318,6 +320,9 @@ async function handleActionDialog(action: TDialog): Promise<void> {
       break;
   }
 }
+
+// Handle search the resource
+const handleSearchTheResource = () => configurationResourceStore.handleAdvancedFilter('paginate')
 
 // Go to Configure resource
 const router = useRouter();

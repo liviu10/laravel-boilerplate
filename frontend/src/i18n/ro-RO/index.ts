@@ -30,7 +30,6 @@ export default {
       `,
       create_record_label: 'Adăugă o înregistrare nouă',
       create_record_tooltip: 'Clic aici pentru a adăuga o înregistrare nouă',
-      search_the_resource: 'Căutați resursa',
       resource_settings_tooltip: 'Clic aici pentru a configura tabelul',
       quick_show_record_label: 'Afișare rapidă înregistrare',
       quick_show_record_tooltip: 'Faceți clic aici pentru a afișa rapid înregistrarea',
@@ -70,6 +69,9 @@ export default {
         Vă rugăm să configurați resursa.
         Dacă problema persistă, puteți contacta administratorul.
       `,
+      input: {
+        search_the_resource: 'Căutați resursa',
+      }
     },
     home: {
       title: 'Dashboard',
@@ -275,16 +277,18 @@ export default {
           repudiandae, numquam, dicta earum, cupiditate consequuntur?
         `,
       },
-      configuration_resources: {
-        title: 'Configurare resurse',
-        page_description: `
-          Lorem ipsum dolor sit amet consectetur adipisicing elit.
-          Iste rem est voluptatem obcaecati maiores, sit quibusdam ad.
-          Qui consequatur quidem itaque et ullam, non velit unde quo
-          inventore adipisci tempora, voluptas sunt dolore vitae iure,
-          quos eligendi. Corporis id adipisci aliquam cum officia impedit
-          repudiandae, numquam, dicta earum, cupiditate consequuntur?
-        `,
+      configuration: {
+        resources: {
+          title: 'Configurare resurse',
+          page_description: `
+            Lorem ipsum dolor sit amet consectetur adipisicing elit.
+            Iste rem est voluptatem obcaecati maiores, sit quibusdam ad.
+            Qui consequatur quidem itaque et ullam, non velit unde quo
+            inventore adipisci tempora, voluptas sunt dolore vitae iure,
+            quos eligendi. Corporis id adipisci aliquam cum officia impedit
+            repudiandae, numquam, dicta earum, cupiditate consequuntur?
+          `,
+        },
       }
     }
   }

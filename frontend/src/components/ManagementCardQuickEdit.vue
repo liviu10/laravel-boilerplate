@@ -25,6 +25,7 @@
           outlined
           square
           stack-label
+          :type="input.type"
           v-model="input.value"
         />
       </div>

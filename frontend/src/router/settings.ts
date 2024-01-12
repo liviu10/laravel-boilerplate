@@ -40,12 +40,12 @@ const routes: RouteRecordRaw[] = [
         component: () => import('pages/AdminSettingTemplatePage.vue'),
       },
       {
-        path: '/admin/settings/configuration-resources',
+        path: '/admin/settings/configuration/resources',
         children: [
           {
             path: '',
-            name: 'AdminSettingConfigurationResourcePage',
-            component: () => import('pages/AdminSettingConfigurationResourcePage.vue'),
+            name: 'AdminSettingConfigurationResourceIndexPage',
+            component: () => import('pages/AdminSettingConfigurationResourceIndexPage.vue'),
             props: (route) => ({ resource: route.query.resource as string | undefined }),
           },
           {

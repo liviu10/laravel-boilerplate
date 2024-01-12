@@ -30,7 +30,6 @@ export default {
       `,
       create_record_label: 'Add new record',
       create_record_tooltip: 'Click here to add a new record',
-      search_the_resource: 'Search the resource',
       resource_settings_tooltip: 'Click here to configure the table',
       quick_show_record_label: 'Quick show record',
       quick_show_record_tooltip: 'Click here to quick show the record',
@@ -70,6 +69,9 @@ export default {
         Please configure the resource.
         If the problem persist you can contact the administrator.
       `,
+      input: {
+        search_the_resource: 'Search the resource',
+      }
     },
     home: {
       title: 'Dashboard',
@@ -275,16 +277,18 @@ export default {
           repudiandae, numquam, dicta earum, cupiditate consequuntur?
         `,
       },
-      configuration_resources: {
-        title: 'Configuration resources',
-        page_description: `
-          Lorem ipsum dolor sit amet consectetur adipisicing elit.
-          Iste rem est voluptatem obcaecati maiores, sit quibusdam ad.
-          Qui consequatur quidem itaque et ullam, non velit unde quo
-          inventore adipisci tempora, voluptas sunt dolore vitae iure,
-          quos eligendi. Corporis id adipisci aliquam cum officia impedit
-          repudiandae, numquam, dicta earum, cupiditate consequuntur?
-        `,
+      configuration: {
+        resources: {
+          title: 'Configuration resources',
+          page_description: `
+            Lorem ipsum dolor sit amet consectetur adipisicing elit.
+            Iste rem est voluptatem obcaecati maiores, sit quibusdam ad.
+            Qui consequatur quidem itaque et ullam, non velit unde quo
+            inventore adipisci tempora, voluptas sunt dolore vitae iure,
+            quos eligendi. Corporis id adipisci aliquam cum officia impedit
+            repudiandae, numquam, dicta earum, cupiditate consequuntur?
+          `,
+        },
       }
     }
   }

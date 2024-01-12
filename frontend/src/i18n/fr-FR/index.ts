@@ -30,7 +30,6 @@ export default {
       `,
       create_record_label: 'Ajouter un nouvel enregistrement',
       create_record_tooltip: 'Cliquez ici pour ajouter un nouvel enregistrement',
-      search_the_resource: 'Rechercher la ressource',
       resource_settings_tooltip: 'Cliquez ici pour configurer le tableau',
       quick_show_record_label: 'Afficher rapidement l\'enregistrement',
       quick_show_record_tooltip: 'Cliquez ici pour afficher rapidement l\'enregistrement',
@@ -70,6 +69,9 @@ export default {
         Veuillez configurer la ressource.
         Si le problème persiste, vous pouvez contacter l'administrateur.
       `,
+      input: {
+        search_the_resource: 'Rechercher la ressource',
+      }
     },
     home: {
       title: 'Dashboard',
@@ -275,16 +277,18 @@ export default {
           repudiandae, numquam, dicta earum, cupiditate consequuntur?
         `,
       },
-      configuration_resources: {
-        title: 'Ressources de configuration',
-        page_description: `
-          Lorem ipsum dolor sit amet consectetur adipisicing elit.
-          Iste rem est voluptatem obcaecati maiores, sit quibusdam ad.
-          Qui consequatur quidem itaque et ullam, non velit unde quo
-          inventore adipisci tempora, voluptas sunt dolore vitae iure,
-          quos eligendi. Corporis id adipisci aliquam cum officia impedit
-          repudiandae, numquam, dicta earum, cupiditate consequuntur?
-        `,
+      configuration: {
+        resources: {
+          title: 'Ressources de configuration',
+          page_description: `
+            Lorem ipsum dolor sit amet consectetur adipisicing elit.
+            Iste rem est voluptatem obcaecati maiores, sit quibusdam ad.
+            Qui consequatur quidem itaque et ullam, non velit unde quo
+            inventore adipisci tempora, voluptas sunt dolore vitae iure,
+            quos eligendi. Corporis id adipisci aliquam cum officia impedit
+            repudiandae, numquam, dicta earum, cupiditate consequuntur?
+          `,
+        },
       }
     }
   }

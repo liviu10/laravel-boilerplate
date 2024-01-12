@@ -37,23 +37,25 @@
     </template>
 
     <!-- Top right slot -->
-    <template v-slot:top-right>
-      <div class="admin-section__grid-table-top-right">
+    <template v-slot:top-right v-if="checkObject.handleCheckIfArray(searchResource)">
+      <div class="admin-section__grid-table-top-right" v-for="input in searchResource" :key="input.id">
         <q-form>
           <q-input
             dense
-            :label="t('admin.generic.search_the_resource')"
+            :label="t(input.name as string)"
             outlined
             square
-            v-model="searchResource"
+            v-model="input.value"
           >
             <template v-slot:append>
-              <q-icon name="search" class="cursor-pointer" />
+              <q-icon name="search" class="cursor-pointer" @click="searchTheResource()" />
             </template>
           </q-input>
         </q-form>
       </div>
     </template>
+
+    <!-- t('admin.generic.search_the_resource') -->
 
     <!-- Body slot -->
     <template v-slot:item="props">
@@ -75,13 +77,15 @@
 <script setup lang="ts">
 // Import vue related utilities
 import { useI18n } from 'vue-i18n';
-import { Ref, computed, ref } from 'vue';
+import { computed } from 'vue';
 import { QTableProps } from 'quasar';
 import { LocationQueryRaw, useRouter } from 'vue-router';
 
 // Import library utilities, interfaces and components
-import { TDialog, actionMethods } from 'src/interfaces/BaseInterface';
 import { HandleRoute } from 'src/utilities/HandleRoute';
+import { HandleObject } from 'src/utilities/HandleObject';
+import { TDialog, actionMethods } from 'src/interfaces/BaseInterface';
+import { IConfigurationInput } from 'src/interfaces/ConfigurationResourceInterface';
 import GridTableTopLeft from './GridTableTopLeft.vue';
 import GridTableBody from './GridTableBody.vue';
 import GridTableBodyActions from './GridTableBodyActions.vue';
@@ -96,6 +100,7 @@ interface IGridTable {
   grid?: boolean;
   loading?: boolean;
   rows?: QTableProps['rows'];
+  searchResource?: IConfigurationInput[];
   square?: boolean;
   resource: string;
   rowsPerPageOptions?: QTableProps['rowsPerPageOptions'];
@@ -155,9 +160,6 @@ const moreOptions = [
   }
 ];
 
-// Search resource
-let searchResource: Ref<string | number | null | undefined> = ref(null);
-
 // More actions
 const moreActions = computed(() => {
   return (record: unknown) => {
@@ -203,8 +205,16 @@ const openDialog = (action: TDialog, record?: unknown): void => {
   }
 };
 
+// Check if object is array
+const checkObject = new HandleObject();
+
+const searchTheResource = (): void => {
+  return emit('handleSearchTheResource');
+}
+
 const emit = defineEmits<{
   (event: 'handleOpenDialog', action: TDialog, recordId?: number): void;
+  (event: 'handleSearchTheResource'): void;
 }>();
 </script>
 
