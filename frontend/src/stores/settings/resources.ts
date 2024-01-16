@@ -60,9 +60,12 @@ export const useResourceStore = defineStore('resourceStore', () => {
   }
 
   return {
+    // Getters
     getAllRecords,
     getApiEndpoint,
     getApiMenu,
+
+    // Actions
     handleIndex,
     handleApiEndpoint,
     handleMenu,

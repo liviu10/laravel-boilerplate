@@ -1,20 +1,7 @@
 // Import vue related utilities
 // import { Cookies } from 'quasar';
 
-// Import library utilities, interfaces and components
-import {
-  IConfiguration,
-  IConfigurationColumn,
-  IConfigurationInput,
-} from 'src/interfaces/ConfigurationResourceInterface';
-
-// Import Pinia's related utilities
-import { useResourceStore } from 'src/stores/settings/resources';
-import { useConfigurationResourceStore } from 'src/stores/settings/configuration_resources';
-
 interface IHandleApi {
-  getEndpoint: () => Promise<string | undefined | void>;
-  getConfigurationId: (resourceName: string) => Promise<void | IConfiguration['results']>;
   createFilterPayload: <T extends IConfigInput>(filterModel?: T[] | undefined, searchResourceModel?: T[] | undefined) => Record<string, string | null>;
   createPayload: <T extends IConfigInput>(model: T[]) => Record<string, string | null>;
 }
@@ -25,49 +12,6 @@ interface IConfigInput {
 }
 
 export class HandleApi implements IHandleApi {
-  endpointUrl: string | undefined;
-  configuration: IConfiguration['results'];
-
-  public constructor() {
-    this.endpointUrl = undefined;
-    this.configuration = [];
-  }
-
-  private initializeStores() {
-    return {
-      resourceStore: useResourceStore(),
-      configurationResourceStore: useConfigurationResourceStore(),
-    };
-  }
-
-  /**
-   * Retrieves the API endpoint for a given resource and store.
-   * @returns {Promise<string | undefined>} A Promise that resolves to the API endpoint URL, or undefined if not found.
-   */
-  public async getEndpoint(): Promise<string | undefined | void> {
-    const resourceStore = this.initializeStores().resourceStore;
-    const pathName = window.location.pathname;
-    await resourceStore.handleApiEndpoint(pathName);
-    this.endpointUrl = resourceStore.getApiEndpoint[0].path;
-    return this.endpointUrl;
-  }
-
-  /**
-   * Retrieves the configuration for a given resource.
-   * @param {string} resourceName - The name of the resource.
-   * @returns {Promise<void | IConfiguration['results']>} A Promise that resolves to the configuration results,
-   * or void if there is an issue in handling the configuration retrieval.
-   */
-  public async getConfigurationId(
-    resourceName: string
-  ): Promise<void | IConfiguration['results']> {
-    const configurationResourceStore =
-      this.initializeStores().configurationResourceStore;
-    await configurationResourceStore.handleGetConfigurationId(resourceName);
-    this.configuration = configurationResourceStore.getResourceConfiguration;
-    return this.configuration;
-  }
-
   /**
    * Creates a filter payload from an array of configuration inputs and a search resource model.
    * @template T - The type of the configuration input elements.

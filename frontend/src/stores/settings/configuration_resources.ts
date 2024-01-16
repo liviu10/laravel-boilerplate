@@ -17,9 +17,13 @@ import {
 } from 'src/interfaces/ConfigurationResourceInterface';
 import { TResourceType } from 'src/interfaces/BaseInterface';
 
-const handleRoute = new HandleRoute();
+// Import Pinia's related utilities
+import { useResourceStore } from 'src/stores/settings/resources';
 
-const baseEndpoint = 'admin/settings/configuration'
+// Instantiate the pinia store
+const resourceStore = useResourceStore();
+
+const handleRoute = new HandleRoute();
 
 export const useConfigurationResourceStore = defineStore(
   'configurationResourceStore',
@@ -28,6 +32,7 @@ export const useConfigurationResourceStore = defineStore(
     const handleApi = new HandleApi();
 
     // State
+    const configurationBaseEndpoint = 'admin/settings/configuration'
     const resourceName: Ref<string> = ref('');
     const resourceEndpoint: Ref<string> = ref('');
     const translationString: Ref<string> = ref('');
@@ -59,12 +64,12 @@ export const useConfigurationResourceStore = defineStore(
     // Actions
     async function handleIndex(type?: TResourceType) {
       try {
-        handleApi.getEndpoint().then(async (apiEndpoint) => {
-          if (apiEndpoint) {
-            handleApi.getConfigurationId(getResourceName.value).then(async (apiConfiguration) => {
-              if (apiConfiguration) {
-                resourceEndpoint.value = apiEndpoint;
-                resourceConfiguration.value = apiConfiguration;
+        resourceStore.handleApiEndpoint(window.location.pathname).then(async () => {
+          const apiEndpoint = resourceStore.getApiEndpoint
+          if (apiEndpoint && Array.isArray(apiEndpoint) && apiEndpoint.length) {
+            resourceEndpoint.value = apiEndpoint[0].path
+            handleGetConfigurationId(getResourceName.value).then(async () => {
+              if (resourceConfiguration.value) {
                 await handleGetColumns(resourceConfiguration.value)
                 await handleGetInputs(resourceConfiguration.value)
                 const response = await api.get(resourceEndpoint.value, {
@@ -81,13 +86,13 @@ export const useConfigurationResourceStore = defineStore(
                 }
                 console.log('-> handleIndex', allRecords.value);
               } else {
-                console.log('-> apiConfiguration does not exist', apiConfiguration);
+                console.log('-> apiConfiguration does not exist', resourceConfiguration.value);
               }
             })
           } else {
             console.log('-> apiEndpoint does not exist', apiEndpoint);
           }
-        });
+        })
       } catch (error) {
         console.log('-> catch', error);
       } finally {
@@ -97,7 +102,7 @@ export const useConfigurationResourceStore = defineStore(
 
     async function handleGetConfigurationId(key: string) {
       try {
-        const response = await api.get(`${baseEndpoint}/get-resource-id`, {
+        const response = await api.get(`${configurationBaseEndpoint}/resources/get-id`, {
           params: {
             key: key ?? undefined,
           },
@@ -113,7 +118,7 @@ export const useConfigurationResourceStore = defineStore(
 
     async function handleGetColumns(configurationResourceId: IConfiguration['results']) {
       try {
-        const response = await api.get(`${baseEndpoint}/columns`, {
+        const response = await api.get(`${configurationBaseEndpoint}/columns`, {
           params: {
             configuration_resource_id: configurationResourceId[0].id ?? undefined,
           },
@@ -133,7 +138,7 @@ export const useConfigurationResourceStore = defineStore(
 
     async function handleGetInputs(configurationResourceId: IConfiguration['results']) {
       try {
-        const response = await api.get(`${baseEndpoint}/inputs`, {
+        const response = await api.get(`${configurationBaseEndpoint}/inputs`, {
           params: {
             configuration_resource_id: configurationResourceId[0].id ?? undefined,
           },
@@ -171,9 +176,10 @@ export const useConfigurationResourceStore = defineStore(
     async function handleAdvancedFilter(type?: TResourceType) {
       const payload = handleApi.createFilterPayload(filterModel.value, searchResourceModel.value);
       try {
-        handleApi.getEndpoint().then(async (apiEndpoint) => {
-          if (apiEndpoint) {
-            resourceEndpoint.value = apiEndpoint;
+        resourceStore.handleApiEndpoint(window.location.pathname).then(async () => {
+          const apiEndpoint = resourceStore.getApiEndpoint
+          if (apiEndpoint && Array.isArray(apiEndpoint) && apiEndpoint.length) {
+            resourceEndpoint.value = apiEndpoint[0].path
             const response = await api.get(resourceEndpoint.value, {
               params: {
                 type: type ?? undefined,
@@ -195,9 +201,10 @@ export const useConfigurationResourceStore = defineStore(
     async function handleUpload() {
       const payload = handleApi.createPayload(uploadModel.value);
       try {
-        handleApi.getEndpoint().then(async (apiEndpoint) => {
-          if (apiEndpoint) {
-            resourceEndpoint.value = apiEndpoint;
+        resourceStore.handleApiEndpoint(window.location.pathname).then(async () => {
+          const apiEndpoint = resourceStore.getApiEndpoint
+          if (apiEndpoint && Array.isArray(apiEndpoint) && apiEndpoint.length) {
+            resourceEndpoint.value = apiEndpoint[0].path
             const response = await api.post(resourceEndpoint.value, {
               ...payload,
             });
@@ -216,9 +223,10 @@ export const useConfigurationResourceStore = defineStore(
     async function handleDownload() {
       const payload = handleApi.createPayload(downloadModel.value);
       try {
-        handleApi.getEndpoint().then(async (apiEndpoint) => {
-          if (apiEndpoint) {
-            resourceEndpoint.value = apiEndpoint;
+        resourceStore.handleApiEndpoint(window.location.pathname).then(async () => {
+          const apiEndpoint = resourceStore.getApiEndpoint
+          if (apiEndpoint && Array.isArray(apiEndpoint) && apiEndpoint.length) {
+            resourceEndpoint.value = apiEndpoint[0].path
             const response = await api.post(resourceEndpoint.value, {
               ...payload,
             });
@@ -241,9 +249,10 @@ export const useConfigurationResourceStore = defineStore(
     async function handleCreate() {
       const payload = handleApi.createPayload(dataModel.value);
       try {
-        handleApi.getEndpoint().then(async (apiEndpoint) => {
-          if (apiEndpoint) {
-            resourceEndpoint.value = apiEndpoint;
+        resourceStore.handleApiEndpoint(window.location.pathname).then(async () => {
+          const apiEndpoint = resourceStore.getApiEndpoint
+          if (apiEndpoint && Array.isArray(apiEndpoint) && apiEndpoint.length) {
+            resourceEndpoint.value = apiEndpoint[0].path
             const response = await api.post(resourceEndpoint.value, {
               ...payload,
             });
@@ -261,9 +270,10 @@ export const useConfigurationResourceStore = defineStore(
 
     async function handleShow(recordId: number | undefined, type?: TResourceType) {
       try {
-        handleApi.getEndpoint().then(async (apiEndpoint) => {
-          if (apiEndpoint) {
-            resourceEndpoint.value = apiEndpoint;
+        resourceStore.handleApiEndpoint(window.location.pathname).then(async () => {
+          const apiEndpoint = resourceStore.getApiEndpoint
+          if (apiEndpoint && Array.isArray(apiEndpoint) && apiEndpoint.length) {
+            resourceEndpoint.value = apiEndpoint[0].path
             const response = await api.get(`${resourceEndpoint.value}/${recordId}`, {
               params: {
                 type: type ?? undefined,
@@ -296,6 +306,9 @@ export const useConfigurationResourceStore = defineStore(
     }
 
     return {
+      // State
+      configurationBaseEndpoint,
+
       // Getters
       getResourceName,
       getTranslationString,

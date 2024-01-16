@@ -91,7 +91,7 @@ Route::group(['prefix' => config('app.version')], function () {
             // Configurations
             Route::group(['prefix' => '/configuration'], function () {
                 // Resources
-                Route::get('/get-resource-id', [ConfigurationResourceController::class, 'getConfigurationResourceId']);
+                Route::get('/resources/get-id', [ConfigurationResourceController::class, 'getConfigurationResourceId']);
                 Route::apiResource('/resources', ConfigurationResourceController::class);
                 // Types
                 Route::apiResource('/types', ConfigurationTypeController::class);
@@ -110,8 +110,10 @@ Route::group(['prefix' => config('app.version')], function () {
             Route::apiResource('/notifications', NotificationController::class);
             // Resources
             Route::apiResource('/resources', ResourceController::class);
-            // User role
+            // Roles
             Route::apiResource('/roles', RoleController::class);
+            // Templates
+            // TODO: Create route for template (email and sms)
             // Users
             // TODO: Improve this when finishing with the login system
             // Route::get('/users/current-auth', [UserController::class, 'currentAuthUser']);

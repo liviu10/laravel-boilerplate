@@ -19,9 +19,15 @@ import {
 } from 'src/interfaces/TagInterface';
 import { TResourceType } from 'src/interfaces/BaseInterface';
 
-const handleRoute = new HandleRoute();
+// Import Pinia's related utilities
+import { useConfigurationResourceStore } from 'src/stores/settings/configuration_resources';
+import { useResourceStore } from 'src/stores/settings/resources';
 
-const baseEndpoint = 'admin/settings/configuration'
+// Instantiate the pinia store
+const configurationResourceStore = useConfigurationResourceStore();
+const resourceStore = useResourceStore();
+
+const handleRoute = new HandleRoute();
 
 export const useTagStore = defineStore(
   'tagStore',
@@ -61,40 +67,35 @@ export const useTagStore = defineStore(
     // Actions
     async function handleIndex(type?: TResourceType) {
       try {
-        handleApi.getEndpoint().then(async (apiEndpoint) => {
-          if (apiEndpoint) {
-            handleApi
-              .getConfigurationId(getResourceName.value).then(async (apiConfiguration) => {
-                if (apiConfiguration) {
-                  resourceEndpoint.value = apiEndpoint;
-                  resourceConfiguration.value = apiConfiguration;
-                  await handleGetColumns(resourceConfiguration.value)
-                  await handleGetInputs(resourceConfiguration.value)
-                  const response = await api.get(resourceEndpoint.value, {
-                    params: {
-                      type: type ?? undefined,
-                    },
-                  });
-                  if (type === 'restore') {
-                    if (response.data && response.data.hasOwnProperty('results')) {
-                      allDeletedRecords.value =
-                        response.data as IAllRecordsUnpaginated;
-                    }
-                  } else {
-                    allRecords.value = response.data as IAllRecords;
+        resourceStore.handleApiEndpoint(window.location.pathname).then(async () => {
+          const apiEndpoint = resourceStore.getApiEndpoint
+          if (apiEndpoint && Array.isArray(apiEndpoint) && apiEndpoint.length) {
+            resourceEndpoint.value = apiEndpoint[0].path
+            handleGetConfigurationId(getResourceName.value).then(async () => {
+              if (resourceConfiguration.value) {
+                await handleGetColumns(resourceConfiguration.value)
+                await handleGetInputs(resourceConfiguration.value)
+                const response = await api.get(resourceEndpoint.value, {
+                  params: {
+                    type: type ?? undefined,
+                  },
+                });
+                if (type === 'restore') {
+                  if (response.data && response.data.hasOwnProperty('results')) {
+                    allDeletedRecords.value = response.data as IAllRecordsUnpaginated;
                   }
-                  console.log('-> handleIndex', allRecords.value);
                 } else {
-                  console.log(
-                    '-> apiConfiguration does not exist',
-                    apiConfiguration
-                  );
+                  allRecords.value = response.data as IAllRecords;
                 }
-              });
+                console.log('-> handleIndex', allRecords.value);
+              } else {
+                console.log('-> apiConfiguration does not exist', resourceConfiguration.value);
+              }
+            })
           } else {
             console.log('-> apiEndpoint does not exist', apiEndpoint);
           }
-        });
+        })
       } catch (error) {
         console.log('-> catch', error);
       } finally {
@@ -104,7 +105,7 @@ export const useTagStore = defineStore(
 
     async function handleGetConfigurationId(key: string) {
       try {
-        const response = await api.get(`${baseEndpoint}/get-resource-id`, {
+        const response = await api.get(`${configurationResourceStore.configurationBaseEndpoint}/resources/get-id`, {
           params: {
             key: key ?? undefined,
           },
@@ -120,7 +121,7 @@ export const useTagStore = defineStore(
 
     async function handleGetColumns(configurationResourceId: IConfiguration['results']) {
       try {
-        const response = await api.get(`${baseEndpoint}/columns`, {
+        const response = await api.get(`${configurationResourceStore.configurationBaseEndpoint}/columns`, {
           params: {
             configuration_resource_id: configurationResourceId[0].id ?? undefined,
           },
@@ -140,7 +141,7 @@ export const useTagStore = defineStore(
 
     async function handleGetInputs(configurationResourceId: IConfiguration['results']) {
       try {
-        const response = await api.get(`${baseEndpoint}/inputs`, {
+        const response = await api.get(`${configurationResourceStore.configurationBaseEndpoint}/inputs`, {
           params: {
             configuration_resource_id: configurationResourceId[0].id ?? undefined,
           },
@@ -178,9 +179,10 @@ export const useTagStore = defineStore(
     async function handleAdvancedFilter(type?: TResourceType) {
       const payload = handleApi.createFilterPayload(filterModel.value);
       try {
-        handleApi.getEndpoint().then(async (apiEndpoint) => {
-          if (apiEndpoint) {
-            resourceEndpoint.value = apiEndpoint;
+        resourceStore.handleApiEndpoint(window.location.pathname).then(async () => {
+          const apiEndpoint = resourceStore.getApiEndpoint
+          if (apiEndpoint && Array.isArray(apiEndpoint) && apiEndpoint.length) {
+            resourceEndpoint.value = apiEndpoint[0].path
             const response = await api.get(resourceEndpoint.value, {
               params: {
                 type: type ?? undefined,
@@ -202,9 +204,10 @@ export const useTagStore = defineStore(
     async function handleUpload() {
       const payload = handleApi.createPayload(uploadModel.value);
       try {
-        handleApi.getEndpoint().then(async (apiEndpoint) => {
-          if (apiEndpoint) {
-            resourceEndpoint.value = apiEndpoint;
+        resourceStore.handleApiEndpoint(window.location.pathname).then(async () => {
+          const apiEndpoint = resourceStore.getApiEndpoint
+          if (apiEndpoint && Array.isArray(apiEndpoint) && apiEndpoint.length) {
+            resourceEndpoint.value = apiEndpoint[0].path
             const response = await api.post(resourceEndpoint.value, {
               ...payload,
             });
@@ -223,9 +226,10 @@ export const useTagStore = defineStore(
     async function handleDownload() {
       const payload = handleApi.createPayload(downloadModel.value);
       try {
-        handleApi.getEndpoint().then(async (apiEndpoint) => {
-          if (apiEndpoint) {
-            resourceEndpoint.value = apiEndpoint;
+        resourceStore.handleApiEndpoint(window.location.pathname).then(async () => {
+          const apiEndpoint = resourceStore.getApiEndpoint
+          if (apiEndpoint && Array.isArray(apiEndpoint) && apiEndpoint.length) {
+            resourceEndpoint.value = apiEndpoint[0].path
             const response = await api.post(resourceEndpoint.value, {
               ...payload,
             });
@@ -248,9 +252,10 @@ export const useTagStore = defineStore(
     async function handleCreate() {
       const payload = handleApi.createPayload(dataModel.value);
       try {
-        handleApi.getEndpoint().then(async (apiEndpoint) => {
-          if (apiEndpoint) {
-            resourceEndpoint.value = apiEndpoint;
+        resourceStore.handleApiEndpoint(window.location.pathname).then(async () => {
+          const apiEndpoint = resourceStore.getApiEndpoint
+          if (apiEndpoint && Array.isArray(apiEndpoint) && apiEndpoint.length) {
+            resourceEndpoint.value = apiEndpoint[0].path
             const response = await api.post(resourceEndpoint.value, {
               ...payload,
             });
@@ -268,17 +273,15 @@ export const useTagStore = defineStore(
 
     async function handleShow(recordId: number | undefined, type?: TResourceType) {
       try {
-        handleApi.getEndpoint().then(async (apiEndpoint) => {
-          if (apiEndpoint) {
-            resourceEndpoint.value = apiEndpoint;
-            const response = await api.get(
-              `${resourceEndpoint.value}/${recordId}`,
-              {
-                params: {
-                  type: type ?? undefined,
-                },
-              }
-            );
+        resourceStore.handleApiEndpoint(window.location.pathname).then(async () => {
+          const apiEndpoint = resourceStore.getApiEndpoint
+          if (apiEndpoint && Array.isArray(apiEndpoint) && apiEndpoint.length) {
+            resourceEndpoint.value = apiEndpoint[0].path
+            const response = await api.get(`${resourceEndpoint.value}/${recordId}`, {
+              params: {
+                type: type ?? undefined,
+              },
+            });
             singleRecord.value = response.data as ISingleRecord;
             console.log('-> handleShow', singleRecord.value);
           } else {
