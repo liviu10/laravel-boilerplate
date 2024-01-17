@@ -34,7 +34,6 @@ class AcceptedDomainRequest extends FormRequest
                 'full_name' => 'required|string|min:3|max:255|regex:/^[a-zA-Z\s]+$/',
                 'rating'    => 'required|integer|min:0|max:5',
                 'comment'   => 'required|string|min:5|max:255',
-                'is_active' => 'required',
             ];
         }
 

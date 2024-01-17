@@ -55,10 +55,10 @@ interface ICreateRecord {
 }
 
 interface IUpdateRecord {
-  type: TypeOptions
-  condition: ConditionOptions
-  title: string
-  content: string
+  type?: TypeOptions
+  condition?: ConditionOptions
+  title?: string
+  content?: string
 }
 
 export {

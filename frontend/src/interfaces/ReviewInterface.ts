@@ -32,6 +32,7 @@ interface ICreateRecord {
   full_name: string
   rating: number
   comment: string
+  is_active: string
 }
 
 interface IUpdateRecord {

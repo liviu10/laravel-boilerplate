@@ -23,3 +23,27 @@ id,value,label,created_at,updated_at,configuration_resource_id,configuration_typ
 22,Role,Role,9/25/2023 8:04,9/25/2023 8:04,7,14,1
 23,Tag,Tag,9/25/2023 8:04,9/25/2023 8:04,7,14,1
 24,User,User,9/25/2023 8:04,9/25/2023 8:04,7,14,1
+25,AcceptedDomain,Accepted domain,9/25/2023 8:04,9/25/2023 8:04,8,14,9
+26,Appreciation,Appreciation,9/25/2023 8:04,9/25/2023 8:04,8,14,9
+27,Comment,Comment,9/25/2023 8:04,9/25/2023 8:04,8,14,9
+28,ConfigurationColumn,Configuration column,9/25/2023 8:04,9/25/2023 8:04,8,14,9
+29,ConfigurationInput,Configuration input,9/25/2023 8:04,9/25/2023 8:04,8,14,9
+30,ConfigurationOption,Configuration option,9/25/2023 8:04,9/25/2023 8:04,8,14,9
+31,ConfigurationResource,Configuration resource,9/25/2023 8:04,9/25/2023 8:04,8,14,9
+32,ConfigurationType,Configuration type,9/25/2023 8:04,9/25/2023 8:04,8,14,9
+33,ContactMessage,Contact message,9/25/2023 8:04,9/25/2023 8:04,8,14,9
+34,ContactResponse,Contact response,9/25/2023 8:04,9/25/2023 8:04,8,14,9
+35,ContactSubject,Contact subject,9/25/2023 8:04,9/25/2023 8:04,8,14,9
+36,Content,Content,9/25/2023 8:04,9/25/2023 8:04,8,14,9
+37,General,General,9/25/2023 8:04,9/25/2023 8:04,8,14,9
+38,Media,Media,9/25/2023 8:04,9/25/2023 8:04,8,14,9
+39,NewsletterCampaign,Newsletter campaign,9/25/2023 8:04,9/25/2023 8:04,8,14,9
+40,NewsletterSubscribe,Newsletter subscribe,9/25/2023 8:04,9/25/2023 8:04,8,14,9
+41,Notification,Notification,9/25/2023 8:04,9/25/2023 8:04,8,14,9
+42,Permission,Permission,9/25/2023 8:04,9/25/2023 8:04,8,14,9
+43,Resource,Resource,9/25/2023 8:04,9/25/2023 8:04,8,14,9
+44,ResourceChildren,Resource children,9/25/2023 8:04,9/25/2023 8:04,8,14,9
+45,Review,Review,9/25/2023 8:04,9/25/2023 8:04,8,14,9
+46,Role,Role,9/25/2023 8:04,9/25/2023 8:04,8,14,9
+47,Tag,Tag,9/25/2023 8:04,9/25/2023 8:04,8,14,9
+48,User,User,9/25/2023 8:04,9/25/2023 8:04,8,14,9

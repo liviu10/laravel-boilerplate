@@ -61,7 +61,6 @@ class ContactSubjectRequest extends FormRequest
             'name.min' => 'The name must be at least :min characters.',
             'name.max' => 'The name may not be greater than :max characters.',
             'name.regex' => 'The name may only contain letters and spaces.',
-            'description.required' => 'The description field is required.',
             'description.string' => 'The description must be a string.',
             'description.min' => 'The description must be at least :min characters.',
             'description.max' => 'The description may not be greater than :max characters.',

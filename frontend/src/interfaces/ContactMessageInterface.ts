@@ -36,10 +36,10 @@ interface ISingleRecord extends IRootObject {
 interface ICreateRecord {
   full_name: string
   email: string
-  phone: string
+  phone?: string
   contact_subject_id: number
   message: string
-  privacy_policy: boolean
+  privacy_policy?: boolean
 }
 
 interface IUpdateRecord {

@@ -81,27 +81,27 @@ interface ISingleRecord extends IRootObject {
 interface ICreateRecord {
   type: TypeOptions
   path: string
-  name: string
-  component: string
-  layout: string
-  title: string
-  caption: string
-  icon: string
+  name?: string
+  component?: string
+  layout?: string
+  title?: string
+  caption?: string
+  icon?: string
   is_active: boolean
   requires_auth: boolean
 }
 
 interface IUpdateRecord {
-  type: TypeOptions
-  path: string
-  name: string
-  component: string
-  layout: string
-  title: string
-  caption: string
-  icon: string
-  is_active: boolean
-  requires_auth: boolean
+  type?: TypeOptions
+  path?: string
+  name?: string
+  component?: string
+  layout?: string
+  title?: string
+  caption?: string
+  icon?: string
+  is_active?: boolean
+  requires_auth?: boolean
 }
 
 export {

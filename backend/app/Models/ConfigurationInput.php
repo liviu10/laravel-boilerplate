@@ -220,6 +220,7 @@ class ConfigurationInput extends BaseModel
     {
         try {
             $query = tap($this->find($id))->update([
+                'accept'                    => $payload['accept'],
                 'field'                     => $payload['field'],
                 'is_active'                 => $payload['is_active'],
                 'is_filter'                 => $payload['is_filter'],

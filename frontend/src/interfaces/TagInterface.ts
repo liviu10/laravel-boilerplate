@@ -50,13 +50,15 @@ interface ISingleRecord extends IRootObject {
 
 interface ICreateRecord {
   name: string
-  description: string
+  description?: string
+  slug?: string
   content_id: number
 }
 
 interface IUpdateRecord {
-  name: string
-  description: string
+  name?: string
+  description?: string
+  slug?: string
   content_id: number
 }
 

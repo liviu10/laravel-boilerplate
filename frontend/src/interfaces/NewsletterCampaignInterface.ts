@@ -56,15 +56,15 @@ interface ICreateRecord {
 }
 
 interface IUpdateRecord {
-  name: string
-  description: string
-  is_active: boolean
-  valid_from: string
-  valid_to: string
-  occur_time: number
-  occur_week: number
-  occur_day: number
-  occur_hour: number
+  name?: string
+  description?: string
+  is_active?: boolean
+  valid_from?: string
+  valid_to?: string
+  occur_time?: number
+  occur_week?: number
+  occur_day?: number
+  occur_hour?: number
 }
 
 export {

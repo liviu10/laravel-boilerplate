@@ -30,7 +30,7 @@ class ConfigurationInputRequest extends FormRequest
         // Validation rules when creating
         if ($currentRouteName === 'inputs.store') {
             $rules = [
-                'accept' => 'required|string',
+                'accept' => 'sometimes|string',
                 'field' => 'required|string',
                 'is_active' => 'required',
                 'is_filter' => 'required',
@@ -71,7 +71,6 @@ class ConfigurationInputRequest extends FormRequest
      */ public function messages()
     {
         return [
-            'accept.required' => 'The accept field is required.',
             'accept.string' => 'The accept must be a string.',
             'field.required' => 'The field field is required.',
             'field.string' => 'The field must be a string.',

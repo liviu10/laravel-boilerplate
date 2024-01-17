@@ -1,4 +1,8 @@
-import { IRootObject, IBasePagination, IBaseTimestamps } from './BaseInterface'
+import {
+  IRootObject,
+  IBasePagination,
+  IBaseTimestamps
+} from './BaseInterface'
 
 interface IPermission {
   id: number
@@ -42,19 +46,19 @@ interface ISingleRecord extends IRootObject {
 interface ICreateRecord {
   name: string
   description: string
-  bg_color: string
-  text_color: string
-  slug: string
+  bg_color?: string
+  text_color?: string
+  slug?: string
   is_active: boolean
 }
 
 interface IUpdateRecord {
-  name: string
-  description: string
-  bg_color: string
-  text_color: string
-  slug: string
-  is_active: boolean
+  name?: string
+  description?: string
+  bg_color?: string
+  text_color?: string
+  slug?: string
+  is_active?: boolean
 }
 
 export {

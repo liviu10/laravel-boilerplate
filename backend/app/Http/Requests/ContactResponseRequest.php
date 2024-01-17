@@ -30,8 +30,8 @@ class ContactResponseRequest extends FormRequest
         // Validation rules when creating
         if ($currentRouteName === 'responses.store') {
             $rules = [
-                'contact_message_id' => 'required',
                 'message' => 'required|string|min:3|max:255',
+                'contact_message_id' => 'required',
             ];
         }
 
@@ -46,11 +46,11 @@ class ContactResponseRequest extends FormRequest
     public function messages()
     {
         return [
-            'contact_message_id.required' => 'The message field is required.',
             'message.required' => 'The message field is required.',
             'message.string' => 'The message must be a string.',
             'message.min' => 'The message must be at least :min characters.',
             'message.max' => 'The message may not be greater than :max characters.',
+            'contact_message_id.required' => 'The message field is required.',
         ];
     }
 }

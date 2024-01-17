@@ -32,15 +32,20 @@ class CommentRequest extends FormRequest
         if ($currentRouteName === 'comments.store')
         {
             $rules = [
+                'type' => [
+                    'required',
+                    'string',
+                    Rule::in(['Comment', 'Reply'])
+                ],
                 'status' => [
-                    'sometimes',
+                    'required',
                     'string',
                     Rule::in(['Pending', 'Approved', 'Spam', 'Trash'])
                 ],
                 'full_name' => 'required|string|min:5|max:255',
                 'email' => 'sometimes|string|min:3|max:255',
                 'message' => 'required|string|min:5|max:255',
-                'notify_new_comments' => 'required',
+                'notify_new_comments' => 'sometimes',
                 'content_id' => 'required',
             ];
         }
@@ -49,6 +54,11 @@ class CommentRequest extends FormRequest
         if ($currentRouteName === 'comments.update')
         {
             $rules = [
+                'type' => [
+                    'sometimes',
+                    'string',
+                    Rule::in(['Comment', 'Reply'])
+                ],
                 'status' => [
                     'sometimes',
                     'string',
@@ -73,6 +83,9 @@ class CommentRequest extends FormRequest
     public function messages()
     {
         return [
+            'type.required' => 'The type field is required.',
+            'type.string' => 'The type must be a string.',
+            'type.in' => 'The selected type is invalid.',
             'status.required' => 'The status field is required.',
             'status.string' => 'The status must be a string.',
             'status.in' => 'The selected status is invalid.',
@@ -80,7 +93,6 @@ class CommentRequest extends FormRequest
             'full_name.string' => 'The full name must be a string.',
             'full_name.min' => 'The full name must be at least :min characters.',
             'full_name.max' => 'The full name may not be greater than :max characters.',
-            'email.required' => 'The email address field is required.',
             'email.string' => 'The email address must be a string.',
             'email.min' => 'The email address must be at least :min characters.',
             'email.max' => 'The email address may not be greater than :max characters.',
@@ -88,7 +100,6 @@ class CommentRequest extends FormRequest
             'message.string' => 'The message must be a string.',
             'message.min' => 'The message must be at least :min characters.',
             'message.max' => 'The message may not be greater than :max characters.',
-            'notify_new_comments.required' => 'The notify new comments is required.',
         ];
     }
 }

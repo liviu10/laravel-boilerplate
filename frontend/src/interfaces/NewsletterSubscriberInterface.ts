@@ -34,7 +34,7 @@ interface ISingleRecord extends IRootObject {
 interface ICreateRecord {
   full_name: string
   email: string
-  privacy_policy: boolean
+  privacy_policy?: boolean
 }
 
 interface IUpdateRecord {

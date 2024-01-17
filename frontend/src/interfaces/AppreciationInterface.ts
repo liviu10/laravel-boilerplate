@@ -36,16 +36,16 @@ interface ISingleRecord extends IRootObject {
 }
 
 interface ICreateRecord {
-  likes: number
-  dislikes: number
-  rating: number
+  likes?: number
+  dislikes?: number
+  rating?: number
   content_id: number
 }
 
 interface IUpdateRecord {
-  likes: number
-  dislikes: number
-  rating: number
+  likes?: number
+  dislikes?: number
+  rating?: number
   content_id: number
 }
 

@@ -53,15 +53,37 @@ interface ISingleRecord extends IRootObject {
 interface ICreateRecord {
   first_name: string
   last_name: string
-  nickname: string
   email: string
   role_id: number
 }
 
-interface IUpdateRecord {
+interface IRegisterUser {
   first_name: string
   last_name: string
-  role_id: string
+  nickname: string
+  email: string
+  password: string
+}
+
+interface ILoginUser {
+  email: string
+  password: string
+}
+
+interface IUpdateRecord {
+  first_name?: string
+  last_name?: string
+  role_id?: string
+}
+
+interface IUpdateUserProfile {
+  first_name?: string
+  last_name?: string
+  nickname?: string
+  email?: string
+  phone?: string
+  password?: string
+  profile_image?: string
 }
 
 export {
@@ -69,5 +91,8 @@ export {
   IAllRecordsUnpaginated,
   ISingleRecord,
   ICreateRecord,
+  IRegisterUser,
+  ILoginUser,
   IUpdateRecord,
+  IUpdateUserProfile,
 }

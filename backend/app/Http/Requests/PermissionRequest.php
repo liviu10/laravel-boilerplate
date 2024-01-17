@@ -3,9 +3,10 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\Route;
 
-class TagRequest extends FormRequest
+class PermissionRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -28,24 +29,28 @@ class TagRequest extends FormRequest
         $rules = [];
 
         // Validation rules when creating
-        if ($currentRouteName === 'tags.store')
+        if ($currentRouteName === 'permissions.store')
         {
             $rules = [
-                'name' => 'required|string|min:3|max:255',
-                'description' => 'sometimes|string|min:10|max:255',
-                'slug' => 'sometimes|string|min:10|max:255',
-                'content_id' => 'required',
+                'name' => 'required|string',
+                'description' => 'required|string|min:255',
+                'is_active' => 'required',
+                'need_approval' => 'required',
+                'report_to_role_id' => 'required',
+                'role_id' => 'required',
             ];
         }
 
         // Validation rules when updating
-        if ($currentRouteName === 'tags.update')
+        if ($currentRouteName === 'permissions.update')
         {
             $rules = [
-                'name' => 'sometimes|string|min:3|max:255',
-                'description' => 'sometimes|string|min:10|max:255',
-                'slug' => 'sometimes|string|min:10|max:255',
-                'content_id' => 'sometimes',
+                'title' => 'sometimes|string|min:3|max:255',
+                'content' => 'sometimes|string|min:50',
+                'is_active' => 'sometimes',
+                'need_approval' => 'sometimes',
+                'report_to_role_id' => 'sometimes',
+                'role_id' => 'sometimes',
             ];
         }
 
@@ -62,15 +67,13 @@ class TagRequest extends FormRequest
         return [
             'name.required' => 'The name field is required.',
             'name.string' => 'The name must be a string.',
-            'name.min' => 'The name must be at least :min characters.',
-            'name.max' => 'The name may not be greater than :max characters.',
+            'description.required' => 'The description field is required.',
             'description.string' => 'The description must be a string.',
             'description.min' => 'The description must be at least :min characters.',
-            'description.max' => 'The description may not be greater than :max characters.',
-            'slug.string' => 'The slug must be a string.',
-            'slug.min' => 'The slug must be at least :min characters.',
-            'slug.max' => 'The slug may not be greater than :max characters.',
-            'content_id.required' => 'The content ID field is required.',
+            'is_active.required' => 'The is active field is required.',
+            'need_approval.required' => 'The need approval field is required.',
+            'report_to_role_id.required' => 'The report to role ID field is required.',
+            'role_id.required' => 'The role ID field is required.',
         ];
     }
 }

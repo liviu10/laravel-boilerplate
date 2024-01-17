@@ -62,16 +62,16 @@ interface ISingleRecord extends IRootObject {
 
 interface ICreateRecord {
   type: TypeOptions
-  internal_path: string | null
-  external_path: string | null
+  internal_path?: string | null
+  external_path?: string | null
   content_id: number
 }
 
 interface IUpdateRecord {
-  type: TypeOptions
-  internal_path: string | null
-  external_path: string | null
-  content_id: number
+  type?: TypeOptions
+  internal_path?: string | null
+  external_path?: string | null
+  content_id?: number
 }
 
 export {

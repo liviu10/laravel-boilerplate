@@ -36,18 +36,12 @@ interface ISingleRecord extends IRootObject {
 }
 
 interface ICreateRecord {
-  contact_message_id: number
   message: string
-}
-
-interface IUpdateRecord {
   contact_message_id: number
-  message: string
 }
 
 export {
   IAllRecords,
   ISingleRecord,
   ICreateRecord,
-  IUpdateRecord,
 }

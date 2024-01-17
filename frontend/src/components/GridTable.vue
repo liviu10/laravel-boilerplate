@@ -55,8 +55,6 @@
       </div>
     </template>
 
-    <!-- t('admin.generic.search_the_resource') -->
-
     <!-- Body slot -->
     <template v-slot:item="props">
       <div class="admin-section__grid-table-content">

@@ -79,13 +79,13 @@ interface ICreateRecord {
 }
 
 interface IUpdateRecord {
-  visibility: TVisibilityOptions
-  content_url: string
-  title: string
-  content_type: TContentTypeOptions
-  description: string
-  content: string
-  allow_comments: boolean
+  visibility?: TVisibilityOptions
+  content_url?: string
+  title?: string
+  content_type?: TContentTypeOptions
+  description?: string
+  content?: string
+  allow_comments?: boolean
 }
 
 export {

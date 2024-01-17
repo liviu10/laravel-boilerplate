@@ -28,14 +28,14 @@ interface ISingleRecord extends IRootObject {
 
 interface ICreateRecord {
   name: string
-  description: string
+  description?: string
   is_active: boolean
 }
 
 interface IUpdateRecord {
-  name: string
-  description: string
-  is_active: boolean
+  name?: string
+  description?: string
+  is_active?: boolean
 }
 
 export {

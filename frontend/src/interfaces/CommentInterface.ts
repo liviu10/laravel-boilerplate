@@ -49,23 +49,23 @@ interface ISingleRecord extends IRootObject {
 }
 
 interface ICreateRecord {
-  type: string
-  status: string
+  type: TypeOptions
+  status: StatusOptions
   full_name: string
-  email: string
+  email?: string
   message: string
-  notify_new_comments: boolean
+  notify_new_comments?: boolean
   content_id: number
 }
 
 interface IUpdateRecord {
-  type: string
-  status: string
-  full_name: string
-  email: string
-  message: string
-  notify_new_comments: boolean
-  content_id: number
+  type?: TypeOptions
+  status?: StatusOptions
+  full_name?: string
+  email?: string
+  message?: string
+  notify_new_comments?: boolean
+  content_id?: number
 }
 
 export {

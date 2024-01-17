@@ -5,3 +5,8 @@
 4,"","date_to",1,0,1,"date_to","admin.generic.input.date_to",4,"date","2023-09-25 08:04:00","2023-09-25 08:04:00",7,14
 5,"","date_from",1,0,1,"date_from","admin.generic.input.date_from",5,"date","2023-09-25 08:04:00","2023-09-25 08:04:00",7,14
 6,"","search_resource",1,1,1,"search_resource","admin.generic.input.search_the_resource",6,"text","2023-09-25 08:04:00","2023-09-25 08:04:00",7,14
+
+7,"","name",1,0,1,"name","admin.settings.configuration_resources.input.name",1,"text","2023-09-25 08:04:00","2023-09-25 08:04:00",8,14
+8,"","is_active",1,0,1,"is_active","admin.generic.input.is_active",1,"text","2023-09-25 08:04:00","2023-09-25 08:04:00",8,14
+9,"","configuration_resource_id",1,0,1,"configuration_resource_id","admin.settings.configuration_resources.input.configuration_resource_id",1,"text","2023-09-25 08:04:00","2023-09-25 08:04:00",8,14
+

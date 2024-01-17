@@ -49,9 +49,9 @@ interface ICreateRecord {
 }
 
 interface IUpdateRecord {
-  type: GeneralOptions
-  label: string
-  value: string
+  type?: GeneralOptions
+  label?: string
+  value?: string
 }
 
 export {

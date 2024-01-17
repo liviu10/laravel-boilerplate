@@ -45,8 +45,9 @@ interface ICreateRecord {
 }
 
 interface IUpdateRecord {
-  type: AcceptedDomainTypeOptions
-  is_active: boolean
+  domain?: string
+  type?: AcceptedDomainTypeOptions
+  is_active?: boolean
 }
 
 export {
