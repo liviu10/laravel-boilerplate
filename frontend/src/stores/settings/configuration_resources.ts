@@ -308,6 +308,7 @@ export const useConfigurationResourceStore = defineStore(
     return {
       // State
       configurationBaseEndpoint,
+      resourceEndpoint,
 
       // Getters
       getResourceName,
@@ -326,6 +327,8 @@ export const useConfigurationResourceStore = defineStore(
       // Actions
       handleIndex,
       handleGetConfigurationId,
+      handleGetColumns,
+      handleGetInputs,
       handleAdvancedFilter,
       handleUpload,
       handleDownload,

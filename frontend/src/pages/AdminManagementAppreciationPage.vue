@@ -27,7 +27,7 @@
       @handle-navigate-to-page="handleNavigateToPage"
     >
       <template v-slot:dialog-details>
-        <management-card-create
+        <card-create
           v-if="actionName === 'create'"
           action-name="create"
           :data-model="appreciationStore.getDataModel"
@@ -130,7 +130,7 @@ import PageTitle from 'src/components/PageTitle.vue';
 import PageDescription from 'src/components/PageDescription.vue';
 import GridTable from 'src/components/GridTable.vue';
 import DialogCard from 'src/components/DialogCard.vue';
-import ManagementCardCreate from 'src/components/ManagementCardCreate.vue';
+import CardCreate from 'src/components/CardCreate.vue';
 import CardAdvancedFilter from 'src/components/CardAdvancedFilter.vue';
 import CardUpload from 'src/components/CardUpload.vue';
 import CardDownload from 'src/components/CardDownload.vue';

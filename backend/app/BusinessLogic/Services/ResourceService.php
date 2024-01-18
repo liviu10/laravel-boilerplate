@@ -44,20 +44,19 @@ class ResourceService implements BaseInterface, ResourceInterface
     public function handleIndex(array $search): Response|ResponseFactory|View
     {
         if ($this->checkPermission->handleApiCheckPermission()) {
-        $apiDisplayAllRecords = $this->apiResponse->generateApiResponse(
-            $this->modelName->fetchAllRecords($search),
-            Actions::get
-        );
-
-        if (Request::capture()->expectsJson()) {
-            return $apiDisplayAllRecords;
+            $apiDisplayAllRecords = $this->apiResponse->generateApiResponse(
+                $this->modelName->fetchAllRecords($search),
+                Actions::get
+            );
+            if (Request::capture()->expectsJson()) {
+                return $apiDisplayAllRecords;
+            } else {
+                $displayAllRecords = collect($apiDisplayAllRecords->original);
+                return view('pages.admin.settings.resources.index', compact('displayAllRecords'));
+            }
         } else {
-            $displayAllRecords = collect($apiDisplayAllRecords->original);
-            return view('pages.admin.settings.resources.index', compact('displayAllRecords'));
+            return $this->apiResponse->generateApiResponse(null, Actions::forbidden);
         }
-    } else {
-        return $this->apiResponse->generateApiResponse(null, Actions::forbidden);
-    }
     }
 
     /**

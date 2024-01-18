@@ -126,6 +126,7 @@ class Resource extends BaseModel
                         $query->where($field, '=', $value);
                     } else {
                         if ($field === 'path') {
+                            $value = preg_replace('/\/(create|show|edit)(\/\d+)?/', '', $value);
                             $query->where($field, 'LIKE', $value);
                         } else {
                             $query->where($field, 'LIKE', '%' . $value . '%');

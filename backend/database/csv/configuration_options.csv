@@ -1,49 +1,138 @@
 id,value,label,created_at,updated_at,configuration_resource_id,configuration_type_id,configuration_input_id
-1,AcceptedDomain,Accepted domain,9/25/2023 8:04,9/25/2023 8:04,7,14,1
-2,Appreciation,Appreciation,9/25/2023 8:04,9/25/2023 8:04,7,14,1
-3,Comment,Comment,9/25/2023 8:04,9/25/2023 8:04,7,14,1
-4,ConfigurationColumn,Configuration column,9/25/2023 8:04,9/25/2023 8:04,7,14,1
-5,ConfigurationInput,Configuration input,9/25/2023 8:04,9/25/2023 8:04,7,14,1
-6,ConfigurationOption,Configuration option,9/25/2023 8:04,9/25/2023 8:04,7,14,1
-7,ConfigurationResource,Configuration resource,9/25/2023 8:04,9/25/2023 8:04,7,14,1
-8,ConfigurationType,Configuration type,9/25/2023 8:04,9/25/2023 8:04,7,14,1
-9,ContactMessage,Contact message,9/25/2023 8:04,9/25/2023 8:04,7,14,1
-10,ContactResponse,Contact response,9/25/2023 8:04,9/25/2023 8:04,7,14,1
-11,ContactSubject,Contact subject,9/25/2023 8:04,9/25/2023 8:04,7,14,1
-12,Content,Content,9/25/2023 8:04,9/25/2023 8:04,7,14,1
-13,General,General,9/25/2023 8:04,9/25/2023 8:04,7,14,1
-14,Media,Media,9/25/2023 8:04,9/25/2023 8:04,7,14,1
-15,NewsletterCampaign,Newsletter campaign,9/25/2023 8:04,9/25/2023 8:04,7,14,1
-16,NewsletterSubscribe,Newsletter subscribe,9/25/2023 8:04,9/25/2023 8:04,7,14,1
-17,Notification,Notification,9/25/2023 8:04,9/25/2023 8:04,7,14,1
-18,Permission,Permission,9/25/2023 8:04,9/25/2023 8:04,7,14,1
-19,Resource,Resource,9/25/2023 8:04,9/25/2023 8:04,7,14,1
-20,ResourceChildren,Resource children,9/25/2023 8:04,9/25/2023 8:04,7,14,1
-21,Review,Review,9/25/2023 8:04,9/25/2023 8:04,7,14,1
-22,Role,Role,9/25/2023 8:04,9/25/2023 8:04,7,14,1
-23,Tag,Tag,9/25/2023 8:04,9/25/2023 8:04,7,14,1
-24,User,User,9/25/2023 8:04,9/25/2023 8:04,7,14,1
-25,AcceptedDomain,Accepted domain,9/25/2023 8:04,9/25/2023 8:04,8,14,9
-26,Appreciation,Appreciation,9/25/2023 8:04,9/25/2023 8:04,8,14,9
-27,Comment,Comment,9/25/2023 8:04,9/25/2023 8:04,8,14,9
-28,ConfigurationColumn,Configuration column,9/25/2023 8:04,9/25/2023 8:04,8,14,9
-29,ConfigurationInput,Configuration input,9/25/2023 8:04,9/25/2023 8:04,8,14,9
-30,ConfigurationOption,Configuration option,9/25/2023 8:04,9/25/2023 8:04,8,14,9
-31,ConfigurationResource,Configuration resource,9/25/2023 8:04,9/25/2023 8:04,8,14,9
-32,ConfigurationType,Configuration type,9/25/2023 8:04,9/25/2023 8:04,8,14,9
-33,ContactMessage,Contact message,9/25/2023 8:04,9/25/2023 8:04,8,14,9
-34,ContactResponse,Contact response,9/25/2023 8:04,9/25/2023 8:04,8,14,9
-35,ContactSubject,Contact subject,9/25/2023 8:04,9/25/2023 8:04,8,14,9
-36,Content,Content,9/25/2023 8:04,9/25/2023 8:04,8,14,9
-37,General,General,9/25/2023 8:04,9/25/2023 8:04,8,14,9
-38,Media,Media,9/25/2023 8:04,9/25/2023 8:04,8,14,9
-39,NewsletterCampaign,Newsletter campaign,9/25/2023 8:04,9/25/2023 8:04,8,14,9
-40,NewsletterSubscribe,Newsletter subscribe,9/25/2023 8:04,9/25/2023 8:04,8,14,9
-41,Notification,Notification,9/25/2023 8:04,9/25/2023 8:04,8,14,9
-42,Permission,Permission,9/25/2023 8:04,9/25/2023 8:04,8,14,9
-43,Resource,Resource,9/25/2023 8:04,9/25/2023 8:04,8,14,9
-44,ResourceChildren,Resource children,9/25/2023 8:04,9/25/2023 8:04,8,14,9
-45,Review,Review,9/25/2023 8:04,9/25/2023 8:04,8,14,9
-46,Role,Role,9/25/2023 8:04,9/25/2023 8:04,8,14,9
-47,Tag,Tag,9/25/2023 8:04,9/25/2023 8:04,8,14,9
-48,User,User,9/25/2023 8:04,9/25/2023 8:04,8,14,9
+1,AcceptedDomain,Accepted domain,9/25/2023 8:04,9/25/2023 8:04,7,20,1
+2,Appreciation,Appreciation,9/25/2023 8:04,9/25/2023 8:04,7,20,1
+3,Comment,Comment,9/25/2023 8:04,9/25/2023 8:04,7,20,1
+4,ConfigurationColumn,Configuration column,9/25/2023 8:04,9/25/2023 8:04,7,20,1
+5,ConfigurationInput,Configuration input,9/25/2023 8:04,9/25/2023 8:04,7,20,1
+6,ConfigurationOption,Configuration option,9/25/2023 8:04,9/25/2023 8:04,7,20,1
+7,ConfigurationResource,Configuration resource,9/25/2023 8:04,9/25/2023 8:04,7,20,1
+8,ConfigurationType,Configuration type,9/25/2023 8:04,9/25/2023 8:04,7,20,1
+9,ContactMessage,Contact message,9/25/2023 8:04,9/25/2023 8:04,7,20,1
+10,ContactResponse,Contact response,9/25/2023 8:04,9/25/2023 8:04,7,20,1
+11,ContactSubject,Contact subject,9/25/2023 8:04,9/25/2023 8:04,7,20,1
+12,Content,Content,9/25/2023 8:04,9/25/2023 8:04,7,20,1
+13,General,General,9/25/2023 8:04,9/25/2023 8:04,7,20,1
+14,Media,Media,9/25/2023 8:04,9/25/2023 8:04,7,20,1
+15,NewsletterCampaign,Newsletter campaign,9/25/2023 8:04,9/25/2023 8:04,7,20,1
+16,NewsletterSubscribe,Newsletter subscribe,9/25/2023 8:04,9/25/2023 8:04,7,20,1
+17,Notification,Notification,9/25/2023 8:04,9/25/2023 8:04,7,20,1
+18,Permission,Permission,9/25/2023 8:04,9/25/2023 8:04,7,20,1
+19,Resource,Resource,9/25/2023 8:04,9/25/2023 8:04,7,20,1
+20,ResourceChildren,Resource children,9/25/2023 8:04,9/25/2023 8:04,7,20,1
+21,Review,Review,9/25/2023 8:04,9/25/2023 8:04,7,20,1
+22,Role,Role,9/25/2023 8:04,9/25/2023 8:04,7,20,1
+23,Tag,Tag,9/25/2023 8:04,9/25/2023 8:04,7,20,1
+24,User,User,9/25/2023 8:04,9/25/2023 8:04,7,20,1
+25,1,Yes,9/25/2023 8:04,9/25/2023 8:04,8,23,8
+26,0,No,9/25/2023 8:04,9/25/2023 8:04,8,23,8
+27,AcceptedDomain,Accepted domain,9/25/2023 8:04,9/25/2023 8:04,8,23,9
+28,Appreciation,Appreciation,9/25/2023 8:04,9/25/2023 8:04,8,23,9
+29,Comment,Comment,9/25/2023 8:04,9/25/2023 8:04,8,23,9
+30,ConfigurationColumn,Configuration column,9/25/2023 8:04,9/25/2023 8:04,8,23,9
+31,ConfigurationInput,Configuration input,9/25/2023 8:04,9/25/2023 8:04,8,23,9
+32,ConfigurationOption,Configuration option,9/25/2023 8:04,9/25/2023 8:04,8,23,9
+33,ConfigurationResource,Configuration resource,9/25/2023 8:04,9/25/2023 8:04,8,23,9
+34,ConfigurationType,Configuration type,9/25/2023 8:04,9/25/2023 8:04,8,23,9
+35,ContactMessage,Contact message,9/25/2023 8:04,9/25/2023 8:04,8,23,9
+36,ContactResponse,Contact response,9/25/2023 8:04,9/25/2023 8:04,8,23,9
+37,ContactSubject,Contact subject,9/25/2023 8:04,9/25/2023 8:04,8,23,9
+38,Content,Content,9/25/2023 8:04,9/25/2023 8:04,8,23,9
+39,General,General,9/25/2023 8:04,9/25/2023 8:04,8,23,9
+40,Media,Media,9/25/2023 8:04,9/25/2023 8:04,8,23,9
+41,NewsletterCampaign,Newsletter campaign,9/25/2023 8:04,9/25/2023 8:04,8,23,9
+42,NewsletterSubscribe,Newsletter subscribe,9/25/2023 8:04,9/25/2023 8:04,8,23,9
+43,Notification,Notification,9/25/2023 8:04,9/25/2023 8:04,8,23,9
+44,Permission,Permission,9/25/2023 8:04,9/25/2023 8:04,8,23,9
+45,Resource,Resource,9/25/2023 8:04,9/25/2023 8:04,8,23,9
+46,ResourceChildren,Resource children,9/25/2023 8:04,9/25/2023 8:04,8,23,9
+47,Review,Review,9/25/2023 8:04,9/25/2023 8:04,8,23,9
+48,Role,Role,9/25/2023 8:04,9/25/2023 8:04,8,23,9
+49,Tag,Tag,9/25/2023 8:04,9/25/2023 8:04,8,23,9
+50,User,User,9/25/2023 8:04,9/25/2023 8:04,8,23,9
+51,AcceptedDomain,Accepted domain,9/25/2023 8:04,9/25/2023 8:04,4,11,17
+52,Appreciation,Appreciation,9/25/2023 8:04,9/25/2023 8:04,4,11,17
+53,Comment,Comment,9/25/2023 8:04,9/25/2023 8:04,4,11,17
+54,ConfigurationColumn,Configuration column,9/25/2023 8:04,9/25/2023 8:04,4,11,17
+55,ConfigurationInput,Configuration input,9/25/2023 8:04,9/25/2023 8:04,4,11,17
+56,ConfigurationOption,Configuration option,9/25/2023 8:04,9/25/2023 8:04,4,11,17
+57,ConfigurationResource,Configuration resource,9/25/2023 8:04,9/25/2023 8:04,4,11,17
+58,ConfigurationType,Configuration type,9/25/2023 8:04,9/25/2023 8:04,4,11,17
+59,ContactMessage,Contact message,9/25/2023 8:04,9/25/2023 8:04,4,11,17
+60,ContactResponse,Contact response,9/25/2023 8:04,9/25/2023 8:04,4,11,17
+61,ContactSubject,Contact subject,9/25/2023 8:04,9/25/2023 8:04,4,11,17
+62,Content,Content,9/25/2023 8:04,9/25/2023 8:04,4,11,17
+63,General,General,9/25/2023 8:04,9/25/2023 8:04,4,11,17
+64,Media,Media,9/25/2023 8:04,9/25/2023 8:04,4,11,17
+65,NewsletterCampaign,Newsletter campaign,9/25/2023 8:04,9/25/2023 8:04,4,11,17
+66,NewsletterSubscribe,Newsletter subscribe,9/25/2023 8:04,9/25/2023 8:04,4,11,17
+67,Notification,Notification,9/25/2023 8:04,9/25/2023 8:04,4,11,17
+68,Permission,Permission,9/25/2023 8:04,9/25/2023 8:04,4,11,17
+69,Resource,Resource,9/25/2023 8:04,9/25/2023 8:04,4,11,17
+70,ResourceChildren,Resource children,9/25/2023 8:04,9/25/2023 8:04,4,11,17
+71,Review,Review,9/25/2023 8:04,9/25/2023 8:04,4,11,17
+72,Role,Role,9/25/2023 8:04,9/25/2023 8:04,4,11,17
+73,Tag,Tag,9/25/2023 8:04,9/25/2023 8:04,4,11,17
+74,User,User,9/25/2023 8:04,9/25/2023 8:04,4,11,17
+75,column,Column,9/25/2023 8:04,9/25/2023 8:04,4,11,18
+76,input,Input,9/25/2023 8:04,9/25/2023 8:04,4,11,18
+77,translation,Translation,9/25/2023 8:04,9/25/2023 8:04,4,11,18
+78,1,Yes,9/25/2023 8:04,9/25/2023 8:04,5,14,21
+79,0,No,9/25/2023 8:04,9/25/2023 8:04,5,14,21
+80,1,Yes,9/25/2023 8:04,9/25/2023 8:04,5,14,22
+81,0,No,9/25/2023 8:04,9/25/2023 8:04,5,14,22
+82,1,Yes,9/25/2023 8:04,9/25/2023 8:04,5,14,23
+83,0,No,9/25/2023 8:04,9/25/2023 8:04,5,14,23
+84,AcceptedDomain,Accepted domain,9/25/2023 8:04,9/25/2023 8:04,5,14,28
+85,Appreciation,Appreciation,9/25/2023 8:04,9/25/2023 8:04,5,14,28
+86,Comment,Comment,9/25/2023 8:04,9/25/2023 8:04,5,14,28
+87,ConfigurationColumn,Configuration column,9/25/2023 8:04,9/25/2023 8:04,5,14,28
+88,ConfigurationInput,Configuration input,9/25/2023 8:04,9/25/2023 8:04,5,14,28
+89,ConfigurationOption,Configuration option,9/25/2023 8:04,9/25/2023 8:04,5,14,28
+90,ConfigurationResource,Configuration resource,9/25/2023 8:04,9/25/2023 8:04,5,14,28
+91,ConfigurationType,Configuration type,9/25/2023 8:04,9/25/2023 8:04,5,14,28
+92,ContactMessage,Contact message,9/25/2023 8:04,9/25/2023 8:04,5,14,28
+93,ContactResponse,Contact response,9/25/2023 8:04,9/25/2023 8:04,5,14,28
+94,ContactSubject,Contact subject,9/25/2023 8:04,9/25/2023 8:04,5,14,28
+95,Content,Content,9/25/2023 8:04,9/25/2023 8:04,5,14,28
+96,General,General,9/25/2023 8:04,9/25/2023 8:04,5,14,28
+97,Media,Media,9/25/2023 8:04,9/25/2023 8:04,5,14,28
+98,NewsletterCampaign,Newsletter campaign,9/25/2023 8:04,9/25/2023 8:04,5,14,28
+99,NewsletterSubscribe,Newsletter subscribe,9/25/2023 8:04,9/25/2023 8:04,5,14,28
+100,Notification,Notification,9/25/2023 8:04,9/25/2023 8:04,5,14,28
+101,Permission,Permission,9/25/2023 8:04,9/25/2023 8:04,5,14,28
+102,Resource,Resource,9/25/2023 8:04,9/25/2023 8:04,5,14,28
+103,ResourceChildren,Resource children,9/25/2023 8:04,9/25/2023 8:04,5,14,28
+104,Review,Review,9/25/2023 8:04,9/25/2023 8:04,5,14,28
+105,Role,Role,9/25/2023 8:04,9/25/2023 8:04,5,14,28
+106,Tag,Tag,9/25/2023 8:04,9/25/2023 8:04,5,14,28
+107,User,User,9/25/2023 8:04,9/25/2023 8:04,5,14,28
+108,column,Column,9/25/2023 8:04,9/25/2023 8:04,5,14,29
+109,input,Input,9/25/2023 8:04,9/25/2023 8:04,5,14,29
+110,translation,Translation,9/25/2023 8:04,9/25/2023 8:04,5,14,29
+111,AcceptedDomain,Accepted domain,9/25/2023 8:04,9/25/2023 8:04,6,17,32
+112,Appreciation,Appreciation,9/25/2023 8:04,9/25/2023 8:04,6,17,32
+113,Comment,Comment,9/25/2023 8:04,9/25/2023 8:04,6,17,32
+114,ConfigurationColumn,Configuration column,9/25/2023 8:04,9/25/2023 8:04,6,17,32
+115,ConfigurationInput,Configuration input,9/25/2023 8:04,9/25/2023 8:04,6,17,32
+116,ConfigurationOption,Configuration option,9/25/2023 8:04,9/25/2023 8:04,6,17,32
+117,ConfigurationResource,Configuration resource,9/25/2023 8:04,9/25/2023 8:04,6,17,32
+118,ConfigurationType,Configuration type,9/25/2023 8:04,9/25/2023 8:04,6,17,32
+119,ContactMessage,Contact message,9/25/2023 8:04,9/25/2023 8:04,6,17,32
+120,ContactResponse,Contact response,9/25/2023 8:04,9/25/2023 8:04,6,17,32
+121,ContactSubject,Contact subject,9/25/2023 8:04,9/25/2023 8:04,6,17,32
+122,Content,Content,9/25/2023 8:04,9/25/2023 8:04,6,17,32
+123,General,General,9/25/2023 8:04,9/25/2023 8:04,6,17,32
+124,Media,Media,9/25/2023 8:04,9/25/2023 8:04,6,17,32
+125,NewsletterCampaign,Newsletter campaign,9/25/2023 8:04,9/25/2023 8:04,6,17,32
+126,NewsletterSubscribe,Newsletter subscribe,9/25/2023 8:04,9/25/2023 8:04,6,17,32
+127,Notification,Notification,9/25/2023 8:04,9/25/2023 8:04,6,17,32
+128,Permission,Permission,9/25/2023 8:04,9/25/2023 8:04,6,17,32
+129,Resource,Resource,9/25/2023 8:04,9/25/2023 8:04,6,17,32
+130,ResourceChildren,Resource children,9/25/2023 8:04,9/25/2023 8:04,6,17,32
+131,Review,Review,9/25/2023 8:04,9/25/2023 8:04,6,17,32
+132,Role,Role,9/25/2023 8:04,9/25/2023 8:04,6,17,32
+133,Tag,Tag,9/25/2023 8:04,9/25/2023 8:04,6,17,32
+134,User,User,9/25/2023 8:04,9/25/2023 8:04,6,17,32
+135,column,Column,9/25/2023 8:04,9/25/2023 8:04,6,17,33
+136,input,Input,9/25/2023 8:04,9/25/2023 8:04,6,17,33
+137,translation,Translation,9/25/2023 8:04,9/25/2023 8:04,6,17,33

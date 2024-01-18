@@ -1,6 +1,6 @@
 id,align,field,header_style,label,name,position,style,created_at,updated_at,configuration_resource_id,configuration_type_id
-1,center,id,width: 75px,id,admin.generic.column.id,1,width: 75px,9/25/2023 8:04,9/25/2023 8:04,7,13
-2,center,resource,width: 100px,resource,admin.settings.configuration_resources.column.resource,2,width: 100px,9/25/2023 8:04,9/25/2023 8:04,7,13
-3,center,key,width: 100px,key,admin.settings.configuration_resources.column.key,3,width: 100px,9/25/2023 8:04,9/25/2023 8:04,7,13
-4,center,created_at,width: 100px,created_at,admin.generic.column.created_at,4,width: 100px,9/25/2023 8:04,9/25/2023 8:04,7,13
-5,center,updated_at,width: 100px,updated_at,admin.generic.column.updated_at,5,width: 100px,9/25/2023 8:04,9/25/2023 8:04,7,13
+1,center,id,width: 75px,id,admin.generic.column.id,1,width: 75px,9/25/2023 8:04,9/25/2023 8:04,7,19
+2,center,resource,width: 100px,resource,admin.settings.configuration_resources.column.resource,2,width: 100px,9/25/2023 8:04,9/25/2023 8:04,7,19
+3,center,key,width: 100px,key,admin.settings.configuration_resources.column.key,3,width: 100px,9/25/2023 8:04,9/25/2023 8:04,7,19
+4,center,created_at,width: 100px,created_at,admin.generic.column.created_at,4,width: 100px,9/25/2023 8:04,9/25/2023 8:04,7,19
+5,center,updated_at,width: 100px,updated_at,admin.generic.column.updated_at,5,width: 100px,9/25/2023 8:04,9/25/2023 8:04,7,19

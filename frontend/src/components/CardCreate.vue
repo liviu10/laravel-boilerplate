@@ -6,7 +6,7 @@
           v-if="checkObject.handleCheckIfArray(input.configuration_options)"
           dense
           emit-value
-          :label="t(`t(${translationString}.data_model.${input.field}`)"
+          :label="t(`${translationString}.data_model.${input.field}`)"
           map-options
           outlined
           square
@@ -43,14 +43,14 @@ import { TDialog } from 'src/interfaces/BaseInterface';
 import { IConfigurationInput } from 'src/interfaces/ConfigurationResourceInterface';
 import CardGoToConfigureResource from 'src/components/CardGoToConfigureResource.vue';
 
-interface IManagementCardCreate {
+interface ICardCreate {
   actionName: TDialog | undefined;
   dataModel?: IConfigurationInput[];
   resource: string;
   translationString: string;
 }
 
-defineProps<IManagementCardCreate>();
+defineProps<ICardCreate>();
 
 // Defined the translation variable
 const { t } = useI18n({});
