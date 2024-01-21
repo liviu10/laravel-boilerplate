@@ -9,8 +9,9 @@ const routes: RouteRecordRaw[] = [
         children: [
           {
             path: '',
-            name: 'AdminManagementContentPage',
-            component: () => import('pages/AdminManagementContentPage.vue'),
+            name: 'AdminManagementContentIndexPage',
+            component: () => import('pages/AdminManagementContentIndexPage.vue'),
+            props: (route) => ({ resource: route.query.resource as string | undefined }),
           },
           {
             path: 'create',
@@ -31,23 +32,27 @@ const routes: RouteRecordRaw[] = [
       },
       {
         path: '/admin/management/tags',
-        name: 'AdminManagementTagPage',
-        component: () => import('pages/AdminManagementTagPage.vue'),
+        name: 'AdminManagementTagIndexPage',
+        component: () => import('pages/AdminManagementTagIndexPage.vue'),
+        props: (route) => ({ resource: route.query.resource as string | undefined }),
       },
       {
         path: '/admin/management/media',
-        name: 'AdminManagementMediaPage',
-        component: () => import('pages/AdminManagementMediaPage.vue'),
+        name: 'AdminManagementMediaIndexPage',
+        component: () => import('pages/AdminManagementMediaIndexPage.vue'),
+        props: (route) => ({ resource: route.query.resource as string | undefined }),
       },
       {
         path: '/admin/management/comments',
-        name: 'AdminManagementCommentPage',
-        component: () => import('pages/AdminManagementCommentPage.vue'),
+        name: 'AdminManagementCommentIndexPage',
+        component: () => import('pages/AdminManagementCommentIndexPage.vue'),
+        props: (route) => ({ resource: route.query.resource as string | undefined }),
       },
       {
         path: '/admin/management/appreciations',
-        name: 'AdminManagementAppreciationPage',
-        component: () => import('pages/AdminManagementAppreciationPage.vue'),
+        name: 'AdminManagementAppreciationIndexPage',
+        component: () => import('pages/AdminManagementAppreciationIndexPage.vue'),
+        props: (route) => ({ resource: route.query.resource as string | undefined }),
       },
     ],
   },

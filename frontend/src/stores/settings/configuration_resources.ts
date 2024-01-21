@@ -95,8 +95,6 @@ export const useConfigurationResourceStore = defineStore(
         })
       } catch (error) {
         console.log('-> catch', error);
-      } finally {
-        console.log('-> finally');
       }
     }
 
@@ -111,8 +109,6 @@ export const useConfigurationResourceStore = defineStore(
         console.log('-> handleShow', resourceConfiguration.value);
       } catch (error) {
         console.log('-> catch', error);
-      } finally {
-        console.log('-> finally');
       }
     }
 
@@ -131,8 +127,6 @@ export const useConfigurationResourceStore = defineStore(
         }
       } catch (error) {
         console.log('-> catch', error);
-      } finally {
-        console.log('-> finally');
       }
     }
 
@@ -148,10 +142,18 @@ export const useConfigurationResourceStore = defineStore(
             (activeInput: { is_active: boolean; }) => activeInput.is_active
           ) as IConfigurationInput[]
           dataModel.value = activeInputs.filter(
-            (model) => model.is_model && model.key !== 'upload' && model.key !== 'date_to' && model.key !== 'date_from'
+            (model) => model.is_model &&
+              model.key !== 'search_resource' &&
+              model.key !== 'upload' &&
+              model.key !== 'date_to' &&
+              model.key !== 'date_from'
           ) as IConfigurationInput[];
           filterModel.value = activeInputs.filter(
-            (filter) => filter.is_filter && filter.key !== 'upload' && filter.key !== 'date_to' && filter.key !== 'date_from'
+            (filter) => filter.is_filter &&
+              filter.key !== 'search_resource' &&
+              filter.key !== 'upload' &&
+              filter.key !== 'date_to' &&
+              filter.key !== 'date_from'
           ) as IConfigurationInput[];
           uploadModel.value = activeInputs.filter(
             (model) => model.key === 'upload'
@@ -168,8 +170,6 @@ export const useConfigurationResourceStore = defineStore(
         }
       } catch (error) {
         console.log('-> catch', error);
-      } finally {
-        console.log('-> finally');
       }
     }
 
@@ -193,8 +193,6 @@ export const useConfigurationResourceStore = defineStore(
         });
       } catch (error) {
         console.log('-> catch', error);
-      } finally {
-        console.log('-> finally');
       }
     }
 
@@ -215,8 +213,6 @@ export const useConfigurationResourceStore = defineStore(
         });
       } catch (error) {
         console.log('-> catch', error);
-      } finally {
-        console.log('-> finally');
       }
     }
 
@@ -237,8 +233,6 @@ export const useConfigurationResourceStore = defineStore(
         });
       } catch (error) {
         console.log('-> catch', error);
-      } finally {
-        console.log('-> finally');
       }
     }
 
@@ -263,8 +257,6 @@ export const useConfigurationResourceStore = defineStore(
         });
       } catch (error) {
         console.log('-> catch', error);
-      } finally {
-        console.log('-> finally');
       }
     }
 
@@ -287,8 +279,6 @@ export const useConfigurationResourceStore = defineStore(
         });
       } catch (error) {
         console.log('-> catch', error);
-      } finally {
-        console.log('-> finally');
       }
     }
 
@@ -303,6 +293,10 @@ export const useConfigurationResourceStore = defineStore(
 
     async function handleStats() {
       console.log('-> handleStats');
+    }
+
+    async function handleReset() {
+      console.log('-> handleReset');
     }
 
     return {
@@ -338,6 +332,7 @@ export const useConfigurationResourceStore = defineStore(
       handleUpdate,
       handleDelete,
       handleStats,
+      handleReset,
     };
   }
 );

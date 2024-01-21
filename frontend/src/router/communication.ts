@@ -6,18 +6,18 @@ const routes: RouteRecordRaw[] = [
     children: [
       {
         path: '/admin/communication/contact',
-        name: 'AdminCommunicationContactPage',
-        component: () => import('pages/AdminCommunicationContactPage.vue'),
+        name: 'AdminCommunicationContactIndexPage',
+        component: () => import('pages/AdminCommunicationContactIndexPage.vue'),
       },
       {
         path: '/admin/communication/newsletter',
-        name: 'AdminCommunicationNewsletterPage',
-        component: () => import('pages/AdminCommunicationNewsletterPage.vue'),
+        name: 'AdminCommunicationNewsletterIndexPage',
+        component: () => import('pages/AdminCommunicationNewsletterIndexPage.vue'),
       },
       {
         path: '/admin/communication/reviews',
-        name: 'AdminCommunicationReviewsPage',
-        component: () => import('pages/AdminCommunicationReviewPage.vue'),
+        name: 'AdminCommunicationReviewsIndexPage',
+        component: () => import('pages/AdminCommunicationReviewIndexPage.vue'),
       },
     ],
   },

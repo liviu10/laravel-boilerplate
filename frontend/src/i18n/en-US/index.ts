@@ -44,7 +44,8 @@ export default {
       close_label: 'Close',
       cancel_label: 'Cancel',
       save_label: 'Save',
-      edit_label: 'Quick edit',
+      quick_edit_label: 'Quick edit',
+      edit_label: 'Edit',
       delete_label: 'Delete',
       apply_filters_label: 'Apply filters',
       ok_label: 'OK',
@@ -96,6 +97,9 @@ export default {
       title: 'Management',
       contents: {
         title: 'Content',
+        show_title: 'Show content',
+        create_title: 'Create content',
+        edit_title: 'Edit content',
         page_description: `
           Lorem ipsum dolor sit amet consectetur adipisicing elit.
           Iste rem est voluptatem obcaecati maiores, sit quibusdam ad.
@@ -267,7 +271,7 @@ export default {
         `,
       },
       template: {
-        title: 'Email and SMS templates',
+        title: 'Templates',
         page_description: `
           Lorem ipsum dolor sit amet consectetur adipisicing elit.
           Iste rem est voluptatem obcaecati maiores, sit quibusdam ad.
@@ -280,6 +284,9 @@ export default {
       configuration: {
         resources: {
           title: 'Configuration resources',
+          show_title: 'Show configuration resources',
+          create_title: 'Create configuration resources',
+          edit_title: 'Edit configuration resources',
           page_description: `
             Lorem ipsum dolor sit amet consectetur adipisicing elit.
             Iste rem est voluptatem obcaecati maiores, sit quibusdam ad.

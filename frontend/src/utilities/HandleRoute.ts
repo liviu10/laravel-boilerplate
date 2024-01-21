@@ -15,7 +15,7 @@ interface IHandleRoute {
   handleRouteDescription: (meta: RouteMeta) => string;
   handleNavigateToRoute: (
     router: Router,
-    resourceName: string,
+    action: string,
     params?: RouteParamsRaw,
     query?: LocationQueryRaw
   ) => Promise<void | NavigationFailure | undefined>;
@@ -28,6 +28,7 @@ export class HandleRoute implements IHandleRoute {
   basicRouteName: string;
   basicRouteTitle: string;
   basicRouteDescription: string;
+  action: string;
   resourceName: string[] | string | undefined;
   translationFromRoute: string;
   recordId: number | null;
@@ -36,6 +37,7 @@ export class HandleRoute implements IHandleRoute {
     this.basicRouteName = 'BasicRouteName';
     this.basicRouteTitle = 'BasicRouteTitle';
     this.basicRouteDescription = 'BasicRouteDescription';
+    this.action = '';
     this.resourceName = '';
     this.translationFromRoute = '';
     this.recordId = null;
@@ -83,24 +85,38 @@ export class HandleRoute implements IHandleRoute {
   }
 
   /**
-   * Navigates to a specified route using the provided router instance.
-   * @param {Router} router - The Vue Router instance used for navigation.
-   * @param {string} resourceName - The name of the route to navigate to.
-   * @param {RouteParamsRaw} [params] - Optional parameters for the route.
-   * @param {LocationQueryRaw} [query] - Optional query parameters for the route.
-   * @returns {Promise<void | NavigationFailure | undefined>} A promise that resolves when the navigation is successful,
-   * rejects with a NavigationFailure in case of an error, or resolves with undefined if the navigation does not result
-   * in a state change (e.g., navigating to the current route).
-   * @throws {NavigationFailure} If the navigation to the specified route fails.
+   * Navigates to a specific route based on the provided action, parameters, and query.
+   * @param {Router} router - The Vue Router instance.
+   * @param {string} action - The action to be performed, used to construct the target route name.
+   * @param {RouteParamsRaw} [params] - Optional route parameters.
+   * @param {LocationQueryRaw} [query] - Optional query parameters.
+   * @returns {Promise<void | NavigationFailure | undefined>} A promise that resolves when the navigation is complete.
    */
   public handleNavigateToRoute(
     router: Router,
-    resourceName: string,
+    action: string,
     params?: RouteParamsRaw,
     query?: LocationQueryRaw
   ): Promise<void | NavigationFailure | undefined> {
+    // Determine the action and construct the resource name
+    // index, show, create, edit
+    if (action.includes('-')) {
+      this.action = action.split('-')[1].charAt(0).toUpperCase() + action.split('-')[1].slice(1);
+    } else {
+      this.action = action.charAt(0).toUpperCase() + action.slice(1);
+    }
+
+    // Extract the current component name from the router
+    let currentComponentName = router.currentRoute.value.name
+    if (currentComponentName) {
+      currentComponentName = currentComponentName.toString().replace(/(Index|Show|Create|Edit)Page$/, '');
+    } else {
+      // TODO: what if the current component name does not exist?
+    }
+    this.resourceName = `${currentComponentName}${this.action}Page`
+
     return router.push({
-      name: resourceName,
+      name: this.resourceName,
       params: params || (undefined as unknown as RouteParamsRaw),
       query: query || (undefined as unknown as LocationQueryRaw),
     });
@@ -144,14 +160,13 @@ export class HandleRoute implements IHandleRoute {
    */
   public handleTranslationFromRoute(): string {
     const pathSegments = window.location.pathname.split('/').filter(segment => segment !== '');
-    if (pathSegments.length > 0) {
-      if (['create', 'show', 'edit'].includes(pathSegments[pathSegments.length - 1])) {
-        pathSegments.pop();
-      }
-      this.translationFromRoute = pathSegments.join('.');
-    } else {
-      this.translationFromRoute = '';
+    while (pathSegments.length > 0 && !isNaN(Number(pathSegments[pathSegments.length - 1]))) {
+      pathSegments.pop();
     }
+    if (pathSegments.length > 0 && ['create', 'show', 'edit'].includes(pathSegments[pathSegments.length - 1])) {
+      pathSegments.pop();
+    }
+    this.translationFromRoute = pathSegments.join('.');
 
     return this.translationFromRoute;
   }

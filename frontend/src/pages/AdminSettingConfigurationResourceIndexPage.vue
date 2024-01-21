@@ -55,7 +55,7 @@
           :translation-string="configurationResourceStore.getTranslationString"
         />
 
-        <management-card-restore
+        <card-restore
           v-if="actionName === 'restore'"
           action-name="restore"
           :record-details="configurationResourceStore.getAllDeletedRecords"
@@ -88,7 +88,7 @@
           </template>
         </management-card-quick-edit>
 
-        <management-card-delete
+        <card-delete
           v-if="actionName === 'delete'"
           action-name="delete"
           :resource="configurationResourceStore.getResourceName"
@@ -102,9 +102,9 @@
               :translation-string="configurationResourceStore.getTranslationString"
             />
           </template>
-        </management-card-delete>
+        </card-delete>
 
-        <management-card-stats v-if="actionName === 'stats'" action-name="stats" />
+        <card-stats v-if="actionName === 'stats'" action-name="stats" />
       </template>
     </dialog-card>
 
@@ -120,8 +120,9 @@ import { RouteParamsRaw, useRouter } from 'vue-router';
 
 // Import library utilities, interfaces and components
 import { HandleRoute } from 'src/utilities/HandleRoute';
-import { TDialog } from 'src/interfaces/BaseInterface';
 import { HandleObject } from 'src/utilities/HandleObject';
+import { TDialog } from 'src/interfaces/BaseInterface';
+import { ISingleRecord } from 'src/interfaces/ConfigurationResourceInterface';
 import PageTitle from 'src/components/PageTitle.vue';
 import PageDescription from 'src/components/PageDescription.vue';
 import GridTable from 'src/components/GridTable.vue';
@@ -129,11 +130,11 @@ import DialogCard from 'src/components/DialogCard.vue';
 import CardAdvancedFilter from 'src/components/CardAdvancedFilter.vue';
 import CardUpload from 'src/components/CardUpload.vue';
 import CardDownload from 'src/components/CardDownload.vue';
-import ManagementCardRestore from 'src/components/ManagementCardRestore.vue';
+import CardRestore from 'src/components/CardRestore.vue';
 import ManagementCardQuickShow from 'src/components/ManagementCardQuickShow.vue';
 import ManagementCardQuickEdit from 'src/components/ManagementCardQuickEdit.vue';
-import ManagementCardDelete from 'src/components/ManagementCardDelete.vue';
-import ManagementCardStats from 'src/components/ManagementCardStats.vue';
+import CardDelete from 'src/components/CardDelete.vue';
+import CardStats from 'src/components/CardStats.vue';
 import PageLoading from 'src/components/PageLoading.vue';
 
 // Import Pinia's related utilities
@@ -327,28 +328,19 @@ const handleSearchTheResource = () => configurationResourceStore.handleAdvancedF
 // Go to Configure resource
 const router = useRouter();
 
+// Instantiate handle route class
+const handleRoute = new HandleRoute();
+
 // Handle navigate to page
 const handleNavigateToPage = (action: TDialog) => {
-  const navigateToRoute = new HandleRoute();
-  let actionWords;
-  let actionName;
-  if (action.includes('-')) {
-    actionWords = action.split('-');
-    actionName = actionWords[1].charAt(0).toUpperCase() + actionWords[1].slice(1);
-    const selectedRecordId = configurationResourceStore.getSingleRecord.results[0].id;
-    navigateToRoute.handleNavigateToRoute(
-      router,
-      `AdminSettingConfigurationResource${actionName}Page`,
-      ({ id: selectedRecordId } as unknown) as RouteParamsRaw
-    );
-  } else {
-    actionWords = action;
-    actionName = actionWords.charAt(0).toUpperCase() + actionWords.slice(1);
-    navigateToRoute.handleNavigateToRoute(
-      router,
-      `AdminSettingConfigurationResource${actionName}Page`
-    );
-  }
+  const selectedRecord: ISingleRecord = configurationResourceStore.getSingleRecord
+  const routeParams = selectedRecord &&
+    selectedRecord.hasOwnProperty('results') &&
+    selectedRecord.results.length > 0
+      ? ({ id: selectedRecord.results[0].id } as unknown) as RouteParamsRaw
+      : undefined
+
+  handleRoute.handleNavigateToRoute(router, action, routeParams)
 };
 </script>
 

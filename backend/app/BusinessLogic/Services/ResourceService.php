@@ -73,6 +73,7 @@ class ResourceService implements BaseInterface, ResourceInterface
             'icon'          => $request['icon'] ?? null,
             'is_active'     => $request['is_active'] ?? false,
             'requires_auth' => $request['requires_auth'] ?? false,
+            'position'      => $request['position'] ?? null,
             'user_id'       => Auth::user() ? Auth::user()->id : 1,
         ];
 
@@ -154,6 +155,9 @@ class ResourceService implements BaseInterface, ResourceInterface
                 'requires_auth' => array_key_exists('requires_auth', $request)
                     ? $request['requires_auth']
                     : $apiDisplaySingleRecord->toArray()[0]['requires_auth'],
+                'position' => array_key_exists('position', $request)
+                    ? $request['position']
+                    : $apiDisplaySingleRecord->toArray()[0]['position'],
                 'user_id'       => Auth::user() ? Auth::user()->id : 1,
             ];
 

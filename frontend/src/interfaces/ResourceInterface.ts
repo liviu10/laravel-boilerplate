@@ -15,6 +15,7 @@ interface IAllRecords extends IRootObject {
     icon: string | undefined
     is_active: boolean
     requires_auth: boolean
+    position: number | null
     resource_children: {
       id: number
       type: TypeOptions
@@ -27,6 +28,7 @@ interface IAllRecords extends IRootObject {
       icon: string | undefined
       is_active: boolean
       requires_auth: boolean
+      position: number | null
     }[]
   }[]
 }

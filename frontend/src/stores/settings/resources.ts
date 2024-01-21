@@ -18,10 +18,9 @@ export const useResourceStore = defineStore('resourceStore', () => {
   // Getters
   const getAllRecords = computed(() => allRecords.value)
   const getApiEndpoint = computed(() => apiEndpoint.value)
-  const getApiMenu = computed(() => apiMenu.value)
+  const getApiMenu = computed(() => apiMenu.value);
 
   // Actions
-
   async function handleIndex() {
     console.log('-> handleIndex')
   }
@@ -38,8 +37,6 @@ export const useResourceStore = defineStore('resourceStore', () => {
       console.log('-> handleIndex', apiEndpoint.value)
     } catch (error) {
       console.log('-> catch', error)
-    } finally {
-      console.log('-> finally')
     }
   }
 
@@ -54,8 +51,6 @@ export const useResourceStore = defineStore('resourceStore', () => {
       console.log('-> handleIndex', apiMenu.value)
     } catch (error) {
       console.log('-> catch', error)
-    } finally {
-      console.log('-> finally')
     }
   }
 

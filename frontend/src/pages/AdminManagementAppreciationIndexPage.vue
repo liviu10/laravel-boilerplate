@@ -1,16 +1,16 @@
 <template>
   <q-page class="admin admin--page">
-    <page-title :page-title="t(`${mediaStore.getTranslationString}.title`)" />
+    <page-title :page-title="t(`${appreciationStore.getTranslationString}.title`)" />
 
     <page-description
-      :page-description="t(`${mediaStore.getTranslationString}.page_description`)"
+      :page-description="t(`${appreciationStore.getTranslationString}.page_description`)"
     />
 
     <div class="admin-section admin-section--container">
       <grid-table
-        :columns="mediaStore.getColumns"
-        :resource="mediaStore.getResourceName"
-        :rows="mediaStore.getAllRecords.results?.data || []"
+        :columns="appreciationStore.getColumns"
+        :resource="appreciationStore.getResourceName"
+        :rows="appreciationStore.getAllRecords.results?.data || []"
         @handle-open-dialog="handleOpenDialog"
       />
     </div>
@@ -30,85 +30,85 @@
         <card-create
           v-if="actionName === 'create'"
           action-name="create"
-          :data-model="mediaStore.getDataModel"
-          :resource="mediaStore.getResourceName"
-          :translation-string="mediaStore.getTranslationString"
+          :data-model="appreciationStore.getDataModel"
+          :resource="appreciationStore.getResourceName"
+          :translation-string="appreciationStore.getTranslationString"
         />
 
         <card-advanced-filter
           v-if="actionName === 'advanced-filters'"
           action-name="advanced-filters"
-          :data-model="mediaStore.getFilterModel"
-          :resource="mediaStore.getResourceName"
-          :translation-string="mediaStore.getTranslationString"
+          :data-model="appreciationStore.getFilterModel"
+          :resource="appreciationStore.getResourceName"
+          :translation-string="appreciationStore.getTranslationString"
         />
 
         <card-upload
           v-if="actionName === 'upload'"
           action-name="upload"
-          :data-model="mediaStore.getUploadModel"
-          :resource="mediaStore.getResourceName"
-          :translation-string="mediaStore.getTranslationString"
+          :data-model="appreciationStore.getUploadModel"
+          :resource="appreciationStore.getResourceName"
+          :translation-string="appreciationStore.getTranslationString"
         />
 
         <card-download
           v-if="actionName === 'download'"
           action-name="download"
-          :data-model="mediaStore.getDownloadModel"
-          :resource="mediaStore.getResourceName"
-          :translation-string="mediaStore.getTranslationString"
+          :data-model="appreciationStore.getDownloadModel"
+          :resource="appreciationStore.getResourceName"
+          :translation-string="appreciationStore.getTranslationString"
         />
 
-        <management-card-restore
+        <card-restore
           v-if="actionName === 'restore'"
           action-name="restore"
-          :record-details="mediaStore.getAllDeletedRecords"
-          :resource="mediaStore.getResourceName"
-          :translation-string="mediaStore.getTranslationString"
+          :record-details="appreciationStore.getAllDeletedRecords"
+          :resource="appreciationStore.getResourceName"
+          :translation-string="appreciationStore.getTranslationString"
         />
 
         <management-card-quick-show
           v-if="actionName === 'quick-show'"
           action-name="quick-show"
-          :record-details="mediaStore.getSingleRecord"
-          :resource="mediaStore.getResourceName"
-          :translation-string="mediaStore.getTranslationString"
+          :record-details="appreciationStore.getSingleRecord"
+          :resource="appreciationStore.getResourceName"
+          :translation-string="appreciationStore.getTranslationString"
         />
 
         <management-card-quick-edit
           v-if="actionName === 'quick-edit'"
           action-name="quick-edit"
-          :data-model="mediaStore.getDataModel"
-          :resource="mediaStore.getResourceName"
-          :translation-string="mediaStore.getTranslationString"
+          :data-model="appreciationStore.getDataModel"
+          :resource="appreciationStore.getResourceName"
+          :translation-string="appreciationStore.getTranslationString"
         >
           <template v-slot:record-details>
             <management-card-quick-show
               action-name="quick-show"
-              :record-details="mediaStore.getSingleRecord"
-              :resource="mediaStore.getResourceName"
-              :translation-string="mediaStore.getTranslationString"
+              :record-details="appreciationStore.getSingleRecord"
+              :resource="appreciationStore.getResourceName"
+              :translation-string="appreciationStore.getTranslationString"
             />
           </template>
         </management-card-quick-edit>
 
-        <management-card-delete
+        <card-delete
           v-if="actionName === 'delete'"
           action-name="delete"
-          :resource="mediaStore.getResourceName"
-          :translation-string="mediaStore.getTranslationString"
+          :resource="appreciationStore.getResourceName"
+          :translation-string="appreciationStore.getTranslationString"
         >
           <template v-slot:record-details>
             <management-card-quick-show
               action-name="quick-show"
-              :record-details="mediaStore.getSingleRecord"
-              :resource="mediaStore.getResourceName"
-              :translation-string="mediaStore.getTranslationString"
+              :record-details="appreciationStore.getSingleRecord"
+              :resource="appreciationStore.getResourceName"
+              :translation-string="appreciationStore.getTranslationString"
             />
           </template>
-        </management-card-delete>
+        </card-delete>
 
-        <management-card-stats v-if="actionName === 'stats'" action-name="stats" />
+        <card-stats v-if="actionName === 'stats'" action-name="stats" />
       </template>
     </dialog-card>
 
@@ -134,18 +134,18 @@ import CardCreate from 'src/components/CardCreate.vue';
 import CardAdvancedFilter from 'src/components/CardAdvancedFilter.vue';
 import CardUpload from 'src/components/CardUpload.vue';
 import CardDownload from 'src/components/CardDownload.vue';
-import ManagementCardRestore from 'src/components/ManagementCardRestore.vue';
+import CardRestore from 'src/components/CardRestore.vue';
 import ManagementCardQuickShow from 'src/components/ManagementCardQuickShow.vue';
 import ManagementCardQuickEdit from 'src/components/ManagementCardQuickEdit.vue';
-import ManagementCardDelete from 'src/components/ManagementCardDelete.vue';
-import ManagementCardStats from 'src/components/ManagementCardStats.vue';
+import CardDelete from 'src/components/CardDelete.vue';
+import CardStats from 'src/components/CardStats.vue';
 import PageLoading from 'src/components/PageLoading.vue';
 
 // Import Pinia's related utilities
-import { useMediaStore } from 'src/stores/management/media';
+import { useAppreciationStore } from 'src/stores/management/appreciations';
 
 // Instantiate the pinia store
-const mediaStore = useMediaStore();
+const appreciationStore = useAppreciationStore();
 
 // Defined the translation variable
 const { t } = useI18n({});
@@ -154,7 +154,7 @@ const { t } = useI18n({});
 const loadPage = ref(false);
 
 // Get all records
-mediaStore.handleIndex('paginate');
+appreciationStore.handleIndex('paginate');
 
 // Display the action name & dialog
 const actionName: Ref<TDialog | undefined> = ref(undefined);
@@ -175,7 +175,7 @@ async function handleOpenDialog(action: TDialog, recordId?: number): Promise<voi
       actionName.value = action;
       loadPage.value = false;
       displayDialog.value = true;
-      if (mediaStore.getDataModel.length === 0) {
+      if (appreciationStore.getDataModel.length === 0) {
         disableActionDialogButton.value = {
           action: action,
           disable: true,
@@ -186,7 +186,7 @@ async function handleOpenDialog(action: TDialog, recordId?: number): Promise<voi
       actionName.value = action;
       loadPage.value = false;
       displayDialog.value = true;
-      if (mediaStore.getFilterModel.length === 0) {
+      if (appreciationStore.getFilterModel.length === 0) {
         disableActionDialogButton.value = {
           action: action,
           disable: true,
@@ -197,7 +197,7 @@ async function handleOpenDialog(action: TDialog, recordId?: number): Promise<voi
       actionName.value = action;
       loadPage.value = false;
       displayDialog.value = true;
-      if (mediaStore.getUploadModel.length === 0) {
+      if (appreciationStore.getUploadModel.length === 0) {
         disableActionDialogButton.value = {
           action: action,
           disable: true,
@@ -208,7 +208,7 @@ async function handleOpenDialog(action: TDialog, recordId?: number): Promise<voi
       actionName.value = action;
       loadPage.value = false;
       displayDialog.value = true;
-      if (mediaStore.getDownloadModel.length === 0) {
+      if (appreciationStore.getDownloadModel.length === 0) {
         disableActionDialogButton.value = {
           action: action,
           disable: true,
@@ -222,7 +222,7 @@ async function handleOpenDialog(action: TDialog, recordId?: number): Promise<voi
       break;
     case 'quick-show':
       actionName.value = action;
-      mediaStore.handleShow(recordId).then(() => {
+      appreciationStore.handleShow(recordId).then(() => {
         loadPage.value = false;
         displayDialog.value = true;
         hideGoToShowPage.value = true;
@@ -230,13 +230,13 @@ async function handleOpenDialog(action: TDialog, recordId?: number): Promise<voi
       break;
     case 'quick-edit':
       actionName.value = action;
-      if (mediaStore.getDataModel.length === 0) {
+      if (appreciationStore.getDataModel.length === 0) {
         disableActionDialogButton.value = {
           action: action,
           disable: true,
         };
       } else {
-        mediaStore.handleShow(recordId).then(() => {
+        appreciationStore.handleShow(recordId).then(() => {
           loadPage.value = false;
           displayDialog.value = true;
           hideGoToEditPage.value = true;
@@ -245,17 +245,17 @@ async function handleOpenDialog(action: TDialog, recordId?: number): Promise<voi
       break;
     case 'delete':
       actionName.value = action;
-      mediaStore.handleShow(recordId).then(() => {
+      appreciationStore.handleShow(recordId).then(() => {
         loadPage.value = false;
         displayDialog.value = true;
       });
       break;
     case 'restore':
       actionName.value = action;
-      mediaStore.handleIndex('restore').then(() => {
+      appreciationStore.handleIndex('restore').then(() => {
         if (
-          !checkObject.handleCheckIfObject(mediaStore.getAllDeletedRecords) &&
-          !checkObject.handleCheckIfArray(mediaStore.getAllDeletedRecords.results)
+          !checkObject.handleCheckIfObject(appreciationStore.getAllDeletedRecords) &&
+          !checkObject.handleCheckIfArray(appreciationStore.getAllDeletedRecords.results)
         ) {
           disableActionDialogButton.value = {
             action: action,
@@ -276,31 +276,31 @@ async function handleActionDialog(action: TDialog): Promise<void> {
   loadPage.value = true;
   switch (action) {
     case 'create':
-      mediaStore.handleCreate().then(() => {
+      appreciationStore.handleCreate().then(() => {
         displayDialog.value = false;
         loadPage.value = false;
       });
       break;
     case 'advanced-filters':
-      mediaStore.handleAdvancedFilter('paginate').then(() => {
+      appreciationStore.handleAdvancedFilter('paginate').then(() => {
         displayDialog.value = false;
         loadPage.value = false;
       });
       break;
     case 'upload':
-      mediaStore.handleUpload().then(() => {
+      appreciationStore.handleUpload().then(() => {
         displayDialog.value = false;
         loadPage.value = false;
       });
       break;
     case 'download':
-      mediaStore.handleDownload().then(() => {
+      appreciationStore.handleDownload().then(() => {
         displayDialog.value = false;
         loadPage.value = false;
       });
       break;
     case 'restore':
-      mediaStore.handleRestore().then(() => {
+      appreciationStore.handleRestore().then(() => {
         displayDialog.value = false;
         loadPage.value = false;
       });
@@ -310,19 +310,19 @@ async function handleActionDialog(action: TDialog): Promise<void> {
       loadPage.value = false;
       break;
     case 'quick-edit':
-      mediaStore.handleUpdate().then(() => {
+      appreciationStore.handleUpdate().then(() => {
         displayDialog.value = false;
         loadPage.value = false;
       });
       break;
     case 'delete':
-      mediaStore.handleDelete().then(() => {
+      appreciationStore.handleDelete().then(() => {
         displayDialog.value = false;
         loadPage.value = false;
       });
       break;
     case 'stats':
-      mediaStore.handleStats().then(() => {
+      appreciationStore.handleStats().then(() => {
         displayDialog.value = false;
         loadPage.value = false;
       });
@@ -343,7 +343,7 @@ const handleNavigateToPage = (action: TDialog) => {
     actionWords[1] = actionWords[1].charAt(0).toUpperCase() + actionWords[1].slice(1);
   }
   const actionName = actionWords[1];
-  const selectedRecordId = mediaStore.getSingleRecord.results[0].id;
+  const selectedRecordId = appreciationStore.getSingleRecord.results[0].id;
   navigateToRoute.handleNavigateToRoute(
     router,
     `AdminManagementContent${actionName}Page`,

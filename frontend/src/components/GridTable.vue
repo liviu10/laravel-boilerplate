@@ -27,7 +27,7 @@
         icon="add"
         :label="t('admin.generic.create_record_label')"
         square
-        @click="openDialog(actionMethods[0])"
+        @click="openDialog(actionMethods[1])"
       >
         <q-tooltip>
           {{ t('admin.generic.create_record_tooltip') }}
@@ -104,6 +104,16 @@ interface IGridTable {
   rowsPerPageOptions?: QTableProps['rowsPerPageOptions'];
 }
 
+// interface IGridTablePagination {
+//   pagination: {
+//     descending: boolean
+//     page: number
+//     rowsNumber?: number
+//     rowsPerPage: number
+//     sortBy: string
+//   }
+// }
+
 const props = withDefaults(defineProps<IGridTable>(), {
   bordered: true,
   customLoader: true,
@@ -119,29 +129,32 @@ const navigateToRoute = new HandleRoute()
 // Go to Configure resource
 const router = useRouter();
 
+// Pagination
+// TODO: configured the server side pagination
+
 // More options
 const moreOptions = [
   {
     id: 1,
-    clickEvent: () => openDialog(actionMethods[4]),
+    clickEvent: () => openDialog(actionMethods[7]),
     icon: 'filter_alt',
     label: 'admin.generic.advanced_filters_record_label'
   },
   {
     id: 2,
-    clickEvent: () => openDialog(actionMethods[5]),
+    clickEvent: () => openDialog(actionMethods[8]),
     icon: 'upload',
     label: 'admin.generic.upload_record_label'
   },
   {
     id: 3,
-    clickEvent: () => openDialog(actionMethods[6]),
+    clickEvent: () => openDialog(actionMethods[9]),
     icon: 'download',
     label: 'admin.generic.download_record_label'
   },
   {
     id: 4,
-    clickEvent: () => openDialog(actionMethods[8]),
+    clickEvent: () => openDialog(actionMethods[11]),
     icon: 'restore_from_trash',
     label: 'admin.generic.restore_record_label'
   },
@@ -164,25 +177,25 @@ const moreActions = computed(() => {
     return [
       {
         id: 1,
-        clickEvent: () => openDialog(actionMethods[1], record),
+        clickEvent: () => openDialog(actionMethods[2], record),
         icon: 'visibility',
         label: 'admin.generic.quick_show_record_label',
       },
       {
         id: 2,
-        clickEvent: () => openDialog(actionMethods[2], record),
+        clickEvent: () => openDialog(actionMethods[4], record),
         icon: 'edit',
         label: 'admin.generic.quick_edit_record_label',
       },
       {
         id: 3,
-        clickEvent: () => openDialog(actionMethods[3], record),
+        clickEvent: () => openDialog(actionMethods[6], record),
         icon: 'delete',
         label: 'admin.generic.delete_record_label',
       },
       {
         id: 4,
-        clickEvent: () => openDialog(actionMethods[7], record),
+        clickEvent: () => openDialog(actionMethods[10], record),
         icon: 'query_stats',
         label: 'admin.generic.content_stats',
       },
@@ -206,10 +219,12 @@ const openDialog = (action: TDialog, record?: unknown): void => {
 // Check if object is array
 const checkObject = new HandleObject();
 
+// Search the resource event
 const searchTheResource = (): void => {
   return emit('handleSearchTheResource');
 }
 
+// Emitting events
 const emit = defineEmits<{
   (event: 'handleOpenDialog', action: TDialog, recordId?: number): void;
   (event: 'handleSearchTheResource'): void;
@@ -217,5 +232,5 @@ const emit = defineEmits<{
 </script>
 
 <style lang="scss" scoped>
-@import 'src/css/components/management_grid_table.scss';
+@import 'src/css/components/grid_table.scss';
 </style>

@@ -44,7 +44,8 @@ export default {
       close_label: 'Închide',
       cancel_label: 'Anulează',
       save_label: 'Salvează',
-      edit_label: 'Editare rapidă',
+      quick_edit_label: 'Editare rapidă',
+      edit_label: 'Editeaza',
       delete_label: 'Șterge',
       apply_filters_label: 'Aplică filtrele',
       ok_label: 'OK',
@@ -96,6 +97,9 @@ export default {
       title: 'Administrare',
       contents: {
         title: 'Conținut',
+        show_title: 'Arata continutul',
+        create_title: 'Creați conținut',
+        edit_title: 'Editați conținutul',
         page_description: `
           Lorem ipsum dolor sit amet consectetur adipisicing elit.
           Iste rem est voluptatem obcaecati maiores, sit quibusdam ad.
@@ -267,7 +271,7 @@ export default {
         `,
       },
       template: {
-        title: 'Șabloane de email și SMS',
+        title: 'Șabloane',
         page_description: `
           Lorem ipsum dolor sit amet consectetur adipisicing elit.
           Iste rem est voluptatem obcaecati maiores, sit quibusdam ad.
@@ -280,6 +284,9 @@ export default {
       configuration: {
         resources: {
           title: 'Configurare resurse',
+          show_title: 'Arata configurare resurse',
+          create_title: 'Creați resurse de configurare',
+          edit_title: 'Editați resursele de configurare',
           page_description: `
             Lorem ipsum dolor sit amet consectetur adipisicing elit.
             Iste rem est voluptatem obcaecati maiores, sit quibusdam ad.

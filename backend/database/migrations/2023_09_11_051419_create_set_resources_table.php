@@ -23,6 +23,7 @@ return new class extends Migration
             $table->string('icon')->nullable();
             $table->boolean('is_active')->default(false);
             $table->boolean('requires_auth')->default(false);
+            $table->integer('position')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });

@@ -10,12 +10,12 @@
 // Import library utilities, interfaces and components
 import { TDialog } from 'src/interfaces/BaseInterface';
 
-interface IManagementCardStats {
+interface ICardStats {
   actionName: TDialog | undefined;
   recordDetails?: [];
 }
 
-defineProps<IManagementCardStats>();
+defineProps<ICardStats>();
 </script>
 
 <style lang="scss" scoped></style>

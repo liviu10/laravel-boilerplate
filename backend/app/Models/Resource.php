@@ -26,6 +26,7 @@ use Illuminate\Support\Facades\Route;
  * @property string $icon
  * @property boolean $is_active
  * @property boolean $requires_auth
+ * @property int $position
  * @property int $user_id
  * @property \Carbon\Carbon $created_at
  * @property \Carbon\Carbon $updated_at
@@ -57,6 +58,7 @@ class Resource extends BaseModel
         'icon',
         'is_active',
         'requires_auth',
+        'position',
         'user_id',
     ];
 
@@ -82,6 +84,7 @@ class Resource extends BaseModel
         $parentCasts = parent::getCastAttributes();
         return array_merge($parentCasts, [
             'requires_auth' => 'boolean',
+            'position'      => 'integer',
             'user_id'       => 'integer',
         ]);
     }
@@ -118,12 +121,17 @@ class Resource extends BaseModel
                 'icon',
                 'is_active',
                 'requires_auth',
+                'position',
             );
 
             if (!empty($search)) {
                 foreach ($search as $field => $value) {
                     if ($field === 'id' || $field === 'type' || $field === 'is_active') {
-                        $query->where($field, '=', $value);
+                        if ($value === 'Menu') {
+                            $query->where($field, '=', $value)->orderBy('position', 'ASC');
+                        } else {
+                            $query->where($field, '=', $value);
+                        }
                     } else {
                         if ($field === 'path') {
                             $value = preg_replace('/\/(create|show|edit)(\/\d+)?/', '', $value);
@@ -139,8 +147,11 @@ class Resource extends BaseModel
                 return $query->onlyTrashed()->select('id', 'type', 'title')->get();
             } else {
                 return $query->with([
-                    'resource_children' => function ($query) {
+                    'resource_children' => function ($query) use ($search) {
                         $query->select('*');
+                        if (isset($search['type']) && $search['type'] === 'Menu') {
+                            $query->select('*')->orderBy('position', 'ASC');
+                        }
                     }
                 ])->get();
             }
@@ -173,6 +184,7 @@ class Resource extends BaseModel
                 'icon'          => $payload['icon'],
                 'is_active'     => $payload['is_active'],
                 'requires_auth' => $payload['requires_auth'],
+                'position'      => $payload['position'],
                 'user_id'       => $payload['user_id'],
             ]);
 
@@ -239,6 +251,7 @@ class Resource extends BaseModel
                 'icon'          => $payload['icon'],
                 'is_active'     => $payload['is_active'],
                 'requires_auth' => $payload['requires_auth'],
+                'position'      => $payload['position'],
                 'user_id'       => $payload['user_id'],
             ]);
 

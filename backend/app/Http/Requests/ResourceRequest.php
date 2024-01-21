@@ -46,6 +46,7 @@ class ResourceRequest extends FormRequest
                 'icon' => 'sometimes|string|min:1|max:100|regex:/^[a-zA-Z\s]+$/',
                 'is_active' => 'required',
                 'requires_auth' => 'required',
+                'position' => 'sometimes|integer',
             ];
         }
 
@@ -67,6 +68,7 @@ class ResourceRequest extends FormRequest
                 'icon' => 'sometimes|string|min:1|max:100|regex:/^[a-zA-Z\s]+$/',
                 'is_active' => 'sometimes',
                 'requires_auth' => 'sometimes',
+                'position' => 'sometimes|integer',
             ];
         }
 
@@ -113,6 +115,7 @@ class ResourceRequest extends FormRequest
             'icon.regex' => 'The icon field must only contain letters and spaces.',
             'is_active.required' => 'The is active field is required.',
             'requires_auth.required' => 'The requires authentication field is required.',
+            'position.integer' => 'The position must be an integer.',
         ];
     }
 }

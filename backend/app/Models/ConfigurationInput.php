@@ -136,7 +136,7 @@ class ConfigurationInput extends BaseModel
             if ($type === 'restore') {
                 return $query->onlyTrashed()->select('id', 'resource')->get();
             } else {
-                return $query->with([
+                return $query->orderBy('position', 'ASC')->with([
                     'configuration_options' => function ($query) {
                         $query->select('value', 'label', 'configuration_input_id');
                     }

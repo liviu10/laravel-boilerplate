@@ -34,8 +34,9 @@ class ResourceSeeder extends Seeder
                     'is_active'     => $data['9'],
                     'requires_auth' => $data['10'],
                     'user_id'       => $data['11'],
-                    'created_at'    => $data['12'],
-                    'updated_at'    => $data['13'],
+                    'position'      => $data['12'] !== null ? (int)$data['12'] : null,
+                    'created_at'    => $data['13'],
+                    'updated_at'    => $data['14'],
                 ]);
             }
             $firstLine = false;

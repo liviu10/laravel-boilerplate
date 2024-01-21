@@ -116,7 +116,7 @@ class ConfigurationColumn extends BaseModel
             if ($type === 'restore') {
                 return $query->onlyTrashed()->select('id', 'resource')->get();
             } else {
-                return $query->get();
+                return $query->orderBy('position', 'ASC')->get();
             }
         } catch (Exception $exception) {
             $this->LogApiError($exception);

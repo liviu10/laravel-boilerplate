@@ -253,7 +253,7 @@
           <q-avatar class="q-mb-sm" size="56px">
             <img src="../assets/images/admin_navbar_avatar.webp" />
           </q-avatar>
-          <div class="text-weight-bold">{{ handleApplicationName }}</div>
+          <div class="text-weight-bold">{{ environment.handleApplicationName() }}</div>
           <div>application v1.0</div>
         </div>
       </q-img>
@@ -272,7 +272,7 @@ import { useI18n } from 'vue-i18n';
 import { useRouter } from 'vue-router';
 
 // Import library utilities, interfaces and components
-import { handleApplicationName } from 'src/library/CopyrightInfo/main';
+import { HandleEnv } from 'src/utilities/HandleEnv';
 
 // Import Pinia's related utilities
 import { useResourceStore } from 'src/stores/settings/resources';
@@ -285,6 +285,9 @@ const { t } = useI18n({});
 
 // Defined the router
 const router = useRouter();
+
+// Instantiate handle environment variables class
+const environment = new HandleEnv();
 
 const leftDrawerOpen = ref(false);
 

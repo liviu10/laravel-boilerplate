@@ -96,8 +96,6 @@ export const useCommentStore = defineStore('commentStore', () => {
       })
     } catch (error) {
       console.log('-> catch', error);
-    } finally {
-      console.log('-> finally');
     }
   }
 
@@ -112,8 +110,6 @@ export const useCommentStore = defineStore('commentStore', () => {
       console.log('-> handleShow', resourceConfiguration.value);
     } catch (error) {
       console.log('-> catch', error);
-    } finally {
-      console.log('-> finally');
     }
   }
 
@@ -132,8 +128,6 @@ export const useCommentStore = defineStore('commentStore', () => {
       }
     } catch (error) {
       console.log('-> catch', error);
-    } finally {
-      console.log('-> finally');
     }
   }
 
@@ -169,8 +163,6 @@ export const useCommentStore = defineStore('commentStore', () => {
       }
     } catch (error) {
       console.log('-> catch', error);
-    } finally {
-      console.log('-> finally');
     }
   }
 
@@ -194,8 +186,6 @@ export const useCommentStore = defineStore('commentStore', () => {
       });
     } catch (error) {
       console.log('-> catch', error);
-    } finally {
-      console.log('-> finally');
     }
   }
 
@@ -216,8 +206,6 @@ export const useCommentStore = defineStore('commentStore', () => {
       });
     } catch (error) {
       console.log('-> catch', error);
-    } finally {
-      console.log('-> finally');
     }
   }
 
@@ -238,8 +226,6 @@ export const useCommentStore = defineStore('commentStore', () => {
       });
     } catch (error) {
       console.log('-> catch', error);
-    } finally {
-      console.log('-> finally');
     }
   }
 
@@ -264,8 +250,6 @@ export const useCommentStore = defineStore('commentStore', () => {
       });
     } catch (error) {
       console.log('-> catch', error);
-    } finally {
-      console.log('-> finally');
     }
   }
 
@@ -288,8 +272,6 @@ export const useCommentStore = defineStore('commentStore', () => {
       });
     } catch (error) {
       console.log('-> catch', error);
-    } finally {
-      console.log('-> finally');
     }
   }
 

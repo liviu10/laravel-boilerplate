@@ -98,8 +98,6 @@ export const useRoleStore = defineStore(
         })
       } catch (error) {
         console.log('-> catch', error);
-      } finally {
-        console.log('-> finally');
       }
     }
 
@@ -114,8 +112,6 @@ export const useRoleStore = defineStore(
         console.log('-> handleShow', resourceConfiguration.value);
       } catch (error) {
         console.log('-> catch', error);
-      } finally {
-        console.log('-> finally');
       }
     }
 
@@ -134,8 +130,6 @@ export const useRoleStore = defineStore(
         }
       } catch (error) {
         console.log('-> catch', error);
-      } finally {
-        console.log('-> finally');
       }
     }
 
@@ -171,8 +165,6 @@ export const useRoleStore = defineStore(
         }
       } catch (error) {
         console.log('-> catch', error);
-      } finally {
-        console.log('-> finally');
       }
     }
 
@@ -196,8 +188,6 @@ export const useRoleStore = defineStore(
         });
       } catch (error) {
         console.log('-> catch', error);
-      } finally {
-        console.log('-> finally');
       }
     }
 
@@ -218,8 +208,6 @@ export const useRoleStore = defineStore(
         });
       } catch (error) {
         console.log('-> catch', error);
-      } finally {
-        console.log('-> finally');
       }
     }
 
@@ -240,8 +228,6 @@ export const useRoleStore = defineStore(
         });
       } catch (error) {
         console.log('-> catch', error);
-      } finally {
-        console.log('-> finally');
       }
     }
 
@@ -266,8 +252,6 @@ export const useRoleStore = defineStore(
         });
       } catch (error) {
         console.log('-> catch', error);
-      } finally {
-        console.log('-> finally');
       }
     }
 
@@ -290,8 +274,6 @@ export const useRoleStore = defineStore(
         });
       } catch (error) {
         console.log('-> catch', error);
-      } finally {
-        console.log('-> finally');
       }
     }
 

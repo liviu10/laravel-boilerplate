@@ -1,68 +1,101 @@
 interface IRootObject {
-  title: string
-  description: string
-};
+  title: string;
+  description: string;
+}
 
 interface IBasePagination {
-  current_page: number
-  first_page_url: string
-  from: number
-  last_page: number
-  last_page_url: string
+  current_page: number;
+  first_page_url: string;
+  from: number;
+  last_page: number;
+  last_page_url: string;
   links: {
-    active: boolean
-    label: string
-    url: string | null
-  }[]
-  next_page_url: string | null
-  path: string
-  per_page: number
-  prev_page_url: string | null
-  to: number
-  total: number
-};
+    active: boolean;
+    label: string;
+    url: string | null;
+  }[];
+  next_page_url: string | null;
+  path: string;
+  per_page: number;
+  prev_page_url: string | null;
+  to: number;
+  total: number;
+}
 
 interface IBaseTimestamps {
-  created_at: string
-  updated_at: string
-  deleted_at?: string
-};
+  created_at: string;
+  updated_at: string;
+  deleted_at?: string;
+}
 
 interface IBaseUser {
-  id: number
-  full_name: string
-};
+  id: number;
+  full_name: string;
+}
 
 type TColumn = 'center' | 'left' | 'right' | undefined;
 
-type TInput = 'number' | 'textarea' | 'time' | 'text' | 'password' | 'email' | 'search' | 'tel' | 'file' | 'url' | 'date' | undefined;
+type TInput =
+  | 'number'
+  | 'textarea'
+  | 'time'
+  | 'text'
+  | 'password'
+  | 'email'
+  | 'search'
+  | 'tel'
+  | 'file'
+  | 'url'
+  | 'date'
+  | undefined;
 
-type TDialog = 'create' | 'quick-show' | 'quick-edit' | 'delete' | 'advanced-filters' | 'upload' | 'download' | 'stats' | 'restore';
+type TDialog =
+  | 'index'
+  | 'create'
+  | 'quick-show'
+  | 'show'
+  | 'quick-edit'
+  | 'edit'
+  | 'delete'
+  | 'advanced-filters'
+  | 'upload'
+  | 'download'
+  | 'stats'
+  | 'restore';
 
 const actionMethods: { [key: number]: TDialog } = {
-  0: 'create',
-  1: 'quick-show',
-  2: 'quick-edit',
-  3: 'delete',
-  4: 'advanced-filters',
-  5: 'upload',
-  6: 'download',
-  7: 'stats',
-  8: 'restore',
+  0: 'index',
+  1: 'create',
+  2: 'quick-show',
+  3: 'show',
+  4: 'quick-edit',
+  5: 'edit',
+  6: 'delete',
+  7: 'advanced-filters',
+  8: 'upload',
+  9: 'download',
+  10: 'stats',
+  11: 'restore',
 };
 
 interface IDialogAction {
-  id: number,
-  class: string,
-  clickEvent: () => void,
-  color: string,
-  dense: boolean,
-  disable?: boolean,
-  label: string,
-  square: boolean,
-};
+  id: number;
+  class: string;
+  clickEvent: () => void;
+  color: string;
+  dense: boolean;
+  disable?: boolean;
+  label: string;
+  square: boolean;
+}
 
-type TResourceType = 'Menu' | 'API' | 'paginate' | 'relation' | 'restore' | undefined;
+type TResourceType =
+  | 'Menu'
+  | 'API'
+  | 'paginate'
+  | 'relation'
+  | 'restore'
+  | undefined;
 
 export {
   IRootObject,
@@ -75,4 +108,4 @@ export {
   actionMethods,
   IDialogAction,
   TResourceType,
-}
+};

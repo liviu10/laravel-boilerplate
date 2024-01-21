@@ -153,7 +153,7 @@ const filteredDialogActionButtons = computed((): IDialogAction[] => {
           : actionName === 'quick-show'
           ? 'admin.generic.show_label'
           : actionName === 'quick-edit'
-          ? 'admin.generic.edit_label'
+          ? 'admin.generic.quick_edit_label'
           : actionName === 'delete'
           ? 'admin.generic.delete_label'
           : 'admin.generic.ok_label',

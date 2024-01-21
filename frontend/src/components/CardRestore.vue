@@ -34,7 +34,7 @@ import { HandleObject } from 'src/utilities/HandleObject';
 import { IRootObject, TDialog } from 'src/interfaces/BaseInterface';
 import CardNoData from 'src/components/CardNoData.vue';
 
-interface IManagementCardRestore {
+interface ICardRestore {
   actionName: TDialog | undefined
   recordDetails?: IRootObject & {
     results: object[]
@@ -43,7 +43,7 @@ interface IManagementCardRestore {
   translationString: string
 }
 
-defineProps<IManagementCardRestore>();
+defineProps<ICardRestore>();
 
 // Defined the translation variable
 const { t } = useI18n({});
