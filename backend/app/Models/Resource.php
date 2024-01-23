@@ -10,7 +10,7 @@ use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\QueryException;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use Illuminate\Support\Facades\Route;
+use Illuminate\Database\Eloquent\Builder;
 
 /**
  * Class Resource
@@ -109,52 +109,89 @@ class Resource extends BaseModel
     public function fetchAllRecords(array $search = [], string|null $type = null): LengthAwarePaginator|Collection|bool
     {
         try {
-            $query = $this->select(
-                'id',
-                'type',
-                'path',
-                'name',
-                'component',
-                'layout',
-                'title',
-                'caption',
-                'icon',
-                'is_active',
-                'requires_auth',
-                'position',
-            );
+            if ($search && count($search)) {
+                if (isset($search['type'])) {
+                    if ($search['type'] === 'Menu' || $search['type'] === 'paginate') {
+                        $query = $this->select(
+                            'id',
+                            'type',
+                            'path',
+                            'name',
+                            'component',
+                            'layout',
+                            'title',
+                            'caption',
+                            'icon',
+                            'is_active',
+                            'requires_auth',
+                            'position',
+                        )
+                        ->where('type', $search['type'])
+                        ->orderBy('position', 'ASC')
+                        ->with([
+                            'resource_children' => function ($query) {
+                                $query->select('*')->orderBy('position', 'ASC');
+                            }
+                        ]);
 
-            if (!empty($search)) {
-                foreach ($search as $field => $value) {
-                    if ($field === 'id' || $field === 'type' || $field === 'is_active') {
-                        if ($value === 'Menu') {
-                            $query->where($field, '=', $value)->orderBy('position', 'ASC');
-                        } else {
-                            $query->where($field, '=', $value);
+                        $this->dynamicFilters($query, $search);
+                    } else if ($search['type'] === 'API') {
+                        $query = $this->select(
+                            'id',
+                            'type',
+                            'path',
+                            'is_active',
+                            'requires_auth',
+                        )
+                        ->where('type', $search['type']);
+
+                        if (isset($search['path'])) {
+                            $query->where('path', $search['path']);
                         }
-                    } else {
-                        if ($field === 'path') {
-                            $value = preg_replace('/\/(create|show|edit)(\/\d+)?/', '', $value);
-                            $query->where($field, 'LIKE', $value);
-                        } else {
-                            $query->where($field, 'LIKE', '%' . $value . '%');
-                        }
+                    } else if ($search['type'] === 'restore') {
+                        $query = $this->select(
+                            'id',
+                            'type',
+                            'title',
+                        )
+                        ->onlyTrashed();
                     }
+                } else {
+                    $query = $this->select(
+                        'id',
+                        'type',
+                        'path',
+                        'name',
+                        'component',
+                        'layout',
+                        'title',
+                        'caption',
+                        'icon',
+                        'is_active',
+                        'requires_auth',
+                        'position',
+                    );
+
+                    $this->dynamicFilters($query, $search);
                 }
+            } else {
+                $query = $this->select(
+                    'id',
+                    'type',
+                    'path',
+                    'name',
+                    'component',
+                    'layout',
+                    'title',
+                    'caption',
+                    'icon',
+                    'is_active',
+                    'requires_auth',
+                    'position',
+                );
             }
 
-            if ($type === 'restore') {
-                return $query->onlyTrashed()->select('id', 'type', 'title')->get();
-            } else {
-                return $query->with([
-                    'resource_children' => function ($query) use ($search) {
-                        $query->select('*');
-                        if (isset($search['type']) && $search['type'] === 'Menu') {
-                            $query->select('*')->orderBy('position', 'ASC');
-                        }
-                    }
-                ])->get();
-            }
+            return $query->get();
         } catch (Exception $exception) {
             $this->LogApiError($exception);
             return false;
@@ -162,6 +199,30 @@ class Resource extends BaseModel
             $this->LogApiError($exception);
             return false;
         }
+    }
+
+    /**
+     * Apply dynamic filters to the given query builder based on the provided search criteria.
+     * @param \Illuminate\Database\Eloquent\Builder $query The query builder instance.
+     * @param array $search The search criteria to apply as filters.
+     * @return \Illuminate\Database\Eloquent\Builder The modified query builder instance.
+     */
+    private function dynamicFilters(Builder $query, array $search): Builder {
+        // TODO: Move this function to a trait so that it can be used in different models
+        foreach ($search as $field => $value) {
+            if ($field === 'id' || $field === 'is_active') {
+                $query->where($field, $value);
+            } else {
+                if ($field === 'path') {
+                    $value = preg_replace('/\/(create|show|edit)(\/\d+)?/', '', $value);
+                    $query->where($field, 'LIKE', $value);
+                } else {
+                    $query->where($field, 'LIKE', '%' . $value . '%');
+                }
+            }
+        }
+
+        return $query;
     }
 
     /**

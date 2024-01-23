@@ -145,10 +145,18 @@ export const useAcceptedDomainStore = defineStore(
             (activeInput: { is_active: boolean; }) => activeInput.is_active
           ) as IConfigurationInput[]
           dataModel.value = activeInputs.filter(
-            (model) => model.is_model && model.key !== 'upload' && model.key !== 'date_to' && model.key !== 'date_from'
+            (model) => model.is_model &&
+              model.key !== 'search_resource' &&
+              model.key !== 'upload' &&
+              model.key !== 'date_to' &&
+              model.key !== 'date_from'
           ) as IConfigurationInput[];
           filterModel.value = activeInputs.filter(
-            (filter) => filter.is_filter && filter.key !== 'upload' && filter.key !== 'date_to' && filter.key !== 'date_from'
+            (filter) => filter.is_filter &&
+              filter.key !== 'search_resource' &&
+              filter.key !== 'upload' &&
+              filter.key !== 'date_to' &&
+              filter.key !== 'date_from'
           ) as IConfigurationInput[];
           uploadModel.value = activeInputs.filter(
             (model) => model.key === 'upload'
@@ -169,7 +177,7 @@ export const useAcceptedDomainStore = defineStore(
     }
 
     async function handleAdvancedFilter(type?: TResourceType) {
-      const payload = handleApi.createFilterPayload(filterModel.value);
+      const payload = handleApi.createFilterPayload(filterModel.value, searchResourceModel.value);
       try {
         resourceStore.handleApiEndpoint(window.location.pathname).then(async () => {
           const apiEndpoint = resourceStore.getApiEndpoint
@@ -290,7 +298,14 @@ export const useAcceptedDomainStore = defineStore(
       console.log('-> handleStats');
     }
 
+    async function handleReset() {
+      console.log('-> handleReset');
+    }
+
     return {
+      // State
+      resourceEndpoint,
+
       // Getters
       getResourceName,
       getTranslationString,
@@ -308,6 +323,8 @@ export const useAcceptedDomainStore = defineStore(
       // Actions
       handleIndex,
       handleGetConfigurationId,
+      handleGetColumns,
+      handleGetInputs,
       handleAdvancedFilter,
       handleUpload,
       handleDownload,
@@ -317,6 +334,7 @@ export const useAcceptedDomainStore = defineStore(
       handleUpdate,
       handleDelete,
       handleStats,
+      handleReset,
     };
   }
 );

@@ -248,7 +248,7 @@ export default {
           repudiandae, numquam, dicta earum, cupiditate consequuntur?
         `,
       },
-      accepted_domain: {
+      accepted_domains: {
         title: 'Domenii acceptate',
         page_description: `
           Lorem ipsum dolor sit amet consectetur adipisicing elit.

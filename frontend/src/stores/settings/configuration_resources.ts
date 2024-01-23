@@ -66,6 +66,7 @@ export const useConfigurationResourceStore = defineStore(
       try {
         resourceStore.handleApiEndpoint(window.location.pathname).then(async () => {
           const apiEndpoint = resourceStore.getApiEndpoint
+          debugger
           if (apiEndpoint && Array.isArray(apiEndpoint) && apiEndpoint.length) {
             resourceEndpoint.value = apiEndpoint[0].path
             handleGetConfigurationId(getResourceName.value).then(async () => {
