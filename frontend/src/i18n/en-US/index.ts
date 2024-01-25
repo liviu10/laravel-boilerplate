@@ -66,7 +66,7 @@ export default {
       no_records_to_restore: 'There are no available records to restore!',
       no_records_available: 'There are no record(s) available to be displayed!',
       no_data_model: `
-        The data model does not exist.
+        The {nonExistingModel} model does not exist.
         Please configure the resource.
         If the problem persist you can contact the administrator.
       `,

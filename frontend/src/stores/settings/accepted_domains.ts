@@ -36,6 +36,7 @@ export const useAcceptedDomainStore = defineStore(
     const handleApi = new HandleApi();
 
     // State
+    const configurationBaseEndpoint = configurationResourceStore.configurationBaseEndpoint
     const resourceName: Ref<string> = ref('');
     const resourceEndpoint: Ref<string> = ref('');
     const translationString: Ref<string> = ref('');
@@ -103,7 +104,7 @@ export const useAcceptedDomainStore = defineStore(
 
     async function handleGetConfigurationId(key: string) {
       try {
-        const response = await api.get(`${configurationResourceStore.configurationBaseEndpoint}/resources/get-id`, {
+        const response = await api.get(`${configurationBaseEndpoint}/resources/get-id`, {
           params: {
             key: key ?? undefined,
           },
@@ -117,7 +118,7 @@ export const useAcceptedDomainStore = defineStore(
 
     async function handleGetColumns(configurationResourceId: IConfiguration['results']) {
       try {
-        const response = await api.get(`${configurationResourceStore.configurationBaseEndpoint}/columns`, {
+        const response = await api.get(`${configurationBaseEndpoint}/columns`, {
           params: {
             configuration_resource_id: configurationResourceId[0].id ?? undefined,
           },
@@ -135,7 +136,7 @@ export const useAcceptedDomainStore = defineStore(
 
     async function handleGetInputs(configurationResourceId: IConfiguration['results']) {
       try {
-        const response = await api.get(`${configurationResourceStore.configurationBaseEndpoint}/inputs`, {
+        const response = await api.get(`${configurationBaseEndpoint}/inputs`, {
           params: {
             configuration_resource_id: configurationResourceId[0].id ?? undefined,
           },
@@ -304,6 +305,7 @@ export const useAcceptedDomainStore = defineStore(
 
     return {
       // State
+      configurationBaseEndpoint,
       resourceEndpoint,
 
       // Getters

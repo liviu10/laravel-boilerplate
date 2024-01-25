@@ -1,6 +1,7 @@
 <template>
-  <p>
-    {{ t(`admin.generic.no_data_model`) }}
+  <p class="admin-section admin-section--go-to-configure-resource">
+    <q-icon name="warning" />
+    {{ t(`admin.generic.no_data_model`, { nonExistingModel: nonExistingModel || undefined }) }}
     <a href="" @click="goToConfigureResource">
       {{ t('admin.generic.configure_resource') }}
     </a>
@@ -16,8 +17,9 @@ import { useI18n } from 'vue-i18n';
 import { HandleRoute } from 'src/utilities/HandleRoute';
 
 interface ICardGoToConfigureResource {
-  resource: string;
-  translationString?: string;
+  nonExistingModel?: string
+  resource: string
+  translationString?: string
 }
 
 const props = defineProps<ICardGoToConfigureResource>();
@@ -37,4 +39,6 @@ const goToConfigureResource = (): Promise<void | NavigationFailure | undefined> 
   );
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+@import 'src/css/components/go_to_configure_resource.scss';
+</style>

@@ -7,7 +7,7 @@
     :grid="grid"
     :loading="loading"
     :no-data-label="t('admin.generic.table_no_data_label')"
-    :rows="rows"
+    :rows="checkDataSource(columns, rows)"
     row-key="id"
     :square="square"
     :rows-per-page-options="rowsPerPageOptions"
@@ -69,13 +69,18 @@
         </q-card>
       </div>
     </template>
+
+    <!-- No data slot -->
+    <template v-slot:no-data>
+      <card-go-to-configure-resource :non-existing-model="nonExistingModel" :resource="resource" />
+    </template>
   </q-table>
 </template>
 
 <script setup lang="ts">
 // Import vue related utilities
 import { useI18n } from 'vue-i18n';
-import { computed } from 'vue';
+import { computed, ref } from 'vue';
 import { QTableProps } from 'quasar';
 import { LocationQueryRaw, useRouter } from 'vue-router';
 
@@ -87,6 +92,7 @@ import { IConfigurationInput } from 'src/interfaces/ConfigurationResourceInterfa
 import GridTableTopLeft from './GridTableTopLeft.vue';
 import GridTableBody from './GridTableBody.vue';
 import GridTableBodyActions from './GridTableBodyActions.vue';
+import CardGoToConfigureResource from './CardGoToConfigureResource.vue';
 
 // Defined the translation variable
 const { t } = useI18n({});
@@ -222,6 +228,24 @@ const checkObject = new HandleObject();
 // Search the resource event
 const searchTheResource = (): void => {
   return emit('handleSearchTheResource');
+}
+
+let nonExistingModel = ref('')
+
+// Check the data source
+const checkDataSource = (columns: QTableProps['columns'], rows: QTableProps['rows']): QTableProps['rows'] | [] => {
+  if (!checkObject.handleCheckIfArray(columns) && !checkObject.handleCheckIfArray(rows)) {
+    nonExistingModel.value = 'columns and rows';
+    return [];
+  } else if (!checkObject.handleCheckIfArray(columns)) {
+    nonExistingModel.value = 'columns';
+    return [];
+  } else if (!checkObject.handleCheckIfArray(rows)) {
+    nonExistingModel.value = 'rows';
+    return [];
+  } else {
+    return rows;
+  }
 }
 
 // Emitting events

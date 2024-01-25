@@ -66,7 +66,7 @@ export default {
       no_records_to_restore: 'Nu există înregistrări disponibile pentru restaurare!',
       no_records_available: 'Nu există înregistrări disponibile pentru afișare!',
       no_data_model: `
-        Modelul de date nu există.
+        Modelul {nonExistingModel} nu există.
         Vă rugăm să configurați resursa.
         Dacă problema persistă, puteți contacta administratorul.
       `,

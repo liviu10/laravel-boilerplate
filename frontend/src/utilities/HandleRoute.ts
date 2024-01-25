@@ -166,6 +166,9 @@ export class HandleRoute implements IHandleRoute {
     if (pathSegments.length > 0 && ['create', 'show', 'edit'].includes(pathSegments[pathSegments.length - 1])) {
       pathSegments.pop();
     }
+    for (let i = 0; i < pathSegments.length; i++) {
+      pathSegments[i] = pathSegments[i].replace(/-/g, '_');
+    }
     this.translationFromRoute = pathSegments.join('.');
 
     return this.translationFromRoute;
