@@ -1,12 +1,14 @@
 <template>
   <q-page class="admin admin--page">
+    <page-title :page-title="t(`${userStore.getUserProfileTranslationString}.title`)" />
 
-    <page-title :page-title="t('admin.setting.user_profile.title')" />
-
-    <page-description :page-description="t('admin.setting.user_profile.page_description')" />
+    <page-description
+      :page-description="
+        t(`${userStore.getUserProfileTranslationString}.page_description`)
+      "
+    />
 
     <page-loading :visible="loadPage" />
-
   </q-page>
 </template>
 
@@ -21,10 +23,15 @@ import PageDescription from 'src/components/PageDescription.vue';
 import PageLoading from 'src/components/PageLoading.vue';
 
 // Import Pinia's related utilities
+import { useUserStore } from 'src/stores/settings/users';
+
+// Instantiate the pinia store
+const userStore = useUserStore();
 
 // Defined the translation variable
 const { t } = useI18n({});
 
+// Load page
 const loadPage = ref(false);
 </script>
 

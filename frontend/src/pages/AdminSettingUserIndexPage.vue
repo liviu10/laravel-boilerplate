@@ -1,82 +1,342 @@
 <template>
   <q-page class="admin admin--page">
+    <page-title :page-title="t(`${userStore.getUserTranslationString}.title`)" />
 
-    <page-title :page-title="t('admin.setting.user.title')" />
+    <page-description
+      :page-description="t(`${userStore.getUserTranslationString}.page_description`)"
+    />
 
-    <page-description :page-description="t('admin.setting.user.page_description')" />
-
-    <div class="admin-section admin-section--content">
-      <div class="admin-section__record-list">
-        <q-table
-          :bordered="bordered"
-          :columns="columns"
-          :dense="dense"
-          :loading="loading"
-          :no-data-label="t('admin.generic.table_no_data_label')"
-          :rows="rows"
-          row-key="id"
-          :square="square"
-          :separator="separator"
-          :rows-per-page-options="rowsPerPageOptions"
-          class="admin-section__container-table"
-        >
-          <template v-slot:loading>
-            <q-inner-loading showing v-if="customLoader">
-              <q-spinner-gears size="60px" color="primary" />
-            </q-inner-loading>
-            <q-inner-loading showing v-else size="60px" color="primary" />
-          </template>
-        </q-table>
-      </div>
+    <div class="admin-section admin-section--container">
+      <grid-table
+        :columns="userStore.getColumns"
+        :search-resource="userStore.getSearchResourceModel"
+        :resource="userStore.getResourceName"
+        :rows="userStore.getAllRecords.results?.data || []"
+        @handle-open-dialog="handleOpenDialog"
+        @handle-search-the-resource="handleSearchTheResource"
+      />
     </div>
 
-    <page-loading :visible="loadPage" />
+    <dialog-card
+      v-if="displayDialog"
+      :action-name="actionName"
+      :display-dialog="displayDialog"
+      :disable-action-dialog-button="disableActionDialogButton"
+      @handle-close-dialog="() => (displayDialog = false)"
+      @handle-action-dialog="handleActionDialog"
+      @handle-navigate-to-page="handleNavigateToPage"
+    >
+      <template v-slot:dialog-details>
+        <card-advanced-filter
+          v-if="actionName === 'advanced-filters'"
+          action-name="advanced-filters"
+          :data-model="userStore.getFilterModel"
+          :resource="userStore.getResourceName"
+          :translation-string="userStore.getUserTranslationString"
+        />
 
+        <card-upload
+          v-if="actionName === 'upload'"
+          action-name="upload"
+          :data-model="userStore.getUploadModel"
+          :resource="userStore.getResourceName"
+          :translation-string="userStore.getUserTranslationString"
+        />
+
+        <card-download
+          v-if="actionName === 'download'"
+          action-name="download"
+          :data-model="userStore.getDownloadModel"
+          :resource="userStore.getResourceName"
+          :translation-string="userStore.getUserTranslationString"
+        />
+
+        <card-restore
+          v-if="actionName === 'restore'"
+          action-name="restore"
+          :record-details="userStore.getAllDeletedRecords"
+          :resource="userStore.getResourceName"
+          :translation-string="userStore.getUserTranslationString"
+        />
+
+        <management-card-quick-show
+          v-if="actionName === 'quick-show'"
+          action-name="quick-show"
+          :record-details="userStore.getSingleRecord"
+          :resource="userStore.getResourceName"
+          :translation-string="userStore.getUserTranslationString"
+        />
+
+        <management-card-quick-edit
+          v-if="actionName === 'quick-edit'"
+          action-name="quick-edit"
+          :data-model="userStore.getDataModel"
+          :resource="userStore.getResourceName"
+          :translation-string="userStore.getUserTranslationString"
+        >
+          <template v-slot:record-details>
+            <management-card-quick-show
+              action-name="quick-show"
+              :record-details="userStore.getSingleRecord"
+              :resource="userStore.getResourceName"
+              :translation-string="userStore.getUserTranslationString"
+            />
+          </template>
+        </management-card-quick-edit>
+
+        <card-delete
+          v-if="actionName === 'delete'"
+          action-name="delete"
+          :resource="userStore.getResourceName"
+          :translation-string="userStore.getUserTranslationString"
+        >
+          <template v-slot:record-details>
+            <management-card-quick-show
+              action-name="quick-show"
+              :record-details="userStore.getSingleRecord"
+              :resource="userStore.getResourceName"
+              :translation-string="userStore.getUserTranslationString"
+            />
+          </template>
+        </card-delete>
+
+        <card-stats v-if="actionName === 'stats'" action-name="stats" />
+      </template>
+    </dialog-card>
+
+    <page-loading :visible="loadPage" />
   </q-page>
 </template>
 
 <script setup lang="ts">
 // Import vue related utilities
 import { useI18n } from 'vue-i18n';
-import { QTableProps } from 'quasar';
-import { ref } from 'vue';
+import { Ref, ref } from 'vue';
+import { RouteParamsRaw, useRouter } from 'vue-router';
 
 // Import library utilities, interfaces and components
+import { HandleRoute } from 'src/utilities/HandleRoute';
+import { HandleObject } from 'src/utilities/HandleObject';
+import { TDialog } from 'src/interfaces/BaseInterface';
+import { ISingleRecord } from 'src/interfaces/UserInterface';
 import PageTitle from 'src/components/PageTitle.vue';
 import PageDescription from 'src/components/PageDescription.vue';
+import GridTable from 'src/components/GridTable.vue';
+import DialogCard from 'src/components/DialogCard.vue';
+import CardAdvancedFilter from 'src/components/CardAdvancedFilter.vue';
+import CardUpload from 'src/components/CardUpload.vue';
+import CardDownload from 'src/components/CardDownload.vue';
+import CardRestore from 'src/components/CardRestore.vue';
+import ManagementCardQuickShow from 'src/components/ManagementCardQuickShow.vue';
+import ManagementCardQuickEdit from 'src/components/ManagementCardQuickEdit.vue';
+import CardDelete from 'src/components/CardDelete.vue';
+import CardStats from 'src/components/CardStats.vue';
 import PageLoading from 'src/components/PageLoading.vue';
-// import { columns } from 'src/assets/data/columns';
 
 // Import Pinia's related utilities
+import { useUserStore } from 'src/stores/settings/users';
+
+// Instantiate the pinia store
+const userStore = useUserStore();
 
 // Defined the translation variable
 const { t } = useI18n({});
 
-interface AdminPageContainerTableInterface {
-  bordered?: boolean;
-  columns?: QTableProps['columns'];
-  customLoader?: boolean;
-  dense?: boolean;
-  loading?: boolean;
-  rows?: QTableProps['rows'];
-  square?: boolean;
-  separator?: QTableProps['separator'];
-  rowsPerPageOptions?: QTableProps['rowsPerPageOptions'];
-  topLeftSlot?: boolean;
-  topRightSlot?: boolean;
-  topRowSlot?: boolean;
+// Load page
+const loadPage = ref(false);
+
+// Get all records
+userStore.handleIndex('paginate');
+
+// Display the action name & dialog
+const actionName: Ref<TDialog | undefined> = ref(undefined);
+const displayDialog = ref(false);
+const disableActionDialogButton: Ref<{
+  action: TDialog | undefined;
+  disable: boolean;
+}> = ref({ action: undefined, disable: false });
+
+// Handle open dialog
+async function handleOpenDialog(action: TDialog, recordId?: number): Promise<void> {
+  const checkObject = new HandleObject();
+  loadPage.value = true;
+  switch (action) {
+    case 'create':
+      actionName.value = action;
+      loadPage.value = false;
+      handleNavigateToPage(action);
+      break;
+    case 'advanced-filters':
+      actionName.value = action;
+      loadPage.value = false;
+      displayDialog.value = true;
+      if (userStore.getFilterModel.length === 0) {
+        disableActionDialogButton.value = {
+          action: action,
+          disable: true,
+        };
+      }
+      break;
+    case 'upload':
+      actionName.value = action;
+      loadPage.value = false;
+      displayDialog.value = true;
+      if (userStore.getUploadModel.length === 0) {
+        disableActionDialogButton.value = {
+          action: action,
+          disable: true,
+        };
+      }
+      break;
+    case 'download':
+      actionName.value = action;
+      loadPage.value = false;
+      displayDialog.value = true;
+      if (userStore.getDownloadModel.length === 0) {
+        disableActionDialogButton.value = {
+          action: action,
+          disable: true,
+        };
+      }
+      break;
+    case 'stats':
+      actionName.value = action;
+      loadPage.value = false;
+      displayDialog.value = true;
+      break;
+    case 'quick-show':
+      actionName.value = action;
+      userStore.handleShow(recordId).then(() => {
+        loadPage.value = false;
+        displayDialog.value = true;
+      });
+      break;
+    case 'quick-edit':
+      actionName.value = action;
+      if (userStore.getDataModel.length === 0) {
+        disableActionDialogButton.value = {
+          action: action,
+          disable: true,
+        };
+      } else {
+        userStore.handleShow(recordId).then(() => {
+          loadPage.value = false;
+          displayDialog.value = true;
+        });
+      }
+      break;
+    case 'delete':
+      actionName.value = action;
+      userStore.handleShow(recordId).then(() => {
+        loadPage.value = false;
+        displayDialog.value = true;
+      });
+      break;
+    case 'restore':
+      actionName.value = action;
+      userStore.handleIndex('restore').then(() => {
+        if (
+          !checkObject.handleCheckIfObject(userStore.getAllDeletedRecords) &&
+          !checkObject.handleCheckIfArray(userStore.getAllDeletedRecords.results)
+        ) {
+          disableActionDialogButton.value = {
+            action: action,
+            disable: true,
+          };
+        }
+        loadPage.value = false;
+        displayDialog.value = true;
+      });
+      break;
+    default:
+      break;
+  }
 }
 
-withDefaults(defineProps<AdminPageContainerTableInterface>(), {
-  bordered: true,
-  // columns: () => columns,
-  customLoader: true,
-  dense: true,
-  square: true,
-  separator: 'cell',
-});
+// Handle action dialog
+async function handleActionDialog(action: TDialog): Promise<void> {
+  loadPage.value = true;
+  switch (action) {
+    case 'create':
+      userStore.handleCreate().then(() => {
+        displayDialog.value = false;
+        loadPage.value = false;
+      });
+      break;
+    case 'advanced-filters':
+      userStore.handleAdvancedFilter('paginate').then(() => {
+        displayDialog.value = false;
+        loadPage.value = false;
+      });
+      break;
+    case 'upload':
+      userStore.handleUpload().then(() => {
+        displayDialog.value = false;
+        loadPage.value = false;
+      });
+      break;
+    case 'download':
+      userStore.handleDownload().then(() => {
+        displayDialog.value = false;
+        loadPage.value = false;
+      });
+      break;
+    case 'restore':
+      userStore.handleRestore().then(() => {
+        displayDialog.value = false;
+        loadPage.value = false;
+      });
+      break;
+    case 'quick-show':
+      displayDialog.value = false;
+      loadPage.value = false;
+      break;
+    case 'quick-edit':
+      userStore.handleUpdate().then(() => {
+        displayDialog.value = false;
+        loadPage.value = false;
+      });
+      break;
+    case 'delete':
+      userStore.handleDelete().then(() => {
+        displayDialog.value = false;
+        loadPage.value = false;
+      });
+      break;
+    case 'stats':
+      userStore.handleStats().then(() => {
+        displayDialog.value = false;
+        loadPage.value = false;
+      });
+      break;
+    default:
+      break;
+  }
+}
 
-const loadPage = ref(false);
+// Handle search the resource
+const handleSearchTheResource = () => userStore.handleAdvancedFilter('paginate');
+
+// Go to Configure resource
+const router = useRouter();
+
+// Instantiate handle route class
+const handleRoute = new HandleRoute();
+
+// Handle navigate to page
+const handleNavigateToPage = (action: TDialog) => {
+  const selectedRecord: ISingleRecord = userStore.getSingleRecord;
+  const routeParams =
+    selectedRecord &&
+    selectedRecord.hasOwnProperty('results') &&
+    selectedRecord.results.length > 0
+      ? (({ id: selectedRecord.results[0].id } as unknown) as RouteParamsRaw)
+      : undefined;
+
+  handleRoute.handleNavigateToRoute(router, action, routeParams);
+};
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+@import 'src/css/pages/admin/settings.scss';
+</style>

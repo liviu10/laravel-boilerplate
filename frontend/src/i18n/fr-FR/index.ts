@@ -52,6 +52,7 @@ export default {
       options_label: 'Plus d\'options',
       options_label_tooltip: 'Cliquez ici pour plus d\'options (filtre, téléchargement, téléversement et plus encore)',
       configure_resource: 'Configuration des ressources',
+      configure_resource_tooltip: 'Cliquez ici pour configurer la ressource',
       download_record_label: 'Télécharger les enregistrements',
       upload_record_label: 'Téléverser les enregistrements',
       actions_label: 'Actions',
@@ -215,7 +216,7 @@ export default {
           repudiandae, numquam, dicta earum, cupiditate consequuntur?
         `,
       },
-      user: {
+      users: {
         title: 'Utilisateurs',
         page_description: `
           Lorem ipsum dolor sit amet consectetur adipisicing elit.
@@ -226,7 +227,7 @@ export default {
           repudiandae, numquam, dicta earum, cupiditate consequuntur?
         `,
       },
-      roles_and_permission: {
+      roles_and_permissions: {
         title: 'Rôles et permissions',
         page_description: `
           Lorem ipsum dolor sit amet consectetur adipisicing elit.
@@ -259,7 +260,7 @@ export default {
           repudiandae, numquam, dicta earum, cupiditate consequuntur?
         `,
       },
-      notification: {
+      notifications: {
         title: 'Notifications',
         page_description: `
           Lorem ipsum dolor sit amet consectetur adipisicing elit.
@@ -270,7 +271,7 @@ export default {
           repudiandae, numquam, dicta earum, cupiditate consequuntur?
         `,
       },
-      template: {
+      templates: {
         title: 'Modèles',
         page_description: `
           Lorem ipsum dolor sit amet consectetur adipisicing elit.

@@ -36,9 +36,11 @@ export const useUserStore = defineStore(
     const handleApi = new HandleApi();
 
     // State
+    const configurationBaseEndpoint = configurationResourceStore.configurationBaseEndpoint
     const resourceName: Ref<string> = ref('');
     const resourceEndpoint: Ref<string> = ref('');
-    const translationString: Ref<string> = ref('');
+    const userTranslationString: Ref<string> = ref('');
+    const userProfileTranslationString: Ref<string> = ref('');
     const allRecords: Ref<IAllRecords> = ref({} as IAllRecords);
     const columns: Ref<QTableProps['columns']> = ref([] as QTableProps['columns']);
     const dataModel: Ref<IConfigurationInput[]> = ref([] as IConfigurationInput[]);
@@ -52,7 +54,8 @@ export const useUserStore = defineStore(
 
     // Getters
     const getResourceName = computed(() => (resourceName.value = handleRoute.handleResourceNameFromRoute()));
-    const getTranslationString = computed(() => (translationString.value = handleRoute.handleTranslationFromRoute()));
+    const getUserTranslationString = computed(() => (userTranslationString.value = handleRoute.handleTranslationFromRoute()));
+    const getUserProfileTranslationString = computed(() => (userProfileTranslationString.value = handleRoute.handleTranslationFromRoute()));
     const getAllRecords = computed(() => allRecords.value);
     const getColumns = computed(() => columns.value);
     const getDataModel = computed(() => dataModel.value);
@@ -103,7 +106,7 @@ export const useUserStore = defineStore(
 
     async function handleGetConfigurationId(key: string) {
       try {
-        const response = await api.get(`${configurationResourceStore.configurationBaseEndpoint}/resources/get-id`, {
+        const response = await api.get(`${configurationBaseEndpoint}/resources/get-id`, {
           params: {
             key: key ?? undefined,
           },
@@ -117,7 +120,7 @@ export const useUserStore = defineStore(
 
     async function handleGetColumns(configurationResourceId: IConfiguration['results']) {
       try {
-        const response = await api.get(`${configurationResourceStore.configurationBaseEndpoint}/columns`, {
+        const response = await api.get(`${configurationBaseEndpoint}/columns`, {
           params: {
             configuration_resource_id: configurationResourceId[0].id ?? undefined,
           },
@@ -135,7 +138,7 @@ export const useUserStore = defineStore(
 
     async function handleGetInputs(configurationResourceId: IConfiguration['results']) {
       try {
-        const response = await api.get(`${configurationResourceStore.configurationBaseEndpoint}/inputs`, {
+        const response = await api.get(`${configurationBaseEndpoint}/inputs`, {
           params: {
             configuration_resource_id: configurationResourceId[0].id ?? undefined,
           },
@@ -145,10 +148,18 @@ export const useUserStore = defineStore(
             (activeInput: { is_active: boolean; }) => activeInput.is_active
           ) as IConfigurationInput[]
           dataModel.value = activeInputs.filter(
-            (model) => model.is_model && model.key !== 'upload' && model.key !== 'date_to' && model.key !== 'date_from'
+            (model) => model.is_model &&
+              model.key !== 'search_resource' &&
+              model.key !== 'upload' &&
+              model.key !== 'date_to' &&
+              model.key !== 'date_from'
           ) as IConfigurationInput[];
           filterModel.value = activeInputs.filter(
-            (filter) => filter.is_filter && filter.key !== 'upload' && filter.key !== 'date_to' && filter.key !== 'date_from'
+            (filter) => filter.is_filter &&
+              filter.key !== 'search_resource' &&
+              filter.key !== 'upload' &&
+              filter.key !== 'date_to' &&
+              filter.key !== 'date_from'
           ) as IConfigurationInput[];
           uploadModel.value = activeInputs.filter(
             (model) => model.key === 'upload'
@@ -169,7 +180,7 @@ export const useUserStore = defineStore(
     }
 
     async function handleAdvancedFilter(type?: TResourceType) {
-      const payload = handleApi.createFilterPayload(filterModel.value);
+      const payload = handleApi.createFilterPayload(filterModel.value, searchResourceModel.value);
       try {
         resourceStore.handleApiEndpoint(window.location.pathname).then(async () => {
           const apiEndpoint = resourceStore.getApiEndpoint
@@ -290,10 +301,19 @@ export const useUserStore = defineStore(
       console.log('-> handleStats');
     }
 
+    async function handleReset() {
+      console.log('-> handleReset');
+    }
+
     return {
+      // State
+      configurationBaseEndpoint,
+      resourceEndpoint,
+
       // Getters
       getResourceName,
-      getTranslationString,
+      getUserTranslationString,
+      getUserProfileTranslationString,
       getAllRecords,
       getColumns,
       getDataModel,
@@ -308,6 +328,8 @@ export const useUserStore = defineStore(
       // Actions
       handleIndex,
       handleGetConfigurationId,
+      handleGetColumns,
+      handleGetInputs,
       handleAdvancedFilter,
       handleUpload,
       handleDownload,
@@ -317,6 +339,7 @@ export const useUserStore = defineStore(
       handleUpdate,
       handleDelete,
       handleStats,
+      handleReset,
     };
   }
 );

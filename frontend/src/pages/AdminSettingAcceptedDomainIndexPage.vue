@@ -1,8 +1,6 @@
 <template>
   <q-page class="admin admin--page">
-    <page-title
-      :page-title="t(`${acceptedDomainStore.getTranslationString}.title`)"
-    />
+    <page-title :page-title="t(`${acceptedDomainStore.getTranslationString}.title`)" />
 
     <page-description
       :page-description="
@@ -240,9 +238,7 @@ async function handleOpenDialog(action: TDialog, recordId?: number): Promise<voi
       actionName.value = action;
       acceptedDomainStore.handleIndex('restore').then(() => {
         if (
-          !checkObject.handleCheckIfObject(
-            acceptedDomainStore.getAllDeletedRecords
-          ) &&
+          !checkObject.handleCheckIfObject(acceptedDomainStore.getAllDeletedRecords) &&
           !checkObject.handleCheckIfArray(
             acceptedDomainStore.getAllDeletedRecords.results
           )
@@ -323,7 +319,8 @@ async function handleActionDialog(action: TDialog): Promise<void> {
 }
 
 // Handle search the resource
-const handleSearchTheResource = () => acceptedDomainStore.handleAdvancedFilter('paginate')
+const handleSearchTheResource = () =>
+  acceptedDomainStore.handleAdvancedFilter('paginate');
 
 // Go to Configure resource
 const router = useRouter();
@@ -333,14 +330,15 @@ const handleRoute = new HandleRoute();
 
 // Handle navigate to page
 const handleNavigateToPage = (action: TDialog) => {
-  const selectedRecord: ISingleRecord = acceptedDomainStore.getSingleRecord
-  const routeParams = selectedRecord &&
+  const selectedRecord: ISingleRecord = acceptedDomainStore.getSingleRecord;
+  const routeParams =
+    selectedRecord &&
     selectedRecord.hasOwnProperty('results') &&
     selectedRecord.results.length > 0
-      ? ({ id: selectedRecord.results[0].id } as unknown) as RouteParamsRaw
-      : undefined
+      ? (({ id: selectedRecord.results[0].id } as unknown) as RouteParamsRaw)
+      : undefined;
 
-  handleRoute.handleNavigateToRoute(router, action, routeParams)
+  handleRoute.handleNavigateToRoute(router, action, routeParams);
 };
 </script>
 

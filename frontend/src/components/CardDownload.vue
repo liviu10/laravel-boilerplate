@@ -15,7 +15,7 @@
     </div>
 
     <div v-else>
-      <card-go-to-configure-resource :resource="resource" />
+      <card-go-to-configure-resource non-existing-model="download" :resource="resource" />
     </div>
   </div>
 </template>

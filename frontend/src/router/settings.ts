@@ -52,6 +52,7 @@ const routes: RouteRecordRaw[] = [
             path: 'create',
             name: 'AdminSettingConfigurationResourceCreatePage',
             component: () => import('pages/AdminSettingConfigurationResourceCreatePage.vue'),
+            props: route => ({ key: route.query.key }),
           },
           {
             path: 'show/:id',

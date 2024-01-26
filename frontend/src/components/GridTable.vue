@@ -38,7 +38,11 @@
 
     <!-- Top right slot -->
     <template v-slot:top-right v-if="checkObject.handleCheckIfArray(searchResource)">
-      <div class="admin-section__grid-table-top-right" v-for="input in searchResource" :key="input.id">
+      <div
+        class="admin-section__grid-table-top-right"
+        v-for="input in searchResource"
+        :key="input.id"
+      >
         <q-form>
           <q-input
             dense
@@ -72,7 +76,10 @@
 
     <!-- No data slot -->
     <template v-slot:no-data>
-      <card-go-to-configure-resource :non-existing-model="nonExistingModel" :resource="resource" />
+      <card-go-to-configure-resource
+        :non-existing-model="nonExistingModel"
+        :resource="resource"
+      />
     </template>
   </q-table>
 </template>
@@ -130,7 +137,7 @@ const props = withDefaults(defineProps<IGridTable>(), {
 });
 
 // Navigate to route
-const navigateToRoute = new HandleRoute()
+const navigateToRoute = new HandleRoute();
 
 // Go to Configure resource
 const router = useRouter();
@@ -144,37 +151,38 @@ const moreOptions = [
     id: 1,
     clickEvent: () => openDialog(actionMethods[7]),
     icon: 'filter_alt',
-    label: 'admin.generic.advanced_filters_record_label'
+    label: 'admin.generic.advanced_filters_record_label',
   },
   {
     id: 2,
     clickEvent: () => openDialog(actionMethods[8]),
     icon: 'upload',
-    label: 'admin.generic.upload_record_label'
+    label: 'admin.generic.upload_record_label',
   },
   {
     id: 3,
     clickEvent: () => openDialog(actionMethods[9]),
     icon: 'download',
-    label: 'admin.generic.download_record_label'
+    label: 'admin.generic.download_record_label',
   },
   {
     id: 4,
     clickEvent: () => openDialog(actionMethods[11]),
     icon: 'restore_from_trash',
-    label: 'admin.generic.restore_record_label'
+    label: 'admin.generic.restore_record_label',
   },
   {
     id: 5,
-    clickEvent: () => navigateToRoute.handleNavigateToRoute(
-      router,
-      'AdminSettingConfigurationResourcePage',
-      undefined,
-      { resource: props.resource } as unknown as LocationQueryRaw
-    ),
+    clickEvent: () =>
+      navigateToRoute.handleNavigateToRoute(
+        router,
+        'AdminSettingConfigurationResourcePage',
+        undefined,
+        ({ resource: props.resource } as unknown) as LocationQueryRaw
+      ),
     icon: 'handyman',
-    label: 'admin.generic.configure_resource'
-  }
+    label: 'admin.generic.configure_resource',
+  },
 ];
 
 // More actions
@@ -206,7 +214,7 @@ const moreActions = computed(() => {
         label: 'admin.generic.content_stats',
       },
     ];
-  }
+  };
 });
 
 // Action dialog
@@ -228,12 +236,15 @@ const checkObject = new HandleObject();
 // Search the resource event
 const searchTheResource = (): void => {
   return emit('handleSearchTheResource');
-}
+};
 
-let nonExistingModel = ref('')
+let nonExistingModel = ref('');
 
 // Check the data source
-const checkDataSource = (columns: QTableProps['columns'], rows: QTableProps['rows']): QTableProps['rows'] | [] => {
+const checkDataSource = (
+  columns: QTableProps['columns'],
+  rows: QTableProps['rows']
+): QTableProps['rows'] | [] => {
   if (!checkObject.handleCheckIfArray(columns) && !checkObject.handleCheckIfArray(rows)) {
     nonExistingModel.value = 'columns and rows';
     return [];
@@ -246,7 +257,7 @@ const checkDataSource = (columns: QTableProps['columns'], rows: QTableProps['row
   } else {
     return rows;
   }
-}
+};
 
 // Emitting events
 const emit = defineEmits<{

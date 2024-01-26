@@ -36,6 +36,7 @@ export const useRoleStore = defineStore(
     const handleApi = new HandleApi();
 
     // State
+    const configurationBaseEndpoint = configurationResourceStore.configurationBaseEndpoint
     const resourceName: Ref<string> = ref('');
     const resourceEndpoint: Ref<string> = ref('');
     const translationString: Ref<string> = ref('');
@@ -103,7 +104,7 @@ export const useRoleStore = defineStore(
 
     async function handleGetConfigurationId(key: string) {
       try {
-        const response = await api.get(`${configurationResourceStore.configurationBaseEndpoint}/resources/get-id`, {
+        const response = await api.get(`${configurationBaseEndpoint}/resources/get-id`, {
           params: {
             key: key ?? undefined,
           },
@@ -117,7 +118,7 @@ export const useRoleStore = defineStore(
 
     async function handleGetColumns(configurationResourceId: IConfiguration['results']) {
       try {
-        const response = await api.get(`${configurationResourceStore.configurationBaseEndpoint}/columns`, {
+        const response = await api.get(`${configurationBaseEndpoint}/columns`, {
           params: {
             configuration_resource_id: configurationResourceId[0].id ?? undefined,
           },
@@ -135,7 +136,7 @@ export const useRoleStore = defineStore(
 
     async function handleGetInputs(configurationResourceId: IConfiguration['results']) {
       try {
-        const response = await api.get(`${configurationResourceStore.configurationBaseEndpoint}/inputs`, {
+        const response = await api.get(`${configurationBaseEndpoint}/inputs`, {
           params: {
             configuration_resource_id: configurationResourceId[0].id ?? undefined,
           },
@@ -145,10 +146,18 @@ export const useRoleStore = defineStore(
             (activeInput: { is_active: boolean; }) => activeInput.is_active
           ) as IConfigurationInput[]
           dataModel.value = activeInputs.filter(
-            (model) => model.is_model && model.key !== 'upload' && model.key !== 'date_to' && model.key !== 'date_from'
+            (model) => model.is_model &&
+              model.key !== 'search_resource' &&
+              model.key !== 'upload' &&
+              model.key !== 'date_to' &&
+              model.key !== 'date_from'
           ) as IConfigurationInput[];
           filterModel.value = activeInputs.filter(
-            (filter) => filter.is_filter && filter.key !== 'upload' && filter.key !== 'date_to' && filter.key !== 'date_from'
+            (filter) => filter.is_filter &&
+              filter.key !== 'search_resource' &&
+              filter.key !== 'upload' &&
+              filter.key !== 'date_to' &&
+              filter.key !== 'date_from'
           ) as IConfigurationInput[];
           uploadModel.value = activeInputs.filter(
             (model) => model.key === 'upload'
@@ -169,7 +178,7 @@ export const useRoleStore = defineStore(
     }
 
     async function handleAdvancedFilter(type?: TResourceType) {
-      const payload = handleApi.createFilterPayload(filterModel.value);
+      const payload = handleApi.createFilterPayload(filterModel.value, searchResourceModel.value);
       try {
         resourceStore.handleApiEndpoint(window.location.pathname).then(async () => {
           const apiEndpoint = resourceStore.getApiEndpoint
@@ -290,7 +299,15 @@ export const useRoleStore = defineStore(
       console.log('-> handleStats');
     }
 
+    async function handleReset() {
+      console.log('-> handleReset');
+    }
+
     return {
+      // State
+      configurationBaseEndpoint,
+      resourceEndpoint,
+
       // Getters
       getResourceName,
       getTranslationString,
@@ -308,6 +325,8 @@ export const useRoleStore = defineStore(
       // Actions
       handleIndex,
       handleGetConfigurationId,
+      handleGetColumns,
+      handleGetInputs,
       handleAdvancedFilter,
       handleUpload,
       handleDownload,
@@ -317,6 +336,7 @@ export const useRoleStore = defineStore(
       handleUpdate,
       handleDelete,
       handleStats,
+      handleReset,
     };
   }
 );

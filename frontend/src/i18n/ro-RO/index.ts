@@ -52,6 +52,7 @@ export default {
       options_label: 'Mai multe opțiuni',
       options_label_tooltip: 'Faceți clic aici pentru mai multe opțiuni (filtrare, încărcare, descărcare și altele)',
       configure_resource: 'Configurează resursa',
+      configure_resource_tooltip: 'Faceti click aici pentru a configura resursa',
       download_record_label: 'Descarcă înregistrările',
       upload_record_label: 'Încarcă înregistrările',
       actions_label: 'Acțiuni',
@@ -215,7 +216,7 @@ export default {
           repudiandae, numquam, dicta earum, cupiditate consequuntur?
         `,
       },
-      user: {
+      users: {
         title: 'Utilizatori',
         page_description: `
           Lorem ipsum dolor sit amet consectetur adipisicing elit.
@@ -226,7 +227,7 @@ export default {
           repudiandae, numquam, dicta earum, cupiditate consequuntur?
         `,
       },
-      roles_and_permission: {
+      roles_and_permissions: {
         title: 'Roluri și permisiuni',
         page_description: `
           Lorem ipsum dolor sit amet consectetur adipisicing elit.
@@ -259,7 +260,7 @@ export default {
           repudiandae, numquam, dicta earum, cupiditate consequuntur?
         `,
       },
-      notification: {
+      notifications: {
         title: 'Notificări',
         page_description: `
           Lorem ipsum dolor sit amet consectetur adipisicing elit.
@@ -270,7 +271,7 @@ export default {
           repudiandae, numquam, dicta earum, cupiditate consequuntur?
         `,
       },
-      template: {
+      templates: {
         title: 'Șabloane',
         page_description: `
           Lorem ipsum dolor sit amet consectetur adipisicing elit.
