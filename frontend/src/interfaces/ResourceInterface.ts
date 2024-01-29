@@ -1,22 +1,15 @@
-import { IRootObject, IBaseTimestamps, IBaseUser } from './BaseInterface'
+import {
+  IRootObject,
+  IBasePagination,
+  IBaseUser,
+  IBaseTimestamps
+} from './BaseInterface'
 
 type TypeOptions = 'Menu' | 'API'
 
 interface IAllRecords extends IRootObject {
-  results: {
-    id: number
-    type: TypeOptions
-    path: string
-    name: string | null
-    component: string | null
-    layout: string | null
-    title: string | undefined
-    caption: string | null
-    icon: string | undefined
-    is_active: boolean
-    requires_auth: boolean
-    position: number | null
-    resource_children: {
+  results: (IBasePagination & {
+    data: {
       id: number
       type: TypeOptions
       path: string
@@ -29,8 +22,22 @@ interface IAllRecords extends IRootObject {
       is_active: boolean
       requires_auth: boolean
       position: number | null
+      resource_children: {
+        id: number
+        type: TypeOptions
+        path: string
+        name: string | null
+        component: string | null
+        layout: string | null
+        title: string | undefined
+        caption: string | null
+        icon: string | undefined
+        is_active: boolean
+        requires_auth: boolean
+        position: number | null
+      }[]
     }[]
-  }[]
+  })
 }
 
 interface IAllRecordsUnpaginated extends IRootObject {

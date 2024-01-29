@@ -13,6 +13,7 @@
     <div class="admin-section admin-section--container">
       <grid-table
         :columns="configurationResourceStore.getColumns"
+        :is-stats-active="false"
         :search-resource="configurationResourceStore.getSearchResourceModel"
         :resource="configurationResourceStore.getResourceName"
         :rows="configurationResourceStore.getAllRecords.results?.data || []"
@@ -265,12 +266,6 @@ async function handleOpenDialog(action: TDialog, recordId?: number): Promise<voi
 async function handleActionDialog(action: TDialog): Promise<void> {
   loadPage.value = true;
   switch (action) {
-    case 'create':
-      configurationResourceStore.handleCreate().then(() => {
-        displayDialog.value = false;
-        loadPage.value = false;
-      });
-      break;
     case 'advanced-filters':
       configurationResourceStore.handleAdvancedFilter('paginate').then(() => {
         displayDialog.value = false;

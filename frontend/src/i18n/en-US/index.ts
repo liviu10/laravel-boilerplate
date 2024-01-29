@@ -73,7 +73,11 @@ export default {
       `,
       input: {
         search_the_resource: 'Search the resource',
-      }
+      },
+      update_profile_label: 'Update profile',
+      update_profile_label_tooltip: 'Click here to update your profile',
+      deactivate_account: 'Deactivate account',
+      deactivate_account_tooltip: 'Click here to deactivate your account',
     },
     home: {
       title: 'Dashboard',
@@ -102,57 +106,52 @@ export default {
         create_title: 'Create content',
         edit_title: 'Edit content',
         page_description: `
-          Lorem ipsum dolor sit amet consectetur adipisicing elit.
-          Iste rem est voluptatem obcaecati maiores, sit quibusdam ad.
-          Qui consequatur quidem itaque et ullam, non velit unde quo
-          inventore adipisci tempora, voluptas sunt dolore vitae iure,
-          quos eligendi. Corporis id adipisci aliquam cum officia impedit
-          repudiandae, numquam, dicta earum, cupiditate consequuntur?
+          This resource powers an admin page dedicated to managing contents.
+          It plays a crucial role in configuring application contents (pages and blog articles).
+          The component features essential functionalities like creating, editing,
+          deleting, and restoring records, along with advanced filtering options
+          and statistical insights.
         `,
         data_model: {},
       },
       tags: {
         title: 'Tags',
         page_description: `
-          Lorem ipsum dolor sit amet consectetur adipisicing elit.
-          Iste rem est voluptatem obcaecati maiores, sit quibusdam ad.
-          Qui consequatur quidem itaque et ullam, non velit unde quo
-          inventore adipisci tempora, voluptas sunt dolore vitae iure,
-          quos eligendi. Corporis id adipisci aliquam cum officia impedit
-          repudiandae, numquam, dicta earum, cupiditate consequuntur?
+          This resource powers an admin page dedicated to managing content tags.
+          It plays a crucial role in configuring application content tags.
+          The component features essential functionalities like creating, editing,
+          deleting, and restoring records, along with advanced filtering options
+          and statistical insights.
         `,
       },
       media: {
         title: 'Media',
         page_description: `
-          Lorem ipsum dolor sit amet consectetur adipisicing elit.
-          Iste rem est voluptatem obcaecati maiores, sit quibusdam ad.
-          Qui consequatur quidem itaque et ullam, non velit unde quo
-          inventore adipisci tempora, voluptas sunt dolore vitae iure,
-          quos eligendi. Corporis id adipisci aliquam cum officia impedit
-          repudiandae, numquam, dicta earum, cupiditate consequuntur?
+          This resource powers an admin page dedicated to managing content media.
+          It plays a crucial role in configuring application content media.
+          The component features essential functionalities like creating, editing,
+          deleting, and restoring records, along with advanced filtering options
+          and statistical insights.
         `,
       },
       comments: {
         title: 'Comment',
         page_description: `
-          Lorem ipsum dolor sit amet consectetur adipisicing elit.
-          Iste rem est voluptatem obcaecati maiores, sit quibusdam ad.
-          Qui consequatur quidem itaque et ullam, non velit unde quo
-          inventore adipisci tempora, voluptas sunt dolore vitae iure,
-          quos eligendi. Corporis id adipisci aliquam cum officia impedit
-          repudiandae, numquam, dicta earum, cupiditate consequuntur?
+          This resource powers an admin page dedicated to managing blog comments.
+          It plays a crucial role in configuring application blog comments.
+          The component features essential functionalities like creating, editing,
+          deleting, and restoring records, along with advanced filtering options
+          and statistical insights.
         `,
       },
       appreciations: {
         title: 'Appreciations',
         page_description: `
-          Lorem ipsum dolor sit amet consectetur adipisicing elit.
-          Iste rem est voluptatem obcaecati maiores, sit quibusdam ad.
-          Qui consequatur quidem itaque et ullam, non velit unde quo
-          inventore adipisci tempora, voluptas sunt dolore vitae iure,
-          quos eligendi. Corporis id adipisci aliquam cum officia impedit
-          repudiandae, numquam, dicta earum, cupiditate consequuntur?
+          This resource powers an admin page dedicated to managing blog appreciations.
+          It plays a crucial role in configuring application blog appreciations (like, dislikes and reviews).
+          The component features essential functionalities like creating, editing,
+          deleting, and restoring records, along with advanced filtering options
+          and statistical insights.
         `,
       }
     },
@@ -205,81 +204,63 @@ export default {
     },
     settings: {
       title: 'Settings',
-      user_profile: {
-        title: 'User profile',
-        page_description: `
-          Lorem ipsum dolor sit amet consectetur adipisicing elit.
-          Iste rem est voluptatem obcaecati maiores, sit quibusdam ad.
-          Qui consequatur quidem itaque et ullam, non velit unde quo
-          inventore adipisci tempora, voluptas sunt dolore vitae iure,
-          quos eligendi. Corporis id adipisci aliquam cum officia impedit
-          repudiandae, numquam, dicta earum, cupiditate consequuntur?
-        `,
-      },
       users: {
         title: 'Users',
         page_description: `
-          Lorem ipsum dolor sit amet consectetur adipisicing elit.
-          Iste rem est voluptatem obcaecati maiores, sit quibusdam ad.
-          Qui consequatur quidem itaque et ullam, non velit unde quo
-          inventore adipisci tempora, voluptas sunt dolore vitae iure,
-          quos eligendi. Corporis id adipisci aliquam cum officia impedit
-          repudiandae, numquam, dicta earum, cupiditate consequuntur?
+          This resource powers an admin page dedicated to managing users.
+          It plays a crucial role in registering new users, assign permissions to users and many more.
+          The component features essential functionalities like creating, editing,
+          deleting, and restoring records, along with advanced filtering options
+          and statistical insights.
         `,
+        profile: {
+          title: 'User profile',
+          page_description: `
+            This resource powers an admin page dedicated to managing user profile.
+            It plays a crucial role in managing user profile (name, contact details, nickname and many more).
+          `,
+        }
       },
       roles_and_permissions: {
         title: 'Roles and permissions',
         page_description: `
-          Lorem ipsum dolor sit amet consectetur adipisicing elit.
-          Iste rem est voluptatem obcaecati maiores, sit quibusdam ad.
-          Qui consequatur quidem itaque et ullam, non velit unde quo
-          inventore adipisci tempora, voluptas sunt dolore vitae iure,
-          quos eligendi. Corporis id adipisci aliquam cum officia impedit
-          repudiandae, numquam, dicta earum, cupiditate consequuntur?
+          This resource powers an admin page dedicated to managing user roles and permissions.
+          It plays a crucial role in configuring user roles and permissions in accessing different resources.
+          The component features essential functionalities like creating, editing,
+          deleting, and restoring records, along with advanced filtering options
+          and statistical insights.
         `,
       },
       general: {
         title: 'General settings',
         page_description: `
-          Lorem ipsum dolor sit amet consectetur adipisicing elit.
-          Iste rem est voluptatem obcaecati maiores, sit quibusdam ad.
-          Qui consequatur quidem itaque et ullam, non velit unde quo
-          inventore adipisci tempora, voluptas sunt dolore vitae iure,
-          quos eligendi. Corporis id adipisci aliquam cum officia impedit
-          repudiandae, numquam, dicta earum, cupiditate consequuntur?
+          This resource powers an admin page dedicated to managing general settings.
+          It plays a crucial role in configuring site title and tagline, set default language,
+          set timezone, footer credit, number of blog posts, date format and many more.
+          The component features essential functionalities like creating, editing,
+          deleting, and restoring records, along with advanced filtering options
+          and statistical insights.
         `,
       },
       accepted_domains: {
         title: 'Accepted domains',
         page_description: `
-          Lorem ipsum dolor sit amet consectetur adipisicing elit.
-          Iste rem est voluptatem obcaecati maiores, sit quibusdam ad.
-          Qui consequatur quidem itaque et ullam, non velit unde quo
-          inventore adipisci tempora, voluptas sunt dolore vitae iure,
-          quos eligendi. Corporis id adipisci aliquam cum officia impedit
-          repudiandae, numquam, dicta earum, cupiditate consequuntur?
+          This resource powers an admin page dedicated to managing accepted domains.
+          It plays a crucial role in ensuring the validity of email addresses before
+          users subscribe, comment, or submit messages through the contact form.
+          The component features essential functionalities like creating, editing,
+          deleting, and restoring records, along with advanced filtering options
+          and statistical insights.
         `,
       },
       notifications: {
-        title: 'Notifications',
+        title: 'Notifications and Templates',
         page_description: `
-          Lorem ipsum dolor sit amet consectetur adipisicing elit.
-          Iste rem est voluptatem obcaecati maiores, sit quibusdam ad.
-          Qui consequatur quidem itaque et ullam, non velit unde quo
-          inventore adipisci tempora, voluptas sunt dolore vitae iure,
-          quos eligendi. Corporis id adipisci aliquam cum officia impedit
-          repudiandae, numquam, dicta earum, cupiditate consequuntur?
-        `,
-      },
-      templates: {
-        title: 'Templates',
-        page_description: `
-          Lorem ipsum dolor sit amet consectetur adipisicing elit.
-          Iste rem est voluptatem obcaecati maiores, sit quibusdam ad.
-          Qui consequatur quidem itaque et ullam, non velit unde quo
-          inventore adipisci tempora, voluptas sunt dolore vitae iure,
-          quos eligendi. Corporis id adipisci aliquam cum officia impedit
-          repudiandae, numquam, dicta earum, cupiditate consequuntur?
+          This resource powers an admin page dedicated to managing notifications and templates.
+          It plays a crucial role in configuring notifications (email and/or SMS) for various events.
+          The component features essential functionalities like creating, editing,
+          deleting, and restoring records, along with advanced filtering options
+          and statistical insights.
         `,
       },
       configuration: {
@@ -289,15 +270,24 @@ export default {
           create_title: 'Create configuration resources',
           edit_title: 'Edit configuration resources',
           page_description: `
-            Lorem ipsum dolor sit amet consectetur adipisicing elit.
-            Iste rem est voluptatem obcaecati maiores, sit quibusdam ad.
-            Qui consequatur quidem itaque et ullam, non velit unde quo
-            inventore adipisci tempora, voluptas sunt dolore vitae iure,
-            quos eligendi. Corporis id adipisci aliquam cum officia impedit
-            repudiandae, numquam, dicta earum, cupiditate consequuntur?
+            This resource powers an admin page dedicated to managing resource configuration.
+            It plays a crucial role in configuring columns, inputs for creating, filtering and
+            updating. The component features essential functionalities like creating, editing,
+            deleting, and restoring records, along with advanced filtering options
+            and statistical insights.
           `,
         },
-      }
+      },
+      resources: {
+        title: 'Resources',
+        page_description: `
+          This resource powers an admin page dedicated to managing menu and APIs.
+          It plays a crucial role in configuring application menu and rest APIs.
+          The component features essential functionalities like creating, editing,
+          deleting, and restoring records, along with advanced filtering options
+          and statistical insights.
+        `,
+      },
     }
   }
 };

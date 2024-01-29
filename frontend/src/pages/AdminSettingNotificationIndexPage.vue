@@ -9,6 +9,7 @@
     <div class="admin-section admin-section--container">
       <grid-table
         :columns="notificationStore.getColumns"
+        :is-stats-active="false"
         :search-resource="notificationStore.getSearchResourceModel"
         :resource="notificationStore.getResourceName"
         :rows="notificationStore.getAllRecords.results?.data || []"
@@ -27,6 +28,14 @@
       @handle-navigate-to-page="handleNavigateToPage"
     >
       <template v-slot:dialog-details>
+        <card-create
+          v-if="actionName === 'create'"
+          action-name="create"
+          :data-model="notificationStore.getDataModel"
+          :resource="notificationStore.getResourceName"
+          :translation-string="notificationStore.getTranslationString"
+        />
+
         <card-advanced-filter
           v-if="actionName === 'advanced-filters'"
           action-name="advanced-filters"
@@ -123,6 +132,7 @@ import PageTitle from 'src/components/PageTitle.vue';
 import PageDescription from 'src/components/PageDescription.vue';
 import GridTable from 'src/components/GridTable.vue';
 import DialogCard from 'src/components/DialogCard.vue';
+import CardCreate from 'src/components/CardCreate.vue';
 import CardAdvancedFilter from 'src/components/CardAdvancedFilter.vue';
 import CardUpload from 'src/components/CardUpload.vue';
 import CardDownload from 'src/components/CardDownload.vue';
@@ -164,7 +174,13 @@ async function handleOpenDialog(action: TDialog, recordId?: number): Promise<voi
     case 'create':
       actionName.value = action;
       loadPage.value = false;
-      handleNavigateToPage(action);
+      displayDialog.value = true;
+      if (notificationStore.getFilterModel.length === 0) {
+        disableActionDialogButton.value = {
+          action: action,
+          disable: true,
+        };
+      }
       break;
     case 'advanced-filters':
       actionName.value = action;

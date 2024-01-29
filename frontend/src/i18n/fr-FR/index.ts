@@ -73,7 +73,11 @@ export default {
       `,
       input: {
         search_the_resource: 'Rechercher la ressource',
-      }
+      },
+      update_profile_label: 'Mettre à jour le profil',
+      update_profile_label_tooltip: 'Cliquez ici pour mettre à jour votre profil',
+      deactivate_account: 'Désactiver le compte',
+      deactivate_account_tooltip: 'Cliquez ici pour désactiver votre compte',
     },
     home: {
       title: 'Dashboard',
@@ -102,57 +106,52 @@ export default {
         create_title: 'Créer du contenu',
         edit_title: 'Modifier le contenu',
         page_description: `
-          Lorem ipsum dolor sit amet consectetur adipisicing elit.
-          Iste rem est voluptatem obcaecati maiores, sit quibusdam ad.
-          Qui consequatur quidem itaque et ullam, non velit unde quo
-          inventore adipisci tempora, voluptas sunt dolore vitae iure,
-          quos eligendi. Corporis id adipisci aliquam cum officia impedit
-          repudiandae, numquam, dicta earum, cupiditate consequuntur?
+          Cette ressource alimente une page d'administration dédiée à la gestion des contenus.
+          Il joue un rôle crucial dans la configuration des contenus de l'application (pages et articles de blog).
+          Le composant présente des fonctionnalités essentielles telles que la création, l'édition,
+          suppression et restauration d'enregistrements, ainsi que des options de filtrage avancées
+          et des informations statistiques.
         `,
         data_model: {},
       },
       tags: {
         title: 'Étiquettes',
         page_description: `
-          Lorem ipsum dolor sit amet consectetur adipisicing elit.
-          Iste rem est voluptatem obcaecati maiores, sit quibusdam ad.
-          Qui consequatur quidem itaque et ullam, non velit unde quo
-          inventore adipisci tempora, voluptas sunt dolore vitae iure,
-          quos eligendi. Corporis id adipisci aliquam cum officia impedit
-          repudiandae, numquam, dicta earum, cupiditate consequuntur?
+          Cette ressource alimente une page d'administration dédiée à la gestion des balises de contenu.
+          Il joue un rôle crucial dans la configuration des balises de contenu de l'application.
+          Le composant présente des fonctionnalités essentielles telles que la création, l'édition,
+          suppression et restauration d'enregistrements, ainsi que des options de filtrage avancées
+          et des informations statistiques.
         `,
       },
       media: {
         title: 'Médias',
         page_description: `
-          Lorem ipsum dolor sit amet consectetur adipisicing elit.
-          Iste rem est voluptatem obcaecati maiores, sit quibusdam ad.
-          Qui consequatur quidem itaque et ullam, non velit unde quo
-          inventore adipisci tempora, voluptas sunt dolore vitae iure,
-          quos eligendi. Corporis id adipisci aliquam cum officia impedit
-          repudiandae, numquam, dicta earum, cupiditate consequuntur?
+          Cette ressource alimente une page d'administration dédiée à la gestion des médias de contenu.
+          Il joue un rôle crucial dans la configuration des supports de contenu de l'application.
+          Le composant présente des fonctionnalités essentielles telles que la création, l'édition,
+          suppression et restauration d'enregistrements, ainsi que des options de filtrage avancées
+          et des informations statistiques.
         `,
       },
       comments: {
         title: 'Commentaires',
         page_description: `
-          Lorem ipsum dolor sit amet consectetur adipisicing elit.
-          Iste rem est voluptatem obcaecati maiores, sit quibusdam ad.
-          Qui consequatur quidem itaque et ullam, non velit unde quo
-          inventore adipisci tempora, voluptas sunt dolore vitae iure,
-          quos eligendi. Corporis id adipisci aliquam cum officia impedit
-          repudiandae, numquam, dicta earum, cupiditate consequuntur?
+          Cette ressource alimente une page d'administration dédiée à la gestion des commentaires de blog.
+          Il joue un rôle crucial dans la configuration des commentaires du blog de l'application.
+          Le composant présente des fonctionnalités essentielles telles que la création, l'édition,
+          suppression et restauration d'enregistrements, ainsi que des options de filtrage avancées
+          et des informations statistiques.
         `,
       },
       appreciations: {
         title: 'Appréciations',
         page_description: `
-          Lorem ipsum dolor sit amet consectetur adipisicing elit.
-          Iste rem est voluptatem obcaecati maiores, sit quibusdam ad.
-          Qui consequatur quidem itaque et ullam, non velit unde quo
-          inventore adipisci tempora, voluptas sunt dolore vitae iure,
-          quos eligendi. Corporis id adipisci aliquam cum officia impedit
-          repudiandae, numquam, dicta earum, cupiditate consequuntur?
+          Cette ressource alimente une page d'administration dédiée à la gestion des appréciations des blogs.
+          Il joue un rôle crucial dans la configuration des appréciations du blog de l'application (j'aime, je n'aime pas et les avis).
+          Le composant présente des fonctionnalités essentielles telles que la création, l'édition,
+          suppression et restauration d'enregistrements, ainsi que des options de filtrage avancées
+          et des informations statistiques.
         `,
       }
     },
@@ -205,81 +204,63 @@ export default {
     },
     settings: {
       title: 'Paramètres',
-      user_profile: {
-        title: 'Profil utilisateur',
-        page_description: `
-          Lorem ipsum dolor sit amet consectetur adipisicing elit.
-          Iste rem est voluptatem obcaecati maiores, sit quibusdam ad.
-          Qui consequatur quidem itaque et ullam, non velit unde quo
-          inventore adipisci tempora, voluptas sunt dolore vitae iure,
-          quos eligendi. Corporis id adipisci aliquam cum officia impedit
-          repudiandae, numquam, dicta earum, cupiditate consequuntur?
-        `,
-      },
       users: {
         title: 'Utilisateurs',
         page_description: `
-          Lorem ipsum dolor sit amet consectetur adipisicing elit.
-          Iste rem est voluptatem obcaecati maiores, sit quibusdam ad.
-          Qui consequatur quidem itaque et ullam, non velit unde quo
-          inventore adipisci tempora, voluptas sunt dolore vitae iure,
-          quos eligendi. Corporis id adipisci aliquam cum officia impedit
-          repudiandae, numquam, dicta earum, cupiditate consequuntur?
+          Cette ressource alimente une page d'administration dédiée à la gestion des utilisateurs.
+          Il joue un rôle crucial dans l'enregistrement de nouveaux utilisateurs, l'attribution d'autorisations aux utilisateurs et bien d'autres encore.
+          Le composant présente des fonctionnalités essentielles telles que la création, l'édition,
+          suppression et restauration des enregistrements de domaine, ainsi que des options de filtrage avancées
+          et des informations statistiques.
         `,
+        profile: {
+          title: 'Profil utilisateur',
+          page_description: `
+            Cette ressource alimente une page d'administration dédiée à la gestion du profil utilisateur.
+            Il joue un rôle crucial dans la gestion du profil utilisateur (nom, coordonnées, pseudo et bien d'autres).
+          `,
+        },
       },
       roles_and_permissions: {
         title: 'Rôles et permissions',
         page_description: `
-          Lorem ipsum dolor sit amet consectetur adipisicing elit.
-          Iste rem est voluptatem obcaecati maiores, sit quibusdam ad.
-          Qui consequatur quidem itaque et ullam, non velit unde quo
-          inventore adipisci tempora, voluptas sunt dolore vitae iure,
-          quos eligendi. Corporis id adipisci aliquam cum officia impedit
-          repudiandae, numquam, dicta earum, cupiditate consequuntur?
+          Cette ressource alimente une page d'administration dédiée à la gestion des rôles et des autorisations des utilisateurs.
+          Il joue un rôle crucial dans la configuration des rôles et des autorisations des utilisateurs pour accéder à différentes ressources.
+          Le composant présente des fonctionnalités essentielles telles que la création, l'édition,
+          suppression et restauration des enregistrements de domaine, ainsi que des options de filtrage avancées
+          et des informations statistiques.
         `,
       },
       general: {
         title: 'Paramètres généraux',
         page_description: `
-          Lorem ipsum dolor sit amet consectetur adipisicing elit.
-          Iste rem est voluptatem obcaecati maiores, sit quibusdam ad.
-          Qui consequatur quidem itaque et ullam, non velit unde quo
-          inventore adipisci tempora, voluptas sunt dolore vitae iure,
-          quos eligendi. Corporis id adipisci aliquam cum officia impedit
-          repudiandae, numquam, dicta earum, cupiditate consequuntur?
+          Cette ressource alimente une page d'administration dédiée à la gestion des paramètres généraux.
+          Il joue un rôle crucial dans la configuration du titre et du slogan du site, la définition de la langue par défaut,
+          définissez le fuseau horaire, le crédit de pied de page, le nombre d'articles de blog, le format de date et bien d'autres.
+          Le composant présente des fonctionnalités essentielles telles que la création, l'édition,
+          suppression et restauration des enregistrements de domaine, ainsi que des options de filtrage avancées
+          et des informations statistiques.
         `,
       },
       accepted_domains: {
         title: 'Domaines acceptés',
         page_description: `
-          Lorem ipsum dolor sit amet consectetur adipisicing elit.
-          Iste rem est voluptatem obcaecati maiores, sit quibusdam ad.
-          Qui consequatur quidem itaque et ullam, non velit unde quo
-          inventore adipisci tempora, voluptas sunt dolore vitae iure,
-          quos eligendi. Corporis id adipisci aliquam cum officia impedit
-          repudiandae, numquam, dicta earum, cupiditate consequuntur?
+          Cette ressource alimente une page d'administration dédiée à la gestion des domaines acceptés.
+          Il joue un rôle crucial en garantissant la validité des adresses e-mail avant
+          les utilisateurs s'abonnent, commentent ou soumettent des messages via le formulaire de contact.
+          Le composant présente des fonctionnalités essentielles telles que la création, l'édition,
+          suppression et restauration des enregistrements de domaine, ainsi que des options de filtrage avancées
+          et des informations statistiques.
         `,
       },
       notifications: {
-        title: 'Notifications',
+        title: 'Notifications et modèles',
         page_description: `
-          Lorem ipsum dolor sit amet consectetur adipisicing elit.
-          Iste rem est voluptatem obcaecati maiores, sit quibusdam ad.
-          Qui consequatur quidem itaque et ullam, non velit unde quo
-          inventore adipisci tempora, voluptas sunt dolore vitae iure,
-          quos eligendi. Corporis id adipisci aliquam cum officia impedit
-          repudiandae, numquam, dicta earum, cupiditate consequuntur?
-        `,
-      },
-      templates: {
-        title: 'Modèles',
-        page_description: `
-          Lorem ipsum dolor sit amet consectetur adipisicing elit.
-          Iste rem est voluptatem obcaecati maiores, sit quibusdam ad.
-          Qui consequatur quidem itaque et ullam, non velit unde quo
-          inventore adipisci tempora, voluptas sunt dolore vitae iure,
-          quos eligendi. Corporis id adipisci aliquam cum officia impedit
-          repudiandae, numquam, dicta earum, cupiditate consequuntur?
+          Cette ressource alimente une page d'administration dédiée à la gestion des notifications et des modèles.
+          Il joue un rôle crucial dans la configuration des notifications (email et/ou SMS) pour divers événements.
+          Le composant présente des fonctionnalités essentielles telles que la création, l'édition,
+          suppression et restauration des enregistrements de domaine, ainsi que des options de filtrage avancées
+          et des informations statistiques.
         `,
       },
       configuration: {
@@ -289,15 +270,24 @@ export default {
           create_title: 'Créer des ressources de configuration',
           edit_title: 'Modifier les ressources de configuration',
           page_description: `
-            Lorem ipsum dolor sit amet consectetur adipisicing elit.
-            Iste rem est voluptatem obcaecati maiores, sit quibusdam ad.
-            Qui consequatur quidem itaque et ullam, non velit unde quo
-            inventore adipisci tempora, voluptas sunt dolore vitae iure,
-            quos eligendi. Corporis id adipisci aliquam cum officia impedit
-            repudiandae, numquam, dicta earum, cupiditate consequuntur?
+            Cette ressource alimente une page d'administration dédiée à la gestion de la configuration des ressources.
+            Il joue un rôle crucial dans la configuration des colonnes, des entrées pour la création, le filtrage et
+            mise à jour. Le composant présente des fonctionnalités essentielles telles que la création, l'édition,
+            suppression et restauration des enregistrements de domaine, ainsi que des options de filtrage avancées
+            et des informations statistiques.
           `,
         },
-      }
+      },
+      resources: {
+        title: 'Ressources',
+        page_description: `
+          Cette ressource alimente une page d'administration dédiée à la gestion des menus et des API.
+          Il joue un rôle crucial dans la configuration du menu de l'application et des API de repos.
+          Le composant présente des fonctionnalités essentielles telles que la création, l'édition,
+          suppression et restauration des enregistrements de domaine, ainsi que des options de filtrage avancées
+          et des informations statistiques.
+        `,
+      },
     }
   }
 };

@@ -7,6 +7,7 @@ import { QTableProps } from 'quasar';
 // Import library utilities, interfaces and components
 import { HandleApi } from 'src/utilities/HandleApi';
 import { HandleRoute } from 'src/utilities/HandleRoute';
+import { HandleObject } from 'src/utilities/HandleObject';
 import {
   IAllRecords,
   IAllRecordsUnpaginated,
@@ -20,19 +21,20 @@ import { TResourceType } from 'src/interfaces/BaseInterface';
 // Import Pinia's related utilities
 import { useResourceStore } from 'src/stores/settings/resources';
 
-// Instantiate the pinia store
-const resourceStore = useResourceStore();
-
 const handleRoute = new HandleRoute();
+const handleObject = new HandleObject();
 
 export const useConfigurationResourceStore = defineStore(
   'configurationResourceStore',
   () => {
+    // Instantiate the pinia store
+    const resourceStore = useResourceStore();
+
     // Handle API
     const handleApi = new HandleApi();
 
     // State
-    const configurationBaseEndpoint = 'admin/settings/configuration'
+    const baseEndpoint = 'admin/settings/configuration'
     const resourceName: Ref<string> = ref('');
     const resourceEndpoint: Ref<string> = ref('');
     const translationString: Ref<string> = ref('');
@@ -84,13 +86,32 @@ export const useConfigurationResourceStore = defineStore(
                 } else {
                   allRecords.value = response.data as IAllRecords;
                 }
-                console.log('-> handleIndex', allRecords.value);
               } else {
                 console.log('-> apiConfiguration does not exist', resourceConfiguration.value);
               }
             })
           } else {
-            console.log('-> apiEndpoint does not exist', apiEndpoint);
+            console.log('-> apiEndpoint does not exist, but the default value is used', apiEndpoint);
+            handleGetConfigurationId(getResourceName.value).then(async () => {
+              if (resourceConfiguration.value) {
+                await handleGetColumns(resourceConfiguration.value)
+                await handleGetInputs(resourceConfiguration.value)
+                const response = await api.get(`${baseEndpoint}/resources`, {
+                  params: {
+                    type: type ?? undefined,
+                  },
+                });
+                if (type === 'restore') {
+                  if (response.data && response.data.hasOwnProperty('results')) {
+                    allDeletedRecords.value = response.data as IAllRecordsUnpaginated;
+                  }
+                } else {
+                  allRecords.value = response.data as IAllRecords;
+                }
+              } else {
+                console.log('-> apiConfiguration does not exist', resourceConfiguration.value);
+              }
+            })
           }
         })
       } catch (error) {
@@ -100,13 +121,12 @@ export const useConfigurationResourceStore = defineStore(
 
     async function handleGetConfigurationId(key: string) {
       try {
-        const response = await api.get(`${configurationBaseEndpoint}/resources/get-id`, {
+        const response = await api.get(`${baseEndpoint}/resources/get-id`, {
           params: {
             key: key ?? undefined,
           },
         });
         resourceConfiguration.value = response.data.results as IConfiguration['results'];
-        console.log('-> handleShow', resourceConfiguration.value);
       } catch (error) {
         console.log('-> catch', error);
       }
@@ -114,7 +134,7 @@ export const useConfigurationResourceStore = defineStore(
 
     async function handleGetColumns(configurationResourceId: IConfiguration['results']) {
       try {
-        const response = await api.get(`${configurationBaseEndpoint}/columns`, {
+        const response = await api.get(`${baseEndpoint}/columns`, {
           params: {
             configuration_resource_id: configurationResourceId[0].id ?? undefined,
           },
@@ -132,39 +152,18 @@ export const useConfigurationResourceStore = defineStore(
 
     async function handleGetInputs(configurationResourceId: IConfiguration['results']) {
       try {
-        const response = await api.get(`${configurationBaseEndpoint}/inputs`, {
+        const response = await api.get(`${baseEndpoint}/inputs`, {
           params: {
             configuration_resource_id: configurationResourceId[0].id ?? undefined,
           },
         });
         if (response.data && response.data.hasOwnProperty('results')) {
-          const activeInputs = response.data.results.filter(
-            (activeInput: { is_active: boolean; }) => activeInput.is_active
-          ) as IConfigurationInput[]
-          dataModel.value = activeInputs.filter(
-            (model) => model.is_model &&
-              model.key !== 'search_resource' &&
-              model.key !== 'upload' &&
-              model.key !== 'date_to' &&
-              model.key !== 'date_from'
-          ) as IConfigurationInput[];
-          filterModel.value = activeInputs.filter(
-            (filter) => filter.is_filter &&
-              filter.key !== 'search_resource' &&
-              filter.key !== 'upload' &&
-              filter.key !== 'date_to' &&
-              filter.key !== 'date_from'
-          ) as IConfigurationInput[];
-          uploadModel.value = activeInputs.filter(
-            (model) => model.key === 'upload'
-          ) as IConfigurationInput[];
-          downloadModel.value = activeInputs.filter(
-            (model) => model.key === 'date_to' || model.key === 'date_from'
-          ) as IConfigurationInput[];
-          searchResourceModel.value = activeInputs.filter(
-            (filter) => filter.key === 'search_resource'
-          ) as IConfigurationInput[];
-          console.log('-> handleGetInputs', dataModel.value);
+          const activeInputs = handleObject.handleActiveInputs(response.data.results)
+          dataModel.value = handleObject.handleActiveInputsDataModel(activeInputs)
+          filterModel.value = handleObject.handleActiveInputsFilterModel(activeInputs)
+          uploadModel.value = handleObject.handleActiveInputsUploadModel(activeInputs)
+          downloadModel.value = handleObject.handleActiveInputsDownloadModel(activeInputs)
+          searchResourceModel.value = handleObject.handleActiveInputsSearchResourceModel(activeInputs)
         } else {
           // TODO: What do you do when this does not exist
         }
@@ -188,7 +187,14 @@ export const useConfigurationResourceStore = defineStore(
             });
             allRecords.value = response.data as IAllRecords;
           } else {
-            console.log('-> apiEndpoint does not exist', apiEndpoint);
+            console.log('-> apiEndpoint does not exist, but the default value is used', apiEndpoint);
+            const response = await api.get(`${baseEndpoint}/resources`, {
+              params: {
+                type: type ?? undefined,
+                ...payload,
+              },
+            });
+            allRecords.value = response.data as IAllRecords;
           }
         });
       } catch (error) {
@@ -208,7 +214,11 @@ export const useConfigurationResourceStore = defineStore(
             });
             allRecords.value = response.data as IAllRecords;
           } else {
-            console.log('-> apiEndpoint does not exist', apiEndpoint);
+            console.log('-> apiEndpoint does not exist, but the default value is used', apiEndpoint);
+            const response = await api.post(`${baseEndpoint}/resources`, {
+              ...payload,
+            });
+            allRecords.value = response.data as IAllRecords;
           }
         });
       } catch (error) {
@@ -228,7 +238,11 @@ export const useConfigurationResourceStore = defineStore(
             });
             allRecords.value = response.data as IAllRecords;
           } else {
-            console.log('-> apiEndpoint does not exist', apiEndpoint);
+            console.log('-> apiEndpoint does not exist, but the default value is used', apiEndpoint);
+            const response = await api.post(`${baseEndpoint}/resources`, {
+              ...payload,
+            });
+            allRecords.value = response.data as IAllRecords;
           }
         });
       } catch (error) {
@@ -252,7 +266,11 @@ export const useConfigurationResourceStore = defineStore(
             });
             allRecords.value = response.data as IAllRecords;
           } else {
-            console.log('-> apiEndpoint does not exist', apiEndpoint);
+            console.log('-> apiEndpoint does not exist, but the default value is used', apiEndpoint);
+            const response = await api.post(`${baseEndpoint}/resources`, {
+              ...payload,
+            });
+            allRecords.value = response.data as IAllRecords;
           }
         });
       } catch (error) {
@@ -272,9 +290,14 @@ export const useConfigurationResourceStore = defineStore(
               },
             });
             singleRecord.value = response.data as ISingleRecord;
-            console.log('-> handleShow', singleRecord.value);
           } else {
-            console.log('-> apiEndpoint does not exist', apiEndpoint);
+            console.log('-> apiEndpoint does not exist, but the default value is used', apiEndpoint);
+            const response = await api.get(`${baseEndpoint}/resources/${recordId}`, {
+              params: {
+                type: type ?? undefined,
+              },
+            });
+            singleRecord.value = response.data as ISingleRecord;
           }
         });
       } catch (error) {
@@ -301,7 +324,7 @@ export const useConfigurationResourceStore = defineStore(
 
     return {
       // State
-      configurationBaseEndpoint,
+      baseEndpoint,
       resourceEndpoint,
 
       // Getters

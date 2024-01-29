@@ -73,7 +73,11 @@ export default {
       `,
       input: {
         search_the_resource: 'Căutați resursa',
-      }
+      },
+      update_profile_label: 'Actualizare profil',
+      update_profile_label_tooltip: 'Faceți clic aici pentru a vă actualiza profilul',
+      deactivate_account: 'Dezactivați contul',
+      deactivate_account_tooltip: 'Faceți clic aici pentru a dezactiva contul dvs.',
     },
     home: {
       title: 'Dashboard',
@@ -102,57 +106,52 @@ export default {
         create_title: 'Creați conținut',
         edit_title: 'Editați conținutul',
         page_description: `
-          Lorem ipsum dolor sit amet consectetur adipisicing elit.
-          Iste rem est voluptatem obcaecati maiores, sit quibusdam ad.
-          Qui consequatur quidem itaque et ullam, non velit unde quo
-          inventore adipisci tempora, voluptas sunt dolore vitae iure,
-          quos eligendi. Corporis id adipisci aliquam cum officia impedit
-          repudiandae, numquam, dicta earum, cupiditate consequuntur?
+          Această resursă alimentează o pagină de administrare dedicată gestionării conținutului.
+          Joacă un rol crucial în configurarea conținutului aplicației (pagini și articole de blog).
+          Componenta are funcționalități esențiale precum crearea, editarea,
+          ștergerea și restaurarea înregistrărilor, împreună cu opțiuni avansate de filtrare
+          și perspective statistice.
         `,
         data_model: {},
       },
       tags: {
         title: 'Etichete',
         page_description: `
-          Lorem ipsum dolor sit amet consectetur adipisicing elit.
-          Iste rem est voluptatem obcaecati maiores, sit quibusdam ad.
-          Qui consequatur quidem itaque et ullam, non velit unde quo
-          inventore adipisci tempora, voluptas sunt dolore vitae iure,
-          quos eligendi. Corporis id adipisci aliquam cum officia impedit
-          repudiandae, numquam, dicta earum, cupiditate consequuntur?
+          Această resursă alimentează o pagină de administrare dedicată gestionării etichetelor de conținut.
+          Acesta joacă un rol crucial în configurarea etichetelor de conținut ale aplicației.
+          Componenta are funcționalități esențiale precum crearea, editarea,
+          ștergerea și restaurarea înregistrărilor, împreună cu opțiuni avansate de filtrare
+          și perspective statistice.
         `,
       },
       media: {
         title: 'Media',
         page_description: `
-          Lorem ipsum dolor sit amet consectetur adipisicing elit.
-          Iste rem est voluptatem obcaecati maiores, sit quibusdam ad.
-          Qui consequatur quidem itaque et ullam, non velit unde quo
-          inventore adipisci tempora, voluptas sunt dolore vitae iure,
-          quos eligendi. Corporis id adipisci aliquam cum officia impedit
-          repudiandae, numquam, dicta earum, cupiditate consequuntur?
+          Această resursă alimentează o pagină de administrare dedicată gestionării conținutului media.
+          Joacă un rol crucial în configurarea conținutului media al aplicației.
+          Componenta are funcționalități esențiale precum crearea, editarea,
+          ștergerea și restaurarea înregistrărilor, împreună cu opțiuni avansate de filtrare
+          și perspective statistice.
         `,
       },
       comments: {
         title: 'Comentarii',
         page_description: `
-          Lorem ipsum dolor sit amet consectetur adipisicing elit.
-          Iste rem est voluptatem obcaecati maiores, sit quibusdam ad.
-          Qui consequatur quidem itaque et ullam, non velit unde quo
-          inventore adipisci tempora, voluptas sunt dolore vitae iure,
-          quos eligendi. Corporis id adipisci aliquam cum officia impedit
-          repudiandae, numquam, dicta earum, cupiditate consequuntur?
+          Această resursă alimentează o pagină de administrare dedicată gestionării comentariilor de blog.
+          Joacă un rol crucial în configurarea comentariilor pe blogul aplicației.
+          Componenta are funcționalități esențiale precum crearea, editarea,
+          ștergerea și restaurarea înregistrărilor, împreună cu opțiuni avansate de filtrare
+          și perspective statistice.
         `,
       },
       appreciations: {
         title: 'Apreciere',
         page_description: `
-          Lorem ipsum dolor sit amet consectetur adipisicing elit.
-          Iste rem est voluptatem obcaecati maiores, sit quibusdam ad.
-          Qui consequatur quidem itaque et ullam, non velit unde quo
-          inventore adipisci tempora, voluptas sunt dolore vitae iure,
-          quos eligendi. Corporis id adipisci aliquam cum officia impedit
-          repudiandae, numquam, dicta earum, cupiditate consequuntur?
+          Această resursă alimentează o pagină de administrare dedicată gestionării aprecierilor blogului.
+          Joacă un rol crucial în configurarea aprecierilor blogului aplicației (cum ar fi, antipatii și recenzii).
+          Componenta are funcționalități esențiale precum crearea, editarea,
+          ștergerea și restaurarea înregistrărilor, împreună cu opțiuni avansate de filtrare
+          și perspective statistice.
         `,
       }
     },
@@ -205,81 +204,63 @@ export default {
     },
     settings: {
       title: 'Setări',
-      user_profile: {
-        title: 'Profil utilizator',
-        page_description: `
-          Lorem ipsum dolor sit amet consectetur adipisicing elit.
-          Iste rem est voluptatem obcaecati maiores, sit quibusdam ad.
-          Qui consequatur quidem itaque et ullam, non velit unde quo
-          inventore adipisci tempora, voluptas sunt dolore vitae iure,
-          quos eligendi. Corporis id adipisci aliquam cum officia impedit
-          repudiandae, numquam, dicta earum, cupiditate consequuntur?
-        `,
-      },
       users: {
         title: 'Utilizatori',
         page_description: `
-          Lorem ipsum dolor sit amet consectetur adipisicing elit.
-          Iste rem est voluptatem obcaecati maiores, sit quibusdam ad.
-          Qui consequatur quidem itaque et ullam, non velit unde quo
-          inventore adipisci tempora, voluptas sunt dolore vitae iure,
-          quos eligendi. Corporis id adipisci aliquam cum officia impedit
-          repudiandae, numquam, dicta earum, cupiditate consequuntur?
+          Această resursă alimentează o pagină de administrare dedicată gestionării utilizatorilor.
+          Joacă un rol crucial în înregistrarea de noi utilizatori, atribuirea de permisiuni utilizatorilor și multe altele.
+          Componenta are funcționalități esențiale precum crearea, editarea,
+          ștergerea și restaurarea înregistrărilor de domeniu, împreună cu opțiuni avansate de filtrare
+          și perspective statistice.
         `,
+        profile: {
+          title: 'Profil utilizator',
+          page_description: `
+            Această resursă alimentează o pagină de administrare dedicată gestionării profilului utilizatorului.
+            Joacă un rol crucial în gestionarea profilului utilizatorului (nume, detalii de contact, porecla și multe altele).
+          `,
+        }
       },
       roles_and_permissions: {
         title: 'Roluri și permisiuni',
         page_description: `
-          Lorem ipsum dolor sit amet consectetur adipisicing elit.
-          Iste rem est voluptatem obcaecati maiores, sit quibusdam ad.
-          Qui consequatur quidem itaque et ullam, non velit unde quo
-          inventore adipisci tempora, voluptas sunt dolore vitae iure,
-          quos eligendi. Corporis id adipisci aliquam cum officia impedit
-          repudiandae, numquam, dicta earum, cupiditate consequuntur?
+          Această resursă alimentează o pagină de administrare dedicată gestionării rolurilor și permisiunilor utilizatorilor.
+          Joacă un rol crucial în configurarea rolurilor utilizatorului și a permisiunilor în accesarea diferitelor resurse.
+          Componenta are funcționalități esențiale precum crearea, editarea,
+          ștergerea și restaurarea înregistrărilor de domeniu, împreună cu opțiuni avansate de filtrare
+          și perspective statistice.
         `,
       },
       general: {
         title: 'Setări generale',
         page_description: `
-          Lorem ipsum dolor sit amet consectetur adipisicing elit.
-          Iste rem est voluptatem obcaecati maiores, sit quibusdam ad.
-          Qui consequatur quidem itaque et ullam, non velit unde quo
-          inventore adipisci tempora, voluptas sunt dolore vitae iure,
-          quos eligendi. Corporis id adipisci aliquam cum officia impedit
-          repudiandae, numquam, dicta earum, cupiditate consequuntur?
+          Această resursă alimentează o pagină de administrare dedicată gestionării setărilor generale.
+          Joacă un rol crucial în configurarea titlului și sloganului site-ului, setarea limbii implicite,
+          setați fusul orar, creditul subsolului, numărul de postări pe blog, formatul datei și multe altele.
+          Componenta are funcționalități esențiale precum crearea, editarea,
+          ștergerea și restaurarea înregistrărilor de domeniu, împreună cu opțiuni avansate de filtrare
+          și perspective statistice.
         `,
       },
       accepted_domains: {
         title: 'Domenii acceptate',
         page_description: `
-          Lorem ipsum dolor sit amet consectetur adipisicing elit.
-          Iste rem est voluptatem obcaecati maiores, sit quibusdam ad.
-          Qui consequatur quidem itaque et ullam, non velit unde quo
-          inventore adipisci tempora, voluptas sunt dolore vitae iure,
-          quos eligendi. Corporis id adipisci aliquam cum officia impedit
-          repudiandae, numquam, dicta earum, cupiditate consequuntur?
+          Această resursă alimentează o pagină de administrare dedicată gestionării domeniilor acceptate.
+          Acesta joacă un rol crucial în asigurarea validității adreselor de e-mail înainte
+          utilizatorii se abonează, comentează sau trimit mesaje prin intermediul formularului de contact.
+          Componenta are funcționalități esențiale precum crearea, editarea,
+          ștergerea și restaurarea înregistrărilor de domeniu, împreună cu opțiuni avansate de filtrare
+          și perspective statistice.
         `,
       },
       notifications: {
-        title: 'Notificări',
+        title: 'Notificări si Șabloane',
         page_description: `
-          Lorem ipsum dolor sit amet consectetur adipisicing elit.
-          Iste rem est voluptatem obcaecati maiores, sit quibusdam ad.
-          Qui consequatur quidem itaque et ullam, non velit unde quo
-          inventore adipisci tempora, voluptas sunt dolore vitae iure,
-          quos eligendi. Corporis id adipisci aliquam cum officia impedit
-          repudiandae, numquam, dicta earum, cupiditate consequuntur?
-        `,
-      },
-      templates: {
-        title: 'Șabloane',
-        page_description: `
-          Lorem ipsum dolor sit amet consectetur adipisicing elit.
-          Iste rem est voluptatem obcaecati maiores, sit quibusdam ad.
-          Qui consequatur quidem itaque et ullam, non velit unde quo
-          inventore adipisci tempora, voluptas sunt dolore vitae iure,
-          quos eligendi. Corporis id adipisci aliquam cum officia impedit
-          repudiandae, numquam, dicta earum, cupiditate consequuntur?
+          Această resursă alimentează o pagină de administrare dedicată gestionării notificărilor și șabloanelor.
+          Joacă un rol crucial în configurarea notificărilor (e-mail și/sau SMS) pentru diverse evenimente.
+          Componenta are funcționalități esențiale precum crearea, editarea,
+          ștergerea și restaurarea înregistrărilor de domeniu, împreună cu opțiuni avansate de filtrare
+          și perspective statistice.
         `,
       },
       configuration: {
@@ -289,15 +270,24 @@ export default {
           create_title: 'Creați resurse de configurare',
           edit_title: 'Editați resursele de configurare',
           page_description: `
-            Lorem ipsum dolor sit amet consectetur adipisicing elit.
-            Iste rem est voluptatem obcaecati maiores, sit quibusdam ad.
-            Qui consequatur quidem itaque et ullam, non velit unde quo
-            inventore adipisci tempora, voluptas sunt dolore vitae iure,
-            quos eligendi. Corporis id adipisci aliquam cum officia impedit
-            repudiandae, numquam, dicta earum, cupiditate consequuntur?
+            Această resursă alimentează o pagină de administrare dedicată gestionării configurației resurselor.
+            Joacă un rol crucial în configurarea coloanelor, a intrărilor pentru crearea, filtrarea și
+            actualizare. Componenta are funcționalități esențiale precum crearea, editarea,
+            ștergerea și restaurarea înregistrărilor de domeniu, împreună cu opțiuni avansate de filtrare
+            și perspective statistice.
           `,
         },
-      }
+      },
+      resources: {
+        title: 'Resurse',
+        page_description: `
+          Această resursă alimentează o pagină de administrare dedicată gestionării meniurilor și API-urilor.
+          Joacă un rol crucial în configurarea meniului aplicației și a restului API-urilor.
+          Componenta are funcționalități esențiale precum crearea, editarea,
+          ștergerea și restaurarea înregistrărilor de domeniu, împreună cu opțiuni avansate de filtrare
+          și perspective statistice.
+        `,
+      },
     }
   }
 };

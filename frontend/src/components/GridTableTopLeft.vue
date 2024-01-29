@@ -17,6 +17,7 @@
             :key="option.id"
             clickable
             dense
+            :disable="!option.is_active"
             v-close-popup
             @click="option.clickEvent"
           >
@@ -63,6 +64,7 @@ interface IMoreOptions {
   id: number
   clickEvent: () => void
   icon: string
+  is_active: boolean
   label: string
 }
 

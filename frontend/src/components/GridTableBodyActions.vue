@@ -17,6 +17,7 @@
             :key="action.id"
             clickable
             dense
+            :disable="!action.is_active"
             v-close-popup
             @click="action.clickEvent"
           >
@@ -47,6 +48,7 @@ interface IMoreActions {
   id: number
   clickEvent: () => void
   icon: string
+  is_active: boolean
   label: string
 }
 

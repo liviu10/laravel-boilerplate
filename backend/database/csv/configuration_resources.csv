@@ -23,3 +23,6 @@ id,resource,key,created_at,updated_at,user_id
 22,Role,roles,9/25/2023 8:04,9/25/2023 8:04,1
 23,Tag,tags,9/25/2023 8:04,9/25/2023 8:04,1
 24,User,users,9/25/2023 8:04,9/25/2023 8:04,1
+25,UserProfile,profile,9/25/2023 8:04,9/25/2023 8:04,1
+26,Login,login,9/25/2023 8:04,9/25/2023 8:04,1
+27,Register,register,9/25/2023 8:04,9/25/2023 8:04,1

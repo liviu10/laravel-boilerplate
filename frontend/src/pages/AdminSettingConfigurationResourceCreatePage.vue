@@ -22,6 +22,8 @@
         </div>
       </q-form>
     </div>
+
+    <page-loading :visible="loadPage" />
   </q-page>
 </template>
 
@@ -29,6 +31,7 @@
 // Import vue related utilities
 import { useI18n } from 'vue-i18n';
 import { RouteParamsRaw, useRouter } from 'vue-router';
+import { ref } from 'vue';
 
 // Import library utilities, interfaces and components
 import { HandleRoute } from 'src/utilities/HandleRoute';
@@ -51,6 +54,9 @@ const handleRoute = new HandleRoute();
 
 // Go to Configure resource
 const router = useRouter();
+
+// Load page
+const loadPage = ref(false);
 
 // Handle navigate to page
 const handleNavigateToPage = (action: TDialog) => {

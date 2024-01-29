@@ -5,14 +5,19 @@ const routes: RouteRecordRaw[] = [
     path: '/admin/settings',
     children: [
       {
-        path: '/admin/settings/user-profile',
-        name: 'AdminSettingUserProfilePage',
-        component: () => import('pages/AdminSettingUserProfilePage.vue'),
-      },
-      {
         path: '/admin/settings/users',
-        name: 'AdminSettingUserIndexPage',
-        component: () => import('pages/AdminSettingUserIndexPage.vue'),
+        children: [
+          {
+            path: '',
+            name: 'AdminSettingUserIndexPage',
+            component: () => import('pages/AdminSettingUserIndexPage.vue'),
+          },
+          {
+            path: 'profile',
+            name: 'AdminSettingUserProfilePage',
+            component: () => import('pages/AdminSettingUserProfilePage.vue'),
+          },
+        ]
       },
       {
         path: '/admin/settings/roles-and-permissions',
@@ -35,9 +40,9 @@ const routes: RouteRecordRaw[] = [
         component: () => import('pages/AdminSettingNotificationIndexPage.vue'),
       },
       {
-        path: '/admin/settings/templates',
-        name: 'AdminSettingTemplateIndexPage',
-        component: () => import('pages/AdminSettingTemplateIndexPage.vue'),
+        path: '/admin/settings/resources',
+        name: 'AdminSettingResourceIndexPage',
+        component: () => import('pages/AdminSettingResourceIndexPage.vue'),
       },
       {
         path: '/admin/settings/configuration/resources',

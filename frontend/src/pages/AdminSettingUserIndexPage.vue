@@ -1,14 +1,15 @@
 <template>
   <q-page class="admin admin--page">
-    <page-title :page-title="t(`${userStore.getUserTranslationString}.title`)" />
+    <page-title :page-title="t(`${userStore.getTranslationString}.title`)" />
 
     <page-description
-      :page-description="t(`${userStore.getUserTranslationString}.page_description`)"
+      :page-description="t(`${userStore.getTranslationString}.page_description`)"
     />
 
     <div class="admin-section admin-section--container">
       <grid-table
         :columns="userStore.getColumns"
+        :is-stats-active="false"
         :search-resource="userStore.getSearchResourceModel"
         :resource="userStore.getResourceName"
         :rows="userStore.getAllRecords.results?.data || []"
@@ -27,12 +28,20 @@
       @handle-navigate-to-page="handleNavigateToPage"
     >
       <template v-slot:dialog-details>
+        <card-create
+          v-if="actionName === 'create'"
+          action-name="create"
+          :data-model="userStore.getDataModel"
+          :resource="userStore.getResourceName"
+          :translation-string="userStore.getTranslationString"
+        />
+
         <card-advanced-filter
           v-if="actionName === 'advanced-filters'"
           action-name="advanced-filters"
           :data-model="userStore.getFilterModel"
           :resource="userStore.getResourceName"
-          :translation-string="userStore.getUserTranslationString"
+          :translation-string="userStore.getTranslationString"
         />
 
         <card-upload
@@ -40,7 +49,7 @@
           action-name="upload"
           :data-model="userStore.getUploadModel"
           :resource="userStore.getResourceName"
-          :translation-string="userStore.getUserTranslationString"
+          :translation-string="userStore.getTranslationString"
         />
 
         <card-download
@@ -48,7 +57,7 @@
           action-name="download"
           :data-model="userStore.getDownloadModel"
           :resource="userStore.getResourceName"
-          :translation-string="userStore.getUserTranslationString"
+          :translation-string="userStore.getTranslationString"
         />
 
         <card-restore
@@ -56,7 +65,7 @@
           action-name="restore"
           :record-details="userStore.getAllDeletedRecords"
           :resource="userStore.getResourceName"
-          :translation-string="userStore.getUserTranslationString"
+          :translation-string="userStore.getTranslationString"
         />
 
         <management-card-quick-show
@@ -64,7 +73,7 @@
           action-name="quick-show"
           :record-details="userStore.getSingleRecord"
           :resource="userStore.getResourceName"
-          :translation-string="userStore.getUserTranslationString"
+          :translation-string="userStore.getTranslationString"
         />
 
         <management-card-quick-edit
@@ -72,14 +81,14 @@
           action-name="quick-edit"
           :data-model="userStore.getDataModel"
           :resource="userStore.getResourceName"
-          :translation-string="userStore.getUserTranslationString"
+          :translation-string="userStore.getTranslationString"
         >
           <template v-slot:record-details>
             <management-card-quick-show
               action-name="quick-show"
               :record-details="userStore.getSingleRecord"
               :resource="userStore.getResourceName"
-              :translation-string="userStore.getUserTranslationString"
+              :translation-string="userStore.getTranslationString"
             />
           </template>
         </management-card-quick-edit>
@@ -88,14 +97,14 @@
           v-if="actionName === 'delete'"
           action-name="delete"
           :resource="userStore.getResourceName"
-          :translation-string="userStore.getUserTranslationString"
+          :translation-string="userStore.getTranslationString"
         >
           <template v-slot:record-details>
             <management-card-quick-show
               action-name="quick-show"
               :record-details="userStore.getSingleRecord"
               :resource="userStore.getResourceName"
-              :translation-string="userStore.getUserTranslationString"
+              :translation-string="userStore.getTranslationString"
             />
           </template>
         </card-delete>
@@ -123,6 +132,7 @@ import PageTitle from 'src/components/PageTitle.vue';
 import PageDescription from 'src/components/PageDescription.vue';
 import GridTable from 'src/components/GridTable.vue';
 import DialogCard from 'src/components/DialogCard.vue';
+import CardCreate from 'src/components/CardCreate.vue';
 import CardAdvancedFilter from 'src/components/CardAdvancedFilter.vue';
 import CardUpload from 'src/components/CardUpload.vue';
 import CardDownload from 'src/components/CardDownload.vue';
@@ -164,7 +174,13 @@ async function handleOpenDialog(action: TDialog, recordId?: number): Promise<voi
     case 'create':
       actionName.value = action;
       loadPage.value = false;
-      handleNavigateToPage(action);
+      displayDialog.value = true;
+      if (userStore.getFilterModel.length === 0) {
+        disableActionDialogButton.value = {
+          action: action,
+          disable: true,
+        };
+      }
       break;
     case 'advanced-filters':
       actionName.value = action;

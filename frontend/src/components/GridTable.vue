@@ -89,10 +89,9 @@
 import { useI18n } from 'vue-i18n';
 import { computed, ref } from 'vue';
 import { QTableProps } from 'quasar';
-import { LocationQueryRaw, useRouter } from 'vue-router';
+import { useRouter } from 'vue-router';
 
 // Import library utilities, interfaces and components
-import { HandleRoute } from 'src/utilities/HandleRoute';
 import { HandleObject } from 'src/utilities/HandleObject';
 import { TDialog, actionMethods } from 'src/interfaces/BaseInterface';
 import { IConfigurationInput } from 'src/interfaces/ConfigurationResourceInterface';
@@ -109,6 +108,11 @@ interface IGridTable {
   columns?: QTableProps['columns'];
   dense?: boolean;
   grid?: boolean;
+  isAdvancedFilterActive?: boolean;
+  isUploadActive?: boolean;
+  isDownloadActive?: boolean;
+  isRestoreActive?: boolean;
+  isStatsActive?: boolean;
   loading?: boolean;
   rows?: QTableProps['rows'];
   searchResource?: IConfigurationInput[];
@@ -132,12 +136,14 @@ const props = withDefaults(defineProps<IGridTable>(), {
   customLoader: true,
   dense: true,
   grid: true,
+  isAdvancedFilterActive: true,
+  isUploadActive: true,
+  isDownloadActive: true,
+  isRestoreActive: true,
+  isStatsActive: true,
   square: true,
   rowsPerPageOptions: () => [10, 25, 50, 100, 0],
 });
-
-// Navigate to route
-const navigateToRoute = new HandleRoute();
 
 // Go to Configure resource
 const router = useRouter();
@@ -151,36 +157,39 @@ const moreOptions = [
     id: 1,
     clickEvent: () => openDialog(actionMethods[7]),
     icon: 'filter_alt',
+    is_active: props.isAdvancedFilterActive,
     label: 'admin.generic.advanced_filters_record_label',
   },
   {
     id: 2,
     clickEvent: () => openDialog(actionMethods[8]),
     icon: 'upload',
+    is_active: props.isUploadActive,
     label: 'admin.generic.upload_record_label',
   },
   {
     id: 3,
     clickEvent: () => openDialog(actionMethods[9]),
     icon: 'download',
+    is_active: props.isDownloadActive,
     label: 'admin.generic.download_record_label',
   },
   {
     id: 4,
     clickEvent: () => openDialog(actionMethods[11]),
     icon: 'restore_from_trash',
+    is_active: props.isRestoreActive,
     label: 'admin.generic.restore_record_label',
   },
   {
     id: 5,
     clickEvent: () =>
-      navigateToRoute.handleNavigateToRoute(
-        router,
-        'AdminSettingConfigurationResourcePage',
-        undefined,
-        ({ resource: props.resource } as unknown) as LocationQueryRaw
-      ),
+      router.push({
+        name: 'AdminSettingConfigurationResourceCreatePage',
+        query: { key: props.resource },
+      }),
     icon: 'handyman',
+    is_active: true,
     label: 'admin.generic.configure_resource',
   },
 ];
@@ -193,24 +202,28 @@ const moreActions = computed(() => {
         id: 1,
         clickEvent: () => openDialog(actionMethods[2], record),
         icon: 'visibility',
+        is_active: true,
         label: 'admin.generic.quick_show_record_label',
       },
       {
         id: 2,
         clickEvent: () => openDialog(actionMethods[4], record),
         icon: 'edit',
+        is_active: true,
         label: 'admin.generic.quick_edit_record_label',
       },
       {
         id: 3,
         clickEvent: () => openDialog(actionMethods[6], record),
         icon: 'delete',
+        is_active: true,
         label: 'admin.generic.delete_record_label',
       },
       {
         id: 4,
         clickEvent: () => openDialog(actionMethods[10], record),
         icon: 'query_stats',
+        is_active: props.isStatsActive,
         label: 'admin.generic.content_stats',
       },
     ];
