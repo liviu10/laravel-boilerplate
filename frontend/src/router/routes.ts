@@ -34,8 +34,21 @@ const routes: RouteRecordRaw[] = [
 
   // Client routes
   {
-    path: '/',
+    path: '',
     component: () => import('src/layouts/ClientLayout.vue'),
+    children: [
+      {
+        path: '',
+        name: 'ClientHomePage',
+        component: () => import('pages/ClientHomePage.vue'),
+      }
+    ],
+  },
+
+  // Authentication routes
+  {
+    path: '',
+    component: () => import('src/layouts/AuthenticationLayout.vue'),
     children: [
       {
         path: 'login',
@@ -43,9 +56,9 @@ const routes: RouteRecordRaw[] = [
         component: () => import('pages/ClientLoginPage.vue'),
       },
       {
-        path: '',
-        name: 'ClientHomePage',
-        component: () => import('pages/ClientHomePage.vue'),
+        path: 'register',
+        name: 'ClientRegisterPage',
+        component: () => import('pages/ClientRegisterPage.vue'),
       }
     ],
   },
