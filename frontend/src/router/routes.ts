@@ -4,6 +4,7 @@ import communication from './communication';
 import settings from './settings';
 
 const routes: RouteRecordRaw[] = [
+  // Admin routes
   {
     path: '/admin',
     component: () => import('src/layouts/AdminLayout.vue'),
@@ -28,6 +29,24 @@ const routes: RouteRecordRaw[] = [
 
       // Settings routes
       ...settings,
+    ],
+  },
+
+  // Client routes
+  {
+    path: '/',
+    component: () => import('src/layouts/ClientLayout.vue'),
+    children: [
+      {
+        path: 'login',
+        name: 'ClientLoginPage',
+        component: () => import('pages/ClientLoginPage.vue'),
+      },
+      {
+        path: '',
+        name: 'ClientHomePage',
+        component: () => import('pages/ClientHomePage.vue'),
+      }
     ],
   },
 

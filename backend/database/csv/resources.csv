@@ -1,9 +1,9 @@
 id,type,path,name,component,layout,title,caption,icon,is_active,requires_auth,user_id,position,created_at,updated_at
-1,Menu,/admin,AdminHomePage,pages/admin/AdminHomePage.vue,src/layouts/AdminLayout.vue,admin.home.title,admin.home.description,home,1,1,1,1,2023-09-15,2023-09-15
-2,Menu,/admin/management,AdminManagementPage,pages/admin/AdminManagementPage.vue,src/layouts/AdminLayout.vue,admin.management.title,admin.management.description,group_work,1,1,1,2,2023-09-15,2023-09-15
-3,Menu,/admin/communication,AdminCommunicationPage,pages/admin/AdminCommunicationPage.vue,src/layouts/AdminLayout.vue,admin.communication.title,admin.communication.description,subscriptions,1,1,1,3,2023-09-15,2023-09-15
-4,Menu,/admin/documentation,AdminDocumentationPage,pages/admin/AdminDocumentationPage.vue,src/layouts/AdminLayout.vue,admin.documentation.title,admin.documentation.description,description,1,1,1,4,2023-09-15,2023-09-15
-5,Menu,/admin/settings,AdminSettingPage,pages/admin/AdminSettingPage.vue,src/layouts/AdminLayout.vue,admin.settings.title,admin.settings.description,settings,1,1,1,5,2023-09-15,2023-09-15
+1,Menu,/admin,AdminHomePage,pages/AdminHomePage.vue,src/layouts/AdminLayout.vue,admin.home.title,admin.home.description,home,1,1,1,1,2023-09-15,2023-09-15
+2,Menu,/admin/management,AdminManagementPage,pages/AdminManagementPage.vue,src/layouts/AdminLayout.vue,admin.management.title,admin.management.description,group_work,1,1,1,2,2023-09-15,2023-09-15
+3,Menu,/admin/communication,AdminCommunicationPage,pages/AdminCommunicationPage.vue,src/layouts/AdminLayout.vue,admin.communication.title,admin.communication.description,subscriptions,1,1,1,3,2023-09-15,2023-09-15
+4,Menu,/admin/documentation,AdminDocumentationPage,pages/AdminDocumentationPage.vue,src/layouts/AdminLayout.vue,admin.documentation.title,admin.documentation.description,description,1,1,1,4,2023-09-15,2023-09-15
+5,Menu,/admin/settings,AdminSettingPage,pages/AdminSettingPage.vue,src/layouts/AdminLayout.vue,admin.settings.title,admin.settings.description,settings,1,1,1,5,2023-09-15,2023-09-15
 6,API,/admin/management,null,null,null,null,null,null,1,1,1,null,2023-09-15,2023-09-15
 7,API,/admin/management/contents,null,null,null,null,null,null,1,1,1,null,2023-09-15,2023-09-15
 8,API,/admin/management/tags,null,null,null,null,null,null,1,1,1,null,2023-09-15,2023-09-15
@@ -37,3 +37,7 @@ id,type,path,name,component,layout,title,caption,icon,is_active,requires_auth,us
 36,API,/client/register,null,null,null,null,null,null,1,0,1,null,2023-09-15,2023-09-15
 37,API,/client/subscribe,null,null,null,null,null,null,1,1,1,null,2023-09-15,2023-09-15
 38,API,/client/unsubscribe,null,null,null,null,null,null,1,1,1,null,2023-09-15,2023-09-15
+39,Menu,/,ClientHomePage,pages/ClientHomePage.vue,src/layouts/ClientLayout.vue,client.home.title,client.home.description,null,1,0,1,1,2023-09-15,2023-09-15
+40,Menu,#portfolio,ClientHomePage,pages/ClientHomePage.vue,src/layouts/ClientLayout.vue,client.home.portfolio.title,client.home.portfolio.description,null,1,0,1,2,2023-09-15,2023-09-15
+41,Menu,#services,ClientHomePage,pages/ClientHomePage.vue,src/layouts/ClientLayout.vue,client.home.services.title,client.home.services.description,null,1,0,1,3,2023-09-15,2023-09-15
+42,Menu,#contact_me,ClientHomePage,pages/ClientHomePage.vue,src/layouts/ClientLayout.vue,client.home.contact_me.title,client.home.contact_me.description,null,1,0,1,4,2023-09-15,2023-09-15

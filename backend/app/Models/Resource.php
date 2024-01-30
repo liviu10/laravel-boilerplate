@@ -210,8 +210,14 @@ class Resource extends BaseModel
     private function dynamicFilters(Builder $query, array $search): Builder {
         // TODO: Move this function to a trait so that it can be used in different models
         foreach ($search as $field => $value) {
-            if ($field === 'id' || $field === 'is_active') {
+            if ($field === 'id') {
                 $query->where($field, $value);
+            } else if ($field === 'is_active' || $field === 'requires_auth') {
+                if ($value === true || $value === 'true' || $value === '1' || $value === 1) {
+                    $query->where($field, true);
+                } else {
+                    $query->where($field, false);
+                }
             } else {
                 if ($field === 'path') {
                     $value = preg_replace('/\/(create|show|edit)(\/\d+)?/', '', $value);

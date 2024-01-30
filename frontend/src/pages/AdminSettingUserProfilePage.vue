@@ -60,7 +60,6 @@ import { useI18n } from 'vue-i18n';
 import { ref } from 'vue';
 
 // Import library utilities, interfaces and components
-import { HandleObject } from 'src/utilities/HandleObject';
 import PageTitle from 'src/components/PageTitle.vue';
 import PageDescription from 'src/components/PageDescription.vue';
 import PageLoading from 'src/components/PageLoading.vue';
@@ -76,9 +75,6 @@ const { t } = useI18n({});
 
 // Load page
 const loadPage = ref(false);
-
-// Check if object is array
-const checkObject = new HandleObject();
 
 // Get user profile data model
 userProfileStore.handleIndex()

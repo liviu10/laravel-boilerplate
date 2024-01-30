@@ -54,6 +54,9 @@ export const useResourceStore = defineStore(
     const resourceConfiguration: Ref<IConfiguration['results']> = ref([] as IConfiguration['results']);
     const singleRecord: Ref<ISingleRecord> = ref({} as ISingleRecord);
 
+    // Client state
+    const apiClientMenu: Ref<IAllRecordsUnpaginated['results']> = ref([] as IAllRecordsUnpaginated['results'])
+
     // Getters
     const getResourceName = computed(() => (resourceName.value = handleRoute.handleResourceNameFromRoute()));
     const getTranslationString = computed(() => (translationString.value = handleRoute.handleTranslationFromRoute()));
@@ -69,6 +72,9 @@ export const useResourceStore = defineStore(
     const getAllDeletedRecords = computed(() => allDeletedRecords.value);
     const getResourceConfiguration = computed(() => resourceConfiguration.value);
     const getSingleRecord = computed(() => singleRecord.value);
+
+    // Client getters
+    const getApiClientMenu = computed(() => apiClientMenu.value);
 
     // Actions
     async function handleIndex(type?: TResourceType) {
@@ -274,7 +280,8 @@ export const useResourceStore = defineStore(
       try {
         const response = await api.get(baseEndpoint, {
           params: {
-            type: 'Menu' as TResourceType
+            type: 'Menu' as TResourceType,
+            requires_auth: true
           }
         })
         apiMenu.value = response.data.results as IAllRecordsUnpaginated['results']
@@ -355,6 +362,20 @@ export const useResourceStore = defineStore(
       console.log('-> handleReset');
     }
 
+    async function handleClientMenu(requiresAuth?: boolean) {
+      try {
+        const response = await api.get(baseEndpoint, {
+          params: {
+            type: 'Menu' as TResourceType,
+            requires_auth: requiresAuth ?? undefined
+          }
+        })
+        apiClientMenu.value = response.data.results as IAllRecordsUnpaginated['results']
+      } catch (error) {
+        console.log('-> catch', error)
+      }
+    }
+
     return {
       // State
       baseEndpoint,
@@ -376,6 +397,9 @@ export const useResourceStore = defineStore(
       getResourceConfiguration,
       getSingleRecord,
 
+      // Client Getters
+      getApiClientMenu,
+
       // Actions
       handleIndex,
       handleGetConfigurationId,
@@ -393,6 +417,9 @@ export const useResourceStore = defineStore(
       handleDelete,
       handleStats,
       handleReset,
+
+      // Client actions
+      handleClientMenu,
     }
   }
 )
