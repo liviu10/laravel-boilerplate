@@ -221,7 +221,7 @@ export default {
           `,
         }
       },
-      roles_and_permissions: {
+      roles: {
         title: 'Roles and permissions',
         page_description: `
           This resource powers an admin page dedicated to managing user roles and permissions.
@@ -278,7 +278,7 @@ export default {
           `,
         },
       },
-      resources: {
+      resource: {
         title: 'Resources',
         page_description: `
           This resource powers an admin page dedicated to managing menu and APIs.

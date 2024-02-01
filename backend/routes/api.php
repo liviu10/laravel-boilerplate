@@ -109,7 +109,7 @@ Route::group(['prefix' => config('app.version')], function () {
             // Notifications
             Route::apiResource('/notifications', NotificationController::class);
             // Resources
-            Route::apiResource('/resources', ResourceController::class);
+            Route::apiResource('/resource', ResourceController::class);
             // Roles
             Route::apiResource('/roles', RoleController::class);
             // Templates

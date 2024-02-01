@@ -87,7 +87,7 @@ class General extends BaseModel
     public function fetchAllRecords(array $search = [], string|null $type = null): LengthAwarePaginator|Collection|bool
     {
         try {
-            $query = $this->all();
+            $query = $this->select('*');
 
             if (!empty($search)) {
                 foreach ($search as $field => $value) {

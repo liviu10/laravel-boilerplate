@@ -17,7 +17,7 @@ id,resource,key,created_at,updated_at,user_id
 16,NewsletterSubscribe,subscribers,9/25/2023 8:04,9/25/2023 8:04,1
 17,Notification,notifications,9/25/2023 8:04,9/25/2023 8:04,1
 18,Permission,permissions,9/25/2023 8:04,9/25/2023 8:04,1
-19,Resource,resources,9/25/2023 8:04,9/25/2023 8:04,1
+19,Resource,resource,9/25/2023 8:04,9/25/2023 8:04,1
 20,ResourceChildren,resource-children,9/25/2023 8:04,9/25/2023 8:04,1
 21,Review,reviews,9/25/2023 8:04,9/25/2023 8:04,1
 22,Role,roles,9/25/2023 8:04,9/25/2023 8:04,1

@@ -12,7 +12,7 @@
           <q-btn
             :label="t('admin.generic.cancel_label')"
             color="primary"
-            @click="handleNavigateToPage(actionMethods[0])"
+            @click="handleNavigateToPage"
           />
           <q-btn
             :label="t('admin.generic.save_label')"
@@ -28,12 +28,10 @@
 <script setup lang="ts">
 // Import vue related utilities
 import { useI18n } from 'vue-i18n';
-import { RouteParamsRaw, useRouter } from 'vue-router';
+import { useRouter } from 'vue-router';
 
 // Import library utilities, interfaces and components
-import { HandleRoute } from 'src/utilities/HandleRoute';
-import { TDialog, actionMethods } from 'src/interfaces/BaseInterface';
-import { ISingleRecord } from 'src/interfaces/ContentInterface';
+import { actionMethods } from 'src/interfaces/BaseInterface';
 import PageTitle from 'src/components/PageTitle.vue';
 import PageDescription from 'src/components/PageDescription.vue';
 
@@ -46,23 +44,11 @@ const contentStore = useContentStore();
 // Defined the translation variable
 const { t } = useI18n({});
 
-// Instantiate handle route class
-const handleRoute = new HandleRoute();
-
 // Go to Configure resource
 const router = useRouter();
 
 // Handle navigate to page
-const handleNavigateToPage = (action: TDialog) => {
-  const selectedRecord: ISingleRecord = contentStore.getSingleRecord
-  const routeParams = selectedRecord &&
-    selectedRecord.hasOwnProperty('results') &&
-    selectedRecord.results.length > 0
-      ? ({ id: selectedRecord.results[0].id } as unknown) as RouteParamsRaw
-      : undefined
-
-  handleRoute.handleNavigateToRoute(router, action, routeParams)
-};
+const handleNavigateToPage = () => router.back();
 </script>
 
 <style lang="scss" scoped>

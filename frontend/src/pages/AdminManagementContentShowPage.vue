@@ -56,14 +56,18 @@ contentStore.handleShow(recordId)
 
 // Handle navigate to page
 const handleNavigateToPage = (action: TDialog) => {
-  const selectedRecord: ISingleRecord = contentStore.getSingleRecord
-  const routeParams = selectedRecord &&
-    selectedRecord.hasOwnProperty('results') &&
-    selectedRecord.results.length > 0
-      ? ({ id: selectedRecord.results[0].id } as unknown) as RouteParamsRaw
-      : undefined
+  if (action === 'index') {
+    router.back();
+  } else {
+    const selectedRecord: ISingleRecord = contentStore.getSingleRecord
+    const routeParams = selectedRecord &&
+      selectedRecord.hasOwnProperty('results') &&
+      selectedRecord.results.length > 0
+        ? ({ id: selectedRecord.results[0].id } as unknown) as RouteParamsRaw
+        : undefined
 
-  handleRoute.handleNavigateToRoute(router, action, routeParams)
+    handleRoute.handleNavigateToRoute(router, action, routeParams)
+  }
 };
 </script>
 

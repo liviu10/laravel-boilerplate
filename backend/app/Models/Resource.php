@@ -111,7 +111,7 @@ class Resource extends BaseModel
         try {
             if ($search && count($search)) {
                 if (isset($search['type'])) {
-                    if ($search['type'] === 'Menu' || $search['type'] === 'paginate') {
+                    if ($search['type'] === 'Menu') {
                         $query = $this->select(
                             'id',
                             'type',
@@ -191,7 +191,13 @@ class Resource extends BaseModel
                 );
             }
 
-            return $query->get();
+            if ($type === 'paginate') {
+                return $query->paginate(15);
+            } elseif ($type === 'restore') {
+                return $query->onlyTrashed()->select('id', 'type', 'path', 'requires_auth')->get();
+            } else {
+                return $query->get();
+            }
         } catch (Exception $exception) {
             $this->LogApiError($exception);
             return false;

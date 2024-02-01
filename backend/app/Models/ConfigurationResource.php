@@ -210,7 +210,9 @@ class ConfigurationResource extends BaseModel
     public function getResources(): array
     {
         return $this->resources;
-    }/**
+    }
+
+    /**
      * Fetches the configuration resource ID based on the given ID.
      * @param int $id The ID to retrieve the configuration resource ID.
      * @return \Illuminate\Support\Collection|bool Returns a collection containing the configuration resource ID if successful,

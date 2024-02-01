@@ -20,9 +20,9 @@ const routes: RouteRecordRaw[] = [
         ]
       },
       {
-        path: '/admin/settings/roles-and-permissions',
-        name: 'AdminSettingRoleAndPermissionIndexPage',
-        component: () => import('pages/AdminSettingRoleAndPermissionIndexPage.vue'),
+        path: '/admin/settings/roles',
+        name: 'AdminSettingRoleIndexPage',
+        component: () => import('pages/AdminSettingRoleIndexPage.vue'),
       },
       {
         path: '/admin/settings/general',
@@ -40,7 +40,7 @@ const routes: RouteRecordRaw[] = [
         component: () => import('pages/AdminSettingNotificationIndexPage.vue'),
       },
       {
-        path: '/admin/settings/resources',
+        path: '/admin/settings/resource',
         name: 'AdminSettingResourceIndexPage',
         component: () => import('pages/AdminSettingResourceIndexPage.vue'),
       },
@@ -65,9 +65,10 @@ const routes: RouteRecordRaw[] = [
             component: () => import('pages/AdminSettingConfigurationResourceShowPage.vue'),
           },
           {
-            path: 'edit/:id',
+            path: 'edit/:id?',
             name: 'AdminSettingConfigurationResourceEditPage',
             component: () => import('pages/AdminSettingConfigurationResourceEditPage.vue'),
+            props: route => ({ key: route.query.key }),
           },
         ]
       },

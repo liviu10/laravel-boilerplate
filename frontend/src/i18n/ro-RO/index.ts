@@ -221,7 +221,7 @@ export default {
           `,
         }
       },
-      roles_and_permissions: {
+      roles: {
         title: 'Roluri și permisiuni',
         page_description: `
           Această resursă alimentează o pagină de administrare dedicată gestionării rolurilor și permisiunilor utilizatorilor.
@@ -278,7 +278,7 @@ export default {
           `,
         },
       },
-      resources: {
+      resource: {
         title: 'Resurse',
         page_description: `
           Această resursă alimentează o pagină de administrare dedicată gestionării meniurilor și API-urilor.

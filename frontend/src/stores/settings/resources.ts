@@ -36,7 +36,7 @@ export const useResourceStore = defineStore(
     const handleApi = new HandleApi();
 
     // State
-    const baseEndpoint = '/admin/settings/resources'
+    const baseEndpoint = '/admin/settings/resource'
     const configurationBaseEndpoint = configurationResourceStore.baseEndpoint || 'admin/settings/configuration'
     const resourceName: Ref<string> = ref('');
     const resourceEndpoint: Ref<string> = ref('');

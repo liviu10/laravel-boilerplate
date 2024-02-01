@@ -14,6 +14,7 @@ use Illuminate\Contracts\Routing\ResponseFactory;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\View\View;
+use Illuminate\Support\Facades\Route;
 
 class ConfigurationResourceService implements BaseInterface, ConfigurationResourceInterface
 {

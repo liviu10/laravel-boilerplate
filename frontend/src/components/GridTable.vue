@@ -185,7 +185,7 @@ const moreOptions = [
     id: 5,
     clickEvent: () =>
       router.push({
-        name: 'AdminSettingConfigurationResourceCreatePage',
+        name: 'AdminSettingConfigurationResourceEditPage',
         query: { key: props.resource },
       }),
     icon: 'handyman',
