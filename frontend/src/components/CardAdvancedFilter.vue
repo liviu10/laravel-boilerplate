@@ -6,13 +6,16 @@
           v-if="checkObject.handleCheckIfArray(input.configuration_options)"
           dense
           emit-value
+          input-debounce="0"
           :label="t(`${translationString}.data_model.${input.field}`)"
           map-options
           outlined
           square
           stack-label
+          use-input
           v-model="input.value"
           :options="input.configuration_options"
+          @filter="filterFn"
         />
         <q-input
           v-else
@@ -42,6 +45,7 @@ import { HandleObject } from 'src/utilities/HandleObject';
 import { IConfigurationInput } from 'src/interfaces/ConfigurationResourceInterface';
 import { TDialog } from 'src/interfaces/BaseInterface';
 import CardGoToConfigureResource from 'src/components/CardGoToConfigureResource.vue';
+import { ref } from 'vue';
 
 interface ICardAdvancedFilter {
   actionName: TDialog | undefined;
@@ -50,13 +54,31 @@ interface ICardAdvancedFilter {
   translationString: string;
 }
 
-defineProps<ICardAdvancedFilter>();
+const props = defineProps<ICardAdvancedFilter>();
 
 // Defined the translation variable
 const { t } = useI18n({});
 
 // Check if object is array
 const checkObject = new HandleObject();
+
+// Filter function
+function filterFn(val: string, update: (arg0: () => void) => void) {
+  const needle = val.toLowerCase();
+  console.log('--> needle', needle, val);
+  update(() => {
+    // Assuming each input has its own options array
+    props.dataModel?.forEach((input) => {
+      if (input.configuration_options) {
+        input.configuration_options = input.configuration_options.filter((option) => {
+          console.log('--> option', option);
+          return option.label.toLowerCase().includes(needle);
+        });
+      }
+    });
+  });
+  console.log('---> dataModel', props.dataModel);
+}
 </script>
 
 <style lang="scss" scoped></style>

@@ -9,7 +9,9 @@
     <div class="admin-section admin-section--container">
       <grid-table
         :columns="roleStore.getColumns"
+        :is-download-active="false"
         :is-stats-active="false"
+        :is-upload-active="false"
         :search-resource="roleStore.getSearchResourceModel"
         :resource="roleStore.getResourceName"
         :rows="roleStore.getAllRecords.results?.data || []"
