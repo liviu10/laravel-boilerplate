@@ -9,7 +9,9 @@
     <div class="admin-section admin-section--container">
       <grid-table
         :columns="notificationStore.getColumns"
+        :is-download-active="false"
         :is-stats-active="false"
+        :is-upload-active="false"
         :search-resource="notificationStore.getSearchResourceModel"
         :resource="notificationStore.getResourceName"
         :rows="notificationStore.getAllRecords.results?.data || []"
@@ -68,7 +70,7 @@
           :translation-string="notificationStore.getTranslationString"
         />
 
-        <management-card-quick-show
+        <card-quick-show
           v-if="actionName === 'quick-show'"
           action-name="quick-show"
           :record-details="notificationStore.getSingleRecord"
@@ -76,7 +78,7 @@
           :translation-string="notificationStore.getTranslationString"
         />
 
-        <management-card-quick-edit
+        <card-quick-edit
           v-if="actionName === 'quick-edit'"
           action-name="quick-edit"
           :data-model="notificationStore.getDataModel"
@@ -84,14 +86,14 @@
           :translation-string="notificationStore.getTranslationString"
         >
           <template v-slot:record-details>
-            <management-card-quick-show
+            <card-quick-show
               action-name="quick-show"
               :record-details="notificationStore.getSingleRecord"
               :resource="notificationStore.getResourceName"
               :translation-string="notificationStore.getTranslationString"
             />
           </template>
-        </management-card-quick-edit>
+        </card-quick-edit>
 
         <card-delete
           v-if="actionName === 'delete'"
@@ -100,7 +102,7 @@
           :translation-string="notificationStore.getTranslationString"
         >
           <template v-slot:record-details>
-            <management-card-quick-show
+            <card-quick-show
               action-name="quick-show"
               :record-details="notificationStore.getSingleRecord"
               :resource="notificationStore.getResourceName"
@@ -137,8 +139,8 @@ import CardAdvancedFilter from 'src/components/CardAdvancedFilter.vue';
 import CardUpload from 'src/components/CardUpload.vue';
 import CardDownload from 'src/components/CardDownload.vue';
 import CardRestore from 'src/components/CardRestore.vue';
-import ManagementCardQuickShow from 'src/components/ManagementCardQuickShow.vue';
-import ManagementCardQuickEdit from 'src/components/ManagementCardQuickEdit.vue';
+import CardQuickShow from 'src/components/CardQuickShow.vue';
+import CardQuickEdit from 'src/components/CardQuickEdit.vue';
 import CardDelete from 'src/components/CardDelete.vue';
 import CardStats from 'src/components/CardStats.vue';
 import PageLoading from 'src/components/PageLoading.vue';

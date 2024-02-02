@@ -13,7 +13,9 @@
     <div class="admin-section admin-section--container">
       <grid-table
         :columns="resourceStore.getColumns"
+        :is-download-active="false"
         :is-stats-active="false"
+        :is-upload-active="false"
         :search-resource="resourceStore.getSearchResourceModel"
         :resource="resourceStore.getResourceName"
         :rows="resourceStore.getAllRecords.results?.data || []"
@@ -72,7 +74,7 @@
           :translation-string="resourceStore.getTranslationString"
         />
 
-        <management-card-quick-show
+        <card-quick-show
           v-if="actionName === 'quick-show'"
           action-name="quick-show"
           :record-details="resourceStore.getSingleRecord"
@@ -80,7 +82,7 @@
           :translation-string="resourceStore.getTranslationString"
         />
 
-        <management-card-quick-edit
+        <card-quick-edit
           v-if="actionName === 'quick-edit'"
           action-name="quick-edit"
           :data-model="resourceStore.getDataModel"
@@ -88,14 +90,14 @@
           :translation-string="resourceStore.getTranslationString"
         >
           <template v-slot:record-details>
-            <management-card-quick-show
+            <card-quick-show
               action-name="quick-show"
               :record-details="resourceStore.getSingleRecord"
               :resource="resourceStore.getResourceName"
               :translation-string="resourceStore.getTranslationString"
             />
           </template>
-        </management-card-quick-edit>
+        </card-quick-edit>
 
         <card-delete
           v-if="actionName === 'delete'"
@@ -104,7 +106,7 @@
           :translation-string="resourceStore.getTranslationString"
         >
           <template v-slot:record-details>
-            <management-card-quick-show
+            <card-quick-show
               action-name="quick-show"
               :record-details="resourceStore.getSingleRecord"
               :resource="resourceStore.getResourceName"
@@ -141,8 +143,8 @@ import CardAdvancedFilter from 'src/components/CardAdvancedFilter.vue';
 import CardUpload from 'src/components/CardUpload.vue';
 import CardDownload from 'src/components/CardDownload.vue';
 import CardRestore from 'src/components/CardRestore.vue';
-import ManagementCardQuickShow from 'src/components/ManagementCardQuickShow.vue';
-import ManagementCardQuickEdit from 'src/components/ManagementCardQuickEdit.vue';
+import CardQuickShow from 'src/components/CardQuickShow.vue';
+import CardQuickEdit from 'src/components/CardQuickEdit.vue';
 import CardDelete from 'src/components/CardDelete.vue';
 import CardStats from 'src/components/CardStats.vue';
 import PageLoading from 'src/components/PageLoading.vue';

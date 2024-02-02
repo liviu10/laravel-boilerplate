@@ -77,9 +77,11 @@
     <!-- No data slot -->
     <template v-slot:no-data>
       <card-go-to-configure-resource
+        v-if="nonExistingModel !== 'rows'"
         :non-existing-model="nonExistingModel"
         :resource="resource"
       />
+      <card-no-data v-else />
     </template>
   </q-table>
 </template>
@@ -99,6 +101,7 @@ import GridTableTopLeft from './GridTableTopLeft.vue';
 import GridTableBody from './GridTableBody.vue';
 import GridTableBodyActions from './GridTableBodyActions.vue';
 import CardGoToConfigureResource from './CardGoToConfigureResource.vue';
+import CardNoData from './CardNoData.vue';
 
 // Defined the translation variable
 const { t } = useI18n({});

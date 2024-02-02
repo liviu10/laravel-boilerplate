@@ -25,6 +25,8 @@
       :action-name="actionName"
       :display-dialog="displayDialog"
       :disable-action-dialog-button="disableActionDialogButton"
+      :hide-go-to-show-page="true"
+      :hide-go-to-edit-page="true"
       @handle-close-dialog="() => (displayDialog = false)"
       @handle-action-dialog="handleActionDialog"
       @handle-navigate-to-page="handleNavigateToPage"
@@ -70,7 +72,7 @@
           :translation-string="acceptedDomainStore.getTranslationString"
         />
 
-        <management-card-quick-show
+        <card-quick-show
           v-if="actionName === 'quick-show'"
           action-name="quick-show"
           :record-details="acceptedDomainStore.getSingleRecord"
@@ -78,7 +80,7 @@
           :translation-string="acceptedDomainStore.getTranslationString"
         />
 
-        <management-card-quick-edit
+        <card-quick-edit
           v-if="actionName === 'quick-edit'"
           action-name="quick-edit"
           :data-model="acceptedDomainStore.getDataModel"
@@ -86,14 +88,14 @@
           :translation-string="acceptedDomainStore.getTranslationString"
         >
           <template v-slot:record-details>
-            <management-card-quick-show
+            <card-quick-show
               action-name="quick-show"
               :record-details="acceptedDomainStore.getSingleRecord"
               :resource="acceptedDomainStore.getResourceName"
               :translation-string="acceptedDomainStore.getTranslationString"
             />
           </template>
-        </management-card-quick-edit>
+        </card-quick-edit>
 
         <card-delete
           v-if="actionName === 'delete'"
@@ -102,7 +104,7 @@
           :translation-string="acceptedDomainStore.getTranslationString"
         >
           <template v-slot:record-details>
-            <management-card-quick-show
+            <card-quick-show
               action-name="quick-show"
               :record-details="acceptedDomainStore.getSingleRecord"
               :resource="acceptedDomainStore.getResourceName"
@@ -139,8 +141,8 @@ import CardAdvancedFilter from 'src/components/CardAdvancedFilter.vue';
 import CardUpload from 'src/components/CardUpload.vue';
 import CardDownload from 'src/components/CardDownload.vue';
 import CardRestore from 'src/components/CardRestore.vue';
-import ManagementCardQuickShow from 'src/components/ManagementCardQuickShow.vue';
-import ManagementCardQuickEdit from 'src/components/ManagementCardQuickEdit.vue';
+import CardQuickShow from 'src/components/CardQuickShow.vue';
+import CardQuickEdit from 'src/components/CardQuickEdit.vue';
 import CardDelete from 'src/components/CardDelete.vue';
 import CardStats from 'src/components/CardStats.vue';
 import PageLoading from 'src/components/PageLoading.vue';

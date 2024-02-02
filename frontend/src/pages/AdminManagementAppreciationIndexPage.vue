@@ -67,7 +67,7 @@
           :translation-string="appreciationStore.getTranslationString"
         />
 
-        <management-card-quick-show
+        <card-quick-show
           v-if="actionName === 'quick-show'"
           action-name="quick-show"
           :record-details="appreciationStore.getSingleRecord"
@@ -75,7 +75,7 @@
           :translation-string="appreciationStore.getTranslationString"
         />
 
-        <management-card-quick-edit
+        <card-quick-edit
           v-if="actionName === 'quick-edit'"
           action-name="quick-edit"
           :data-model="appreciationStore.getDataModel"
@@ -83,14 +83,14 @@
           :translation-string="appreciationStore.getTranslationString"
         >
           <template v-slot:record-details>
-            <management-card-quick-show
+            <card-quick-show
               action-name="quick-show"
               :record-details="appreciationStore.getSingleRecord"
               :resource="appreciationStore.getResourceName"
               :translation-string="appreciationStore.getTranslationString"
             />
           </template>
-        </management-card-quick-edit>
+        </card-quick-edit>
 
         <card-delete
           v-if="actionName === 'delete'"
@@ -99,7 +99,7 @@
           :translation-string="appreciationStore.getTranslationString"
         >
           <template v-slot:record-details>
-            <management-card-quick-show
+            <card-quick-show
               action-name="quick-show"
               :record-details="appreciationStore.getSingleRecord"
               :resource="appreciationStore.getResourceName"
@@ -135,8 +135,8 @@ import CardAdvancedFilter from 'src/components/CardAdvancedFilter.vue';
 import CardUpload from 'src/components/CardUpload.vue';
 import CardDownload from 'src/components/CardDownload.vue';
 import CardRestore from 'src/components/CardRestore.vue';
-import ManagementCardQuickShow from 'src/components/ManagementCardQuickShow.vue';
-import ManagementCardQuickEdit from 'src/components/ManagementCardQuickEdit.vue';
+import CardQuickShow from 'src/components/CardQuickShow.vue';
+import CardQuickEdit from 'src/components/CardQuickEdit.vue';
 import CardDelete from 'src/components/CardDelete.vue';
 import CardStats from 'src/components/CardStats.vue';
 import PageLoading from 'src/components/PageLoading.vue';

@@ -1,11 +1,13 @@
 <template>
-  <p class="admin-section admin-section--go-to-configure-resource">
+  <div class="admin-section admin-section--go-to-configure-resource">
     <q-icon name="warning" />
-    {{
-      t(`admin.generic.no_data_model`, {
-        nonExistingModel: nonExistingModel || undefined,
-      })
-    }}
+    <p>
+      {{
+        t(`admin.generic.no_data_model`, {
+          nonExistingModel: nonExistingModel || undefined,
+        })
+      }}
+    </p>
     <q-btn
       color="positive"
       dense
@@ -17,7 +19,7 @@
         {{ t('admin.generic.configure_resource_tooltip') }}
       </q-tooltip>
     </q-btn>
-  </p>
+  </div>
 </template>
 
 <script setup lang="ts">

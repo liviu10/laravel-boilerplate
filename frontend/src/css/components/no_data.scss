@@ -1,5 +1,5 @@
 .admin-section {
-  &--go-to-configure-resource {
+  &--no-data {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -21,10 +21,6 @@
         margin-bottom: 16px;
         text-align: justify;
       }
-    }
-    & .q-btn {
-      color: #000000 !important;
-      line-height: normal;
     }
   }
 }
