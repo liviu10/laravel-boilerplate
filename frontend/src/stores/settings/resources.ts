@@ -53,6 +53,7 @@ export const useResourceStore = defineStore(
     const allDeletedRecords: Ref<IAllRecordsUnpaginated> = ref({} as IAllRecordsUnpaginated);
     const resourceConfiguration: Ref<IConfiguration['results']> = ref([] as IConfiguration['results']);
     const singleRecord: Ref<ISingleRecord> = ref({} as ISingleRecord);
+    const loadPage: Ref<boolean> = ref(false);
 
     // Client state
     const apiClientMenu: Ref<IAllRecordsUnpaginated['results']> = ref([] as IAllRecordsUnpaginated['results'])
@@ -79,6 +80,7 @@ export const useResourceStore = defineStore(
     // Actions
     async function handleIndex(type?: TResourceType) {
       try {
+        loadPage.value = true;
         handleApiEndpoint(window.location.pathname).then(async () => {
           const apiEndpoint = getApiEndpoint.value
           if (apiEndpoint && Array.isArray(apiEndpoint) && apiEndpoint.length) {
@@ -99,6 +101,7 @@ export const useResourceStore = defineStore(
                 } else {
                   allRecords.value = response.data as IAllRecords;
                 }
+                loadPage.value = false;
               } else {
                 console.log('-> apiConfiguration does not exist', resourceConfiguration.value);
               }
@@ -121,6 +124,7 @@ export const useResourceStore = defineStore(
                 } else {
                   allRecords.value = response.data as IAllRecords;
                 }
+                loadPage.value = false;
               } else {
                 console.log('-> apiConfiguration does not exist', resourceConfiguration.value);
               }
@@ -187,6 +191,7 @@ export const useResourceStore = defineStore(
     async function handleAdvancedFilter(type?: TResourceType) {
       const payload = handleApi.createFilterPayload(filterModel.value, searchResourceModel.value);
       try {
+        loadPage.value = true;
         handleApiEndpoint(window.location.pathname).then(async () => {
           const apiEndpoint = getApiEndpoint.value
           if (apiEndpoint && Array.isArray(apiEndpoint) && apiEndpoint.length) {
@@ -198,6 +203,7 @@ export const useResourceStore = defineStore(
               },
             });
             allRecords.value = response.data as IAllRecords;
+            loadPage.value = false;
           } else {
             console.log('-> apiEndpoint does not exist, but the default value is used', apiEndpoint);
             const response = await api.get(baseEndpoint, {
@@ -207,6 +213,7 @@ export const useResourceStore = defineStore(
               },
             });
             allRecords.value = response.data as IAllRecords;
+            loadPage.value = false;
           }
         });
       } catch (error) {
@@ -217,6 +224,7 @@ export const useResourceStore = defineStore(
     async function handleUpload() {
       const payload = handleApi.createPayload(uploadModel.value);
       try {
+        loadPage.value = true;
         handleApiEndpoint(window.location.pathname).then(async () => {
           const apiEndpoint = getApiEndpoint.value
           if (apiEndpoint && Array.isArray(apiEndpoint) && apiEndpoint.length) {
@@ -225,12 +233,14 @@ export const useResourceStore = defineStore(
               ...payload,
             });
             allRecords.value = response.data as IAllRecords;
+            loadPage.value = false;
           } else {
             console.log('-> apiEndpoint does not exist, but the default value is used', apiEndpoint);
             const response = await api.post(baseEndpoint, {
               ...payload,
             });
             allRecords.value = response.data as IAllRecords;
+            loadPage.value = false;
           }
         });
       } catch (error) {
@@ -241,6 +251,7 @@ export const useResourceStore = defineStore(
     async function handleDownload() {
       const payload = handleApi.createPayload(downloadModel.value);
       try {
+        loadPage.value = true;
         handleApiEndpoint(window.location.pathname).then(async () => {
           const apiEndpoint = getApiEndpoint.value
           if (apiEndpoint && Array.isArray(apiEndpoint) && apiEndpoint.length) {
@@ -249,12 +260,14 @@ export const useResourceStore = defineStore(
               ...payload,
             });
             allRecords.value = response.data as IAllRecords;
+            loadPage.value = false;
           } else {
             console.log('-> apiEndpoint does not exist, but the default value is used', apiEndpoint);
             const response = await api.post(baseEndpoint, {
               ...payload,
             });
             allRecords.value = response.data as IAllRecords;
+            loadPage.value = false;
           }
         });
       } catch (error) {
@@ -297,6 +310,7 @@ export const useResourceStore = defineStore(
     async function handleCreate() {
       const payload = handleApi.createPayload(dataModel.value);
       try {
+        loadPage.value = true;
         handleApiEndpoint(window.location.pathname).then(async () => {
           const apiEndpoint = getApiEndpoint.value
           if (apiEndpoint && Array.isArray(apiEndpoint) && apiEndpoint.length) {
@@ -305,12 +319,14 @@ export const useResourceStore = defineStore(
               ...payload,
             });
             allRecords.value = response.data as IAllRecords;
+            loadPage.value = false;
           } else {
             console.log('-> apiEndpoint does not exist, but the default value is used', apiEndpoint);
             const response = await api.post(baseEndpoint, {
               ...payload,
             });
             allRecords.value = response.data as IAllRecords;
+            loadPage.value = false;
           }
         });
       } catch (error) {
@@ -320,6 +336,7 @@ export const useResourceStore = defineStore(
 
     async function handleShow(recordId: number | undefined, type?: TResourceType) {
       try {
+        loadPage.value = true;
         handleApiEndpoint(window.location.pathname).then(async () => {
           const apiEndpoint = getApiEndpoint.value
           if (apiEndpoint && Array.isArray(apiEndpoint) && apiEndpoint.length) {
@@ -330,6 +347,7 @@ export const useResourceStore = defineStore(
               },
             });
             singleRecord.value = response.data as ISingleRecord;
+            loadPage.value = false;
           } else {
             console.log('-> apiEndpoint does not exist, but the default value is used', apiEndpoint);
             const response = await api.get(`${baseEndpoint}/${recordId}`, {
@@ -338,6 +356,7 @@ export const useResourceStore = defineStore(
               },
             });
             singleRecord.value = response.data as ISingleRecord;
+            loadPage.value = false;
           }
         });
       } catch (error) {
@@ -380,6 +399,7 @@ export const useResourceStore = defineStore(
       // State
       baseEndpoint,
       resourceEndpoint,
+      loadPage,
 
       // Getters
       getResourceName,

@@ -115,7 +115,7 @@
       </template>
     </dialog-card>
 
-    <page-loading :visible="loadPage" />
+    <page-loading :visible="notificationStore.loadPage" />
   </q-page>
 </template>
 
@@ -154,9 +154,6 @@ const notificationStore = useNotificationStore();
 // Defined the translation variable
 const { t } = useI18n({});
 
-// Load page
-const loadPage = ref(false);
-
 // Get all records
 notificationStore.handleIndex('paginate');
 
@@ -171,11 +168,9 @@ const disableActionDialogButton: Ref<{
 // Handle open dialog
 async function handleOpenDialog(action: TDialog, recordId?: number): Promise<void> {
   const checkObject = new HandleObject();
-  loadPage.value = true;
   switch (action) {
     case 'create':
       actionName.value = action;
-      loadPage.value = false;
       displayDialog.value = true;
       if (notificationStore.getFilterModel.length === 0) {
         disableActionDialogButton.value = {
@@ -186,7 +181,6 @@ async function handleOpenDialog(action: TDialog, recordId?: number): Promise<voi
       break;
     case 'advanced-filters':
       actionName.value = action;
-      loadPage.value = false;
       displayDialog.value = true;
       if (notificationStore.getFilterModel.length === 0) {
         disableActionDialogButton.value = {
@@ -197,7 +191,6 @@ async function handleOpenDialog(action: TDialog, recordId?: number): Promise<voi
       break;
     case 'upload':
       actionName.value = action;
-      loadPage.value = false;
       displayDialog.value = true;
       if (notificationStore.getUploadModel.length === 0) {
         disableActionDialogButton.value = {
@@ -208,7 +201,6 @@ async function handleOpenDialog(action: TDialog, recordId?: number): Promise<voi
       break;
     case 'download':
       actionName.value = action;
-      loadPage.value = false;
       displayDialog.value = true;
       if (notificationStore.getDownloadModel.length === 0) {
         disableActionDialogButton.value = {
@@ -219,13 +211,11 @@ async function handleOpenDialog(action: TDialog, recordId?: number): Promise<voi
       break;
     case 'stats':
       actionName.value = action;
-      loadPage.value = false;
       displayDialog.value = true;
       break;
     case 'quick-show':
       actionName.value = action;
       notificationStore.handleShow(recordId).then(() => {
-        loadPage.value = false;
         displayDialog.value = true;
       });
       break;
@@ -238,7 +228,6 @@ async function handleOpenDialog(action: TDialog, recordId?: number): Promise<voi
         };
       } else {
         notificationStore.handleShow(recordId).then(() => {
-          loadPage.value = false;
           displayDialog.value = true;
         });
       }
@@ -246,7 +235,6 @@ async function handleOpenDialog(action: TDialog, recordId?: number): Promise<voi
     case 'delete':
       actionName.value = action;
       notificationStore.handleShow(recordId).then(() => {
-        loadPage.value = false;
         displayDialog.value = true;
       });
       break;
@@ -262,7 +250,6 @@ async function handleOpenDialog(action: TDialog, recordId?: number): Promise<voi
             disable: true,
           };
         }
-        loadPage.value = false;
         displayDialog.value = true;
       });
       break;
@@ -273,58 +260,48 @@ async function handleOpenDialog(action: TDialog, recordId?: number): Promise<voi
 
 // Handle action dialog
 async function handleActionDialog(action: TDialog): Promise<void> {
-  loadPage.value = true;
   switch (action) {
     case 'create':
       notificationStore.handleCreate().then(() => {
         displayDialog.value = false;
-        loadPage.value = false;
       });
       break;
     case 'advanced-filters':
       notificationStore.handleAdvancedFilter('paginate').then(() => {
         displayDialog.value = false;
-        loadPage.value = false;
       });
       break;
     case 'upload':
       notificationStore.handleUpload().then(() => {
         displayDialog.value = false;
-        loadPage.value = false;
       });
       break;
     case 'download':
       notificationStore.handleDownload().then(() => {
         displayDialog.value = false;
-        loadPage.value = false;
       });
       break;
     case 'restore':
       notificationStore.handleRestore().then(() => {
         displayDialog.value = false;
-        loadPage.value = false;
       });
       break;
     case 'quick-show':
       displayDialog.value = false;
-      loadPage.value = false;
       break;
     case 'quick-edit':
       notificationStore.handleUpdate().then(() => {
         displayDialog.value = false;
-        loadPage.value = false;
       });
       break;
     case 'delete':
       notificationStore.handleDelete().then(() => {
         displayDialog.value = false;
-        loadPage.value = false;
       });
       break;
     case 'stats':
       notificationStore.handleStats().then(() => {
         displayDialog.value = false;
-        loadPage.value = false;
       });
       break;
     default:

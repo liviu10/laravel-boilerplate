@@ -50,14 +50,13 @@
       </q-form>
     </div>
 
-    <page-loading :visible="loadPage" />
+    <page-loading :visible="userProfileStore.loadPage" />
   </q-page>
 </template>
 
 <script setup lang="ts">
 // Import vue related utilities
 import { useI18n } from 'vue-i18n';
-import { ref } from 'vue';
 
 // Import library utilities, interfaces and components
 import PageTitle from 'src/components/PageTitle.vue';
@@ -72,9 +71,6 @@ const userProfileStore = useUserProfileStore();
 
 // Defined the translation variable
 const { t } = useI18n({});
-
-// Load page
-const loadPage = ref(false);
 
 // Get user profile data model
 userProfileStore.handleIndex()

@@ -44,6 +44,7 @@ export const useUserProfileStore = defineStore(
     const allDeletedRecords: Ref<IAllRecordsUnpaginated> = ref({} as IAllRecordsUnpaginated);
     const resourceConfiguration: Ref<IConfiguration['results']> = ref([] as IConfiguration['results']);
     const singleRecord: Ref<ISingleRecord> = ref({} as ISingleRecord);
+    const loadPage: Ref<boolean> = ref(false);
 
     // Getters
     const getResourceName = computed(() => (resourceName.value = handleRoute.handleResourceNameFromRoute()));
@@ -56,6 +57,7 @@ export const useUserProfileStore = defineStore(
     // Actions
     async function handleIndex() {
       try {
+        loadPage.value = true;
         resourceStore.handleApiEndpoint(window.location.pathname).then(async () => {
           const apiEndpoint = resourceStore.getApiEndpoint
           if (apiEndpoint && Array.isArray(apiEndpoint) && apiEndpoint.length) {
@@ -63,6 +65,7 @@ export const useUserProfileStore = defineStore(
             handleGetConfigurationId(getResourceName.value).then(async () => {
               if (resourceConfiguration.value) {
                 await handleGetInputs(resourceConfiguration.value)
+                loadPage.value = false;
               } else {
                 console.log('-> apiConfiguration does not exist', resourceConfiguration.value);
               }
@@ -72,6 +75,7 @@ export const useUserProfileStore = defineStore(
             handleGetConfigurationId(getResourceName.value).then(async () => {
               if (resourceConfiguration.value) {
                 await handleGetInputs(resourceConfiguration.value)
+                loadPage.value = false;
               } else {
                 console.log('-> apiConfiguration does not exist', resourceConfiguration.value);
               }
@@ -116,6 +120,7 @@ export const useUserProfileStore = defineStore(
 
     async function handleShow(recordId: number | undefined, type?: TResourceType) {
       try {
+        loadPage.value = true;
         resourceStore.handleApiEndpoint(window.location.pathname).then(async () => {
           const apiEndpoint = resourceStore.getApiEndpoint
           if (apiEndpoint && Array.isArray(apiEndpoint) && apiEndpoint.length) {
@@ -126,6 +131,7 @@ export const useUserProfileStore = defineStore(
               },
             });
             singleRecord.value = response.data as ISingleRecord;
+            loadPage.value = false;
           } else {
             console.log('-> apiEndpoint does not exist, but the default value is used', apiEndpoint);
             const response = await api.get(`${baseEndpoint}/${recordId}`, {
@@ -134,6 +140,7 @@ export const useUserProfileStore = defineStore(
               },
             });
             singleRecord.value = response.data as ISingleRecord;
+            loadPage.value = false;
           }
         });
       } catch (error) {
@@ -157,6 +164,7 @@ export const useUserProfileStore = defineStore(
     return {
       // State
       resourceEndpoint,
+      loadPage,
 
       // Getters
       getResourceName,

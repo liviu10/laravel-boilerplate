@@ -65,14 +65,14 @@ import { IDialogAction, TDialog } from 'src/interfaces/BaseInterface';
 import { HandleText } from 'src/utilities/HandleText';
 
 interface IDialogCard {
-  actionName?: TDialog;
+  actionName?: TDialog
   disableActionDialogButton?: {
     action: TDialog | undefined
     disable: boolean
   };
-  displayDialog?: boolean;
-  hideGoToShowPage?: boolean;
-  hideGoToEditPage?: boolean;
+  displayDialog?: boolean
+  hideGoToShowPage?: boolean
+  hideGoToEditPage?: boolean
 }
 
 const props = defineProps<IDialogCard>();

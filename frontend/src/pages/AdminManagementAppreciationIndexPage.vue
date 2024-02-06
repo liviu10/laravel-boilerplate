@@ -112,7 +112,7 @@
       </template>
     </dialog-card>
 
-    <page-loading :visible="loadPage" />
+    <page-loading :visible="appreciationStore.loadPage" />
   </q-page>
 </template>
 
@@ -150,9 +150,6 @@ const appreciationStore = useAppreciationStore();
 // Defined the translation variable
 const { t } = useI18n({});
 
-// Load page
-const loadPage = ref(false);
-
 // Get all records
 appreciationStore.handleIndex('paginate');
 
@@ -169,11 +166,9 @@ const hideGoToEditPage = ref(false);
 // Handle open dialog
 async function handleOpenDialog(action: TDialog, recordId?: number): Promise<void> {
   const checkObject = new HandleObject();
-  loadPage.value = true;
   switch (action) {
     case 'create':
       actionName.value = action;
-      loadPage.value = false;
       displayDialog.value = true;
       if (appreciationStore.getDataModel.length === 0) {
         disableActionDialogButton.value = {
@@ -184,7 +179,6 @@ async function handleOpenDialog(action: TDialog, recordId?: number): Promise<voi
       break;
     case 'advanced-filters':
       actionName.value = action;
-      loadPage.value = false;
       displayDialog.value = true;
       if (appreciationStore.getFilterModel.length === 0) {
         disableActionDialogButton.value = {
@@ -195,7 +189,6 @@ async function handleOpenDialog(action: TDialog, recordId?: number): Promise<voi
       break;
     case 'upload':
       actionName.value = action;
-      loadPage.value = false;
       displayDialog.value = true;
       if (appreciationStore.getUploadModel.length === 0) {
         disableActionDialogButton.value = {
@@ -206,7 +199,6 @@ async function handleOpenDialog(action: TDialog, recordId?: number): Promise<voi
       break;
     case 'download':
       actionName.value = action;
-      loadPage.value = false;
       displayDialog.value = true;
       if (appreciationStore.getDownloadModel.length === 0) {
         disableActionDialogButton.value = {
@@ -217,13 +209,11 @@ async function handleOpenDialog(action: TDialog, recordId?: number): Promise<voi
       break;
     case 'stats':
       actionName.value = action;
-      loadPage.value = false;
       displayDialog.value = true;
       break;
     case 'quick-show':
       actionName.value = action;
       appreciationStore.handleShow(recordId).then(() => {
-        loadPage.value = false;
         displayDialog.value = true;
         hideGoToShowPage.value = true;
       });
@@ -237,7 +227,6 @@ async function handleOpenDialog(action: TDialog, recordId?: number): Promise<voi
         };
       } else {
         appreciationStore.handleShow(recordId).then(() => {
-          loadPage.value = false;
           displayDialog.value = true;
           hideGoToEditPage.value = true;
         });
@@ -246,7 +235,6 @@ async function handleOpenDialog(action: TDialog, recordId?: number): Promise<voi
     case 'delete':
       actionName.value = action;
       appreciationStore.handleShow(recordId).then(() => {
-        loadPage.value = false;
         displayDialog.value = true;
       });
       break;
@@ -262,7 +250,6 @@ async function handleOpenDialog(action: TDialog, recordId?: number): Promise<voi
             disable: true,
           };
         }
-        loadPage.value = false;
         displayDialog.value = true;
       });
       break;
@@ -273,58 +260,48 @@ async function handleOpenDialog(action: TDialog, recordId?: number): Promise<voi
 
 // Handle action dialog
 async function handleActionDialog(action: TDialog): Promise<void> {
-  loadPage.value = true;
   switch (action) {
     case 'create':
       appreciationStore.handleCreate().then(() => {
         displayDialog.value = false;
-        loadPage.value = false;
       });
       break;
     case 'advanced-filters':
       appreciationStore.handleAdvancedFilter('paginate').then(() => {
         displayDialog.value = false;
-        loadPage.value = false;
       });
       break;
     case 'upload':
       appreciationStore.handleUpload().then(() => {
         displayDialog.value = false;
-        loadPage.value = false;
       });
       break;
     case 'download':
       appreciationStore.handleDownload().then(() => {
         displayDialog.value = false;
-        loadPage.value = false;
       });
       break;
     case 'restore':
       appreciationStore.handleRestore().then(() => {
         displayDialog.value = false;
-        loadPage.value = false;
       });
       break;
     case 'quick-show':
       displayDialog.value = false;
-      loadPage.value = false;
       break;
     case 'quick-edit':
       appreciationStore.handleUpdate().then(() => {
         displayDialog.value = false;
-        loadPage.value = false;
       });
       break;
     case 'delete':
       appreciationStore.handleDelete().then(() => {
         displayDialog.value = false;
-        loadPage.value = false;
       });
       break;
     case 'stats':
       appreciationStore.handleStats().then(() => {
         displayDialog.value = false;
-        loadPage.value = false;
       });
       break;
     default:

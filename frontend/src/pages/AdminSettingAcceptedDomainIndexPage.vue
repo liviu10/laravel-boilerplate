@@ -117,7 +117,7 @@
       </template>
     </dialog-card>
 
-    <page-loading :visible="loadPage" />
+    <page-loading :visible="acceptedDomainStore.loadPage" />
   </q-page>
 </template>
 
@@ -156,9 +156,6 @@ const acceptedDomainStore = useAcceptedDomainStore();
 // Defined the translation variable
 const { t } = useI18n({});
 
-// Load page
-const loadPage = ref(false);
-
 // Get all records
 acceptedDomainStore.handleIndex('paginate');
 
@@ -173,11 +170,9 @@ const disableActionDialogButton: Ref<{
 // Handle open dialog
 async function handleOpenDialog(action: TDialog, recordId?: number): Promise<void> {
   const checkObject = new HandleObject();
-  loadPage.value = true;
   switch (action) {
     case 'create':
       actionName.value = action;
-      loadPage.value = false;
       displayDialog.value = true;
       if (acceptedDomainStore.getDataModel.length === 0) {
         disableActionDialogButton.value = {
@@ -188,7 +183,6 @@ async function handleOpenDialog(action: TDialog, recordId?: number): Promise<voi
       break;
     case 'advanced-filters':
       actionName.value = action;
-      loadPage.value = false;
       displayDialog.value = true;
       if (acceptedDomainStore.getFilterModel.length === 0) {
         disableActionDialogButton.value = {
@@ -199,7 +193,6 @@ async function handleOpenDialog(action: TDialog, recordId?: number): Promise<voi
       break;
     case 'upload':
       actionName.value = action;
-      loadPage.value = false;
       displayDialog.value = true;
       if (acceptedDomainStore.getUploadModel.length === 0) {
         disableActionDialogButton.value = {
@@ -210,7 +203,6 @@ async function handleOpenDialog(action: TDialog, recordId?: number): Promise<voi
       break;
     case 'download':
       actionName.value = action;
-      loadPage.value = false;
       displayDialog.value = true;
       if (acceptedDomainStore.getDownloadModel.length === 0) {
         disableActionDialogButton.value = {
@@ -221,13 +213,11 @@ async function handleOpenDialog(action: TDialog, recordId?: number): Promise<voi
       break;
     case 'stats':
       actionName.value = action;
-      loadPage.value = false;
       displayDialog.value = true;
       break;
     case 'quick-show':
       actionName.value = action;
       acceptedDomainStore.handleShow(recordId).then(() => {
-        loadPage.value = false;
         displayDialog.value = true;
       });
       break;
@@ -240,7 +230,6 @@ async function handleOpenDialog(action: TDialog, recordId?: number): Promise<voi
         };
       } else {
         acceptedDomainStore.handleShow(recordId).then(() => {
-          loadPage.value = false;
           displayDialog.value = true;
         });
       }
@@ -248,7 +237,6 @@ async function handleOpenDialog(action: TDialog, recordId?: number): Promise<voi
     case 'delete':
       actionName.value = action;
       acceptedDomainStore.handleShow(recordId).then(() => {
-        loadPage.value = false;
         displayDialog.value = true;
       });
       break;
@@ -266,7 +254,6 @@ async function handleOpenDialog(action: TDialog, recordId?: number): Promise<voi
             disable: true,
           };
         }
-        loadPage.value = false;
         displayDialog.value = true;
       });
       break;
@@ -277,58 +264,48 @@ async function handleOpenDialog(action: TDialog, recordId?: number): Promise<voi
 
 // Handle action dialog
 async function handleActionDialog(action: TDialog): Promise<void> {
-  loadPage.value = true;
   switch (action) {
     case 'create':
       acceptedDomainStore.handleCreate().then(() => {
         displayDialog.value = false;
-        loadPage.value = false;
       });
       break;
     case 'advanced-filters':
       acceptedDomainStore.handleAdvancedFilter('paginate').then(() => {
         displayDialog.value = false;
-        loadPage.value = false;
       });
       break;
     case 'upload':
       acceptedDomainStore.handleUpload().then(() => {
         displayDialog.value = false;
-        loadPage.value = false;
       });
       break;
     case 'download':
       acceptedDomainStore.handleDownload().then(() => {
         displayDialog.value = false;
-        loadPage.value = false;
       });
       break;
     case 'restore':
       acceptedDomainStore.handleRestore().then(() => {
         displayDialog.value = false;
-        loadPage.value = false;
       });
       break;
     case 'quick-show':
       displayDialog.value = false;
-      loadPage.value = false;
       break;
     case 'quick-edit':
       acceptedDomainStore.handleUpdate().then(() => {
         displayDialog.value = false;
-        loadPage.value = false;
       });
       break;
     case 'delete':
       acceptedDomainStore.handleDelete().then(() => {
         displayDialog.value = false;
-        loadPage.value = false;
       });
       break;
     case 'stats':
       acceptedDomainStore.handleStats().then(() => {
         displayDialog.value = false;
-        loadPage.value = false;
       });
       break;
     default:
