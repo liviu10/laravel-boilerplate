@@ -132,24 +132,28 @@ const moreOptions = [
     id: 1,
     clickEvent: () => openDialog(actionMethods[4]),
     icon: 'filter_alt',
+    is_active: true,
     label: 'admin.generic.advanced_filters_record_label',
   },
   {
     id: 2,
     clickEvent: () => openDialog(actionMethods[5]),
     icon: 'upload',
+    is_active: true,
     label: 'admin.generic.upload_record_label',
   },
   {
     id: 3,
     clickEvent: () => openDialog(actionMethods[6]),
     icon: 'download',
+    is_active: true,
     label: 'admin.generic.download_record_label',
   },
   {
     id: 4,
     clickEvent: () => openDialog(actionMethods[8]),
     icon: 'restore_from_trash',
+    is_active: true,
     label: 'admin.generic.restore_record_label',
   },
   {
@@ -162,6 +166,7 @@ const moreOptions = [
         ({ resource: props.resource } as unknown) as LocationQueryRaw
       ),
     icon: 'handyman',
+    is_active: true,
     label: 'admin.generic.configure_resource',
   },
 ];
@@ -177,24 +182,28 @@ const moreActions = computed(() => {
         id: 1,
         clickEvent: () => openDialog(actionMethods[1], record),
         icon: 'visibility',
+        is_active: true,
         label: 'admin.generic.quick_show_record_label',
       },
       {
         id: 2,
         clickEvent: () => openDialog(actionMethods[2], record),
         icon: 'edit',
+        is_active: true,
         label: 'admin.generic.quick_edit_record_label',
       },
       {
         id: 3,
         clickEvent: () => openDialog(actionMethods[3], record),
         icon: 'delete',
+        is_active: true,
         label: 'admin.generic.delete_record_label',
       },
       {
         id: 4,
         clickEvent: () => openDialog(actionMethods[7], record),
         icon: 'query_stats',
+        is_active: true,
         label: 'admin.generic.content_stats',
       },
     ];

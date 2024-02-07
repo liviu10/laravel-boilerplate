@@ -78,6 +78,7 @@ export default {
       update_profile_label_tooltip: 'Cliquez ici pour mettre à jour votre profil',
       deactivate_account: 'Désactiver le compte',
       deactivate_account_tooltip: 'Cliquez ici pour désactiver votre compte',
+      search_results_message: 'Résultats de recherche pour',
     },
     home: {
       title: 'Dashboard',

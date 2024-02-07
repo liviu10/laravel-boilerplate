@@ -6,7 +6,7 @@
       :page-description="t(`${tagStore.getTranslationString}.page_description`)"
     />
 
-    <div class="admin-section admin-section--container">
+    <div v-if="!tagStore.loadPage" class="admin-section admin-section--container">
       <grid-table
         :columns="tagStore.getColumns"
         :resource="tagStore.getResourceName"

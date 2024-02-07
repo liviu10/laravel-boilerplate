@@ -6,7 +6,7 @@
       :page-description="t(`${generalStore.getTranslationString}.page_description`)"
     />
 
-    <div class="admin-section admin-section--container">
+    <div v-if="!generalStore.loadPage" class="admin-section admin-section--container">
       <grid-table
         :columns="generalStore.getColumns"
         :is-stats-active="false"

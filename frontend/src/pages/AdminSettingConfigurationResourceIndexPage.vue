@@ -10,7 +10,7 @@
       "
     />
 
-    <div class="admin-section admin-section--container">
+    <div v-if="!configurationResourceStore.loadPage" class="admin-section admin-section--container">
       <grid-table
         :columns="configurationResourceStore.getColumns"
         :is-stats-active="false"

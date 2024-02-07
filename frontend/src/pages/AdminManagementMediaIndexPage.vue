@@ -6,7 +6,7 @@
       :page-description="t(`${mediaStore.getTranslationString}.page_description`)"
     />
 
-    <div class="admin-section admin-section--container">
+    <div v-if="!mediaStore.loadPage" class="admin-section admin-section--container">
       <grid-table
         :columns="mediaStore.getColumns"
         :resource="mediaStore.getResourceName"

@@ -8,7 +8,7 @@
       "
     />
 
-    <div class="admin-section admin-section--container admin-section--container-edit">
+    <div v-if="!userProfileStore.loadPage" class="admin-section admin-section--container admin-section--container-edit">
       <q-avatar size="100px" font-size="52px">
         <img src="../assets/images/admin_navbar_avatar.webp">
       </q-avatar>

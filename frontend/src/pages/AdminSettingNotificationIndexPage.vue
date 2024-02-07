@@ -6,7 +6,7 @@
       :page-description="t(`${notificationStore.getTranslationString}.page_description`)"
     />
 
-    <div class="admin-section admin-section--container">
+    <div v-if="!notificationStore.loadPage" class="admin-section admin-section--container">
       <grid-table
         :columns="notificationStore.getColumns"
         :is-download-active="false"

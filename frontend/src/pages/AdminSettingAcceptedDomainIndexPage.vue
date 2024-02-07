@@ -8,7 +8,13 @@
       "
     />
 
-    <div class="admin-section admin-section--container">
+    <search-results
+      v-if="checkObject.handleCheckIfFilter(acceptedDomainStore.getFilterModel)"
+      :filters="acceptedDomainStore.getFilterModel"
+      @handle-clear-filters="acceptedDomainStore.handleClearFilters"
+    />
+
+    <div v-if="!acceptedDomainStore.loadPage" class="admin-section admin-section--container">
       <grid-table
         :columns="acceptedDomainStore.getColumns"
         :is-stats-active="false"
@@ -134,6 +140,7 @@ import { TDialog } from 'src/interfaces/BaseInterface';
 import { ISingleRecord } from 'src/interfaces/AcceptedDomainInterface';
 import PageTitle from 'src/components/PageTitle.vue';
 import PageDescription from 'src/components/PageDescription.vue';
+import SearchResults from 'src/components/SearchResults.vue';
 import GridTable from 'src/components/GridTable.vue';
 import DialogCard from 'src/components/DialogCard.vue';
 import CardCreate from 'src/components/CardCreate.vue';
@@ -167,9 +174,11 @@ const disableActionDialogButton: Ref<{
   disable: boolean;
 }> = ref({ action: undefined, disable: false });
 
+// Instantiate the handle object class
+const checkObject = new HandleObject();
+
 // Handle open dialog
 async function handleOpenDialog(action: TDialog, recordId?: number): Promise<void> {
-  const checkObject = new HandleObject();
   switch (action) {
     case 'create':
       actionName.value = action;

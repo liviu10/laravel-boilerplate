@@ -47,6 +47,7 @@ interface IHandleObject {
   handleActiveInputsUploadModel: (array: IConfigurationInput[]) => IConfigurationInput[];
   handleActiveInputsDownloadModel: (array: IConfigurationInput[]) => IConfigurationInput[];
   handleActiveInputsSearchResourceModel: (array: IConfigurationInput[]) => IConfigurationInput[];
+  handleCheckIfFilter: (array: IConfigurationInput[]) => boolean;
 }
 
 export class HandleObject implements IHandleObject {
@@ -147,5 +148,23 @@ export class HandleObject implements IHandleObject {
     return array.filter(
       (filter: IConfigurationInput) => filter.key === 'search_resource'
     )
+  }
+
+  public handleCheckIfFilter(array: IConfigurationInput[]): boolean {
+    if (this.handleCheckIfArray(array)) {
+      for (const item of array) {
+        if (
+          item.hasOwnProperty('value') &&
+          item.value !== null &&
+          item.value !== '' &&
+          item.value !== undefined
+        ) {
+          return true;
+        }
+      }
+      return false
+    } else {
+      return false;
+    }
   }
 }

@@ -78,6 +78,7 @@ export default {
       update_profile_label_tooltip: 'Faceți clic aici pentru a vă actualiza profilul',
       deactivate_account: 'Dezactivați contul',
       deactivate_account_tooltip: 'Faceți clic aici pentru a dezactiva contul dvs.',
+      search_results_message: 'Rezultatele cautarii dupa',
     },
     home: {
       title: 'Dashboard',

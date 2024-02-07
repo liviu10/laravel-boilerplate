@@ -10,7 +10,7 @@
       "
     />
 
-    <div class="admin-section admin-section--container">
+    <div v-if="!resourceStore.loadPage" class="admin-section admin-section--container">
       <grid-table
         :columns="resourceStore.getColumns"
         :is-download-active="false"

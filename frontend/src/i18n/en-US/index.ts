@@ -78,6 +78,7 @@ export default {
       update_profile_label_tooltip: 'Click here to update your profile',
       deactivate_account: 'Deactivate account',
       deactivate_account_tooltip: 'Click here to deactivate your account',
+      search_results_message: 'Search results for',
     },
     home: {
       title: 'Dashboard',

@@ -6,7 +6,7 @@
       :page-description="t(`${appreciationStore.getTranslationString}.page_description`)"
     />
 
-    <div class="admin-section admin-section--container">
+    <div v-if="!appreciationStore.loadPage" class="admin-section admin-section--container">
       <grid-table
         :columns="appreciationStore.getColumns"
         :resource="appreciationStore.getResourceName"

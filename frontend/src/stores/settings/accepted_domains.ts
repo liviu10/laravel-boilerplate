@@ -213,6 +213,14 @@ export const useAcceptedDomainStore = defineStore(
       }
     }
 
+    async function handleClearFilters(filter: IConfigurationInput) {
+      const indexToUpdate = filterModel.value.findIndex(item => item.id === filter.id);
+      if (indexToUpdate !== -1) {
+        filterModel.value[indexToUpdate] = { ...filterModel.value[indexToUpdate], value: null };
+      }
+      handleAdvancedFilter();
+    }
+
     async function handleUpload() {
       const payload = handleApi.createPayload(uploadModel.value);
       try {
@@ -370,6 +378,7 @@ export const useAcceptedDomainStore = defineStore(
       handleGetColumns,
       handleGetInputs,
       handleAdvancedFilter,
+      handleClearFilters,
       handleUpload,
       handleDownload,
       handleRestore,

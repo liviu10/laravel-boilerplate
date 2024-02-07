@@ -6,7 +6,7 @@
       :page-description="t(`${roleStore.getTranslationString}.page_description`)"
     />
 
-    <div class="admin-section admin-section--container">
+    <div v-if="!roleStore.loadPage" class="admin-section admin-section--container">
       <grid-table
         :columns="roleStore.getColumns"
         :is-download-active="false"

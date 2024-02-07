@@ -6,7 +6,7 @@
       :page-description="t(`${commentStore.getTranslationString}.page_description`)"
     />
 
-    <div class="admin-section admin-section--container">
+    <div v-if="!commentStore.loadPage" class="admin-section admin-section--container">
       <grid-table
         :columns="commentStore.getColumns"
         :resource="commentStore.getResourceName"
