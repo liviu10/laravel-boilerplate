@@ -32,19 +32,6 @@ const routes: RouteRecordRaw[] = [
     ],
   },
 
-  // Client routes
-  {
-    path: '',
-    component: () => import('src/layouts/ClientLayout.vue'),
-    children: [
-      {
-        path: '',
-        name: 'ClientHomePage',
-        component: () => import('pages/ClientHomePage.vue'),
-      }
-    ],
-  },
-
   // Authentication routes
   {
     path: '',
@@ -52,13 +39,13 @@ const routes: RouteRecordRaw[] = [
     children: [
       {
         path: 'login',
-        name: 'ClientLoginPage',
-        component: () => import('pages/ClientLoginPage.vue'),
+        name: 'AuthLoginPage',
+        component: () => import('pages/AuthLoginPage.vue'),
       },
       {
         path: 'register',
-        name: 'ClientRegisterPage',
-        component: () => import('pages/ClientRegisterPage.vue'),
+        name: 'AuthRegisterPage',
+        component: () => import('pages/AuthRegisterPage.vue'),
       }
     ],
   },

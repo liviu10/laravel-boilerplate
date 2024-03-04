@@ -24,6 +24,6 @@ class HomeService
      */
     public function handleIndex(): Response|ResponseFactory|View
     {
-        return view('pages.admin.index');
+        return view('pages.index');
     }
 }

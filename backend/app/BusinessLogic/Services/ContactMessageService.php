@@ -11,9 +11,7 @@ use App\Utilities\ApiResourcePermission;
 use App\Utilities\Actions;
 use Illuminate\Http\Response;
 use Illuminate\Contracts\Routing\ResponseFactory;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\View\View;
 
 class ContactMessageService implements BaseInterface, ContactMessageInterface
 {
@@ -38,10 +36,10 @@ class ContactMessageService implements BaseInterface, ContactMessageInterface
     /**
      * Handle the index action for displaying a list of records.
      * @param array $search An array of search parameters to filter records.
-     * @return Response|ResponseFactory|View The response containing the list of records,
+     * @return Response|ResponseFactory The response containing the list of records,
      * a response factory or a view template.
      */
-    public function handleIndex(array $search): Response|ResponseFactory|View
+    public function handleIndex(array $search): Response|ResponseFactory
     {
         if ($this->checkPermission->handleApiCheckPermission()) {
             $type = null;
@@ -57,12 +55,7 @@ class ContactMessageService implements BaseInterface, ContactMessageInterface
                 Actions::get
             );
 
-            if (Request::capture()->expectsJson()) {
-                return $apiDisplayAllRecords;
-            } else {
-                $displayAllRecords = collect($apiDisplayAllRecords->original);
-                return view('pages.admin.communication.contact.messages.index', compact('displayAllRecords'));
-            }
+            return $apiDisplayAllRecords;
         } else {
             return $this->apiResponse->generateApiResponse(null, Actions::forbidden);
         }
