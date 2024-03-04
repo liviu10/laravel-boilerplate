@@ -104,7 +104,7 @@ class General extends BaseModel
             } elseif ($type === 'restore') {
                 return $query->onlyTrashed()->select('id', 'type', 'value', 'label')->get();
             } else {
-                return $query;
+                return $query->get();
             }
         } catch (Exception $exception) {
             $this->LogApiError($exception);
