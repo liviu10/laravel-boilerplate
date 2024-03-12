@@ -16,9 +16,11 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @package App\Models
 
  * @property int $id
- * @property string $type
- * @property string $label
+ * @property string $instance_model
+ * @property string $path
+ * @property string $instance_model
  * @property string $value
+ * @property string $label
  * @property int $user_id
  * @property \Carbon\Carbon $created_at
  * @property \Carbon\Carbon $updated_at
@@ -33,14 +35,16 @@ class General extends BaseModel
 {
     use HasFactory, LogApiError, SoftDeletes;
 
-    protected $table = 'set_generals';
+    protected $table = 'generals';
 
     protected $foreignKey = 'user_id';
 
     protected $foreignKeyType = 'int';
 
     protected $fillable = [
-        'type',
+        'instance_model',
+        'path',
+        'instance_field',
         'label',
         'value',
         'user_id',
@@ -52,16 +56,6 @@ class General extends BaseModel
         'generals.show',
         'generals.update',
         'generals.destroy',
-    ];
-
-    protected $generalTypeOptions = [
-        'General',
-        'Writing',
-        'Reading',
-        'Discussion',
-        'Media',
-        'Performance',
-        'Notifications',
     ];
 
     protected function getCastAttributes()
@@ -102,7 +96,7 @@ class General extends BaseModel
             if ($type === 'paginate') {
                 return $query->paginate(15);
             } elseif ($type === 'restore') {
-                return $query->onlyTrashed()->select('id', 'type', 'value', 'label')->get();
+                return $query->onlyTrashed()->select('*')->get();
             } else {
                 return $query->get();
             }
@@ -125,10 +119,12 @@ class General extends BaseModel
     {
         try {
             $query = $this->create([
-                'type'    => $payload['type'],
-                'label'   => $payload['label'],
-                'value'   => $payload['value'],
-                'user_id' => $payload['user_id'],
+                'instance_model' => $payload['instance_model'],
+                'path'           => $payload['path'],
+                'instance_field' => $payload['instance_field'],
+                'value'          => $payload['value'],
+                'label'          => $payload['label'],
+                'user_id'        => $payload['user_id'],
             ]);
 
             return $query;
@@ -184,10 +180,12 @@ class General extends BaseModel
     {
         try {
             $query = tap($this->find($id))->update([
-                'type'    => $payload['type'],
-                'label'   => $payload['label'],
-                'value'   => $payload['value'],
-                'user_id' => $payload['user_id'],
+                'instance_model' => $payload['instance_model'],
+                'path'           => $payload['path'],
+                'instance_field' => $payload['instance_field'],
+                'value'          => $payload['value'],
+                'label'          => $payload['label'],
+                'user_id'        => $payload['user_id'],
             ]);
 
             return $query->fresh();
@@ -198,15 +196,6 @@ class General extends BaseModel
             $this->LogApiError($exception);
             return false;
         }
-    }
-
-    /**
-     * Get the general type options.
-     * @return array An array containing the general type options.
-     */
-    public function getGeneralTypeOptions(): array
-    {
-        return $this->generalTypeOptions;
     }
 
     /**

@@ -41,7 +41,7 @@ class Resource extends BaseModel
 {
     use HasFactory, LogApiError, SoftDeletes;
 
-    protected $table = 'set_resources';
+    protected $table = 'resources';
 
     protected $foreignKey = 'user_id';
 

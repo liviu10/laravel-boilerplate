@@ -38,7 +38,7 @@ class ResourceChildren extends BaseModel
 {
     use HasFactory, LogApiError;
 
-    protected $table = 'set_resource_children';
+    protected $table = 'resource_children';
 
     protected $foreignKey = 'user_id';
 

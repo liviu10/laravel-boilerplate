@@ -37,7 +37,7 @@ class Comment extends BaseModel
 {
     use HasFactory, LogApiError;
 
-    protected $table = 'man_comments';
+    protected $table = 'comments';
 
     protected $fillable = [
         'type',

@@ -5,15 +5,17 @@ import {
   IBaseTimestamps
 } from './BaseInterface'
 
-type GeneralOptions = 'General' | 'Writing' | 'Reading' | 'Discussion' | 'Media' | 'Performance' | 'Notifications'
+// type GeneralOptions = 'General' | 'Writing' | 'Reading' | 'Discussion' | 'Media' | 'Performance' | 'Notifications' | 'Page'
 
 interface IAllRecords extends IRootObject {
   results: (IBasePagination & {
     data: (IBaseTimestamps & {
       id: number
-      type: GeneralOptions
-      label: string
+      instance_model: string
+      path: string
+      instance_field: string
       value: string
+      label: string
       user_id: number
       user: IBaseUser
     })[]
@@ -23,9 +25,11 @@ interface IAllRecords extends IRootObject {
 interface IAllRecordsUnpaginated extends IRootObject {
   results: {
     id: number
-    type: GeneralOptions
-    label: string
+    instance_model: string
+    path: string
+    instance_field: string
     value: string
+    label: string
     user_id: number
     user: IBaseUser
   }[]
@@ -34,24 +38,30 @@ interface IAllRecordsUnpaginated extends IRootObject {
 interface ISingleRecord extends IRootObject {
   results: (IBaseTimestamps & {
     id: number
-    type: GeneralOptions
-    label: string
+    instance_model: string
+    path: string
+    instance_field: string
     value: string
+    label: string
     user_id: number
     user: IBaseUser
   })[]
 }
 
 interface ICreateRecord {
-  type: GeneralOptions
-  label: string
+  instance_model: string
+  path: string
+  instance_field: string
   value: string
+  label: string
 }
 
 interface IUpdateRecord {
-  type?: GeneralOptions
-  label?: string
-  value?: string
+  instance_model: string
+  path: string
+  instance_field: string
+  value: string
+  label: string
 }
 
 export {

@@ -36,7 +36,7 @@ class Role extends BaseModel
 {
     use HasFactory, LogApiError, SoftDeletes;
 
-    protected $table = 'set_roles';
+    protected $table = 'roles';
 
     protected $fillable = [
         'name',

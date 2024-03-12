@@ -34,7 +34,7 @@ class ConfigurationColumn extends BaseModel
 {
     use HasFactory, LogApiError;
 
-    protected $table = 'set_configuration_columns';
+    protected $table = 'configuration_columns';
 
     protected $foreignKey = 'configuration_resource_id';
 

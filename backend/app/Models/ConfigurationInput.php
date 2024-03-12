@@ -37,7 +37,7 @@ class ConfigurationInput extends BaseModel
 {
     use HasFactory, LogApiError;
 
-    protected $table = 'set_configuration_inputs';
+    protected $table = 'configuration_inputs';
 
     protected $foreignKey = 'configuration_resource_id';
 

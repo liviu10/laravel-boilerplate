@@ -34,7 +34,7 @@ class Media extends BaseModel
 {
     use HasFactory, LogApiError, SoftDeletes;
 
-    protected $table = 'man_medias';
+    protected $table = 'medias';
 
     protected $foreignKey = 'content_id';
 

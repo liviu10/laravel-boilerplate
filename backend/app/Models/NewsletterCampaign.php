@@ -38,7 +38,7 @@ class NewsletterCampaign extends BaseModel
 {
     use HasFactory, LogApiError, SoftDeletes;
 
-    protected $table = 'com_newsletter_campaigns';
+    protected $table = 'newsletter_campaigns';
 
     protected $foreignKey = 'user_id';
 

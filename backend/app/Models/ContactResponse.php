@@ -31,7 +31,7 @@ class ContactResponse extends BaseModel
 {
     use HasFactory, LogApiError, SoftDeletes;
 
-    protected $table = 'com_contact_responses';
+    protected $table = 'contact_responses';
 
     protected $foreignKey = 'user_id';
 

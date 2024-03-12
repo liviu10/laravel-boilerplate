@@ -18,7 +18,7 @@
         <link rel="stylesheet" href="{{ url('css/app.css') }}">
     </head>
     <body>
-        <x-client-navbar />
+        <x-navbar />
 
         @show
 

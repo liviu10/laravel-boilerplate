@@ -31,7 +31,7 @@ class ConfigurationTranslationLocale extends BaseModel
 {
     use HasFactory, LogApiError, SoftDeletes;
 
-    protected $table = 'set_configuration_translation_locales';
+    protected $table = 'configuration_translation_locales';
 
     protected $foreignKey = 'user_id';
 

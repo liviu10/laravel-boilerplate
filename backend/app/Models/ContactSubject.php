@@ -32,7 +32,7 @@ class ContactSubject extends BaseModel
 {
     use HasFactory, LogApiError, SoftDeletes;
 
-    protected $table = 'com_contact_subjects';
+    protected $table = 'contact_subjects';
 
     protected $foreignKey = 'user_id';
 

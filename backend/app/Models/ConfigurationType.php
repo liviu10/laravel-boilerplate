@@ -28,7 +28,7 @@ class ConfigurationType extends BaseModel
 {
     use HasFactory, LogApiError;
 
-    protected $table = 'set_configuration_types';
+    protected $table = 'configuration_types';
 
     protected $foreignKey = 'configuration_resource_id';
 

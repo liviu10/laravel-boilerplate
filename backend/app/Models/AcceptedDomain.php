@@ -34,7 +34,7 @@ class AcceptedDomain extends BaseModel
 {
     use HasFactory, LogApiError, SoftDeletes;
 
-    protected $table = 'set_accepted_domains';
+    protected $table = 'accepted_domains';
 
     protected $foreignKey = 'user_id';
 

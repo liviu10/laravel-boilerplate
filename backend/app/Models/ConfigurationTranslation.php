@@ -33,7 +33,7 @@ class ConfigurationTranslation extends BaseModel
 {
     use HasFactory, LogApiError;
 
-    protected $table = 'set_configuration_translations';
+    protected $table = 'configuration_translations';
 
     protected $foreignKey = 'user_id';
 

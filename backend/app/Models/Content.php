@@ -38,7 +38,7 @@ class Content extends BaseModel
 {
     use HasFactory, LogApiError, SoftDeletes;
 
-    protected $table = 'man_contents';
+    protected $table = 'contents';
 
     protected $foreignKey = 'user_id';
 

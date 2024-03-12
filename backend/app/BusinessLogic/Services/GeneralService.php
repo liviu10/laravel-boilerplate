@@ -70,10 +70,12 @@ class GeneralService implements BaseInterface, GeneralInterface
     {
         if ($this->checkPermission->handleApiCheckPermission()) {
             $apiInsertRecord = [
-                'type'    => $request['type'],
-                'label'   => $request['label'],
-                'value'   => $request['value'],
-                'user_id' => Auth::user() ? Auth::user()->id : 1,
+                'instance_model' => $request['instance_model'],
+                'path'           => $request['path'],
+                'instance_field' => $request['instance_field'],
+                'value'          => $request['value'],
+                'label'          => $request['label'],
+                'user_id'        => Auth::user() ? Auth::user()->id : 1,
             ];
             $createdRecord = $this->modelName->createRecord($apiInsertRecord);
             $apiCreatedRecord = $this->apiResponse->generateApiResponse($createdRecord->toArray(), Actions::create);
@@ -115,15 +117,21 @@ class GeneralService implements BaseInterface, GeneralInterface
             $apiDisplaySingleRecord = $this->modelName->fetchSingleRecord($id);
             if ($apiDisplaySingleRecord && $apiDisplaySingleRecord->isNotEmpty()) {
                 $apiUpdateRecord = [
-                    'type'    => array_key_exists('type', $request)
-                        ? $request['type']
-                        : $apiDisplaySingleRecord->toArray()[0]['type'],
-                    'label'   => array_key_exists('label', $request)
-                        ? $request['label']
-                        : $apiDisplaySingleRecord->toArray()[0]['label'],
-                    'value'   => array_key_exists('value', $request)
+                    'instance_model' => array_key_exists('instance_model', $request)
+                        ? $request['instance_model']
+                        : $apiDisplaySingleRecord->toArray()[0]['instance_model'],
+                    'path' => array_key_exists('path', $request)
+                        ? $request['path']
+                        : $apiDisplaySingleRecord->toArray()[0]['path'],
+                    'instance_field' => array_key_exists('instance_field', $request)
+                        ? $request['instance_field']
+                        : $apiDisplaySingleRecord->toArray()[0]['instance_field'],
+                    'value' => array_key_exists('value', $request)
                         ? $request['value']
                         : $apiDisplaySingleRecord->toArray()[0]['value'],
+                    'label' => array_key_exists('label', $request)
+                        ? $request['label']
+                        : $apiDisplaySingleRecord->toArray()[0]['label'],
                     'user_id' => Auth::user() ? Auth::user()->id : 1,
                 ];
                 $updatedRecord = $this->modelName->updateRecord($apiUpdateRecord, $id);

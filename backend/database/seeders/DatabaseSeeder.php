@@ -22,6 +22,7 @@ class DatabaseSeeder extends Seeder
             ConfigurationTranslationLocaleSeeder::class,
             ConfigurationTypeSeeder::class,
             ContactSubjectSeeder::class,
+            GeneralSeeder::class,
             NewsletterCampaignSeeder::class,
             PermissionSeeder::class,
             ResourceChildrenSeeder::class,

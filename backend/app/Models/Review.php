@@ -32,7 +32,7 @@ class Review extends BaseModel
 {
     use HasFactory, LogApiError;
 
-    protected $table = 'com_reviews';
+    protected $table = 'reviews';
 
     protected $fillable = [
         'full_name',

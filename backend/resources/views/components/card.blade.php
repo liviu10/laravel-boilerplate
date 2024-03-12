@@ -1,19 +1,29 @@
 <div class="section section--card">
     <div class="card">
-        <img
-            src="https://images.unsplash.com/photo-1594069758873-e79e9075eb7d?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1350&q=80"
-            class="card-img-top"
-            alt="..."
-            width="320"
-            height="180"
-        >
         <div class="card-body">
-            <p class="card-title">Card title</p>
-            <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-        </div>
-        <div class="card-actions">
-            <a href="#" class="btn btn-primary">Go somewhere</a>
-            <a href="#" class="btn btn-primary">Go somewhere</a>
+            <p>
+                <pre>&lt;GreetingsComponent /&gt;</pre>
+            </p>
+            <p class="card-title">
+                Hi, I'm Liviu
+                <i class="fas fa-hands-helping"></i>
+            </p>
+            <p class="card-text">
+                Lorem ipsum dolor sit amet consectetur adipisicing elit. Tempora officiis hic,
+                labore officia possimus reiciendis iste quis inventore unde qui harum asperiores voluptatibus nemo.
+                Aliquam ipsa commodi, doloremque itaque eos amet in iste molestias asperiores nemo aut delectus
+                laboriosam ex nam hic possimus id odio voluptas dicta quidem quam ullam illo ipsam!
+                Obcaecati assumenda doloribus iusto maiores magnam aperiam, quae eaque quia minima
+                in optio eum eos enim at et corporis, repellat beatae, illo dicta a! Tenetur,
+                tempore maxime distinctio provident cumque, illo qui hic accusamus,
+                saepe numquam velit quos molestiae voluptas. Iure, soluta dolores. Sit soluta maxime excepturi dolor?
+            </p>
+            <p class="card-text">
+                You can find me on
+                <a href="#">Github</a>
+                and
+                <a href="#">Linkedin</a>.
+            </p>
         </div>
     </div>
 </div>

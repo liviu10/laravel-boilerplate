@@ -33,7 +33,7 @@ class Tag extends BaseModel
 {
     use HasFactory, LogApiError, SoftDeletes;
 
-    protected $table = 'man_tags';
+    protected $table = 'tags';
 
     protected $foreignKey = 'content_id';
 

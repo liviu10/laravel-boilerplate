@@ -30,7 +30,7 @@ class ConfigurationOption extends BaseModel
 {
     use HasFactory, LogApiError;
 
-    protected $table = 'set_configuration_options';
+    protected $table = 'configuration_options';
 
     protected $foreignKey = 'configuration_resource_id';
 

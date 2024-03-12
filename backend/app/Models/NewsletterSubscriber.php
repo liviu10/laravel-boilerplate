@@ -33,7 +33,7 @@ class NewsletterSubscriber extends BaseModel
 {
     use HasFactory, LogApiError;
 
-    protected $table = 'com_newsletter_subscribers';
+    protected $table = 'newsletter_subscribers';
 
     protected $foreignKey = 'newsletter_campaign_id';
 

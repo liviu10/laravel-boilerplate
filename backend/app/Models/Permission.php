@@ -34,7 +34,7 @@ class Permission extends BaseModel
 {
     use HasFactory, LogApiError, SoftDeletes;
 
-    protected $table = 'set_permissions';
+    protected $table = 'permissions';
 
     protected $foreignKey = 'role_id';
 

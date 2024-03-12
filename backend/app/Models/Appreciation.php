@@ -32,7 +32,7 @@ class Appreciation extends BaseModel
 {
     use HasFactory, LogApiError;
 
-    protected $table = 'man_appreciations';
+    protected $table = 'appreciations';
 
     protected $fillable = [
         'likes',

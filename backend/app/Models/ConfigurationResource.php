@@ -31,7 +31,7 @@ class ConfigurationResource extends BaseModel
 {
     use HasFactory, LogApiError, SoftDeletes;
 
-    protected $table = 'set_configuration_resources';
+    protected $table = 'configuration_resources';
 
     protected $foreignKey = 'user_id';
 

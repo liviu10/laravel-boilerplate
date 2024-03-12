@@ -1,5 +1,5 @@
 @extends('layouts.client')
 
 @section('content')
-    HOME PAGE HERE
+    <x-card />
 @endsection
