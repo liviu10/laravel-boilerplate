@@ -7,6 +7,32 @@ return [
 
     /*
     |--------------------------------------------------------------------------
+    | Application Owner
+    |--------------------------------------------------------------------------
+    |
+    | This value is the name of your application's owner. This value is used when the
+    | framework needs to place the application's owner name in a notification or
+    | any other location as required by the application or its packages.
+    |
+    */
+
+    'owner' => env('APP_OWNER', 'Webmaster'),
+
+    /*
+    |--------------------------------------------------------------------------
+    | Application Email Address
+    |--------------------------------------------------------------------------
+    |
+    | This value is the email address of your application. This value is used when the
+    | framework needs to place the application's email address in a notification or
+    | any other location as required by the application or its packages.
+    |
+    */
+
+    'email' => env('APP_EMAIL', 'office@localhost.com'),
+
+    /*
+    |--------------------------------------------------------------------------
     | Application Name
     |--------------------------------------------------------------------------
     |
@@ -17,6 +43,46 @@ return [
     */
 
     'name' => env('APP_NAME', 'Laravel'),
+
+    /*
+    |--------------------------------------------------------------------------
+    | Application URL
+    |--------------------------------------------------------------------------
+    |
+    | This URL is used by the console to properly generate URLs when using
+    | the Artisan command line tool. You should set this to the root of
+    | your application so that it is used when running Artisan tasks.
+    |
+    */
+
+    'url' => env('APP_URL', 'http://localhost'),
+
+    'asset_url' => env('ASSET_URL'),
+
+    /*
+    |--------------------------------------------------------------------------
+    | Application Domain Name
+    |--------------------------------------------------------------------------
+    |
+    | This value is the name of your application's domain. This value is used
+    | when the framework needs to place the application's domain name in a
+    | notification or any other location as required by the application or its packages.
+    |
+    */
+
+    'domain_name' => env('APP_DOMAIN', 'localhost.com'),
+
+    /*
+    |--------------------------------------------------------------------------
+    | Application Version
+    |--------------------------------------------------------------------------
+    |
+    | This key represents the application version. This is used when the api
+    | endpoint is formed (eg. api/v1/).
+    |
+    */
+
+    'version' => env('APP_VERSION', '1'),
 
     /*
     |--------------------------------------------------------------------------
@@ -33,6 +99,21 @@ return [
 
     /*
     |--------------------------------------------------------------------------
+    | Encryption Key
+    |--------------------------------------------------------------------------
+    |
+    | This key is used by the Illuminate encrypter service and should be set
+    | to a random, 32 character string, otherwise these encrypted strings
+    | will not be safe. Please do this before deploying an application!
+    |
+    */
+
+    'key' => env('APP_KEY'),
+
+    'cipher' => 'AES-256-CBC',
+
+    /*
+    |--------------------------------------------------------------------------
     | Application Debug Mode
     |--------------------------------------------------------------------------
     |
@@ -46,18 +127,29 @@ return [
 
     /*
     |--------------------------------------------------------------------------
-    | Application URL
+    | Application Designer Name
     |--------------------------------------------------------------------------
     |
-    | This URL is used by the console to properly generate URLs when using
-    | the Artisan command line tool. You should set this to the root of
-    | your application so that it is used when running Artisan tasks.
+    | This value is the email address of your application. This value is used when the
+    | framework needs to place the application's email address in a notification or
+    | any other location as required by the application or its packages.
     |
     */
 
-    'url' => env('APP_URL', 'http://localhost'),
+    'designer' => env('APP_DESIGNER', 'John Doe'),
 
-    'asset_url' => env('ASSET_URL'),
+    /*
+    |--------------------------------------------------------------------------
+    | Application Designer Website
+    |--------------------------------------------------------------------------
+    |
+    | This value is the designer website url. This value is used when the
+    | framework needs to place the designer website url in a notification or
+    | any other location as required by the application or its packages.
+    |
+    */
+
+    'designer_url' => env('APP_DESIGNER_URL', 'https://domain.com'),
 
     /*
     |--------------------------------------------------------------------------
@@ -110,21 +202,6 @@ return [
     */
 
     'faker_locale' => 'en_US',
-
-    /*
-    |--------------------------------------------------------------------------
-    | Encryption Key
-    |--------------------------------------------------------------------------
-    |
-    | This key is used by the Illuminate encrypter service and should be set
-    | to a random, 32 character string, otherwise these encrypted strings
-    | will not be safe. Please do this before deploying an application!
-    |
-    */
-
-    'key' => env('APP_KEY'),
-
-    'cipher' => 'AES-256-CBC',
 
     /*
     |--------------------------------------------------------------------------
