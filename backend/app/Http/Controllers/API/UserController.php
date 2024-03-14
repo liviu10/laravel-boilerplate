@@ -62,13 +62,11 @@ class UserController extends Controller implements ApiInterface, UserInterface
             'last_name' => $validatedRequest['last_name'],
             'email' => $validatedRequest['email'],
             'password' => bcrypt($this->defaultPassword),
-            'profile_image' => array_key_exists('profile_image', $request->all())
-                ? $validatedRequest['profile_image']
-                : $this->getProfileImageUrl(
-                    $validatedRequest['email'],
-                    $validatedRequest['first_name'],
-                    $validatedRequest['last_name']
-                ),
+            'profile_image' => $this->getProfileImageUrl(
+                $validatedRequest['email'],
+                $validatedRequest['first_name'],
+                $validatedRequest['last_name']
+            ),
         ];
 
         $createdRecord = $this->modelName->createRecord($apiInsertRecord);
@@ -162,28 +160,6 @@ class UserController extends Controller implements ApiInterface, UserInterface
     }
 
     /**
-     * Handle the register operation.
-     *
-     * @param Request $request An instance of Illuminate\Http\Request containing request data.
-     * @return Response|ResponseFactory
-     */
-    public function register(Request $request): Response|ResponseFactory
-    {
-        //
-    }
-
-    /**
-     * Handle the login operation.
-     *
-     * @param Request $request An instance of Illuminate\Http\Request containing login data.
-     * @return Response|ResponseFactory
-     */
-    public function login(Request $request): Response|ResponseFactory
-    {
-        //
-    }
-
-    /**
      * Handle the update user profile operation.
      *
      * @param Request $request An instance of Illuminate\Http\Request containing update data.
@@ -192,6 +168,46 @@ class UserController extends Controller implements ApiInterface, UserInterface
      */
     public function userProfile(Request $request, string $id): Response|ResponseFactory
     {
-        //
+        $validatedRequest = $request->validate(UserRequest::rules());
+
+        $apiDisplaySingleRecord = $this->modelName->fetchSingleRecord($id);
+        if ($apiDisplaySingleRecord && $apiDisplaySingleRecord->isNotEmpty()) {
+            $apiUpdateRecord = [
+                'first_name' => array_key_exists('first_name', $request->all())
+                    ? $validatedRequest['first_name']
+                    : $apiDisplaySingleRecord->toArray()[0]['first_name'],
+                'last_name' => array_key_exists('last_name', $request->all())
+                    ? $validatedRequest['last_name']
+                    : $apiDisplaySingleRecord->toArray()[0]['last_name'],
+                'nickname' => array_key_exists('nickname', $request->all())
+                    ? $validatedRequest['nickname']
+                    : $apiDisplaySingleRecord->toArray()[0]['nickname'],
+                'email' => array_key_exists('email', $request->all())
+                    ? $validatedRequest['email']
+                    : $apiDisplaySingleRecord->toArray()[0]['email'],
+                'phone' => array_key_exists('phone', $request->all())
+                    ? $validatedRequest['phone']
+                    : $apiDisplaySingleRecord->toArray()[0]['phone'],
+                'password' => $validatedRequest['phone'],
+                'profile_image' => array_key_exists('profile_image', $request->all())
+                    ? $validatedRequest['profile_image']
+                    : $apiDisplaySingleRecord->toArray()[0]['profile_image'],
+            ];
+
+            $apiUpdateRecord['full_name'] = $apiUpdateRecord['first_name'] . ' ' . $apiUpdateRecord['last_name'];
+
+            $updatedRecord = $this->modelName->updateRecord($apiUpdateRecord, $id);
+            $apiUpdatedRecord = $this->apiResponse->generateApiResponse(
+                $updatedRecord->toArray(),
+                Actions::update
+            );
+        } else {
+            $apiUpdatedRecord = $this->apiResponse->generateApiResponse(
+                null,
+                Actions::not_found_record
+            );
+        }
+
+        return $apiUpdatedRecord;
     }
 }

@@ -14,22 +14,6 @@ use Illuminate\Http\Request;
 interface UserInterface
 {
     /**
-     * Handle the register operation.
-     *
-     * @param Request $request An instance of Illuminate\Http\Request containing request data.
-     * @return Response|ResponseFactory
-     */
-    public function register(Request $request): Response|ResponseFactory;
-
-    /**
-     * Handle the login operation.
-     *
-     * @param Request $request An instance of Illuminate\Http\Request containing login data.
-     * @return Response|ResponseFactory
-     */
-    public function login(Request $request): Response|ResponseFactory;
-
-    /**
      * Handle the update user profile operation.
      *
      * @param Request $request An instance of Illuminate\Http\Request containing update data.
