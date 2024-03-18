@@ -12,7 +12,7 @@ class UserRequest extends FormRequest
      *
      * @return bool
      */
-    public function authorize()
+    public function authorize(): bool
     {
         return true;
     }
@@ -22,7 +22,7 @@ class UserRequest extends FormRequest
      *
      * @return array
      */
-    static function rules()
+    static function rules(): array
     {
         $currentRouteName = Route::current()->getName();
         $rules = [];
@@ -89,7 +89,7 @@ class UserRequest extends FormRequest
      *
      * @return array
      */
-    public function messages()
+    public function messages(): array
     {
         return [
             'first_name.required' => 'The first name field is required.',

@@ -16,11 +16,10 @@ interface ApiInterface
     /**
      * Handle the index operation.
      *
-     * @param array $search An array containing search parameters.
-     * @param string|null $type Optional type parameter.
+     * @param Request $request
      * @return Response|ResponseFactory
      */
-    public function index(array $search = [], string|null $type = null): Response|ResponseFactory;
+    public function index(Request $request): Response|ResponseFactory;
 
     /**
      * Handle the store operation.

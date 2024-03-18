@@ -2,61 +2,45 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Model;
 use Carbon\Carbon;
 use Exception;
-use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Collection;
-use Illuminate\Database\Eloquent\Relations\HasMany;
-use Illuminate\Pagination\LengthAwarePaginator;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Foundation\Auth\User as Authenticatable;
-use Illuminate\Notifications\Notifiable;
-use Laravel\Sanctum\HasApiTokens;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\QueryException;
 use App\Traits\ApiHandleFilter;
+use Illuminate\Pagination\LengthAwarePaginator;
 
 /**
- * Class User
+ * Class NotificationTemplate
  * @package App\Models
  *
  * @property int $id
- * @property string $full_name
- * @property string $first_name
- * @property string $last_name
- * @property string $nickname
- * @property string $email
- * @property string $phone
- * @property string $email_verified_at
- * @property string $password
- * @property string $profile_image
+ * @property int $notification_type_id
+ * @property int $notification_condition_id
+ * @property string $title
+ * @property string $content
+ * @property int $user_id
  * @property Carbon $created_at
  * @property Carbon $updated_at
  */
-class User extends Authenticatable
+class NotificationTemplate extends Model
 {
-    use HasApiTokens,
-        HasFactory,
-        Notifiable,
-        ApiHandleFilter;
+    use ApiHandleFilter;
 
     protected $fillable = [
-        'full_name',
-        'first_name',
-        'last_name',
-        'nickname',
-        'email',
-        'phone',
-        'password',
-        'profile_image',
-    ];
-
-    protected $hidden = [
-        'password',
-        'remember_token',
+        'notification_type_id',
+        'notification_condition_id',
+        'title',
+        'content',
+        'user_id',
     ];
 
     protected $casts = [
         'id' => 'integer',
-        'email_verified_at' => 'datetime:d.m.Y H:i',
+        'notification_type_id' => 'integer',
+        'notification_condition_id' => 'integer',
+        'user_id' => 'integer',
         'created_at' => 'datetime:d.m.Y H:i',
         'updated_at' => 'datetime:d.m.Y H:i',
     ];
@@ -67,19 +51,19 @@ class User extends Authenticatable
         'updated_at'
     ];
 
-    public function notification_types(): HasMany
+    public function notification_type(): BelongsTo
     {
-        return $this->hasMany('App\Models\NotificationType');
+        return $this->belongsTo('App\Models\NotificationType');
     }
 
-    public function notification_conditions(): HasMany
+    public function notification_condition(): BelongsTo
     {
-        return $this->hasMany('App\Models\NotificationCondition');
+        return $this->belongsTo('App\Models\NotificationCondition');
     }
 
-    public function notification_templates(): HasMany
+    public function user(): BelongsTo
     {
-        return $this->hasMany('App\Models\NotificationTemplate');
+        return $this->belongsTo('App\Models\User');
     }
 
     /**
@@ -94,10 +78,10 @@ class User extends Authenticatable
         try {
             $query = $this->select(
                 'id',
-                'full_name',
-                'nickname',
-                'email',
-                'created_at',
+                'notification_type_id',
+                'notification_condition_id',
+                'title',
+                'user_id'
             );
 
             $this->handleApiFilter($query, $search);
@@ -119,14 +103,11 @@ class User extends Authenticatable
     {
         try {
             return $this->create([
-                'full_name' => $payload['full_name'],
-                'first_name' => $payload['first_name'],
-                'last_name' => $payload['last_name'],
-                'nickname' => $payload['nickname'],
-                'email' => $payload['email'],
-                'phone' => $payload['phone'],
-                'password' => $payload['password'],
-                'profile_image' => $payload['profile_image'],
+                'notification_type_id' => $payload['notification_type_id'],
+                'notification_condition_id' => $payload['notification_condition_id'],
+                'title' => $payload['title'],
+                'content' => $payload['content'],
+                'user_id' => $payload['user_id'],
             ]);
         } catch (Exception $exception) {
             return $exception;
@@ -144,7 +125,19 @@ class User extends Authenticatable
     public function fetchSingleRecord(string $id, string|null $type = null): Collection|Exception
     {
         try {
-            $query = $this->select('*')->where('id', '=', $id);
+            $query = $this->select('*')
+                ->where('id', '=', $id)
+                ->with([
+                    'notification_type_id' => function ($query) {
+                        $query->select('id', 'name');
+                    },
+                    'notification_condition_id' => function ($query) {
+                        $query->select('id', 'name');
+                    },
+                    'user_id' => function ($query) {
+                        $query->select('id', 'full_name');
+                    },
+                ]);;
 
             return $query->get();
         } catch (Exception $exception) {
@@ -164,14 +157,11 @@ class User extends Authenticatable
     {
         try {
             $query = tap($this->find($id))->update([
-                'full_name' => $payload['full_name'],
-                'first_name' => $payload['first_name'],
-                'last_name' => $payload['last_name'],
-                'nickname' => $payload['nickname'],
-                'email' => $payload['email'],
-                'phone' => $payload['phone'],
-                'password' => $payload['password'],
-                'profile_image' => $payload['profile_image'],
+                'notification_type_id' => $payload['notification_type_id'],
+                'notification_condition_id' => $payload['notification_condition_id'],
+                'title' => $payload['title'],
+                'content' => $payload['content'],
+                'user_id' => $payload['user_id'],
             ]);
 
             return $query->fresh();

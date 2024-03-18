@@ -16,9 +16,9 @@ interface UserInterface
     /**
      * Handle the update user profile operation.
      *
-     * @param Request $request An instance of Illuminate\Http\Request containing update data.
-     * @param string $id The identifier for the resource.
+     * @param Request $request
+     * @param string $id
      * @return Response|ResponseFactory
      */
-    public function userProfile(Request $request, string $id): Response|ResponseFactory;
+    public function profile(Request $request, string $id): Response|ResponseFactory;
 }

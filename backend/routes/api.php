@@ -25,7 +25,10 @@ Route::group(['prefix' => config('app.version')], function () {
         // Application's settings api endpoints
         Route::group(['prefix' => '/settings'], function () {
             // Users
-            Route::apiResource('/users', UserController::class);
+            Route::group(['prefix' => '/'], function () {
+                Route::put('/users/profile/{id}', [UserController::class, 'profile'])->name('users.profile');
+                Route::apiResource('/users', UserController::class);
+            });
         });
     });
 
