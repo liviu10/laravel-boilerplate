@@ -7,8 +7,8 @@ use Carbon\Carbon;
 use Exception;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Database\QueryException;
 use App\Traits\ApiHandleFilter;
+use Illuminate\Database\Eloquent\Relations\MorphOne;
 use Illuminate\Pagination\LengthAwarePaginator;
 
 /**
@@ -64,6 +64,11 @@ class NotificationTemplate extends Model
     public function user(): BelongsTo
     {
         return $this->belongsTo('App\Models\User');
+    }
+
+    public function general(): MorphOne
+    {
+        return $this->morphOne(General::class, 'generalable');
     }
 
     /**

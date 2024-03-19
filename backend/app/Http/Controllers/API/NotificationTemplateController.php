@@ -4,22 +4,22 @@ namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
 use App\Interfaces\ApiInterface;
-use App\Models\NotificationType;
+use App\Models\NotificationTemplate;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\Response;
 use Illuminate\Contracts\Routing\ResponseFactory;
 use Illuminate\Http\Request;
-use App\Http\Requests\NotificationConditionRequest;
+use App\Http\Requests\NotificationTemplateRequest;
 use Illuminate\Support\Facades\Auth;
 use Exception;
 
-class NotificationConditionController extends Controller implements ApiInterface
+class NotificationTemplateController extends Controller implements ApiInterface
 {
-    protected NotificationType $modelName;
+    protected NotificationTemplate $modelName;
 
     public function __construct()
     {
-        $this->modelName = new NotificationType();
+        $this->modelName = new NotificationTemplate();
     }
 
     /**
@@ -62,17 +62,20 @@ class NotificationConditionController extends Controller implements ApiInterface
      */
     public function store(Request $request): Response|ResponseFactory
     {
-        $validatedRequest = $request->validate(NotificationConditionRequest::rules());
+        $validatedRequest = $request->validate(NotificationTemplateRequest::rules());
 
         $insertRecord = [
-            'name' => $validatedRequest['name'],
+            'notification_type_id' => $validatedRequest['notification_type_id'],
+            'notification_condition_id' => $validatedRequest['notification_condition_id'],
+            'title' => $validatedRequest['title'],
+            'content' => $validatedRequest['content'],
             'user_id' => Auth::user() ? Auth::user()->id : 1,
         ];
 
         $createdRecord = $this->modelName->createRecord($insertRecord);
         $data = [];
 
-        if ($createdRecord instanceof NotificationType) {
+        if ($createdRecord instanceof NotificationTemplate) {
             $data['title'] = __('translations.success_title');
             $data['description'] = __('translations.success_message');
             $data['results'] = $createdRecord;
@@ -129,7 +132,7 @@ class NotificationConditionController extends Controller implements ApiInterface
      */
     public function update(Request $request, string $id): Response|ResponseFactory
     {
-        $validatedRequest = $request->validate(NotificationConditionRequest::rules());
+        $validatedRequest = $request->validate(NotificationTemplateRequest::rules());
 
         $showRecord = $this->modelName->fetchSingleRecord($id);
         $data = [];
@@ -137,9 +140,19 @@ class NotificationConditionController extends Controller implements ApiInterface
         if ($showRecord instanceof Collection) {
             if ($showRecord->isNotEmpty()) {
                 $updateRecord = [
-                    'name' => array_key_exists('name', $request->all())
-                        ? $validatedRequest['name']
-                        : $showRecord->toArray()[0]['name'],
+                    'notification_type_id' => array_key_exists('notification_type_id', $request->all())
+                        ? $validatedRequest['notification_type_id']
+                        : $showRecord->toArray()[0]['notification_type_id'],
+                    'notification_condition_id' => array_key_exists('notification_condition_id', $request->all())
+                        ? $validatedRequest['notification_condition_id']
+                        : $showRecord->toArray()[0]['notification_condition_id'],
+                    'title' => array_key_exists('title', $request->all())
+                        ? $validatedRequest['title']
+                        : $showRecord->toArray()[0]['title'],
+                    'content' => array_key_exists('content', $request->all())
+                        ? $validatedRequest['content']
+                        : $showRecord->toArray()[0]['content'],
+                    'user_id' => Auth::user() ? Auth::user()->id : 1,
                 ];
 
                 $editedRecord = $this->modelName->updateRecord($updateRecord, $id);

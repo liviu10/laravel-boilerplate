@@ -8,11 +8,11 @@ use Exception;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
-use Illuminate\Database\QueryException;
 use App\Traits\ApiHandleFilter;
+use Illuminate\Database\Eloquent\Relations\MorphOne;
 
 /**
- * Class NotificationType
+ * Class NotificationCondition
  * @package App\Models
  *
  * @property int $id
@@ -51,6 +51,11 @@ class NotificationCondition extends Model
     public function notification_templates(): HasMany
     {
         return $this->hasMany('App\Models\NotificationTemplate');
+    }
+
+    public function general(): MorphOne
+    {
+        return $this->morphOne(General::class, 'generalable');
     }
 
     /**

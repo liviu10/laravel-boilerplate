@@ -6,33 +6,36 @@ use Illuminate\Database\Eloquent\Model;
 use Carbon\Carbon;
 use Exception;
 use Illuminate\Database\Eloquent\Collection;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Database\Eloquent\Relations\HasMany;
 use App\Traits\ApiHandleFilter;
-use Illuminate\Database\Eloquent\Relations\MorphOne;
 
 /**
- * Class NotificationType
+ * Class General
  * @package App\Models
  *
  * @property int $id
- * @property string name
+ * @property string generalable_id
+ * @property string generalable_type
+ * @property string value
+ * @property string label
+ * @property string key
  * @property int $user_id
  * @property Carbon $created_at
  * @property Carbon $updated_at
  */
-class NotificationType extends Model
+class General extends Model
 {
     use ApiHandleFilter;
 
     protected $fillable = [
-        'name',
-        'user_id',
+        'generalable_id',
+        'generalable_type',
+        'value',
+        'label',
+        'key',
     ];
 
     protected $casts = [
         'id' => 'integer',
-        'user_id' => 'integer',
         'created_at' => 'datetime:d.m.Y H:i',
         'updated_at' => 'datetime:d.m.Y H:i',
     ];
@@ -43,19 +46,9 @@ class NotificationType extends Model
         'updated_at'
     ];
 
-    public function user(): BelongsTo
+    public function generalable()
     {
-        return $this->belongsTo('App\Models\User');
-    }
-
-    public function notification_templates(): HasMany
-    {
-        return $this->hasMany('App\Models\NotificationTemplate');
-    }
-
-    public function general(): MorphOne
-    {
-        return $this->morphOne(General::class, 'generalable');
+        return $this->morphTo();
     }
 
     /**
@@ -68,7 +61,14 @@ class NotificationType extends Model
     public function fetchAllRecords(array $search = []): Collection|Exception
     {
         try {
-            $query = $this->select('id', 'name');
+            $query = $this->select(
+                'id',
+                'generalable_id',
+                'generalable_type',
+                'value',
+                'label',
+                'key'
+            );
 
             $this->handleApiFilter($query, $search);
 
@@ -82,15 +82,18 @@ class NotificationType extends Model
      * Create a new record.
      *
      * @param array $payload
-     * @return NotificationType|Exception
+     * @return NotificationCondition|Exception
      * @throws Exception
      */
-    public function createRecord(array $payload): NotificationType|Exception
+    public function createRecord(array $payload): General|Exception
     {
         try {
             return $this->create([
-                'name' => $payload['name'],
-                'user_id' => $payload['user_id'],
+                'generalable_id' => $payload['generalable_id'],
+                'generalable_type' => $payload['generalable_type'],
+                'value' => $payload['value'],
+                'label' => $payload['label'],
+                'key' => $payload['key'],
             ]);
         } catch (Exception $exception) {
             return $exception;
@@ -121,15 +124,18 @@ class NotificationType extends Model
      *
      * @param array $payload
      * @param string $id
-     * @return NotificationType|Exception
+     * @return NotificationCondition|Exception
      * @throws Exception
      */
-    public function updateRecord(array $payload, string $id): NotificationType|Exception
+    public function updateRecord(array $payload, string $id): General|Exception
     {
         try {
             $query = tap($this->find($id))->update([
-                'name' => $payload['name'],
-                'user_id' => $payload['user_id'],
+                'generalable_id' => $payload['generalable_id'],
+                'generalable_type' => $payload['generalable_type'],
+                'value' => $payload['value'],
+                'label' => $payload['label'],
+                'key' => $payload['key'],
             ]);
 
             return $query->fresh();
@@ -147,12 +153,16 @@ class NotificationType extends Model
      */
     public function deleteRecord(string $id): bool|Exception
     {
-        try {
-            $this->find($id)->delete();
+        abort(405);
+    }
 
-            return true;
-        } catch (Exception $exception) {
-            return $exception;
-        }
+    /**
+     * Handle fetch model names operation.
+     *
+     * @return array
+     */
+    public function fetchModelNames(): array
+    {
+        return [];
     }
 }

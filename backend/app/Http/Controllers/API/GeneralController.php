@@ -4,22 +4,24 @@ namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
 use App\Interfaces\ApiInterface;
-use App\Models\NotificationType;
+use App\Interfaces\GeneralInterface;
+use App\Models\General;
+use App\Http\Requests\GeneralRequest;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\Response;
 use Illuminate\Contracts\Routing\ResponseFactory;
 use Illuminate\Http\Request;
-use App\Http\Requests\NotificationConditionRequest;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Artisan;
 use Exception;
 
-class NotificationConditionController extends Controller implements ApiInterface
+class GeneralController extends Controller implements ApiInterface, GeneralInterface
 {
-    protected NotificationType $modelName;
+    protected General $modelName;
 
     public function __construct()
     {
-        $this->modelName = new NotificationType();
+        $this->modelName = new General();
     }
 
     /**
@@ -62,17 +64,21 @@ class NotificationConditionController extends Controller implements ApiInterface
      */
     public function store(Request $request): Response|ResponseFactory
     {
-        $validatedRequest = $request->validate(NotificationConditionRequest::rules());
+        $validatedRequest = $request->validate(GeneralRequest::rules());
 
         $insertRecord = [
-            'name' => $validatedRequest['name'],
+            'generalable_id' => $validatedRequest['generalable_id'],
+            'generalable_type' => $validatedRequest['generalable_type'],
+            'value' => $validatedRequest['value'],
+            'label' => $validatedRequest['label'],
+            'key' => str_replace(' ', '_', strtolower($validatedRequest['label'])),
             'user_id' => Auth::user() ? Auth::user()->id : 1,
         ];
 
         $createdRecord = $this->modelName->createRecord($insertRecord);
         $data = [];
 
-        if ($createdRecord instanceof NotificationType) {
+        if ($createdRecord instanceof General) {
             $data['title'] = __('translations.success_title');
             $data['description'] = __('translations.success_message');
             $data['results'] = $createdRecord;
@@ -129,7 +135,7 @@ class NotificationConditionController extends Controller implements ApiInterface
      */
     public function update(Request $request, string $id): Response|ResponseFactory
     {
-        $validatedRequest = $request->validate(NotificationConditionRequest::rules());
+        $validatedRequest = $request->validate(GeneralRequest::rules());
 
         $showRecord = $this->modelName->fetchSingleRecord($id);
         $data = [];
@@ -137,10 +143,21 @@ class NotificationConditionController extends Controller implements ApiInterface
         if ($showRecord instanceof Collection) {
             if ($showRecord->isNotEmpty()) {
                 $updateRecord = [
-                    'name' => array_key_exists('name', $request->all())
-                        ? $validatedRequest['name']
-                        : $showRecord->toArray()[0]['name'],
+                    'generalable_id' => array_key_exists('generalable_id', $request->all())
+                        ? $validatedRequest['generalable_id']
+                        : $showRecord->toArray()[0]['generalable_id'],
+                    'generalable_type' => array_key_exists('generalable_type', $request->all())
+                        ? $validatedRequest['generalable_type']
+                        : $showRecord->toArray()[0]['generalable_type'],
+                    'value' => array_key_exists('value', $request->all())
+                        ? $validatedRequest['value']
+                        : $showRecord->toArray()[0]['value'],
+                    'label' => array_key_exists('label', $request->all())
+                        ? $validatedRequest['label']
+                        : $showRecord->toArray()[0]['label'],
                 ];
+
+                $updateRecord['key'] = str_replace(' ', '_', strtolower($validatedRequest['label']));
 
                 $editedRecord = $this->modelName->updateRecord($updateRecord, $id);
 
@@ -173,29 +190,77 @@ class NotificationConditionController extends Controller implements ApiInterface
      */
     public function destroy(string $id): Response|ResponseFactory
     {
-        $showRecord = $this->modelName->fetchSingleRecord($id);
-        $data = [];
+        abort(405);
+    }
 
-        if ($showRecord instanceof Collection) {
-            if ($showRecord->isNotEmpty()) {
-                $this->modelName->deleteRecord($id);
-                $data['title'] = __('translations.success_title');
-                $data['description'] = __('translations.success_message');
-                $data['results'] = $showRecord;
-                $statusCode = 200;
-            } else {
-                $data['title'] = __('translations.not_found_title');
-                $data['description'] = __('translations.not_found_message');
-                $data['results'] = [];
-                $statusCode = 422;
-            }
-        } else {
-            $data['title'] = __('translations.error_title');
-            $data['description'] = __('translations.error_message');
-            $data['results'] = [];
-            $statusCode = 500;
-        }
+    /**
+     * Handle fetch model names operation.
+     *
+     * @return Response|ResponseFactory
+     */
+    public function fetchModelNames(): Response|ResponseFactory
+    {
+        $allRecords = $this->modelName->fetchModelNames();
+        $data = [
+            'title' => __('translations.success_title'),
+            'description' => __('translations.success_message'),
+            'records' => $allRecords,
+        ];
 
-        return response($data, $statusCode);
+        return response($data, 200);
+    }
+
+    /**
+     * Handle apply migrations operation.
+     *
+     * @return Response|ResponseFactory
+     * @throws Exception
+     */
+    public function applyMigrations(): Response|ResponseFactory
+    {
+        Artisan::call('migrate:fresh');
+
+        $data = [
+            'title' => __('translations.success_title'),
+            'description' => __('translations.success_message'),
+        ];
+
+        return response($data, 200);
+    }
+
+    /**
+     * Handle apply seeders operation.
+     *
+     * @return Response|ResponseFactory
+     * @throws Exception
+     */
+    public function applySeeders(): Response|ResponseFactory
+    {
+        Artisan::call('db:seed');
+
+        $data = [
+            'title' => __('translations.success_title'),
+            'description' => __('translations.success_message'),
+        ];
+
+        return response($data, 200);
+    }
+
+    /**
+     * Handle optimize application operation.
+     *
+     * @return Response|ResponseFactory
+     * @throws Exception
+     */
+    public function optimizeApplication(): Response|ResponseFactory
+    {
+        Artisan::call('optimize:clear');
+
+        $data = [
+            'title' => __('translations.success_title'),
+            'description' => __('translations.success_message'),
+        ];
+
+        return response($data, 200);
     }
 }

@@ -51,6 +51,7 @@ return new class extends Migration
      */
     public function down(): void
     {
+        Schema::dropIfExists('notification_templates');
         Schema::table('notification_templates', function (Blueprint $table) {
             $table->dropForeign(['notification_type_id']);
             $table->dropColumn('notification_type_id');

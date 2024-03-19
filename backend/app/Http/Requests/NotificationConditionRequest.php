@@ -5,7 +5,7 @@ namespace App\Http\Requests;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\Route;
 
-class NotificationTypeRequest extends FormRequest
+class NotificationConditionRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -28,7 +28,7 @@ class NotificationTypeRequest extends FormRequest
         $rules = [];
 
         // Validation rules when creating
-        if ($currentRouteName === 'types.store')
+        if ($currentRouteName === 'conditions.store')
         {
             $rules = [
                 'name' => 'required|string|min:3|max:100|regex:/^[a-zA-Z\s]+$/',
@@ -36,7 +36,7 @@ class NotificationTypeRequest extends FormRequest
         }
 
         // Validation rules when updating
-        if ($currentRouteName === 'types.update')
+        if ($currentRouteName === 'conditions.update')
         {
             $rules = [
                 'name' => 'sometimes|string|min:3|max:100|regex:/^[a-zA-Z\s]+$/',

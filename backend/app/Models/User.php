@@ -7,6 +7,7 @@ use Exception;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\MorphOne;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -80,6 +81,11 @@ class User extends Authenticatable
     public function notification_templates(): HasMany
     {
         return $this->hasMany('App\Models\NotificationTemplate');
+    }
+
+    public function general(): MorphOne
+    {
+        return $this->morphOne(General::class, 'generalable');
     }
 
     /**
