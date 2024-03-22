@@ -6,14 +6,14 @@ use Carbon\Carbon;
 use Exception;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Collection;
-use Illuminate\Database\Eloquent\Relations\HasMany;
-use Illuminate\Database\Eloquent\Relations\MorphOne;
-use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Pagination\LengthAwarePaginator;
+use Laravel\Fortify\TwoFactorAuthenticatable;
+use Laravel\Jetstream\HasProfilePhoto;
+use Laravel\Jetstream\HasTeams;
 use Laravel\Sanctum\HasApiTokens;
-use App\Traits\ApiHandleFilter;
 
 /**
  * Class User
@@ -36,8 +36,10 @@ class User extends Authenticatable
 {
     use HasApiTokens,
         HasFactory,
+        HasProfilePhoto,
+        HasTeams,
         Notifiable,
-        ApiHandleFilter;
+        TwoFactorAuthenticatable;
 
     protected $fillable = [
         'full_name',
@@ -53,6 +55,8 @@ class User extends Authenticatable
     protected $hidden = [
         'password',
         'remember_token',
+        'two_factor_recovery_codes',
+        'two_factor_secret',
     ];
 
     protected $casts = [
@@ -67,26 +71,6 @@ class User extends Authenticatable
         'created_at',
         'updated_at'
     ];
-
-    public function notification_types(): HasMany
-    {
-        return $this->hasMany('App\Models\NotificationType');
-    }
-
-    public function notification_conditions(): HasMany
-    {
-        return $this->hasMany('App\Models\NotificationCondition');
-    }
-
-    public function notification_templates(): HasMany
-    {
-        return $this->hasMany('App\Models\NotificationTemplate');
-    }
-
-    public function general(): MorphOne
-    {
-        return $this->morphOne(General::class, 'generalable');
-    }
 
     /**
      * Get all the records from the database.
