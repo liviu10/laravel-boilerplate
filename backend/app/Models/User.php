@@ -2,7 +2,6 @@
 
 namespace App\Models;
 
-use Carbon\Carbon;
 use Exception;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Collection;
@@ -18,24 +17,11 @@ use Laravel\Sanctum\HasApiTokens;
 /**
  * Class User
  * @package App\Models
- *
- * @property int $id
- * @property string $full_name
- * @property string $first_name
- * @property string $last_name
- * @property string $nickname
- * @property string $email
- * @property string $phone
- * @property string $email_verified_at
- * @property string $password
- * @property string $profile_image
- * @property Carbon $created_at
- * @property Carbon $updated_at
  */
 class User extends Authenticatable
 {
-    use HasApiTokens,
-        HasFactory,
+    use HasFactory,
+        HasApiTokens,
         HasProfilePhoto,
         HasTeams,
         Notifiable,
@@ -127,11 +113,10 @@ class User extends Authenticatable
      * Get record details from the database.
      *
      * @param string $id
-     * @param string|null $type
      * @return Collection|Exception
      * @throws Exception
      */
-    public function fetchSingleRecord(string $id, string|null $type = null): Collection|Exception
+    public function fetchSingleRecord(string $id): Collection|Exception
     {
         try {
             $query = $this->select('*')->where('id', '=', $id);
