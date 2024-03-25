@@ -5,22 +5,22 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Collection;
 use Exception;
 
 
 /**
- * Class CommentStatus
+ * Class Review
  * @package App\Models
  */
-class CommentStatus extends Model
+class Review extends Model
 {
     use HasFactory;
 
     protected $fillable = [
-        'value',
-        'label',
+        'full_name',
+        'rating',
+        'comment',
         'is_active',
         'user_id',
     ];
@@ -29,38 +29,36 @@ class CommentStatus extends Model
         'id',
         'created_at',
         'updated_at',
+        'deleted_at',
     ];
 
     protected $casts = [
         'id' => 'integer',
+        'rating' => 'integer',
         'is_active' => 'boolean',
+        'user_id' => 'integer',
         'created_at' => 'datetime:d.m.Y H:i',
         'updated_at' => 'datetime:d.m.Y H:i',
-        'user_id' => 'integer',
+        'deleted_at' => 'datetime:d.m.Y H:i',
     ];
 
     protected $attributes = [
         'is_active' => false,
     ];
 
-    public function user(): BelongsTo
-    {
-        return $this->belongsTo('App\Models\User');
-    }
-
-    public function comments(): HasMany
-    {
-        return $this->hasMany('App\Models\Comments');
-    }
-
     public function fetchAllRecords(array $search = []): Collection|Exception
     {
         try {
-            $query = $this->select('id', 'value', 'label')->where('is_active', true);
+            $query = $this->select(
+                'id',
+                'full_name',
+                'rating',
+                'is_active',
+            );
 
             if (!empty($search)) {
                 foreach ($search as $field => $value) {
-                    if ($field === 'id') {
+                    if ($field === 'id' || $field === 'rating' || $field === 'is_active') {
                         $query->where($field, '=', $value);
                     } else {
                         $query->where($field, 'LIKE', '%' . $value . '%');
@@ -74,12 +72,13 @@ class CommentStatus extends Model
         }
     }
 
-    public function createRecord(array $payload): CommentStatus|Exception
+    public function createRecord(array $payload): Review|Exception
     {
         try {
             return $this->create([
-                'value' => $payload['value'],
-                'label' => $payload['label'],
+                'full_name' => $payload['full_name'],
+                'rating' => $payload['rating'],
+                'comment' => $payload['comment'],
                 'is_active' => $payload['is_active'],
                 'user_id' => $payload['user_id'],
             ]);
@@ -93,34 +92,19 @@ class CommentStatus extends Model
         try {
             return $this->select('*')
                 ->where('id', '=', $id)
-                ->with([
-                    'comments' => function ($query) {
-                        $query->select(
-                            'id',
-                            'content_id',
-                            'full_name',
-                        )->with([
-                            'content' => function ($query) {
-                                $query->select('id', 'title');
-                            }
-                        ]);
-                    },
-                    'user' => function ($query) {
-                        $query->select('id', 'full_name');
-                    }
-                ])
                 ->get();
         } catch (Exception $exception) {
             return $exception;
         }
     }
 
-    public function updateRecord(array $payload, int $id): CommentStatus|Exception
+    public function updateRecord(array $payload, int $id): Review|Exception
     {
         try {
             $query = tap($this->find($id))->update([
-                'value' => $payload['value'],
-                'label' => $payload['label'],
+                'full_name' => $payload['full_name'],
+                'rating' => $payload['rating'],
+                'comment' => $payload['comment'],
                 'is_active' => $payload['is_active'],
                 'user_id' => $payload['user_id'],
             ]);

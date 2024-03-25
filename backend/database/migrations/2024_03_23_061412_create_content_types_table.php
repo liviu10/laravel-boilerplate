@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id()->index('idx_id');
             $table->string('value')->nullable(false);
             $table->string('label')->nullable(false);
-            $table->string('is_active')->default(false);
+            $table->boolean('is_active')->default(false);
             $table->timestamps();
             $table->foreignId('user_id')
                 ->constrained()

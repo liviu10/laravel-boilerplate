@@ -100,7 +100,7 @@ class CommentType extends Model
                             'content_id',
                             'full_name',
                         )->with([
-                            'contend' => function ($query) {
+                            'content' => function ($query) {
                                 $query->select('id', 'title');
                             }
                         ]);

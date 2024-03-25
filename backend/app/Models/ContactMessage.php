@@ -11,17 +11,19 @@ use Exception;
 
 
 /**
- * Class CommentStatus
+ * Class ContactMessage
  * @package App\Models
  */
-class CommentStatus extends Model
+class ContactMessage extends Model
 {
     use HasFactory;
 
     protected $fillable = [
-        'value',
-        'label',
-        'is_active',
+        'contact_subject_id',
+        'full_name',
+        'email',
+        'phone',
+        'privacy_policy',
         'user_id',
     ];
 
@@ -29,38 +31,52 @@ class CommentStatus extends Model
         'id',
         'created_at',
         'updated_at',
+        'deleted_at',
     ];
 
     protected $casts = [
         'id' => 'integer',
-        'is_active' => 'boolean',
+        'contact_subject_id' => 'integer',
+        'privacy_policy' => 'boolean',
         'created_at' => 'datetime:d.m.Y H:i',
         'updated_at' => 'datetime:d.m.Y H:i',
+        'deleted_at' => 'datetime:d.m.Y H:i',
         'user_id' => 'integer',
     ];
 
     protected $attributes = [
-        'is_active' => false,
+        'privacy_policy' => false,
     ];
 
-    public function user(): BelongsTo
+    public function contact_subject(): BelongsTo
     {
-        return $this->belongsTo('App\Models\User');
+        return $this->belongsTo('App\Models\ContactSubject');
     }
 
-    public function comments(): HasMany
+    public function contact_responses(): HasMany
     {
-        return $this->hasMany('App\Models\Comments');
+        return $this->hasMany('App\Models\ContactResponse');
     }
 
     public function fetchAllRecords(array $search = []): Collection|Exception
     {
         try {
-            $query = $this->select('id', 'value', 'label')->where('is_active', true);
+            $query = $this->select(
+                'id',
+                'contact_subject_id',
+                'full_name',
+                'email',
+                'phone',
+                'privacy_policy',
+            )->with([
+                'contact_subject' => function ($query) {
+                    $query->select('id', 'label')->where('is_active', true);
+                }
+            ]);
 
             if (!empty($search)) {
                 foreach ($search as $field => $value) {
-                    if ($field === 'id') {
+                    if ($field === 'id' || $field === 'contact_subject_id' || $field === 'privacy_policy') {
                         $query->where($field, '=', $value);
                     } else {
                         $query->where($field, 'LIKE', '%' . $value . '%');
@@ -74,13 +90,15 @@ class CommentStatus extends Model
         }
     }
 
-    public function createRecord(array $payload): CommentStatus|Exception
+    public function createRecord(array $payload): ContactMessage|Exception
     {
         try {
             return $this->create([
-                'value' => $payload['value'],
-                'label' => $payload['label'],
-                'is_active' => $payload['is_active'],
+                'contact_subject_id' => $payload['contact_subject_id'],
+                'full_name' => $payload['full_name'],
+                'email' => $payload['email'],
+                'phone' => $payload['phone'],
+                'privacy_policy' => $payload['privacy_policy'],
                 'user_id' => $payload['user_id'],
             ]);
         } catch (Exception $exception) {
@@ -94,20 +112,20 @@ class CommentStatus extends Model
             return $this->select('*')
                 ->where('id', '=', $id)
                 ->with([
-                    'comments' => function ($query) {
+                    'contact_subject' => function ($query) {
+                        $query->select('id', 'label')->where('is_active', true);
+                    },
+                    'contact_responses' => function ($query) {
                         $query->select(
                             'id',
-                            'content_id',
-                            'full_name',
+                            'contact_message_id',
+                            'message',
                         )->with([
-                            'content' => function ($query) {
-                                $query->select('id', 'title');
+                            'user' => function ($query) {
+                                $query->select('id', 'full_name');
                             }
                         ]);
                     },
-                    'user' => function ($query) {
-                        $query->select('id', 'full_name');
-                    }
                 ])
                 ->get();
         } catch (Exception $exception) {
@@ -115,13 +133,15 @@ class CommentStatus extends Model
         }
     }
 
-    public function updateRecord(array $payload, int $id): CommentStatus|Exception
+    public function updateRecord(array $payload, int $id): ContactMessage|Exception
     {
         try {
             $query = tap($this->find($id))->update([
-                'value' => $payload['value'],
-                'label' => $payload['label'],
-                'is_active' => $payload['is_active'],
+                'contact_subject_id' => $payload['contact_subject_id'],
+                'full_name' => $payload['full_name'],
+                'email' => $payload['email'],
+                'phone' => $payload['phone'],
+                'privacy_policy' => $payload['privacy_policy'],
                 'user_id' => $payload['user_id'],
             ]);
 

@@ -11,17 +11,23 @@ use Exception;
 
 
 /**
- * Class CommentStatus
+ * Class NewsletterCampaign
  * @package App\Models
  */
-class CommentStatus extends Model
+class NewsletterCampaign extends Model
 {
     use HasFactory;
 
     protected $fillable = [
-        'value',
-        'label',
+        'name',
+        'description',
         'is_active',
+        'valid_from',
+        'valid_to',
+        'occur_times',
+        'occur_week',
+        'occur_day',
+        'occur_hour',
         'user_id',
     ];
 
@@ -29,13 +35,21 @@ class CommentStatus extends Model
         'id',
         'created_at',
         'updated_at',
+        'deleted_at',
     ];
 
     protected $casts = [
         'id' => 'integer',
         'is_active' => 'boolean',
+        'valid_from' => 'datetime:d.m.Y',
+        'valid_to' => 'datetime:d.m.Y',
+        'occur_times' => 'integer',
+        'occur_week' => 'integer',
+        'occur_day' => 'integer',
+        'occur_hour' => 'time:H:i',
         'created_at' => 'datetime:d.m.Y H:i',
         'updated_at' => 'datetime:d.m.Y H:i',
+        'deleted_at' => 'datetime:d.m.Y H:i',
         'user_id' => 'integer',
     ];
 
@@ -48,19 +62,34 @@ class CommentStatus extends Model
         return $this->belongsTo('App\Models\User');
     }
 
-    public function comments(): HasMany
+    public function newsletter_subscribers(): HasMany
     {
-        return $this->hasMany('App\Models\Comments');
+        return $this->hasMany('App\Models\NewsletterSubscriber');
     }
 
     public function fetchAllRecords(array $search = []): Collection|Exception
     {
         try {
-            $query = $this->select('id', 'value', 'label')->where('is_active', true);
+            $query = $this->select(
+                'id',
+                'name',
+                'is_active',
+                'valid_from',
+                'valid_to',
+                'occur_times',
+                'occur_week',
+                'occur_day',
+                'occur_hour',
+            )->with([
+                'user' => function ($query) {
+                    $query->select('id', 'full_name');
+                }
+            ]);
 
             if (!empty($search)) {
                 foreach ($search as $field => $value) {
-                    if ($field === 'id') {
+                    if ($field === 'id' || $field === 'is_active' || $field === 'valid_from' || $field === 'valid_to' ||
+                        $field === 'occur_times' || $field === 'occur_week' || $field === 'occur_day' || $field === 'occur_hour') {
                         $query->where($field, '=', $value);
                     } else {
                         $query->where($field, 'LIKE', '%' . $value . '%');
@@ -74,13 +103,19 @@ class CommentStatus extends Model
         }
     }
 
-    public function createRecord(array $payload): CommentStatus|Exception
+    public function createRecord(array $payload): NewsletterCampaign|Exception
     {
         try {
             return $this->create([
-                'value' => $payload['value'],
-                'label' => $payload['label'],
+                'name' => $payload['name'],
+                'description' => $payload['description'],
                 'is_active' => $payload['is_active'],
+                'valid_from' => $payload['valid_from'],
+                'valid_to' => $payload['valid_to'],
+                'occur_times' => $payload['occur_times'],
+                'occur_week' => $payload['occur_week'],
+                'occur_day' => $payload['occur_day'],
+                'occur_hour' => $payload['occur_hour'],
                 'user_id' => $payload['user_id'],
             ]);
         } catch (Exception $exception) {
@@ -94,16 +129,15 @@ class CommentStatus extends Model
             return $this->select('*')
                 ->where('id', '=', $id)
                 ->with([
-                    'comments' => function ($query) {
+                    'newsletter_subscribers' => function ($query) {
                         $query->select(
                             'id',
-                            'content_id',
+                            'newsletter_campaign_id',
                             'full_name',
-                        )->with([
-                            'content' => function ($query) {
-                                $query->select('id', 'title');
-                            }
-                        ]);
+                            'email',
+                            'privacy_policy',
+                            'valid_email',
+                        );
                     },
                     'user' => function ($query) {
                         $query->select('id', 'full_name');
@@ -115,13 +149,19 @@ class CommentStatus extends Model
         }
     }
 
-    public function updateRecord(array $payload, int $id): CommentStatus|Exception
+    public function updateRecord(array $payload, int $id): NewsletterCampaign|Exception
     {
         try {
             $query = tap($this->find($id))->update([
-                'value' => $payload['value'],
-                'label' => $payload['label'],
+                'name' => $payload['name'],
+                'description' => $payload['description'],
                 'is_active' => $payload['is_active'],
+                'valid_from' => $payload['valid_from'],
+                'valid_to' => $payload['valid_to'],
+                'occur_times' => $payload['occur_times'],
+                'occur_week' => $payload['occur_week'],
+                'occur_day' => $payload['occur_day'],
+                'occur_hour' => $payload['occur_hour'],
                 'user_id' => $payload['user_id'],
             ]);
 

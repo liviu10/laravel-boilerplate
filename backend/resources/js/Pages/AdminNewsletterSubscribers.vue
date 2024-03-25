@@ -3,10 +3,10 @@ import AppLayout from '@/Layouts/AppLayout.vue';
 </script>
 
 <template>
-    <AppLayout title="Dashboard">
+    <AppLayout title="Newsletter subscribers">
         <template #header>
             <h2 class="font-semibold text-xl text-gray-800 leading-tight text-center">
-                Dashboard
+                Newsletter subscribers
             </h2>
         </template>
 

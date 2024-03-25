@@ -1,39 +1,76 @@
 <?php
-    use App\Http\Controllers\AdminManagementController;
-    use App\Http\Controllers\AdminManagementContentController;
-    use App\Http\Controllers\AdminManagementTagController;
-    use App\Http\Controllers\AdminManagementMediaController;
-    use App\Http\Controllers\AdminManagementCommentController;
-    use App\Http\Controllers\AdminManagementAppreciationController;
-    use Illuminate\Support\Facades\Route;
 
-    Route::resource('/management', AdminManagementController::class)
-        ->only('index')
-        ->names([
-            'index' => 'admin.management'
-        ]);
-    Route::resource('/management/contents', AdminManagementContentController::class)
-        ->only('index')
-        ->names([
-            'index' => 'admin.management.content'
-        ]);
-    Route::resource('/management/tags', AdminManagementTagController::class)
-        ->only('index')
-        ->names([
-            'index' => 'admin.management.tag'
-        ]);
-    Route::resource('/management/media', AdminManagementMediaController::class)
-        ->only('index')
-        ->names([
-            'index' => 'admin.management.media'
-        ]);
-    Route::resource('/management/comments', AdminManagementCommentController::class)
-        ->only('index')
-        ->names([
-            'index' => 'admin.management.comment'
-        ]);
-    Route::resource('/management/appreciations', AdminManagementAppreciationController::class)
-        ->only('index')
-        ->names([
-            'index' => 'admin.management.appreciation'
-        ]);
+use App\Http\Controllers\Admin\ManagementController;
+use App\Http\Controllers\Admin\ContentTypeController;
+use App\Http\Controllers\Admin\ContentVisibilityController;
+use App\Http\Controllers\Admin\ContentController;
+use App\Http\Controllers\Admin\TagController;
+use App\Http\Controllers\Admin\MediaTypeController;
+use App\Http\Controllers\Admin\MediaController;
+use App\Http\Controllers\Admin\CommentController;
+use App\Http\Controllers\Admin\AppreciationController;
+use Illuminate\Support\Facades\Route;
+
+// Management main routes
+    Route::group(
+        ['prefix' => '/management'],
+        function () {
+            // Index
+            Route::get(
+                '/',
+                [ManagementController::class, 'index']
+            )->name('admin.management');
+
+            // Content routes: types, visibility and content
+            Route::group(
+                ['prefix' => '/'],
+                function () {
+                    Route::resource(
+                        '/content/types',
+                        ContentTypeController::class
+                    );
+                    Route::resource(
+                        '/content/visibility',
+                        ContentVisibilityController::class
+                    );
+                    Route::resource(
+                        '/content',
+                        ContentController::class
+                    );
+                }
+            );
+
+            // Tag route
+            Route::resource(
+                '/tags',
+                TagController::class
+            );
+
+            // Media routes: types and media
+            Route::group(
+                ['prefix' => '/'],
+                function () {
+                    Route::resource(
+                        '/media/types',
+                        MediaTypeController::class
+                    );
+                    Route::resource(
+                        '/media',
+                        MediaController::class
+                    );
+                }
+            );
+
+            // Comment route
+            Route::resource(
+                '/comments',
+                CommentController::class
+            );
+
+            // Appreciation route
+            Route::resource(
+                '/appreciations',
+                AppreciationController::class
+            );
+        }
+    );
