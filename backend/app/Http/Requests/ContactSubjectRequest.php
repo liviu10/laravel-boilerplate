@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Facades\Route;
 
 class ContactSubjectRequest extends FormRequest
 {
@@ -21,12 +22,26 @@ class ContactSubjectRequest extends FormRequest
      */
     public function rules(): array
     {
-        return [
-            'value' => 'required|integer',
-            'label' => 'required|string',
-            'privacy_policy' => 'required|boolean',
-            'user_id' => 'required|integer',
-        ];
+        $currentRouteName = Route::current()->getName();
+        $rules = [];
+
+        if ($currentRouteName === 'subjects.store') {
+            $rules = [
+                'value' => 'required|integer',
+                'label' => 'required|string',
+                'privacy_policy' => 'required|boolean',
+            ];
+        }
+
+        if ($currentRouteName === 'subjects.update') {
+            $rules = [
+                'value' => 'sometimes|integer',
+                'label' => 'sometimes|string',
+                'privacy_policy' => 'sometimes|boolean',
+            ];
+        }
+
+        return $rules;
     }
 
     /**

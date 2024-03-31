@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Facades\Route;
 
 class ContentRequest extends FormRequest
 {
@@ -21,16 +22,33 @@ class ContentRequest extends FormRequest
      */
     public function rules(): array
     {
-        return [
-            'content_visibility_id' => 'required|integer',
-            'content_url' => 'required|string',
-            'title' => 'required|string|min:3|max:255',
-            'content_type_id' => 'required|integer',
-            'description' => 'sometimes|string',
-            'content' => 'required|string',
-            'allow_comments' => 'required|boolean',
-            'user_id' => 'required|integer',
-        ];
+        $currentRouteName = Route::current()->getName();
+        $rules = [];
+
+        if ($currentRouteName === 'contents.store') {
+            $rules = [
+                'content_visibility_id' => 'required|integer',
+                'content_url' => 'required|string',
+                'title' => 'required|string|min:3|max:255',
+                'content_type_id' => 'required|integer',
+                'description' => 'sometimes|string',
+                'content' => 'required|string',
+                'allow_comments' => 'required|boolean',
+            ];
+        }
+
+        if ($currentRouteName === 'contents.update') {
+            $rules = [
+                'content_visibility_id' => 'sometimes|integer',
+                'content_url' => 'sometimes|string',
+                'title' => 'sometimes|string|min:3|max:255',
+                'content_type_id' => 'sometimes|integer',
+                'description' => 'sometimes|string',
+                'content' => 'sometimes|string',
+                'allow_comments' => 'sometimes|boolean',
+            ];
+        }
+        return $rules;
     }
 
     /**

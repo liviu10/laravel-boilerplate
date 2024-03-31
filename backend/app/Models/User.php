@@ -110,7 +110,7 @@ class User extends Authenticatable
         }
     }
 
-    public function updateRecord(array $payload, int $id): Collection|Exception
+    public function updateRecord(array $payload, int $id): User|Exception
     {
         try {
             $query = tap($this->find($id))->update([
@@ -130,12 +130,13 @@ class User extends Authenticatable
         }
     }
 
-    public function deleteRecord(int $id): bool|Exception
+    public function deleteRecord(int $id): User|Exception
     {
         try {
-            $query = tap($this->find($id))->delete();
+            $query = $this->find($id);
+            $query->delete();
 
-            return $query->fresh();
+            return $query;
         } catch (Exception $exception) {
             return $exception;
         }

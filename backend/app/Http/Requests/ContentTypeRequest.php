@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Facades\Route;
 
 class ContentTypeRequest extends FormRequest
 {
@@ -21,12 +22,26 @@ class ContentTypeRequest extends FormRequest
      */
     public function rules(): array
     {
-        return [
-            'value' => 'required|string',
-            'label' => 'required|string',
-            'is_active' => 'required|boolean',
-            'user_id' => 'required|integer',
-        ];
+        $currentRouteName = Route::current()->getName();
+        $rules = [];
+
+        if ($currentRouteName === 'types.store') {
+            $rules = [
+                'value' => 'required|string',
+                'label' => 'required|string',
+                'is_active' => 'required|boolean',
+            ];
+        }
+
+        if ($currentRouteName === 'types.update') {
+            $rules = [
+                'value' => 'sometimes|string',
+                'label' => 'sometimes|string',
+                'is_active' => 'sometimes|boolean',
+            ];
+        }
+
+        return $rules;
     }
 
     /**

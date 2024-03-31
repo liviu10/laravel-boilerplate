@@ -24,7 +24,6 @@ class ContactResponseRequest extends FormRequest
         return [
             'contact_message_id' => 'required|integer',
             'message' => 'required|string',
-            'user_id' => 'required|integer',
         ];
     }
 

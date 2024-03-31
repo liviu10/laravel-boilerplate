@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Facades\Route;
 
 class NewsletterCampaignRequest extends FormRequest
 {
@@ -21,18 +22,38 @@ class NewsletterCampaignRequest extends FormRequest
      */
     public function rules(): array
     {
-        return [
-            'name' => 'required|string|min:3|max:100|regex:/^[a-zA-Z\s]+$/',
-            'description' => 'sometimes|string',
-            'is_active' => 'required|boolean',
-            'valid_from' => 'required|date_format:Y-m-d H:i:s',
-            'valid_to' => 'required|date_format:Y-m-d H:i:s',
-            'occur_times' => 'required|integer|min:1',
-            'occur_week' => 'required|integer|min:1',
-            'occur_day' => 'required|integer|min:1',
-            'occur_hour' => 'required|date_format: H:i:s',
-            'user_id' => 'required|integer',
-        ];
+        $currentRouteName = Route::current()->getName();
+        $rules = [];
+
+        if ($currentRouteName === 'campaigns.store') {
+            $rules = [
+                'name' => 'required|string|min:3|max:100|regex:/^[a-zA-Z\s]+$/',
+                'description' => 'sometimes|string',
+                'is_active' => 'required|boolean',
+                'valid_from' => 'required|date_format:Y-m-d H:i:s',
+                'valid_to' => 'required|date_format:Y-m-d H:i:s',
+                'occur_times' => 'required|integer|min:1',
+                'occur_week' => 'required|integer|min:1',
+                'occur_day' => 'required|integer|min:1',
+                'occur_hour' => 'required|date_format: H:i:s',
+            ];
+        }
+
+        if ($currentRouteName === 'campaigns.update') {
+            $rules = [
+                'name' => 'sometimes|string|min:3|max:100|regex:/^[a-zA-Z\s]+$/',
+                'description' => 'sometimes|string',
+                'is_active' => 'sometimes|boolean',
+                'valid_from' => 'sometimes|date_format:Y-m-d H:i:s',
+                'valid_to' => 'sometimes|date_format:Y-m-d H:i:s',
+                'occur_times' => 'sometimes|integer|min:1',
+                'occur_week' => 'sometimes|integer|min:1',
+                'occur_day' => 'sometimes|integer|min:1',
+                'occur_hour' => 'sometimes|date_format: H:i:s',
+            ];
+        }
+
+        return $rules;
     }
 
     /**

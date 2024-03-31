@@ -15,6 +15,7 @@ use App\Http\Controllers\Admin\TagController;
 use App\Http\Controllers\Admin\MediaTypeController;
 use App\Http\Controllers\Admin\MediaController;
 use App\Http\Controllers\Admin\CommentTypeController;
+use App\Http\Controllers\Admin\CommentStatusController;
 use App\Http\Controllers\Admin\CommentController;
 use App\Http\Controllers\Admin\AppreciationController;
 use App\Http\Controllers\Admin\UserController;
@@ -57,20 +58,21 @@ Route::group(['prefix' => config('app.version')], function () {
         Route::group(['prefix' => '/management'], function () {
             // Content (types, visibility, pages and articles)
             Route::group(['prefix' => '/'], function () {
-                Route::apiResource('/contents/type', ContentTypeController::class);
-                Route::apiResource('/contents/visibility', ContentVisibilityController::class);
+                Route::apiResource('/content/types', ContentTypeController::class);
+                Route::apiResource('/content/visibilities', ContentVisibilityController::class);
                 Route::apiResource('/contents', ContentController::class);
             });
             // Tags
             Route::apiResource('/tags', TagController::class);
             // Media (types and media)
             Route::group(['prefix' => '/'], function () {
-                Route::apiResource('/media/type', MediaTypeController::class);
+                Route::apiResource('/media/types', MediaTypeController::class);
                 Route::apiResource('/media', MediaController::class);
             });
             // Comments (types and comments)
             Route::group(['prefix' => '/'], function () {
-                Route::apiResource('/comments/type', CommentTypeController::class);
+                Route::apiResource('/comment/types', CommentTypeController::class);
+                Route::apiResource('/comment/statuses', CommentStatusController::class);
                 Route::apiResource('/comments', CommentController::class);
             });
             // Appreciation

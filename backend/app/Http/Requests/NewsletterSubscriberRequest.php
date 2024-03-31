@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Facades\Route;
 
 class NewsletterSubscriberRequest extends FormRequest
 {
@@ -21,13 +22,26 @@ class NewsletterSubscriberRequest extends FormRequest
      */
     public function rules(): array
     {
-        return [
-            'newsletter_campaign_id' => 'required|integer',
-            'full_name' => 'required|string|min:3|max:100|regex:/^[a-zA-Z\s]+$/',
-            'email' => 'required|string|unique:newsletter_subscribers',
-            'privacy_policy' => 'required|boolean',
-            'valid_email' => 'sometimes|boolean',
-        ];
+        $currentRouteName = Route::current()->getName();
+        $rules = [];
+
+        if ($currentRouteName === 'subscribers.store') {
+            $rules = [
+                'newsletter_campaign_id' => 'required|integer',
+                'full_name' => 'required|string|min:3|max:100|regex:/^[a-zA-Z\s]+$/',
+                'email' => 'required|string|unique:newsletter_subscribers',
+                'privacy_policy' => 'required|boolean',
+                'valid_email' => 'sometimes|boolean',
+            ];
+        }
+
+        if ($currentRouteName === 'subscribers.update') {
+            $rules = [
+                'newsletter_campaign_id' => 'required|integer',
+            ];
+        }
+
+        return $rules;
     }
 
     /**

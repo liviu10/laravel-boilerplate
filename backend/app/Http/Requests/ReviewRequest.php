@@ -26,7 +26,6 @@ class ReviewRequest extends FormRequest
             'rating' => 'required|integer|min:0|max:10',
             'comment' => 'sometimes|string',
             'is_active' => 'required|boolean',
-            'user_id' => 'sometimes|integer',
         ];
     }
 

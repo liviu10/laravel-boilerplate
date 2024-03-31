@@ -143,12 +143,13 @@ class ContactSubject extends Model
         }
     }
 
-    public function deleteRecord(string $id): bool|Exception
+    public function deleteRecord(string $id): ContactSubject|Exception
     {
         try {
-            $this->find($id)->delete();
+            $query = $this->find($id);
+            $query->delete();
 
-            return true;
+            return $query;
         } catch (Exception $exception) {
             return $exception;
         }

@@ -151,12 +151,13 @@ class ContactMessage extends Model
         }
     }
 
-    public function deleteRecord(string $id): bool|Exception
+    public function deleteRecord(string $id): ContactMessage|Exception
     {
         try {
-            $this->find($id)->delete();
+            $query = $this->find($id);
+            $query->delete();
 
-            return true;
+            return $query;
         } catch (Exception $exception) {
             return $exception;
         }

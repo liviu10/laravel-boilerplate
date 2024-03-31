@@ -3,63 +3,114 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
+use App\Http\Requests\MediaTypeRequest;
+use App\Models\MediaType;
+use Illuminate\Http\Response;
+use Illuminate\Contracts\Routing\ResponseFactory;
+use App\Utilities\HandleApi;
+use Illuminate\Database\Eloquent\Collection;
 
 class MediaTypeController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
-    public function index()
+    protected MediaType $modelName;
+    protected HandleApi $handleApi;
+
+    public function __construct()
     {
-        //
+        $this->modelName = new MediaType();
+        $this->handleApi = new HandleApi();
     }
 
     /**
-     * Show the form for creating a new resource.
+     * Display a listing of the resource.
+     * @param array $search
+     * @return Response|ResponseFactory
      */
-    public function create()
+    public function index(array $search = []): Response|ResponseFactory
     {
-        //
+        $query = $this->modelName->fetchAllRecords($search);
+
+        return $this->handleApi->handleApiResponse($query);
     }
 
     /**
      * Store a newly created resource in storage.
+     * @param MediaTypeRequest $request
+     * @return Response|ResponseFactory
      */
-    public function store(Request $request)
+    public function store(MediaTypeRequest $request): Response|ResponseFactory
     {
-        //
+        $payload = $this->handleApi->handlePayload(
+            MediaTypeRequest::class,
+            $this->modelName->getFillable()
+        );
+
+        $query = $this->modelName->createRecord($payload);
+
+        return $this->handleApi->handleApiResponse(
+            $query,
+            MediaType::class
+        );
     }
 
     /**
      * Display the specified resource.
+     * @param string $id
+     * @return Response|ResponseFactory
      */
-    public function show(string $id)
+    public function show(string $id): Response|ResponseFactory
     {
-        //
-    }
+        $query = $this->modelName->fetchSingleRecord($id);
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
-    {
-        //
+        return $this->handleApi->handleApiResponse($query);
     }
 
     /**
      * Update the specified resource in storage.
+     * @param MediaTypeRequest $request
+     * @param string $id
+     * @return Response|ResponseFactory
      */
-    public function update(Request $request, string $id)
+    public function update(MediaTypeRequest $request, string $id): Response|ResponseFactory
     {
-        //
+        $selectedRecord = $this->modelName->fetchSingleRecord($id);
+
+        if ($selectedRecord instanceof Collection && $selectedRecord->isNotEmpty()) {
+            $payload = $this->handleApi->handlePayload(
+                MediaTypeRequest::class,
+                $this->modelName->getFillable(),
+                $selectedRecord,
+            );
+
+            $query = $this->modelName->updateRecord($payload, $id);
+
+            return $this->handleApi->handleApiResponse(
+                $query,
+                MediaType::class
+            );
+        } else {
+            return $this->handleApi->handleApiResponse($selectedRecord);
+        }
     }
 
     /**
      * Remove the specified resource from storage.
+     * @param string $id
+     * @return Response|ResponseFactory
      */
-    public function destroy(string $id)
+    public function destroy(string $id): Response|ResponseFactory
     {
-        //
+        $selectedRecord = $this->modelName->fetchSingleRecord($id);
+
+        if ($selectedRecord instanceof Collection && $selectedRecord->isNotEmpty()) {
+            $query = $this->modelName->deleteRecord($id);
+
+            return $this->handleApi->handleApiResponse(
+                $query,
+                MediaType::class
+            );
+        } else {
+            return $this->handleApi->handleApiResponse($selectedRecord);
+        }
     }
 }

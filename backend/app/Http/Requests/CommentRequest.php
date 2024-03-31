@@ -29,7 +29,6 @@ class CommentRequest extends FormRequest
             'email' => 'required|email',
             'message' => 'required|string',
             'notify_new_comments' => 'required|boolean',
-            'user_id' => 'sometimes|integer',
         ];
     }
 

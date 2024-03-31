@@ -25,7 +25,6 @@ class AppreciationRequest extends FormRequest
     {
         return [
             'content_id' => 'required|integer',
-            'user_id' => 'sometimes|integer',
             'likes' => 'sometimes|integer|min:0',
             'dislikes' => 'sometimes|integer|min:0',
             'rating' => 'sometimes|integer|min:0|max:10',

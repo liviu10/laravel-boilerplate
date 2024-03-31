@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Facades\Route;
 
 class UserRequest extends FormRequest
 {
@@ -21,15 +22,59 @@ class UserRequest extends FormRequest
      */
     public function rules(): array
     {
-        return [
-            'first_name' => 'sometimes|string|min:3|max:100|regex:/^[a-zA-Z\s]+$/',
-            'last_name' => 'sometimes|string|min:3|max:100|regex:/^[a-zA-Z\s]+$/',
-            'nickname' => 'sometimes|string|min:3|max:100',
-            'email' => 'sometimes|string|min:3|max:255|unique:users',
-            'phone' => 'sometimes|string|min:7|max:15|regex:/^\+?(?:[0-9][ .-]?){6,14}[0-9]$/',
-            'password' => 'sometimes|string|min:8|confirmed',
-            'profile_image' => 'sometimes|image|mimes:jpeg,jpg,png,gif,webp,bmp,svg,tiff',
-        ];
+        $currentRouteName = Route::current()->getName();
+        $rules = [];
+
+        if ($currentRouteName === 'users.store')
+        {
+            $rules = [
+                'first_name' => 'required|string|min:3|max:100|regex:/^[a-zA-Z\s]+$/',
+                'last_name' => 'required|string|min:3|max:100|regex:/^[a-zA-Z\s]+$/',
+                'email' => 'required|string|min:3|max:255|unique:users',
+            ];
+        }
+
+        if ($currentRouteName === 'users.update')
+        {
+            $rules = [
+                'first_name' => 'sometimes|string|min:3|max:100|regex:/^[a-zA-Z\s]+$/',
+                'last_name' => 'sometimes|string|min:3|max:100|regex:/^[a-zA-Z\s]+$/',
+            ];
+        }
+
+        if ($currentRouteName === 'register')
+        {
+            $rules = [
+                'first_name'=> 'required|string|min:3|max:100|regex:/^[a-zA-Z\s]+$/',
+                'last_name' => 'required|string|min:3|max:100|regex:/^[a-zA-Z\s]+$/',
+                'nickname' => 'required|string|min:3|max:100',
+                'email' => 'required|string|min:3|max:255|unique:users',
+                'password' => 'required|string|min:8|confirmed',
+            ];
+        }
+
+        if ($currentRouteName === 'login')
+        {
+            $rules = [
+                'email' => 'required|string|min:3|max:255',
+                'password' => 'required|string|min:8|confirmed',
+            ];
+        }
+
+        if ($currentRouteName === 'users.profile')
+        {
+            $rules = [
+                'first_name' => 'sometimes|string|min:3|max:100|regex:/^[a-zA-Z\s]+$/',
+                'last_name' => 'sometimes|string|min:3|max:100|regex:/^[a-zA-Z\s]+$/',
+                'nickname' => 'sometimes|string|min:3|max:100',
+                'email' => 'sometimes|string|min:3|max:255',
+                'phone' => 'sometimes|string|min:7|max:15|regex:/^\+?(?:[0-9][ .-]?){6,14}[0-9]$/',
+                'password' => 'sometimes|string|min:8|confirmed',
+                'profile_image' => 'sometimes|image|mimes:jpeg,jpg,png,gif,webp,bmp,svg,tiff',
+            ];
+        }
+
+        return $rules;
     }
 
     /**

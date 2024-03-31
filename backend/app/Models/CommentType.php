@@ -131,12 +131,13 @@ class CommentType extends Model
         }
     }
 
-    public function deleteRecord(string $id): bool|Exception
+    public function deleteRecord(string $id): CommentType|Exception
     {
         try {
-            $this->find($id)->delete();
+            $query = $this->find($id);
+            $query->delete();
 
-            return true;
+            return $query;
         } catch (Exception $exception) {
             return $exception;
         }

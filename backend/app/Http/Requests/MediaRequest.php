@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Facades\Route;
 
 class MediaRequest extends FormRequest
 {
@@ -21,13 +22,28 @@ class MediaRequest extends FormRequest
      */
     public function rules(): array
     {
-        return [
-            'media_type_id' => 'required|integer',
-            'content_id' => 'required|integer',
-            'internal_path' => 'sometimes|image|mimes:jpeg,jpg,png,gif,webp,bmp,svg,tiff',
-            'external_path' => 'sometimes|string',
-            'user_id' => 'required|integer',
-        ];
+        $currentRouteName = Route::current()->getName();
+        $rules = [];
+
+        if ($currentRouteName === 'media.store') {
+            $rules = [
+                'media_type_id' => 'required|integer',
+                'content_id' => 'required|integer',
+                'internal_path' => 'sometimes|image|mimes:jpeg,jpg,png,gif,webp,bmp,svg,tiff',
+                'external_path' => 'sometimes|string',
+            ];
+        }
+
+        if ($currentRouteName === 'media.store') {
+            $rules = [
+                'media_type_id' => 'sometimes|integer',
+                'content_id' => 'sometimes|integer',
+                'internal_path' => 'sometimes|image|mimes:jpeg,jpg,png,gif,webp,bmp,svg,tiff',
+                'external_path' => 'sometimes|string',
+            ];
+        }
+
+        return $rules;
     }
 
     /**

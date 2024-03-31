@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Facades\Route;
 
 class TagRequest extends FormRequest
 {
@@ -21,13 +22,29 @@ class TagRequest extends FormRequest
      */
     public function rules(): array
     {
-        return [
-            'content_id' => 'required|integer',
-            'name' => 'required|string',
-            'description' => 'sometimes|string',
-            'slug' => 'required|string',
-            'user_id' => 'required|integer',
-        ];
+        $currentRouteName = Route::current()->getName();
+        $rules = [];
+
+        if ($currentRouteName === 'tags.store') {
+            $rules = [
+                'content_id' => 'required|integer',
+                'name' => 'required|string',
+                'description' => 'sometimes|string',
+                'slug' => 'required|string',
+            ];
+        }
+
+        if ($currentRouteName === 'tags.store') {
+            $rules = [
+                'content_id' => 'sometimes|integer',
+                'name' => 'sometimes|string',
+                'description' => 'sometimes|string',
+                'slug' => 'sometimes|string',
+            ];
+        }
+
+
+        return $rules;
     }
 
     /**
