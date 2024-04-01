@@ -43,20 +43,6 @@ class User extends Authenticatable
         'updated_at'
     ];
 
-    // TODO: Improve this when finishing with the login system
-    // public function fetchCurrentAuthUser()
-    // {
-    //     try {
-    //         return collect(Auth::user())->except(['email_verified_at', 'password']);
-    //     } catch (\Exception $exception) {
-    //         $this->LogApiError($exception);
-    //         return false;
-    //     } catch (\Illuminate\Database\QueryException $exception) {
-    //         $this->LogApiError($exception);
-    //         return false;
-    //     }
-    // }
-
     public function fetchAllRecords(array $search = []): Collection|Exception
     {
         try {
@@ -81,7 +67,7 @@ class User extends Authenticatable
     public function createRecord(array $payload): User|Exception
     {
         try {
-            $query = $this->create([
+            return $this->create([
                 'full_name' => $payload['full_name'],
                 'first_name' => $payload['first_name'],
                 'last_name' => $payload['last_name'],
@@ -91,8 +77,6 @@ class User extends Authenticatable
                 'password' => $payload['password'],
                 'profile_image' => $payload['profile_image'],
             ]);
-
-            return $query;
         } catch (Exception $exception) {
             return $exception;
         }
@@ -102,7 +86,6 @@ class User extends Authenticatable
     {
         try {
             $query = $this->select('*')->where('id', '=', $id);
-
 
             return $query->get();
         } catch (Exception $exception) {
@@ -140,5 +123,14 @@ class User extends Authenticatable
         } catch (Exception $exception) {
             return $exception;
         }
+    }
+
+    public function getProfileImageUrl(array $input): string
+    {
+        $fullName = $input['first_name'] . ' ' . $input['last_name'];
+        return vsprintf('https://www.gravatar.com/avatar/%s.jpg?s=200&d=%s', [
+            md5(strtolower($input['email'])),
+            $fullName ? urlencode('https://ui-avatars.com/api/' . $fullName) : 'mp'
+        ]);
     }
 }

@@ -19,6 +19,10 @@ use App\Http\Controllers\Admin\CommentStatusController;
 use App\Http\Controllers\Admin\CommentController;
 use App\Http\Controllers\Admin\AppreciationController;
 use App\Http\Controllers\Admin\UserController;
+use App\Http\Controllers\Admin\LogoutController;
+
+use App\Http\Controllers\Client\RegisterController;
+use App\Http\Controllers\Client\LoginController;
 
 /*
 |--------------------------------------------------------------------------
@@ -37,7 +41,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 Route::group(['prefix' => config('app.version')], function () {
     // Application's admin api endpoints
-    Route::group(['prefix' => '/admin'], function () {
+    Route::group(['prefix' => '/admin', 'middleware' => 'auth:sanctum'], function () {
         // Application's communication endpoints
         Route::group(['prefix' => '/communication'], function () {
             // Contact subject, messages and responses
@@ -82,21 +86,13 @@ Route::group(['prefix' => config('app.version')], function () {
         Route::group(['prefix' => '/settings'], function () {
             Route::apiResource('/users', UserController::class);
         });
+        // Application's logout endpoint
+        Route::post('/logout', [LogoutController::class, 'logout'])->name('logout');
     });
 
     // Application's client api endpoints
-//    Route::group(['prefix' => '/client'], function () {
-//        // Contact message
-//        Route::post('/messages', [ContactMessageController::class, 'contactMessage'])->name('contact.messages');
-//        // Newsletter
-//        Route::post('/subscribe', [NewsletterSubscriberController::class, 'subscribe'])->name('newsletter.subscribe');
-//        Route::delete('/unsubscribe/{email}', [NewsletterSubscriberController::class, 'unsubscribe'])->name('newsletter.unsubscribe');
-//        // Content (pages and articles)
-//        Route::get('/contents', [ContentController::class, 'fetchAllContents'])->name('content.all');
-//        Route::get('/contents/{id}', [ContentController::class, 'fetchSingleContent'])->name('content.single');
-//        // Resources
-//        Route::get('/resources', [ResourceController::class, 'fetchAllResources'])->name('resource.all');
-//        // Reviews
-//        Route::post('/reviews', [ReviewController::class, 'store'])->name('reviews.store');
-//    });
+    Route::group(['prefix' => '/client'], function () {
+        Route::post('/register', [RegisterController::class, 'register'])->name('register');
+        Route::post('/login', [LoginController::class, 'login'])->name('login');
+    });
 });
