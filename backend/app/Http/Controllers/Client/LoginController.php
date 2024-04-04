@@ -23,9 +23,7 @@ class LoginController extends Controller
         if (Auth::attempt(['email' => $request->email, 'password' => $request->password])) {
             $currentAuthUser = Auth::user();
             $token = $currentAuthUser
-                ->createToken(
-                    config('app.token_name')
-                )
+                ->createToken(config('app.token_name'))
                 ->plainTextToken;
 
             return response([
@@ -34,8 +32,7 @@ class LoginController extends Controller
                 'token' => $token,
                 'results' => $currentAuthUser,
             ], 200);
-        }
-        else{
+        } else {
             return response([
                 'title' => __('translation.unauthorized_message.title'),
                 'description' => __('translation.unauthorized_message.description'),

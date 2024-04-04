@@ -9,6 +9,7 @@ use Illuminate\Http\Response;
 use Illuminate\Contracts\Routing\ResponseFactory;
 use App\Utilities\HandleApi;
 use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Support\Facades\Auth;
 
 class ContactSubjectController extends Controller
 {
@@ -44,6 +45,7 @@ class ContactSubjectController extends Controller
             ContactSubjectRequest::class,
             $this->modelName->getFillable()
         );
+        $payload['user_id'] =  Auth::user() ? Auth::user()->id : 1;
 
         $query = $this->modelName->createRecord($payload);
 

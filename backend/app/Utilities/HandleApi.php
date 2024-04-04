@@ -17,7 +17,9 @@ class HandleApi
 
     public function __construct()
     {
-        $this->routeMethod = Route::current()->methods[0];
+        $this->routeMethod = Route::current()
+            ? Route::current()->methods[0]
+            : null;
         $this->response = [];
         $this->statusCode = null;
     }
@@ -25,12 +27,12 @@ class HandleApi
     /**
      * Handle the response.
      *
-     * @param Collection|Model|Exception|bool $query
+     * @param Collection|Model|Exception|array|bool $query
      * @param null $modelInstance
      * @return Response|ResponseFactory
      */
     public function handleApiResponse(
-        Collection|Model|Exception|bool $query,
+        Collection|Model|Exception|array|bool $query,
         $modelInstance = null
     ): Response|ResponseFactory
     {
@@ -93,16 +95,16 @@ class HandleApi
     /**
      * Handle the success response.
      *
-     * @param Collection|Model|bool $query
+     * @param Collection|Model|array|bool $query
      * @return Response|ResponseFactory
      */
-    private function handleApiSuccessResponse(Collection|Model|bool $query): Response|ResponseFactory
+    private function handleApiSuccessResponse(Collection|Model|array|bool $query): Response|ResponseFactory
     {
         $this->response['title'] = __('translation.success_message.title');
         $this->response['description'] = __('translation.success_message.description');
         $this->response['results'] =
             $this->routeMethod === 'POST' || $this->routeMethod === 'PUT'
-                ? $query->toArray()
+                ? is_array($query) ? $query : $query->toArray()
                 : $query;
         $this->statusCode = $this->routeMethod === 'POST'
             ? 201

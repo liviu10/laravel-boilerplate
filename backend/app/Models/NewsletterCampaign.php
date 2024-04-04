@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -46,7 +47,7 @@ class NewsletterCampaign extends Model
         'occur_times' => 'integer',
         'occur_week' => 'integer',
         'occur_day' => 'integer',
-        'occur_hour' => 'time:H:i',
+        'occur_hour' => 'datetime:H:i:s',
         'created_at' => 'datetime:d.m.Y H:i',
         'updated_at' => 'datetime:d.m.Y H:i',
         'deleted_at' => 'datetime:d.m.Y H:i',
@@ -96,6 +97,24 @@ class NewsletterCampaign extends Model
                     }
                 }
             }
+
+            return $query->get();
+        } catch (Exception $exception) {
+            return $exception;
+        }
+    }
+
+    public function fetchClientCampaigns(): Collection|Exception
+    {
+        try {
+            $query = $this->select(
+                'id',
+                'name',
+                'description',
+            )
+                ->where('is_active', true)
+                ->where('valid_from', '>=', Carbon::now()->startOfMonth())
+                ->where('valid_to', '<=', Carbon::now()->endOfMonth());
 
             return $query->get();
         } catch (Exception $exception) {

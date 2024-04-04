@@ -23,7 +23,7 @@ return new class extends Migration
                 'idx_newsletter_campaigns_newsletter_subscribers_id'
             );
             $table->string('full_name')->nullable(false);
-            $table->string('email')->nullable(false)->unique();
+            $table->string('email')->nullable(false);
             $table->boolean('privacy_policy')->default(false);
             $table->boolean('valid_email')->default(false);
             $table->timestamps();

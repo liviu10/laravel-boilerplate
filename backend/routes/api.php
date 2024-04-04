@@ -21,8 +21,10 @@ use App\Http\Controllers\Admin\AppreciationController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Admin\LogoutController;
 
-use App\Http\Controllers\Client\RegisterController;
+use App\Http\Controllers\Client\CommunicationController;
 use App\Http\Controllers\Client\LoginController;
+use App\Http\Controllers\Client\ManagementController;
+use App\Http\Controllers\Client\RegisterController;
 
 /*
 |--------------------------------------------------------------------------
@@ -92,7 +94,41 @@ Route::group(['prefix' => config('app.version')], function () {
 
     // Application's client api endpoints
     Route::group(['prefix' => '/client'], function () {
+        // Authentication and register
         Route::post('/register', [RegisterController::class, 'register'])->name('register');
         Route::post('/login', [LoginController::class, 'login'])->name('login');
+        // Communication (contact form, newsletter and reviews)
+        Route::group(['prefix' => '/communication'], function () {
+            Route::group(['prefix' => '/contact'], function () {
+                Route::get(
+                    '/subjects',
+                    [CommunicationController::class, 'getContactSubjects']
+                )->name('contact.subjects');
+                Route::post(
+                    '/message',
+                    [CommunicationController::class, 'sendContactMessage']
+                )->name('contact.message');
+            });
+            Route::group(['prefix' => '/newsletters'], function () {
+                Route::get(
+                    '/campaigns',
+                    [CommunicationController::class, 'getNewsletterCampaigns']
+                )->name('newsletter.campaigns');
+                Route::post(
+                    '/subscribe',
+                    [CommunicationController::class, 'newsletterSubscribe']
+                )->name('newsletter.subscribe');
+                Route::delete(
+                    '/unsubscribe/{email}/{newsletterCampaignIds}',
+                    [CommunicationController::class, 'newsletterUnsubscribe']
+                )->name('newsletter.unsubscribe');
+            });
+            Route::post(
+                '/review',
+                [CommunicationController::class, 'sendReview']
+            )->name('review');
+        });
+        // Management (content, comments and appreciations)
+
     });
 });

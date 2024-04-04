@@ -27,17 +27,17 @@ class ContactSubjectRequest extends FormRequest
 
         if ($currentRouteName === 'subjects.store') {
             $rules = [
-                'value' => 'required|integer',
+                'value' => 'required|string',
                 'label' => 'required|string',
-                'privacy_policy' => 'required|boolean',
+                'is_active' => 'required|boolean',
             ];
         }
 
         if ($currentRouteName === 'subjects.update') {
             $rules = [
-                'value' => 'sometimes|integer',
+                'value' => 'sometimes|string',
                 'label' => 'sometimes|string',
-                'privacy_policy' => 'sometimes|boolean',
+                'is_active' => 'sometimes|boolean',
             ];
         }
 
@@ -53,13 +53,11 @@ class ContactSubjectRequest extends FormRequest
     {
         return [
             'value.required' => 'The value field is required.',
-            'value.integer' => 'The value must be an integer.',
+            'value.string' => 'The value must be a string.',
             'label.required' => 'The label field is required.',
             'label.string' => 'The label must be a string.',
-            'privacy_policy.required' => 'The privacy policy field is required.',
-            'privacy_policy.boolean' => 'The privacy policy field must be a boolean value.',
-            'user_id.required' => 'The user ID field is required.',
-            'user_id.integer' => 'The user ID must be an integer.',
+            'is_active.required' => 'The privacy policy field is required.',
+            'is_active.boolean' => 'The privacy policy field must be a boolean value.',
         ];
     }
 }

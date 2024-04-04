@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Facades\Route;
 
 class ReviewRequest extends FormRequest
 {
@@ -21,12 +22,24 @@ class ReviewRequest extends FormRequest
      */
     public function rules(): array
     {
-        return [
-            'full_name' => 'required|string|min:3|max:100|regex:/^[a-zA-Z\s]+$/',
-            'rating' => 'required|integer|min:0|max:10',
-            'comment' => 'sometimes|string',
-            'is_active' => 'required|boolean',
-        ];
+        $currentRouteName = Route::current()->getName();
+        $rules = [];
+
+        if ($currentRouteName === 'review') {
+            $rules = [
+                'full_name' => 'required|string|min:3|max:100|regex:/^[a-zA-Z\s]+$/',
+                'rating' => 'required|integer|min:0|max:10',
+                'comment' => 'sometimes|string',
+            ];
+        }
+
+        if ($currentRouteName === 'reviews.update') {
+            $rules = [
+                'is_active' => 'required|boolean',
+            ];
+        }
+
+        return $rules;
     }
 
     /**

@@ -35,7 +35,7 @@ class NewsletterCampaignRequest extends FormRequest
                 'occur_times' => 'required|integer|min:1',
                 'occur_week' => 'required|integer|min:1',
                 'occur_day' => 'required|integer|min:1',
-                'occur_hour' => 'required|date_format: H:i:s',
+                'occur_hour' => 'required|date_format:H:i:s',
             ];
         }
 
@@ -49,7 +49,7 @@ class NewsletterCampaignRequest extends FormRequest
                 'occur_times' => 'sometimes|integer|min:1',
                 'occur_week' => 'sometimes|integer|min:1',
                 'occur_day' => 'sometimes|integer|min:1',
-                'occur_hour' => 'sometimes|date_format: H:i:s',
+                'occur_hour' => 'sometimes|date_format:H:i:s',
             ];
         }
 
@@ -87,8 +87,6 @@ class NewsletterCampaignRequest extends FormRequest
             'occur_day.min' => 'The occur day must be at least :min.',
             'occur_hour.required' => 'The occur hour field is required.',
             'occur_hour.date_format' => 'The occur hour must be a time in the format H:i:s.',
-            'user_id.required' => 'The user ID field is required.',
-            'user_id.integer' => 'The user ID must be an integer.',
         ];
     }
 }

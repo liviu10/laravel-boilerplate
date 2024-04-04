@@ -73,6 +73,8 @@ class NewsletterSubscriber extends Model
                     if ($field === 'id' || $field === 'newsletter_campaign_id' ||
                         $field === 'privacy_policy' || $field === 'valid_email') {
                         $query->where($field, '=', $value);
+                    } elseif ($field === 'newsletterCampaignIds') {
+                        $query->whereIn('newsletter_campaign_id', $value);
                     } else {
                         $query->where($field, 'LIKE', '%' . $value . '%');
                     }

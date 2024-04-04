@@ -19,10 +19,11 @@ class ContactMessage extends Model
     use HasFactory;
 
     protected $fillable = [
-        'contact_subject_id',
         'full_name',
         'email',
         'phone',
+        'contact_subject_id',
+        'message',
         'privacy_policy',
         'user_id',
     ];
@@ -98,6 +99,7 @@ class ContactMessage extends Model
                 'full_name' => $payload['full_name'],
                 'email' => $payload['email'],
                 'phone' => $payload['phone'],
+                'message' => $payload['message'],
                 'privacy_policy' => $payload['privacy_policy'],
                 'user_id' => $payload['user_id'],
             ]);
