@@ -1,0 +1,55 @@
+# Use the official PHP 8.1 image as base
+FROM php:8.1
+
+# Install system dependencies
+RUN apt-get update && \
+    apt-get install -y \
+        libpng-dev \
+        libjpeg-dev \
+        libfreetype6-dev \
+        zlib1g-dev \
+        libzip-dev \
+        unzip && \
+    apt-get clean && \
+    rm -rf /var/lib/apt/lists/*
+
+# Install additional packages required for PHP extensions
+RUN apt-get update && \
+    apt-get install -y \
+        libpng-dev \
+        libjpeg-dev \
+        libfreetype6-dev \
+        libonig-dev && \
+    apt-get clean && \
+    rm -rf /var/lib/apt/lists/*
+
+# Configure and install PHP extensions
+RUN docker-php-ext-configure gd --with-freetype --with-jpeg && \
+    docker-php-ext-install -j$(nproc) gd pdo pdo_mysql mbstring exif pcntl bcmath zip
+
+# Install Composer
+RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
+
+# Set working directory
+WORKDIR /var/www/html
+
+# Copy composer files
+COPY composer.json composer.lock ./
+
+# Install dependencies
+RUN composer install --no-dev --no-scripts --no-autoloader
+
+# Copy the rest of the application
+COPY . .
+
+# Generate key
+RUN php artisan key:generate
+
+# Run php artisan storage:link
+RUN php artisan storage:link
+
+# Expose port
+EXPOSE 8000
+
+# Start the server
+CMD php artisan serve --host=0.0.0.0 --port=8000
