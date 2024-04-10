@@ -1,0 +1,1 @@
+Admin comment type page

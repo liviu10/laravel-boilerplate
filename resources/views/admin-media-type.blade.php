@@ -1,0 +1,1 @@
+Admin media type page

@@ -1,0 +1,1 @@
+Admin content type page
