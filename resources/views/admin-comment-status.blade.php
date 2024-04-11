@@ -2,6 +2,6 @@
 
 @section('content')
     <div class="container">
-        Admin comment status page
+        @include('components.generic-page-title', [ 'title' => 'Admin comment status page' ])
     </div>
 @endsection

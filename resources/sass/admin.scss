@@ -3,3 +3,88 @@
 
 // Bootstrap
 @import 'bootstrap/scss/bootstrap';
+
+// Utilities
+@mixin flex-center() {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+// Component styles
+.component {
+    &-header {
+        @include flex-center;
+        margin-top: 24px;
+        margin-bottom: 24px;
+        height: 60px;
+        & h1 {
+            margin-bottom: 0;
+            user-select: none;
+        }
+    }
+    &-card-group-stats {
+        & .card {
+            margin: 4px;
+            border-radius: 0;
+            width: 250px;
+            & p {
+                margin-bottom: 0;
+                user-select: none;
+            }
+            &-body {
+                padding: 8px;
+            }
+            &-title {
+                @include flex-center;
+                margin-top: 16px;
+                margin-bottom: 16px !important;
+                font-size: 18px;
+                font-weight: bold;
+                & i {
+                    margin-left: 6px;
+                }
+            }
+            &-text {
+                text-align: center;
+                & .fa-solid.fa-arrow-up {
+                    color: #198754;
+                }
+                & .fa-solid.fa-arrow-down {
+                    color: #DC3545;
+                }
+                & .fa-solid.fa-minus {
+                    color: #FFC107;
+                }
+            }
+            &-actions {
+                @include flex-center;
+                margin-bottom: 16px;
+                & .btn {
+                    border-radius: 0;
+                }
+            }
+        }
+    }
+    &-message-chart,
+    &-newsletter-chart,
+    &-review-chart,
+    &-content-chart,
+    &-storage-chart {
+        @include flex-center;
+        align-items: flex-start;
+        flex-direction: column;
+        & .card {
+            border-radius: 0;
+        }
+        & #message_pie_chart,
+        & #message_combo_chart,
+        & #newsletter_combo_chart,
+        & #review_pie_chart,
+        & #content_pie_chart,
+        & #storage_pie_chart {
+            width: 480px;
+            height: 360px;
+        }
+    }
+}

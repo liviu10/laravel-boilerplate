@@ -2,7 +2,7 @@
 
 @section('content')
     <div class="container">
-        Admin media page
+        @include('components.generic-page-title', [ 'title' => 'Admin media page' ])
     </div>
 @endsection
 

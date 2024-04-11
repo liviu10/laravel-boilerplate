@@ -61,20 +61,6 @@
                                 <a class="nav-link" href="#">Link</a>
                             </li>
                         </ul>
-
-                        <!-- Right Side Of Navbar -->
-                        <ul class="navbar-nav ms-auto">
-                            @if (Route::has('login'))
-                                @auth
-                                    <a href="{{ url('/admin') }}" class="">Admin</a>
-                                @else
-                                    <a href="{{ route('login') }}" class="">Log in</a>
-                                    @if (Route::has('register'))
-                                        <a href="{{ route('register') }}" class="">Register</a>
-                                    @endif
-                                @endauth
-                            @endif
-                        </ul>
                     </div>
                 </div>
             </nav>

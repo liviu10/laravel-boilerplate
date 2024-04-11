@@ -2,6 +2,6 @@
 
 @section('content')
     <div class="container">
-        Admin media type page
+        @include('components.generic-page-title', [ 'title' => 'Admin media type page' ])
     </div>
 @endsection

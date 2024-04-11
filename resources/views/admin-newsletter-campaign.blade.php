@@ -2,6 +2,6 @@
 
 @section('content')
     <div class="container">
-        Admin newsletter campaign page
+        @include('components.generic-page-title', [ 'title' => 'Admin newsletter campaign page' ])
     </div>
 @endsection

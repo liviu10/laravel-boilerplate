@@ -2,6 +2,6 @@
 
 @section('content')
     <div class="container">
-        Admin content social media page
+        @include('components.generic-page-title', [ 'title' => 'Admin content social media page' ])
     </div>
 @endsection

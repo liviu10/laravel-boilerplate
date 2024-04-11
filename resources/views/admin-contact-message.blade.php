@@ -2,6 +2,6 @@
 
 @section('content')
     <div class="container">
-        Admin contact message page
+        @include('components.generic-page-title', [ 'title' => 'Admin contact message page' ])
     </div>
 @endsection

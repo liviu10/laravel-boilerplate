@@ -2,6 +2,6 @@
 
 @section('content')
     <div class="container">
-        GUEST WELCOME PAGE
+        @include('components.generic-page-title', [ 'title' => 'Guest welcome page' ])
     </div>
 @endsection

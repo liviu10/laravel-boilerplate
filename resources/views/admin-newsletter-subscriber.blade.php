@@ -2,6 +2,6 @@
 
 @section('content')
     <div class="container">
-        Admin newsletter subscriber page
+        @include('components.generic-page-title', [ 'title' => 'Admin newsletter subscriber page' ])
     </div>
 @endsection

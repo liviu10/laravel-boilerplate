@@ -2,22 +2,18 @@
 
 @section('content')
     <div class="container">
-        <div class="row justify-content-center">
-            <div class="col-md-8">
-                <div class="card">
-                    <div class="card-header">{{ __('Dashboard') }}</div>
+        @include('components.generic-page-title', [ 'title' => 'Admin dashboard page' ])
 
-                    <div class="card-body">
-                        @if (session('status'))
-                            <div class="alert alert-success" role="alert">
-                                {{ session('status') }}
-                            </div>
-                        @endif
+        @include('components.admin-card-group-stats')
 
-                        {{ __('You are logged in!') }}
-                    </div>
-                </div>
-            </div>
-        </div>
+        @include('components.admin-card-message-chart')
+
+        @include('components.admin-card-newsletter-chart')
+
+        @include('components.admin-card-review-chart')
+
+        @include('components.admin-card-content-chart')
+
+        @include('components.admin-card-storage-chart')
     </div>
 @endsection
