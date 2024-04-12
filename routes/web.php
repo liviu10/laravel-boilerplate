@@ -5,6 +5,7 @@ use App\Http\Controllers\AppreciationController;
 use App\Http\Controllers\CommentController;
 use App\Http\Controllers\CommentStatusController;
 use App\Http\Controllers\CommentTypeController;
+use App\Http\Controllers\CommunicationController;
 use App\Http\Controllers\ContactMessageController;
 use App\Http\Controllers\ContactResponseController;
 use App\Http\Controllers\ContactSubjectController;
@@ -12,11 +13,13 @@ use App\Http\Controllers\ContentController;
 use App\Http\Controllers\ContentSocialMediaController;
 use App\Http\Controllers\ContentTypeController;
 use App\Http\Controllers\ContentVisibilityController;
+use App\Http\Controllers\ManagementController;
 use App\Http\Controllers\MediaController;
 use App\Http\Controllers\MediaTypeController;
 use App\Http\Controllers\NewsletterCampaignController;
 use App\Http\Controllers\NewsletterSubscriberController;
 use App\Http\Controllers\ReviewController;
+use App\Http\Controllers\SettingsController;
 use App\Http\Controllers\TagController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Auth;
@@ -35,13 +38,14 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     return view('welcome');
-});
+})->name('guest.index');
 
 Auth::routes();
 
 Route::group(['prefix' => '/admin'], function () {
     Route::get('/', [AdminController::class, 'index'])->name('admin.index');
     Route::group(['prefix' => '/communication'], function () {
+        Route::get('/', [CommunicationController::class, 'index'])->name('communication.index');
         Route::group(['prefix' => '/contact'], function () {
             Route::resource('/subjects', ContactSubjectController::class);
             Route::resource('/messages', ContactMessageController::class);
@@ -54,6 +58,7 @@ Route::group(['prefix' => '/admin'], function () {
         Route::resource('/reviews', ReviewController::class);
     });
     Route::group(['prefix' => '/management'], function () {
+        Route::get('/', [ManagementController::class, 'index'])->name('management.index');
         Route::group(['prefix' => '/contents'], function () {
             Route::resource('/types', ContentTypeController::class);
             Route::resource('/visibilities', ContentVisibilityController::class);
@@ -73,6 +78,7 @@ Route::group(['prefix' => '/admin'], function () {
         Route::resource('/appreciations', AppreciationController::class);
     });
     Route::group(['prefix' => '/settings'], function () {
+        Route::get('/', [SettingsController::class, 'index'])->name('settings.index');
         Route::resource('/users', UserController::class);
     });
 });

@@ -19,18 +19,14 @@ class AdminNavigationBar extends Component
         $this->adminNavigationBar = [
             'title' => 'Home',
             'url' => route('admin.index'),
-            'communication' => [
-                'title' => 'Communication',
-                'children' => $this->getRouteChildren('communication'),
-            ],
-            'management' => [
-                'title' => 'Management',
-                'children' => $this->getRouteChildren('management'),
-            ],
-            'settings' => [
-                'title' => 'Settings',
-                'children' => $this->getRouteChildren('settings'),
-            ],
+            'communication_title' => 'Communication',
+            'communication_url' => route('communication.index'),
+            'management_title' => 'Management',
+            'management_url' => route('management.index'),
+            'settings_title' => 'Settings',
+            'settings_url' => route('settings.index'),
+            'view_website_title' => 'View Website',
+            'view_website_url' => route('guest.index'),
         ];
     }
 
@@ -41,34 +37,5 @@ class AdminNavigationBar extends Component
     {
         return view('components.admin-navigation-bar')
             ->with('adminNavigationBar', $this->adminNavigationBar);
-    }
-
-    /**
-     * Get the children routes for a given group.
-     */
-    private function getRouteChildren(string $baseUrl): array
-    {
-        $routes = Route::getRoutes();
-
-        $filteredRoutes = [];
-
-        $id = 1;
-
-        foreach ($routes as $route) {
-            if (str_starts_with($route->uri(), "admin/{$baseUrl}") && $route->getActionMethod() === 'index') {
-                $fullUrl = route($route->getName());
-
-                $urlComponents = explode('/', $fullUrl);
-                $lastElement = end($urlComponents);
-
-                $filteredRoutes[] = [
-                    'id' => $id++,
-                    'title' => $lastElement,
-                    'url' => $fullUrl,
-                ];
-            }
-        }
-
-        return ['children' => $filteredRoutes];
     }
 }

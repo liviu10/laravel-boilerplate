@@ -21,75 +21,25 @@
                         {{ $adminNavigationBar['title'] }}
                     </a>
                 </li>
-                <li class="nav-item dropdown">
-                    <a
-                        class="nav-link dropdown-toggle"
-                        href="#"
-                        role="button"
-                        data-bs-toggle="dropdown"
-                        aria-expanded="false"
-                    >
-                        {{ $adminNavigationBar['communication']['title'] }}
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ $adminNavigationBar['communication_url'] }}">
+                        {{ $adminNavigationBar['communication_title'] }}
                     </a>
-                    <ul class="dropdown-menu">
-                        @foreach($adminNavigationBar['communication']['children'] as $value)
-                            @foreach($value as $item)
-                                <li>
-                                    <a class="dropdown-item" href="{{ $item['url'] }}">
-                                        {{ $item['title'] }}
-                                    </a>
-                                </li>
-                            @endforeach
-                        @endforeach
-                    </ul>
-                </li>
-                <li class="nav-item dropdown">
-                    <a
-                        class="nav-link dropdown-toggle"
-                        href="#"
-                        role="button"
-                        data-bs-toggle="dropdown"
-                        aria-expanded="false"
-                    >
-                        {{ $adminNavigationBar['management']['title'] }}
-                    </a>
-                    <ul class="dropdown-menu">
-                        @foreach($adminNavigationBar['management']['children'] as $value)
-                            @foreach($value as $item)
-                                <li>
-                                    <a class="dropdown-item" href="{{ $item['url'] }}">
-                                        {{ $item['title'] }}
-                                    </a>
-                                </li>
-                            @endforeach
-                        @endforeach
-                    </ul>
-                </li>
-                <li class="nav-item dropdown">
-                    <a
-                        class="nav-link dropdown-toggle"
-                        href="#"
-                        role="button"
-                        data-bs-toggle="dropdown"
-                        aria-expanded="false"
-                    >
-                        {{ $adminNavigationBar['settings']['title'] }}
-                    </a>
-                    <ul class="dropdown-menu">
-                        @foreach($adminNavigationBar['settings']['children'] as $value)
-                            @foreach($value as $item)
-                                <li>
-                                    <a class="dropdown-item" href="{{ $item['url'] }}">
-                                        {{ $item['title'] }}
-                                    </a>
-                                </li>
-                            @endforeach
-                        @endforeach
-                    </ul>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">
-                        View website
+                    <a class="nav-link" href="{{ $adminNavigationBar['management_url'] }}">
+                        {{ $adminNavigationBar['management_title'] }}
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ $adminNavigationBar['settings_url'] }}">
+                        {{ $adminNavigationBar['settings_title'] }}
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ $adminNavigationBar['view_website_url'] }}">
+                        {{ $adminNavigationBar['view_website_title'] }}
+                        <i class="fa-solid fa-up-right-from-square"></i>
                     </a>
                 </li>
             </ul>
@@ -105,17 +55,13 @@
                         aria-expanded="false"
                         v-pre
                     >
-                        {{ Auth::user()->full_name }}
+                        Welcome, {{ Auth::user()->full_name }}
                     </a>
                     <ul class="dropdown-menu dropdown-menu-end">
                         <li>
                             <a class="dropdown-item" href="#">
-                                Action
-                            </a>
-                        </li>
-                        <li>
-                            <a class="dropdown-item" href="#">
-                                Another action
+                                <i class="fa-solid fa-user"></i>
+                                My account
                             </a>
                         </li>
                         <li>
@@ -125,6 +71,7 @@
                             <a class="dropdown-item" href="{{ route('logout') }}"
                                onclick="event.preventDefault();
                                                  document.getElementById('logout-form').submit();">
+                                <i class="fa-solid fa-arrow-right-from-bracket"></i>
                                 {{ __('Logout') }}
                             </a>
                         </li>
