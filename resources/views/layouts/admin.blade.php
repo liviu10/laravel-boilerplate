@@ -37,7 +37,7 @@
     <body>
 
         <div id="app">
-            @include('components.admin-navbar')
+            <x-admin-navigation-bar />
 
             <main class="container-fluid">
                 @yield('content')

@@ -40,7 +40,7 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::group(['prefix' => '/admin'], function () {
-    Route::get('/', [AdminController::class, 'index']);
+    Route::get('/', [AdminController::class, 'index'])->name('admin.index');
     Route::group(['prefix' => '/communication'], function () {
         Route::group(['prefix' => '/contact'], function () {
             Route::resource('/subjects', ContactSubjectController::class);

@@ -105,7 +105,7 @@ return [
     |
     */
 
-    '.env' => env('APP_ENV', 'production'),
+    'env' => env('APP_ENV', 'production'),
 
     /*
     |--------------------------------------------------------------------------
@@ -265,7 +265,7 @@ return [
 //        App\Providers\BusinessLogicProvider::class,
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
-        // App\Providers\TelescopeServiceProvider::class,
+//        App\Providers\TelescopeServiceProvider::class,
 
     ],
 
