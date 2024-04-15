@@ -4,7 +4,7 @@
             LOGO
         </a>
         <button
-            class="navbar-toggler"
+            class="navbar-toggler collapsed"
             type="button"
             data-bs-toggle="collapse"
             data-bs-target="#navbarSupportedContent"
