@@ -2,6 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Contracts\View\Factory;
+use Illuminate\Contracts\View\View;
+use Illuminate\Foundation\Application;
 use Illuminate\Http\Request;
 
 class SettingsController extends Controller
@@ -18,9 +21,27 @@ class SettingsController extends Controller
 
     /**
      * Display a listing of the resource.
+     * @return View|Application|Factory
      */
-    public function index()
+    public function index(): View|Application|Factory
     {
-        return view('admin-settings');
+        $data = [
+            'resources' => [
+                'content' => $this->handleUserResources(),
+            ]
+        ];
+
+        return view('admin-settings', compact('data'));
+    }
+
+    private function handleUserResources(): array
+    {
+        return [
+            [
+                'id' => 1,
+                'title' => 'Users',
+                'url' => '/admin/settings/users'
+            ],
+        ];
     }
 }
