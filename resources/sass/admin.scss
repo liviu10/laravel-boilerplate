@@ -2,4 +2,62 @@
 @import 'bootstrap/scss/bootstrap';
 
 // Import components
-@import 'components/admin_navbar';
+@import 'components/admin_navigation_bar';
+
+// Import utilities
+@import 'utilities/flex';
+@import 'utilities/rem_convertor';
+@import 'utilities/theme';
+
+.admin {
+    &--page {}
+    &__header {
+        margin-top: rem-convertor(32px);
+        margin-bottom: rem-convertor(32px);
+        & h1 {
+            margin-bottom: 0;
+            text-align: center;
+        }
+    }
+    &__body {}
+    &__card-stats {
+        align-items: center;
+        justify-content: center;
+        & .card {
+            margin: 0 rem-convertor(6px);
+            border-radius: 0;
+            padding: rem-convertor(12px);
+            @media only screen and (max-width: 575px) {
+                margin: rem-convertor(6px) 0;
+            }
+            &-body {
+                padding: 0;
+            }
+            &-title, &-text {
+                margin-bottom: 0;
+                user-select: none;
+            }
+            &-title {
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                margin-top: rem-convertor(12px);
+                margin-bottom: rem-convertor(12px);
+            }
+            &-text {
+                & span {
+                    font-weight: bold;
+                }
+                & .fa-solid.fa-star {
+                    color: #FFC000;
+                }
+                & .fa-solid.fa-thumbs-up {
+                    color: #198754;
+                }
+                & .fa-solid.fa-thumbs-down {
+                    color: #dc3545;
+                }
+            }
+        }
+    }
+}

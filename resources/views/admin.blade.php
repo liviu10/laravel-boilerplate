@@ -7,7 +7,13 @@
         </div>
 
         <div class="admin__body">
-            @include('components.admin-card-stats')
+            <div class="row admin__card-stats">
+                <x-admin-card-stats />
+            </div>
+
+            <div class="row admin__google-combo-chart">
+                <x-admin-google-combo-chart />
+            </div>
         </div>
     </div>
 @endsection

@@ -2,9 +2,9 @@
 @import 'bootstrap/scss/bootstrap';
 
 // Import utilities
-@import 'utilties/flex';
-@import 'utilties/rem_convertor';
-@import 'utilties/theme';
+@import 'utilities/flex';
+@import 'utilities/rem_convertor';
+@import 'utilities/theme';
 
 .container-fluid {
     & .auth {
