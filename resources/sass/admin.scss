@@ -23,6 +23,8 @@
     &__card-stats {
         align-items: center;
         justify-content: center;
+        margin-top: rem-convertor(32px);
+        margin-bottom: rem-convertor(32px);
         & .card {
             margin: 0 rem-convertor(6px);
             border-radius: 0;
@@ -56,6 +58,34 @@
                 }
                 & .fa-solid.fa-thumbs-down {
                     color: #dc3545;
+                }
+            }
+        }
+    }
+    &__insights {
+        align-items: center;
+        justify-content: center;
+        margin-top: rem-convertor(32px);
+        margin-bottom: rem-convertor(32px);
+        &-content {
+            & p {
+                margin-bottom: 0;
+                & .btn {
+                    border-radius: 0;
+                    border: none;
+                }
+            }
+            & .collapse {
+                & .card {
+                    margin-top: rem-convertor(32px);
+                    border-radius: 0;
+                    border: none;
+                    &-title, &-body {
+                        padding: 0 rem-convertor(12px);
+                    }
+                    &-title {
+                        margin-bottom: rem-convertor(24px);
+                    }
                 }
             }
         }

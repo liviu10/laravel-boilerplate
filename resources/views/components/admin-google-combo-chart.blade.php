@@ -1,4 +1,4 @@
-<div id="chart_div" style="width: 900px; height: 500px;"></div>
+<div id="{{ $chartId }}" style="margin-left: auto; margin-right:auto; width: 900px; height: 500px;"></div>
 <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 <script type="text/javascript">
     google.charts.load('current', {'packages':['corechart']});
@@ -16,14 +16,18 @@
         ]);
 
         const options = {
-            title: 'Monthly Coffee Production by Country',
-            vAxis: {title: 'Cups'},
-            hAxis: {title: 'Month'},
+            title: @json($chartTitle),
+            vAxis: {
+                title: 'Cups'
+            },
+            hAxis: {
+                title: 'Month'
+            },
             seriesType: 'bars',
             series: {5: {type: 'line'}}
         };
 
-        const chart = new google.visualization.ComboChart(document.getElementById('chart_div'));
+        const chart = new google.visualization.ComboChart(document.getElementById(@json($chartId)));
         chart.draw(data, options);
     }
 </script>
