@@ -75,7 +75,7 @@
                     border: none;
                 }
             }
-            & .collapse {
+            & .collapse, & .collapsing {
                 & .card {
                     margin-top: rem-convertor(32px);
                     border-radius: 0;

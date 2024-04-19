@@ -49,6 +49,7 @@
                             data-bs-target="#collapseCommunication"
                             aria-expanded="false"
                             aria-controls="collapseCommunication"
+                            onclick="toggleCollapse('collapseCommunication')"
                         >
                             Communication
                         </button>
@@ -59,11 +60,12 @@
                             data-bs-target="#collapseManagement"
                             aria-expanded="false"
                             aria-controls="collapseManagement"
+                            onclick="toggleCollapse('collapseManagement')"
                         >
                             Management
                         </button>
                     </p>
-                    <div class="collapse show" id="collapseCommunication">
+                    <div class="collapse" id="collapseCommunication">
                         <div class="card">
                             <h5 class="card-title">
                                 Communication stats
@@ -87,6 +89,24 @@
                             </div>
                         </div>
                     </div>
+                    <script>
+                        function toggleCollapse(targetId) {
+                            // Get the target element
+                            var target = document.getElementById(targetId);
+
+                            // Get all buttons
+                            var buttons = document.querySelectorAll('[data-bs-toggle="collapse"]');
+
+                            // Loop through buttons and set aria-expanded to false
+                            buttons.forEach(function(button) {
+                                button.setAttribute('aria-expanded', 'false');
+                            });
+
+                            // Set aria-expanded to true for the clicked button
+                            var clickedButton = document.querySelector('[data-bs-target="#' + targetId + '"]');
+                            clickedButton.setAttribute('aria-expanded', 'true');
+                        }
+                    </script>
                 </div>
             </div>
         </div>
