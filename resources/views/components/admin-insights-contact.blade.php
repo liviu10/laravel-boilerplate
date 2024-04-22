@@ -4,13 +4,13 @@
             Contact
         </h5>
         <div class="card-content">
-            <div class="">
+            <div class="my-3">
                 <span>Subjects</span>:
                 <span class="badge text-bg-primary">Subject A</span>
                 <span class="badge text-bg-primary">Subject B</span>
                 <span class="badge text-bg-primary">Subject C</span>
             </div>
-            <div class="">
+            <div class="my-3">
                 <ul class="list-group">
                     <li class="list-group-item">
                         500 messages | 402 responses | 93.1% respond ratio
@@ -31,10 +31,10 @@
                     </li>
                 </ul>
             </div>
-            <div class="">
+            <div class="my-3">
                 <canvas id="contact_combo_chart"></canvas>
             </div>
-            <div class="">
+            <div class="my-3">
                 <canvas id="contact_pie_chart"></canvas>
             </div>
         </div>
@@ -48,8 +48,8 @@
 ></script>
 <script type="text/javascript">
     // Combo bar chart
-    const ctx = document.getElementById('contact_combo_chart').getContext('2d');
-    const barChartData = {
+    const contactBarChartCtx = document.getElementById('contact_combo_chart').getContext('2d');
+    const contactBarChartData = {
         labels: ['Subject A', 'Subject B', 'Subject C'],
         datasets: [
             {
@@ -70,25 +70,32 @@
             }
         ]
     };
-    const options = {
+    const contactBarChartOptions = {
+        aspectRatio: 1.75,
+        plugins: {
+            title: {
+                display: true,
+                text: 'Contact messages vs. responses over time'
+            }
+        },
         scales: {
             y: {
                 beginAtZero: true
             }
         }
     };
-    const myChart = new Chart(ctx, {
+    const contactBarChart = new Chart(contactBarChartCtx, {
         type: 'bar',
-        data: barChartData,
-        options: options
+        data: contactBarChartData,
+        options: contactBarChartOptions
     });
 
     // Pie chart
-    const pieCtx = document.getElementById('contact_pie_chart').getContext('2d');
-    const pieChartData = {
+    const contactPieChartCtx = document.getElementById('contact_pie_chart').getContext('2d');
+    const contactPieChartData = {
         labels: ['Messages', 'Responses'],
         datasets: [{
-            label: 'Pie Chart',
+            label: 'Messages',
             data: [402, 98],
             backgroundColor: [
                 'rgba(255, 99, 132, 0.2)',
@@ -103,16 +110,23 @@
             borderWidth: 1
         }]
     };
-    const pieOptions = {
+    const contactPieOptions = {
+        aspectRatio: 1.75,
+        plugins: {
+            title: {
+                display: true,
+                text: 'Respond ratio'
+            }
+        },
         scales: {
             y: {
                 beginAtZero: true
             }
         }
     };
-    const myPieChart = new Chart(pieCtx, {
+    const contactPieChart = new Chart(contactPieChartCtx, {
         type: 'pie',
-        data: pieChartData,
-        options: pieOptions
+        data: contactPieChartData,
+        options: contactPieOptions
     });
 </script>
