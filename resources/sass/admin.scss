@@ -67,26 +67,45 @@
         justify-content: center;
         margin-top: rem-convertor(32px);
         margin-bottom: rem-convertor(32px);
-        &-content {
+        &-body {
             & p {
                 margin-bottom: 0;
                 & .btn {
                     border-radius: 0;
-                    border: none;
                 }
             }
             & .collapse, & .collapsing {
                 & .card {
-                    margin-top: rem-convertor(32px);
                     border-radius: 0;
-                    border: none;
-                    &-title, &-body {
-                        padding: 0 rem-convertor(12px);
+                    padding: rem-convertor(12px);
+                    &-body {
+                        padding: 0;
+                        & h5 {
+                            display: flex;
+                            align-items: center;
+                            justify-content: space-between;
+                            margin-top: rem-convertor(12px);
+                            margin-bottom: rem-convertor(12px);
+                        }
                     }
-                    &-title {
-                        margin-bottom: rem-convertor(24px);
+                    &-content {
+                        & div {
+                            margin: rem-convertor(16px) 0;
+                            & .list-group {
+                                border-radius: 0;
+                                &-item {
+                                    & .btn {
+                                        border-radius: 0;
+                                        padding: rem-convertor(4px);
+                                    }
+                                }
+                            }
+                        }
                     }
                 }
+            }
+            & .collapsing, &.collapsed {
+                border: none;
             }
         }
     }
