@@ -21,21 +21,51 @@
                         <a href="#" target="_blank">
                             See more
                         </a>
+                        <div>
+                            <i class="fa-solid fa-reply"></i>
+                            User Webmaster at 21.04.2024: Lorem Ipsum is simply dummy text of the printing and typesetting industry...
+                            <a href="#" target="_blank">
+                                See more
+                            </a>
+                        </div>
                     </li>
                     <li class="list-group-item">
-                        <i class="fa-solid fa-reply"></i>
-                        User Webmaster at 21.04.2024: Lorem Ipsum is simply dummy text of the printing and typesetting industry...
+                        <i class="fa-solid fa-comments"></i>
+                        John Doe at 18.04.2024: Lorem Ipsum is simply dummy text of the printing and typesetting industry...
                         <a href="#" target="_blank">
                             See more
                         </a>
+                        <div>
+                            <i class="fa-solid fa-reply"></i>
+                            User Webmaster at 19.04.2024: Lorem Ipsum is simply dummy text of the printing and typesetting industry...
+                            <a href="#" target="_blank">
+                                See more
+                            </a>
+                        </div>
+                    </li>
+                    <li class="list-group-item">
+                        <i class="fa-solid fa-comments"></i>
+                        John Doe at 17.04.2024: Lorem Ipsum is simply dummy text of the printing and typesetting industry...
+                        <a href="#" target="_blank">
+                            See more
+                        </a>
+                        <div>
+                            <i class="fa-solid fa-reply"></i>
+                            User Webmaster at 18.04.2024: Lorem Ipsum is simply dummy text of the printing and typesetting industry...
+                            <a href="#" target="_blank">
+                                See more
+                            </a>
+                        </div>
                     </li>
                 </ul>
             </div>
-            <div class="my-3">
-                <canvas id="contact_combo_chart"></canvas>
-            </div>
-            <div class="my-3">
-                <canvas id="contact_pie_chart"></canvas>
+            <div class="row my-3">
+                <div class="col-6">
+                    <canvas id="contact_combo_chart"></canvas>
+                </div>
+                <div class="col-6">
+                    <canvas id="contact_pie_chart"></canvas>
+                </div>
             </div>
         </div>
     </div>
@@ -71,7 +101,7 @@
         ]
     };
     const contactBarChartOptions = {
-        aspectRatio: 1.75,
+        aspectRatio: 1.50,
         plugins: {
             title: {
                 display: true,
@@ -111,7 +141,7 @@
         }]
     };
     const contactPieOptions = {
-        aspectRatio: 1.75,
+        aspectRatio: 1.50,
         plugins: {
             title: {
                 display: true,

@@ -25,12 +25,6 @@
     <div class="collapse" id="collapseContent">
         @include('components.admin-insights-content')
     </div>
-    <div class="collapse" id="collapseComment">
-        @include('components.admin-insights-comment')
-    </div>
-    <div class="collapse" id="collapseAppreciation">
-        @include('components.admin-insights-appreciation')
-    </div>
 </div>
 <script>
     const collapseButtons = document.querySelectorAll('[data-bs-toggle="collapse"]');

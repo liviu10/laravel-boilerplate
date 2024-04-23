@@ -90,19 +90,36 @@
             <div class="my-3">
                 <ul class="list-group">
                     <li class="list-group-item">
+                        5 <i class="fa-solid fa-star"></i>
                         John Doe at 20.04.2024: Lorem Ipsum is simply dummy text of the printing and typesetting industry...
                         <a href="#" target="_blank">
                             See more
                         </a>
                     </li>
                     <li class="list-group-item">
-                        John Doe at 19.04.2024: Lorem Ipsum is simply dummy text of the printing and typesetting industry...
+                        4 <i class="fa-solid fa-star"></i>
+                        John Doe at 20.04.2024: Lorem Ipsum is simply dummy text of the printing and typesetting industry...
                         <a href="#" target="_blank">
                             See more
                         </a>
                     </li>
                     <li class="list-group-item">
-                        John Doe at 18.04.2024: Lorem Ipsum is simply dummy text of the printing and typesetting industry...
+                        3 <i class="fa-solid fa-star"></i>
+                        John Doe at 20.04.2024: Lorem Ipsum is simply dummy text of the printing and typesetting industry...
+                        <a href="#" target="_blank">
+                            See more
+                        </a>
+                    </li>
+                    <li class="list-group-item">
+                        2 <i class="fa-solid fa-star"></i>
+                        John Doe at 20.04.2024: Lorem Ipsum is simply dummy text of the printing and typesetting industry...
+                        <a href="#" target="_blank">
+                            See more
+                        </a>
+                    </li>
+                    <li class="list-group-item">
+                        1 <i class="fa-solid fa-star"></i>
+                        John Doe at 20.04.2024: Lorem Ipsum is simply dummy text of the printing and typesetting industry...
                         <a href="#" target="_blank">
                             See more
                         </a>

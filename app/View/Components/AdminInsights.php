@@ -21,7 +21,6 @@ class AdminInsights extends Component
             'newsletter' => $this->handleAdminInsightNewsletter(),
             'review' => $this->handleAdminInsightReview(),
             'content' => $this->handleAdminInsightContent(),
-            'comment' => $this->handleAdminInsightComment(),
             'appreciation' => $this->handleAdminInsightAppreciation(),
         ];
     }
@@ -58,16 +57,6 @@ class AdminInsights extends Component
                 'key' => 'collapseContent',
                 'label' => __('Content')
             ],
-            [
-                'id' => 5,
-                'key' => 'collapseComment',
-                'label' => __('Comment')
-            ],
-            [
-                'id' => 6,
-                'key' => 'collapseAppreciation',
-                'label' => __('Appreciation')
-            ]
         ];
     }
 

@@ -38,11 +38,13 @@
                     </li>
                 </ul>
             </div>
-            <div class="my-3">
-                <canvas id="subscribers_line_chart"></canvas>
-            </div>
-            <div class="my-3">
-                <canvas id="subscribers_pie_chart"></canvas>
+            <div class="row my-3">
+                <div class="col-6">
+                    <canvas id="subscribers_line_chart"></canvas>
+                </div>
+                <div class="col-6">
+                    <canvas id="subscribers_pie_chart"></canvas>
+                </div>
             </div>
         </div>
     </div>
@@ -80,10 +82,11 @@
         }]
     };
     const newsletterLineChartOptions = {
+        aspectRatio: 1.50,
         plugins: {
             title: {
                 display: true,
-                text: 'Subscribers per Campaign'
+                text: 'Subscribers over time'
             }
         },
         scales: {
@@ -119,7 +122,7 @@
         }]
     };
     const newsletterPieOptions = {
-        aspectRatio: 1.75,
+        aspectRatio: 1.50,
         plugins: {
             title: {
                 display: true,
