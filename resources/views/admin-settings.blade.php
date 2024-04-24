@@ -21,7 +21,7 @@
         </div>
 
         <div class="admin__body">
-
+            @include('components.admin-card')
         </div>
     </div>
 @endsection
