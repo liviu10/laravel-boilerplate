@@ -111,4 +111,30 @@
             }
         }
     }
+    &__shortcuts {
+        @include flex-center();
+        flex-wrap: wrap;
+        margin: rem-convertor(16px) auto;
+        & .card {
+            margin: rem-convertor(8px);
+            border-radius: 0;
+            width: rem-convertor(180px);
+            height: rem-convertor(120px);
+            &-body {
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                flex-direction: column;
+                padding: rem-convertor(8px);
+                & .btn {
+                    border-radius: 0;
+                    padding: rem-convertor(6px);
+                    width: 50%;
+                }
+            }
+            &-title {
+                margin-bottom: 0;
+            }
+        }
+    }
 }

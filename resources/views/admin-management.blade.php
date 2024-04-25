@@ -21,7 +21,75 @@
         </div>
 
         <div class="admin__body">
+            <div class="row">
+                <div class="col-10 admin__shortcuts">
+                    <!-- Content types -->
+                    @include('components.admin-card-shortcuts', [
+                        'title' => __('Content types'),
+                        'buttonRoute' => route('types.index')
+                    ])
 
+                    <!-- Content visibilities -->
+                    @include('components.admin-card-shortcuts', [
+                        'title' => __('Content visibilities'),
+                        'buttonRoute' => route('visibilities.index')
+                    ])
+
+                    <!-- Content social -->
+                    @include('components.admin-card-shortcuts', [
+                        'title' => __('Content social'),
+                        'buttonRoute' => route('social.index')
+                    ])
+
+                    <!-- Content -->
+                    @include('components.admin-card-shortcuts', [
+                        'title' => __('Content'),
+                        'buttonRoute' => url('admin/management/contents')
+                    ])
+
+                    <!-- Tags -->
+                    @include('components.admin-card-shortcuts', [
+                        'title' => __('Tags'),
+                        'buttonRoute' => route('tags.index')
+                    ])
+
+                    <!-- Media types -->
+                    @include('components.admin-card-shortcuts', [
+                        'title' => __('Media types'),
+                        'buttonRoute' => route('types.index')
+                    ])
+
+                    <!-- Media -->
+                    @include('components.admin-card-shortcuts', [
+                        'title' => __('Media'),
+                        'buttonRoute' => url('admin/management/media')
+                    ])
+
+                    <!-- Comment types -->
+                    @include('components.admin-card-shortcuts', [
+                        'title' => __('Comment types'),
+                        'buttonRoute' => route('types.index')
+                    ])
+
+                    <!-- Comment statuses -->
+                    @include('components.admin-card-shortcuts', [
+                        'title' => __('Comment statuses'),
+                        'buttonRoute' => route('statuses.index')
+                    ])
+
+                    <!-- Comments -->
+                    @include('components.admin-card-shortcuts', [
+                        'title' => __('Comments'),
+                        'buttonRoute' => url('admin/management/comments')
+                    ])
+
+                    <!-- Appreciations -->
+                    @include('components.admin-card-shortcuts', [
+                        'title' => __('Appreciations'),
+                        'buttonRoute' => route('appreciations.index')
+                    ])
+                </div>
+            </div>
         </div>
     </div>
 @endsection

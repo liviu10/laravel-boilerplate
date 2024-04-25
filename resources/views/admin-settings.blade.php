@@ -21,7 +21,15 @@
         </div>
 
         <div class="admin__body">
-            @include('components.admin-card')
+            <div class="row">
+                <div class="col-10 admin__shortcuts">
+                    <!-- Users -->
+                    @include('components.admin-card-shortcuts', [
+                        'title' => __('Users'),
+                        'buttonRoute' => route('users.index')
+                    ])
+                </div>
+            </div>
         </div>
     </div>
 @endsection

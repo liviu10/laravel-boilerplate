@@ -21,7 +21,45 @@
         </div>
 
         <div class="admin__body">
+            <div class="row">
+                <div class="col-10 admin__shortcuts">
+                    <!-- Contact subjects -->
+                    @include('components.admin-card-shortcuts', [
+                        'title' => __('Contact subjects'),
+                        'buttonRoute' => route('subjects.index')
+                    ])
 
+                    <!-- Contact messages -->
+                    @include('components.admin-card-shortcuts', [
+                        'title' => __('Contact messages'),
+                        'buttonRoute' => route('messages.index')
+                    ])
+
+                    <!-- Contact responses -->
+                    @include('components.admin-card-shortcuts', [
+                        'title' => __('Contact responses'),
+                        'buttonRoute' => route('responses.index')
+                    ])
+
+                    <!-- Newsletter campaigns -->
+                    @include('components.admin-card-shortcuts', [
+                        'title' => __('Newsletter campaigns'),
+                        'buttonRoute' => route('campaigns.index')
+                    ])
+
+                    <!-- Newsletter subscribers -->
+                    @include('components.admin-card-shortcuts', [
+                        'title' => __('Newsletter subscribers'),
+                        'buttonRoute' => route('subscribers.index')
+                    ])
+
+                    <!-- Reviews -->
+                    @include('components.admin-card-shortcuts', [
+                        'title' => __('Reviews'),
+                        'buttonRoute' => route('reviews.index')
+                    ])
+                </div>
+            </div>
         </div>
     </div>
 @endsection
