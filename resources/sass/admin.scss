@@ -2,11 +2,15 @@
 @import 'bootstrap/scss/bootstrap';
 
 // Import components
+@import 'components/admin_card_inline_modifier.scss';
 @import 'components/admin_card_shortcuts.scss';
+@import 'components/admin_card_stats.scss';
 @import 'components/admin_description.scss';
 @import 'components/admin_header.scss';
+@import 'components/admin_insights.scss';
 @import 'components/admin_navigation_bar';
 @import 'components/admin_table.scss';
+@import 'components/admin_title_section.scss';
 
 // Import utilities
 @import 'utilities/flex';
@@ -14,131 +18,10 @@
 @import 'utilities/theme';
 
 .admin {
-    // &--page {}
+    &--page {}
+    &__body {}
     &--component {
         margin-top: rem-convertor(32px) !important;
         margin-bottom: rem-convertor(32px) !important;
     }
-    // &__body {}
-    // &__card-stats {
-    //     align-items: center;
-    //     justify-content: center;
-    //     margin-top: rem-convertor(32px);
-    //     margin-bottom: rem-convertor(32px);
-    //     & .card {
-    //         margin: 0 rem-convertor(6px);
-    //         border-radius: 0;
-    //         padding: rem-convertor(12px);
-    //         @media only screen and (max-width: 575px) {
-    //             margin: rem-convertor(6px) 0;
-    //         }
-    //         &-body {
-    //             padding: 0;
-    //         }
-    //         &-title, &-text {
-    //             margin-bottom: 0;
-    //             user-select: none;
-    //         }
-    //         &-title {
-    //             display: flex;
-    //             align-items: center;
-    //             justify-content: space-between;
-    //             margin-top: rem-convertor(12px);
-    //             margin-bottom: rem-convertor(12px);
-    //         }
-    //         &-text {
-    //             & span {
-    //                 font-weight: bold;
-    //             }
-    //             & .fa-solid.fa-star {
-    //                 color: #FFC000;
-    //             }
-    //             & .fa-solid.fa-thumbs-up {
-    //                 color: #198754;
-    //             }
-    //             & .fa-solid.fa-thumbs-down {
-    //                 color: #dc3545;
-    //             }
-    //         }
-    //     }
-    // }
-    // &__insights {
-    //     align-items: center;
-    //     justify-content: center;
-    //     margin-top: rem-convertor(32px);
-    //     margin-bottom: rem-convertor(32px);
-    //     &-body {
-    //         & p {
-    //             margin-bottom: 0;
-    //             & .btn {
-    //                 border-radius: 0;
-    //             }
-    //         }
-    //         & .collapse, & .collapsing {
-    //             & .card {
-    //                 border-radius: 0;
-    //                 padding: rem-convertor(12px);
-    //                 &-body {
-    //                     padding: 0;
-    //                     & h5 {
-    //                         display: flex;
-    //                         align-items: center;
-    //                         justify-content: space-between;
-    //                         margin-top: rem-convertor(12px);
-    //                         margin-bottom: rem-convertor(12px);
-    //                     }
-    //                 }
-    //                 &-content {
-    //                     & div {
-    //                         & .list-group {
-    //                             border-radius: 0;
-    //                             &-item {
-    //                                 & .btn {
-    //                                     border-radius: 0;
-    //                                     padding: rem-convertor(4px);
-    //                                 }
-    //                                 & .progress {
-    //                                     width: 90%;
-    //                                 }
-    //                             }
-    //                         }
-    //                     }
-    //                 }
-    //             }
-    //         }
-    //         & .collapsing, &.collapsed {
-    //             border: none;
-    //         }
-    //     }
-    // }
-    // &__shortcuts {
-    //     @include flex-center();
-    //     flex-wrap: wrap;
-    //     margin: rem-convertor(16px) auto;
-    //     & .card {
-    //         margin: rem-convertor(8px);
-    //         border-radius: 0;
-    //         width: rem-convertor(180px);
-    //         height: rem-convertor(120px);
-    //         &-body {
-    //             display: flex;
-    //             align-items: center;
-    //             justify-content: space-between;
-    //             flex-direction: column;
-    //             padding: rem-convertor(8px);
-    //             & .btn {
-    //                 border-radius: 0;
-    //                 padding: rem-convertor(6px);
-    //                 width: 50%;
-    //             }
-    //         }
-    //         &-title {
-    //             margin-bottom: 0;
-    //         }
-    //     }
-    // }
-    // &__content {
-    //     margin-left: auto;
-    //     margin-right: auto;
-    // }
 }

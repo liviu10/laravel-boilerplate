@@ -3,31 +3,13 @@
 
 .admin {
     &__card-shortcuts {
-        margin-right: auto;
-        margin-left: auto;
-        & .card {
-            border-width: 0;
+        @include flex-center();
+        flex-wrap: wrap;
+        margin: rem-convertor(16px) auto;
+        & .btn {
+            margin: rem-convertor(6px);
             border-radius: 0;
-            &-body {
-                padding: 0;
-            }
-            &-title {
-                @include flex-center();
-                flex-wrap: wrap;
-                margin-bottom: 0;
-                width: 100%;
-                & .btn-group {
-                    display: initial;
-                    & .btn {
-                        margin: rem-convertor(4px);
-                        border-radius: 0;
-                        @media only screen and (max-width: 375px) {
-                            margin: rem-convertor(4px) 0;
-                            width: 100%;
-                        }
-                    }
-                }
-            }
+            padding: rem-convertor(6px);
         }
     }
 }

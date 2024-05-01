@@ -2,18 +2,12 @@
 
 @section('content')
     <div class="admin admin--page">
-        <div class="admin__header">
-            @include('components.admin-header', ['title' => 'Dashboard'])
-        </div>
+        @include('components.admin-header', ['title' => 'Dashboard'])
 
         <div class="admin__body">
-            <div class="row admin__card-stats">
-                <x-admin-stats />
-            </div>
+            <x-admin-stats />
 
-            <div class="row admin__insights">
-                <x-admin-insights />
-            </div>
+            <x-admin-insights />
         </div>
     </div>
 @endsection

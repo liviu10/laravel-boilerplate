@@ -16,6 +16,8 @@
             '
         ])
 
+        @include('components.admin-title-section', ['title' => __('Quick access')])
+
         @include('components.admin-card-shortcuts', [
             'shortcuts' => [
                 [

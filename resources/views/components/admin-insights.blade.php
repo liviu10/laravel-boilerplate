@@ -1,29 +1,31 @@
-<div class="col-xxl-8 col-xl-10 col-lg-10 col-md-12 col-sm-12 col-12 admin__insights-body">
-    <p>
-        @foreach($adminInsights['menu'] as $key => $menu)
-            <button
-                class="btn btn-outline-primary"
-                type="button"
-                data-bs-toggle="collapse"
-                data-bs-target="#{{ $menu['key'] }}"
-                aria-expanded="true"
-                aria-controls="{{ $menu['key'] }}"
-            >
-                {{ $menu['label'] }}
-            </button>
-        @endforeach
-    </p>
-    <div class="collapse show" id="collapseContact">
-        @include('components.admin-insights-contact')
-    </div>
-    <div class="collapse" id="collapseNewsletter">
-        @include('components.admin-insights-newsletter')
-    </div>
-    <div class="collapse" id="collapseReview">
-        @include('components.admin-insights-review')
-    </div>
-    <div class="collapse" id="collapseContent">
-        @include('components.admin-insights-content')
+<div class="row admin admin--component">
+    <div class="col-xxl-8 col-xl-10 col-lg-10 col-md-12 col-sm-12 col-12 admin__insights">
+        <p>
+            @foreach($adminInsights['menu'] as $key => $menu)
+                <button
+                    class="btn btn-outline-primary"
+                    type="button"
+                    data-bs-toggle="collapse"
+                    data-bs-target="#{{ $menu['key'] }}"
+                    aria-expanded="true"
+                    aria-controls="{{ $menu['key'] }}"
+                >
+                    {{ $menu['label'] }}
+                </button>
+            @endforeach
+        </p>
+        <div class="collapse show" id="collapseContact">
+            @include('components.admin-insights-contact')
+        </div>
+        <div class="collapse" id="collapseNewsletter">
+            @include('components.admin-insights-newsletter')
+        </div>
+        <div class="collapse" id="collapseReview">
+            @include('components.admin-insights-review')
+        </div>
+        <div class="collapse" id="collapseContent">
+            @include('components.admin-insights-content')
+        </div>
     </div>
 </div>
 <script>

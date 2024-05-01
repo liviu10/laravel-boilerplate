@@ -1,0 +1,28 @@
+@import '../utilities/flex.scss';
+@import '../utilities/rem_convertor';
+
+.admin {
+    &--component {
+        align-items: center;
+        justify-content: center;
+    }
+    &__card-stats {
+        & .card {
+            border-radius: 0;
+            user-select: none;
+            &-body {
+                padding: rem-convertor(8px);
+            }
+            &-title {
+                @include flex-center-between();
+                margin: rem-convertor(8px) 0;
+                & .fa-solid {
+                    font-size: rem-convertor(24px);
+                }
+            }
+            &-text {
+                margin-bottom: 0;
+            }
+        }
+    }
+}

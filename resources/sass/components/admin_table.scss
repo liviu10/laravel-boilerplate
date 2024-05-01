@@ -42,16 +42,6 @@
                         & th, & td {
                             border-width: 1px;
                             padding: rem-convertor(6px);
-                            &:first-child {
-                                width: rem-convertor(20px);
-                                & .form-check {
-                                    @include flex-center();
-                                    margin-bottom: 0;
-                                    &-input {
-                                        cursor: pointer;
-                                    }
-                                }
-                            }
                         }
                     }
                 }

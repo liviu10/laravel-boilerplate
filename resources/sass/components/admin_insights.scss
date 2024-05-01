@@ -1,0 +1,52 @@
+@import '../utilities/flex.scss';
+@import '../utilities/rem_convertor';
+
+.admin {
+    &__insights {
+        align-items: center;
+        justify-content: center;
+        margin-top: rem-convertor(32px);
+        margin-bottom: rem-convertor(32px);
+        & p {
+            margin-bottom: 0;
+            & .btn {
+                border-radius: 0;
+            }
+        }
+        & .collapse, & .collapsing {
+            & .card {
+                border-radius: 0;
+                padding: rem-convertor(12px);
+                &-body {
+                    padding: 0;
+                    & h5 {
+                        display: flex;
+                        align-items: center;
+                        justify-content: space-between;
+                        margin-top: rem-convertor(12px);
+                        margin-bottom: rem-convertor(12px);
+                    }
+                }
+                &-content {
+                    & div {
+                        & .list-group {
+                            border-radius: 0;
+                            &-item {
+                                & .btn {
+                                    border-radius: 0;
+                                    padding: rem-convertor(4px);
+                                }
+                                & .progress {
+                                    width: 90%;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        & .collapsing, &.collapsed {
+            border: none;
+        }
+    }
+}

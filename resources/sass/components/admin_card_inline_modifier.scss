@@ -1,0 +1,41 @@
+@import '../utilities/flex.scss';
+@import '../utilities/rem_convertor';
+
+.admin {
+    &__card-inline-modifier {
+        & .card {
+            border-radius: 0;
+            &-title {
+                margin: rem-convertor(8px) 0;
+            }
+            &-text {
+                @include flex-center-between();
+                margin-bottom: 0;
+                & div {
+                    & .badge {
+                        cursor: pointer;
+                    }
+                    & .btn {
+                        border-radius: 0;
+                    }
+                }
+            }
+            &-form {
+                & .form-control, & .form-select {
+                    border-radius: 0;
+                }
+                & .form-control.not-allowed {
+                    cursor: not-allowed;
+                }
+                & .form-actions {
+                    @include flex-center();
+                    & .btn {
+                        margin-right: rem-convertor(6px);
+                        margin-left: rem-convertor(6px);
+                        border-radius: 0;
+                    }
+                }
+            }
+        }
+    }
+}

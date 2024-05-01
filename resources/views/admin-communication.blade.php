@@ -16,41 +16,59 @@
             '
         ])
 
+        @include('components.admin-title-section', ['title' => __('Quick access')])
+
         @include('components.admin-card-shortcuts', [
             'shortcuts' => [
                 [
                     'id' => 1,
-                    'title' => __('Contact subjects'),
-                    'buttonRoute' => route('subjects.index')
-                ],
-                [
-                    'id' => 2,
                     'title' => __('Contact messages'),
                     'buttonRoute' => route('messages.index')
                 ],
                 [
-                    'id' => 3,
+                    'id' => 2,
                     'title' => __('Contact responses'),
                     'buttonRoute' => route('responses.index')
                 ],
                 [
-                    'id' => 4,
+                    'id' => 3,
                     'title' => __('Newsletter campaigns'),
                     'buttonRoute' => route('campaigns.index')
                 ],
                 [
-                    'id' => 5,
+                    'id' => 4,
                     'title' => __('Newsletter subscribers'),
                     'buttonRoute' => route('subscribers.index')
                 ],
                 [
-                    'id' => 6,
+                    'id' => 5,
                     'title' => __('Reviews'),
                     'buttonRoute' => route('reviews.index')
                 ],
             ]
         ])
 
-        @include('components.admin-table')
+        @include('components.admin-card-inline-modifier', [
+            'results' => [
+                'title' => __('Contact subjects'),
+                'records' => [
+                    [
+                        'id' => 1,
+                        'label' => 'Subject A',
+                        'is_active' => true,
+                    ],
+                    [
+                        'id' => 2,
+                        'label' => 'Subject B',
+                        'is_active' => true,
+                    ],
+                    [
+                        'id' => 3,
+                        'label' => 'Subject C',
+                        'is_active' => true,
+                    ]
+                ]
+            ]
+        ])
     </div>
 @endsection

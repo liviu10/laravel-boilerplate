@@ -30,17 +30,6 @@
                 <thead>
                     <tr>
                         <th scope="col">
-                            <div class="form-check">
-                                <input
-                                    class="form-check-input"
-                                    id="checkAllRows"
-                                    onclick="checkAllRows()"
-                                    type="checkbox"
-                                    value=""
-                                >
-                            </div>
-                        </th>
-                        <th scope="col">
                             <div>
                                 ID
                                 <i class="fa-solid fa-sort-up" onclick="ascendSort()"></i>
@@ -73,17 +62,6 @@
                 </thead>
                 <tbody>
                     <tr>
-                        <td>
-                            <div class="form-check">
-                                <input
-                                    class="form-check-input"
-                                    id="checkRow"
-                                    type="checkbox"
-                                    onclick="checkRow()"
-                                    value=""
-                                >
-                            </div>
-                        </td>
                         <th scope="row">1</th>
                         <td>Mark</td>
                         <td>Otto</td>
@@ -374,16 +352,6 @@
 <script>
     function redirectToCreatePage() {
         window.location.href = resourceUrl;
-    }
-    function checkAllRows() {
-        var checkAllCheckbox = document.getElementById('checkAllRows');
-        var checkboxes = document.querySelectorAll('.admin__table-body input[type="checkbox"]');
-        checkboxes.forEach(function(checkbox) {
-            checkbox.checked = checkAllCheckbox.checked;
-        });
-    }
-    function checkRow() {
-
     }
     function ascendSort() {
 
