@@ -1,2 +1,21 @@
 // Bootstrap
 @import 'bootstrap/scss/bootstrap';
+
+// Import components
+@import 'components/guest_description.scss';
+@import 'components/guest_header.scss';
+@import 'components/guest_line.scss';
+
+// Import utilities
+@import 'utilities/flex';
+@import 'utilities/rem_convertor';
+@import 'utilities/theme';
+
+.guest {
+    &--page {}
+    &__body {}
+    &--component {
+        margin-top: rem-convertor(32px) !important;
+        margin-bottom: rem-convertor(32px) !important;
+    }
+}

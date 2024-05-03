@@ -19,20 +19,6 @@
         <link href="https://fonts.bunny.net/css?family=Nunito" rel="stylesheet">
         <!-- LOCAL CSS AND JAVASCRIPT -->
         @vite(['resources/sass/guest.scss', 'resources/js/app.js'])
-        <script src="https://cdn.tiny.cloud/1/no-api-key/tinymce/6/tinymce.min.js" referrerpolicy="origin"></script>
-        <script>
-            tinymce.init({
-                selector: 'textarea#greetings_description',
-                plugins: 'code table lists',
-                toolbar: 'undo redo | blocks | bold italic | alignleft aligncenter alignright | indent outdent | bullist numlist | code | table',
-                max_height: 500,
-                max_width: 500,
-                min_height: 100,
-                min_width: 400,
-                height: 300,
-                menubar: false,
-            });
-        </script>
     </head>
     <body>
 
@@ -55,10 +41,21 @@
                     </button>
 
                     <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                        <!-- Left Side Of Navbar -->
-                        <ul class="navbar-nav me-auto">
+                        <ul class="navbar-nav ms-auto">
                             <li class="nav-item">
-                                <a class="nav-link" href="#">Link</a>
+                                <a class="nav-link" href="{{ url('/') }}">Home</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="#">Despre noi</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="#">Evenimente</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="#">Unde suntem</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="#">Contact</a>
                             </li>
                         </ul>
                     </div>

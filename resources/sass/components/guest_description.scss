@@ -1,0 +1,11 @@
+.guest {
+    &__description {
+        margin-right: auto;
+        margin-bottom: 0;
+        margin-left: auto;
+        text-align: center;
+        @media only screen and (max-width: 575px) {
+            text-align: justify;
+        }
+    }
+}

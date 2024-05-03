@@ -1,0 +1,11 @@
+@import '../utilities/flex.scss';
+@import '../utilities/rem_convertor';
+
+.guest {
+    &__line {
+        margin-right: auto;
+        margin-left: auto;
+        border: rem-convertor(3px) solid red;
+        width: rem-convertor(30px);
+    }
+}
