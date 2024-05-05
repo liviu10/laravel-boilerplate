@@ -24,7 +24,7 @@ class AppreciationController extends Controller
      */
     public function index()
     {
-        return view('admin-appreciation');
+        return view('pages.admin-appreciation');
     }
 
     /**

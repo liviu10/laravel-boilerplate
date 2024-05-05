@@ -16,11 +16,11 @@
                     class="btn btn-primary"
                     data-bs-target="#filterModal"
                     data-bs-toggle="modal"
-                    title="{{ __('Click here to filter the records') }}"
+                    title="{{ __('Click here to filter & sort the records') }}"
                     type="button"
                 >
                     <i class="fa-solid fa-filter"></i>
-                    {{ __('Filter') }}
+                    {{ __('Filter & sort') }}
                 </button>
             </div>
         </div>
@@ -32,29 +32,21 @@
                         <th scope="col">
                             <div>
                                 ID
-                                <i class="fa-solid fa-sort-up" onclick="ascendSort()"></i>
-                                <i class="fa-solid fa-sort-down" onclick="descendSort()"></i>
                             </div>
                         </th>
                         <th scope="col">
                             <div>
                                 First
-                                <i class="fa-solid fa-sort-up" onclick="ascendSort()"></i>
-                                <i class="fa-solid fa-sort-down" onclick="descendSort()"></i>
                             </div>
                         </th>
                         <th scope="col">
                             <div>
                                 Last
-                                <i class="fa-solid fa-sort-up" onclick="ascendSort()"></i>
-                                <i class="fa-solid fa-sort-down" onclick="descendSort()"></i>
                             </div>
                         </th>
                         <th scope="col">
                             <div>
                                 Handle
-                                <i class="fa-solid fa-sort-up" onclick="ascendSort()"></i>
-                                <i class="fa-solid fa-sort-down" onclick="descendSort()"></i>
                             </div>
                         </th>
                         <th scope="col">Actions</th>
@@ -353,10 +345,10 @@
     function redirectToCreatePage() {
         window.location.href = resourceUrl;
     }
-    function ascendSort() {
+    // function ascendSort() {
 
-    }
-    function descendSort() {
+    // }
+    // function descendSort() {
 
-    }
+    // }
 </script>

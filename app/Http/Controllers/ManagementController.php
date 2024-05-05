@@ -35,7 +35,7 @@ class ManagementController extends Controller
             ]
         ];
 
-        return view('admin-management', compact('data'));
+        return view('pages.admin-management', compact('data'));
     }
 
     private function handleContentResources(): array

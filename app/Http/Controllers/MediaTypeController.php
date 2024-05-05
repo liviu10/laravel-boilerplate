@@ -21,7 +21,7 @@ class MediaTypeController extends Controller
      */
     public function index()
     {
-        return view('admin-media-type');
+        return view('pages.admin-media-type');
     }
 
     /**

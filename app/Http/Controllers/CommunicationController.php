@@ -32,7 +32,7 @@ class CommunicationController extends Controller
                 'reviews' => $this->handleReviewResources(),
             ]
         ];
-        return view('admin-communication', compact('data'));
+        return view('pages.admin-communication', compact('data'));
     }
 
     private function handleContactResources(): array

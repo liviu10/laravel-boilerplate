@@ -30,8 +30,7 @@ class SettingsController extends Controller
                 'content' => $this->handleUserResources(),
             ]
         ];
-
-        return view('admin-settings', compact('data'));
+        return view('pages.admin-settings', compact('data'));
     }
 
     private function handleUserResources(): array

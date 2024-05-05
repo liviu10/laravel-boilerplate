@@ -21,7 +21,7 @@ class ContactResponseController extends Controller
      */
     public function index()
     {
-        return view('admin-contact-response');
+        return view('pages.admin-contact-response');
     }
 
     /**

@@ -21,7 +21,7 @@ class ContactMessageController extends Controller
      */
     public function index()
     {
-        return view('admin-contact-message');
+        return view('pages.admin-contact-message');
     }
 
     /**

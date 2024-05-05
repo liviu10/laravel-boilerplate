@@ -21,7 +21,7 @@ class NewsletterCampaignController extends Controller
      */
     public function index()
     {
-        return view('admin-newsletter-campaign');
+        return view('pages.admin-newsletter-campaign');
     }
 
     /**

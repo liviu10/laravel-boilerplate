@@ -21,7 +21,7 @@ class ContentSocialMediaController extends Controller
      */
     public function index()
     {
-        return view('admin-content-social-media');
+        return view('pages.admin-content-social-media');
     }
 
     /**
