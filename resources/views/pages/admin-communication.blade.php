@@ -47,28 +47,5 @@
                 ],
             ]
         ])
-
-        @include('components.admin-card-inline-modifier', [
-            'results' => [
-                'title' => __('Contact subjects'),
-                'records' => [
-                    [
-                        'id' => 1,
-                        'label' => 'Subject A',
-                        'is_active' => true,
-                    ],
-                    [
-                        'id' => 2,
-                        'label' => 'Subject B',
-                        'is_active' => true,
-                    ],
-                    [
-                        'id' => 3,
-                        'label' => 'Subject C',
-                        'is_active' => true,
-                    ]
-                ]
-            ]
-        ])
     </div>
 @endsection

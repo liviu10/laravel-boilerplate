@@ -33,6 +33,10 @@
                         margin-right: rem-convertor(6px);
                         margin-left: rem-convertor(6px);
                         border-radius: 0;
+                        &.edit-button-not-allowed {
+                            cursor: not-allowed;
+                            pointer-events: all !important;
+                        }
                     }
                 }
             }
