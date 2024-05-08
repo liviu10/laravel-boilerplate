@@ -1,5 +1,5 @@
 <div class="row admin admin--component">
-    <div class="col-xxl-6 col-xl-6 col-lg-6 col-md-8 col-sm-8 col-10 admin__card-inline-modifier">
+    <div class="col-xxl-6 col-xl-6 col-lg-6 col-md-8 col-sm-10 col-12 admin__card-inline-modifier">
         <div class="card">
             <div class="card-body">
                 <h5 class="card-title">
@@ -182,7 +182,7 @@
         }
     };
     function populateEditForm(id, value, label, isActive) {
-    const editForm = document.getElementById('editForm');
+        const editForm = document.getElementById('editForm');
         const editValueInput = document.getElementById('editValue');
         const editLabelInput = document.getElementById('editLabel');
         const editIsActive = document.getElementById('editIsActive');

@@ -27,21 +27,16 @@
                 ],
                 [
                     'id' => 2,
-                    'title' => __('Contact responses'),
-                    'buttonRoute' => route('responses.index')
-                ],
-                [
-                    'id' => 3,
                     'title' => __('Newsletter campaigns'),
                     'buttonRoute' => route('campaigns.index')
                 ],
                 [
-                    'id' => 4,
+                    'id' => 3,
                     'title' => __('Newsletter subscribers'),
                     'buttonRoute' => route('subscribers.index')
                 ],
                 [
-                    'id' => 5,
+                    'id' => 4,
                     'title' => __('Reviews'),
                     'buttonRoute' => route('reviews.index')
                 ],
