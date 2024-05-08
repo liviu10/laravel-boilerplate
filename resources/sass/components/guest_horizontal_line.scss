@@ -1,0 +1,10 @@
+@import '../utilities/flex.scss';
+@import '../utilities/rem_convertor';
+
+.guest {
+    &__horizontal-line {
+        margin: rem-convertor(32px) auto;
+        border: rem-convertor(1px) solid red;
+        width: 75%;
+    }
+}

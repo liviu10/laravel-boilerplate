@@ -2,9 +2,13 @@
 @import 'bootstrap/scss/bootstrap';
 
 // Import components
-@import 'components/guest_description.scss';
-@import 'components/guest_header.scss';
-@import 'components/guest_line.scss';
+@import 'components/guest_description';
+@import 'components/guest_header';
+@import 'components/guest_line';
+@import 'components/guest_jumbotron';
+@import 'components/guest_horizontal_line';
+@import 'components/guest_cards';
+@import 'components/guest_image';
 
 // Import utilities
 @import 'utilities/flex';

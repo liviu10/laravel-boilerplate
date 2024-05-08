@@ -1,0 +1,53 @@
+@import '../utilities/flex.scss';
+@import '../utilities/rem_convertor';
+
+.guest {
+    &--cards {
+        @include flex-center();
+    }
+    & .card {
+        border: 0;
+        border-radius: 0;
+        padding: 0;
+        &-header, &-footer {
+            background-color: #FFFFFF;
+        }
+        &-header {
+            border-bottom: 0;
+            & img {
+                border-radius: 50%;
+            }
+        }
+        &-body {
+            margin: rem-convertor(32px) 0;
+            padding-top: 0;
+            padding-bottom: 0;
+            & p:first-child {
+                line-height: 1;
+            }
+            & p {
+                margin-bottom: 0;
+            }
+            & p:last-child {
+                width: 100%
+            }
+            & .underline {
+                margin: rem-convertor(16px) 0;
+                border-bottom: rem-convertor(3px) solid red;
+                width: 8%;
+                position: relative;
+            }
+        }
+        &-footer {
+            margin-top: rem-convertor(32px);
+            margin-bottom: rem-convertor(64px);
+            border-radius: 0;
+            border-top: 0;
+            border-bottom: rem-convertor(3px) solid red;
+            padding-bottom: rem-convertor(32px);
+        }
+    }
+    & .card:not(:last-child) .card-body {
+        border-right: rem-convertor(1px) dashed red;
+    }
+}
