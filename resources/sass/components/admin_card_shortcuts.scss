@@ -1,15 +1,37 @@
 @import '../utilities/flex.scss';
 @import '../utilities/rem_convertor';
+@import '../utilities/theme';
 
 .admin {
     &__card-shortcuts {
-        @include flex-center();
-        flex-wrap: wrap;
-        margin: rem-convertor(16px) auto;
-        & .btn {
-            margin: rem-convertor(6px);
+        & .card {
+            margin: rem-convertor(8px) 0;
             border-radius: 0;
-            padding: rem-convertor(6px);
+            &-header, &-body, &-footer {
+                padding: rem-convertor(8px);
+            }
+            &-header, &-footer {
+                background-color: #FFFFFF;
+            }
+            &-header {
+                border-radius: 0;
+                background-color: $light-blue-background-color;
+                font-weight: 500;
+                font-size: rem-convertor(18px);
+            }
+            &-footer {
+                @include flex-center();
+                border-top: 0;
+                & .btn {
+                    @include flex-center-between();
+                    border-radius: 0;
+                    padding: rem-convertor(6px);
+                    width: 40%;
+                    background-color: $white-background-color;
+                    border-color: $light-blue-border-color;
+                    color: $black-text-color;
+                }
+            }
         }
     }
 }

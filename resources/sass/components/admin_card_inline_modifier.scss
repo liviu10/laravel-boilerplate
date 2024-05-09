@@ -17,6 +17,9 @@
                     }
                     & .btn {
                         border-radius: 0;
+                        padding: rem-convertor(6px);
+                        width: rem-convertor(30px);
+                        font-size: rem-convertor(12px);
                     }
                 }
             }
@@ -33,6 +36,7 @@
                         margin-right: rem-convertor(6px);
                         margin-left: rem-convertor(6px);
                         border-radius: 0;
+                        padding: rem-convertor(6px);
                         &.edit-button-not-allowed {
                             cursor: not-allowed;
                             pointer-events: all !important;

@@ -23,21 +23,25 @@
                 [
                     'id' => 1,
                     'title' => __('Contact messages'),
+                    'short_description' => 'Lorem Ipsum is simply dummy text of the printing and typesetting industry.',
                     'buttonRoute' => route('messages.index')
                 ],
                 [
                     'id' => 2,
                     'title' => __('Newsletter campaigns'),
+                    'short_description' => 'Lorem Ipsum is simply dummy text of the printing and typesetting industry.',
                     'buttonRoute' => route('campaigns.index')
                 ],
                 [
                     'id' => 3,
                     'title' => __('Newsletter subscribers'),
+                    'short_description' => 'Lorem Ipsum is simply dummy text of the printing and typesetting industry.',
                     'buttonRoute' => route('subscribers.index')
                 ],
                 [
                     'id' => 4,
-                    'title' => __('Reviews'),
+                    'title' => __('Website reviews'),
+                    'short_description' => 'Lorem Ipsum is simply dummy text of the printing and typesetting industry.',
                     'buttonRoute' => route('reviews.index')
                 ],
             ]

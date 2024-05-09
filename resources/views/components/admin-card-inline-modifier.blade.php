@@ -1,5 +1,5 @@
 <div class="row admin admin--component">
-    <div class="col-xxl-6 col-xl-6 col-lg-6 col-md-8 col-sm-10 col-12 admin__card-inline-modifier">
+    <div class="col-xxl-8 col-xl-8 col-lg-8 col-md-12 col-sm-12 col-12 admin__card-inline-modifier">
         <div class="card">
             <div class="card-body">
                 <h5 class="card-title">
@@ -151,67 +151,20 @@
     </div>
 </div>
 <script>
-    const collapseButtons = document.querySelectorAll('[data-bs-toggle="collapse"]');
-    collapseButtons.forEach(button => {
-        button.addEventListener('click', function () {
-            const targetCollapse = document.querySelector(button.getAttribute('data-bs-target'));
-            const currentlyExpanded = document.querySelector('.collapse.show');
-            if (currentlyExpanded && currentlyExpanded !== targetCollapse) {
-                currentlyExpanded.classList.remove('show');
-            }
+    document.addEventListener('DOMContentLoaded', function() {
+        const newButton = document.querySelector('[data-bs-target="#{{ $results['target_new'] }}"]');
+        const editButton = document.querySelector('[data-bs-target="#{{ $results['target_edit'] }}"]');
+        newButton.addEventListener('click', function() {
+            collapseForm('{{ $results['target_edit'] }}');
+        });
+        editButton.addEventListener('click', function() {
+            collapseForm('{{ $results['target_new'] }}');
         });
     });
     function collapseForm(collapseId) {
         const collapseElement = document.getElementById(collapseId);
         if (collapseElement) {
             collapseElement.classList.remove('show');
-            const form = document.getElementById(collapseId);
-            if (form) {
-                const inputElements = form.querySelectorAll('input');
-                inputElements.forEach(input => {
-                    input.value = '';
-                });
-                const selectElement = form.querySelector('select');
-                if (selectElement) {
-                    selectElement.selectedIndex = 0;
-                }
-                const editButton = document.getElementById('editButton');
-                editButton.classList.add('edit-button-not-allowed');
-                editButton.disabled = true;
-            }
         }
-    };
-    function populateEditForm(id, value, label, isActive) {
-        const editForm = document.getElementById('editForm');
-        const editValueInput = document.getElementById('editValue');
-        const editLabelInput = document.getElementById('editLabel');
-        const editIsActive = document.getElementById('editIsActive');
-        const hiddenIdInput = editForm.querySelector('input[name="id"]');
-        const editButton = document.getElementById('editButton');
-        editForm.action = editForm.action.replace(/\/\d+$/, `/${id}`);
-        hiddenIdInput.value = id;
-        editValueInput.value = value;
-        editLabelInput.value = label;
-        editIsActive.value = isActive ? "1" : "0";
-        editButton.classList.remove('edit-button-not-allowed');
-        editButton.disabled = false;
-
     }
-    document.addEventListener('DOMContentLoaded', function () {
-        const newLabelInput = document.getElementById('newLabel');
-        const newValueInput = document.getElementById('newValue');
-        newLabelInput.addEventListener('input', function () {
-            let sanitizedValue = newLabelInput.value.replace(/[^a-zA-Z0-9]+/g, '-').toLowerCase()
-            newValueInput.value = sanitizedValue;
-        });
-        const editLabelInput = document.getElementById('editLabel');
-        const editValueInput = document.getElementById('editValue');
-        editLabelInput.addEventListener('input', function () {
-            let sanitizedValue = editLabelInput.value.replace(/[^a-zA-Z0-9]+/g, '-').toLowerCase()
-            editValueInput.value = sanitizedValue;
-        });
-        const editButton = document.getElementById('editButton');
-        editButton.classList.add('edit-button-not-allowed');
-        editButton.disabled = true;
-    });
 </script>

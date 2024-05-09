@@ -23,16 +23,19 @@
                 [
                     'id' => 1,
                     'title' => __('Content'),
+                    'short_description' => 'Lorem Ipsum is simply dummy text of the printing and typesetting industry.',
                     'buttonRoute' => url('admin/management/contents')
                 ],
                 [
                     'id' => 2,
                     'title' => __('Tags'),
+                    'short_description' => 'Lorem Ipsum is simply dummy text of the printing and typesetting industry.',
                     'buttonRoute' => route('tags.index')
                 ],
                 [
                     'id' => 3,
                     'title' => __('Media'),
+                    'short_description' => 'Lorem Ipsum is simply dummy text of the printing and typesetting industry.',
                     'buttonRoute' => url('admin/management/media')
                 ],
             ]

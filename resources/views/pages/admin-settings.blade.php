@@ -23,6 +23,7 @@
                 [
                     'id' => 1,
                     'title' => __('Users'),
+                    'short_description' => 'Lorem Ipsum is simply dummy text of the printing and typesetting industry.',
                     'buttonRoute' => route('users.index')
                 ],
             ]

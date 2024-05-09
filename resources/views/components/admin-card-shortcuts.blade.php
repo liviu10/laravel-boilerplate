@@ -1,14 +1,25 @@
 <div class="row admin admin--component">
-    <div class="col-xxl-6 col-xl-6 col-lg-6 col-md-8 col-sm-8 col-10 admin__card-shortcuts">
+    <div class="col-xxl-8 col-xl-8 col-lg-8 col-md-10 col-sm-10 col-12 admin__card-shortcuts">
         @foreach ($shortcuts as $key => $shortcut)
-            <a
-                class="btn btn-primary"
-                onclick="goToResource('{{ $shortcut['buttonRoute'] }}')"
-                title="{{ __('Navigate to', [ 'buttonLabel' => $shortcut['title'] ]) }}"
-                type="button"
-            >
+        <div class="card">
+            <div class="card-header">
                 {{ $shortcut['title'] }}
-            </a>
+            </div>
+            <div class="card-body">
+                {{ $shortcut['short_description'] }}
+            </div>
+            <div class="card-footer">
+                <a
+                    class="btn btn-primary"
+                    onclick="goToResource('{{ $shortcut['buttonRoute'] }}')"
+                    title="{{ __('Click here to navigate to', [ 'buttonLabel' => $shortcut['title'] ]) }}"
+                    type="button"
+                >
+                    {{ __('Go to') }} {{ $shortcut['title'] }}
+                    <i class="fa-solid fa-arrow-right"></i>
+                </a>
+            </div>
+        </div>
         @endforeach
     </div>
 </div>

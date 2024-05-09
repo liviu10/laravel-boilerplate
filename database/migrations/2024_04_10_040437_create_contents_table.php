@@ -33,6 +33,7 @@ return new class extends Migration
                 'content_type_id',
                 'idx_content_types_contents_id'
             );
+            $table->integer('content_category_id')->nullable();
             $table->string('description')->nullable();
             $table->longText('content')->nullable(false);
             $table->boolean('allow_comments')->default(false);
