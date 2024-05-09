@@ -38,6 +38,8 @@
             & .btn-group {
                 & .btn {
                     border-radius: 0;
+                    padding: rem-convertor(6px);
+                    font-size: rem-convertor(12px);
                 }
             }
         }

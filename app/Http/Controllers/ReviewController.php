@@ -2,6 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Contracts\View\Factory;
+use Illuminate\Contracts\View\View;
+use Illuminate\Foundation\Application;
 use Illuminate\Http\Request;
 
 class ReviewController extends Controller
@@ -18,8 +21,9 @@ class ReviewController extends Controller
 
     /**
      * Display a listing of the resource.
+     * @return View|Application|Factory
      */
-    public function index()
+    public function index(): View|Application|Factory
     {
         return view('pages.admin-review');
     }
@@ -27,17 +31,17 @@ class ReviewController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
+    public function create(): void
     {
-        //
+        abort(405, __('The action is not allowed.'));
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(Request $request): void
     {
-        //
+        abort(405, __('The action is not allowed.'));
     }
 
     /**
@@ -51,9 +55,9 @@ class ReviewController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(string $id): void
     {
-        //
+        abort(405, __('The action is not allowed.'));
     }
 
     /**
@@ -67,8 +71,8 @@ class ReviewController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(string $id): void
     {
-        //
+        abort(405, __('The action is not allowed.'));
     }
 }

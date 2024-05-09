@@ -2,6 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Contracts\View\Factory;
+use Illuminate\Contracts\View\View;
+use Illuminate\Foundation\Application;
 use Illuminate\Http\Request;
 
 class NewsletterCampaignController extends Controller
@@ -18,18 +21,20 @@ class NewsletterCampaignController extends Controller
 
     /**
      * Display a listing of the resource.
+     * @return View|Application|Factory
      */
-    public function index()
+    public function index(): View|Application|Factory
     {
         return view('pages.admin-newsletter-campaign');
     }
 
     /**
      * Show the form for creating a new resource.
+     * @return View|Application|Factory
      */
-    public function create()
+    public function create(): View|Application|Factory
     {
-        //
+        return view('pages.admin-newsletter-campaign-add');
     }
 
     /**
@@ -42,18 +47,22 @@ class NewsletterCampaignController extends Controller
 
     /**
      * Display the specified resource.
+     * @param string $id
+     * @return View|Application|Factory
      */
-    public function show(string $id)
+    public function show(string $id): View|Application|Factory
     {
-        //
+        return view('pages.admin-newsletter-campaign-show');
     }
 
     /**
      * Show the form for editing the specified resource.
+     * @param string $id
+     * @return View|Application|Factory
      */
-    public function edit(string $id)
+    public function edit(string $id): View|Application|Factory
     {
-        //
+        return view('pages.admin-newsletter-campaign-edit');
     }
 
     /**

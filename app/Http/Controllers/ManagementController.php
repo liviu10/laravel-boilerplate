@@ -26,99 +26,44 @@ class ManagementController extends Controller
     public function index(): View|Application|Factory
     {
         $data = [
-            'resources' => [
-                'content' => $this->handleContentResources(),
-                'tags' => $this->handleTagResources(),
-                'media' => $this->handleMediaResources(),
-                'comments' => $this->handleCommentResources(),
-                'appreciations' => $this->handleAppreciationResources(),
+            'title' => __('Management'),
+            'description' => __('
+                Lorem Ipsum is simply dummy text of the printing and typesetting industry.
+                Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s,
+                when an unknown printer took a galley of type and scrambled it to make a type specimen book.
+                It has survived not only five centuries, but also the leap into electronic typesetting,
+                remaining essentially unchanged. It was popularised in the 1960s with the release of
+                Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing
+                software like Aldus PageMaker including versions of Lorem Ipsum.
+            '),
+            'shortcuts' => [
+                $this->handleShortcuts()
             ]
         ];
 
         return view('pages.admin-management', compact('data'));
     }
 
-    private function handleContentResources(): array
+    private function handleShortcuts(): array
     {
         return [
             [
                 'id' => 1,
-                'title' => 'Content types',
-                'url' => '/admin/management/contents/types'
+                'title' => __('Content'),
+                'short_description' => __('Lorem Ipsum is simply dummy text of the printing and typesetting industry.'),
+                'url' => '/admin/management/contents'
             ],
             [
                 'id' => 2,
-                'title' => 'Content visibilities',
-                'url' => '/admin/management/contents/visibilities'
-            ],
-            [
-                'id' => 3,
-                'title' => 'Content social',
-                'url' => '/admin/management/contents/social'
-            ],
-            [
-                'id' => 4,
-                'title' => 'Content',
-                'url' => '/admin/management/contents'
-            ]
-        ];
-    }
-
-    private function handleTagResources(): array
-    {
-        return [
-            [
-                'id' => 1,
-                'title' => 'Tags',
+                'title' => __('Tags'),
+                'short_description' => __('Lorem Ipsum is simply dummy text of the printing and typesetting industry.'),
                 'url' => '/admin/management/tags'
             ],
-        ];
-    }
-
-    private function handleMediaResources(): array
-    {
-        return [
-            [
-                'id' => 1,
-                'title' => 'Media types',
-                'url' => '/admin/management/media/types'
-            ],
-            [
-                'id' => 2,
-                'title' => 'Media',
-                'url' => '/admin/management/media'
-            ],
-        ];
-    }
-
-    private function handleCommentResources(): array
-    {
-        return [
-            [
-                'id' => 1,
-                'title' => 'Comment types',
-                'url' => '/admin/management/comments/types'
-            ],
-            [
-                'id' => 2,
-                'title' => 'Comment statuses',
-                'url' => '/admin/management/comments/statuses'
-            ],
             [
                 'id' => 3,
-                'title' => 'Comments',
-                'url' => '/admin/management/comments'
-            ],
-        ];
-    }
-
-    private function handleAppreciationResources(): array
-    {
-        return [
-            [
-                'id' => 1,
-                'title' => 'Appreciation',
-                'url' => '/admin/management/appreciations'
+                'title' => __('Media'),
+                'short_description' => __('Lorem Ipsum is simply dummy text of the printing and typesetting industry.'),
+                'url' => '/admin/management/media'
             ],
         ];
     }

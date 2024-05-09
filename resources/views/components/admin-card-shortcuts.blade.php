@@ -11,7 +11,7 @@
             <div class="card-footer">
                 <a
                     class="btn btn-primary"
-                    onclick="goToResource('{{ $shortcut['buttonRoute'] }}')"
+                    onclick="goToResource('{{ $shortcut['url'] }}')"
                     title="{{ __('Click here to navigate to', [ 'buttonLabel' => $shortcut['title'] ]) }}"
                     type="button"
                 >

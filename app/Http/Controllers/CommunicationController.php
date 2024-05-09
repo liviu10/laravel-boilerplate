@@ -26,58 +26,49 @@ class CommunicationController extends Controller
     public function index(): View|Application|Factory
     {
         $data = [
-            'resources' => [
-                'contact' => $this->handleContactResources(),
-                'newsletter' => $this->handleNewsletterResources(),
-                'reviews' => $this->handleReviewResources(),
+            'title' => __('Communication'),
+            'description' => __('
+                Lorem Ipsum is simply dummy text of the printing and typesetting industry.
+                Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s,
+                when an unknown printer took a galley of type and scrambled it to make a type specimen book.
+                It has survived not only five centuries, but also the leap into electronic typesetting,
+                remaining essentially unchanged. It was popularised in the 1960s with the release of
+                Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing
+                software like Aldus PageMaker including versions of Lorem Ipsum.
+            '),
+            'shortcuts' => [
+                $this->handleShortcuts()
             ]
         ];
+
         return view('pages.admin-communication', compact('data'));
     }
 
-    private function handleContactResources(): array
+    private function handleShortcuts(): array
     {
         return [
             [
                 'id' => 1,
-                'title' => 'Contact subjects',
-                'url' => '/admin/communication/contact/subjects'
-            ],
-            [
-                'id' => 2,
-                'title' => 'Contact messages',
+                'title' => __('Contact messages'),
+                'short_description' => __('Lorem Ipsum is simply dummy text of the printing and typesetting industry.'),
                 'url' => '/admin/communication/contact/messages'
             ],
             [
-                'id' => 3,
-                'title' => 'Contact responses',
-                'url' => '/admin/communication/contact/responses'
-            ]
-        ];
-    }
-
-    private function handleNewsletterResources(): array
-    {
-        return [
-            [
-                'id' => 1,
-                'title' => 'Newsletter campaigns',
+                'id' => 2,
+                'title' => __('Newsletter campaigns'),
+                'short_description' => __('Lorem Ipsum is simply dummy text of the printing and typesetting industry.'),
                 'url' => '/admin/communication/newsletter/campaigns'
             ],
             [
-                'id' => 2,
-                'title' => 'Newsletter subscribers',
+                'id' => 3,
+                'title' => __('Newsletter subscribers'),
+                'short_description' => __('Lorem Ipsum is simply dummy text of the printing and typesetting industry.'),
                 'url' => '/admin/communication/newsletter/subscribers'
             ],
-        ];
-    }
-
-    private function handleReviewResources(): array
-    {
-        return [
             [
-                'id' => 1,
-                'title' => 'Reviews',
+                'id' => 4,
+                'title' => __('Reviews'),
+                'short_description' => __('Lorem Ipsum is simply dummy text of the printing and typesetting industry.'),
                 'url' => '/admin/communication/reviews'
             ],
         ];

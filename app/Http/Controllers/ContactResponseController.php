@@ -19,17 +19,17 @@ class ContactResponseController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(): void
     {
-        return view('pages.admin-contact-response');
+        abort(405, __('The action is not allowed.'));
     }
 
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
+    public function create(): void
     {
-        //
+        abort(405, __('The action is not allowed.'));
     }
 
     /**
@@ -43,17 +43,17 @@ class ContactResponseController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(string $id): void
     {
-        //
+        abort(405, __('The action is not allowed.'));
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(string $id): void
     {
-        //
+        abort(405, __('The action is not allowed.'));
     }
 
     /**
@@ -67,8 +67,8 @@ class ContactResponseController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(string $id): void
     {
-        //
+        abort(405, __('The action is not allowed.'));
     }
 }

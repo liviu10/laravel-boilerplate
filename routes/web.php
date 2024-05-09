@@ -44,19 +44,29 @@ Auth::routes();
 
 Route::group(['prefix' => '/admin'], function () {
     Route::get('/', [AdminController::class, 'index'])->name('admin.index');
+
+    // Communication web routes
     Route::group(['prefix' => '/communication'], function () {
-        Route::get('/', [CommunicationController::class, 'index'])->name('communication.index');
+        Route::get('/', [CommunicationController::class, 'index'])
+            ->name('communication.index');
         Route::group(['prefix' => '/contact'], function () {
-            Route::resource('/subjects', ContactSubjectController::class);
-            Route::resource('/messages', ContactMessageController::class);
-            Route::resource('/responses', ContactResponseController::class);
+            Route::resource('/subjects', ContactSubjectController::class)
+                ->only(['store', 'update']);
+            Route::resource('/messages', ContactMessageController::class)
+                ->only(['index', 'show', 'update']);
+            Route::resource('/responses', ContactResponseController::class)
+                ->only(['store', 'update']);
         });
         Route::group(['prefix' => '/newsletter'], function () {
             Route::resource('/campaigns', NewsletterCampaignController::class);
-            Route::resource('/subscribers', NewsletterSubscriberController::class);
+            Route::resource('/subscribers', NewsletterSubscriberController::class)
+                ->only(['index', 'show', 'update']);
         });
-        Route::resource('/reviews', ReviewController::class);
+        Route::resource('/reviews', ReviewController::class)
+            ->only(['index', 'show', 'update']);
     });
+
+    // Management web routes
     Route::group(['prefix' => '/management'], function () {
         Route::get('/', [ManagementController::class, 'index'])->name('management.index');
         Route::group(['prefix' => '/contents'], function () {
@@ -77,6 +87,8 @@ Route::group(['prefix' => '/admin'], function () {
         });
         Route::resource('/appreciations', AppreciationController::class);
     });
+
+    // Settings web routes
     Route::group(['prefix' => '/settings'], function () {
         Route::get('/', [SettingsController::class, 'index'])->name('settings.index');
         Route::resource('/users', UserController::class);
