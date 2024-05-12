@@ -1,0 +1,86 @@
+@import '../utilities/flex.scss';
+@import '../utilities/rem_convertor';
+@import '../utilities/theme';
+@import '../utilities/fonts';
+
+.guest {
+    &__card-reviews {
+        @include flex-center();
+        @media only screen and (max-width: 767px) {
+            display: none;
+        }
+        & .card {
+            width: rem-convertor(300px);
+            height: rem-convertor(300px);
+            border: 0;
+            border-radius: 0;
+            padding: 0;
+            &-img-top {
+                margin-bottom: rem-convertor(24px);
+                margin-left: auto;
+                margin-right: auto;
+                border-radius: 50%;
+                width: rem-convertor(75px);
+                height: rem-convertor(75px);
+            }
+            &-body {
+                border-right: 0;
+                padding: 0;
+                & p:first-child {
+                    height: auto;
+                    @include lato-regular();
+                    font-size: rem-convertor(16px);
+                    line-height: normal;
+                    color: $secondary-special-text-color;
+                    text-align: center;
+                }
+            }
+        }
+    }
+    &__card-reviews-responsive {
+        @media only screen and (min-width: 768px) {
+            display: none;
+        }
+        @media only screen and (max-width: 767px) {
+            @include flex-center-start();
+            overflow-y: hidden;
+            overflow-x: auto;
+            margin-left: auto;
+            margin-right: auto;
+            padding: rem-convertor(32px) 0;
+            & .card {
+                width: rem-convertor(300px);
+                height: rem-convertor(300px);
+                border: 0;
+                border-radius: 0;
+                padding: 0;
+                background-color: $white-background-color !important;
+                box-shadow: none !important;
+                z-index: 0 !important;
+                transform: none !important;
+                transition: none !important;
+                &-img-top {
+                    margin-bottom: rem-convertor(24px);
+                    margin-left: auto;
+                    margin-right: auto;
+                    border-radius: 50%;
+                    width: rem-convertor(75px);
+                    height: rem-convertor(75px);
+                }
+                &-body {
+                    border-right: 0;
+                    padding: 0;
+                    background-color: $white-background-color !important;
+                    & p:first-child {
+                        height: auto;
+                        @include lato-regular();
+                        font-size: rem-convertor(16px);
+                        line-height: normal;
+                        color: $secondary-special-text-color;
+                        text-align: center;
+                    }
+                }
+            }
+        }
+    }
+}

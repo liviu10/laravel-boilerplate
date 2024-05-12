@@ -10,12 +10,12 @@
                 height: rem-convertor(368px);
             }
             @media only screen and (min-width: 425px) and (max-width: 575px) {
-                width: rem-convertor(401px);
+                width: 100%;
                 height: rem-convertor(267px);
             }
             @media only screen and (max-width: 424px) {
-                width: rem-convertor(296px);
-                height: rem-convertor(197px);
+                width: 100%;
+                height: rem-convertor(200px);
             }
         }
     }

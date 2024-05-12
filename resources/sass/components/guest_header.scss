@@ -1,6 +1,11 @@
+@import '../utilities/theme';
+@import '../utilities/fonts';
+
 .guest {
     &__header {
-        margin-bottom: 0;
-        text-align: center;
+        @include lato-bold();
+        letter-spacing: 4px;
+        text-transform: uppercase;
+        color: $primary-special-text-color;
     }
 }

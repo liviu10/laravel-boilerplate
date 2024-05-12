@@ -1,10 +1,12 @@
 @import '../utilities/flex.scss';
 @import '../utilities/rem_convertor';
+@import '../utilities/theme';
 
 .guest {
     &__horizontal-line {
-        margin: rem-convertor(32px) auto;
-        border: rem-convertor(1px) solid red;
+        margin-top: rem-convertor(32px);
+        margin-bottom: rem-convertor(32px);
+        border: rem-convertor(1px) solid $secondary-special-border-color;
         width: 75%;
     }
 }

@@ -15,8 +15,9 @@
             referrerpolicy="no-referrer"
         />
         <!-- GOOGLE FONTS IMPORT LINK -->
-        <link rel="dns-prefetch" href="//fonts.gstatic.com">
-        <link href="https://fonts.bunny.net/css?family=Nunito" rel="stylesheet">
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&display=swap" rel="stylesheet">
         <!-- LOCAL CSS AND JAVASCRIPT -->
         @vite(['resources/sass/guest.scss', 'resources/js/app.js'])
     </head>
@@ -26,7 +27,7 @@
             <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
                 <div class="container">
                     <a class="navbar-brand" href="{{ url('/') }}">
-                        {{ config('app.name', 'Laravel') }}
+                        <img src="{{ asset('images/00_logo_portrait_220x40px.svg') }}" width=220 height=40 alt="">
                     </a>
                     <button
                         class="navbar-toggler"
@@ -46,16 +47,16 @@
                                 <a class="nav-link" href="{{ url('/') }}">Home</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="#">Despre noi</a>
+                                <a class="nav-link" href="#about-us">Despre noi</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="#">Evenimente</a>
+                                <a class="nav-link" href="#events">Evenimente</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="#">Unde suntem</a>
+                                <a class="nav-link" href="#localization">Unde suntem</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="#">Contact</a>
+                                <a class="nav-link" href="#contact-us">Contact</a>
                             </li>
                         </ul>
                     </div>
@@ -65,7 +66,13 @@
             <main class="container-fluid">
                 @yield('content')
             </main>
-        </div>
 
+            <button id="scroll_top" class="btn btn-primary" onclick="scrollToTop()" title="Sus">
+                <span>
+                    <i class="fas fa-arrow-up"></i>
+                    Sus
+                </span>
+            </button>
+        </div>
     </body>
 </html>

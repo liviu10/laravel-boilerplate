@@ -1,5 +1,14 @@
 @import '../utilities/flex.scss';
 @import '../utilities/rem_convertor';
+@import '../utilities/theme';
+@import '../utilities/fonts';
+
+@mixin underline {
+    margin: rem-convertor(16px) 0;
+    border-bottom: rem-convertor(3px) solid $secondary-special-text-color;
+    width: rem-convertor(30px);
+    position: relative;
+}
 
 .guest {
     &--jumbotron {
@@ -40,9 +49,7 @@
                     }
                 }
                 &-content {
-                    display: flex;
-                    justify-content: flex-start;
-                    align-items: center;
+                    @include flex-center-start();
                     margin-top: rem-convertor(64px);
                     width: 75%;
                     @media only screen and (min-width: 768px) and (max-width: 991px) {
@@ -62,18 +69,19 @@
                     & .content {
                         margin-left: rem-convertor(16px);
                         & p:first-child {
-                            font-size: rem-convertor(30px);
+                            @include lato-regular();
+                            font-size: rem-convertor(20px);
                             line-height: 1;
+                            color: $primary-special-text-color;
                         }
                         & p {
+                            @include lato-regular();
                             margin-bottom: 0;
-                            font-size: rem-convertor(20px);
+                            font-size: rem-convertor(16px);
+                            color: $secondary-special-text-color;
                         }
                         & .underline {
-                            margin: rem-convertor(6px) 0;
-                            border-bottom: rem-convertor(3px) solid red;
-                            width: 5%;
-                            position: relative;
+                            @include underline();
                         }
                     }
                 }
@@ -81,8 +89,7 @@
         }
     }
     &__jumbotron-left, &__jumbotron-right {
-        display: flex;
-        justify-content: space-around;
+        @include flex-center-around();
         flex-direction: column;
         &-top, &-bottom {
             display: flex;
@@ -91,10 +98,16 @@
                 justify-content: center;
                 flex-direction: column;
                 & p:first-child {
+                    @include lato-regular();
+                    font-size: rem-convertor(20px);
                     line-height: 1;
+                    color: $primary-special-text-color;
                 }
                 & p {
+                    @include lato-regular();
                     margin-bottom: 0;
+                    font-size: rem-convertor(16px);
+                    color: $secondary-special-text-color;
                 }
                 & p:last-child {
                     width: 65%;
@@ -103,10 +116,7 @@
                     }
                 }
                 & .underline {
-                    margin: rem-convertor(6px) 0;
-                    border-bottom: rem-convertor(3px) solid red;
-                    width: 8%;
-                    position: relative;
+                    @include underline();
                 }
             }
             & img {

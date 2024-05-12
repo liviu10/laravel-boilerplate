@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg id="Livello_1" data-name="Livello 1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 70 70">
+  <defs>
+    <style>
+      .cls-1 {
+        clip-path: url(#clippath);
+      }
+
+      .cls-2 {
+        fill: none;
+      }
+
+      .cls-2, .cls-3 {
+        stroke-width: 0px;
+      }
+
+      .cls-3 {
+        fill: #fff;
+      }
+    </style>
+    <clipPath id="clippath">
+      <circle class="cls-2" cx="35" cy="35" r="35"/>
+    </clipPath>
+  </defs>
+  <g class="cls-1">
+    <image width="71" height="71" transform="translate(-.32 -.9)" xlink:href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEcAAABHCAYAAABVsFofAAAACXBIWXMAAAsSAAALEgHS3X78AAAFiUlEQVR4nN2cW4LkKghAoTdz9zlLmAU39yMRBUEF86gp5lGJFRUJHsGkG//+94eICLRQ87/6EEcAAEd1OkqJuK5dDlD6IyA4/hKX01mvHtN53VnelBGVY+jLmvNfUfYrz8/rdNkvEfx0VvnnBO9pFSFmnD018rVxsf5aD2heh8bJg57TTCWwppRdy1JaFBx/bcOQRkGdhqKUylSvUxHgUeMcgvx5jqqU6NGNrQKdP6FxndGG2w0iaK8KGce5uUFB86wbfrMInMhVCkhPoMYLh70ZdkZlxGKiL2AOGkfj1izqaCejZ1erCXOcWvcwR5Uq5gARIOLnMMcat3Miyu5hDsY9507meJ29wZyjLOg5dzJnZPhbmdMslrWUPos5ntzOHKrMqeUI8G3M6cycYA7LtzFnqTfsF3J0lPgq5kR0YRN1zDlvRDTx3BObOUWWhn4hc9qcrjKndHKY7gOYM7mwPxFl5RvT88LMqULwaG7lZlHDzlaZM+uVzxzm9N73aJxjC6lPv997mdPr8HacA3N/eow5umV6mzmTC8exL7JRzknnd9aceMzR5RPm9N2N8+eZxJlTBu0xp2zGr/TKZ9fEOVfN8bX4Js2ciDpNOM1+h37/DwBZDl+vLdvMmXQtmEOaOafnWZZ5J7daNPEic4bzapU5Vsg1zq085mQl6HeKOTqiBs6ix+3azFnTJcGcqNjt6O3RGXO6Abm3fKABtmWnkRDNpfyhINBmDio3zzFn3nVFSs8c3i92KieYszu5LmBO8ZpzcKM25Anay7bhgJPE02NOdrpdyBxq9Ysw5yiR26Se3wSZkzPLPrvc9GCxbZc5iFDf3ujlgaV8Bbm+iKllAWhknxlzzinpTbXElsU1m6VTmTGnRG8T5sg2HOb0PQCME0+v0/eYwy9ZifAmns60f0bL5HPM4cpxz0P+t0k9VZ0fD1nMeWbLotzttdVFi88cr0x2PWIOt2K2EQwCP4Y5rEaeOdoL+x6CuZWr6FBmMbDfvcucjBpNxRqdjz3vAeboyvklfeFtvkFdeWkbWJrMiS7lOdlnDmdhFnMmXYvdxIY5ohWjmfAe8jXbpOuXLzFnpI/DHIR+20L3EN5DdhUdykIk63TPd51UbhVsTy7lKL95hzko7cLTKuF5aIwrqFV7VbtN6jIHbmUOsevbu8ZrIphjfjtXoWWOVeuStyzeZo5YypPMKcfzOGcYBH4WcwBIDijNHPWNm4je+jhYZcCbzBlmiCtNFDuoRzPtRys3b3aVp5E6vskyJ1y1X/EIwHri6eHsAeYk42rFiy59oO5g2kZr5Slzbt/PQed4KtStNF36EFRDeGD7zVVxzqomTVoHffqw2Eh3FmROt16fYF9kDsAdz8qpTj9pj5yxhWEiTcixn7rgOnPg7ldQhqvMvG6p2f68Zq/eGnOkKitxTipCXh1sdlMTQDOnOs5GnGPi5TXmgFrKc8ypMN1jDv/Y0KcwJ1F73PMGc7iBS5nTTfNVD8gFfYzg0wPbLYssc3gZv5w5q2ZWCgH42e5Yzsimfb84wxxjKX+VOTIe0elDlDmaO9ncCnkpf5U5hy28N8pzxt6NcwBImvlt5kgPyjNHb5NmmCMOP4E5fLjFnL7NHHOq130Ec2T6sLGP07QbZU55wsB04V1SgzmOdrcwJ1dbXmv+JEugiTIVuzYCkfv1zMHqQSA+V+W4nn88EUD83hytnqsPGqdvMgfV9ynm8CvlPV8izKkP7kYr3YA5eEduxUt5kjnyFnPR7JZYJfwKPzQ2X2XOeCcwLuPhB43dMWe9fjWJVXONOQgIP9bv66pdgG1St0G4iDnEHiiY0wPQ1cdkSoA5BCuPZqJxzi5zeLB55iCW27PBHAD4GRIpJKjSh93cak+b+qpJkjmA8D+z+5x1BO0kIwAAAABJRU5ErkJggg=="/>
+  </g>
+  <g>
+    <path class="cls-3" d="M34.07,34.49c0,1.58-.17,2.94-.51,4.09-.34,1.15-.8,2.11-1.39,2.86-.58.75-1.27,1.32-2.05,1.69-.78.37-1.62.55-2.51.55s-1.73-.18-2.51-.55c-.78-.37-1.46-.93-2.05-1.69-.58-.75-1.04-1.71-1.38-2.86-.33-1.15-.5-2.52-.5-4.09s.17-2.94.5-4.09c.33-1.15.79-2.11,1.38-2.86.58-.75,1.27-1.32,2.05-1.69.78-.37,1.62-.55,2.51-.55s1.73.18,2.51.55c.78.37,1.47.93,2.05,1.69.58.75,1.05,1.71,1.39,2.86.34,1.15.51,2.52.51,4.09ZM32.8,34.49c0-1.46-.14-2.7-.42-3.74-.28-1.03-.65-1.88-1.12-2.54-.47-.66-1.02-1.14-1.65-1.44s-1.29-.46-1.99-.46-1.36.15-1.98.46-1.18.79-1.65,1.44c-.47.66-.85,1.5-1.13,2.54-.28,1.03-.42,2.28-.42,3.74s.14,2.71.42,3.74.66,1.87,1.13,2.53c.48.66,1.03,1.14,1.65,1.44.63.3,1.29.45,1.98.45s1.36-.15,1.99-.45c.63-.3,1.18-.78,1.65-1.44.47-.66.85-1.5,1.12-2.53.28-1.03.42-2.28.42-3.74Z"/>
+    <path class="cls-3" d="M36.98,30.15c.11-.77.32-1.46.64-2.06.31-.6.71-1.11,1.2-1.53.48-.42,1.04-.73,1.68-.95.64-.22,1.32-.32,2.06-.32.69,0,1.34.1,1.95.29.61.19,1.15.48,1.61.86.46.38.83.86,1.09,1.42s.4,1.23.4,1.97c0,.58-.09,1.11-.27,1.58-.18.47-.43.88-.74,1.24-.32.36-.69.65-1.13.9-.43.24-.9.43-1.41.55,1.32.25,2.32.76,2.99,1.53.67.78,1.01,1.74,1.01,2.91,0,.74-.15,1.42-.45,2.05s-.7,1.18-1.22,1.63-1.13.82-1.83,1.07-1.47.39-2.29.39c-1.03,0-1.88-.14-2.56-.41-.68-.28-1.24-.63-1.69-1.07-.44-.44-.78-.93-1.03-1.48-.25-.55-.45-1.09-.6-1.63l.48-.2c.14-.06.28-.08.43-.05.15.03.26.12.32.29.04.1.1.26.17.48.07.22.18.46.31.72.14.26.31.53.53.81.22.28.49.53.81.76.33.23.72.42,1.18.56.46.14,1,.22,1.63.22.76,0,1.43-.13,2-.38s1.05-.58,1.44-.97c.39-.39.67-.83.86-1.32.19-.49.29-.96.29-1.42,0-.55-.09-1.06-.26-1.54-.17-.47-.46-.88-.87-1.23-.41-.34-.94-.61-1.61-.81-.67-.2-1.49-.3-2.46-.3v-.88c.78-.02,1.47-.12,2.06-.31.59-.19,1.09-.45,1.49-.78s.7-.72.9-1.18.31-.96.31-1.51c0-.64-.11-1.19-.32-1.65-.21-.47-.5-.85-.85-1.16s-.77-.53-1.25-.67c-.48-.14-.97-.22-1.49-.22-.57,0-1.09.09-1.58.26-.48.17-.91.42-1.28.72-.37.31-.68.68-.92,1.11-.25.43-.42.9-.51,1.41-.05.19-.12.31-.22.37-.09.06-.22.08-.39.06l-.62-.1Z"/>
+  </g>
+</svg>
