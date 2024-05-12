@@ -51,6 +51,6 @@ $app->singleton(
 |
 */
 
-$app->loadEnvironmentFrom('.env');
+$app->loadEnvironmentFrom('.env.learning-platform');
 
 return $app;
