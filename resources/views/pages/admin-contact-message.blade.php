@@ -4,7 +4,7 @@
     <div class="admin admin--page">
         @include('components.admin-header', ['title' => 'Contact messages'])
 
-        {{-- @include('components.admin-card-inline-modifier', [
+        @include('components.admin-card-inline-modifier', [
             'results' => [
                 'target_new' => 'collapseAddNewContactSubjects',
                 'route_new' => 'subjects.store',
@@ -32,7 +32,7 @@
                     ]
                 ]
             ]
-        ]) --}}
+        ])
 
         <form method="POST" action="{{ route('subjects.store') }}" enctype="multipart/form-data">
             @csrf
