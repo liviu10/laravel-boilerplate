@@ -2,10 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\ContactSubject;
 use Illuminate\Http\Request;
 
 class ContactSubjectController extends Controller
 {
+    protected $modelContactSubject;
+
     /**
      * Create a new controller instance.
      *
@@ -14,6 +17,7 @@ class ContactSubjectController extends Controller
     public function __construct()
     {
         $this->middleware('auth');
+        $this->modelContactSubject = new ContactSubject();
     }
 
     /**
@@ -37,7 +41,21 @@ class ContactSubjectController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        dd($request);
+        $successMessage = __('The record was successfully saved');
+        $errorMessage = __('The record was not saved in the database');
+
+        $validateRequest = [
+            'value' => 'required|string',
+            'label' => 'required|string',
+            'is_active' => 'required|boolean',
+        ];
+
+        $payload = array_filter($request->all());
+        $request->validate($validateRequest);
+        $result = $this->modelContactSubject->createRecord($payload);
+
+        return redirect()->route('messages.index')->with('success', $result ? $successMessage : $errorMessage);
     }
 
     /**
@@ -61,7 +79,23 @@ class ContactSubjectController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $successMessage = __('The record was successfully updated');
+        $errorMessage = __('The record was not update in the database');
+
+        $validateRequest = [
+            'value' => 'sometimes|string',
+            'label' => 'sometimes|string',
+            'is_active' => 'sometimes|boolean',
+        ];
+
+        $payload = array_filter($request->all());
+        $request->validate($validateRequest);
+
+        $selectedRecord = $this->modelContactSubject->fetchSingleRecord($request->get('id'));
+
+        $result = $this->modelContactSubject->updateRecord($payload, $id);
+
+        return redirect()->route('messages.index')->with('success', $result ? $successMessage : $errorMessage);
     }
 
     /**

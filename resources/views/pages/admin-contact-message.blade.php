@@ -4,7 +4,7 @@
     <div class="admin admin--page">
         @include('components.admin-header', ['title' => 'Contact messages'])
 
-        @include('components.admin-card-inline-modifier', [
+        {{-- @include('components.admin-card-inline-modifier', [
             'results' => [
                 'target_new' => 'collapseAddNewContactSubjects',
                 'route_new' => 'subjects.store',
@@ -32,7 +32,49 @@
                     ]
                 ]
             ]
-        ])
+        ]) --}}
+
+        <form method="POST" action="{{ route('subjects.store') }}" enctype="multipart/form-data">
+            @csrf
+            <div class="form-floating mb-3">
+                <input
+                    class="form-control"
+                    id="value"
+                    name="value"
+                    placeholder="Value"
+                    type="text"
+                    value=""
+                >
+                <label for="value">{{ __('Value') }}</label>
+            </div>
+            <div class="form-floating mb-3">
+                <input
+                    class="form-control"
+                    id="label"
+                    name="label"
+                    placeholder="Label"
+                    type="text"
+                    value=""
+                >
+                <label for="label">{{ __('Label') }}</label>
+            </div>
+            <div class="form-floating mb-3">
+                <select class="form-select" id="is_active" name="is_active">
+                    <option selected>{{ __('-- Choose an option --') }}</option>
+                    <option value="0">{{ __('No') }}</option>
+                    <option value="1">{{ __('Yes') }}</option>
+                </select>
+                <label for="is_active">{{ __('Is active?') }}</label>
+            </div>
+            <div class="form-actions">
+                <button class="btn btn-secondary" type="button">
+                    {{ __('Cancel') }}
+                </button>
+                <button class="btn btn-success" type="submit">
+                    {{ __('Save') }}
+                </button>
+            </div>
+        </form>
 
         @include('components.admin-table', [
             'results' => [
@@ -59,13 +101,13 @@
                         'column_2' => '@tom',
                     ]
                 ],
-                'canAdd' => true,
+                'canAdd' => false,
                 'canFilter' => true,
                 'hasActions' => true,
                 'canShow' => true,
                 'canEdit' => true,
-                'canDelete' => true,
-                'canRestore' => true,
+                'canDelete' => false,
+                'canRestore' => false,
             ],
         ])
     </div>

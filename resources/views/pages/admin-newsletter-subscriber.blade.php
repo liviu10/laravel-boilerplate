@@ -29,13 +29,13 @@
                         'column_2' => '@tom',
                     ]
                 ],
-                'canAdd' => true,
+                'canAdd' => false,
                 'canFilter' => true,
                 'hasActions' => true,
                 'canShow' => true,
                 'canEdit' => true,
-                'canDelete' => true,
-                'canRestore' => true,
+                'canDelete' => false,
+                'canRestore' => false,
             ],
         ])
     </div>

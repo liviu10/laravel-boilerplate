@@ -47,35 +47,32 @@
                 <div class="card-form">
                     <div class="collapse card-form-new" id="{{ $results['target_new'] }}">
                         <hr>
-                        <form id="addNewForm" method="POST" action="{{ route($results['route_new']) }}">
+                        <form id="addNewForm" method="POST" action="{{ route($results['route_new']) }}" enctype="multipart/form-data">
                             @csrf
                             <div class="form-floating mb-3">
                                 <input
-                                    aria-describedby="New value"
-                                    aria-label="NewValue"
-                                    class="form-control not-allowed"
-                                    disabled
-                                    id="newValue"
-                                    readonly="true"
-                                    value=""
+                                    class="form-control"
+                                    id="value"
+                                    name="value"
                                     placeholder="Value"
                                     type="text"
+                                    value=""
                                 >
                                 <label for="value">{{ __('Value') }}</label>
                             </div>
                             <div class="form-floating mb-3">
                                 <input
-                                    aria-describedby="label"
-                                    aria-label="Label"
                                     class="form-control"
-                                    id="newLabel"
+                                    id="label"
+                                    name="label"
                                     placeholder="Label"
                                     type="text"
+                                    value=""
                                 >
                                 <label for="label">{{ __('Label') }}</label>
                             </div>
                             <div class="form-floating mb-3">
-                                <select class="form-select" id="newIsActive">
+                                <select class="form-select" id="is_active" name="is_active">
                                     <option selected>{{ __('-- Choose an option --') }}</option>
                                     <option value="0">{{ __('No') }}</option>
                                     <option value="1">{{ __('Yes') }}</option>
@@ -86,7 +83,7 @@
                                 <button class="btn btn-secondary" type="button" onclick="collapseForm('{{ $results['target_new'] }}')">
                                     {{ __('Cancel') }}
                                 </button>
-                                <button class="btn btn-success" type="button">
+                                <button class="btn btn-success" type="submit">
                                     {{ __('Save') }}
                                 </button>
                             </div>
@@ -98,7 +95,7 @@
                         <p>
                             {{ __('Please select a record before editing!') }}
                         </p>
-                        <form id="editForm" method="POST" action="{{ route($results['route_update'], 1) }}">
+                        <form id="editForm" method="POST" action="{{ route($results['route_update'], 1) }}" enctype="multipart/form-data">
                             @csrf
                             @method('PUT')
                             <input type="hidden" name="id" value="">
@@ -139,7 +136,7 @@
                                 <button class="btn btn-secondary" type="button" onclick="collapseForm('{{ $results['target_edit'] }}')">
                                     {{ __('Cancel') }}
                                 </button>
-                                <button class="btn btn-warning" id="editButton" disabled type="button">
+                                <button class="btn btn-warning" id="editButton" disabled type="submit">
                                     {{ __('Edit') }}
                                 </button>
                             </div>
