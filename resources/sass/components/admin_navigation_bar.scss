@@ -6,9 +6,9 @@
 .admin {
     .navbar {
         margin-bottom: rem-convertor(32px);
-        background-color: $light-blue-background-color !important;
+        background-color: $primary-special-background-color !important;
         &-brand {
-            color: $black-text-color !important;
+            color: $white-text-color !important;
             @media only screen and (max-width: 425px) and (min-width: 320px) {
                 margin-right: 0 !important;
                 font-weight: 700;
@@ -63,7 +63,7 @@
         &-nav {
             & .nav-item {
                 & .nav-link {
-                    color: $black-text-color !important;
+                    color: $white-text-color !important;
                 }
             }
             & .dropdown-menu {
@@ -79,7 +79,7 @@
                 & .fa-solid.fa-user,
                 & .fa-solid.fa-arrow-right-from-bracket {
                     margin-right: rem-convertor(4px);
-                    color: $black-text-color !important;
+                    color: $white-text-color !important;
                     &::before {
                         @include flex-center();
                     }

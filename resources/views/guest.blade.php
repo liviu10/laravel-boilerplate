@@ -101,7 +101,7 @@
 
         <x-guest-slider-image />
 
-        @include('components.guest-line')
+        @include('components.guest-horizontal-line')
 
         <x-guest-header>
             {{ __('CE SPUN CLIENȚII') }}
@@ -124,7 +124,7 @@
 
         <x-guest-reviews />
 
-        @include('components.guest-line')
+        @include('components.guest-horizontal-line')
 
         <x-guest-header headerId="contact-us">
             {{ __('CONTACT') }}

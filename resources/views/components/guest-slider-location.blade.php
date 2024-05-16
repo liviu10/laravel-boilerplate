@@ -22,7 +22,7 @@
                     allowfullscreen
                     referrerpolicy="no-referrer-when-downgrade"
                     src="https://www.google.com/maps/embed/v1/place?key=AIzaSyDv8eEzN1mcoOt9fibT8iuZqKcQqes7UXw
-                        &q=Piata+Unirii,Bucharest">
+                        &q=Piata+Unirii,Bucuresti">
                 </iframe>
             </div>
         </div>

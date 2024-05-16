@@ -25,21 +25,6 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ route('communication.index') }}">
-                            {{ __('Communication') }}
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{ route('management.index') }}">
-                            {{ __('Management') }}
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{ route('settings.index') }}">
-                            {{ __('Settings') }}
-                        </a>
-                    </li>
-                    <li class="nav-item">
                         <a class="nav-link" href="{{ route('guest.index') }}" target="_blank">
                             {{ __('View Website') }}
                             <i class="fa-solid fa-up-right-from-square"></i>
@@ -60,15 +45,6 @@
                             {{ __('Welcome') }}, {{ Auth::user()->full_name }}
                         </a>
                         <ul class="dropdown-menu dropdown-menu-end">
-                            <li>
-                                <a class="dropdown-item" href="#">
-                                    <i class="fa-solid fa-user"></i>
-                                    {{ __('My account') }}
-                                </a>
-                            </li>
-                            <li>
-                                <hr class="dropdown-divider">
-                            </li>
                             <li>
                                 <a class="dropdown-item" href="{{ route('logout') }}"
                                    onclick="event.preventDefault();
