@@ -1,2 +1,63 @@
 // Bootstrap
 @import 'bootstrap/scss/bootstrap';
+
+// Import components
+@import 'components/guest_description';
+@import 'components/guest_header';
+@import 'components/guest_line';
+@import 'components/guest_jumbotron';
+@import 'components/guest_horizontal_line';
+@import 'components/guest_cards';
+@import 'components/guest_image';
+@import 'components/guest_slider_location';
+@import 'components/guest_slider_image';
+@import 'components/guest_review';
+
+// Import utilities
+@import 'utilities/flex';
+@import 'utilities/rem_convertor';
+@import 'utilities/theme';
+@import 'utilities/fonts';
+
+.guest {
+    &--page {}
+    &__body {}
+    &--component {
+        margin-top: rem-convertor(32px) !important;
+        margin-bottom: rem-convertor(32px) !important;
+    }
+    &__description, &__header {
+        margin-bottom: 0;
+        text-align: center;
+    }
+    &__description, &__line, &__horizontal-line,
+    &__slider-location, &__slider-image, &__card-reviews {
+        margin-right: auto;
+        margin-left: auto;
+    }
+}
+.btn, #scroll_top.btn {
+    border-radius: 0px;
+    border-color: $primary-special-border-color;
+    background-color: $primary-special-text-color;
+    color: $white-text-color;
+}
+#scroll_top.btn {
+    @include lato-regular();
+    display: none;
+    position: fixed;
+    bottom: rem-convertor(20px);
+    right: rem-convertor(30px);
+    z-index: 99;
+    font-size: rem-convertor(14px);
+    border: none;
+    outline: none;
+    cursor: pointer;
+    padding: rem-convertor(8px);
+    & .fas.fa-arrow-up {
+        margin-right: rem-convertor(2px);
+    }
+    @media only screen and (max-width: 575px) {
+        right: rem-convertor(15px);
+    }
+}

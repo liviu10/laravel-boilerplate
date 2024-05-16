@@ -1,0 +1,58 @@
+@import '../utilities/flex.scss';
+@import '../utilities/rem_convertor';
+@import '../utilities/theme';
+
+.guest {
+    &__slider-image {
+        @include flex-center();
+        @media only screen and (max-width: 991px) {
+            display: none;
+        }
+        &-left, &-right {
+            @include flex-center();
+        }
+        &-left {
+            flex-direction: column;
+            & div {
+                margin: rem-convertor(8px) 0;
+            }
+        }
+    }
+    &__slider-image-responsive {
+        @media only screen and (min-width: 992px) {
+            display: none;
+        }
+        @media only screen and (max-width: 991px) {
+            @include flex-center-start();
+            overflow: auto;
+            margin-left: auto;
+            margin-right: auto;
+            padding: rem-convertor(32px) 0;
+            & div {
+                margin-right: rem-convertor(8px);
+            }
+            &::-webkit-scrollbar {
+                width: rem-convertor(5px);
+                height: rem-convertor(10px);
+            }
+            &::-webkit-scrollbar-track {
+                background: #F2F2F2;
+            }
+            &::-webkit-scrollbar-thumb {
+                background: #888888;
+                border-radius: rem-convertor(5px);
+            }
+            &::-webkit-scrollbar-thumb:hover {
+                background: #555555;
+            }
+        }
+        @media only screen and (max-width: 575px) {
+            & div {
+                & img {
+                    width: rem-convertor(297px);
+                    height: rem-convertor(196px);
+                }
+            }
+        }
+    }
+}

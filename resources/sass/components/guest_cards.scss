@@ -1,0 +1,127 @@
+@import '../utilities/flex.scss';
+@import '../utilities/rem_convertor';
+@import '../utilities/theme';
+@import '../utilities/fonts';
+
+@mixin underline {
+    margin: rem-convertor(16px) 0;
+    border-bottom: rem-convertor(3px) solid $secondary-special-text-color;
+    width: rem-convertor(30px);
+    position: relative;
+}
+
+.guest {
+    &--cards {
+        @include flex-center-evenly();
+        padding-top: rem-convertor(32px);
+        padding-bottom: rem-convertor(32px);
+        @media only screen and (min-width: 992px) {
+            justify-content: center;
+        }
+        @media only screen and (max-width: 991px) {
+            justify-content: flex-start;
+            flex-wrap: nowrap;
+            overflow-y: hidden;
+            overflow-x: auto;
+            margin-left: auto;
+            margin-right: auto;
+            & .card {
+                width: rem-convertor(200px);
+                &-header, &-body, &-footer {
+                    padding-right: rem-convertor(24px) !important;
+                    padding-left: rem-convertor(24px) !important;
+                }
+                &.hidden {
+                    visibility: hidden;
+                }
+            }
+            &::-webkit-scrollbar {
+                width: rem-convertor(5px);
+                height: rem-convertor(10px);
+            }
+            &::-webkit-scrollbar-track {
+                background: #F2F2F2;
+            }
+            &::-webkit-scrollbar-thumb {
+                background: #888888;
+                border-radius: rem-convertor(5px);
+            }
+            &::-webkit-scrollbar-thumb:hover {
+                background: #555555;
+            }
+        }
+        @media only screen and (min-width: 768px) and (max-width: 991px) {
+            width: rem-convertor(600px);
+        }
+        @media only screen and (min-width: 576px) and (max-width: 767px) {
+            width: rem-convertor(500px);
+        }
+        @media only screen and (max-width: 575px) {
+            width: rem-convertor(320px);
+        }
+    }
+    & .card {
+        border: 0;
+        border-radius: 0;
+        border-bottom: rem-convertor(3px) solid $primary-special-border-color;
+        padding: rem-convertor(32px) 0;
+        &-header, &-body, &-footer {
+            margin-left: rem-convertor(24px);
+            padding: rem-convertor(8px);
+            @media only screen and (max-width: 1199px) {
+                margin-left: 0;
+            }
+        }
+        &-header, &-footer {
+            background-color: $white-background-color;
+        }
+        &-header {
+            border-bottom: 0;
+            & img {
+                border-radius: 50%;
+            }
+        }
+        &-body {
+            height: rem-convertor(200px);
+            border-right: rem-convertor(1px) dashed $secondary-special-border-color;
+            & p:first-child {
+                @include lato-regular();
+                font-size: rem-convertor(16px);
+                line-height: 1;
+                color: $primary-special-text-color;
+                @media only screen and (max-width: 1199px) {
+                    height: rem-convertor(50px);
+                }
+            }
+            & p, & a {
+                @include lato-regular();
+                margin-bottom: 0;
+                font-size: rem-convertor(14px);
+                color: $secondary-special-text-color;
+            }
+            & .underline {
+                @include underline();
+            }
+        }
+        &-footer {
+            border-top: 0;
+        }
+        &:nth-child(3) {
+            background-color: $special-background-color;
+            box-shadow: 0px 0px 10px rgba(242, 242, 242, 0.25);
+            transform: scale(1.05);
+            transition: transform 0.3s ease;
+            border-bottom: 0;
+            z-index: 1;
+            & .card-header, & .card-body, & .card-footer {
+                background-color: $special-background-color;
+            }
+            & .card-body {
+                border-right: 0;
+            }
+        }
+        &:nth-child(5) .card-body {
+            border-right: 0;
+        }
+    }
+}

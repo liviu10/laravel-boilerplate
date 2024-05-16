@@ -1,0 +1,55 @@
+@import '../utilities/flex.scss';
+@import '../utilities/rem_convertor';
+@import '../utilities/theme';
+@import '../utilities/fonts';
+
+.guest {
+    &__slider-location {
+        @include flex-center-start();
+        overflow: auto;
+        &-image, &-announcement {
+            margin: rem-convertor(32px) rem-convertor(8px);
+            & .card {
+                border: 0;
+            }
+        }
+        &-announcement {
+            & .card {
+                width: rem-convertor(300px);
+                height: rem-convertor(300px);
+                border: 0;
+                border-radius: 0;
+                padding: 0;
+                &-img-top {
+                    margin-bottom: rem-convertor(16px);
+                    border-radius: 0;
+                }
+                &-body {
+                    border-right: 0;
+                    padding: 0;
+                    & p:first-child {
+                        height: auto;
+                        @include lato-regular();
+                        font-size: rem-convertor(14px);
+                        line-height: normal;
+                        color: $primary-special-text-color;
+                    }
+                }
+            }
+        }
+        &::-webkit-scrollbar {
+            width: rem-convertor(5px);
+            height: rem-convertor(10px);
+        }
+        &::-webkit-scrollbar-track {
+            background: #F2F2F2;
+        }
+        &::-webkit-scrollbar-thumb {
+            background: #888888;
+            border-radius: rem-convertor(5px);
+        }
+        &::-webkit-scrollbar-thumb:hover {
+            background: #555555;
+        }
+    }
+}
