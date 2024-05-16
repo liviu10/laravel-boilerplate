@@ -37,6 +37,8 @@
             padding: rem-convertor(32px) 0;
             & img {
                 margin-right: rem-convertor(8px);
+                width: 100%;
+                height: rem-convertor(400px);
             }
             &::-webkit-scrollbar {
                 width: rem-convertor(5px);
