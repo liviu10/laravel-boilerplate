@@ -159,13 +159,12 @@ body {
         }
     }
 }
-#scroll_top.btn {
+#chat_with_us.btn, #scroll_top.btn {
     @include lato-regular();
     border-radius: 0px;
     border-color: $primary-special-border-color;
     background-color: $primary-special-text-color;
     color: $white-text-color;
-    display: none;
     position: fixed;
     bottom: rem-convertor(20px);
     right: rem-convertor(30px);
@@ -181,4 +180,12 @@ body {
     @media only screen and (max-width: 575px) {
         right: rem-convertor(15px);
     }
+}
+#chat_with_us.btn {
+    right: 0;
+    bottom: 50%;
+    height: auto;
+}
+#scroll_top.btn {
+    display: none;
 }

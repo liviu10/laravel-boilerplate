@@ -86,6 +86,19 @@
                 </div>
             </div>
 
+            <button
+                id="chat_with_us"
+                class="btn btn-primary"
+                title="Scrie-ne!"
+                data-phone-number="+40760961010"
+                data-message="Buna ziua! Sunt interesat de capsunile dvs.!"
+            >
+                <span>
+                    <i class="fa-brands fa-whatsapp"></i>
+                    Scrie-ne!
+                </span>
+            </button>
+
             <button id="scroll_top" class="btn btn-primary" onclick="scrollToTop()" title="Sus">
                 <span>
                     <i class="fas fa-arrow-up"></i>
