@@ -25,12 +25,12 @@
 
         <div id="app">
             <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
-                <div class="container">
+                <div class="container guest">
                     <a class="navbar-brand" href="{{ url('/') }}">
                         <img src="{{ asset('images/00_logo_portrait_220x40px.svg') }}" width=220 height=40 alt="">
                     </a>
                     <button
-                        class="navbar-toggler"
+                        class="navbar-toggler collapsed"
                         type="button"
                         data-bs-toggle="collapse"
                         data-bs-target="#navbarSupportedContent"
@@ -38,7 +38,9 @@
                         aria-expanded="false"
                         aria-label="{{ __('Toggle navigation') }}"
                     >
-                        <span class="navbar-toggler-icon"></span>
+                        <span class="icon-bar top-bar"></span>
+                        <span class="icon-bar middle-bar"></span>
+                        <span class="icon-bar bottom-bar"></span>
                     </button>
 
                     <div class="collapse navbar-collapse" id="navbarSupportedContent">
@@ -66,6 +68,23 @@
             <main class="container-fluid">
                 @yield('content')
             </main>
+
+            <div class="guest">
+                <div class="guest__footer">
+                    <p>
+                        BRIOFRESH LAND
+                    </p>
+                    <p>
+                        CUI: 14399840, Reg. Com. J40/372/2002
+                    </p>
+                    <p>
+                        ©2024. All Rights reserved.
+                    </p>
+                    <a href="#" target="_blank">
+                        Termeni și Condiții
+                    </a>
+                </div>
+            </div>
 
             <button id="scroll_top" class="btn btn-primary" onclick="scrollToTop()" title="Sus">
                 <span>

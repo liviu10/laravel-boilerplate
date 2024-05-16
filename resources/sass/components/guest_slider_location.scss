@@ -13,18 +13,25 @@
                 border: 0;
             }
         }
+        &-image {
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
+            & .card {
+                padding: 0;
+            }
+        }
         &-announcement {
             & .card {
                 width: rem-convertor(300px);
                 height: rem-convertor(300px);
-                border: 0;
                 border-radius: 0;
                 padding: 0;
+                box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.25);
                 &-img-top {
                     margin-bottom: rem-convertor(16px);
                     border-radius: 0;
                 }
                 &-body {
+                    margin: 0 rem-convertor(8px);
                     border-right: 0;
                     padding: 0;
                     & p:first-child {

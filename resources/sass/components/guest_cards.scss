@@ -65,6 +65,7 @@
         border-radius: 0;
         border-bottom: rem-convertor(3px) solid $primary-special-border-color;
         padding: rem-convertor(32px) 0;
+        background-color: #F6F7F8;
         &-header, &-body, &-footer {
             margin-left: rem-convertor(24px);
             padding: rem-convertor(8px);
@@ -73,7 +74,7 @@
             }
         }
         &-header, &-footer {
-            background-color: $white-background-color;
+            background-color: #F6F7F8;
         }
         &-header {
             border-bottom: 0;
@@ -108,7 +109,7 @@
         }
         &:nth-child(3) {
             background-color: $special-background-color;
-            box-shadow: 0px 0px 10px rgba(242, 242, 242, 0.25);
+            box-shadow: 0px 0px 35px rgba(0, 0, 0, 0.5);
             transform: scale(1.05);
             transition: transform 0.3s ease;
             border-bottom: 0;

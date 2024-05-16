@@ -2,8 +2,8 @@
 @import 'bootstrap/scss/bootstrap';
 
 // Import components
-@import 'components/guest_description';
 @import 'components/guest_header';
+@import 'components/guest_description';
 @import 'components/guest_line';
 @import 'components/guest_jumbotron';
 @import 'components/guest_horizontal_line';
@@ -19,6 +19,102 @@
 @import 'utilities/theme';
 @import 'utilities/fonts';
 
+body {
+    background-color: #F6F7F8;
+}
+.navbar {
+    background-color: $white-background-color !important;
+    & .container.guest {
+        margin-top: rem-convertor(24px);
+        & .navbar-brand {
+            color: $black-text-color !important;
+            @media only screen and (max-width: 425px) and (min-width: 320px) {
+                margin-right: 0 !important;
+                font-weight: 700;
+            }
+            @media only screen and (max-width: 425px) and (min-width: 375px) {
+                font-size: rem-convertor(16px);
+            }
+            @media only screen and (max-width: 374px) and (min-width: 320px) {
+                font-size: rem-convertor(14px);
+            }
+        }
+        & .navbar-toggler, & .navbar-toggler:focus {
+            border: 0 !important;
+            box-shadow: none !important;
+        }
+        & .navbar-toggler {
+            & span {
+                display: block;
+                background-color: $black-background-color;
+                height: rem-convertor(3px);
+                width: rem-convertor(25px);
+                margin-top: rem-convertor(5px);
+                margin-bottom: rem-convertor(5px);
+                position: relative;
+                left: 0;
+                opacity: 1;
+                transition: all 0.35s ease-out;
+                transform-origin: center left;
+                &:nth-child(1) {
+                    transform: translate(0%, 0%) rotate(0deg);
+                    margin-top: 0.3em;
+                }
+                &:nth-child(2) {
+                    opacity: 1;
+                }
+                &:nth-child(3) {
+                    transform: translate(0%, 0%) rotate(0deg);
+                }
+            }
+            &:not(.collapsed) {
+                & span:nth-child(1) {
+                    transform: translate(15%, -33%) rotate(45deg);
+                }
+                & span:nth-child(2) {
+                    opacity: 0;
+                }
+                & span:nth-child(3) {
+                    transform: translate(15%, 33%) rotate(-45deg);
+                }
+            }
+        }
+        & .navbar-nav {
+            & .nav-item {
+                & .nav-link {
+                    @include lato-bold();
+                    color: $black-text-color !important;
+                }
+            }
+            & .dropdown-menu {
+                border-radius: 0;
+                border-color: $black-border-color !important;
+                padding: 0 !important;
+            }
+            & .dropdown-item {
+                color: $black-text-color !important;
+                &:active {
+                    background-color: $white-background-color;
+                }
+                & .fa-solid.fa-user,
+                & .fa-solid.fa-arrow-right-from-bracket {
+                    margin-right: rem-convertor(4px);
+                    color: $black-text-color !important;
+                    &::before {
+                        @include flex-center();
+                    }
+                }
+                & span {
+                    width: 85%;
+                }
+            }
+            & .dropdown-divider {
+                margin: 0 !important;
+                border-color: $black-border-color !important;
+            }
+        }
+    }
+}
 .guest {
     &--page {}
     &__body {}
@@ -35,15 +131,40 @@
         margin-right: auto;
         margin-left: auto;
     }
+    &__description {
+        & .contact-phone, & .contact-email {
+            @include lato-bold();
+            color: $primary-special-background-color;
+            text-decoration: none;
+        }
+        & .contact-phone {
+            font-size: rem-convertor(30px);
+        }
+        & .contact-email {
+            font-size: rem-convertor(16px);
+        }
+    }
+    &__footer {
+        @include flex-center();
+        flex-direction: column;
+        padding-top: rem-convertor(64px);
+        padding-bottom: rem-convertor(64px);
+        width: 100%;
+        background-color: $primary-special-background-color;
+        text-align: center;
+        & p, & a {
+            @include lato-bold();
+            margin-bottom: 0;
+            color: $white-text-color;
+        }
+    }
 }
-.btn, #scroll_top.btn {
+#scroll_top.btn {
+    @include lato-regular();
     border-radius: 0px;
     border-color: $primary-special-border-color;
     background-color: $primary-special-text-color;
     color: $white-text-color;
-}
-#scroll_top.btn {
-    @include lato-regular();
     display: none;
     position: fixed;
     bottom: rem-convertor(20px);
