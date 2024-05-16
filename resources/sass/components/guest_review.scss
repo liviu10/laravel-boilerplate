@@ -4,28 +4,67 @@
 @import '../utilities/fonts';
 
 .guest {
+    &--review {
+        @media only screen and (max-width: 991px) {
+            justify-content: flex-start;
+            flex-wrap: nowrap;
+            overflow-y: hidden;
+            overflow-x: auto;
+            margin-left: auto;
+            margin-right: auto;
+            &::-webkit-scrollbar {
+                width: rem-convertor(5px);
+                height: rem-convertor(10px);
+            }
+            &::-webkit-scrollbar-track {
+                background: #F2F2F2;
+            }
+            &::-webkit-scrollbar-thumb {
+                background: #888888;
+                border-radius: rem-convertor(5px);
+            }
+            &::-webkit-scrollbar-thumb:hover {
+                background: #555555;
+            }
+        }
+    }
     &__card-reviews {
         @include flex-center();
-        @media only screen and (max-width: 767px) {
-            display: none;
+        @media only screen and (max-width: 991px) {
+            justify-content: flex-start;
         }
         & .card {
             width: rem-convertor(300px);
-            height: rem-convertor(300px);
             border: 0;
-            border-radius: 0;
-            padding: 0;
+            border-radius: 5px;
+            padding: rem-convertor(8px);
+            background-color: transparent;
+            &-header {
+                background-color: transparent;
+            }
             &-img-top {
+                position: absolute;
                 margin-bottom: rem-convertor(24px);
-                margin-left: auto;
-                margin-right: auto;
+                border: 10px solid $white-background-color;
                 border-radius: 50%;
-                width: rem-convertor(75px);
-                height: rem-convertor(75px);
+                width: rem-convertor(85px);
+                height: rem-convertor(85px);
+                background-color: transparent !important;
+                top: 5%;
+                left: 50%;
+                transform: translateX(-50%);
+                box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.25);
             }
             &-body {
+                margin: rem-convertor(48px) 0;
                 border-right: 0;
-                padding: 0;
+                padding-top: rem-convertor(100px);
+                padding-bottom: rem-convertor(64px);
+                padding-left: rem-convertor(16px);
+                padding-right: rem-convertor(16px);
+                height: rem-convertor(350px);
+                background-color: $white-background-color;
+                box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.25);
                 & p:first-child {
                     height: auto;
                     @include lato-regular();
@@ -35,50 +74,21 @@
                     text-align: center;
                 }
             }
-        }
-    }
-    &__card-reviews-responsive {
-        @media only screen and (min-width: 768px) {
-            display: none;
-        }
-        @media only screen and (max-width: 767px) {
-            @include flex-center-start();
-            overflow-y: hidden;
-            overflow-x: auto;
-            margin-left: auto;
-            margin-right: auto;
-            padding: rem-convertor(32px) 0;
-            & .card {
-                width: rem-convertor(300px);
-                height: rem-convertor(300px);
-                border: 0;
-                border-radius: 0;
-                padding: 0;
-                background-color: $white-background-color !important;
-                box-shadow: none !important;
-                z-index: 0 !important;
-                transform: none !important;
-                transition: none !important;
-                &-img-top {
-                    margin-bottom: rem-convertor(24px);
-                    margin-left: auto;
-                    margin-right: auto;
-                    border-radius: 50%;
-                    width: rem-convertor(75px);
-                    height: rem-convertor(75px);
+            &:nth-child(3) {
+                background-color: transparent;
+                box-shadow: 0px 0px 10px rgba(242, 242, 242, 0.25);
+                transform: none;
+                transition: none;
+                border-bottom: 0;
+                z-index: 1;
+                & .card-header, & .card-body, & .card-footer {
+                    background-color: $white-background-color;
                 }
-                &-body {
+                & .card-header {
+                    background-color: transparent;
+                }
+                & .card-body {
                     border-right: 0;
-                    padding: 0;
-                    background-color: $white-background-color !important;
-                    & p:first-child {
-                        height: auto;
-                        @include lato-regular();
-                        font-size: rem-convertor(16px);
-                        line-height: normal;
-                        color: $secondary-special-text-color;
-                        text-align: center;
-                    }
                 }
             }
         }
