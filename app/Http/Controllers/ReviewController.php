@@ -25,7 +25,7 @@ class ReviewController extends Controller
      */
     public function index(): View|Application|Factory
     {
-        return view('pages.admin-review');
+        return view('pages.admin.admin-review');
     }
 
     /**

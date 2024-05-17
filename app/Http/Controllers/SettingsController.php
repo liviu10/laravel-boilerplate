@@ -40,7 +40,7 @@ class SettingsController extends Controller
                 $this->handleShortcuts()
             ]
         ];
-        return view('pages.admin-settings', compact('data'));
+        return view('pages.admin.admin-settings', compact('data'));
     }
 
     private function handleShortcuts(): array

@@ -41,7 +41,7 @@ class ManagementController extends Controller
             ]
         ];
 
-        return view('pages.admin-management', compact('data'));
+        return view('pages.admin.admin-management', compact('data'));
     }
 
     private function handleShortcuts(): array

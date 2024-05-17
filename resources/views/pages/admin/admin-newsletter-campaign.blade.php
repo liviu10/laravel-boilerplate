@@ -2,9 +2,9 @@
 
 @section('content')
     <div class="admin admin--page">
-        @include('components.admin-header', ['title' => 'Reviews'])
+        @include('components.admin.admin-header', ['title' => 'Newsletter campaigns'])
 
-        @include('components.admin-table', [
+        @include('components.admin.admin-table', [
             'results' => [
                 'columns' => [
                     __('ID'), __('Column 0'), __('Column 1'), __('Column 2'),
@@ -29,13 +29,13 @@
                         'column_2' => '@tom',
                     ]
                 ],
-                'canAdd' => false,
+                'canAdd' => true,
                 'canFilter' => true,
                 'hasActions' => true,
                 'canShow' => true,
                 'canEdit' => true,
-                'canDelete' => false,
-                'canRestore' => false,
+                'canDelete' => true,
+                'canRestore' => true,
             ],
         ])
     </div>

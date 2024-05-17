@@ -2,9 +2,9 @@
 
 @section('content')
     <div class="admin admin--page">
-        @include('components.admin-header', ['title' => 'Newsletter campaigns'])
+        @include('components.admin.admin-header', ['title' => 'Users'])
 
-        @include('components.admin-table', [
+        @include('components.admin.admin-table', [
             'results' => [
                 'columns' => [
                     __('ID'), __('Column 0'), __('Column 1'), __('Column 2'),

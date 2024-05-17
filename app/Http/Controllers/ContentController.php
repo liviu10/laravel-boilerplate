@@ -21,7 +21,7 @@ class ContentController extends Controller
      */
     public function index()
     {
-        return view('pages.admin-content');
+        return view('pages.admin.admin-content');
     }
 
     /**

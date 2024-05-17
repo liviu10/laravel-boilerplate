@@ -41,7 +41,7 @@ class CommunicationController extends Controller
             ]
         ];
 
-        return view('pages.admin-communication', compact('data'));
+        return view('pages.admin.admin-communication', compact('data'));
     }
 
     private function handleShortcuts(): array

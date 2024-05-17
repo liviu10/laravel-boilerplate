@@ -25,7 +25,7 @@ class AdminStats extends Component
      */
     public function render(): View|Closure|string
     {
-        return view('components.admin-stats')
+        return view('components.admin.admin-stats')
             ->with('adminStats', $this->adminStats);
     }
 

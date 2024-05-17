@@ -2,9 +2,9 @@
 
 @section('content')
     <div class="admin admin--page">
-        @include('components.admin-header', ['title' => 'Content'])
+        @include('components.admin.admin-header', ['title' => 'Content'])
 
-        @include('components.admin-card-inline-modifier', [
+        @include('components.admin.admin-card-inline-modifier', [
             'results' => [
                 'target_new' => 'collapseAddNewContentTypes',
                 'route_new' => 'types.store',
@@ -28,7 +28,7 @@
             ]
         ])
 
-        @include('components.admin-card-inline-modifier', [
+        @include('components.admin.admin-card-inline-modifier', [
             'results' => [
                 'target_new' => 'collapseAddNewContentVisibilities',
                 'route_new' => 'visibilities.store',
@@ -64,7 +64,7 @@
             ]
         ])
 
-        @include('components.admin-card-inline-modifier', [
+        @include('components.admin.admin-card-inline-modifier', [
             'results' => [
                 'target_new' => 'collapseAddNewCommentTypes',
                 'route_new' => 'types.store',
@@ -88,7 +88,7 @@
             ]
         ])
 
-        @include('components.admin-card-inline-modifier', [
+        @include('components.admin.admin-card-inline-modifier', [
             'results' => [
                 'target_new' => 'collapseAddNewCommentStatuses',
                 'route_new' => 'statuses.store',
@@ -124,7 +124,7 @@
             ]
         ])
 
-        @include('components.admin-table', [
+        @include('components.admin.admin-table', [
             'results' => [
                 'columns' => [
                     __('ID'), __('Column 0'), __('Column 1'), __('Column 2'),

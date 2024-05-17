@@ -33,7 +33,7 @@ class ContactMessageController extends Controller
             'results' => $this->contactMessages->all()
         ];
 
-        return view('pages.admin-contact-message', compact('data'));
+        return view('pages.admin.admin-contact-message', compact('data'));
     }
 
     /**
@@ -63,7 +63,7 @@ class ContactMessageController extends Controller
             'results' => $this->contactMessages->fetchSingleRecord($id),
         ];
 
-        return view('pages.admin-contact-message-show');
+        return view('pages.admin.admin-contact-message-show');
     }
 
     /**
@@ -73,7 +73,7 @@ class ContactMessageController extends Controller
      */
     public function edit(string $id): View|Application|Factory
     {
-        return view('pages.admin-contact-message-edit');
+        return view('pages.admin.admin-contact-message-edit');
     }
 
     /**

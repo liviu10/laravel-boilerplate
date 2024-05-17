@@ -23,7 +23,7 @@
     <body>
 
         <div id="app">
-            @include('components.admin-navigation-bar')
+            @include('components.admin.admin-navigation-bar')
 
             <main class="container-fluid">
                 @yield('content')

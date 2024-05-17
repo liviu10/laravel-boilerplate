@@ -25,7 +25,7 @@ class NewsletterSubscriberController extends Controller
      */
     public function index(): View|Application|Factory
     {
-        return view('pages.admin-newsletter-subscriber');
+        return view('pages.admin.admin-newsletter-subscriber');
     }
 
     /**

@@ -25,7 +25,7 @@ class NewsletterCampaignController extends Controller
      */
     public function index(): View|Application|Factory
     {
-        return view('pages.admin-newsletter-campaign');
+        return view('pages.admin.admin-newsletter-campaign');
     }
 
     /**
@@ -34,7 +34,7 @@ class NewsletterCampaignController extends Controller
      */
     public function create(): View|Application|Factory
     {
-        return view('pages.admin-newsletter-campaign-add');
+        return view('pages.admin.admin-newsletter-campaign-add');
     }
 
     /**
@@ -52,7 +52,7 @@ class NewsletterCampaignController extends Controller
      */
     public function show(string $id): View|Application|Factory
     {
-        return view('pages.admin-newsletter-campaign-show');
+        return view('pages.admin.admin-newsletter-campaign-show');
     }
 
     /**
@@ -62,7 +62,7 @@ class NewsletterCampaignController extends Controller
      */
     public function edit(string $id): View|Application|Factory
     {
-        return view('pages.admin-newsletter-campaign-edit');
+        return view('pages.admin.admin-newsletter-campaign-edit');
     }
 
     /**

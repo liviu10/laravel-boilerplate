@@ -21,7 +21,7 @@ class CommentStatusController extends Controller
      */
     public function index()
     {
-        return view('pages.admin-comment-status');
+        return view('pages.admin.admin-comment-status');
     }
 
     /**

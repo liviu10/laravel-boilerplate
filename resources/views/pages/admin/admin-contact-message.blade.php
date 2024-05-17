@@ -2,9 +2,9 @@
 
 @section('content')
     <div class="admin admin--page">
-        @include('components.admin-header', ['title' => 'Contact messages'])
+        @include('components.admin.admin-header', ['title' => 'Contact messages'])
 
-        @include('components.admin-card-inline-modifier', [
+        @include('components.admin.admin-card-inline-modifier', [
             'results' => [
                 'target_new' => 'collapseAddNewContactSubjects',
                 'route_new' => 'subjects.store',
@@ -76,7 +76,7 @@
             </div>
         </form>
 
-        @include('components.admin-table', [
+        @include('components.admin.admin-table', [
             'results' => [
                 'columns' => [
                     __('ID'), __('Column 0'), __('Column 1'), __('Column 2'),
