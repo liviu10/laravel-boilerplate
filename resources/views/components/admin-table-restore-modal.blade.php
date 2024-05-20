@@ -1,14 +1,14 @@
 <div
     aria-hidden="true"
-    aria-labelledby="restoreModalLabel"
+    aria-labelledby="restoreModalLabel{{ $key }}"
     class="modal fade"
-    id="restoreModal"
+    id="restoreModal{{ $key }}"
     tabindex="-1"
 >
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h1 class="modal-title fs-5" id="restoreModalLabel">
+                <h1 class="modal-title fs-5" id="restoreModalLabel{{ $key }}">
                     {{ __('Restore record') }}
                 </h1>
                 <button

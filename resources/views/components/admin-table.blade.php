@@ -118,7 +118,7 @@
                                             @if ($item['is_active'])
                                                 <button
                                                     class="{{ $item['class'] }}"
-                                                    data-bs-target="{{ $item['target'] }}{{ $key }}"
+                                                    data-bs-target="{{ $item['target'] . '' . $key }}"
                                                     data-bs-toggle="modal"
                                                     title="{{ $item['title'] }}"
                                                     type="button"
@@ -126,42 +126,39 @@
                                                     <i class="{{ $item['icon'] }}"></i>
                                                 </button>
 
-                                                <!-- Add new record modal -->
-                                                @if ($results['options']['canAdd'])
-                                                    @include('components.admin-table-add-modal', [
-                                                        'create_form' => $results['forms']['create_form']
-                                                    ])
-                                                @endif
-
-                                                <!-- Filter record modal -->
-                                                @if ($results['options']['canFilter'])
-                                                    @include('components.admin-table-filter-modal', [
-                                                        'filter_form' => $results['forms']['filter_form']
-                                                    ])
-                                                @endif
-
                                                 <!-- Show record modal -->
                                                 @if ($results['options']['canShow'])
                                                     @include('components.admin-table-show-modal', [
-                                                        'key' => $key
+                                                        'key' => $key,
+                                                        'record' => $row
                                                     ])
                                                 @endif
 
                                                 <!-- Edit record modal -->
                                                 @if ($results['options']['canUpdate'])
                                                     @include('components.admin-table-edit-modal', [
-                                                        'update_form' => $results['forms']['update_form']
+                                                        'update_form' => $results['forms']['update_form'],
+                                                        'key' => $key,
+                                                        'record' => $row
                                                     ])
                                                 @endif
 
                                                 <!-- Delete record modal -->
                                                 @if ($results['options']['canDelete'])
-                                                    @include('components.admin-table-delete-modal')
+                                                    @include('components.admin-table-delete-modal', [
+                                                        'delete_form' => $results['forms']['delete_form'],
+                                                        'key' => $key,
+                                                        'record' => $row,
+                                                        'id' => 1
+                                                    ])
                                                 @endif
 
                                                 <!-- Restore record modal -->
                                                 @if ($results['options']['canRestore'])
-                                                    @include('components.admin-table-restore-modal')
+                                                    @include('components.admin-table-restore-modal', [
+                                                        'key' => $key,
+                                                        'record' => $row
+                                                    ])
                                                 @endif
                                             @endif
                                         @endforeach
@@ -184,6 +181,20 @@
             @endif
         </div>
     </div>
+
+    <!-- Add new record modal -->
+    @if ($results['options']['canAdd'])
+        @include('components.admin-table-add-modal', [
+            'create_form' => $results['forms']['create_form']
+        ])
+    @endif
+
+    <!-- Filter record modal -->
+    @if ($results['options']['canFilter'])
+        @include('components.admin-table-filter-modal', [
+            'filter_form' => $results['forms']['filter_form']
+        ])
+    @endif
 </div>
 
 <script>

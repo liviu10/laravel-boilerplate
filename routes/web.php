@@ -50,8 +50,8 @@ Route::group(['prefix' => '/admin'], function () {
         Route::get('/', [CommunicationController::class, 'index'])
             ->name('communication.index');
         Route::group(['prefix' => '/contact'], function () {
-            Route::resource('/subjects', ContactSubjectController::class)
-                ->only(['index', 'store', 'update']);
+            Route::resource('/subjects', ContactSubjectController::class);
+                // ->only(['index', 'store', 'update']);
             Route::resource('/messages', ContactMessageController::class)
                 ->only(['index', 'show', 'update']);
             Route::resource('/responses', ContactResponseController::class)

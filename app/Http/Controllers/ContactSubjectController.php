@@ -53,6 +53,7 @@ class ContactSubjectController extends Controller
                     'create_form' => $this->handleForm('subjects.store'),
                     'filter_form' => $this->handleForm('subjects.index'),
                     'update_form' => $this->handleForm('subjects.update'),
+                    'delete_form' => $this->handleForm('subjects.destroy'),
                 ],
                 'options' => [
                     'canAdd' => true,
@@ -60,7 +61,7 @@ class ContactSubjectController extends Controller
                     'hasActions' => true,
                     'canShow' => true,
                     'canUpdate' => true,
-                    'canDelete' => false,
+                    'canDelete' => true,
                     'canRestore' => false,
                     'hasPagination' => false,
                 ],
@@ -170,7 +171,7 @@ class ContactSubjectController extends Controller
         $payload['value'] = strtolower(str_replace(' ', '-', $payload['label']));
         $payload['is_active'] = isset($payload['is_active']) ? $payload['is_active'] : false;
         $payload['user_id'] = Auth::user()->id;
-        $selectedRecord = $this->contactSubject->fetchSingleRecord($request->get('id'));
+        $selectedRecord = $this->contactSubject->fetchSingleRecord($id);
         $result = $this->contactSubject->updateRecord($payload, $id);
 
         return redirect()->route('subjects.index')->with('success', $result ? $successMessage : $errorMessage);

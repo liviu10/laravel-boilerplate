@@ -1,14 +1,14 @@
 <div
     aria-hidden="true"
-    aria-labelledby="deleteModalLabel"
+    aria-labelledby="deleteModalLabel{{ $key }}"
     class="modal fade"
-    id="deleteModal"
+    id="deleteModal{{ $key }}"
     tabindex="-1"
 >
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h1 class="modal-title fs-5" id="deleteModalLabel">
+                <h1 class="modal-title fs-5" id="deleteModalLabel{{ $key }}">
                     {{ __('Delete record') }}
                 </h1>
                 <button

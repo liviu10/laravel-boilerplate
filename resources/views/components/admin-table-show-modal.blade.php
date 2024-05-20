@@ -8,7 +8,7 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h1 class="modal-title fs-5" id="showModalLabel">
+                <h1 class="modal-title fs-5" id="showModalLabel{{ $key }}">
                     {{ __('Show record details') }}
                 </h1>
                 <button
@@ -19,7 +19,7 @@
                 ></button>
             </div>
             <div class="modal-body">
-                ...
+                {{ $record }}
             </div>
             <div class="modal-footer">
                 <button
