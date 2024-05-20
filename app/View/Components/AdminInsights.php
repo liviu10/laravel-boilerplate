@@ -30,7 +30,7 @@ class AdminInsights extends Component
      */
     public function render(): View|Closure|string
     {
-        return view('components.admin.admin-insights')
+        return view('components.admin-insights')
             ->with('adminInsights', $this->adminInsights);
     }
 

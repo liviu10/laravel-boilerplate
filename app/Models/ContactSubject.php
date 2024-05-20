@@ -7,8 +7,8 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Pagination\LengthAwarePaginator;
 use Exception;
-
 
 /**
  * Class ContactSubject
@@ -55,10 +55,10 @@ class ContactSubject extends Model
         return $this->hasMany('App\Models\ContactMessage');
     }
 
-    public function fetchAllRecords(array $search = []): Collection|Exception
+    public function fetchAllRecords(array $search = []): Collection|LengthAwarePaginator|Exception
     {
         try {
-            $query = $this->select('id', 'value', 'label')->where('is_active', true);
+            $query = $this->select('id', 'value', 'label', 'is_active');
 
             if (!empty($search)) {
                 foreach ($search as $field => $value) {

@@ -41,7 +41,7 @@ class CommunicationController extends Controller
             ]
         ];
 
-        return view('pages.admin.admin-communication', compact('data'));
+        return view('pages.admin-communication', compact('data'));
     }
 
     private function handleShortcuts(): array
@@ -49,24 +49,30 @@ class CommunicationController extends Controller
         return [
             [
                 'id' => 1,
+                'title' => __('Contact subjects'),
+                'short_description' => __('Lorem Ipsum is simply dummy text of the printing and typesetting industry.'),
+                'url' => '/admin/communication/contact/subjects'
+            ],
+            [
+                'id' => 2,
                 'title' => __('Contact messages'),
                 'short_description' => __('Lorem Ipsum is simply dummy text of the printing and typesetting industry.'),
                 'url' => '/admin/communication/contact/messages'
             ],
             [
-                'id' => 2,
+                'id' => 3,
                 'title' => __('Newsletter campaigns'),
                 'short_description' => __('Lorem Ipsum is simply dummy text of the printing and typesetting industry.'),
                 'url' => '/admin/communication/newsletter/campaigns'
             ],
             [
-                'id' => 3,
+                'id' => 4,
                 'title' => __('Newsletter subscribers'),
                 'short_description' => __('Lorem Ipsum is simply dummy text of the printing and typesetting industry.'),
                 'url' => '/admin/communication/newsletter/subscribers'
             ],
             [
-                'id' => 4,
+                'id' => 5,
                 'title' => __('Reviews'),
                 'short_description' => __('Lorem Ipsum is simply dummy text of the printing and typesetting industry.'),
                 'url' => '/admin/communication/reviews'

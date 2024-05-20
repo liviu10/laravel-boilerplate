@@ -15,16 +15,16 @@
             @endforeach
         </p>
         <div class="collapse show" id="collapseContact">
-            @include('components.admin.admin-insights-contact')
+            @include('components.admin-insights-contact')
         </div>
         <div class="collapse" id="collapseNewsletter">
-            @include('components.admin.admin-insights-newsletter')
+            @include('components.admin-insights-newsletter')
         </div>
         <div class="collapse" id="collapseReview">
-            @include('components.admin.admin-insights-review')
+            @include('components.admin-insights-review')
         </div>
         <div class="collapse" id="collapseContent">
-            @include('components.admin.admin-insights-content')
+            @include('components.admin-insights-content')
         </div>
     </div>
 </div>

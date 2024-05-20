@@ -2,26 +2,26 @@
 @import 'bootstrap/scss/bootstrap';
 
 // Import components
-@import 'components/admin_card_inline_modifier.scss';
-@import 'components/admin_card_shortcuts.scss';
-@import 'components/admin_card_stats.scss';
-@import 'components/admin_description.scss';
-@import 'components/admin_header.scss';
-@import 'components/admin_insights.scss';
-@import 'components/admin_navigation_bar';
-@import 'components/admin_table.scss';
-@import 'components/admin_title_section.scss';
+// @import 'components/admin_card_inline_modifier.scss';
+// @import 'components/admin_card_shortcuts.scss';
+// @import 'components/admin_card_stats.scss';
+// @import 'components/admin_description.scss';
+// @import 'components/admin_header.scss';
+// @import 'components/admin_insights.scss';
+// @import 'components/admin_navigation_bar';
+// @import 'components/admin_table.scss';
+// @import 'components/admin_title_section.scss';
 
 // Import utilities
-@import 'utilities/flex';
-@import 'utilities/rem_convertor';
-@import 'utilities/theme';
+// @import 'utilities/flex';
+// @import 'utilities/rem_convertor';
+// @import 'utilities/theme';
 
-.admin {
-    &--page {}
-    &__body {}
-    &--component {
-        margin-top: rem-convertor(32px) !important;
-        margin-bottom: rem-convertor(32px) !important;
-    }
-}
+// .admin {
+//     &--page {}
+//     &__body {}
+//     &--component {
+//         margin-top: rem-convertor(32px) !important;
+//         margin-bottom: rem-convertor(32px) !important;
+//     }
+// }

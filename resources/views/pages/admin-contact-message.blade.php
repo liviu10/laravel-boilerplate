@@ -2,9 +2,17 @@
 
 @section('content')
     <div class="admin admin--page">
-        @include('components.admin.admin-header', ['title' => 'Tags'])
+        <x-page-header title="{{ $data['title'] }}" />
 
-        @include('components.admin.admin-table', [
+        <div class="admin__jumbotron">
+            <x-page-description>
+                {{ $data['description'] }}
+            </x-page-description>
+        </div>
+
+        <div class="admin__body"></div>
+
+        {{-- @include('components.admin-table', [
             'results' => [
                 'columns' => [
                     __('ID'), __('Column 0'), __('Column 1'), __('Column 2'),
@@ -29,14 +37,14 @@
                         'column_2' => '@tom',
                     ]
                 ],
-                'canAdd' => true,
+                'canAdd' => false,
                 'canFilter' => true,
                 'hasActions' => true,
                 'canShow' => true,
                 'canEdit' => true,
-                'canDelete' => true,
-                'canRestore' => true,
+                'canDelete' => false,
+                'canRestore' => false,
             ],
-        ])
+        ]) --}}
     </div>
 @endsection

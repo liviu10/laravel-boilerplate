@@ -2,7 +2,7 @@
 
 @section('content')
     <div class="guest guest--page">
-        Guest welcome page
+        <x-page-header title="{{ __('Welcome') }}" />
 
         <div class="guest__body">
 

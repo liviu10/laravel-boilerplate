@@ -21,7 +21,7 @@ class CommentController extends Controller
      */
     public function index()
     {
-        return view('pages.admin.admin-comment');
+        return view('pages.admin-comment');
     }
 
     /**

@@ -21,7 +21,7 @@ class TagController extends Controller
      */
     public function index()
     {
-        return view('pages.admin.admin-tag');
+        return view('pages.admin-tag');
     }
 
     /**

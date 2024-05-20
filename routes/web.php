@@ -37,7 +37,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('guest');
+    return view('pages.guest');
 })->name('guest.index');
 
 Auth::routes();
@@ -51,7 +51,7 @@ Route::group(['prefix' => '/admin'], function () {
             ->name('communication.index');
         Route::group(['prefix' => '/contact'], function () {
             Route::resource('/subjects', ContactSubjectController::class)
-                ->only(['store', 'update']);
+                ->only(['index', 'store', 'update']);
             Route::resource('/messages', ContactMessageController::class)
                 ->only(['index', 'show', 'update']);
             Route::resource('/responses', ContactResponseController::class)

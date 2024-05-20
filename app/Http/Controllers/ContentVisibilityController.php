@@ -21,7 +21,7 @@ class ContentVisibilityController extends Controller
      */
     public function index()
     {
-        return view('pages.admin.admin-content-visibility');
+        return view('pages.admin-content-visibility');
     }
 
     /**

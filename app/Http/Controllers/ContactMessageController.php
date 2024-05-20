@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\ContactMessage;
+use App\Models\ContactSubject;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Foundation\Application;
@@ -10,7 +11,8 @@ use Illuminate\Http\Request;
 
 class ContactMessageController extends Controller
 {
-    protected $contactMessages;
+    protected $contactMessage;
+    protected $contactSubject;
 
     /**
      * Create a new controller instance.
@@ -20,7 +22,8 @@ class ContactMessageController extends Controller
     public function __construct()
     {
         $this->middleware('auth');
-        $this->contactMessages = new ContactMessage();
+        $this->contactMessage = new ContactMessage();
+        $this->contactSubject = new ContactSubject();
     }
 
     /**
@@ -30,10 +33,24 @@ class ContactMessageController extends Controller
     public function index(): View|Application|Factory
     {
         $data = [
-            'results' => $this->contactMessages->all()
+            'title' => __('Contact messages'),
+            'description' => __('
+                Lorem Ipsum is simply dummy text of the printing and typesetting industry.
+                Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s,
+                when an unknown printer took a galley of type and scrambled it to make a type specimen book.
+                It has survived not only five centuries, but also the leap into electronic typesetting,
+                remaining essentially unchanged. It was popularised in the 1960s with the release of
+                Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing
+                software like Aldus PageMaker including versions of Lorem Ipsum.
+            '),
+            'results' => $this->contactMessage->fetchAllRecords(),
+            'contact_subjects' => [
+                'title' => __('Contact subjects'),
+                'results' => $this->contactSubject->fetchAllRecords(),
+            ],
         ];
 
-        return view('pages.admin.admin-contact-message', compact('data'));
+        return view('pages.admin-contact-message', compact('data'));
     }
 
     /**
@@ -60,10 +77,10 @@ class ContactMessageController extends Controller
     public function show(string $id): View|Application|Factory
     {
         $data = [
-            'results' => $this->contactMessages->fetchSingleRecord($id),
+            'results' => $this->contactMessage->fetchSingleRecord($id),
         ];
 
-        return view('pages.admin.admin-contact-message-show');
+        return view('pages.admin-contact-message-show');
     }
 
     /**
@@ -73,7 +90,7 @@ class ContactMessageController extends Controller
      */
     public function edit(string $id): View|Application|Factory
     {
-        return view('pages.admin.admin-contact-message-edit');
+        return view('pages.admin-contact-message-edit');
     }
 
     /**
