@@ -2,16 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Review;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Foundation\Application;
 use Illuminate\Http\Request;
 
-class ReviewController extends Controller
+class ManagementController extends Controller
 {
-    protected $review;
-
     /**
      * Create a new controller instance.
      *
@@ -20,7 +17,6 @@ class ReviewController extends Controller
     public function __construct()
     {
         $this->middleware('auth');
-        $this->review = new Review();
     }
 
     /**
@@ -30,7 +26,7 @@ class ReviewController extends Controller
     public function index(): View|Application|Factory
     {
         $data = [
-            'title' => __('Reviews'),
+            'title' => __('Management'),
             'description' => __('
                 Lorem Ipsum is simply dummy text of the printing and typesetting industry.
                 Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s,
@@ -40,57 +36,35 @@ class ReviewController extends Controller
                 Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing
                 software like Aldus PageMaker including versions of Lorem Ipsum.
             '),
-            'results' => $this->review->fetchAllRecords(),
+            'shortcuts' => [
+                $this->handleShortcuts()
+            ]
         ];
 
-        return view('pages.admin-review', compact('data'));
+        return view('pages.admin.management.index', compact('data'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create(): void
+    private function handleShortcuts(): array
     {
-        abort(405, __('The action is not allowed.'));
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request): void
-    {
-        abort(405, __('The action is not allowed.'));
-    }
-
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id): void
-    {
-        abort(405, __('The action is not allowed.'));
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id): void
-    {
-        abort(405, __('The action is not allowed.'));
+        return [
+            [
+                'id' => 1,
+                'title' => __('Content'),
+                'short_description' => __('Lorem Ipsum is simply dummy text of the printing and typesetting industry.'),
+                'url' => '/admin/management/contents'
+            ],
+            [
+                'id' => 2,
+                'title' => __('Tags'),
+                'short_description' => __('Lorem Ipsum is simply dummy text of the printing and typesetting industry.'),
+                'url' => '/admin/management/tags'
+            ],
+            [
+                'id' => 3,
+                'title' => __('Media'),
+                'short_description' => __('Lorem Ipsum is simply dummy text of the printing and typesetting industry.'),
+                'url' => '/admin/management/media'
+            ],
+        ];
     }
 }

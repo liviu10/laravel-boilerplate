@@ -11,14 +11,5 @@
         </div>
 
         <div class="admin__body"></div>
-
-        @include('components.admin-table', [
-            'results' => [
-                'columns' => $data['results']['columns'],
-                'rows' => $data['results']['rows'],
-                'forms' => $data['results']['forms'],
-                'options' => $data['results']['options'],
-            ]
-        ])
     </div>
 @endsection

@@ -1,27 +1,34 @@
 <?php
 
+// Admin controller
 use App\Http\Controllers\AdminController;
-use App\Http\Controllers\AppreciationController;
-use App\Http\Controllers\CommentController;
-use App\Http\Controllers\CommentStatusController;
-use App\Http\Controllers\CommentTypeController;
-use App\Http\Controllers\CommunicationController;
-use App\Http\Controllers\ContactMessageController;
-use App\Http\Controllers\ContactResponseController;
-use App\Http\Controllers\ContactSubjectController;
-use App\Http\Controllers\ContentController;
-use App\Http\Controllers\ContentSocialMediaController;
-use App\Http\Controllers\ContentTypeController;
-use App\Http\Controllers\ContentVisibilityController;
-use App\Http\Controllers\ManagementController;
-use App\Http\Controllers\MediaController;
-use App\Http\Controllers\MediaTypeController;
-use App\Http\Controllers\NewsletterCampaignController;
-use App\Http\Controllers\NewsletterSubscriberController;
-use App\Http\Controllers\ReviewController;
+
+// Communication controllers
+use App\Http\Controllers\Communication\CommunicationController;
+use App\Http\Controllers\Communication\ContactSubjectController;
+use App\Http\Controllers\Communication\ContactMessageController;
+use App\Http\Controllers\Communication\NewsletterCampaignController;
+use App\Http\Controllers\Communication\NewsletterSubscriberController;
+use App\Http\Controllers\Communication\ReviewController;
+
+// Management controllers
+use App\Http\Controllers\Management\ManagementController;
+use App\Http\Controllers\Management\AppreciationController;
+use App\Http\Controllers\Management\CommentController;
+use App\Http\Controllers\Management\CommentStatusController;
+use App\Http\Controllers\Management\CommentTypeController;
+use App\Http\Controllers\Management\ContentController;
+use App\Http\Controllers\Management\ContentSocialMediaController;
+use App\Http\Controllers\Management\ContentTypeController;
+use App\Http\Controllers\Management\ContentVisibilityController;
+use App\Http\Controllers\Management\MediaController;
+use App\Http\Controllers\Management\MediaTypeController;
+use App\Http\Controllers\Management\TagController;
+
+// Settings controllers
 use App\Http\Controllers\SettingsController;
-use App\Http\Controllers\TagController;
 use App\Http\Controllers\UserController;
+
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -47,23 +54,17 @@ Route::group(['prefix' => '/admin'], function () {
 
     // Communication web routes
     Route::group(['prefix' => '/communication'], function () {
-        Route::get('/', [CommunicationController::class, 'index'])
-            ->name('communication.index');
+        Route::get('/', [CommunicationController::class, 'index'])->name('communication.index');
         Route::group(['prefix' => '/contact'], function () {
-            Route::resource('/subjects', ContactSubjectController::class);
-                // ->only(['index', 'store', 'update']);
-            Route::resource('/messages', ContactMessageController::class)
-                ->only(['index', 'show', 'update']);
-            Route::resource('/responses', ContactResponseController::class)
-                ->only(['store', 'update']);
+            Route::resource('/subjects', ContactSubjectController::class)->except('delete');
+            Route::resource('/messages', ContactMessageController::class)->only('index', 'show', 'update');
+            // Route::resource('/responses', ContactResponseController::class)->only('index', 'show', 'update');
         });
         Route::group(['prefix' => '/newsletter'], function () {
-            Route::resource('/campaigns', NewsletterCampaignController::class);
-            Route::resource('/subscribers', NewsletterSubscriberController::class)
-                ->only(['index', 'show', 'update']);
+            Route::resource('/campaigns', NewsletterCampaignController::class)->except('delete');
+            Route::resource('/subscribers', NewsletterSubscriberController::class)->only('index', 'show', 'update');
         });
-        Route::resource('/reviews', ReviewController::class)
-            ->only(['index', 'show', 'update']);
+        Route::resource('/reviews', ReviewController::class)->only('index', 'show', 'update');
     });
 
     // Management web routes

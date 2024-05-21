@@ -1,13 +1,14 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Communication;
 
+use App\Http\Controllers\Controller;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Foundation\Application;
 use Illuminate\Http\Request;
 
-class ManagementController extends Controller
+class CommunicationController extends Controller
 {
     /**
      * Create a new controller instance.
@@ -26,7 +27,7 @@ class ManagementController extends Controller
     public function index(): View|Application|Factory
     {
         $data = [
-            'title' => __('Management'),
+            'title' => __('Communication'),
             'description' => __('
                 Lorem Ipsum is simply dummy text of the printing and typesetting industry.
                 Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s,
@@ -41,7 +42,7 @@ class ManagementController extends Controller
             ]
         ];
 
-        return view('pages.admin-management', compact('data'));
+        return view('pages.admin.communication.index', compact('data'));
     }
 
     private function handleShortcuts(): array
@@ -49,21 +50,33 @@ class ManagementController extends Controller
         return [
             [
                 'id' => 1,
-                'title' => __('Content'),
+                'title' => __('Contact subjects'),
                 'short_description' => __('Lorem Ipsum is simply dummy text of the printing and typesetting industry.'),
-                'url' => '/admin/management/contents'
+                'url' => '/admin/communication/contact/subjects'
             ],
             [
                 'id' => 2,
-                'title' => __('Tags'),
+                'title' => __('Contact messages'),
                 'short_description' => __('Lorem Ipsum is simply dummy text of the printing and typesetting industry.'),
-                'url' => '/admin/management/tags'
+                'url' => '/admin/communication/contact/messages'
             ],
             [
                 'id' => 3,
-                'title' => __('Media'),
+                'title' => __('Newsletter campaigns'),
                 'short_description' => __('Lorem Ipsum is simply dummy text of the printing and typesetting industry.'),
-                'url' => '/admin/management/media'
+                'url' => '/admin/communication/newsletter/campaigns'
+            ],
+            [
+                'id' => 4,
+                'title' => __('Newsletter subscribers'),
+                'short_description' => __('Lorem Ipsum is simply dummy text of the printing and typesetting industry.'),
+                'url' => '/admin/communication/newsletter/subscribers'
+            ],
+            [
+                'id' => 5,
+                'title' => __('Reviews'),
+                'short_description' => __('Lorem Ipsum is simply dummy text of the printing and typesetting industry.'),
+                'url' => '/admin/communication/reviews'
             ],
         ];
     }

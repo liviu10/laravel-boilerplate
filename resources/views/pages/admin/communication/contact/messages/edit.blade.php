@@ -10,12 +10,6 @@
             </x-page-description>
         </div>
 
-        <div class="admin__quick-access">
-            <x-page-subtitle subtitle="{{ __('Quick access') }}" />
-
-            @include('components.admin-card-shortcuts', [
-                'shortcuts' => $data['shortcuts'][0]
-            ])
-        </div>
+        <div class="admin__body"></div>
     </div>
 @endsection
