@@ -22,6 +22,7 @@ class NewsletterSubscriber extends Model
         'full_name',
         'email',
         'privacy_policy',
+        'terms_and_conditions',
         'valid_email',
     ];
 
@@ -36,6 +37,7 @@ class NewsletterSubscriber extends Model
         'id' => 'integer',
         'newsletter_campaign_id' => 'integer',
         'privacy_policy' => 'boolean',
+        'terms_and_conditions' => 'boolean',
         'valid_email' => 'boolean',
         'created_at' => 'datetime:d.m.Y H:i',
         'updated_at' => 'datetime:d.m.Y H:i',
@@ -44,6 +46,7 @@ class NewsletterSubscriber extends Model
 
     protected $attributes = [
         'privacy_policy' => false,
+        'terms_and_conditions' => false,
         'valid_email' => false,
     ];
 
@@ -61,6 +64,7 @@ class NewsletterSubscriber extends Model
                 'full_name',
                 'email',
                 'privacy_policy',
+                'terms_and_conditions',
                 'valid_email',
             )->with([
                 'newsletter_campaign' => function ($query) {
@@ -71,7 +75,7 @@ class NewsletterSubscriber extends Model
             if (!empty($search)) {
                 foreach ($search as $field => $value) {
                     if ($field === 'id' || $field === 'newsletter_campaign_id' ||
-                        $field === 'privacy_policy' || $field === 'valid_email') {
+                        $field === 'privacy_policy' || $field === 'terms_and_conditions' || $field === 'valid_email') {
                         $query->where($field, '=', $value);
                     } elseif ($field === 'newsletterCampaignIds') {
                         $query->whereIn('newsletter_campaign_id', $value);
@@ -96,6 +100,7 @@ class NewsletterSubscriber extends Model
                 'full_name',
                 'email',
                 'privacy_policy',
+                'terms_and_conditions',
                 'valid_email',
             )->with([
                 'newsletter_campaign' => function ($query) {
@@ -137,6 +142,7 @@ class NewsletterSubscriber extends Model
                 'full_name' => $payload['full_name'],
                 'email' => $payload['email'],
                 'privacy_policy' => $payload['privacy_policy'],
+                'terms_and_conditions' => $payload['terms_and_conditions'],
                 'valid_email' => $payload['valid_email'],
             ]);
         } catch (Exception $exception) {
@@ -183,6 +189,7 @@ class NewsletterSubscriber extends Model
                 'full_name' => $payload['full_name'],
                 'email' => $payload['email'],
                 'privacy_policy' => $payload['privacy_policy'],
+                'terms_and_conditions' => $payload['terms_and_conditions'],
                 'valid_email' => $payload['valid_email'],
             ]);
 

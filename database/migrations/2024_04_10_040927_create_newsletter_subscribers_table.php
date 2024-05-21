@@ -25,6 +25,7 @@ return new class extends Migration
             $table->string('full_name')->nullable(false);
             $table->string('email')->nullable(false);
             $table->boolean('privacy_policy')->default(false);
+            $table->boolean('terms_and_conditions')->default(false);
             $table->boolean('valid_email')->default(false);
             $table->timestamps();
             $table->softDeletes();

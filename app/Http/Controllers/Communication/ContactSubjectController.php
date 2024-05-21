@@ -31,17 +31,18 @@ class ContactSubjectController extends Controller
      */
     public function index(Request $request): View|Application|Factory
     {
+        $searchTerms = array_filter($request->all(), function ($value, $key) {
+            return !is_null($value) || $key === 'is_active';
+        }, ARRAY_FILTER_USE_BOTH);
+
         $data = [
             'title' => __('Contact subjects'),
             'description' => __('
                 Lorem Ipsum is simply dummy text of the printing and typesetting industry.
                 Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s,
                 when an unknown printer took a galley of type and scrambled it to make a type specimen book.
-                It has survived not only five centuries, but also the leap into electronic typesetting,
-                remaining essentially unchanged. It was popularised in the 1960s with the release of
-                Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing
-                software like Aldus PageMaker including versions of Lorem Ipsum.
             '),
+            'results' => $this->contactSubject->fetchAllRecords($searchTerms),
         ];
 
         return view('pages.admin.communication.contact.subjects.index', compact('data'));
@@ -59,11 +60,35 @@ class ContactSubjectController extends Controller
                 Lorem Ipsum is simply dummy text of the printing and typesetting industry.
                 Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s,
                 when an unknown printer took a galley of type and scrambled it to make a type specimen book.
-                It has survived not only five centuries, but also the leap into electronic typesetting,
-                remaining essentially unchanged. It was popularised in the 1960s with the release of
-                Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing
-                software like Aldus PageMaker including versions of Lorem Ipsum.
             '),
+            'results' => [
+                [
+                    'id' => 1,
+                    'key' => 'label',
+                    'placeholder' => __('Subject'),
+                    'type' => 'text',
+                    'value' => ''
+                ],
+                [
+                    'id' => 2,
+                    'key' => 'is_active',
+                    'placeholder' => __('Is active?'),
+                    'type' => 'select',
+                    'value' => null,
+                    'options' => [
+                        [
+                            'id' => 1,
+                            'value' => 0,
+                            'label' => __('No'),
+                        ],
+                        [
+                            'id' => 2,
+                            'value' => 1,
+                            'label' => __('Yes'),
+                        ]
+                    ],
+                ],
+            ],
         ];
 
         return view('pages.admin.communication.contact.subjects.create', compact('data'));
@@ -74,7 +99,22 @@ class ContactSubjectController extends Controller
      */
     public function store(Request $request)
     {
-        // 
+        $successMessage = __('The record was successfully saved');
+        $errorMessage = __('The record was not saved in the database');
+
+        $validateRequest = [
+            'label' => 'required|string',
+            'is_active' => 'required|boolean',
+        ];
+
+        $request->validate($validateRequest);
+        $payload = array_filter($request->all());
+        $payload['value'] = strtolower(str_replace(' ', '-', $payload['label']));
+        $payload['is_active'] = isset($payload['is_active']) ? $payload['is_active'] : false;
+        $payload['user_id'] = Auth::user()->id;
+        $result = $this->contactSubject->createRecord($payload);
+
+        return redirect()->route('subjects.index')->with('success', $result ? $successMessage : $errorMessage);
     }
 
     /**
@@ -89,11 +129,8 @@ class ContactSubjectController extends Controller
                 Lorem Ipsum is simply dummy text of the printing and typesetting industry.
                 Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s,
                 when an unknown printer took a galley of type and scrambled it to make a type specimen book.
-                It has survived not only five centuries, but also the leap into electronic typesetting,
-                remaining essentially unchanged. It was popularised in the 1960s with the release of
-                Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing
-                software like Aldus PageMaker including versions of Lorem Ipsum.
             '),
+            'results' => $this->contactSubject->fetchSingleRecord($id),
         ];
 
         return view('pages.admin.communication.contact.subjects.show', compact('data'));
@@ -111,11 +148,35 @@ class ContactSubjectController extends Controller
                 Lorem Ipsum is simply dummy text of the printing and typesetting industry.
                 Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s,
                 when an unknown printer took a galley of type and scrambled it to make a type specimen book.
-                It has survived not only five centuries, but also the leap into electronic typesetting,
-                remaining essentially unchanged. It was popularised in the 1960s with the release of
-                Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing
-                software like Aldus PageMaker including versions of Lorem Ipsum.
             '),
+            'results' => [
+                [
+                    'id' => 1,
+                    'key' => 'label',
+                    'placeholder' => __('Subject'),
+                    'type' => 'text',
+                    'value' => ''
+                ],
+                [
+                    'id' => 2,
+                    'key' => 'is_active',
+                    'placeholder' => __('Is active?'),
+                    'type' => 'select',
+                    'value' => null,
+                    'options' => [
+                        [
+                            'id' => 1,
+                            'value' => 0,
+                            'label' => __('No'),
+                        ],
+                        [
+                            'id' => 2,
+                            'value' => 1,
+                            'label' => __('Yes'),
+                        ]
+                    ],
+                ],
+            ],
         ];
 
         return view('pages.admin.communication.contact.subjects.edit', compact('data'));
@@ -126,7 +187,23 @@ class ContactSubjectController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        // 
+        $successMessage = __('The record was successfully updated');
+        $errorMessage = __('The record was not update in the database');
+
+        $validateRequest = [
+            'label' => 'sometimes|string',
+            'is_active' => 'sometimes|boolean',
+        ];
+
+        $request->validate($validateRequest);
+        $payload = array_filter($request->all());
+        $payload['value'] = strtolower(str_replace(' ', '-', $payload['label']));
+        $payload['is_active'] = isset($payload['is_active']) ? $payload['is_active'] : false;
+        $payload['user_id'] = Auth::user()->id;
+        $selectedRecord = $this->contactSubject->fetchSingleRecord($id);
+        $result = $this->contactSubject->updateRecord($payload, $id);
+
+        return redirect()->route('subjects.index')->with('success', $result ? $successMessage : $errorMessage);
     }
 
     /**

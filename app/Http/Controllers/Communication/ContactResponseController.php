@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Communication;
 
 use App\Http\Controllers\Controller;
 use App\Models\ContactResponse;
+use App\Mail\RepondToContactMessage;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
@@ -31,20 +32,7 @@ class ContactResponseController extends Controller
      */
     public function index(Request $request): View|Application|Factory
     {
-        $data = [
-            'title' => __('Contact responses'),
-            'description' => __('
-                Lorem Ipsum is simply dummy text of the printing and typesetting industry.
-                Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s,
-                when an unknown printer took a galley of type and scrambled it to make a type specimen book.
-                It has survived not only five centuries, but also the leap into electronic typesetting,
-                remaining essentially unchanged. It was popularised in the 1960s with the release of
-                Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing
-                software like Aldus PageMaker including versions of Lorem Ipsum.
-            '),
-        ];
-
-        return view('pages.admin.communication.contact.responses.index', compact('data'));
+        abort(405, __('The action is not allowed.'));
     }
 
     /**
@@ -53,7 +41,33 @@ class ContactResponseController extends Controller
      */
     public function create(): View|Application|Factory
     {
-        abort(405, __('The action is not allowed.'));
+        $data = [
+            'title' => __('Create a contact response'),
+            'description' => __('
+                Lorem Ipsum is simply dummy text of the printing and typesetting industry.
+                Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s,
+                when an unknown printer took a galley of type and scrambled it to make a type specimen book.
+            '),
+            'results' => [
+                [
+                    'id' => 1,
+                    'key' => 'contact_message_id',
+                    'placeholder' => __('Contact message'),
+                    'type' => 'select',
+                    'value' => null,
+                    'options' => [], // TODO: Bring the contact messages here
+                ],
+                [
+                    'id' => 2,
+                    'key' => 'message',
+                    'placeholder' => __('Response'),
+                    'type' => 'textarea',
+                    'value' => '',
+                ],
+            ],
+        ];
+
+        return view('pages.admin.communication.contact.responses.create', compact('data'));
     }
 
     /**
@@ -61,7 +75,25 @@ class ContactResponseController extends Controller
      */
     public function store(Request $request)
     {
-        abort(405, __('The action is not allowed.'));
+        $successMessage = __('The record was successfully updated');
+        $errorMessage = __('The record was not update in the database');
+
+        $validateRequest = [
+            'contact_message_id' => 'required|integer',
+            'message' => 'required|string',
+        ];
+
+        $request->validate($validateRequest);
+        $payload = array_filter($request->all());
+        $payload['user_id'] = Auth::user()->id;
+        $result = $this->contactResponse->saveRecord($payload, $id);
+
+        if ($result instanceof ContactResponse) {
+            $contactMessage = $this->contactMessage->fetchSingleRecord($payload['contact_message_id'])->toArray();
+            Mail::to($contactMessage['email'])->send(new RepondToContactMessage($contactMessage));
+        }
+
+        return redirect()->route('responses.index')->with('success', $result ? $successMessage : $errorMessage);
     }
 
     /**
@@ -70,20 +102,7 @@ class ContactResponseController extends Controller
      */
     public function show(string $id): View|Application|Factory
     {
-        $data = [
-            'title' => __('Show a contact response'),
-            'description' => __('
-                Lorem Ipsum is simply dummy text of the printing and typesetting industry.
-                Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s,
-                when an unknown printer took a galley of type and scrambled it to make a type specimen book.
-                It has survived not only five centuries, but also the leap into electronic typesetting,
-                remaining essentially unchanged. It was popularised in the 1960s with the release of
-                Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing
-                software like Aldus PageMaker including versions of Lorem Ipsum.
-            '),
-        ];
-
-        return view('pages.admin.communication.contact.responses.show', compact('data'));
+        abort(405, __('The action is not allowed.'));
     }
 
     /**
@@ -92,20 +111,7 @@ class ContactResponseController extends Controller
      */
     public function edit(string $id): View|Application|Factory
     {
-        $data = [
-            'title' => __('Edit a contact response'),
-            'description' => __('
-                Lorem Ipsum is simply dummy text of the printing and typesetting industry.
-                Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s,
-                when an unknown printer took a galley of type and scrambled it to make a type specimen book.
-                It has survived not only five centuries, but also the leap into electronic typesetting,
-                remaining essentially unchanged. It was popularised in the 1960s with the release of
-                Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing
-                software like Aldus PageMaker including versions of Lorem Ipsum.
-            '),
-        ];
-
-        return view('pages.admin.communication.contact.responses.edit', compact('data'));
+        abort(405, __('The action is not allowed.'));
     }
 
     /**
@@ -113,7 +119,7 @@ class ContactResponseController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        // 
+        abort(405, __('The action is not allowed.'));
     }
 
     /**

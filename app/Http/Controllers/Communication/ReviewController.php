@@ -31,17 +31,18 @@ class ReviewController extends Controller
      */
     public function index(Request $request): View|Application|Factory
     {
+        $searchTerms = array_filter($request->all(), function ($value, $key) {
+            return !is_null($value) || $key === 'is_active';
+        }, ARRAY_FILTER_USE_BOTH);
+
         $data = [
             'title' => __('Reviews'),
             'description' => __('
                 Lorem Ipsum is simply dummy text of the printing and typesetting industry.
                 Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s,
                 when an unknown printer took a galley of type and scrambled it to make a type specimen book.
-                It has survived not only five centuries, but also the leap into electronic typesetting,
-                remaining essentially unchanged. It was popularised in the 1960s with the release of
-                Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing
-                software like Aldus PageMaker including versions of Lorem Ipsum.
             '),
+            'results' => $this->review->fetchAllRecords($searchTerms),
         ];
 
         return view('pages.admin.communication.reviews.index', compact('data'));
@@ -70,20 +71,7 @@ class ReviewController extends Controller
      */
     public function show(string $id): View|Application|Factory
     {
-        $data = [
-            'title' => __('Show a review'),
-            'description' => __('
-                Lorem Ipsum is simply dummy text of the printing and typesetting industry.
-                Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s,
-                when an unknown printer took a galley of type and scrambled it to make a type specimen book.
-                It has survived not only five centuries, but also the leap into electronic typesetting,
-                remaining essentially unchanged. It was popularised in the 1960s with the release of
-                Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing
-                software like Aldus PageMaker including versions of Lorem Ipsum.
-            '),
-        ];
-
-        return view('pages.admin.communication.reviews.show', compact('data'));
+        abort(405, __('The action is not allowed.'));
     }
 
     /**
@@ -98,11 +86,28 @@ class ReviewController extends Controller
                 Lorem Ipsum is simply dummy text of the printing and typesetting industry.
                 Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s,
                 when an unknown printer took a galley of type and scrambled it to make a type specimen book.
-                It has survived not only five centuries, but also the leap into electronic typesetting,
-                remaining essentially unchanged. It was popularised in the 1960s with the release of
-                Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing
-                software like Aldus PageMaker including versions of Lorem Ipsum.
             '),
+            'results' => [
+                [
+                    'id' => 1,
+                    'key' => 'is_active',
+                    'placeholder' => __('Is active?'),
+                    'type' => 'select',
+                    'value' => null,
+                    'options' => [
+                        [
+                            'id' => 1,
+                            'value' => 0,
+                            'label' => __('No'),
+                        ],
+                        [
+                            'id' => 2,
+                            'value' => 1,
+                            'label' => __('Yes'),
+                        ]
+                    ],
+                ],
+            ],
         ];
 
         return view('pages.admin.communication.reviews.edit', compact('data'));
@@ -113,7 +118,19 @@ class ReviewController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        // 
+        $successMessage = __('The record was successfully updated');
+        $errorMessage = __('The record was not update in the database');
+
+        $validateRequest = [
+            'is_active' => 'required|boolean',
+        ];
+
+        $request->validate($validateRequest);
+        $payload = array_filter($request->all());
+        $payload['user_id'] = Auth::user()->id;
+        $result = $this->review->updateRecord($payload, $id);
+
+        return redirect()->route('reviews.index')->with('success', $result ? $successMessage : $errorMessage);
     }
 
     /**

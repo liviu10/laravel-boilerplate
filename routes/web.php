@@ -44,9 +44,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('pages.guest');
-})->name('guest.index');
+Route::get('/', function () { return view('pages.guest'); })->name('guest.index');
 
 Auth::routes();
 
@@ -58,14 +56,14 @@ Route::group(['prefix' => '/admin'], function () {
         Route::get('/', [CommunicationController::class, 'index'])->name('communication.index');
         Route::group(['prefix' => '/contact'], function () {
             Route::resource('/subjects', ContactSubjectController::class)->except('delete');
-            Route::resource('/messages', ContactMessageController::class)->only('index', 'show', 'update');
+            Route::resource('/messages', ContactMessageController::class)->only('index', 'show');
             Route::resource('/responses', ContactResponseController::class)->only('index', 'show', 'update');
         });
         Route::group(['prefix' => '/newsletter'], function () {
             Route::resource('/campaigns', NewsletterCampaignController::class)->except('delete');
             Route::resource('/subscribers', NewsletterSubscriberController::class)->only('index', 'show', 'update');
         });
-        Route::resource('/reviews', ReviewController::class)->only('index', 'show', 'update');
+        Route::resource('/reviews', ReviewController::class)->only('index', 'update');
     });
 
     // Management web routes
