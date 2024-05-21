@@ -29,7 +29,7 @@ class UpdateNewsletterEnrolment extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            from: config('app.contact_email'),
+            from: config('app.newsletter_email'),
             to: $this->emailDetails['email_to'],
             subject: 'Update newsletter enrolment',
         );
