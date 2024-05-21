@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Pagination\LengthAwarePaginator;
 use Exception;
 
 
@@ -59,7 +60,7 @@ class ContactMessage extends Model
         return $this->hasMany('App\Models\ContactResponse');
     }
 
-    public function fetchAllRecords(array $search = []): Collection|Exception
+    public function fetchAllRecords(array $search = []): Collection|LengthAwarePaginator|Exception
     {
         try {
             $query = $this->select(
@@ -85,7 +86,7 @@ class ContactMessage extends Model
                 }
             }
 
-            return $query->get();
+            return $query->paginate(15);
         } catch (Exception $exception) {
             return $exception;
         }

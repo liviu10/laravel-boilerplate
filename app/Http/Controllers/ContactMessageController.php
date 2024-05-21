@@ -30,8 +30,13 @@ class ContactMessageController extends Controller
      * Display a listing of the resource.
      * @return View|Application|Factory
      */
-    public function index(): View|Application|Factory
+    public function index(Request $request): View|Application|Factory
     {
+        $searchTerms = array_filter($request->all(), function ($value, $key) {
+            return !is_null($value) || $key === 'privacy_policy';
+        }, ARRAY_FILTER_USE_BOTH);
+        unset($searchTerms['_token']);
+
         $data = [
             'title' => __('Contact messages'),
             'description' => __('
@@ -43,14 +48,72 @@ class ContactMessageController extends Controller
                 Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing
                 software like Aldus PageMaker including versions of Lorem Ipsum.
             '),
-            'results' => $this->contactMessage->fetchAllRecords(),
-            'contact_subjects' => [
-                'title' => __('Contact subjects'),
-                'results' => $this->contactSubject->fetchAllRecords(),
+            'results' => [
+                'columns' => [
+                    __('ID'),
+                    __('Contact subject'),
+                    __('Full name'),
+                    __('Email'),
+                    __('Phone'),
+                    __('Privacy policy'),
+                    __('Actions')
+                ],
+                'rows' => $this->contactMessage->fetchAllRecords($searchTerms),
+                'forms' => [
+                    'create_form' => $this->handleForm('messages.store'),
+                    'filter_form' => $this->handleForm('messages.index'),
+                    'update_form' => $this->handleForm('messages.update'),
+                    'delete_form' => $this->handleForm('messages.destroy'),
+                ],
+                'options' => [
+                    'canAdd' => true,
+                    'canFilter' => true,
+                    'hasActions' => true,
+                    'canShow' => true,
+                    'canUpdate' => true,
+                    'canDelete' => true,
+                    'canRestore' => true,
+                    'hasPagination' => true,
+                ],
             ],
         ];
 
         return view('pages.admin-contact-message', compact('data'));
+    }
+
+    private function handleForm(string $action): array
+    {
+        return [
+            'action' => $action,
+            'inputs' => [
+                [
+                    'id' => 1,
+                    'key' => 'label',
+                    'placeholder' => __('Subject'),
+                    'type' => 'text',
+                    'value' => ''
+                ],
+                [
+                    'id' => 2,
+                    'key' => 'is_active',
+                    'placeholder' => __('Is active?'),
+                    'type' => 'select',
+                    'value' => '',
+                    'options' => [
+                        [
+                            'id' => 1,
+                            'value' => 0,
+                            'label' => __('No'),
+                        ],
+                        [
+                            'id' => 2,
+                            'value' => 1,
+                            'label' => __('Yes'),
+                        ]
+                    ],
+                ],
+            ]
+        ];
     }
 
     /**
