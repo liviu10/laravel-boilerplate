@@ -20,6 +20,23 @@
             </div>
             <div class="modal-body">
                 {{ __('Are you sure you want to delete the selected record? The deleted record can be recovered by filtering out the deleted records and clicking on the restore button.') }}
+                <hr>
+                <ul class="list-group">
+                @foreach ($record->toArray() as $key => $item)
+                    <li class="list-group-item">
+                        <b>
+                            {{ ucfirst(str_replace('_', ' ', $key)) }}
+                        </b>:
+                        @if ($key === 'is_active')
+                            <span class="badge text-bg-{{ $value ? 'success' : 'danger' }}">
+                                {{ $value ? __('Yes') : __('No') }}
+                            </span>
+                        @else
+                            {{ $item }}
+                        @endif
+                    </li>
+                @endforeach
+                </ul>
             </div>
             <div class="modal-footer">
                 <button

@@ -149,7 +149,7 @@
                                                         'delete_form' => $results['forms']['delete_form'],
                                                         'key' => $key,
                                                         'record' => $row,
-                                                        'id' => 1
+                                                        'id' => $row->id
                                                     ])
                                                 @endif
 
@@ -157,7 +157,8 @@
                                                 @if ($results['options']['canRestore'])
                                                     @include('components.admin-table-restore-modal', [
                                                         'key' => $key,
-                                                        'record' => $row
+                                                        'record' => $row,
+                                                        'id' => $row->id
                                                     ])
                                                 @endif
                                             @endif

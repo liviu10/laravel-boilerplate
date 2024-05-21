@@ -47,7 +47,13 @@ class ContactSubjectController extends Controller
                 software like Aldus PageMaker including versions of Lorem Ipsum.
             '),
             'results' => [
-                'columns' => [ __('ID'), __('Value'), __('Label'), __('Is active'), __('Actions') ],
+                'columns' => [
+                    __('ID'),
+                    __('Value'),
+                    __('Label'),
+                    __('Is active'),
+                    __('Actions')
+                ],
                 'rows' => $this->contactSubject->fetchAllRecords($searchTerms),
                 'forms' => [
                     'create_form' => $this->handleForm('subjects.store'),

@@ -19,7 +19,22 @@
                 ></button>
             </div>
             <div class="modal-body">
-                {{ $record }}
+                <ul class="list-group">
+                @foreach ($record->toArray() as $key => $item)
+                    <li class="list-group-item">
+                        <b>
+                            {{ ucfirst(str_replace('_', ' ', $key)) }}
+                        </b>:
+                        @if ($key === 'is_active')
+                            <span class="badge text-bg-{{ $value ? 'success' : 'danger' }}">
+                                {{ $value ? __('Yes') : __('No') }}
+                            </span>
+                        @else
+                            {{ $item }}
+                        @endif
+                    </li>
+                @endforeach
+                </ul>
             </div>
             <div class="modal-footer">
                 <button
