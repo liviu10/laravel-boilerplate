@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\Collection;
 use Exception;
 
@@ -68,9 +69,9 @@ class NewsletterCampaign extends Model
         return $this->hasMany('App\Models\NewsletterSubscriber');
     }
 
-    public function newsletter_templates(): HasMany
+    public function newsletter_templates(): HasOne
     {
-        return $this->hasMany('App\Models\NewsletterTemplate');
+        return $this->hasOne('App\Models\NewsletterTemplate');
     }
 
     public function fetchAllRecords(array $search = []): Collection|Exception
