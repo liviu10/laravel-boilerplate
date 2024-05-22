@@ -69,6 +69,9 @@ class NewsletterSubscriber extends Model
             )->with([
                 'newsletter_campaign' => function ($query) {
                     $query->select('id', 'name');
+                },
+                'user' => function ($query) {
+                    $query->select('id', 'full_name');
                 }
             ]);
 
@@ -77,7 +80,7 @@ class NewsletterSubscriber extends Model
                     if ($field === 'id' || $field === 'newsletter_campaign_id' ||
                         $field === 'privacy_policy' || $field === 'terms_and_conditions' || $field === 'valid_email') {
                         $query->where($field, '=', $value);
-                    } elseif ($field === 'newsletterCampaignIds') {
+                    } elseif ($field === 'newsletter_campaign_ids') {
                         $query->whereIn('newsletter_campaign_id', $value);
                     } else {
                         $query->where($field, 'LIKE', '%' . $value . '%');
@@ -120,7 +123,7 @@ class NewsletterSubscriber extends Model
 
             if (!empty($search)) {
                 foreach ($search as $field => $value) {
-                    if ($field === 'newsletterCampaignIds') {
+                    if ($field === 'newsletter_campaign_ids') {
                         $query->whereIn('newsletter_campaign_id', $value);
                     } else {
                         $query->where($field, $value);

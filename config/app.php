@@ -56,6 +56,19 @@ return [
 
     /*
     |--------------------------------------------------------------------------
+    | Application Review Email Address
+    |--------------------------------------------------------------------------
+    |
+    | This value is the review email address of your application. This value is used when the
+    | framework needs to place the application's review email address in a notification or
+    | any other location as required by the application or its packages.
+    |
+    */
+
+    'review_email' => env('APP_REVIEW_EMAIL', 'review@localhost.com'),
+
+    /*
+    |--------------------------------------------------------------------------
     | Application Name
     |--------------------------------------------------------------------------
     |

@@ -10,19 +10,18 @@ use Exception;
 
 
 /**
- * Class Review
+ * Class NewsletterTemplate
  * @package App\Models
  */
-class Review extends Model
+class NewsletterTemplate extends Model
 {
     use HasFactory;
 
     protected $fillable = [
-        'full_name',
-        'rating',
-        'comment',
+        'newsletter_campaign_id',
+        'path',
+        'template',
         'is_active',
-        'user_id',
     ];
 
     protected $guarded = [
@@ -34,9 +33,8 @@ class Review extends Model
 
     protected $casts = [
         'id' => 'integer',
-        'rating' => 'integer',
+        'newsletter_campaign_id' => 'integer',
         'is_active' => 'boolean',
-        'user_id' => 'integer',
         'created_at' => 'datetime:d.m.Y H:i',
         'updated_at' => 'datetime:d.m.Y H:i',
         'deleted_at' => 'datetime:d.m.Y H:i',
@@ -46,19 +44,31 @@ class Review extends Model
         'is_active' => false,
     ];
 
+    public function newsletter_campaign(): BelongsTo
+    {
+        return $this->belongsTo('App\Models\NewsletterCampaign');
+    }
+
     public function fetchAllRecords(array $search = []): Collection|Exception
     {
         try {
-            $query = $this->select('id', 'full_name', 'rating', 'is_active')
-                ->with([
-                    'user' => function ($query) {
-                        $query->select('id', 'full_name');
-                    }
-                ]);
+            $query = $this->select(
+                'id',
+                'newsletter_campaign_id',
+                'path',
+                'is_active',
+            )->with([
+                'newsletter_campaign' => function ($query) {
+                    $query->select('id', 'name');
+                },
+                'user' => function ($query) {
+                    $query->select('id', 'full_name');
+                }
+            ]);
 
             if (!empty($search)) {
                 foreach ($search as $field => $value) {
-                    if ($field === 'id' || $field === 'rating' || $field === 'is_active') {
+                    if ($field === 'id' || $field === 'newsletter_campaign_id' || $field === 'is_active') {
                         $query->where($field, '=', $value);
                     } else {
                         $query->where($field, 'LIKE', '%' . $value . '%');
@@ -72,15 +82,14 @@ class Review extends Model
         }
     }
 
-    public function createRecord(array $payload): Review|Exception
+    public function createRecord(array $payload): NewsletterTemplate|Exception
     {
         try {
             return $this->create([
-                'full_name' => $payload['full_name'],
-                'rating' => $payload['rating'],
-                'comment' => $payload['comment'],
+                'newsletter_campaign_id' => $payload['newsletter_campaign_id'],
+                'path' => $payload['path'],
                 'is_active' => $payload['is_active'],
-                'user_id' => $payload['user_id'],
+                'template' => $payload['template'],
             ]);
         } catch (Exception $exception) {
             return $exception;
@@ -92,21 +101,40 @@ class Review extends Model
         try {
             return $this->select('*')
                 ->where('id', '=', $id)
+                ->with([
+                    'newsletter_subscribers' => function ($query) {
+                        $query->select(
+                            'id',
+                            'newsletter_campaign_id',
+                            'name',
+                            'is_active',
+                            'valid_from',
+                            'valid_to',
+                            'occur_times',
+                            'occur_week',
+                            'occur_day',
+                            'occur_hour',
+                        )->with([
+                            'user' => function ($query) {
+                                $query->select('id', 'full_name');
+                            }
+                        ]);
+                    },
+                ])
                 ->get();
         } catch (Exception $exception) {
             return $exception;
         }
     }
 
-    public function updateRecord(array $payload, int $id): Review|Exception
+    public function updateRecord(array $payload, int $id): NewsletterTemplate|Exception
     {
         try {
             $query = tap($this->find($id))->update([
-                'full_name' => $payload['full_name'],
-                'rating' => $payload['rating'],
-                'comment' => $payload['comment'],
+                'newsletter_campaign_id' => $payload['newsletter_campaign_id'],
+                'path' => $payload['path'],
                 'is_active' => $payload['is_active'],
-                'user_id' => $payload['user_id'],
+                'template' => $payload['template'],
             ]);
 
             return $query->fresh();
@@ -115,7 +143,7 @@ class Review extends Model
         }
     }
 
-    public function deleteRecord(string $id): Review|Exception
+    public function deleteRecord(string $id): NewsletterTemplate|Exception
     {
         try {
             $query = $this->find($id);

@@ -68,6 +68,11 @@ class NewsletterCampaign extends Model
         return $this->hasMany('App\Models\NewsletterSubscriber');
     }
 
+    public function newsletter_templates(): HasMany
+    {
+        return $this->hasMany('App\Models\NewsletterTemplate');
+    }
+
     public function fetchAllRecords(array $search = []): Collection|Exception
     {
         try {
@@ -157,6 +162,13 @@ class NewsletterCampaign extends Model
                             'privacy_policy',
                             'valid_email',
                         );
+                    },
+                    'newsletter_templates' => function ($query) {
+                        $query->select(
+                            'id',
+                            'newsletter_campaign_id',
+                            'path',
+                        )->where('is_active', true);
                     },
                     'user' => function ($query) {
                         $query->select('id', 'full_name');

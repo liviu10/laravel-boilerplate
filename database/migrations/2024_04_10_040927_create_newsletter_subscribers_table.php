@@ -42,9 +42,6 @@ return new class extends Migration
             $table->dropForeign(['newsletter_campaign_id']);
             $table->dropColumn('newsletter_campaign_id');
             $table->dropIndex('idx_newsletter_campaigns_newsletter_subscribers_id');
-            $table->dropForeign(['user_id']);
-            $table->dropColumn('user_id');
-            $table->dropIndex('idx_users_newsletter_campaigns_id');
         });
     }
 };

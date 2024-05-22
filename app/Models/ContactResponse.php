@@ -63,6 +63,9 @@ class ContactResponse extends Model
                             $query->select('id', 'label')->where('is_active', true);
                         }
                     ]);
+                },
+                'user' => function ($query) {
+                    $query->select('id', 'full_name');
                 }
             ]);
 

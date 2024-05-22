@@ -77,6 +77,9 @@ class ContactMessage extends Model
             )->with([
                 'contact_subject' => function ($query) {
                     $query->select('id', 'label')->where('is_active', true);
+                },
+                'user' => function ($query) {
+                    $query->select('id', 'full_name');
                 }
             ]);
 
@@ -84,6 +87,8 @@ class ContactMessage extends Model
                 foreach ($search as $field => $value) {
                     if ($field === 'id' || $field === 'contact_subject_id' || $field === 'privacy_policy' || $field === 'terms_and_conditions') {
                         $query->where($field, '=', $value);
+                    } elseif ($field === 'contact_message_ids') {
+                        $query->whereIn('id', $value);
                     } else {
                         $query->where($field, 'LIKE', '%' . $value . '%');
                     }

@@ -3,7 +3,11 @@
 namespace App\Http\Controllers\Communication;
 
 use App\Http\Controllers\Controller;
+use App\Models\ContactMessage;
+use App\Models\NewsletterSubscriber;
 use App\Models\Review;
+use App\Mail\SendReviewToUser;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
@@ -148,12 +152,24 @@ class ReviewController extends Controller
         }, ARRAY_FILTER_USE_BOTH);
 
         if (array_key_exists('resource', $searchTerms)) {
-            if ($searchTerms['resource'] === 'contact-message') {
-                // TODO: send email to one or multiple users if the request came from contact messages
+            if ($searchTerms['resource'] === 'contact-message' && array_key_exists('contact_message_ids', $searchTerms)) {
+                $contactMessage = new ContactMessage();
+                $result = $contactMessage->fetchAllRecords($searchTerms['contact_message_ids']);
+                if ($result instanceof Collection && $result->isNotEmpty()) {
+                    foreach ($result as $key => $item) {
+                        Mail::to($item['email'])->send(new SendReviewToUser($item));
+                    }
+                }
             }
 
-            if ($searchTerms['resource'] === 'newsletter-subscribers') {
-                // TODO: send email to one or multiple users if the request came from newsletter subscribers
+            if ($searchTerms['resource'] === 'newsletter-subscribers' && array_key_exists('newsletter_subscriber_ids', $searchTerms)) {
+                $newsletterSubscriber = new NewsletterSubscriber();
+                $result = $newsletterSubscriber->fetchAllRecords($searchTerms['newsletter_subscriber_ids']);
+                if ($result instanceof Collection && $result->isNotEmpty()) {
+                    foreach ($result as $key => $item) {
+                        Mail::to($item['email'])->send(new SendReviewToUser($item));
+                    }
+                }
             }
         }
     }
