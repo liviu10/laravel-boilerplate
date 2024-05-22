@@ -4,7 +4,8 @@ namespace App\Http\Controllers\Communication;
 
 use App\Http\Controllers\Controller;
 use App\Models\ContactResponse;
-use App\Mail\RepondToContactMessage;
+use App\Mail\RespondToContactMessage;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
@@ -86,11 +87,11 @@ class ContactResponseController extends Controller
         $request->validate($validateRequest);
         $payload = array_filter($request->all());
         $payload['user_id'] = Auth::user()->id;
-        $result = $this->contactResponse->saveRecord($payload, $id);
+        $result = $this->contactResponse->saveRecord($payload);
 
         if ($result instanceof ContactResponse) {
-            $contactMessage = $this->contactMessage->fetchSingleRecord($payload['contact_message_id'])->toArray();
-            Mail::to($contactMessage['email'])->send(new RepondToContactMessage($contactMessage));
+            $contactMessage = $this->contactResponse->fetchSingleRecord($payload['contact_message_id'])->toArray();
+            Mail::to($contactMessage['email'])->send(new RespondToContactMessage($contactMessage));
         }
 
         return redirect()->route('responses.index')->with('success', $result ? $successMessage : $errorMessage);

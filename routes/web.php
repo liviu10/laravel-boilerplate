@@ -63,6 +63,7 @@ Route::group(['prefix' => '/admin'], function () {
             Route::resource('/campaigns', NewsletterCampaignController::class)->except('delete');
             Route::resource('/subscribers', NewsletterSubscriberController::class)->only('index', 'show', 'update');
         });
+        Route::resource('/reviews/send-review', [ReviewController::class, 'sendReview']);
         Route::resource('/reviews', ReviewController::class)->only('index', 'update');
     });
 

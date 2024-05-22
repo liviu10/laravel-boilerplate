@@ -140,4 +140,21 @@ class ReviewController extends Controller
     {
         abort(405, __('The action is not allowed.'));
     }
+
+    public function sendReview(Request $request)
+    {
+        $searchTerms = array_filter($request->all(), function ($value, $key) {
+            return !is_null($value) || $key === 'is_active';
+        }, ARRAY_FILTER_USE_BOTH);
+
+        if (array_key_exists('resource', $searchTerms)) {
+            if ($searchTerms['resource'] === 'contact-message') {
+                // TODO: send email to one or multiple users if the request came from contact messages
+            }
+
+            if ($searchTerms['resource'] === 'newsletter-subscribers') {
+                // TODO: send email to one or multiple users if the request came from newsletter subscribers
+            }
+        }
+    }
 }

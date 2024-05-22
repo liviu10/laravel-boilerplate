@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Communication;
 
 use App\Http\Controllers\Controller;
 use App\Models\NewsletterCampaign;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
@@ -176,7 +177,7 @@ class NewsletterCampaignController extends Controller
         $request->validate($validateRequest);
         $payload = array_filter($request->all());
         $payload['user_id'] = Auth::user()->id;
-        $result = $this->newsletterCampaign->saveRecord($payload, $id);
+        $result = $this->newsletterCampaign->saveRecord($payload);
 
         return redirect()->route('campaigns.index')->with('success', $result ? $successMessage : $errorMessage);
     }

@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Communication;
 use App\Http\Controllers\Controller;
 use App\Models\NewsletterSubscriber;
 use App\Mail\UpdateNewsletterEnrolment;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
@@ -33,9 +34,9 @@ class NewsletterSubscriberController extends Controller
     public function index(Request $request): View|Application|Factory
     {
         $searchTerms = array_filter($request->all(), function ($value, $key) {
-            return !is_null($value) || $key === 'is_active';
+            return !is_null($value) || $key === 'privacy_policy' || $key === 'terms_and_conditions';
         }, ARRAY_FILTER_USE_BOTH);
-        
+
         $data = [
             'title' => __('Newsletter subscribers'),
             'description' => __('
@@ -132,7 +133,7 @@ class NewsletterSubscriberController extends Controller
 
         if ($result instanceof NewsletterSubscriber) {
             $newsletterSubscriber = $this->newsletterSubscriber->fetchSingleRecord($payload['contact_message_id'])->toArray();
-            Mail::to($newsletterSubscriber['email'])->send(new UpdateNewsletterEnrolment($contactMessage));
+            Mail::to($newsletterSubscriber['email'])->send(new UpdateNewsletterEnrolment($newsletterSubscriber));
         }
 
         return redirect()->route('subscribers.index')->with('success', $result ? $successMessage : $errorMessage);
