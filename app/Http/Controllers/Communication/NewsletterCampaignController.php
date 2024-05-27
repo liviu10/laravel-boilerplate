@@ -62,6 +62,7 @@ class NewsletterCampaignController extends Controller
                 Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s,
                 when an unknown printer took a galley of type and scrambled it to make a type specimen book.
             '),
+            'action' => 'campaigns.store',
             'results' => [
                 [
                     'id' => 1,
@@ -159,13 +160,10 @@ class NewsletterCampaignController extends Controller
      */
     public function store(Request $request)
     {
-        $successMessage = __('The record was successfully updated');
-        $errorMessage = __('The record was not update in the database');
-
         $validateRequest = [
             'name' => 'required|string|min:3|max:100|regex:/^[a-zA-Z\s]+$/',
             'description' => 'sometimes|string',
-            'is_active' => 'required|boolean',
+            'is_active' => 'sometimes|nullable|boolean',
             'valid_from' => 'required|date_format:Y-m-d H:i:s',
             'valid_to' => 'required|date_format:Y-m-d H:i:s',
             'occur_times' => 'required|integer|min:1',
@@ -179,7 +177,7 @@ class NewsletterCampaignController extends Controller
         $payload['user_id'] = Auth::user()->id;
         $result = $this->newsletterCampaign->saveRecord($payload);
 
-        return redirect()->route('pages.admin.communication.newsletter.campaigns.index')->with('success', $result ? $successMessage : $errorMessage);
+        return redirect()->route('campaigns.index')->with('success', $result);
     }
 
     /**
@@ -214,6 +212,7 @@ class NewsletterCampaignController extends Controller
                 Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s,
                 when an unknown printer took a galley of type and scrambled it to make a type specimen book.
             '),
+            'action' => 'campaigns.update',
             'results' => [
                 [
                     'id' => 1,
@@ -311,13 +310,10 @@ class NewsletterCampaignController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        $successMessage = __('The record was successfully updated');
-        $errorMessage = __('The record was not update in the database');
-
         $validateRequest = [
             'name' => 'sometimes|string|min:3|max:100|regex:/^[a-zA-Z\s]+$/',
             'description' => 'sometimes|string',
-            'is_active' => 'sometimes|boolean',
+            'is_active' => 'sometimes|nullable|boolean',
             'valid_from' => 'sometimes|date_format:Y-m-d H:i:s',
             'valid_to' => 'sometimes|date_format:Y-m-d H:i:s',
             'occur_times' => 'sometimes|integer|min:1',
@@ -331,7 +327,7 @@ class NewsletterCampaignController extends Controller
         $payload['user_id'] = Auth::user()->id;
         $result = $this->newsletterCampaign->updateRecord($payload, $id);
 
-        return redirect()->route('pages.admin.communication.newsletter.campaigns.index')->with('success', $result ? $successMessage : $errorMessage);
+        return redirect()->route('campaigns.index')->with('success', $result);
     }
 
     /**

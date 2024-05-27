@@ -1,17 +1,13 @@
-@extends('layouts.admin')
+@extends('layouts.guest')
 
 @section('content')
-    <div class="admin admin--page">
+    <div class="guest guest--page">
         <x-page-header title="{{ $data['title'] }}" />
 
-        <div class="admin__jumbotron">
+        <div class="guest__body">
             <x-page-description>
                 {{ $data['description'] }}
             </x-page-description>
-        </div>
-
-        <div class="admin__body">
-            {{ $data['results'] }}
         </div>
     </div>
 @endsection

@@ -60,6 +60,7 @@ class MediaTypeController extends Controller
                 Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s,
                 when an unknown printer took a galley of type and scrambled it to make a type specimen book.
             '),
+            'action' => 'types.store',
             'results' => [
                 [
                     'id' => 1,
@@ -98,12 +99,9 @@ class MediaTypeController extends Controller
      */
     public function store(Request $request)
     {
-        $successMessage = __('The record was successfully saved');
-        $errorMessage = __('The record was not saved in the database');
-
         $validateRequest = [
             'label' => 'required|string',
-            'is_active' => 'required|boolean',
+            'is_active' => 'sometimes|nullable|boolean',
         ];
 
         $request->validate($validateRequest);
@@ -113,7 +111,7 @@ class MediaTypeController extends Controller
         $payload['user_id'] = Auth::user()->id;
         $result = $this->mediaType->createRecord($payload);
 
-        return redirect()->route('pages.admin.management.media.types.index')->with('success', $result ? $successMessage : $errorMessage);
+        return redirect()->route('types.index')->with('success', $result);
     }
 
     /**
@@ -136,6 +134,7 @@ class MediaTypeController extends Controller
                 Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s,
                 when an unknown printer took a galley of type and scrambled it to make a type specimen book.
             '),
+            'action' => 'types.update',
             'results' => [
                 [
                     'id' => 1,
@@ -174,12 +173,9 @@ class MediaTypeController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        $successMessage = __('The record was successfully updated');
-        $errorMessage = __('The record was not update in the database');
-
         $validateRequest = [
             'label' => 'sometimes|string',
-            'is_active' => 'sometimes|boolean',
+            'is_active' => 'sometimes|nullable|boolean',
         ];
 
         $request->validate($validateRequest);
@@ -190,7 +186,7 @@ class MediaTypeController extends Controller
         $selectedRecord = $this->mediaType->fetchSingleRecord($id);
         $result = $this->mediaType->updateRecord($payload, $id);
 
-        return redirect()->route('pages.admin.management.media.types.index')->with('success', $result ? $successMessage : $errorMessage);
+        return redirect()->route('types.index')->with('success', $result);
     }
 
     /**

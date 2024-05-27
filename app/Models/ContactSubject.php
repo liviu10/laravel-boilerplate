@@ -104,11 +104,12 @@ class ContactSubject extends Model
                     'contact_messages' => function ($query) {
                         $query->select(
                             'id',
-                            'content_subject_id',
+                            'contact_subject_id',
                             'full_name',
                             'email',
                             'privacy_policy',
-                        )->with([
+                        )
+                        ->with([
                             'contact_responses' => function ($query) {
                                 $query->select(
                                     'id',

@@ -45,7 +45,7 @@ class ContentTypeController extends Controller
             'results' => $this->contentType->fetchAllRecords($searchTerms),
         ];
 
-        return view('pages.admin.management.contents.types.index', compact('data'));
+        return view('pages.admin.management.content.types.index', compact('data'));
     }
 
     /**
@@ -61,6 +61,7 @@ class ContentTypeController extends Controller
                 Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s,
                 when an unknown printer took a galley of type and scrambled it to make a type specimen book.
             '),
+            'action' => 'type.store',
             'results' => [
                 [
                     'id' => 1,
@@ -91,7 +92,7 @@ class ContentTypeController extends Controller
             ],
         ];
 
-        return view('pages.admin.management.contents.types.create', compact('data'));
+        return view('pages.admin.management.content.types.create', compact('data'));
     }
 
     /**
@@ -99,12 +100,9 @@ class ContentTypeController extends Controller
      */
     public function store(Request $request)
     {
-        $successMessage = __('The record was successfully saved');
-        $errorMessage = __('The record was not saved in the database');
-
         $validateRequest = [
             'label' => 'required|string',
-            'is_active' => 'required|boolean',
+            'is_active' => 'sometimes|nullable|boolean',
         ];
 
         $request->validate($validateRequest);
@@ -114,7 +112,7 @@ class ContentTypeController extends Controller
         $payload['user_id'] = Auth::user()->id;
         $result = $this->contentType->createRecord($payload);
 
-        return redirect()->route('pages.admin.management.contents.types.index')->with('success', $result ? $successMessage : $errorMessage);
+        return redirect()->route('types.index')->with('success', $result);
     }
 
     /**
@@ -138,6 +136,7 @@ class ContentTypeController extends Controller
                 Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s,
                 when an unknown printer took a galley of type and scrambled it to make a type specimen book.
             '),
+            'action' => 'types.update',
             'results' => [
                 [
                     'id' => 1,
@@ -168,7 +167,7 @@ class ContentTypeController extends Controller
             ],
         ];
 
-        return view('pages.admin.management.contents.types.edit', compact('data'));
+        return view('pages.admin.management.content.types.edit', compact('data'));
     }
 
     /**
@@ -176,12 +175,9 @@ class ContentTypeController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        $successMessage = __('The record was successfully updated');
-        $errorMessage = __('The record was not update in the database');
-
         $validateRequest = [
             'label' => 'sometimes|string',
-            'is_active' => 'sometimes|boolean',
+            'is_active' => 'sometimes|nullable|boolean',
         ];
 
         $request->validate($validateRequest);
@@ -192,7 +188,7 @@ class ContentTypeController extends Controller
         $selectedRecord = $this->contentType->fetchSingleRecord($id);
         $result = $this->contentType->updateRecord($payload, $id);
 
-        return redirect()->route('pages.admin.management.contents.types.index')->with('success', $result ? $successMessage : $errorMessage);
+        return redirect()->route('types.index')->with('success', $result);
     }
 
     /**

@@ -48,6 +48,7 @@ Route::group(['prefix' => '/'], function () {
     Route::get('/', [GuestController::class, 'index'])->name('guest.index');
     Route::get('/privacy-policy', [GuestController::class, 'privacyPolicy'])->name('guest.privacyPolicy');
     Route::get('/terms-and-conditions', [GuestController::class, 'termsAndConditions'])->name('guest.termsAndConditions');
+    Route::get('/data-protection', [GuestController::class, 'dataProtection'])->name('guest.dataProtection');
 });
 
 Auth::routes();

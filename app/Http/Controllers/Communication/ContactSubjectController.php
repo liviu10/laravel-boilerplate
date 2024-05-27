@@ -61,6 +61,7 @@ class ContactSubjectController extends Controller
                 Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s,
                 when an unknown printer took a galley of type and scrambled it to make a type specimen book.
             '),
+            'action' => 'subjects.store',
             'results' => [
                 [
                     'id' => 1,
@@ -98,13 +99,10 @@ class ContactSubjectController extends Controller
      * Store a newly created resource in storage.
      */
     public function store(Request $request)
-    {
-        $successMessage = __('The record was successfully saved');
-        $errorMessage = __('The record was not saved in the database');
-
+    {   
         $validateRequest = [
-            'label' => 'required|string',
-            'is_active' => 'required|boolean',
+            'label' => 'required|string|unique:contact_subjects',
+            'is_active' => 'sometimes|nullable|boolean',
         ];
 
         $request->validate($validateRequest);
@@ -114,7 +112,7 @@ class ContactSubjectController extends Controller
         $payload['user_id'] = Auth::user()->id;
         $result = $this->contactSubject->createRecord($payload);
 
-        return redirect()->route('pages.admin.communication.contact.subjects.index')->with('success', $result ? $successMessage : $errorMessage);
+        return redirect()->route('subjects.index')->with('success', $result);
     }
 
     /**
@@ -142,6 +140,8 @@ class ContactSubjectController extends Controller
      */
     public function edit(string $id): View|Application|Factory
     {
+        $selectedRecord = $this->contactSubject->fetchSingleRecord($id);
+
         $data = [
             'title' => __('Edit a contact subject'),
             'description' => __('
@@ -149,6 +149,8 @@ class ContactSubjectController extends Controller
                 Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s,
                 when an unknown printer took a galley of type and scrambled it to make a type specimen book.
             '),
+            'action' => 'subjects.update',
+            'rowId' => $id,
             'results' => [
                 [
                     'id' => 1,
@@ -179,6 +181,15 @@ class ContactSubjectController extends Controller
             ],
         ];
 
+        foreach ($data['results'] as &$result) {
+            foreach ($selectedRecord->toArray()[0] as $recordKey => $recordValue) {
+                if ($result['key'] === $recordKey) {
+                    $result['value'] = $recordValue;
+                    break;
+                }
+            }
+        }
+
         return view('pages.admin.communication.contact.subjects.edit', compact('data'));
     }
 
@@ -187,12 +198,9 @@ class ContactSubjectController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        $successMessage = __('The record was successfully updated');
-        $errorMessage = __('The record was not update in the database');
-
         $validateRequest = [
-            'label' => 'sometimes|string',
-            'is_active' => 'sometimes|boolean',
+            'label' => 'sometimes|string|unique:contact_subjects',
+            'is_active' => 'sometimes|nullable|boolean',
         ];
 
         $request->validate($validateRequest);
@@ -203,7 +211,7 @@ class ContactSubjectController extends Controller
         $selectedRecord = $this->contactSubject->fetchSingleRecord($id);
         $result = $this->contactSubject->updateRecord($payload, $id);
 
-        return redirect()->route('pages.admin.communication.contact.subjects.index')->with('success', $result ? $successMessage : $errorMessage);
+        return redirect()->route('subjects.index')->with('success', $result);
     }
 
     /**

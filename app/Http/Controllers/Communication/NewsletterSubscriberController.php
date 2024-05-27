@@ -114,6 +114,7 @@ class NewsletterSubscriberController extends Controller
                 Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s,
                 when an unknown printer took a galley of type and scrambled it to make a type specimen book.
             '),
+            'action' => 'subscribers.update',
             'results' => [
                 [
                     'id' => 1,
@@ -134,9 +135,6 @@ class NewsletterSubscriberController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        $successMessage = __('The record was successfully updated');
-        $errorMessage = __('The record was not update in the database');
-
         $validateRequest = [
             'newsletter_campaign_id' => 'required|array',
         ];
@@ -151,7 +149,7 @@ class NewsletterSubscriberController extends Controller
             Mail::to($newsletterSubscriber['email'])->send(new UpdateNewsletterEnrolment($newsletterSubscriber));
         }
 
-        return redirect()->route('pages.admin.communication.newsletter.subscribers.index')->with('success', $result ? $successMessage : $errorMessage);
+        return redirect()->route('subscribers.index')->with('success', $result);
     }
 
     /**

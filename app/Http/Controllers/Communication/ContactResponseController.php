@@ -49,6 +49,7 @@ class ContactResponseController extends Controller
                 Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s,
                 when an unknown printer took a galley of type and scrambled it to make a type specimen book.
             '),
+            'action' => 'responses.store',
             'results' => [
                 [
                     'id' => 1,
@@ -76,9 +77,6 @@ class ContactResponseController extends Controller
      */
     public function store(Request $request)
     {
-        $successMessage = __('The record was successfully updated');
-        $errorMessage = __('The record was not update in the database');
-
         $validateRequest = [
             'contact_message_id' => 'required|integer',
             'message' => 'required|string',
@@ -94,7 +92,7 @@ class ContactResponseController extends Controller
             Mail::to($contactMessage['email'])->send(new RespondToContactMessage($contactMessage));
         }
 
-        return redirect()->route('pages.admin.communication.contact.responses.index')->with('success', $result ? $successMessage : $errorMessage);
+        return redirect()->route('responses.index')->with('success', $result);
     }
 
     /**

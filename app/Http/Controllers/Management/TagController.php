@@ -59,6 +59,7 @@ class TagController extends Controller
                 Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s,
                 when an unknown printer took a galley of type and scrambled it to make a type specimen book.
             '),
+            'action' => 'tags.store',
             'results' => [
                 [
                     'id' => 1,
@@ -93,9 +94,6 @@ class TagController extends Controller
      */
     public function store(Request $request)
     {
-        $successMessage = __('The record was successfully saved');
-        $errorMessage = __('The record was not saved in the database');
-
         $validateRequest = [
             'content_id' => 'required|integer',
             'name' => 'required|string',
@@ -108,7 +106,7 @@ class TagController extends Controller
         $payload['user_id'] = Auth::user()->id;
         $result = $this->tag->createRecord($payload);
 
-        return redirect()->route('pages.admin.management.tags.index')->with('success', $result ? $successMessage : $errorMessage);
+        return redirect()->route('tags.index')->with('success', $result);
     }
 
     /**
@@ -132,6 +130,7 @@ class TagController extends Controller
                 Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s,
                 when an unknown printer took a galley of type and scrambled it to make a type specimen book.
             '),
+            'action' => 'tags.update',
             'results' => [
                 [
                     'id' => 1,
@@ -166,9 +165,6 @@ class TagController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        $successMessage = __('The record was successfully saved');
-        $errorMessage = __('The record was not saved in the database');
-
         $validateRequest = [
             'content_id' => 'sometimes|integer',
             'name' => 'sometimes|string',
@@ -182,7 +178,7 @@ class TagController extends Controller
         $selectedRecord = $this->tag->fetchSingleRecord($id);
         $result = $this->tag->createRecord($payload);
 
-        return redirect()->route('pages.admin.management.tags.index')->with('success', $result ? $successMessage : $errorMessage);
+        return redirect()->route('tags.index')->with('success', $result);
     }
 
     /**

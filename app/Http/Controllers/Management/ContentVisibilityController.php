@@ -45,7 +45,7 @@ class ContentVisibilityController extends Controller
             'results' => $this->contentVisibility->fetchAllRecords($searchTerms),
         ];
 
-        return view('pages.admin.management.contents.visibilities.index', compact('data'));
+        return view('pages.admin.management.content.visibilities.index', compact('data'));
     }
 
     /**
@@ -61,6 +61,7 @@ class ContentVisibilityController extends Controller
                 Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s,
                 when an unknown printer took a galley of type and scrambled it to make a type specimen book.
             '),
+            'action' => 'visibilities.store',
             'results' => [
                 [
                     'id' => 1,
@@ -91,7 +92,7 @@ class ContentVisibilityController extends Controller
             ],
         ];
 
-        return view('pages.admin.management.contents.visibilities.create', compact('data'));
+        return view('pages.admin.management.content.visibilities.create', compact('data'));
     }
 
     /**
@@ -99,12 +100,9 @@ class ContentVisibilityController extends Controller
      */
     public function store(Request $request)
     {
-        $successMessage = __('The record was successfully saved');
-        $errorMessage = __('The record was not saved in the database');
-
         $validateRequest = [
             'label' => 'required|string',
-            'is_active' => 'required|boolean',
+            'is_active' => 'sometimes|nullable|boolean',
         ];
 
         $request->validate($validateRequest);
@@ -114,7 +112,7 @@ class ContentVisibilityController extends Controller
         $payload['user_id'] = Auth::user()->id;
         $result = $this->contentVisibility->createRecord($payload);
 
-        return redirect()->route('pages.admin.management.contents.visibilities.index')->with('success', $result ? $successMessage : $errorMessage);
+        return redirect()->route('visibilities.index')->with('success', $result);
     }
 
     /**
@@ -138,6 +136,7 @@ class ContentVisibilityController extends Controller
                 Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s,
                 when an unknown printer took a galley of type and scrambled it to make a type specimen book.
             '),
+            'action' => 'visibilities.update',
             'results' => [
                 [
                     'id' => 1,
@@ -168,7 +167,7 @@ class ContentVisibilityController extends Controller
             ],
         ];
 
-        return view('pages.admin.management.contents.visibilities.edit', compact('data'));
+        return view('pages.admin.management.content.visibilities.edit', compact('data'));
     }
 
     /**
@@ -176,12 +175,9 @@ class ContentVisibilityController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        $successMessage = __('The record was successfully updated');
-        $errorMessage = __('The record was not update in the database');
-
         $validateRequest = [
             'label' => 'sometimes|string',
-            'is_active' => 'sometimes|boolean',
+            'is_active' => 'sometimes|nullable|boolean',
         ];
 
         $request->validate($validateRequest);
@@ -192,7 +188,7 @@ class ContentVisibilityController extends Controller
         $selectedRecord = $this->contentVisibility->fetchSingleRecord($id);
         $result = $this->contentVisibility->updateRecord($payload, $id);
 
-        return redirect()->route('pages.admin.management.contents.visibilities.index')->with('success', $result ? $successMessage : $errorMessage);
+        return redirect()->route('visibilities.index')->with('success', $result);
     }
 
     /**

@@ -59,6 +59,7 @@ class UserController extends Controller
                 Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s,
                 when an unknown printer took a galley of type and scrambled it to make a type specimen book.
             '),
+            'action' => 'users.store',
             'results' => [
                 [
                     'id' => 1,
@@ -92,9 +93,6 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        $successMessage = __('The record was successfully saved');
-        $errorMessage = __('The record was not saved in the database');
-
         $validateRequest = [
             'first_name' => 'required|string|min:3|max:100|regex:/^[a-zA-Z\s]+$/',
             'last_name' => 'required|string|min:3|max:100|regex:/^[a-zA-Z\s]+$/',
@@ -107,7 +105,7 @@ class UserController extends Controller
         $payload['user_id'] = Auth::user()->id;
         $result = $this->user->createRecord($payload);
 
-        return redirect()->route('pages.admin.settings.users.index')->with('success', $result ? $successMessage : $errorMessage);
+        return redirect()->route('pages.admin.settings.users.index')->with('success', $result);
     }
 
     /**
@@ -142,6 +140,7 @@ class UserController extends Controller
                 Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s,
                 when an unknown printer took a galley of type and scrambled it to make a type specimen book.
             '),
+            'action' => 'users.update',
             'results' => [
                 [
                     'id' => 1,
@@ -168,9 +167,6 @@ class UserController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        $successMessage = __('The record was successfully saved');
-        $errorMessage = __('The record was not saved in the database');
-
         $validateRequest = [
             'first_name' => 'sometimes|string|min:3|max:100|regex:/^[a-zA-Z\s]+$/',
             'last_name' => 'sometimes|string|min:3|max:100|regex:/^[a-zA-Z\s]+$/',
@@ -183,7 +179,7 @@ class UserController extends Controller
         $selectedRecord = $this->user->fetchSingleRecord($id);
         $result = $this->user->createRecord($payload);
 
-        return redirect()->route('pages.admin.settings.users.index')->with('success', $result ? $successMessage : $errorMessage);
+        return redirect()->route('pages.admin.settings.users.index')->with('success', $result);
     }
 
     /**

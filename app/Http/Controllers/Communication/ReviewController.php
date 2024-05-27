@@ -92,6 +92,7 @@ class ReviewController extends Controller
                 Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s,
                 when an unknown printer took a galley of type and scrambled it to make a type specimen book.
             '),
+            'action' => 'reviews.update',
             'results' => [
                 [
                     'id' => 1,
@@ -123,11 +124,8 @@ class ReviewController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        $successMessage = __('The record was successfully updated');
-        $errorMessage = __('The record was not update in the database');
-
         $validateRequest = [
-            'is_active' => 'required|boolean',
+            'is_active' => 'sometimes|nullable|boolean',
         ];
 
         $request->validate($validateRequest);
@@ -135,7 +133,7 @@ class ReviewController extends Controller
         $payload['user_id'] = Auth::user()->id;
         $result = $this->review->updateRecord($payload, $id);
 
-        return redirect()->route('pages.admin.communication.reviews.index')->with('success', $result ? $successMessage : $errorMessage);
+        return redirect()->route('reviews.index')->with('success', $result);
     }
 
     /**

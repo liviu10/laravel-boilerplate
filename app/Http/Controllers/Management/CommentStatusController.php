@@ -45,7 +45,7 @@ class CommentStatusController extends Controller
             'results' => $this->commentStatus->fetchAllRecords($searchTerms),
         ];
 
-        return view('pages.admin.management.contents.comments.statuses.index', compact('data'));
+        return view('pages.admin.management.content.comments.statuses.index', compact('data'));
     }
 
     /**
@@ -60,6 +60,7 @@ class CommentStatusController extends Controller
                 Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s,
                 when an unknown printer took a galley of type and scrambled it to make a type specimen book.
             '),
+            'action' => 'statuses.store',
             'results' => [
                 [
                     'id' => 1,
@@ -90,7 +91,7 @@ class CommentStatusController extends Controller
             ],
         ];
 
-        return view('pages.admin.management.contents.comments.statuses.create', compact('data'));
+        return view('pages.admin.management.content.comments.statuses.create', compact('data'));
     }
 
     /**
@@ -98,12 +99,9 @@ class CommentStatusController extends Controller
      */
     public function store(Request $request)
     {
-        $successMessage = __('The record was successfully saved');
-        $errorMessage = __('The record was not saved in the database');
-
         $validateRequest = [
             'label' => 'required|string',
-            'is_active' => 'required|boolean',
+            'is_active' => 'sometimes|nullable|boolean',
         ];
 
         $request->validate($validateRequest);
@@ -113,7 +111,7 @@ class CommentStatusController extends Controller
         $payload['user_id'] = Auth::user()->id;
         $result = $this->commentStatus->createRecord($payload);
 
-        return redirect()->route('pages.admin.management.contents.comments.statuses.index')->with('success', $result ? $successMessage : $errorMessage);
+        return redirect()->route('statuses.index')->with('success', $result);
     }
 
     /**
@@ -136,6 +134,7 @@ class CommentStatusController extends Controller
                 Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s,
                 when an unknown printer took a galley of type and scrambled it to make a type specimen book.
             '),
+            'action' => 'statuses.update',
             'results' => [
                 [
                     'id' => 1,
@@ -166,7 +165,7 @@ class CommentStatusController extends Controller
             ],
         ];
 
-        return view('pages.admin.management.contents.comments.statuses.edit', compact('data'));
+        return view('pages.admin.management.content.comments.statuses.edit', compact('data'));
     }
 
     /**
@@ -174,12 +173,9 @@ class CommentStatusController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        $successMessage = __('The record was successfully updated');
-        $errorMessage = __('The record was not update in the database');
-
         $validateRequest = [
             'label' => 'sometimes|string',
-            'is_active' => 'sometimes|boolean',
+            'is_active' => 'sometimes|nullable|boolean',
         ];
 
         $request->validate($validateRequest);
@@ -190,7 +186,7 @@ class CommentStatusController extends Controller
         $selectedRecord = $this->commentStatus->fetchSingleRecord($id);
         $result = $this->commentStatus->updateRecord($payload, $id);
 
-        return redirect()->route('pages.admin.management.contents.comments.statuses.index')->with('success', $result ? $successMessage : $errorMessage);
+        return redirect()->route('statuses.index')->with('success', $result);
     }
 
     /**
