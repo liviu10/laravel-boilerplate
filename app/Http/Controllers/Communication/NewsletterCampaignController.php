@@ -179,7 +179,7 @@ class NewsletterCampaignController extends Controller
         $payload['user_id'] = Auth::user()->id;
         $result = $this->newsletterCampaign->saveRecord($payload);
 
-        return redirect()->route('campaigns.index')->with('success', $result ? $successMessage : $errorMessage);
+        return redirect()->route('pages.admin.communication.newsletter.campaigns.index')->with('success', $result ? $successMessage : $errorMessage);
     }
 
     /**
@@ -331,7 +331,7 @@ class NewsletterCampaignController extends Controller
         $payload['user_id'] = Auth::user()->id;
         $result = $this->newsletterCampaign->updateRecord($payload, $id);
 
-        return redirect()->route('campaigns.index')->with('success', $result ? $successMessage : $errorMessage);
+        return redirect()->route('pages.admin.communication.newsletter.campaigns.index')->with('success', $result ? $successMessage : $errorMessage);
     }
 
     /**

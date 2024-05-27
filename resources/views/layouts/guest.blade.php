@@ -39,8 +39,8 @@
         <div id="app">
             <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
                 <div class="container">
-                    <a class="navbar-brand" href="{{ url('/') }}">
-                        {{ config('app.name', 'Laravel') }}
+                    <a class="navbar-brand" href="{{ route('guest.index') }}">
+                        {{ config('app.name') }}
                     </a>
                     <button
                         class="navbar-toggler"
@@ -49,7 +49,7 @@
                         data-bs-target="#navbarSupportedContent"
                         aria-controls="navbarSupportedContent"
                         aria-expanded="false"
-                        aria-label="{{ __('Toggle navigation') }}"
+                        aria-label="Toggle navigation"
                     >
                         <span class="navbar-toggler-icon"></span>
                     </button>
@@ -60,6 +60,14 @@
                             <li class="nav-item">
                                 <a class="nav-link" href="#">Link</a>
                             </li>
+                            @if (Auth::user())
+                                <li class="nav-item">
+                                    <a class="nav-link" href="{{ route('admin.index') }}" target="_blank">
+                                        {{ __('View Admin') }}
+                                        <i class="fa-solid fa-up-right-from-square"></i>
+                                    </a>
+                                </li>
+                            @endif
                         </ul>
                     </div>
                 </div>

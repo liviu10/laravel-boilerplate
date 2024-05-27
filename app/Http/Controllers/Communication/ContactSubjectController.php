@@ -114,7 +114,7 @@ class ContactSubjectController extends Controller
         $payload['user_id'] = Auth::user()->id;
         $result = $this->contactSubject->createRecord($payload);
 
-        return redirect()->route('subjects.index')->with('success', $result ? $successMessage : $errorMessage);
+        return redirect()->route('pages.admin.communication.contact.subjects.index')->with('success', $result ? $successMessage : $errorMessage);
     }
 
     /**
@@ -203,7 +203,7 @@ class ContactSubjectController extends Controller
         $selectedRecord = $this->contactSubject->fetchSingleRecord($id);
         $result = $this->contactSubject->updateRecord($payload, $id);
 
-        return redirect()->route('subjects.index')->with('success', $result ? $successMessage : $errorMessage);
+        return redirect()->route('pages.admin.communication.contact.subjects.index')->with('success', $result ? $successMessage : $errorMessage);
     }
 
     /**

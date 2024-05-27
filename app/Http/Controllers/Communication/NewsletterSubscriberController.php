@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Communication;
 use App\Http\Controllers\Controller;
 use App\Models\NewsletterSubscriber;
 use App\Mail\UpdateNewsletterEnrolment;
+use App\Models\NewsletterCampaign;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Contracts\View\Factory;
@@ -15,6 +17,7 @@ use Illuminate\Http\Request;
 class NewsletterSubscriberController extends Controller
 {
     protected $newsletterSubscriber;
+    protected $newsletterCampaign;
 
     /**
      * Create a new controller instance.
@@ -25,6 +28,7 @@ class NewsletterSubscriberController extends Controller
     {
         $this->middleware('auth');
         $this->newsletterSubscriber = new NewsletterSubscriber();
+        $this->newsletterCampaign = new NewsletterCampaign();
     }
 
     /**
@@ -92,6 +96,17 @@ class NewsletterSubscriberController extends Controller
      */
     public function edit(string $id): View|Application|Factory
     {
+        if ($this->newsletterCampaign instanceof Collection) {
+            $options = $this->newsletterCampaign->map(function ($campaign) {
+                return [
+                    'value' => $campaign->id,
+                    'label' => $campaign->name,
+                ];
+            })->toArray();
+        } else {
+            $options = [];
+        }
+
         $data = [
             'title' => __('Edit a newsletter subscriber'),
             'description' => __('
@@ -106,7 +121,7 @@ class NewsletterSubscriberController extends Controller
                     'placeholder' => __('Newsletter campaign'),
                     'type' => 'select',
                     'value' => null,
-                    'options' => [], // TODO: Bring the newsletter campaigns here
+                    'options' => $options,
                 ],
             ],
         ];
@@ -136,7 +151,7 @@ class NewsletterSubscriberController extends Controller
             Mail::to($newsletterSubscriber['email'])->send(new UpdateNewsletterEnrolment($newsletterSubscriber));
         }
 
-        return redirect()->route('subscribers.index')->with('success', $result ? $successMessage : $errorMessage);
+        return redirect()->route('pages.admin.communication.newsletter.subscribers.index')->with('success', $result ? $successMessage : $errorMessage);
     }
 
     /**

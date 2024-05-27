@@ -1,5 +1,8 @@
 <?php
 
+// Guest controller
+use App\Http\Controllers\GuestController;
+
 // Admin controller
 use App\Http\Controllers\AdminController;
 
@@ -14,8 +17,6 @@ use App\Http\Controllers\Communication\ReviewController;
 
 // Management controllers
 use App\Http\Controllers\Management\ManagementController;
-use App\Http\Controllers\Management\AppreciationController;
-use App\Http\Controllers\Management\CommentController;
 use App\Http\Controllers\Management\CommentStatusController;
 use App\Http\Controllers\Management\CommentTypeController;
 use App\Http\Controllers\Management\ContentController;
@@ -27,8 +28,8 @@ use App\Http\Controllers\Management\MediaTypeController;
 use App\Http\Controllers\Management\TagController;
 
 // Settings controllers
-use App\Http\Controllers\SettingsController;
-use App\Http\Controllers\UserController;
+use App\Http\Controllers\Settings\SettingsController;
+use App\Http\Controllers\Settings\UserController;
 
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -43,8 +44,11 @@ use Illuminate\Support\Facades\Route;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
-
-Route::get('/', function () { return view('pages.guest'); })->name('guest.index');
+Route::group(['prefix' => '/'], function () {
+    Route::get('/', [GuestController::class, 'index'])->name('guest.index');
+    Route::get('/privacy-policy', [GuestController::class, 'privacyPolicy'])->name('guest.privacyPolicy');
+    Route::get('/terms-and-conditions', [GuestController::class, 'termsAndConditions'])->name('guest.termsAndConditions');
+});
 
 Auth::routes();
 
@@ -57,7 +61,7 @@ Route::group(['prefix' => '/admin'], function () {
         Route::group(['prefix' => '/contact'], function () {
             Route::resource('/subjects', ContactSubjectController::class)->except('delete');
             Route::resource('/messages', ContactMessageController::class)->only('index', 'show');
-            Route::resource('/responses', ContactResponseController::class)->only('index', 'show', 'update');
+            Route::resource('/responses', ContactResponseController::class)->only('store');
         });
         Route::group(['prefix' => '/newsletter'], function () {
             Route::resource('/campaigns', NewsletterCampaignController::class)->except('delete');
@@ -70,23 +74,23 @@ Route::group(['prefix' => '/admin'], function () {
     // Management web routes
     Route::group(['prefix' => '/management'], function () {
         Route::get('/', [ManagementController::class, 'index'])->name('management.index');
-        Route::group(['prefix' => '/contents'], function () {
-            Route::resource('/types', ContentTypeController::class);
-            Route::resource('/visibilities', ContentVisibilityController::class);
-            Route::resource('/social', ContentSocialMediaController::class);
-            Route::resource('/', ContentController::class);
+        Route::group(['prefix' => '/'], function () {
+            Route::group(['prefix' => '/content'], function () {
+                Route::resource('/types', ContentTypeController::class)->except('show', 'delete');
+                Route::resource('/visibilities', ContentVisibilityController::class)->except('show', 'delete');
+                Route::resource('/social', ContentSocialMediaController::class)->except('show', 'delete');
+            });
+            Route::group(['prefix' => '/comment'], function () {
+                Route::resource('/types', CommentTypeController::class)->except('show', 'delete');
+                Route::resource('/statuses', CommentStatusController::class)->except('show', 'delete');
+            });
+            Route::resource('/content', ContentController::class)->except('delete');
         });
-        Route::resource('/tags', TagController::class);
-        Route::group(['prefix' => '/media'], function () {
-            Route::resource('/types', MediaTypeController::class);
-            Route::resource('/', MediaController::class);
+        Route::resource('/tags', TagController::class)->except('show', 'delete');
+        Route::group(['prefix' => '/'], function () {
+            Route::resource('/media/types', MediaTypeController::class)->except('show', 'delete');
+            Route::resource('/media', MediaController::class)->only('index');
         });
-        Route::group(['prefix' => '/comments'], function () {
-            Route::resource('/types', CommentTypeController::class);
-            Route::resource('/statuses', CommentStatusController::class);
-            Route::resource('/', CommentController::class);
-        });
-        Route::resource('/appreciations', AppreciationController::class);
     });
 
     // Settings web routes

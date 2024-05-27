@@ -94,7 +94,7 @@ class ContactResponseController extends Controller
             Mail::to($contactMessage['email'])->send(new RespondToContactMessage($contactMessage));
         }
 
-        return redirect()->route('responses.index')->with('success', $result ? $successMessage : $errorMessage);
+        return redirect()->route('pages.admin.communication.contact.responses.index')->with('success', $result ? $successMessage : $errorMessage);
     }
 
     /**

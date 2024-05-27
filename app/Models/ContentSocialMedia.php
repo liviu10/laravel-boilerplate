@@ -21,7 +21,6 @@ class ContentSocialMedia extends Model
     protected $fillable = [
         'content_id',
         'platform_name',
-        'platform_share_url',
         'full_share_url',
         'user_id',
     ];
@@ -58,7 +57,6 @@ class ContentSocialMedia extends Model
             $query = $this->select(
                 'content_id',
                 'platform_name',
-                'platform_share_url',
                 'full_share_url',
                 'user_id',
             )
@@ -90,7 +88,6 @@ class ContentSocialMedia extends Model
             return $this->create([
                 'content_id' => $payload['content_id'],
                 'platform_name' => $payload['platform_name'],
-                'platform_share_url' => $payload['platform_share_url'],
                 'full_share_url' => $payload['full_share_url'],
                 'user_id' => $payload['user_id'],
             ]);
@@ -136,7 +133,6 @@ class ContentSocialMedia extends Model
             $query = tap($this->find($id))->update([
                 'content_id' => $payload['content_id'],
                 'platform_name' => $payload['platform_name'],
-                'platform_share_url' => $payload['platform_share_url'],
                 'full_share_url' => $payload['full_share_url'],
                 'user_id' => $payload['user_id'],
             ]);

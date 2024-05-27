@@ -2,10 +2,11 @@
 
 namespace App\Http\Controllers\Management;
 
+use App\Http\Controllers\Controller;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Foundation\Application;
-use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 
 class ManagementController extends Controller
 {
@@ -51,19 +52,19 @@ class ManagementController extends Controller
                 'id' => 1,
                 'title' => __('Content'),
                 'short_description' => __('Lorem Ipsum is simply dummy text of the printing and typesetting industry.'),
-                'url' => '/admin/management/contents'
+                'url' => route('content.index')
             ],
             [
                 'id' => 2,
                 'title' => __('Tags'),
                 'short_description' => __('Lorem Ipsum is simply dummy text of the printing and typesetting industry.'),
-                'url' => '/admin/management/tags'
+                'url' => route('tags.index')
             ],
             [
                 'id' => 3,
                 'title' => __('Media'),
                 'short_description' => __('Lorem Ipsum is simply dummy text of the printing and typesetting industry.'),
-                'url' => '/admin/management/media'
+                'url' => route('media.index')
             ],
         ];
     }

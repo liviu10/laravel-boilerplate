@@ -7,6 +7,7 @@ use App\Models\ContactMessage;
 use App\Models\NewsletterSubscriber;
 use App\Models\Review;
 use App\Mail\SendReviewToUser;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Contracts\View\Factory;
@@ -134,7 +135,7 @@ class ReviewController extends Controller
         $payload['user_id'] = Auth::user()->id;
         $result = $this->review->updateRecord($payload, $id);
 
-        return redirect()->route('reviews.index')->with('success', $result ? $successMessage : $errorMessage);
+        return redirect()->route('pages.admin.communication.reviews.index')->with('success', $result ? $successMessage : $errorMessage);
     }
 
     /**

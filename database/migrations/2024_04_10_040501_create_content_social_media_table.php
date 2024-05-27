@@ -23,7 +23,6 @@ return new class extends Migration
                 'idx_contents_content_social_media_id'
             );
             $table->string('platform_name')->nullable(false);
-            $table->string('platform_share_url')->nullable(false);
             $table->string('full_share_url')->nullable(false);
             $table->timestamps();
             $table->softDeletes();

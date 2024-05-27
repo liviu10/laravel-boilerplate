@@ -116,7 +116,6 @@ class NewsletterCampaign extends Model
             $query = $this->select(
                 'id',
                 'name',
-                'description',
             )
                 ->where('is_active', true)
                 ->where('valid_from', '>=', Carbon::now()->startOfMonth())

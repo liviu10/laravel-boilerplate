@@ -1,11 +1,12 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Settings;
 
+use App\Http\Controllers\Controller;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Foundation\Application;
-use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 
 class SettingsController extends Controller
 {
@@ -40,7 +41,8 @@ class SettingsController extends Controller
                 $this->handleShortcuts()
             ]
         ];
-        return view('pages.admin-settings', compact('data'));
+
+        return view('pages.admin.settings.index', compact('data'));
     }
 
     private function handleShortcuts(): array
@@ -50,7 +52,7 @@ class SettingsController extends Controller
                 'id' => 1,
                 'title' => __('Users'),
                 'short_description' => __('Lorem Ipsum is simply dummy text of the printing and typesetting industry.'),
-                'url' => '/admin/settings/users'
+                'url' => route('users.index')
             ],
         ];
     }
