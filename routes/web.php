@@ -79,7 +79,7 @@ Route::group(['prefix' => '/admin'], function () {
             Route::group(['prefix' => '/content'], function () {
                 Route::resource('/types', ContentTypeController::class)->except('show', 'delete');
                 Route::resource('/visibilities', ContentVisibilityController::class)->except('show', 'delete');
-                Route::resource('/social', ContentSocialMediaController::class)->except('show', 'delete');
+                Route::resource('/social-media', ContentSocialMediaController::class)->except('show', 'delete');
             });
             Route::group(['prefix' => '/comment'], function () {
                 Route::resource('/types', CommentTypeController::class)->except('show', 'delete');

@@ -48,6 +48,38 @@ class CommentTypeController extends Controller
         return view('pages.admin.management.content.comments.types.index', compact('data'));
     }
 
+    private function handleFormInputs(): array
+    {
+        return [
+            [
+                'id' => 1,
+                'key' => 'label',
+                'placeholder' => __('Type'),
+                'type' => 'text',
+                'value' => ''
+            ],
+            [
+                'id' => 2,
+                'key' => 'is_active',
+                'placeholder' => __('Is active?'),
+                'type' => 'select',
+                'value' => null,
+                'options' => [
+                    [
+                        'id' => 1,
+                        'value' => 0,
+                        'label' => __('No'),
+                    ],
+                    [
+                        'id' => 2,
+                        'value' => 1,
+                        'label' => __('Yes'),
+                    ]
+                ],
+            ],
+        ];
+    }
+
     /**
      * Show the form for creating a new resource.
      */
@@ -61,34 +93,7 @@ class CommentTypeController extends Controller
                 when an unknown printer took a galley of type and scrambled it to make a type specimen book.
             '),
             'action' => 'types.store',
-            'results' => [
-                [
-                    'id' => 1,
-                    'key' => 'label',
-                    'placeholder' => __('Type'),
-                    'type' => 'text',
-                    'value' => ''
-                ],
-                [
-                    'id' => 2,
-                    'key' => 'is_active',
-                    'placeholder' => __('Is active?'),
-                    'type' => 'select',
-                    'value' => null,
-                    'options' => [
-                        [
-                            'id' => 1,
-                            'value' => 0,
-                            'label' => __('No'),
-                        ],
-                        [
-                            'id' => 2,
-                            'value' => 1,
-                            'label' => __('Yes'),
-                        ]
-                    ],
-                ],
-            ],
+            'results' => $this->handleFormInputs(),
         ];
 
         return view('pages.admin.management.content.comments.types.create', compact('data'));
@@ -135,34 +140,7 @@ class CommentTypeController extends Controller
                 when an unknown printer took a galley of type and scrambled it to make a type specimen book.
             '),
             'action' => 'types.update',
-            'results' => [
-                [
-                    'id' => 1,
-                    'key' => 'label',
-                    'placeholder' => __('Type'),
-                    'type' => 'text',
-                    'value' => ''
-                ],
-                [
-                    'id' => 2,
-                    'key' => 'is_active',
-                    'placeholder' => __('Is active?'),
-                    'type' => 'select',
-                    'value' => null,
-                    'options' => [
-                        [
-                            'id' => 1,
-                            'value' => 0,
-                            'label' => __('No'),
-                        ],
-                        [
-                            'id' => 2,
-                            'value' => 1,
-                            'label' => __('Yes'),
-                        ]
-                    ],
-                ],
-            ],
+            'results' => $this->handleFormInputs(),
         ];
 
         return view('pages.admin.management.content.comments.types.edit', compact('data'));

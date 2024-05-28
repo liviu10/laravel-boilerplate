@@ -11,7 +11,11 @@
         </div>
 
         <div class="admin__body">
+            <x-page-subtitle subtitle="{{ __('Quick access') }}" />
 
+            @include('components.admin-card-shortcuts', [
+                'shortcuts' => $data['shortcuts'][0],
+            ])
         </div>
     </div>
 @endsection

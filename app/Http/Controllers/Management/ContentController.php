@@ -42,10 +42,130 @@ class ContentController extends Controller
                 Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s,
                 when an unknown printer took a galley of type and scrambled it to make a type specimen book.
             '),
+            'shortcuts' => [
+                $this->handleShortcuts()
+            ],
             'results' => $this->content->fetchAllRecords($searchTerms),
         ];
 
         return view('pages.admin.management.content.index', compact('data'));
+    }
+
+    private function handleShortcuts(): array
+    {
+        return [
+            [
+                'id' => 1,
+                'title' => __('Content types'),
+                'short_description' => __('Lorem Ipsum is simply dummy text of the printing and typesetting industry.'),
+                'url' => url('admin/management/content/types')
+            ],
+            [
+                'id' => 2,
+                'title' => __('Content visibilities'),
+                'short_description' => __('Lorem Ipsum is simply dummy text of the printing and typesetting industry.'),
+                'url' => url('admin/management/content/visibilities')
+            ],
+            [
+                'id' => 3,
+                'title' => __('Content social'),
+                'short_description' => __('Lorem Ipsum is simply dummy text of the printing and typesetting industry.'),
+                'url' => url('admin/management/content/social-media')
+            ],
+            [
+                'id' => 4,
+                'title' => __('Comment types'),
+                'short_description' => __('Lorem Ipsum is simply dummy text of the printing and typesetting industry.'),
+                'url' => url('admin/management/comment/types')
+            ],
+            [
+                'id' => 5,
+                'title' => __('Comment statuses'),
+                'short_description' => __('Lorem Ipsum is simply dummy text of the printing and typesetting industry.'),
+                'url' => url('admin/management/comment/statuses')
+            ],
+        ];
+    }
+
+    private function handleFormInputs(): array
+    {
+        return [
+            [
+                'id' => 1,
+                'key' => 'content_visibility_id',
+                'placeholder' => __('Visibility'),
+                'type' => 'select',
+                'value' => null,
+                'options' => [], // TODO: bring the content visibilities as value and label
+            ],
+            [
+                'id' => 2,
+                'key' => 'title',
+                'placeholder' => __('Title'),
+                'type' => 'text',
+                'value' => '',
+            ],
+            [
+                'id' => 3,
+                'key' => 'content_type_id',
+                'placeholder' => __('Type'),
+                'type' => 'select',
+                'value' => null,
+                'options' => [], // TODO: bring the content types as value and label
+            ],
+            [
+                'id' => 4,
+                'key' => 'description',
+                'placeholder' => __('Description'),
+                'type' => 'text',
+                'value' => '',
+            ],
+            [
+                'id' => 5,
+                'key' => 'content',
+                'placeholder' => __('Content'),
+                'type' => 'textarea',
+                'value' => '',
+            ],
+            [
+                'id' => 6,
+                'key' => 'allow_comments',
+                'placeholder' => __('Allow comments'),
+                'type' => 'select',
+                'value' => null,
+                'options' => [
+                    [
+                        'id' => 1,
+                        'value' => 0,
+                        'label' => __('No'),
+                    ],
+                    [
+                        'id' => 2,
+                        'value' => 1,
+                        'label' => __('Yes'),
+                    ]
+                ],
+            ],
+            [
+                'id' => 7,
+                'key' => 'allow_share',
+                'placeholder' => __('Allow share'),
+                'type' => 'select',
+                'value' => null,
+                'options' => [
+                    [
+                        'id' => 1,
+                        'value' => 0,
+                        'label' => __('No'),
+                    ],
+                    [
+                        'id' => 2,
+                        'value' => 1,
+                        'label' => __('Yes'),
+                    ]
+                ],
+            ],
+        ];
     }
 
     /**
@@ -62,83 +182,7 @@ class ContentController extends Controller
                 when an unknown printer took a galley of type and scrambled it to make a type specimen book.
             '),
             'action' => 'content.store',
-            'results' => [
-                [
-                    'id' => 1,
-                    'key' => 'content_visibility_id',
-                    'placeholder' => __('Visibility'),
-                    'type' => 'select',
-                    'value' => null,
-                    'options' => [], // TODO: bring the content visibilities as value and label
-                ],
-                [
-                    'id' => 2,
-                    'key' => 'title',
-                    'placeholder' => __('Title'),
-                    'type' => 'text',
-                    'value' => '',
-                ],
-                [
-                    'id' => 3,
-                    'key' => 'content_type_id',
-                    'placeholder' => __('Type'),
-                    'type' => 'select',
-                    'value' => null,
-                    'options' => [], // TODO: bring the content types as value and label
-                ],
-                [
-                    'id' => 4,
-                    'key' => 'description',
-                    'placeholder' => __('Description'),
-                    'type' => 'text',
-                    'value' => '',
-                ],
-                [
-                    'id' => 5,
-                    'key' => 'content',
-                    'placeholder' => __('Content'),
-                    'type' => 'textarea',
-                    'value' => '',
-                ],
-                [
-                    'id' => 6,
-                    'key' => 'allow_comments',
-                    'placeholder' => __('Allow comments'),
-                    'type' => 'select',
-                    'value' => null,
-                    'options' => [
-                        [
-                            'id' => 1,
-                            'value' => 0,
-                            'label' => __('No'),
-                        ],
-                        [
-                            'id' => 2,
-                            'value' => 1,
-                            'label' => __('Yes'),
-                        ]
-                    ],
-                ],
-                [
-                    'id' => 7,
-                    'key' => 'allow_share',
-                    'placeholder' => __('Allow share'),
-                    'type' => 'select',
-                    'value' => null,
-                    'options' => [
-                        [
-                            'id' => 1,
-                            'value' => 0,
-                            'label' => __('No'),
-                        ],
-                        [
-                            'id' => 2,
-                            'value' => 1,
-                            'label' => __('Yes'),
-                        ]
-                    ],
-                ],
-            ],
+            'results' => $this->handleFormInputs(),
         ];
 
         return view('pages.admin.management.content.create', compact('data'));
@@ -203,83 +247,7 @@ class ContentController extends Controller
                 when an unknown printer took a galley of type and scrambled it to make a type specimen book.
             '),
             'action' => 'content.update',
-            'results' => [
-                [
-                    'id' => 1,
-                    'key' => 'content_visibility_id',
-                    'placeholder' => __('Visibility'),
-                    'type' => 'select',
-                    'value' => null,
-                    'options' => [], // TODO: bring the content visibilities as value and label
-                ],
-                [
-                    'id' => 2,
-                    'key' => 'title',
-                    'placeholder' => __('Title'),
-                    'type' => 'text',
-                    'value' => '',
-                ],
-                [
-                    'id' => 3,
-                    'key' => 'content_type_id',
-                    'placeholder' => __('Type'),
-                    'type' => 'select',
-                    'value' => null,
-                    'options' => [], // TODO: bring the content types as value and label
-                ],
-                [
-                    'id' => 4,
-                    'key' => 'description',
-                    'placeholder' => __('Description'),
-                    'type' => 'text',
-                    'value' => '',
-                ],
-                [
-                    'id' => 5,
-                    'key' => 'content',
-                    'placeholder' => __('Content'),
-                    'type' => 'textarea',
-                    'value' => '',
-                ],
-                [
-                    'id' => 6,
-                    'key' => 'allow_comments',
-                    'placeholder' => __('Allow comments'),
-                    'type' => 'select',
-                    'value' => null,
-                    'options' => [
-                        [
-                            'id' => 1,
-                            'value' => 0,
-                            'label' => __('No'),
-                        ],
-                        [
-                            'id' => 2,
-                            'value' => 1,
-                            'label' => __('Yes'),
-                        ]
-                    ],
-                ],
-                [
-                    'id' => 7,
-                    'key' => 'allow_share',
-                    'placeholder' => __('Allow share'),
-                    'type' => 'select',
-                    'value' => null,
-                    'options' => [
-                        [
-                            'id' => 1,
-                            'value' => 0,
-                            'label' => __('No'),
-                        ],
-                        [
-                            'id' => 2,
-                            'value' => 1,
-                            'label' => __('Yes'),
-                        ]
-                    ],
-                ],
-            ],
+            'results' => $this->handleFormInputs(),
         ];
 
         return view('pages.admin.management.content.edit', compact('data'));

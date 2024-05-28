@@ -40,10 +40,25 @@ class MediaController extends Controller
                 Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s,
                 when an unknown printer took a galley of type and scrambled it to make a type specimen book.
             '),
+            'shortcuts' => [
+                $this->handleShortcuts()
+            ],
             'results' => $this->media->fetchAllRecords($searchTerms),
         ];
 
         return view('pages.admin.management.media.index', compact('data'));
+    }
+
+    private function handleShortcuts(): array
+    {
+        return [
+            [
+                'id' => 1,
+                'title' => __('Media types'),
+                'short_description' => __('Lorem Ipsum is simply dummy text of the printing and typesetting industry.'),
+                'url' => url('admin/management/media/types')
+            ],
+        ];
     }
 
     /**

@@ -48,6 +48,38 @@ class ContactSubjectController extends Controller
         return view('pages.admin.communication.contact.subjects.index', compact('data'));
     }
 
+    private function handleFormInputs(): array
+    {
+        return [
+            [
+                'id' => 1,
+                'key' => 'label',
+                'placeholder' => __('Subject'),
+                'type' => 'text',
+                'value' => ''
+            ],
+            [
+                'id' => 2,
+                'key' => 'is_active',
+                'placeholder' => __('Is active?'),
+                'type' => 'select',
+                'value' => null,
+                'options' => [
+                    [
+                        'id' => 1,
+                        'value' => 0,
+                        'label' => __('No'),
+                    ],
+                    [
+                        'id' => 2,
+                        'value' => 1,
+                        'label' => __('Yes'),
+                    ]
+                ],
+            ],
+        ];
+    }
+
     /**
      * Show the form for creating a new resource.
      * @return View|Application|Factory
@@ -62,34 +94,7 @@ class ContactSubjectController extends Controller
                 when an unknown printer took a galley of type and scrambled it to make a type specimen book.
             '),
             'action' => 'subjects.store',
-            'results' => [
-                [
-                    'id' => 1,
-                    'key' => 'label',
-                    'placeholder' => __('Subject'),
-                    'type' => 'text',
-                    'value' => ''
-                ],
-                [
-                    'id' => 2,
-                    'key' => 'is_active',
-                    'placeholder' => __('Is active?'),
-                    'type' => 'select',
-                    'value' => null,
-                    'options' => [
-                        [
-                            'id' => 1,
-                            'value' => 0,
-                            'label' => __('No'),
-                        ],
-                        [
-                            'id' => 2,
-                            'value' => 1,
-                            'label' => __('Yes'),
-                        ]
-                    ],
-                ],
-            ],
+            'results' => $this->handleFormInputs(),
         ];
 
         return view('pages.admin.communication.contact.subjects.create', compact('data'));
@@ -99,7 +104,7 @@ class ContactSubjectController extends Controller
      * Store a newly created resource in storage.
      */
     public function store(Request $request)
-    {   
+    {
         $validateRequest = [
             'label' => 'required|string|unique:contact_subjects',
             'is_active' => 'sometimes|nullable|boolean',
@@ -151,34 +156,7 @@ class ContactSubjectController extends Controller
             '),
             'action' => 'subjects.update',
             'rowId' => $id,
-            'results' => [
-                [
-                    'id' => 1,
-                    'key' => 'label',
-                    'placeholder' => __('Subject'),
-                    'type' => 'text',
-                    'value' => ''
-                ],
-                [
-                    'id' => 2,
-                    'key' => 'is_active',
-                    'placeholder' => __('Is active?'),
-                    'type' => 'select',
-                    'value' => null,
-                    'options' => [
-                        [
-                            'id' => 1,
-                            'value' => 0,
-                            'label' => __('No'),
-                        ],
-                        [
-                            'id' => 2,
-                            'value' => 1,
-                            'label' => __('Yes'),
-                        ]
-                    ],
-                ],
-            ],
+            'results' => $this->handleFormInputs(),
         ];
 
         foreach ($data['results'] as &$result) {

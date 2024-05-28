@@ -49,6 +49,97 @@ class NewsletterCampaignController extends Controller
         return view('pages.admin.communication.newsletter.campaigns.index', compact('data'));
     }
 
+    private function handleFormInputs(): array
+    {
+        return [
+            [
+                'id' => 1,
+                'key' => 'name',
+                'placeholder' => __('Name'),
+                'type' => 'text',
+                'value' => ''
+            ],
+            [
+                'id' => 2,
+                'key' => 'description',
+                'placeholder' => __('Description'),
+                'type' => 'text',
+                'value' => ''
+            ],
+            [
+                'id' => 3,
+                'key' => 'is_active',
+                'placeholder' => __('Is active?'),
+                'type' => 'select',
+                'value' => null,
+                'options' => [
+                    [
+                        'id' => 1,
+                        'value' => 0,
+                        'label' => __('No'),
+                    ],
+                    [
+                        'id' => 2,
+                        'value' => 1,
+                        'label' => __('Yes'),
+                    ]
+                ],
+            ],
+            [
+                'id' => 4,
+                'key' => 'valid_from',
+                'placeholder' => __('Valid from'),
+                'type' => 'datetime-local',
+                'value' => '',
+                'min' => Carbon::now()->startOfYear()->toDateTimeLocalString(),
+            ],
+            [
+                'id' => 5,
+                'key' => 'valid_to',
+                'placeholder' => __('Valid to'),
+                'type' => 'datetime-local',
+                'value' => '',
+                'min' => Carbon::now()->startOfYear()->toDateTimeLocalString(),
+            ],
+            [
+                'id' => 5,
+                'key' => 'occur_times',
+                'placeholder' => __('Occur times'),
+                'type' => 'integer',
+                'value' => 0,
+                'min' => 1,
+                'max' => 30,
+            ],
+            [
+                'id' => 6,
+                'key' => 'occur_week',
+                'placeholder' => __('Occur week'),
+                'type' => 'integer',
+                'value' => 0,
+                'min' => 1,
+                'max' => 7,
+            ],
+            [
+                'id' => 7,
+                'key' => 'occur_day',
+                'placeholder' => __('Occur day'),
+                'type' => 'integer',
+                'value' => 0,
+                'min' => 1,
+                'max' => 31,
+            ],
+            [
+                'id' => 8,
+                'key' => 'occur_hour',
+                'placeholder' => __('Occur hour'),
+                'type' => 'time',
+                'value' => '',
+                'min' => '00:00',
+                'max' => '23:59',
+            ],
+        ];
+    }
+
     /**
      * Show the form for creating a new resource.
      * @return View|Application|Factory
@@ -63,93 +154,7 @@ class NewsletterCampaignController extends Controller
                 when an unknown printer took a galley of type and scrambled it to make a type specimen book.
             '),
             'action' => 'campaigns.store',
-            'results' => [
-                [
-                    'id' => 1,
-                    'key' => 'name',
-                    'placeholder' => __('Name'),
-                    'type' => 'text',
-                    'value' => ''
-                ],
-                [
-                    'id' => 2,
-                    'key' => 'description',
-                    'placeholder' => __('Description'),
-                    'type' => 'text',
-                    'value' => ''
-                ],
-                [
-                    'id' => 3,
-                    'key' => 'is_active',
-                    'placeholder' => __('Is active?'),
-                    'type' => 'select',
-                    'value' => null,
-                    'options' => [
-                        [
-                            'id' => 1,
-                            'value' => 0,
-                            'label' => __('No'),
-                        ],
-                        [
-                            'id' => 2,
-                            'value' => 1,
-                            'label' => __('Yes'),
-                        ]
-                    ],
-                ],
-                [
-                    'id' => 4,
-                    'key' => 'valid_from',
-                    'placeholder' => __('Valid from'),
-                    'type' => 'datetime-local',
-                    'value' => '',
-                    'min' => Carbon::now()->startOfYear()->toDateTimeLocalString(),
-                ],
-                [
-                    'id' => 5,
-                    'key' => 'valid_to',
-                    'placeholder' => __('Valid to'),
-                    'type' => 'datetime-local',
-                    'value' => '',
-                    'min' => Carbon::now()->startOfYear()->toDateTimeLocalString(),
-                ],
-                [
-                    'id' => 5,
-                    'key' => 'occur_times',
-                    'placeholder' => __('Occur times'),
-                    'type' => 'integer',
-                    'value' => 0,
-                    'min' => 1,
-                    'max' => 30,
-                ],
-                [
-                    'id' => 6,
-                    'key' => 'occur_week',
-                    'placeholder' => __('Occur week'),
-                    'type' => 'integer',
-                    'value' => 0,
-                    'min' => 1,
-                    'max' => 7,
-                ],
-                [
-                    'id' => 7,
-                    'key' => 'occur_day',
-                    'placeholder' => __('Occur day'),
-                    'type' => 'integer',
-                    'value' => 0,
-                    'min' => 1,
-                    'max' => 31,
-                ],
-                [
-                    'id' => 8,
-                    'key' => 'occur_hour',
-                    'placeholder' => __('Occur hour'),
-                    'type' => 'time',
-                    'value' => '',
-                    'min' => '00:00',
-                    'max' => '23:59',
-                ],
-            ],
+            'results' => $this->handleFormInputs(),
         ];
 
         return view('pages.admin.communication.newsletter.campaigns.create', compact('data'));
@@ -213,93 +218,7 @@ class NewsletterCampaignController extends Controller
                 when an unknown printer took a galley of type and scrambled it to make a type specimen book.
             '),
             'action' => 'campaigns.update',
-            'results' => [
-                [
-                    'id' => 1,
-                    'key' => 'name',
-                    'placeholder' => __('Name'),
-                    'type' => 'text',
-                    'value' => ''
-                ],
-                [
-                    'id' => 2,
-                    'key' => 'description',
-                    'placeholder' => __('Description'),
-                    'type' => 'text',
-                    'value' => ''
-                ],
-                [
-                    'id' => 3,
-                    'key' => 'is_active',
-                    'placeholder' => __('Is active?'),
-                    'type' => 'select',
-                    'value' => null,
-                    'options' => [
-                        [
-                            'id' => 1,
-                            'value' => 0,
-                            'label' => __('No'),
-                        ],
-                        [
-                            'id' => 2,
-                            'value' => 1,
-                            'label' => __('Yes'),
-                        ]
-                    ],
-                ],
-                [
-                    'id' => 4,
-                    'key' => 'valid_from',
-                    'placeholder' => __('Valid from'),
-                    'type' => 'datetime-local',
-                    'value' => '',
-                    'min' => Carbon::now()->startOfYear()->toDateTimeLocalString(),
-                ],
-                [
-                    'id' => 5,
-                    'key' => 'valid_to',
-                    'placeholder' => __('Valid to'),
-                    'type' => 'datetime-local',
-                    'value' => '',
-                    'min' => Carbon::now()->startOfYear()->toDateTimeLocalString(),
-                ],
-                [
-                    'id' => 5,
-                    'key' => 'occur_times',
-                    'placeholder' => __('Occur times'),
-                    'type' => 'integer',
-                    'value' => 0,
-                    'min' => 1,
-                    'max' => 30,
-                ],
-                [
-                    'id' => 6,
-                    'key' => 'occur_week',
-                    'placeholder' => __('Occur week'),
-                    'type' => 'integer',
-                    'value' => 0,
-                    'min' => 1,
-                    'max' => 7,
-                ],
-                [
-                    'id' => 7,
-                    'key' => 'occur_day',
-                    'placeholder' => __('Occur day'),
-                    'type' => 'integer',
-                    'value' => 0,
-                    'min' => 1,
-                    'max' => 31,
-                ],
-                [
-                    'id' => 8,
-                    'key' => 'occur_hour',
-                    'placeholder' => __('Occur hour'),
-                    'type' => 'time',
-                    'value' => '',
-                    'min' => '00:00',
-                    'max' => '23:59',
-                ],
-            ],
+            'results' => $this->handleFormInputs(),
         ];
 
         return view('pages.admin.communication.newsletter.campaigns.edit', compact('data'));

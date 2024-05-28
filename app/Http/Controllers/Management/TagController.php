@@ -46,6 +46,34 @@ class TagController extends Controller
         return view('pages.admin.management.tags.index', compact('data'));
     }
 
+    private function handleFormInputs(): array
+    {
+        return [
+            [
+                'id' => 1,
+                'key' => 'content_id',
+                'placeholder' => __('Content'),
+                'type' => 'select',
+                'value' => null,
+                'options' => [], // TODO: bring the contents as value and label
+            ],
+            [
+                'id' => 2,
+                'key' => 'name',
+                'placeholder' => __('Name'),
+                'type' => 'text',
+                'value' => '',
+            ],
+            [
+                'id' => 3,
+                'key' => 'description',
+                'placeholder' => __('Description'),
+                'type' => 'text',
+                'value' => '',
+            ],
+        ];
+    }
+
     /**
      * Show the form for creating a new resource.
      * @return View|Application|Factory
@@ -60,30 +88,7 @@ class TagController extends Controller
                 when an unknown printer took a galley of type and scrambled it to make a type specimen book.
             '),
             'action' => 'tags.store',
-            'results' => [
-                [
-                    'id' => 1,
-                    'key' => 'content_id',
-                    'placeholder' => __('Content'),
-                    'type' => 'select',
-                    'value' => null,
-                    'options' => [], // TODO: bring the contents as value and label
-                ],
-                [
-                    'id' => 2,
-                    'key' => 'name',
-                    'placeholder' => __('Name'),
-                    'type' => 'text',
-                    'value' => '',
-                ],
-                [
-                    'id' => 3,
-                    'key' => 'description',
-                    'placeholder' => __('Description'),
-                    'type' => 'text',
-                    'value' => '',
-                ],
-            ],
+            'results' => $this->handleFormInputs(),
         ];
 
         return view('pages.admin.management.tags.create', compact('data'));
@@ -131,30 +136,7 @@ class TagController extends Controller
                 when an unknown printer took a galley of type and scrambled it to make a type specimen book.
             '),
             'action' => 'tags.update',
-            'results' => [
-                [
-                    'id' => 1,
-                    'key' => 'content_id',
-                    'placeholder' => __('Content'),
-                    'type' => 'select',
-                    'value' => null,
-                    'options' => [], // TODO: bring the contents as value and label
-                ],
-                [
-                    'id' => 2,
-                    'key' => 'name',
-                    'placeholder' => __('Name'),
-                    'type' => 'text',
-                    'value' => '',
-                ],
-                [
-                    'id' => 3,
-                    'key' => 'description',
-                    'placeholder' => __('Description'),
-                    'type' => 'text',
-                    'value' => '',
-                ],
-            ],
+            'results' => $this->handleFormInputs(),
         ];
 
         return view('pages.admin.management.tags.edit', compact('data'));
