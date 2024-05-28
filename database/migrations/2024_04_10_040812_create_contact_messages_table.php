@@ -28,6 +28,7 @@ return new class extends Migration
             $table->string('message')->nullable(false);
             $table->boolean('privacy_policy')->default(false);
             $table->boolean('terms_and_conditions')->default(false);
+            $table->boolean('data_protection')->default(false);
             $table->timestamps();
             $table->softDeletes();
             $table->integer('user_id')->nullable();

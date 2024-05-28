@@ -31,7 +31,7 @@ class ContactMessageController extends Controller
     public function index(Request $request): View|Application|Factory
     {
         $searchTerms = array_filter($request->all(), function ($value, $key) {
-            return !is_null($value) || $key === 'privacy_policy' || $key === 'terms_and_conditions';
+            return !is_null($value) || $key === 'privacy_policy' || $key === 'terms_and_conditions' || $key === 'data_protection';
         }, ARRAY_FILTER_USE_BOTH);
 
         $data = [

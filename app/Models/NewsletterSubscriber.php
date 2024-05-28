@@ -23,6 +23,7 @@ class NewsletterSubscriber extends Model
         'email',
         'privacy_policy',
         'terms_and_conditions',
+        'data_protection',
         'valid_email',
     ];
 
@@ -38,6 +39,7 @@ class NewsletterSubscriber extends Model
         'newsletter_campaign_id' => 'integer',
         'privacy_policy' => 'boolean',
         'terms_and_conditions' => 'boolean',
+        'data_protection' => 'boolean',
         'valid_email' => 'boolean',
         'created_at' => 'datetime:d.m.Y H:i',
         'updated_at' => 'datetime:d.m.Y H:i',
@@ -47,6 +49,7 @@ class NewsletterSubscriber extends Model
     protected $attributes = [
         'privacy_policy' => false,
         'terms_and_conditions' => false,
+        'data_protection' => false,
         'valid_email' => false,
     ];
 
@@ -65,6 +68,7 @@ class NewsletterSubscriber extends Model
                 'email',
                 'privacy_policy',
                 'terms_and_conditions',
+                'data_protection',
                 'valid_email',
             )->with([
                 'newsletter_campaign' => function ($query) {
@@ -78,7 +82,7 @@ class NewsletterSubscriber extends Model
             if (!empty($search)) {
                 foreach ($search as $field => $value) {
                     if ($field === 'id' || $field === 'newsletter_campaign_id' ||
-                        $field === 'privacy_policy' || $field === 'terms_and_conditions' || $field === 'valid_email') {
+                        $field === 'privacy_policy' || $field === 'terms_and_conditions' || $field === 'data_protection' || $field === 'valid_email') {
                         $query->where($field, '=', $value);
                     } elseif ($field === 'newsletter_campaign_ids') {
                         $query->whereIn('newsletter_campaign_id', $value);
@@ -104,6 +108,7 @@ class NewsletterSubscriber extends Model
                 'email',
                 'privacy_policy',
                 'terms_and_conditions',
+                'data_protection',
                 'valid_email',
             )->with([
                 'newsletter_campaign' => function ($query) {
@@ -146,6 +151,7 @@ class NewsletterSubscriber extends Model
                 'email' => $payload['email'],
                 'privacy_policy' => $payload['privacy_policy'],
                 'terms_and_conditions' => $payload['terms_and_conditions'],
+                'data_protection' => $payload['data_protection'],
                 'valid_email' => $payload['valid_email'],
             ]);
         } catch (Exception $exception) {
@@ -159,18 +165,17 @@ class NewsletterSubscriber extends Model
             return $this->select('*')
                 ->where('id', '=', $id)
                 ->with([
-                    'newsletter_subscribers' => function ($query) {
+                    'newsletter_campaign' => function ($query) {
                         $query->select(
                             'id',
-                            'newsletter_campaign_id',
                             'name',
-                            'is_active',
+                            'description',
                             'valid_from',
                             'valid_to',
                             'occur_times',
                             'occur_week',
                             'occur_day',
-                            'occur_hour',
+                            'occur_hour'
                         )->with([
                             'user' => function ($query) {
                                 $query->select('id', 'full_name');
@@ -193,6 +198,7 @@ class NewsletterSubscriber extends Model
                 'email' => $payload['email'],
                 'privacy_policy' => $payload['privacy_policy'],
                 'terms_and_conditions' => $payload['terms_and_conditions'],
+                'data_protection' => $payload['data_protection'],
                 'valid_email' => $payload['valid_email'],
             ]);
 

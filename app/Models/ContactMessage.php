@@ -27,6 +27,7 @@ class ContactMessage extends Model
         'message',
         'privacy_policy',
         'terms_and_conditions',
+        'data_protection',
         'user_id',
     ];
 
@@ -42,6 +43,7 @@ class ContactMessage extends Model
         'contact_subject_id' => 'integer',
         'privacy_policy' => 'boolean',
         'terms_and_conditions' => 'boolean',
+        'data_protection' => 'boolean',
         'created_at' => 'datetime:d.m.Y H:i',
         'updated_at' => 'datetime:d.m.Y H:i',
         'deleted_at' => 'datetime:d.m.Y H:i',
@@ -51,6 +53,7 @@ class ContactMessage extends Model
     protected $attributes = [
         'privacy_policy' => false,
         'terms_and_conditions' => false,
+        'data_protection' => false,
     ];
 
     public function contact_subject(): BelongsTo
@@ -74,6 +77,7 @@ class ContactMessage extends Model
                 'phone',
                 'privacy_policy',
                 'terms_and_conditions',
+                'data_protection',
             )->with([
                 'contact_subject' => function ($query) {
                     $query->select('id', 'label')->where('is_active', true);
@@ -85,7 +89,7 @@ class ContactMessage extends Model
 
             if (!empty($search)) {
                 foreach ($search as $field => $value) {
-                    if ($field === 'id' || $field === 'contact_subject_id' || $field === 'privacy_policy' || $field === 'terms_and_conditions') {
+                    if ($field === 'id' || $field === 'contact_subject_id' || $field === 'privacy_policy' || $field === 'terms_and_conditions' || $field === 'data_protection') {
                         $query->where($field, '=', $value);
                     } elseif ($field === 'contact_message_ids') {
                         $query->whereIn('id', $value);
@@ -112,6 +116,7 @@ class ContactMessage extends Model
                 'message' => $payload['message'],
                 'privacy_policy' => $payload['privacy_policy'],
                 'terms_and_conditions' => $payload['terms_and_conditions'],
+                'data_protection' => $payload['data_protection'],
                 'user_id' => $payload['user_id'],
             ]);
         } catch (Exception $exception) {
@@ -157,6 +162,7 @@ class ContactMessage extends Model
                 'message' => $payload['message'],
                 'privacy_policy' => $payload['privacy_policy'],
                 'terms_and_conditions' => $payload['terms_and_conditions'],
+                'data_protection' => $payload['data_protection'],
                 'user_id' => $payload['user_id'],
             ]);
 
