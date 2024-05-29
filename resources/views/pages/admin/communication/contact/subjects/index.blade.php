@@ -24,7 +24,8 @@
                 />
             </div>
             @endif
-            {{ var_dump($data['results']) }}
+
+            {{ $data['results'] }}
         </div>
     </div>
 @endsection

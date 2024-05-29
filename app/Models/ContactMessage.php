@@ -78,13 +78,17 @@ class ContactMessage extends Model
                 'privacy_policy',
                 'terms_and_conditions',
                 'data_protection',
-            )->with([
+            )
+            ->with([
                 'contact_subject' => function ($query) {
-                    $query->select('id', 'label')->where('is_active', true);
+                    $query->select('id', 'label')
+                        ->where('is_active', true)
+                        ->with([
+                            'user' => function ($query) {
+                                $query->select('id', 'full_name');
+                            }
+                        ]);
                 },
-                'user' => function ($query) {
-                    $query->select('id', 'full_name');
-                }
             ]);
 
             if (!empty($search)) {
@@ -99,7 +103,7 @@ class ContactMessage extends Model
                 }
             }
 
-            return $query->paginate(15);
+            return $query->get();
         } catch (Exception $exception) {
             return $exception;
         }

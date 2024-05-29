@@ -1,7 +1,12 @@
 <?php
 
-// Guest controller
+use Illuminate\Support\Facades\Route;
+
+// Guest controllers
 use App\Http\Controllers\GuestController;
+
+// Auth controllers
+use Illuminate\Support\Facades\Auth;
 
 // Admin controller
 use App\Http\Controllers\AdminController;
@@ -10,7 +15,7 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\Communication\CommunicationController;
 use App\Http\Controllers\Communication\ContactSubjectController;
 use App\Http\Controllers\Communication\ContactMessageController;
-use App\Http\Controllers\Communication\ContactResponseController;
+// use App\Http\Controllers\Communication\ContactResponseController;
 use App\Http\Controllers\Communication\NewsletterCampaignController;
 use App\Http\Controllers\Communication\NewsletterSubscriberController;
 use App\Http\Controllers\Communication\ReviewController;
@@ -30,9 +35,6 @@ use App\Http\Controllers\Management\TagController;
 // Settings controllers
 use App\Http\Controllers\Settings\SettingsController;
 use App\Http\Controllers\Settings\UserController;
-
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Route;
 
 /*
 |--------------------------------------------------------------------------
@@ -61,8 +63,9 @@ Route::group(['prefix' => '/admin'], function () {
         Route::get('/', [CommunicationController::class, 'index'])->name('communication.index');
         Route::group(['prefix' => '/contact'], function () {
             Route::resource('/subjects', ContactSubjectController::class)->except('delete');
+            Route::post('/messages/respond', [ContactMessageController::class, 'messageResponse'])->name('messages.messageResponse');
             Route::resource('/messages', ContactMessageController::class)->only('index', 'show');
-            Route::resource('/responses', ContactResponseController::class)->only('store');
+            // Route::resource('/responses', ContactResponseController::class)->only('store');
         });
         Route::group(['prefix' => '/newsletter'], function () {
             Route::resource('/campaigns', NewsletterCampaignController::class)->except('delete');

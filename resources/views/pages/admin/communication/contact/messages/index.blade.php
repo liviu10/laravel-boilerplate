@@ -10,6 +10,8 @@
             </x-page-description>
         </div>
 
-        <div class="admin__body"></div>
+        <div class="admin__body">
+            {{ $data['results'] }}
+        </div>
     </div>
 @endsection

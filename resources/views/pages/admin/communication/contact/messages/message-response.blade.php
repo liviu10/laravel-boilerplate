@@ -11,8 +11,6 @@
         </div>
 
         <div class="admin__body">
-            {{ $data['results'] }}
-
             @if ($errors->any())
                 <div class="alert alert-danger alert-dismissible fade show" role="alert">
                     <p class="my-0">
@@ -39,18 +37,32 @@
                 enctype="multipart/form-data"
             >
                 @csrf
-                <input type="hidden" name="results" value="{{ $data['results'] }}">
                 <div class="">
-                    @foreach ($data['form'] as $input)
+                    @foreach ($data['results'] as $input)
                         <div class="form-floating mb-3">
-                            <textarea
+                            @if ($input['type'] === 'text')
+                            <input
                                 class="form-control"
                                 id="{{ $input['key'] }}"
                                 name="{{ $input['key'] }}"
                                 placeholder="{{ $input['placeholder'] }}"
                                 type="{{ $input['type'] }}"
                                 value="{{ $input['value'] }}"
-                            ></textarea>
+                            >
+                            @else
+                            <select
+                                class="form-select"
+                                id="{{ $input['key'] }}"
+                                name="{{ $input['key'] }}"
+                            >
+                                <option value="">{{ __('-- Choose an option --') }}</option>
+                                @foreach ($input['options'] as $option)
+                                    <option value="{{ $option['value'] }}">
+                                        {{ $option['label'] }}
+                                    </option>
+                                @endforeach
+                            </select>
+                            @endif
                             <label for="{{ $input['key'] }}">
                                 {{ $input['placeholder'] }}
                             </label>

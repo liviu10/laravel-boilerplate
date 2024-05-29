@@ -29,7 +29,7 @@
                     />
                 </div>
             @endif
-            
+
             <form
                 id="createForm"
                 method="POST"
@@ -49,7 +49,7 @@
                                 type="{{ $input['type'] }}"
                                 value="{{ $input['value'] }}"
                             >
-                            @else
+                            @elseif ($input['type'] === 'select')
                             <select
                                 class="form-select"
                                 id="{{ $input['key'] }}"

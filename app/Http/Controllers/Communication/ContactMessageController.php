@@ -4,6 +4,10 @@ namespace App\Http\Controllers\Communication;
 
 use App\Http\Controllers\Controller;
 use App\Models\ContactMessage;
+use App\Models\ContactResponse;
+use App\Mail\RespondToContactMessage;
+use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Foundation\Application;
@@ -12,6 +16,7 @@ use Illuminate\Http\Request;
 class ContactMessageController extends Controller
 {
     protected $contactMessage;
+    protected $contactResponse;
 
     /**
      * Create a new controller instance.
@@ -22,6 +27,7 @@ class ContactMessageController extends Controller
     {
         $this->middleware('auth');
         $this->contactMessage = new ContactMessage();
+        $this->contactResponse = new ContactResponse();
     }
 
     /**
@@ -77,6 +83,16 @@ class ContactMessageController extends Controller
                 Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s,
                 when an unknown printer took a galley of type and scrambled it to make a type specimen book.
             '),
+            'action' => 'messages.messageResponse',
+            'form' => [
+                [
+                    'id' => 1,
+                    'key' => 'message',
+                    'placeholder' => __('Response'),
+                    'type' => 'textarea',
+                    'value' => '',
+                ],
+            ],
             'results' => $this->contactMessage->fetchSingleRecord($id),
         ];
 
@@ -106,5 +122,30 @@ class ContactMessageController extends Controller
     public function destroy(string $id): void
     {
         abort(405, __('The action is not allowed.'));
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     */
+    public function messageResponse(Request $request)
+    {
+        $validateRequest = [
+            'contact_message_id' => 'required|integer',
+            'message' => 'required|string',
+        ];
+
+        dd(json_decode($request->input('results'), true)[0]);
+
+        $request->validate($validateRequest);
+        $payload = array_filter($request->all());
+        $payload['user_id'] = Auth::user()->id;
+        $result = $this->contactResponse->saveRecord($payload);
+
+        if ($result instanceof ContactResponse) {
+            $contactMessage = $this->contactResponse->fetchSingleRecord($payload['contact_message_id'])->toArray();
+            Mail::to($contactMessage['email'])->send(new RespondToContactMessage($contactMessage));
+        }
+
+        return redirect()->route('messages.index')->with('success', $result);
     }
 }
