@@ -16,6 +16,8 @@
             @include('components.admin-card-shortcuts', [
                 'shortcuts' => $data['shortcuts'][0],
             ])
+
+            {{ $data['results'] }}
         </div>
     </div>
 @endsection
