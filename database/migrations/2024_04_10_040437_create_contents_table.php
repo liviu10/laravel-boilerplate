@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id()->index('idx_id');
             $table->foreignId('content_visibility_id')
                 ->constrained()
-                ->on('content_visibility')
+                ->on('content_visibilities')
                 ->onDelete('cascade')
                 ->onUpdate('cascade');
             $table->index(

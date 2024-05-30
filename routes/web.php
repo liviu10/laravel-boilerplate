@@ -15,7 +15,6 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\Communication\CommunicationController;
 use App\Http\Controllers\Communication\ContactSubjectController;
 use App\Http\Controllers\Communication\ContactMessageController;
-// use App\Http\Controllers\Communication\ContactResponseController;
 use App\Http\Controllers\Communication\NewsletterCampaignController;
 use App\Http\Controllers\Communication\NewsletterSubscriberController;
 use App\Http\Controllers\Communication\ReviewController;
@@ -25,7 +24,7 @@ use App\Http\Controllers\Management\ManagementController;
 use App\Http\Controllers\Management\CommentStatusController;
 use App\Http\Controllers\Management\CommentTypeController;
 use App\Http\Controllers\Management\ContentController;
-use App\Http\Controllers\Management\ContentSocialMediaController;
+use App\Http\Controllers\Management\ContentCategoryController;
 use App\Http\Controllers\Management\ContentTypeController;
 use App\Http\Controllers\Management\ContentVisibilityController;
 use App\Http\Controllers\Management\MediaController;
@@ -65,7 +64,6 @@ Route::group(['prefix' => '/admin'], function () {
             Route::resource('/subjects', ContactSubjectController::class)->except('delete');
             Route::post('/messages/respond', [ContactMessageController::class, 'messageResponse'])->name('messages.messageResponse');
             Route::resource('/messages', ContactMessageController::class)->only('index', 'show');
-            // Route::resource('/responses', ContactResponseController::class)->only('store');
         });
         Route::group(['prefix' => '/newsletter'], function () {
             Route::resource('/campaigns', NewsletterCampaignController::class)->except('delete');
@@ -80,9 +78,9 @@ Route::group(['prefix' => '/admin'], function () {
         Route::get('/', [ManagementController::class, 'index'])->name('management.index');
         Route::group(['prefix' => '/'], function () {
             Route::group(['prefix' => '/content'], function () {
+                Route::resource('/categories', ContentCategoryController::class)->except('show', 'delete');
                 Route::resource('/types', ContentTypeController::class)->except('show', 'delete');
                 Route::resource('/visibilities', ContentVisibilityController::class)->except('show', 'delete');
-                Route::resource('/social-media', ContentSocialMediaController::class)->except('show', 'delete');
             });
             Route::group(['prefix' => '/comment'], function () {
                 Route::resource('/types', CommentTypeController::class)->except('show', 'delete');

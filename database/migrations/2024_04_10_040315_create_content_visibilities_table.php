@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('content_visibility', function (Blueprint $table) {
+        Schema::create('content_visibilities', function (Blueprint $table) {
             $table->id()->index('idx_id');
             $table->string('value')->nullable(false);
             $table->string('label')->nullable(false);
@@ -34,8 +34,8 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('content_visibility');
-        Schema::table('content_visibility', function (Blueprint $table) {
+        Schema::dropIfExists('content_visibilities');
+        Schema::table('content_visibilities', function (Blueprint $table) {
             $table->dropForeign(['user_id']);
             $table->dropColumn('user_id');
             $table->dropIndex('idx_users_content_visibility_id');

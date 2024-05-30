@@ -61,6 +61,11 @@ class Content extends Model
         return $this->belongsTo('App\Models\User');
     }
 
+    public function content_category(): BelongsTo
+    {
+        return $this->belongsTo('App\Models\ContentCategory');
+    }
+
     public function content_visibility(): BelongsTo
     {
         return $this->belongsTo('App\Models\ContentVisibility');
@@ -109,6 +114,9 @@ class Content extends Model
                 'user_id',
             )
                 ->with([
+                    'content_category' => function ($query) {
+                        $query->select('id', 'label')->where('is_active', true);
+                    },
                     'content_visibility' => function ($query) {
                         $query->select('id', 'label')->where('is_active', true);
                     },
@@ -122,7 +130,7 @@ class Content extends Model
 
             if (!empty($search)) {
                 foreach ($search as $field => $value) {
-                    if ($field === 'id' || $field === 'content_visibility_id'
+                    if ($field === 'id' || $field === 'content_category_id' || $field === 'content_visibility_id'
                         || $field === 'content_type_id' || $field === 'user_id') {
                         $query->where($field, '=', $value);
                     } else {
@@ -164,6 +172,9 @@ class Content extends Model
             return $this->select('*')
                 ->where('id', '=', $id)
                 ->with([
+                    'content_category' => function ($query) {
+                        $query->select('id', 'label')->where('is_active', true);
+                    },
                     'content_visibility' => function ($query) {
                         $query->select('id', 'label')->where('is_active', true);
                     },

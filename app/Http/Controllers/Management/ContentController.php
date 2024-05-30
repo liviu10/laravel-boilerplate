@@ -4,15 +4,18 @@ namespace App\Http\Controllers\Management;
 
 use App\Http\Controllers\Controller;
 use App\Models\Content;
+use App\Models\ContentSocialMedia;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Foundation\Application;
 use Illuminate\Http\Request;
+use Exception;
 
 class ContentController extends Controller
 {
     protected $content;
+    protected $contentSocialMedia;
 
     /**
      * Create a new controller instance.
@@ -23,6 +26,7 @@ class ContentController extends Controller
     {
         $this->middleware('auth');
         $this->content = new Content();
+        $this->contentSocialMedia = new ContentSocialMedia();
     }
 
     /**
@@ -56,21 +60,21 @@ class ContentController extends Controller
         return [
             [
                 'id' => 1,
-                'title' => __('Content types'),
+                'title' => __('Category'),
+                'short_description' => __('Lorem Ipsum is simply dummy text of the printing and typesetting industry.'),
+                'url' => url('admin/management/content/categories')
+            ],
+            [
+                'id' => 2,
+                'title' => __('Types'),
                 'short_description' => __('Lorem Ipsum is simply dummy text of the printing and typesetting industry.'),
                 'url' => url('admin/management/content/types')
             ],
             [
-                'id' => 2,
-                'title' => __('Content visibilities'),
+                'id' => 3,
+                'title' => __('Visibility'),
                 'short_description' => __('Lorem Ipsum is simply dummy text of the printing and typesetting industry.'),
                 'url' => url('admin/management/content/visibilities')
-            ],
-            [
-                'id' => 3,
-                'title' => __('Content social'),
-                'short_description' => __('Lorem Ipsum is simply dummy text of the printing and typesetting industry.'),
-                'url' => url('admin/management/content/social-media')
             ],
             [
                 'id' => 4,
@@ -210,8 +214,40 @@ class ContentController extends Controller
             '/' . str_replace(' ', '-', strtolower($payload['title']));
         $payload['user_id'] = Auth::user()->id;
         $result = $this->content->createRecord($payload);
+        $this->contentSocialMedia->insert($this->handleSocialMediaPayload($result));
 
         return redirect()->route('contents.index')->with('success', $result);
+    }
+
+    private function handleSocialMediaPayload(Content|Exception $result): array|bool
+    {
+        if ($result instanceof Content) {
+            $socialMediaPlatforms = ['Facebook', 'Twitter', 'Linkedin'];
+            $socialMediaPayload = [];
+            foreach ($socialMediaPlatforms as $platform) {
+                $socialMediaPayload = [
+                    'content_id' => $result->id,
+                    'platform_name' => $platform,
+                    'user_id' => Auth::user()->id,
+                ];
+                switch ($platform) {
+                    case 'Facebook':
+                        $socialMediaPayload['full_share_url'] = 'https://www.facebook.com/sharer/sharer.php?u=' . urlencode($result->content_url) . '&src=sdkpreparse';
+                        break;
+                    case 'Twitter':
+                        $socialMediaPayload['full_share_url'] = 'http://twitter.com/share?text=' . $result->title . '&url=' . urlencode($result->content_url);
+                        break;
+                    case 'Linkedin':
+                        $socialMediaPayload['full_share_url'] = 'https://www.linkedin.com/shareArticle?mini=true&url=' . urlencode($result->content_url) . '&title=' . $result->title .'&source=LinkedIn';
+                        break;
+                }
+                $socialMediaPayloads[] = $socialMediaPayload;
+            }
+
+            return $socialMediaPayload;
+        } else {
+            return false;
+        }
     }
 
     /**
@@ -275,7 +311,10 @@ class ContentController extends Controller
             '/' . str_replace(' ', '-', strtolower($payload['title']));
         $payload['user_id'] = Auth::user()->id;
         $selectedRecord = $this->content->fetchSingleRecord($id);
-        $result = $this->content->createRecord($payload);
+        $result = $this->content->updateRecord($payload, $id);
+        foreach($this->handleSocialMediaPayload($result) as $payload) {
+            $this->contentSocialMedia->updateRecord($payload, $id);
+        }
 
         return redirect()->route('contents.index')->with('success', $result);
     }
