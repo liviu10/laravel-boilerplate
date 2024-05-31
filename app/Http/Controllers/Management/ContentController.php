@@ -13,6 +13,7 @@ use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Foundation\Application;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
 use Exception;
 
 class ContentController extends Controller
@@ -214,7 +215,6 @@ class ContentController extends Controller
      */
     public function store(Request $request)
     {
-        // dd($request->all());
         $validateRequest = [
             'content_category_id' => 'required|integer',
             'content_visibility_id' => 'required|integer',
@@ -222,38 +222,18 @@ class ContentController extends Controller
             'content_type_id' => 'required|integer',
             'description' => 'sometimes|string|min:3|max:255',
             'content' => 'required|string',
-            'allow_comments' => [
-                'required',
-                function ($attribute, $value, $fail) {
-                    if (!is_bool($value)) {
-                        $value = filter_var($value, FILTER_VALIDATE_BOOLEAN);
-                    }
-                    if (!is_bool($value)) {
-                        $fail($attribute . ' must be a boolean.');
-                    }
-                }
-            ],
-            'allow_share' =>[
-                'required',
-                function ($attribute, $value, $fail) {
-                    if (!is_bool($value)) {
-                        $value = filter_var($value, FILTER_VALIDATE_BOOLEAN);
-                    }
-                    if (!is_bool($value)) {
-                        $fail($attribute . ' must be a boolean.');
-                    }
-                }
-            ],
+            'allow_comments' => 'required|boolean',
+            'allow_share' => 'required|boolean',
         ];
 
         $request->validate($validateRequest);
         $payload = array_filter($request->all());
         $payload['content_url'] = config('app.url') .
-            ($payload['content_type_id'] === 2 ? '/blog' : '') .
+            ($payload['content_type_id'] === "2" ? '/blog/article' : '') .
             '/' . str_replace(' ', '-', strtolower($payload['title']));
         $payload['user_id'] = Auth::user()->id;
         $result = $this->content->createRecord($payload);
-        // $this->contentSocialMedia->insert($this->handleSocialMediaPayload($result));
+        $this->contentSocialMedia->insert($this->handleSocialMediaPayload($result));
 
         return redirect()->route('content.index')->with('success', $result);
     }
@@ -283,7 +263,7 @@ class ContentController extends Controller
                 $socialMediaPayloads[] = $socialMediaPayload;
             }
 
-            return $socialMediaPayload;
+            return $socialMediaPayloads;
         } else {
             return false;
         }
@@ -340,34 +320,14 @@ class ContentController extends Controller
             'content_type_id' => 'required|integer',
             'description' => 'sometimes|string',
             'content' => 'required|string',
-            'allow_comments' => [
-                'required',
-                function ($attribute, $value, $fail) {
-                    if (!is_bool($value)) {
-                        $value = filter_var($value, FILTER_VALIDATE_BOOLEAN);
-                    }
-                    if (!is_bool($value)) {
-                        $fail($attribute . ' must be a boolean.');
-                    }
-                }
-            ],
-            'allow_share' => [
-                'required',
-                function ($attribute, $value, $fail) {
-                    if (!is_bool($value)) {
-                        $value = filter_var($value, FILTER_VALIDATE_BOOLEAN);
-                    }
-                    if (!is_bool($value)) {
-                        $fail($attribute . ' must be a boolean.');
-                    }
-                }
-            ],
+            'allow_comments' => 'required|boolean',
+            'allow_share' => 'required|boolean',
         ];
 
         $request->validate($validateRequest);
         $payload = array_filter($request->all());
         $payload['content_url'] = config('app.url') .
-            ($payload['content_type_id'] === 2 ? '/blog' : '') .
+            ($payload['content_type_id'] === "2" ? '/blog/article' : '') .
             '/' . str_replace(' ', '-', strtolower($payload['title']));
         $payload['user_id'] = Auth::user()->id;
         $selectedRecord = $this->content->fetchSingleRecord($id);

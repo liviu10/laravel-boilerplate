@@ -21,8 +21,8 @@ class ContentCategorySeeder extends Seeder
         $records = [
             [
                 'id' => 1,
-                'value' => 'test-article',
-                'label' => 'Test article',
+                'value' => 'test-category',
+                'label' => 'Test category',
                 'is_active' => true,
                 'user_id' => 1,
                 'created_at' => Carbon::now(),
