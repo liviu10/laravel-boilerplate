@@ -57,11 +57,19 @@
                             >
                                 <option value="">{{ __('-- Choose an option --') }}</option>
                                 @foreach ($input['options'] as $option)
-                                    <option value="{{ $option['value'] }}">
+                                    <option value="{{ $input['key'] === 'allow_comments' || $input['key'] === 'allow_share' ? $option['value'] : $option['id'] }}">
                                         {{ $option['label'] }}
                                     </option>
                                 @endforeach
                             </select>
+                            @elseif ($input['type'] === 'textarea')
+                            <textarea
+                                class="form-control"
+                                id="{{ $input['key'] }}"
+                                name="{{ $input['key'] }}"
+                                rows="3"
+                            >
+                            </textarea>
                             @endif
                             <label for="{{ $input['key'] }}">
                                 {{ $input['placeholder'] }}
@@ -84,4 +92,17 @@
             </form>
         </div>
     </div>
+    <script>
+        tinymce.init({
+            selector: 'textarea#content',
+            plugins: 'code table lists',
+            toolbar: 'undo redo | blocks | bold italic | alignleft aligncenter alignright | indent outdent | bullist numlist | code | table',
+            max_height: 500,
+            max_width: 500,
+            min_height: 100,
+            min_width: 400,
+            height: 300,
+            menubar: false,
+        });
+    </script>
 @endsection

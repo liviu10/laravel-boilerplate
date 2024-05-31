@@ -147,6 +147,7 @@ class Content extends Model
 
     public function createRecord(array $payload): Content|Exception
     {
+        // dd($payload);
         try {
             return $this->create([
                 'content_visibility_id' => $payload['content_visibility_id'],
@@ -158,7 +159,6 @@ class Content extends Model
                 'content' => $payload['content'],
                 'allow_comments' => $payload['allow_comments'],
                 'allow_share' => $payload['allow_share'],
-                'is_active' => $payload['is_active'],
                 'user_id' => $payload['user_id'],
             ]);
         } catch (Exception $exception) {
@@ -252,7 +252,6 @@ class Content extends Model
                 'content' => $payload['content'],
                 'allow_comments' => $payload['allow_comments'],
                 'allow_share' => $payload['allow_share'],
-                'is_active' => $payload['is_active'],
                 'user_id' => $payload['user_id'],
             ]);
 

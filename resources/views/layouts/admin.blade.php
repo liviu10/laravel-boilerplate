@@ -17,6 +17,8 @@
         <!-- GOOGLE FONTS -->
         <link rel="dns-prefetch" href="//fonts.gstatic.com">
         <link href="https://fonts.bunny.net/css?family=Nunito" rel="stylesheet">
+        <!-- TINY MCE SCRIPT -->
+        <script src="https://cdn.tiny.cloud/1/bug374qmi16ckpgnjjk1s7zzm08li0htov90xrj30lugs4yx/tinymce/7/tinymce.min.js" referrerpolicy="origin"></script>
         <!-- LOCAL CSS AND JAVASCRIPT -->
         @vite(['resources/sass/admin.scss', 'resources/js/app.js'])
     </head>

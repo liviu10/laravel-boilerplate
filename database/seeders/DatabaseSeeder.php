@@ -17,6 +17,7 @@ class DatabaseSeeder extends Seeder
             CommentStatusSeeder::class,
             CommentTypeSeeder::class,
             ContentCategorySeeder::class,
+            ContactSubjectSeeder::class,
             ContentTypeSeeder::class,
             ContentVisibilitySeeder::class,
             NewsletterCampaignSeeder::class,

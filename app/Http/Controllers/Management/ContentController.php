@@ -4,6 +4,9 @@ namespace App\Http\Controllers\Management;
 
 use App\Http\Controllers\Controller;
 use App\Models\Content;
+use App\Models\ContentCategory;
+use App\Models\ContentVisibility;
+use App\Models\ContentType;
 use App\Models\ContentSocialMedia;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Contracts\View\Factory;
@@ -15,6 +18,9 @@ use Exception;
 class ContentController extends Controller
 {
     protected $content;
+    protected $contentCategory;
+    protected $contentVisibility;
+    protected $contentType;
     protected $contentSocialMedia;
 
     /**
@@ -26,6 +32,9 @@ class ContentController extends Controller
     {
         $this->middleware('auth');
         $this->content = new Content();
+        $this->contentCategory = new ContentCategory();
+        $this->contentVisibility = new ContentVisibility();
+        $this->contentType = new ContentType();
         $this->contentSocialMedia = new ContentSocialMedia();
     }
 
@@ -96,43 +105,51 @@ class ContentController extends Controller
         return [
             [
                 'id' => 1,
+                'key' => 'content_category_id',
+                'placeholder' => __('Category'),
+                'type' => 'select',
+                'value' => null,
+                'options' => $this->contentCategory->fetchAllRecords()->toArray(),
+            ],
+            [
+                'id' => 2,
                 'key' => 'content_visibility_id',
                 'placeholder' => __('Visibility'),
                 'type' => 'select',
                 'value' => null,
-                'options' => [], // TODO: bring the content visibilities as value and label
+                'options' => $this->contentVisibility->fetchAllRecords()->toArray(),
             ],
             [
-                'id' => 2,
+                'id' => 3,
                 'key' => 'title',
                 'placeholder' => __('Title'),
                 'type' => 'text',
                 'value' => '',
             ],
             [
-                'id' => 3,
+                'id' => 4,
                 'key' => 'content_type_id',
                 'placeholder' => __('Type'),
                 'type' => 'select',
                 'value' => null,
-                'options' => [], // TODO: bring the content types as value and label
+                'options' => $this->contentType->fetchAllRecords()->toArray(),
             ],
             [
-                'id' => 4,
+                'id' => 5,
                 'key' => 'description',
                 'placeholder' => __('Description'),
                 'type' => 'text',
                 'value' => '',
             ],
             [
-                'id' => 5,
+                'id' => 6,
                 'key' => 'content',
                 'placeholder' => __('Content'),
                 'type' => 'textarea',
                 'value' => '',
             ],
             [
-                'id' => 6,
+                'id' => 7,
                 'key' => 'allow_comments',
                 'placeholder' => __('Allow comments'),
                 'type' => 'select',
@@ -151,7 +168,7 @@ class ContentController extends Controller
                 ],
             ],
             [
-                'id' => 7,
+                'id' => 8,
                 'key' => 'allow_share',
                 'placeholder' => __('Allow share'),
                 'type' => 'select',
@@ -197,14 +214,36 @@ class ContentController extends Controller
      */
     public function store(Request $request)
     {
+        // dd($request->all());
         $validateRequest = [
-            'content_visibility_id' => 'sometimes|integer',
-            'title' => 'sometimes|string|min:3|max:255',
-            'content_type_id' => 'sometimes|integer',
-            'description' => 'sometimes|string',
-            'content' => 'sometimes|string',
-            'allow_comments' => 'sometimes|boolean',
-            'allow_share' => 'sometimes|boolean',
+            'content_category_id' => 'required|integer',
+            'content_visibility_id' => 'required|integer',
+            'title' => 'required|string|min:3|max:255',
+            'content_type_id' => 'required|integer',
+            'description' => 'sometimes|string|min:3|max:255',
+            'content' => 'required|string',
+            'allow_comments' => [
+                'required',
+                function ($attribute, $value, $fail) {
+                    if (!is_bool($value)) {
+                        $value = filter_var($value, FILTER_VALIDATE_BOOLEAN);
+                    }
+                    if (!is_bool($value)) {
+                        $fail($attribute . ' must be a boolean.');
+                    }
+                }
+            ],
+            'allow_share' =>[
+                'required',
+                function ($attribute, $value, $fail) {
+                    if (!is_bool($value)) {
+                        $value = filter_var($value, FILTER_VALIDATE_BOOLEAN);
+                    }
+                    if (!is_bool($value)) {
+                        $fail($attribute . ' must be a boolean.');
+                    }
+                }
+            ],
         ];
 
         $request->validate($validateRequest);
@@ -214,9 +253,9 @@ class ContentController extends Controller
             '/' . str_replace(' ', '-', strtolower($payload['title']));
         $payload['user_id'] = Auth::user()->id;
         $result = $this->content->createRecord($payload);
-        $this->contentSocialMedia->insert($this->handleSocialMediaPayload($result));
+        // $this->contentSocialMedia->insert($this->handleSocialMediaPayload($result));
 
-        return redirect()->route('contents.index')->with('success', $result);
+        return redirect()->route('content.index')->with('success', $result);
     }
 
     private function handleSocialMediaPayload(Content|Exception $result): array|bool
@@ -295,13 +334,34 @@ class ContentController extends Controller
     public function update(Request $request, string $id)
     {
         $validateRequest = [
+            'content_category_id' => 'required|integer',
             'content_visibility_id' => 'required|integer',
             'title' => 'required|string|min:3|max:255',
             'content_type_id' => 'required|integer',
             'description' => 'sometimes|string',
             'content' => 'required|string',
-            'allow_comments' => 'required|boolean',
-            'allow_share' => 'required|boolean',
+            'allow_comments' => [
+                'required',
+                function ($attribute, $value, $fail) {
+                    if (!is_bool($value)) {
+                        $value = filter_var($value, FILTER_VALIDATE_BOOLEAN);
+                    }
+                    if (!is_bool($value)) {
+                        $fail($attribute . ' must be a boolean.');
+                    }
+                }
+            ],
+            'allow_share' => [
+                'required',
+                function ($attribute, $value, $fail) {
+                    if (!is_bool($value)) {
+                        $value = filter_var($value, FILTER_VALIDATE_BOOLEAN);
+                    }
+                    if (!is_bool($value)) {
+                        $fail($attribute . ' must be a boolean.');
+                    }
+                }
+            ],
         ];
 
         $request->validate($validateRequest);
@@ -316,7 +376,7 @@ class ContentController extends Controller
             $this->contentSocialMedia->updateRecord($payload, $id);
         }
 
-        return redirect()->route('contents.index')->with('success', $result);
+        return redirect()->route('content.index')->with('success', $result);
     }
 
     /**

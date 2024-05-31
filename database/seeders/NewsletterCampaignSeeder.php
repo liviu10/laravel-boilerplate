@@ -27,7 +27,7 @@ class NewsletterCampaignSeeder extends Seeder
                 'valid_from' => Carbon::now()->startOfYear(),
                 'valid_to' => '2099-12-31 11:59:59',
                 'occur_times' => 1,
-                'occur_when' => 2,
+                'occur_week' => 2,
                 'occur_day' => 3,
                 'occur_hour' => '19:00',
                 'user_id' => 1,
