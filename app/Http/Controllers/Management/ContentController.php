@@ -302,8 +302,16 @@ class ContentController extends Controller
                 when an unknown printer took a galley of type and scrambled it to make a type specimen book.
             '),
             'action' => 'content.update',
+            'rowId' => $id,
             'results' => $this->handleFormInputs(),
         ];
+
+        $selectedRecord = $this->content->fetchSingleRecord($id);
+        foreach ($data['results'] as &$result) {
+            if (array_key_exists($result['key'], $selectedRecord->toArray()[0])) {
+                $result['value'] = $selectedRecord->toArray()[0][$result['key']];
+            }
+        }
 
         return view('pages.admin.management.content.edit', compact('data'));
     }
@@ -330,7 +338,6 @@ class ContentController extends Controller
             ($payload['content_type_id'] === "2" ? '/blog/article' : '') .
             '/' . str_replace(' ', '-', strtolower($payload['title']));
         $payload['user_id'] = Auth::user()->id;
-        $selectedRecord = $this->content->fetchSingleRecord($id);
         $result = $this->content->updateRecord($payload, $id);
         foreach($this->handleSocialMediaPayload($result) as $payload) {
             $this->contentSocialMedia->updateRecord($payload, $id);
