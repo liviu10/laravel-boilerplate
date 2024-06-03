@@ -1,7 +1,7 @@
 <div class="row admin admin--component">
-    <div class="col-lg-8 col-sm-10 col-12 admin__card-shortcuts">
+    <div class="col-10 admin__card-shortcuts">
         @foreach ($shortcuts as $key => $shortcut)
-        <div class="card">
+        <div class="col-4 card">
             <div class="card-header">
                 {{ $shortcut['title'] }}
             </div>
