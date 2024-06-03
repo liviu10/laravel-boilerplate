@@ -25,8 +25,12 @@
                 </div>
             @endif
 
-            <form id="editForm" method="POST" action="{{ route($data['action'], $data['rowId']) }}"
-                enctype="multipart/form-data">
+            <form
+                id="editForm"
+                method="POST"
+                action="{{ route($data['action'], $data['rowId']) }}"
+                enctype="multipart/form-data"
+            >
                 @csrf
                 @method('PUT')
                 <div class="">
@@ -40,13 +44,22 @@
                                     placeholder="{{ $input['placeholder'] }}" type="{{ $input['type'] }}"
                                     value="{{ $input['value'] }}"
                                 >
+                            @elseif ($input['type'] === 'datetime-local')
+                                <input
+                                    class="form-control"
+                                    id="{{ $input['key'] }}"
+                                    name="{{ $input['key'] }}"
+                                    type="{{ $input['type'] }}"
+                                    value="{{ $input['value'] }}"
+                                    min="{{ $input['min'] }}"
+                                >
                             @elseif ($input['type'] === 'select')
                                 <select class="form-select" id="{{ $input['key'] }}" name="{{ $input['key'] }}">
                                     <option value="">{{ __('-- Choose an option --') }}</option>
                                     @foreach ($input['options'] as $key => $option)
                                         <option
                                             value="{{ $input['key'] === 'allow_comments' || $input['key'] === 'allow_share' ? $option['value'] : $option['id'] }}"
-                                            @if ($input['value'] !== null && $input['value'] == $key) selected @endif
+                                            @if ($input['value'] !== null && $input['value'] == $key + 1) selected @endif
                                         >
                                             {{ $option['label'] }}
                                         </option>
@@ -85,6 +98,31 @@
             min_width: 400,
             height: 300,
             menubar: false,
+        });
+
+        document.addEventListener('DOMContentLoaded', function() {
+            function toggleScheduledOnInput() {
+                var contentVisibilitySelect = document.getElementById('content_visibility_id');
+                var scheduledOnInput = document.getElementById('scheduled_on');
+                var scheduledOnLabel = document.querySelector('label[for="scheduled_on"]');
+
+                if (contentVisibilitySelect && scheduledOnInput && scheduledOnLabel) {
+                    // Visibility is scheduled
+                    if (contentVisibilitySelect.value == '3') {
+                        scheduledOnInput.style.display = '';
+                        scheduledOnLabel.style.display = '';
+                    } else {
+                        scheduledOnInput.style.display = 'none';
+                        scheduledOnLabel.style.display = 'none';
+                    }
+                }
+            }
+
+            var contentVisibilitySelect = document.getElementById('content_visibility_id');
+            if (contentVisibilitySelect) {
+                contentVisibilitySelect.addEventListener('change', toggleScheduledOnInput);
+                toggleScheduledOnInput();
+            }
         });
     </script>
 @endsection

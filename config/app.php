@@ -69,6 +69,19 @@ return [
 
     /*
     |--------------------------------------------------------------------------
+    | Application Job Queue Email Address
+    |--------------------------------------------------------------------------
+    |
+    | This value is the job queue email address of your application. This value is used when the
+    | framework needs to place the application's job queue email address in a notification or
+    | any other location as required by the application or its packages.
+    |
+    */
+
+    'job_queue_email' => env('APP_JOB_QUEUE_EMAIL', 'job_queue@localhost.com'),
+
+    /*
+    |--------------------------------------------------------------------------
     | Application Name
     |--------------------------------------------------------------------------
     |

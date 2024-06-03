@@ -33,6 +33,10 @@ return new class extends Migration
             );
             $table->string('internal_path')->nullable();
             $table->string('external_path')->nullable();
+            $table->string('title')->nullable();
+            $table->string('caption')->nullable();
+            $table->string('alt_text')->nullable();
+            $table->string('description')->nullable();
             $table->timestamps();
             $table->softDeletes();
             $table->foreignId('user_id')

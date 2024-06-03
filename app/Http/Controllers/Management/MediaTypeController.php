@@ -140,8 +140,19 @@ class MediaTypeController extends Controller
                 when an unknown printer took a galley of type and scrambled it to make a type specimen book.
             '),
             'action' => 'types.update',
+            'rowId' => $id,
             'results' => $this->handleFormInputs(),
         ];
+
+        $selectedRecord = $this->mediaType->fetchSingleRecord($id);
+        foreach ($data['results'] as &$result) {
+            foreach ($selectedRecord->toArray()[0] as $recordKey => $recordValue) {
+                if ($result['key'] === $recordKey) {
+                    $result['value'] = $recordValue;
+                    break;
+                }
+            }
+        }
 
         return view('pages.admin.management.media.types.edit', compact('data'));
     }

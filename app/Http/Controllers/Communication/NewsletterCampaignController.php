@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Communication;
 
 use App\Http\Controllers\Controller;
 use App\Models\NewsletterCampaign;
+use App\Models\NewsletterTemplate;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Contracts\View\Factory;
@@ -14,6 +15,7 @@ use Illuminate\Http\Request;
 class NewsletterCampaignController extends Controller
 {
     protected $newsletterCampaign;
+    protected $newsletterTemplate;
 
     /**
      * Create a new controller instance.
@@ -24,6 +26,7 @@ class NewsletterCampaignController extends Controller
     {
         $this->middleware('auth');
         $this->newsletterCampaign = new NewsletterCampaign();
+        $this->newsletterTemplate = new NewsletterTemplate();
     }
 
     /**
@@ -137,6 +140,13 @@ class NewsletterCampaignController extends Controller
                 'min' => '00:00',
                 'max' => '23:59',
             ],
+            [
+                'id' => 9,
+                'key' => 'template',
+                'placeholder' => __('Template'),
+                'type' => 'textarea',
+                'value' => '',
+            ],
         ];
     }
 
@@ -169,8 +179,8 @@ class NewsletterCampaignController extends Controller
             'name' => 'required|string|min:3|max:100|regex:/^[a-zA-Z\s]+$/',
             'description' => 'sometimes|string',
             'is_active' => 'sometimes|nullable|boolean',
-            'valid_from' => 'required|date_format:Y-m-d H:i:s',
-            'valid_to' => 'required|date_format:Y-m-d H:i:s',
+            'valid_from' => 'required',
+            'valid_to' => 'required',
             'occur_times' => 'required|integer|min:1',
             'occur_week' => 'required|integer|min:1',
             'occur_day' => 'required|integer|min:1',
@@ -180,7 +190,12 @@ class NewsletterCampaignController extends Controller
         $request->validate($validateRequest);
         $payload = array_filter($request->all());
         $payload['user_id'] = Auth::user()->id;
-        $result = $this->newsletterCampaign->saveRecord($payload);
+        $result = $this->newsletterCampaign->createRecord($payload);
+        $this->newsletterTemplate->createRecord([
+            'newsletter_campaign_id' => $result->id,
+            'is_active' => 1,
+            'template' => $request->get('template'),
+        ]);
 
         return redirect()->route('campaigns.index')->with('success', $result);
     }
@@ -218,8 +233,19 @@ class NewsletterCampaignController extends Controller
                 when an unknown printer took a galley of type and scrambled it to make a type specimen book.
             '),
             'action' => 'campaigns.update',
+            'rowId' => $id,
             'results' => $this->handleFormInputs(),
         ];
+
+        $selectedRecord = $this->newsletterCampaign->fetchSingleRecord($id);
+        foreach ($data['results'] as &$result) {
+            foreach ($selectedRecord->toArray()[0] as $recordKey => $recordValue) {
+                if ($result['key'] === $recordKey) {
+                    $result['value'] = $recordValue;
+                    break;
+                }
+            }
+        }
 
         return view('pages.admin.communication.newsletter.campaigns.edit', compact('data'));
     }
@@ -233,8 +259,8 @@ class NewsletterCampaignController extends Controller
             'name' => 'sometimes|string|min:3|max:100|regex:/^[a-zA-Z\s]+$/',
             'description' => 'sometimes|string',
             'is_active' => 'sometimes|nullable|boolean',
-            'valid_from' => 'sometimes|date_format:Y-m-d H:i:s',
-            'valid_to' => 'sometimes|date_format:Y-m-d H:i:s',
+            'valid_from' => 'sometimes',
+            'valid_to' => 'sometimes',
             'occur_times' => 'sometimes|integer|min:1',
             'occur_week' => 'sometimes|integer|min:1',
             'occur_day' => 'sometimes|integer|min:1',
@@ -245,6 +271,11 @@ class NewsletterCampaignController extends Controller
         $payload = array_filter($request->all());
         $payload['user_id'] = Auth::user()->id;
         $result = $this->newsletterCampaign->updateRecord($payload, $id);
+        $this->newsletterTemplate->updateRecord([
+            'newsletter_campaign_id' => $result->id,
+            'is_active' => 1,
+            'template' => $request->get('template'),
+        ], $result->newsletter_templates->id);
 
         return redirect()->route('campaigns.index')->with('success', $result);
     }

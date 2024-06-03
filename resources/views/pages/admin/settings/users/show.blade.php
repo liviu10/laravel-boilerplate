@@ -11,7 +11,7 @@
         </div>
 
         <div class="admin__body">
-
+            {{ $data['results'] }}
         </div>
     </div>
 @endsection

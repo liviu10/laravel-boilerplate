@@ -145,8 +145,6 @@ class ContactSubjectController extends Controller
      */
     public function edit(string $id): View|Application|Factory
     {
-        $selectedRecord = $this->contactSubject->fetchSingleRecord($id);
-
         $data = [
             'title' => __('Edit a contact subject'),
             'description' => __('
@@ -159,6 +157,7 @@ class ContactSubjectController extends Controller
             'results' => $this->handleFormInputs(),
         ];
 
+        $selectedRecord = $this->contactSubject->fetchSingleRecord($id);
         foreach ($data['results'] as &$result) {
             foreach ($selectedRecord->toArray()[0] as $recordKey => $recordValue) {
                 if ($result['key'] === $recordKey) {

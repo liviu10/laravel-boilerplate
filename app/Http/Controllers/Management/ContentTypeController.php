@@ -93,7 +93,7 @@ class ContentTypeController extends Controller
                 Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s,
                 when an unknown printer took a galley of type and scrambled it to make a type specimen book.
             '),
-            'action' => 'type.store',
+            'action' => 'types.store',
             'results' => $this->handleFormInputs(),
         ];
 
@@ -142,8 +142,19 @@ class ContentTypeController extends Controller
                 when an unknown printer took a galley of type and scrambled it to make a type specimen book.
             '),
             'action' => 'types.update',
+            'rowId' => $id,
             'results' => $this->handleFormInputs(),
         ];
+
+        $selectedRecord = $this->contentType->fetchSingleRecord($id);
+        foreach ($data['results'] as &$result) {
+            foreach ($selectedRecord->toArray()[0] as $recordKey => $recordValue) {
+                if ($result['key'] === $recordKey) {
+                    $result['value'] = $recordValue;
+                    break;
+                }
+            }
+        }
 
         return view('pages.admin.management.content.types.edit', compact('data'));
     }

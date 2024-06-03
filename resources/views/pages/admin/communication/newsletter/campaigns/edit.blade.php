@@ -42,56 +42,60 @@
                     @foreach ($data['results'] as $input)
                         <div class="form-floating mb-3">
                             @if ($input['type'] === 'text')
-                            <input
-                                class="form-control"
-                                id="{{ $input['key'] }}"
-                                name="{{ $input['key'] }}"
-                                placeholder="{{ $input['placeholder'] }}"
-                                type="{{ $input['type'] }}"
-                                value="{{ $input['value'] }}"
-                            >
+                                <input
+                                    class="form-control"
+                                    id="{{ $input['key'] }}"
+                                    name="{{ $input['key'] }}"
+                                    placeholder="{{ $input['placeholder'] }}"
+                                    type="{{ $input['type'] }}"
+                                    value="{{ $input['value'] }}"
+                                >
                             @elseif ($input['type'] === 'select')
-                            <select
-                                class="form-select"
-                                id="{{ $input['key'] }}"
-                                name="{{ $input['key'] }}"
-                            >
-                                <option value="">{{ __('-- Choose an option --') }}</option>
-                                @foreach ($input['options'] as $key => $option)
-                                    <option value="{{ $option['value'] }}" @if ($input['value'] !== null && $input['value'] == $key) selected @endif>
-                                        {{ $option['label'] }}
-                                    </option>
-                                @endforeach
-                            </select>
+                                <select
+                                    class="form-select"
+                                    id="{{ $input['key'] }}"
+                                    name="{{ $input['key'] }}"
+                                >
+                                    <option value="">{{ __('-- Choose an option --') }}</option>
+                                    @foreach ($input['options'] as $key => $option)
+                                        <option value="{{ $option['value'] }}" @if ($input['value'] !== null && $input['value'] == $key + 1) selected @endif>
+                                            {{ $option['label'] }}
+                                        </option>
+                                    @endforeach
+                                </select>
                             @elseif ($input['type'] === 'datetime-local')
-                            <input
-                                class="form-control"
-                                id="{{ $input['key'] }}"
-                                name="{{ $input['key'] }}"
-                                type="{{ $input['type'] }}"
-                                value="{{ $input['value'] }}"
-                                min="{{ $input['min'] }}"
-                            >
+                                <input
+                                    class="form-control"
+                                    id="{{ $input['key'] }}"
+                                    name="{{ $input['key'] }}"
+                                    type="{{ $input['type'] }}"
+                                    value="{{ $input['value'] }}"
+                                    min="{{ $input['min'] }}"
+                                >
                             @elseif ($input['type'] === 'number')
-                            <input
-                                class="form-control"
-                                id="{{ $input['key'] }}"
-                                name="{{ $input['key'] }}"
-                                type="{{ $input['type'] }}"
-                                value="{{ $input['value'] }}"
-                                min="{{ $input['min'] }}"
-                                max="{{ $input['max'] }}"
-                            >
+                                <input
+                                    class="form-control"
+                                    id="{{ $input['key'] }}"
+                                    name="{{ $input['key'] }}"
+                                    type="{{ $input['type'] }}"
+                                    value="{{ $input['value'] }}"
+                                    min="{{ $input['min'] }}"
+                                    max="{{ $input['max'] }}"
+                                >
                             @elseif ($input['type'] === 'time')
-                            <input
-                                class="form-control"
-                                id="{{ $input['key'] }}"
-                                name="{{ $input['key'] }}"
-                                type="{{ $input['type'] }}"
-                                value="{{ $input['value'] }}"
-                                min="{{ $input['min'] }}"
-                                max="{{ $input['max'] }}"
-                            >
+                                <input
+                                    class="form-control"
+                                    id="{{ $input['key'] }}"
+                                    name="{{ $input['key'] }}"
+                                    type="{{ $input['type'] }}"
+                                    value="{{ $input['value'] }}"
+                                    min="{{ $input['min'] }}"
+                                    max="{{ $input['max'] }}"
+                                >
+                            @elseif ($input['type'] === 'textarea')
+                                <textarea class="form-control" id="{{ $input['key'] }}" name="{{ $input['key'] }}" rows="3">
+                                    {{ $input['value'] }}
+                                </textarea>
                             @endif
                             <label for="{{ $input['key'] }}">
                                 {{ $input['placeholder'] }}
@@ -114,4 +118,17 @@
             </form>
         </div>
     </div>
+    <script>
+        tinymce.init({
+            selector: 'textarea#template',
+            plugins: 'code table lists',
+            toolbar: 'undo redo | blocks | bold italic | alignleft aligncenter alignright | indent outdent | bullist numlist | code | table',
+            max_height: 500,
+            max_width: 500,
+            min_height: 100,
+            min_width: 400,
+            height: 300,
+            menubar: false,
+        });
+    </script>
 @endsection

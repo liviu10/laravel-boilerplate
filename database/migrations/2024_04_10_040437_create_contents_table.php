@@ -18,6 +18,7 @@ return new class extends Migration
                 ->on('content_visibilities')
                 ->onDelete('cascade')
                 ->onUpdate('cascade');
+            $table->dateTime('scheduled_on')->nullable()->default(null);
             $table->index(
                 'content_visibility_id',
                 'idx_content_visibility_contents_id'

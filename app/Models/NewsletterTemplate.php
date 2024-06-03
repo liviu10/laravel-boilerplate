@@ -19,7 +19,6 @@ class NewsletterTemplate extends Model
 
     protected $fillable = [
         'newsletter_campaign_id',
-        'path',
         'template',
         'is_active',
     ];
@@ -55,7 +54,6 @@ class NewsletterTemplate extends Model
             $query = $this->select(
                 'id',
                 'newsletter_campaign_id',
-                'path',
                 'is_active',
             )->with([
                 'newsletter_campaign' => function ($query) {
@@ -87,7 +85,6 @@ class NewsletterTemplate extends Model
         try {
             return $this->create([
                 'newsletter_campaign_id' => $payload['newsletter_campaign_id'],
-                'path' => $payload['path'],
                 'is_active' => $payload['is_active'],
                 'template' => $payload['template'],
             ]);
@@ -132,7 +129,6 @@ class NewsletterTemplate extends Model
         try {
             $query = tap($this->find($id))->update([
                 'newsletter_campaign_id' => $payload['newsletter_campaign_id'],
-                'path' => $payload['path'],
                 'is_active' => $payload['is_active'],
                 'template' => $payload['template'],
             ]);

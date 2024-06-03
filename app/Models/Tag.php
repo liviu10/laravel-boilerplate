@@ -61,7 +61,7 @@ class Tag extends Model
                 'user_id',
             )
                 ->with([
-                    'content_id' => function ($query) {
+                    'content' => function ($query) {
                         $query->select('id', 'title');
                     },
                     'user' => function ($query) {
@@ -85,7 +85,7 @@ class Tag extends Model
         }
     }
 
-    public function createRecord(array $payload): Content|Exception
+    public function createRecord(array $payload): Tag|Exception
     {
         try {
             return $this->create([
@@ -106,7 +106,7 @@ class Tag extends Model
             return $this->select('*')
                 ->where('id', '=', $id)
                 ->with([
-                    'content_id' => function ($query) {
+                    'content' => function ($query) {
                         $query->select('id', 'title');
                     },
                     'user' => function ($query) {
@@ -119,7 +119,7 @@ class Tag extends Model
         }
     }
 
-    public function updateRecord(array $payload, int $id): Content|Exception
+    public function updateRecord(array $payload, int $id): Tag|Exception
     {
         try {
             $query = tap($this->find($id))->update([

@@ -22,6 +22,10 @@ class Media extends Model
         'content_id',
         'internal_path',
         'external_path',
+        'title',
+        'caption',
+        'alt_text',
+        'description',
         'user_id',
     ];
 
@@ -66,6 +70,10 @@ class Media extends Model
                 'content_id',
                 'internal_path',
                 'external_path',
+                'title',
+                'caption',
+                'alt_text',
+                'description',
                 'user_id',
             )
                 ->with([
@@ -104,6 +112,10 @@ class Media extends Model
                 'content_id' => $payload['content_id'],
                 'internal_path' => $payload['internal_path'],
                 'external_path' => $payload['external_path'],
+                'title' => $payload['title'],
+                'caption' => $payload['caption'],
+                'alt_text' => $payload['alt_text'],
+                'description' => $payload['description'],
                 'user_id' => $payload['user_id'],
             ]);
         } catch (Exception $exception) {
@@ -141,6 +153,10 @@ class Media extends Model
                 'content_id' => $payload['content_id'],
                 'internal_path' => $payload['internal_path'],
                 'external_path' => $payload['external_path'],
+                'title' => $payload['title'],
+                'caption' => $payload['caption'],
+                'alt_text' => $payload['alt_text'],
+                'description' => $payload['description'],
                 'user_id' => $payload['user_id'],
             ]);
 

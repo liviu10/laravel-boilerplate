@@ -50,7 +50,7 @@ class CommentStatus extends Model
 
     public function comments(): HasMany
     {
-        return $this->hasMany('App\Models\Comments');
+        return $this->hasMany('App\Models\Comment');
     }
 
     public function fetchAllRecords(array $search = []): Collection|Exception

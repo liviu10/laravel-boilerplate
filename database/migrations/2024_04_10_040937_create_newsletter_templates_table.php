@@ -22,7 +22,6 @@ return new class extends Migration
                 'newsletter_campaign_id',
                 'idx_newsletter_campaigns_newsletter_templates_id'
             );
-            $table->string('path')->nullable(false);
             $table->longText('template')->nullable(false);
             $table->boolean('is_active')->default(false);
             $table->foreignId('user_id')

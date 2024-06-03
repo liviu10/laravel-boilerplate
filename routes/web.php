@@ -67,10 +67,10 @@ Route::group(['prefix' => '/admin'], function () {
         });
         Route::group(['prefix' => '/newsletter'], function () {
             Route::resource('/campaigns', NewsletterCampaignController::class)->except('delete');
-            Route::resource('/subscribers', NewsletterSubscriberController::class)->only('index', 'show', 'update');
+            Route::resource('/subscribers', NewsletterSubscriberController::class)->only('index', 'show', 'edit', 'update');
         });
         Route::get('/reviews/send-review', [ReviewController::class, 'sendReview']);
-        Route::resource('/reviews', ReviewController::class)->only('index', 'update');
+        Route::resource('/reviews', ReviewController::class)->only('index', 'edit', 'update');
     });
 
     // Management web routes
@@ -91,13 +91,13 @@ Route::group(['prefix' => '/admin'], function () {
         Route::resource('/tags', TagController::class)->except('show', 'delete');
         Route::group(['prefix' => '/'], function () {
             Route::resource('/media/types', MediaTypeController::class)->except('show', 'delete');
-            Route::resource('/media', MediaController::class)->only('index');
+            Route::resource('/media', MediaController::class)->except('show', 'delete');
         });
     });
 
     // Settings web routes
     Route::group(['prefix' => '/settings'], function () {
         Route::get('/', [SettingsController::class, 'index'])->name('settings.index');
-        Route::resource('/users', UserController::class);
+        Route::resource('/users', UserController::class)->except('delete');
     });
 });

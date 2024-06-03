@@ -124,23 +124,24 @@ class UserController extends Controller
             'results' => $this->user->fetchSingleRecord($id),
         ];
 
-        return view('pages.admin.settings.users.create', compact('data'));
+        return view('pages.admin.settings.users.show', compact('data'));
     }
 
     /**
      * Show the form for creating a new resource.
      * @return View|Application|Factory
      */
-    public function edit(): View|Application|Factory
+    public function edit(string $id): View|Application|Factory
     {
         $data = [
-            'title' => __('Create a content type'),
+            'title' => __('Update a user'),
             'description' => __('
                 Lorem Ipsum is simply dummy text of the printing and typesetting industry.
                 Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s,
                 when an unknown printer took a galley of type and scrambled it to make a type specimen book.
             '),
             'action' => 'users.update',
+            'rowId' => $id,
             'results' => [
                 [
                     'id' => 1,
@@ -158,6 +159,16 @@ class UserController extends Controller
                 ],
             ],
         ];
+
+        $selectedRecord = $this->user->fetchSingleRecord($id);
+        foreach ($data['results'] as &$result) {
+            foreach ($selectedRecord->toArray()[0] as $recordKey => $recordValue) {
+                if ($result['key'] === $recordKey) {
+                    $result['value'] = $recordValue;
+                    break;
+                }
+            }
+        }
 
         return view('pages.admin.settings.users.edit', compact('data'));
     }

@@ -58,7 +58,7 @@
                             >
                                 <option value="">{{ __('-- Choose an option --') }}</option>
                                 @foreach ($input['options'] as $key => $option)
-                                    <option value="{{ $option['value'] }}" @if ($input['value'] !== null && $input['value'] == $key) selected @endif>
+                                    <option value="{{ $option['value'] }}" @if ($input['value'] !== null && $input['value'] == $key + 1) selected @endif>
                                         {{ $option['label'] }}
                                     </option>
                                 @endforeach

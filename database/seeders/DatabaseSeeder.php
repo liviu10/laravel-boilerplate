@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\MediaType;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -20,6 +21,7 @@ class DatabaseSeeder extends Seeder
             ContactSubjectSeeder::class,
             ContentTypeSeeder::class,
             ContentVisibilitySeeder::class,
+            MediaTypeSeeder::class,
             NewsletterCampaignSeeder::class,
             UserSeeder::class,
         ]);

@@ -139,7 +139,7 @@ class ContactMessageController extends Controller
         $request->validate($validateRequest);
         $payload = array_filter($request->all());
         $payload['user_id'] = Auth::user()->id;
-        $result = $this->contactResponse->saveRecord($payload);
+        $result = $this->contactResponse->createRecord($payload);
 
         if ($result instanceof ContactResponse) {
             $contactMessage = $this->contactResponse->fetchSingleRecord($payload['contact_message_id'])->toArray();

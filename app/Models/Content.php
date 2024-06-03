@@ -8,7 +8,8 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Collection;
 use Exception;
-
+use Illuminate\Support\Facades\Log;
+use Carbon\Carbon;
 
 /**
  * Class Content
@@ -20,6 +21,7 @@ class Content extends Model
 
     protected $fillable = [
         'content_visibility_id',
+        'scheduled_on',
         'content_url',
         'title',
         'content_type_id',
@@ -41,6 +43,7 @@ class Content extends Model
     protected $casts = [
         'id' => 'integer',
         'content_visibility_id' => 'integer',
+        'scheduled_on' => 'datetime:d.m.Y',
         'content_type_id' => 'integer',
         'content_category_id' => 'integer',
         'allow_comments' => 'boolean',
@@ -107,6 +110,7 @@ class Content extends Model
             $query = $this->select(
                 'id',
                 'content_visibility_id',
+                'scheduled_on',
                 'content_url',
                 'title',
                 'content_type_id',
@@ -124,7 +128,7 @@ class Content extends Model
                         $query->select('id', 'label')->where('is_active', true);
                     },
                     'user' => function ($query) {
-                        $query->select('id', 'full_name');
+                        $query->select('id', 'full_name', 'email');
                     }
                 ]);
 
@@ -133,6 +137,9 @@ class Content extends Model
                     if ($field === 'id' || $field === 'content_category_id' || $field === 'content_visibility_id'
                         || $field === 'content_type_id' || $field === 'user_id') {
                         $query->where($field, '=', $value);
+                    } else if ($field === 'scheduled_on') {
+                        $query->where($field, '>=', Carbon::parse($value)->startOfDay())
+                            ->where($field, '<=', Carbon::parse($value)->endOfDay());
                     } else {
                         $query->where($field, 'LIKE', '%' . $value . '%');
                     }
@@ -147,10 +154,10 @@ class Content extends Model
 
     public function createRecord(array $payload): Content|Exception
     {
-        // dd($payload);
         try {
             return $this->create([
                 'content_visibility_id' => $payload['content_visibility_id'],
+                'scheduled_on' => $payload['scheduled_on'],
                 'content_url' => $payload['content_url'],
                 'title' => $payload['title'],
                 'content_type_id' => $payload['content_type_id'],
@@ -244,6 +251,7 @@ class Content extends Model
         try {
             $query = tap($this->find($id))->update([
                 'content_visibility_id' => $payload['content_visibility_id'],
+                'scheduled_on' => $payload['scheduled_on'],
                 'content_url' => $payload['content_url'],
                 'title' => $payload['title'],
                 'content_type_id' => $payload['content_type_id'],
@@ -256,6 +264,21 @@ class Content extends Model
             ]);
 
             return $query->fresh();
+        } catch (Exception $exception) {
+            return $exception;
+        }
+    }
+
+    public function partialUpdateRecord(array $payload, int $id): Content|Exception
+    {
+        try {
+            $query = $this->findOrFail($id);
+            $query->update([
+                'content_visibility_id' => $payload['content_visibility_id'],
+                'scheduled_on' => $payload['scheduled_on'],
+            ]);
+
+            return $query->refresh();
         } catch (Exception $exception) {
             return $exception;
         }

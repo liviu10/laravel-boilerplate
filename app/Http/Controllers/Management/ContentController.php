@@ -8,12 +8,12 @@ use App\Models\ContentCategory;
 use App\Models\ContentVisibility;
 use App\Models\ContentType;
 use App\Models\ContentSocialMedia;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Foundation\Application;
 use Illuminate\Http\Request;
-use Illuminate\Validation\Rule;
 use Exception;
 
 class ContentController extends Controller
@@ -122,13 +122,21 @@ class ContentController extends Controller
             ],
             [
                 'id' => 3,
+                'key' => 'scheduled_on',
+                'placeholder' => __('Scheduled on'),
+                'type' => 'datetime-local',
+                'value' => '',
+                'min' => Carbon::now()->startOfYear()->toDateTimeLocalString(),
+            ],
+            [
+                'id' => 4,
                 'key' => 'title',
                 'placeholder' => __('Title'),
                 'type' => 'text',
                 'value' => '',
             ],
             [
-                'id' => 4,
+                'id' => 5,
                 'key' => 'content_type_id',
                 'placeholder' => __('Type'),
                 'type' => 'select',
@@ -136,21 +144,21 @@ class ContentController extends Controller
                 'options' => $this->contentType->fetchAllRecords()->toArray(),
             ],
             [
-                'id' => 5,
+                'id' => 6,
                 'key' => 'description',
                 'placeholder' => __('Description'),
                 'type' => 'text',
                 'value' => '',
             ],
             [
-                'id' => 6,
+                'id' => 7,
                 'key' => 'content',
                 'placeholder' => __('Content'),
                 'type' => 'textarea',
                 'value' => '',
             ],
             [
-                'id' => 7,
+                'id' => 8,
                 'key' => 'allow_comments',
                 'placeholder' => __('Allow comments'),
                 'type' => 'select',
@@ -169,7 +177,7 @@ class ContentController extends Controller
                 ],
             ],
             [
-                'id' => 8,
+                'id' => 9,
                 'key' => 'allow_share',
                 'placeholder' => __('Allow share'),
                 'type' => 'select',
@@ -197,7 +205,7 @@ class ContentController extends Controller
     public function create(): View|Application|Factory
     {
         $data = [
-            'title' => __('Create a content type'),
+            'title' => __('Create a content'),
             'description' => __('
                 Lorem Ipsum is simply dummy text of the printing and typesetting industry.
                 Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s,
@@ -217,6 +225,7 @@ class ContentController extends Controller
     {
         $validateRequest = [
             'content_category_id' => 'required|integer',
+            'scheduled_on' => 'sometimes',
             'content_visibility_id' => 'required|integer',
             'title' => 'required|string|min:3|max:255',
             'content_type_id' => 'required|integer',
@@ -241,7 +250,7 @@ class ContentController extends Controller
     private function handleSocialMediaPayload(Content|Exception $result): array|bool
     {
         if ($result instanceof Content) {
-            $socialMediaPlatforms = ['Facebook', 'Twitter', 'Linkedin'];
+            $socialMediaPlatforms = ['Facebook', 'Twitter', 'Linkedin', 'Whatsapp'];
             $socialMediaPayload = [];
             foreach ($socialMediaPlatforms as $platform) {
                 $socialMediaPayload = [
@@ -258,6 +267,9 @@ class ContentController extends Controller
                         break;
                     case 'Linkedin':
                         $socialMediaPayload['full_share_url'] = 'https://www.linkedin.com/shareArticle?mini=true&url=' . urlencode($result->content_url) . '&title=' . $result->title .'&source=LinkedIn';
+                        break;
+                    case 'Whatsapp':
+                        $socialMediaPayload['full_share_url'] = 'https://api.whatsapp.com/send?text=' . urlencode($result->content_url);
                         break;
                 }
                 $socialMediaPayloads[] = $socialMediaPayload;
@@ -276,7 +288,7 @@ class ContentController extends Controller
     public function show(string $id): View|Application|Factory
     {
         $data = [
-            'title' => __('Show a newsletter subscriber'),
+            'title' => __('Show a content'),
             'description' => __('
                 Lorem Ipsum is simply dummy text of the printing and typesetting industry.
                 Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s,
@@ -285,7 +297,7 @@ class ContentController extends Controller
             'results' => $this->content->fetchSingleRecord($id),
         ];
 
-        return view('pages.admin.management.content.create', compact('data'));
+        return view('pages.admin.management.content.show', compact('data'));
     }
 
     /**
@@ -295,7 +307,7 @@ class ContentController extends Controller
     public function edit(string $id): View|Application|Factory
     {
         $data = [
-            'title' => __('Create a content type'),
+            'title' => __('Edit a content'),
             'description' => __('
                 Lorem Ipsum is simply dummy text of the printing and typesetting industry.
                 Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s,
@@ -308,8 +320,11 @@ class ContentController extends Controller
 
         $selectedRecord = $this->content->fetchSingleRecord($id);
         foreach ($data['results'] as &$result) {
-            if (array_key_exists($result['key'], $selectedRecord->toArray()[0])) {
-                $result['value'] = $selectedRecord->toArray()[0][$result['key']];
+            foreach ($selectedRecord->toArray()[0] as $recordKey => $recordValue) {
+                if ($result['key'] === $recordKey) {
+                    $result['value'] = $recordValue;
+                    break;
+                }
             }
         }
 
@@ -323,6 +338,7 @@ class ContentController extends Controller
     {
         $validateRequest = [
             'content_category_id' => 'required|integer',
+            'scheduled_on' => 'sometimes',
             'content_visibility_id' => 'required|integer',
             'title' => 'required|string|min:3|max:255',
             'content_type_id' => 'required|integer',

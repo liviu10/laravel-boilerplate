@@ -140,8 +140,19 @@ class CommentStatusController extends Controller
                 when an unknown printer took a galley of type and scrambled it to make a type specimen book.
             '),
             'action' => 'statuses.update',
+            'rowId' => $id,
             'results' => $this->handleFormInputs(),
         ];
+
+        $selectedRecord = $this->commentStatus->fetchSingleRecord($id);
+        foreach ($data['results'] as &$result) {
+            foreach ($selectedRecord->toArray()[0] as $recordKey => $recordValue) {
+                if ($result['key'] === $recordKey) {
+                    $result['value'] = $recordValue;
+                    break;
+                }
+            }
+        }
 
         return view('pages.admin.management.content.comments.statuses.edit', compact('data'));
     }

@@ -72,11 +72,12 @@ class NewsletterSubscriber extends Model
                 'valid_email',
             )->with([
                 'newsletter_campaign' => function ($query) {
-                    $query->select('id', 'name');
+                    $query->select('id', 'name')->with([
+                        'user' => function ($query) {
+                            $query->select('id', 'full_name');
+                        }
+                    ]);
                 },
-                'user' => function ($query) {
-                    $query->select('id', 'full_name');
-                }
             ]);
 
             if (!empty($search)) {

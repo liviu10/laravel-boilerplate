@@ -96,17 +96,6 @@ class NewsletterSubscriberController extends Controller
      */
     public function edit(string $id): View|Application|Factory
     {
-        if ($this->newsletterCampaign instanceof Collection) {
-            $options = $this->newsletterCampaign->map(function ($campaign) {
-                return [
-                    'value' => $campaign->id,
-                    'label' => $campaign->name,
-                ];
-            })->toArray();
-        } else {
-            $options = [];
-        }
-
         $data = [
             'title' => __('Edit a newsletter subscriber'),
             'description' => __('
@@ -115,6 +104,7 @@ class NewsletterSubscriberController extends Controller
                 when an unknown printer took a galley of type and scrambled it to make a type specimen book.
             '),
             'action' => 'subscribers.update',
+            'rowId' => $id,
             'results' => [
                 [
                     'id' => 1,
@@ -122,10 +112,28 @@ class NewsletterSubscriberController extends Controller
                     'placeholder' => __('Newsletter campaign'),
                     'type' => 'select',
                     'value' => null,
-                    'options' => $options,
+                    'options' => $this->newsletterCampaign
+                        ->fetchAllRecords()
+                        ->map(function ($campaign) {
+                            return [
+                                'value' => $campaign->id,
+                                'label' => $campaign->name,
+                            ];
+                        })
+                        ->toArray(),
                 ],
             ],
         ];
+
+        $selectedRecord = $this->newsletterSubscriber->fetchSingleRecord($id);
+        foreach ($data['results'] as &$result) {
+            foreach ($selectedRecord->toArray()[0] as $recordKey => $recordValue) {
+                if ($result['key'] === $recordKey) {
+                    $result['value'] = $recordValue;
+                    break;
+                }
+            }
+        }
 
         return view('pages.admin.communication.newsletter.subscribers.edit', compact('data'));
     }

@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Management;
 
 use App\Http\Controllers\Controller;
 use App\Models\Tag;
+use App\Models\Content;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
@@ -13,6 +14,7 @@ use Illuminate\Http\Request;
 class TagController extends Controller
 {
     protected $tag;
+    protected $content;
 
     /**
      * Create a new controller instance.
@@ -23,6 +25,7 @@ class TagController extends Controller
     {
         $this->middleware('auth');
         $this->tag = new Tag();
+        $this->content = new Content();
     }
 
     /**
@@ -55,7 +58,7 @@ class TagController extends Controller
                 'placeholder' => __('Content'),
                 'type' => 'select',
                 'value' => null,
-                'options' => [], // TODO: bring the contents as value and label
+                'options' => $this->content->fetchAllRecords()->toArray(),
             ],
             [
                 'id' => 2,
@@ -129,15 +132,26 @@ class TagController extends Controller
     public function edit(string $id): View|Application|Factory
     {
         $data = [
-            'title' => __('Create a tag'),
+            'title' => __('Update a tag'),
             'description' => __('
                 Lorem Ipsum is simply dummy text of the printing and typesetting industry.
                 Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s,
                 when an unknown printer took a galley of type and scrambled it to make a type specimen book.
             '),
             'action' => 'tags.update',
+            'rowId' => $id,
             'results' => $this->handleFormInputs(),
         ];
+
+        $selectedRecord = $this->tag->fetchSingleRecord($id);
+        foreach ($data['results'] as &$result) {
+            foreach ($selectedRecord->toArray()[0] as $recordKey => $recordValue) {
+                if ($result['key'] === $recordKey) {
+                    $result['value'] = $recordValue;
+                    break;
+                }
+            }
+        }
 
         return view('pages.admin.management.tags.edit', compact('data'));
     }
@@ -158,7 +172,7 @@ class TagController extends Controller
         $payload['slug'] = str_replace(' ', '-', strtolower($payload['name']));
         $payload['user_id'] = Auth::user()->id;
         $selectedRecord = $this->tag->fetchSingleRecord($id);
-        $result = $this->tag->createRecord($payload);
+        $result = $this->tag->updateRecord($payload, $id);
 
         return redirect()->route('tags.index')->with('success', $result);
     }

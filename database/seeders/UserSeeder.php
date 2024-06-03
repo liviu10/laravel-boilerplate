@@ -32,6 +32,20 @@ class UserSeeder extends Seeder
                 'profile_image' => null,
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now(),
+            ],
+            [
+                'id' => 2,
+                'full_name' => 'Job Queue',
+                'first_name' => 'Job',
+                'last_name' => 'Queue',
+                'nickname' => null,
+                'email' => 'job_queue@' . config('app.domain_name'),
+                'phone' => null,
+                'email_verified_at' => null,
+                'password' => bcrypt('123@JobQueue'),
+                'profile_image' => null,
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now(),
             ]
         ];
 
