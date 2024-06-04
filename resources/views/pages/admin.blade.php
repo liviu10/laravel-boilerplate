@@ -5,44 +5,21 @@
         @include('components.admin-header', ['title' => 'Dashboard'])
 
         <div class="admin__body">
-            {{-- <div class="card">
-                <div class="card-body">
-                    <form id="addNewForm" method="POST" action="{{ route('admin.saveGoogleMapsLocation') }}">
-                        @csrf
-                        <div class="form-floating mb-3">
-                            <input
-                                aria-describedby="Address"
-                                aria-label="Address"
-                                class="form-control"
-                                id="google_maps_location"
-                                name="google_maps_location"
-                                placeholder="Address"
-                                type="text"
-                            >
-                            <label for="google_maps_location">
-                                {{ __('Adresa google maps') }}
-                            </label>
-                        </div>
-                        <div class="form-actions">
-                            <button class="btn btn-success" type="submit">
-                                {{ __('Save') }}
-                            </button>
-                        </div>
-                    </form>
-                </div>
-            </div> --}}
             <div class="row admin admin--component">
-                <div class="col-xxl-6 col-xl-6 col-lg-6 col-md-8 col-sm-8 col-10 admin__card-inline-modifier">
+                <div class="col-8 admin__card-inline-modifier mb-3">
                     <div class="card">
                         <div class="card-body">
                             <div class="card-text">
-                                {{-- <div>
-                                    @foreach ($results['records'] as $key => $record)
+                                <div class="mb-3">
+                                    {{ __('Adresa eveniment') }}
+                                </div>
+                                <div class="mb-3">
+                                    @if ($data['results'] && count($data['results']['google_maps']) > 0)
                                         <span class="badge text-bg-primary">
-                                            {{ $record['label'] }}
+                                            {{ $data['results']['google_maps']['address'] }}
                                         </span>
-                                    @endforeach
-                                </div> --}}
+                                    @endif
+                                </div>
                                 <div>
                                     <button
                                         aria-controls="collapseAddNew"
@@ -52,6 +29,9 @@
                                         data-bs-target="#collapseAddNew"
                                         title="{{ __('Click here to add a new record') }}"
                                         type="button"
+                                        @if ($data['results'] && count($data['results']) === 1)
+                                        disabled
+                                        @endif
                                     >
                                         <i class="fa-solid fa-plus"></i>
                                     </button>
@@ -71,19 +51,20 @@
                             <div class="card-form">
                                 <div class="collapse card-form-new" id="collapseAddNew">
                                     <hr>
-                                    <form id="addNewForm" method="POST" action="{{ route('admin.saveGoogleMapsLocation') }}">
+                                    <form id="addNewForm" method="POST" action="{{ route('storeGoogleMaps') }}">
                                         @csrf
                                         <div class="form-floating mb-3">
                                             <input
                                                 aria-describedby="Address"
                                                 aria-label="Address"
                                                 class="form-control"
-                                                id="google_maps_location"
-                                                name="google_maps_location"
+                                                id="address"
+                                                name="address"
                                                 placeholder="Address"
                                                 type="text"
+                                                value=""
                                             >
-                                            <label for="google_maps_location">
+                                            <label for="address">
                                                 {{ __('Adresa google maps') }}
                                             </label>
                                         </div>
@@ -91,7 +72,7 @@
                                             <button class="btn btn-secondary" type="button" onclick="collapseForm('collapseAddNew')">
                                                 {{ __('Cancel') }}
                                             </button>
-                                            <button class="btn btn-success" type="button">
+                                            <button class="btn btn-success" type="submit">
                                                 {{ __('Save') }}
                                             </button>
                                         </div>
@@ -99,22 +80,23 @@
                                 </div>
                                 <div class="collapse card-form-edit" id="collapseEdit">
                                     <hr>
-                                    <form id="editForm" method="POST" action="{{ route('subjects.updateGoogleMapsLocation', 1) }}">
+                                    <form id="editForm" method="POST" action="{{ count($data['results']['google_maps']) > 0 ? route('updateGoogleMaps', $data['results']['google_maps']['id']) : '#' }}">
                                         @csrf
                                         @method('PUT')
-                                        {{-- <input type="hidden" name="id" value="{{ $data->id }}"> --}}
                                         <div class="form-floating mb-3">
                                             <input
                                                 aria-describedby="Address"
                                                 aria-label="Address"
                                                 class="form-control"
-                                                id="google_maps_location"
-                                                name="google_maps_location"
+                                                id="address"
+                                                name="address"
                                                 placeholder="Address"
                                                 type="text"
-                                                value=""
+                                                @if ($data['results'] && count($data['results']) > 0)
+                                                value="{{ $data['results']['google_maps']['address'] }}"
+                                                @endif
                                             >
-                                            <label for="google_maps_location">
+                                            <label for="address">
                                                 {{ __('Adresa google maps') }}
                                             </label>
                                         </div>
@@ -122,11 +104,23 @@
                                             <button class="btn btn-secondary" type="button" onclick="collapseForm('collapseEdit')">
                                                 {{ __('Cancel') }}
                                             </button>
-                                            <button class="btn btn-warning" type="button">
+                                            <button class="btn btn-warning" type="submit">
                                                 {{ __('Edit') }}
                                             </button>
                                         </div>
                                     </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-8 admin__card-event-images">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="card-text">
+                                <div class="mb-3">
+                                    {{ __('Poze eveniment') }}
                                 </div>
                             </div>
                         </div>

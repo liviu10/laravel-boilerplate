@@ -11,11 +11,9 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('contact_subjects', function (Blueprint $table) {
+        Schema::create('google_maps', function (Blueprint $table) {
             $table->id()->index('idx_id');
-            $table->string('value')->nullable(false);
-            $table->string('label')->nullable(false);
-            $table->boolean('is_active')->default(false);
+            $table->string('address')->nullable(false);
             $table->timestamps();
             $table->softDeletes();
             $table->foreignId('user_id')
@@ -25,7 +23,7 @@ return new class extends Migration
                 ->onUpdate('cascade');
             $table->index(
                 'user_id',
-                'idx_users_contact_subjects_id'
+                'idx_users_google_maps_id'
             );
         });
     }
@@ -35,11 +33,11 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('contact_subjects');
-        Schema::table('contact_subjects', function (Blueprint $table) {
+        Schema::dropIfExists('google_maps');
+        Schema::table('google_maps', function (Blueprint $table) {
             $table->dropForeign(['user_id']);
             $table->dropColumn('user_id');
-            $table->dropIndex('idx_users_contact_subjects_id');
+            $table->dropIndex('idx_users_google_maps_id');
         });
     }
 };

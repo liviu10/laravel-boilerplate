@@ -1,7 +1,7 @@
 <div class="row guest guest--component guest--cards" id="info">
     <div class="col-2 card">
         <div class="card-header">
-            <img src="{{ asset('images/05_icon_01_neselectat_70x70px.svg') }}" width=60 height=60 alt="">
+            <img src="{{ asset('storage/05_icon_01_neselectat_70x70px.svg') }}" width=60 height=60 alt="">
         </div>
         <div class="card-body">
             <p>
@@ -16,12 +16,12 @@
             </p>
         </div>
         <div class="card-footer">
-            <img src="https://dummyimage.com/60x60/000/fff" width=60 height=60 alt="">
+            <img src="{{ asset('storage/01_icon_SaNeCunoastem_neselectat_70x70px.svg') }}" width=60 height=60 alt="">
         </div>
     </div>
     <div class="col-2 card">
         <div class="card-header">
-            <img src="{{ asset('images/06_icon_02_neselectat_70x70px.svg') }}" width=60 height=60 alt="">
+            <img src="{{ asset('storage/06_icon_02_neselectat_70x70px.svg') }}" width=60 height=60 alt="">
         </div>
         <div class="card-body">
             <p>
@@ -34,12 +34,12 @@
             </p>
         </div>
         <div class="card-footer">
-            <img src="https://dummyimage.com/60x60/000/fff" width=60 height=60 alt="">
+            <img src="{{ asset('storage/02_icon_PrinGradina_neselectat_70x70px.svg') }}" width=60 height=60 alt="">
         </div>
     </div>
     <div class="col-2 card">
         <div class="card-header">
-            <img src="{{ asset('images/07_icon_03_selectat_70x70px.svg') }}" width=60 height=60 alt="">
+            <img src="{{ asset('storage/07_icon_03_selectat_70x70px.svg') }}" width=60 height=60 alt="">
         </div>
         <div class="card-body">
             <p>
@@ -52,12 +52,12 @@
             </p>
         </div>
         <div class="card-footer">
-            <img src="https://dummyimage.com/60x60/000/fff" width=60 height=60 alt="">
+            <img src="{{ asset('storage/03_icon_VinoLaNoi_selectat_70x70px.svg') }}" width=60 height=60 alt="">
         </div>
     </div>
     <div class="col-2 card">
         <div class="card-header">
-            <img src="{{ asset('images/08_icon_04_neselectat_70x70px.svg') }}" width=60 height=60 alt="">
+            <img src="{{ asset('storage/08_icon_04_neselectat_70x70px.svg') }}" width=60 height=60 alt="">
         </div>
         <div class="card-body">
             <p>
@@ -72,12 +72,12 @@
             </p>
         </div>
         <div class="card-footer">
-            <img src="https://dummyimage.com/60x60/000/fff" width=60 height=60 alt="">
+            <img src="{{ asset('storage/04_icon_SuntemSociali_neselectat_70x70px.svg') }}" width=60 height=60 alt="">
         </div>
     </div>
     <div class="col-2 card">
         <div class="card-header">
-            <img src="{{ asset('images/09_icon_05_neselectat_70x70px.svg') }}" width=60 height=60 alt="">
+            <img src="{{ asset('storage/09_icon_05_neselectat_70x70px.svg') }}" width=60 height=60 alt="">
         </div>
         <div class="card-body">
             <p>
@@ -92,7 +92,7 @@
             </p>
         </div>
         <div class="card-footer">
-            <img src="https://dummyimage.com/60x60/000/fff" width=60 height=60 alt="">
+            <img src="{{ asset('storage/05_icon_CuCineLucram_selectat_70x70px.svg') }}" width=60 height=60 alt="">
         </div>
     </div>
 </div>

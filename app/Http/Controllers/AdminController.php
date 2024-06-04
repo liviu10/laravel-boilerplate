@@ -2,13 +2,17 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Http\Request;
-// use App\Models\GoogleMaps;
+use App\Models\GoogleMaps;
+use Illuminate\Contracts\View\Factory;
+use Illuminate\Contracts\View\View;
+use Illuminate\Foundation\Application;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Database\Eloquent\Collection;
 
 class AdminController extends Controller
 {
-    // protected $modelName;
+    protected $googleMaps;
 
     /**
      * Create a new controller instance.
@@ -18,30 +22,62 @@ class AdminController extends Controller
     public function __construct()
     {
         $this->middleware('auth');
-        // $this->modelName = new GoogleMaps();
+        $this->googleMaps = new GoogleMaps();
     }
 
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request): View|Application|Factory
     {
-        return view('pages.admin');
+        $searchTerms = array_filter($request->all());
+        $googleMaps = $this->googleMaps->fetchAllRecords();
+
+        if ($googleMaps instanceof Collection && $googleMaps->isNotEmpty()) {
+            $recordGoogleMaps = $googleMaps->toArray()[0];
+        }
+
+        $data = [
+            'results' => [
+                'google_maps' => $recordGoogleMaps,
+            ]
+        ];
+
+        return view('pages.admin', compact('data'));
     }
 
-    public function saveGoogleMapsLocation(Request $request)
+    public function storeGoogleMaps(Request $request)
     {
-        $successMessage = __('The record was successfully saved');
-        $errorMessage = __('The record was not saved in the database');
-
         $validateRequest = [
-            'google_maps_location' => 'required|string',
+            'address' => 'required|string|min:3|max:255',
         ];
-        $payload = array_filter($request->all());
-        $request->validate($validateRequest);
-        // $result = $this->modelName->createRecord($payload);
-        $result = [];
 
-        return redirect()->route('admin.index')->with('success', $result ? $successMessage : $errorMessage);
+        $request->validate($validateRequest);
+        $payload = array_filter($request->all());
+        $payload['user_id'] = Auth::user()->id;
+
+        $existingAddress = $this->googleMaps->fetchAllRecords([ 'address' => $payload['address'] ])->first();
+        if ($existingAddress) {
+            return redirect()->route('index')->with('error', 'You can only create one address.');
+        }
+
+        $result = $this->googleMaps->createRecord($payload);
+
+        return redirect()->route('index')->with('success', $result);
+    }
+
+    public function updateGoogleMaps(Request $request, string $id)
+    {
+        $validateRequest = [
+            'address' => 'required|string|min:3|max:255',
+        ];
+
+        $request->validate($validateRequest);
+        $payload = array_filter($request->all());
+        $payload['user_id'] = Auth::user()->id;
+
+        $result = $this->googleMaps->updateRecord($payload, $id);
+
+        return redirect()->route('index')->with('success', $result);
     }
 }

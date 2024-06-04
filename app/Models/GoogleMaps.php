@@ -8,20 +8,18 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Collection;
 use Exception;
-
+use Carbon\Carbon;
 
 /**
- * Class CommentStatus
+ * Class GoogleMaps
  * @package App\Models
  */
-class CommentStatus extends Model
+class GoogleMaps extends Model
 {
     use HasFactory;
 
     protected $fillable = [
-        'value',
-        'label',
-        'is_active',
+        'address',
         'user_id',
     ];
 
@@ -29,18 +27,15 @@ class CommentStatus extends Model
         'id',
         'created_at',
         'updated_at',
+        'deleted_at',
     ];
 
     protected $casts = [
         'id' => 'integer',
-        'is_active' => 'boolean',
         'created_at' => 'datetime:d.m.Y H:i',
         'updated_at' => 'datetime:d.m.Y H:i',
+        'deleted_at' => 'datetime:d.m.Y H:i',
         'user_id' => 'integer',
-    ];
-
-    protected $attributes = [
-        'is_active' => false,
     ];
 
     public function user(): BelongsTo
@@ -48,39 +43,50 @@ class CommentStatus extends Model
         return $this->belongsTo('App\Models\User');
     }
 
-    public function comments(): HasMany
-    {
-        return $this->hasMany('App\Models\Comments');
-    }
-
     public function fetchAllRecords(array $search = []): Collection|Exception
     {
         try {
-            $query = $this->select('id', 'value', 'label')->where('is_active', true);
+            $query = $this->select(
+                'id',
+                'address',
+                'user_id',
+            )
+                ->with([
+                    'user' => function ($query) {
+                        $query->select('id', 'full_name', 'email');
+                    }
+                ]);
 
             if (!empty($search)) {
                 foreach ($search as $field => $value) {
-                    if ($field === 'id') {
+                    if ($field === 'id' || $field === 'content_category_id' || $field === 'content_visibility_id'
+                        || $field === 'content_type_id' || $field === 'user_id') {
                         $query->where($field, '=', $value);
+                    } else if ($field === 'scheduled_on') {
+                        $query->where($field, '>=', Carbon::parse($value)->startOfDay())
+                            ->where($field, '<=', Carbon::parse($value)->endOfDay());
                     } else {
                         $query->where($field, 'LIKE', '%' . $value . '%');
                     }
                 }
             }
 
-            return $query->get();
+            $query = $query->get();
+            $query->each(function ($item) {
+                $item->makeHidden('user_id');
+            });
+
+            return $query;
         } catch (Exception $exception) {
             return $exception;
         }
     }
 
-    public function createRecord(array $payload): CommentStatus|Exception
+    public function createRecord(array $payload): GoogleMaps|Exception
     {
         try {
             return $this->create([
-                'value' => $payload['value'],
-                'label' => $payload['label'],
-                'is_active' => $payload['is_active'],
+                'address' => $payload['address'],
                 'user_id' => $payload['user_id'],
             ]);
         } catch (Exception $exception) {
@@ -94,19 +100,8 @@ class CommentStatus extends Model
             return $this->select('*')
                 ->where('id', '=', $id)
                 ->with([
-                    'comments' => function ($query) {
-                        $query->select(
-                            'id',
-                            'content_id',
-                            'full_name',
-                        )->with([
-                            'content' => function ($query) {
-                                $query->select('id', 'title');
-                            }
-                        ]);
-                    },
                     'user' => function ($query) {
-                        $query->select('id', 'full_name');
+                        $query->select('id', 'full_name', 'email');
                     }
                 ])
                 ->get();
@@ -115,13 +110,11 @@ class CommentStatus extends Model
         }
     }
 
-    public function updateRecord(array $payload, int $id): CommentStatus|Exception
+    public function updateRecord(array $payload, int $id): GoogleMaps|Exception
     {
         try {
             $query = tap($this->find($id))->update([
-                'value' => $payload['value'],
-                'label' => $payload['label'],
-                'is_active' => $payload['is_active'],
+                'address' => $payload['address'],
                 'user_id' => $payload['user_id'],
             ]);
 
@@ -131,7 +124,7 @@ class CommentStatus extends Model
         }
     }
 
-    public function deleteRecord(string $id): CommentStatus|Exception
+    public function deleteRecord(string $id): GoogleMaps|Exception
     {
         try {
             $query = $this->find($id);

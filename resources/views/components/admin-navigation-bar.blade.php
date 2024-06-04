@@ -1,7 +1,7 @@
 <div class="admin admin--navbar">
     <nav class="navbar navbar-expand-lg bg-light">
         <div class="container-fluid">
-            <a class="navbar-brand" href="{{ route('admin.index') }}">
+            <a class="navbar-brand" href="{{ route('index') }}">
                 {{ config('app.name') }}
             </a>
             <button
@@ -20,7 +20,7 @@
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ route('admin.index') }}">
+                        <a class="nav-link" href="{{ route('index') }}">
                             {{ __('Home') }}
                         </a>
                     </li>

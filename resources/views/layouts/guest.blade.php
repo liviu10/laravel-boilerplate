@@ -27,7 +27,7 @@
             <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
                 <div class="container guest">
                     <a class="navbar-brand" href="{{ url('/') }}">
-                        <img src="{{ asset('images/00_logo_portrait_220x40px.svg') }}" width=220 height=40 alt="">
+                        <img src="{{ asset('storage/00_logo_portrait_220x40px.svg') }}" width=220 height=40 alt="">
                     </a>
                     <button
                         class="navbar-toggler collapsed"

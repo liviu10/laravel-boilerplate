@@ -2,7 +2,7 @@
     <div class="col-12 guest__card-reviews">
         <div class="col-4 card">
             <div class="card-header">
-                <img src="{{ asset('images/19_poza_recenzie_03.png') }}" class="card-img-top" width=75 height=75 alt="">
+                <img src="{{ asset('storage/19_poza_recenzie_03.png') }}" class="card-img-top" width=75 height=75 alt="">
             </div>
             <div class="card-body">
                 <p class="card-text">
@@ -15,7 +15,7 @@
         </div>
         <div class="col-4 card">
             <div class="card-header">
-                <img src="{{ asset('images/17_poza_recenzie_01.png') }}" class="card-img-top" width=75 height=75 alt="">
+                <img src="{{ asset('storage/17_poza_recenzie_01.png') }}" class="card-img-top" width=75 height=75 alt="">
             </div>
             <div class="card-body">
                 <p class="card-text">
@@ -28,7 +28,7 @@
         </div>
         <div class="col-4 card">
             <div class="card-header">
-                <img src="{{ asset('images/18_poza_recenzie_02.png') }}" class="card-img-top" width=75 height=75 alt="">
+                <img src="{{ asset('storage/18_poza_recenzie_02.png') }}" class="card-img-top" width=75 height=75 alt="">
             </div>
             <div class="card-body">
                 <p class="card-text">

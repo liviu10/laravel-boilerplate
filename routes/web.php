@@ -22,7 +22,7 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::group(['prefix' => '/admin'], function () {
-    Route::get('/', [AdminController::class, 'index'])->name('admin.index');
-    Route::post('/save-location', [AdminController::class, 'saveGoogleMapsLocation'])->name('admin.saveGoogleMapsLocation');
-    Route::put('/update-location', [AdminController::class, 'updateGoogleMapsLocation'])->name('admin.updateGoogleMapsLocation');
+    Route::get('/', [AdminController::class, 'index'])->name('index');
+    Route::post('/google-maps', [AdminController::class, 'storeGoogleMaps'])->name('storeGoogleMaps');
+    Route::put('/google-maps/{google_maps}', [AdminController::class, 'updateGoogleMaps'])->name('updateGoogleMaps');
 });

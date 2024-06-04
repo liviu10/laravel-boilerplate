@@ -28,7 +28,7 @@
         if (resourceUrl && resourceUrl !== '') {
             window.location.href = resourceUrl;
         } else {
-            window.location.href = "{{ route('admin.index') }}";
+            window.location.href = "{{ route('index') }}";
         }
     }
 </script>
