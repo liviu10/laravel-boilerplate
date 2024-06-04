@@ -102,10 +102,18 @@
                         <tr>
                             @foreach ($row->toArray() as $subkey => $value)
                             <td data-cell="{{ $subkey }}">
-                                @if ($subkey === 'is_active')
+                                @if ($subkey === 'is_active' || $subkey === 'privacy_policy' || $subkey === 'terms_and_conditions' || $subkey === 'data_protection')
                                     <span class="badge text-bg-{{ $value ? 'success' : 'danger' }}">
                                         {{ $value ? __('Yes') : __('No') }}
                                     </span>
+                                @elseif (gettype($value) === 'array')
+                                    @if (array_key_exists('label', $value))
+                                        {{ $value['label'] }}
+                                    @elseif (array_key_exists('full_name', $value))
+                                        {{ $value['full_name'] }}
+                                    @elseif (array_key_exists('name', $value))
+                                        {{ $value['name'] }}
+                                    @endif
                                 @else
                                     {{ $value }}
                                 @endif
@@ -191,11 +199,11 @@
     @endif --}}
 
     <!-- Filter record modal -->
-    {{-- @if ($results['options']['canFilter'])
+    @if ($results['options']['canFilter'])
         @include('components.admin-table-filter-modal', [
             'filter_form' => $results['forms']['filter_form']
         ])
-    @endif --}}
+    @endif
 </div>
 
 <script>

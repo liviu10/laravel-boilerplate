@@ -58,7 +58,7 @@ class ContactSubject extends Model
     public function fetchAllRecords(array $search = []): Collection|LengthAwarePaginator|Exception
     {
         try {
-            $query = $this->select('id', 'value', 'label', 'is_active')
+            $query = $this->select('id', 'value', 'label', 'is_active', 'user_id')
                 ->with([
                     'user' => function ($query) {
                         $query->select('id', 'full_name');
@@ -75,7 +75,12 @@ class ContactSubject extends Model
                 }
             }
 
-            return $query->get();
+            $query = $query->get();
+            $query->each(function ($item) {
+                $item->makeHidden('user_id');
+            });
+
+            return $query;
         } catch (Exception $exception) {
             return $exception;
         }

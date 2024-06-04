@@ -56,7 +56,12 @@ class MediaType extends Model
     public function fetchAllRecords(array $search = []): Collection|Exception
     {
         try {
-            $query = $this->select('id', 'value', 'label')->where('is_active', true);
+            $query = $this->select('id', 'value', 'label', 'is_active', 'user_id')
+                ->with([
+                    'user' => function ($query) {
+                        $query->select('id', 'full_name');
+                    }
+                ]);
 
             if (!empty($search)) {
                 foreach ($search as $field => $value) {
@@ -68,7 +73,12 @@ class MediaType extends Model
                 }
             }
 
-            return $query->get();
+            $query = $query->get();
+            $query->each(function ($item) {
+                $item->makeHidden('user_id');
+            });
+
+            return $query;
         } catch (Exception $exception) {
             return $exception;
         }

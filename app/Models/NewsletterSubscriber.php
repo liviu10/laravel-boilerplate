@@ -72,11 +72,7 @@ class NewsletterSubscriber extends Model
                 'valid_email',
             )->with([
                 'newsletter_campaign' => function ($query) {
-                    $query->select('id', 'name')->with([
-                        'user' => function ($query) {
-                            $query->select('id', 'full_name');
-                        }
-                    ]);
+                    $query->select('id', 'name');
                 },
             ]);
 
@@ -93,7 +89,12 @@ class NewsletterSubscriber extends Model
                 }
             }
 
-            return $query->get();
+            $query = $query->get();
+            $query->each(function ($item) {
+                $item->makeHidden('newsletter_campaign_id');
+            });
+
+            return $query;
         } catch (Exception $exception) {
             return $exception;
         }
@@ -122,8 +123,13 @@ class NewsletterSubscriber extends Model
                         'occur_times',
                         'occur_week',
                         'occur_day',
-                        'occur_hour'
-                    );
+                        'occur_hour',
+                        'user_id',
+                    )->with([
+                        'user' => function ($query) {
+                            $query->select('id', 'full_name');
+                        }
+                    ]);
                 }
             ]);
 

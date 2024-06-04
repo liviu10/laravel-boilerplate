@@ -146,7 +146,15 @@ class Content extends Model
                 }
             }
 
-            return $query->get();
+            $query = $query->get();
+            $query->each(function ($item) {
+                $item->makeHidden('content_category_id');
+                $item->makeHidden('content_visibility_id');
+                $item->makeHidden('content_type_id');
+                $item->makeHidden('user_id');
+            });
+
+            return $query;
         } catch (Exception $exception) {
             return $exception;
         }

@@ -47,10 +47,98 @@ class ContactMessageController extends Controller
                 Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s,
                 when an unknown printer took a galley of type and scrambled it to make a type specimen book.
             '),
+            'filter_form' => [
+                'action' => 'messages.index',
+                'inputs' => $this->handleFormInputs(),
+            ],
             'results' => $this->contactMessage->fetchAllRecords($searchTerms),
         ];
 
         return view('pages.admin.communication.contact.messages.index', compact('data'));
+    }
+
+    private function handleFormInputs(): array
+    {
+        return [
+            [
+                'id' => 1,
+                'key' => 'full_name',
+                'placeholder' => __('Full name'),
+                'type' => 'text',
+                'value' => ''
+            ],
+            [
+                'id' => 2,
+                'key' => 'email',
+                'placeholder' => __('Email'),
+                'type' => 'mail',
+                'value' => ''
+            ],
+            [
+                'id' => 3,
+                'key' => 'phone',
+                'placeholder' => __('Phone'),
+                'type' => 'tel',
+                'value' => ''
+            ],
+            [
+                'id' => 4,
+                'key' => 'privacy_policy',
+                'placeholder' => __('Privacy policy'),
+                'type' => 'select',
+                'value' => null,
+                'options' => [
+                    [
+                        'id' => 1,
+                        'value' => 0,
+                        'label' => __('No'),
+                    ],
+                    [
+                        'id' => 2,
+                        'value' => 1,
+                        'label' => __('Yes'),
+                    ]
+                ],
+            ],
+            [
+                'id' => 5,
+                'key' => 'terms_and_conditions',
+                'placeholder' => __('Terms and conditions'),
+                'type' => 'select',
+                'value' => null,
+                'options' => [
+                    [
+                        'id' => 1,
+                        'value' => 0,
+                        'label' => __('No'),
+                    ],
+                    [
+                        'id' => 2,
+                        'value' => 1,
+                        'label' => __('Yes'),
+                    ]
+                ],
+            ],
+            [
+                'id' => 6,
+                'key' => 'data_protection',
+                'placeholder' => __('Data protection'),
+                'type' => 'select',
+                'value' => null,
+                'options' => [
+                    [
+                        'id' => 1,
+                        'value' => 0,
+                        'label' => __('No'),
+                    ],
+                    [
+                        'id' => 2,
+                        'value' => 1,
+                        'label' => __('Yes'),
+                    ]
+                ],
+            ],
+        ];
     }
 
     /**

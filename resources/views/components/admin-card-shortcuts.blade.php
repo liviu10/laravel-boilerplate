@@ -15,7 +15,7 @@
                     title="{{ __('Click here to navigate to', [ 'buttonLabel' => $shortcut['title'] ]) }}"
                     type="button"
                 >
-                    {{ __('Go to') }} {{ $shortcut['title'] }}
+                    {{ __('View') }}
                     <i class="fa-solid fa-arrow-right"></i>
                 </a>
             </div>

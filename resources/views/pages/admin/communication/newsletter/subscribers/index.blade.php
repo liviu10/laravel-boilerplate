@@ -25,7 +25,26 @@
             </div>
             @endif
 
-            {{ $data['results'] }}
+            @include('components.admin-table', [
+                'results' => [
+                    'options' => [
+                        'canAdd' => false,
+                        'canFilter' => true,
+                        'hasActions' => true,
+                        'canShow' => true,
+                        'canUpdate' => true,
+                        'canDelete' => false,
+                        'canRestore' => false,
+                        'hasPagination' => false,
+                    ],
+                    'columns' => [
+                        'ID', 'Full name', 'Email', 'Privacy policy',
+                        'Terms and conditions', 'Data protection', 'Valid email',
+                        'Newsletter campaign', 'Actions'
+                    ],
+                    'rows' => $data['results']
+                ]
+            ])
         </div>
     </div>
 @endsection

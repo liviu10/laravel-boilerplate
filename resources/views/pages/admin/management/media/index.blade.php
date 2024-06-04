@@ -17,7 +17,25 @@
                 'shortcuts' => $data['shortcuts'][0],
             ])
 
-            {{ $data['results'] }}
+            @include('components.admin-table', [
+                'results' => [
+                    'options' => [
+                        'canAdd' => true,
+                        'canFilter' => true,
+                        'hasActions' => true,
+                        'canShow' => false,
+                        'canUpdate' => true,
+                        'canDelete' => false,
+                        'canRestore' => false,
+                        'hasPagination' => false,
+                    ],
+                    'columns' => [
+                        'ID', 'Path', 'Title', 'Caption', 'Alternate text',
+                        'Media type', 'Content', 'Added by', 'Actions'
+                    ],
+                    'rows' => $data['results']
+                ]
+            ])
         </div>
     </div>
 @endsection

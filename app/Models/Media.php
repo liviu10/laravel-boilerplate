@@ -69,11 +69,9 @@ class Media extends Model
                 'media_type_id',
                 'content_id',
                 'internal_path',
-                'external_path',
                 'title',
                 'caption',
                 'alt_text',
-                'description',
                 'user_id',
             )
                 ->with([
@@ -98,7 +96,14 @@ class Media extends Model
                 }
             }
 
-            return $query->get();
+            $query = $query->get();
+            $query->each(function ($item) {
+                $item->makeHidden('media_type_id');
+                $item->makeHidden('content_id');
+                $item->makeHidden('user_id');
+            });
+
+            return $query;
         } catch (Exception $exception) {
             return $exception;
         }

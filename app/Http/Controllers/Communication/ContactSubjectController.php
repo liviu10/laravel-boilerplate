@@ -42,6 +42,10 @@ class ContactSubjectController extends Controller
                 Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s,
                 when an unknown printer took a galley of type and scrambled it to make a type specimen book.
             '),
+            'filter_form' => [
+                'action' => 'subjects.index',
+                'inputs' => $this->handleFormInputs(),
+            ],
             'results' => $this->contactSubject->fetchAllRecords($searchTerms),
         ];
 
@@ -54,7 +58,7 @@ class ContactSubjectController extends Controller
             [
                 'id' => 1,
                 'key' => 'label',
-                'placeholder' => __('Subject'),
+                'placeholder' => __('Label'),
                 'type' => 'text',
                 'value' => ''
             ],

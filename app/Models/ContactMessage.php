@@ -103,7 +103,12 @@ class ContactMessage extends Model
                 }
             }
 
-            return $query->get();
+            $query = $query->get();
+            $query->each(function ($item) {
+                $item->makeHidden('contact_subject_id');
+            });
+
+            return $query;
         } catch (Exception $exception) {
             return $exception;
         }

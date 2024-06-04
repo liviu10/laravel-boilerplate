@@ -87,6 +87,7 @@ class NewsletterCampaign extends Model
                 'occur_week',
                 'occur_day',
                 'occur_hour',
+                'user_id',
             )->with([
                 'user' => function ($query) {
                     $query->select('id', 'full_name');
@@ -104,7 +105,12 @@ class NewsletterCampaign extends Model
                 }
             }
 
-            return $query->get();
+            $query = $query->get();
+            $query->each(function ($item) {
+                $item->makeHidden('user_id');
+            });
+
+            return $query;
         } catch (Exception $exception) {
             return $exception;
         }

@@ -28,6 +28,7 @@
             @include('components.admin-table', [
                 'results' => [
                     'options' => [
+                        'createRoute' => 'subjects.create',
                         'canAdd' => true,
                         'canFilter' => true,
                         'hasActions' => true,
@@ -36,6 +37,9 @@
                         'canDelete' => false,
                         'canRestore' => false,
                         'hasPagination' => false,
+                    ],
+                    'forms' => [
+                        'filter_form' => $data['filter_form'],
                     ],
                     'columns' => [
                         'ID', 'Value', 'Label', 'Is active?', 'Added by', 'Actions'
