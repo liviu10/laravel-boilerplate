@@ -66,7 +66,30 @@
 
         <div class="admin__table-header">
             <div class="btn-group" role="group" aria-label="Basic example">
-                @foreach ($tableButtonGroup as $item)
+                @if ($results['options']['canAdd'])
+                    <a
+                        class="btn btn-primary"
+                        href="{{ route($results['actions']['create']) }}"
+                        title="{{ __('Click here to add a new record') }}"
+                        type="button"
+                    >
+                        <i class="{{ $item['icon'] }}"></i>
+                        {{ $item['label'] }}
+                    </button>
+                @endif
+                @if ($results['options']['canFilter'])
+                    <button
+                        class="btn btn-primary"
+                        data-bs-target="{{ $item['target'] }}"
+                        data-bs-toggle="modal"
+                        title="__('Click here to filter & sort the records')"
+                        type="button"
+                    >
+                        <i class="{{ $item['icon'] }}"></i>
+                        {{ $item['label'] }}
+                    </button>
+                @endif
+                {{-- @foreach ($tableButtonGroup as $item)
                     @if ($item['is_active'])
                         <button
                             class="btn btn-primary"
@@ -74,12 +97,15 @@
                             data-bs-toggle="modal"
                             title="{{ $item['title'] }}"
                             type="button"
+                            @if ($item['target'] === '#addNewModal')
+                                onclick="redirectToCreatePage($item['action'])"
+                            @endif
                         >
                             <i class="{{ $item['icon'] }}"></i>
                             {{ $item['label'] }}
                         </button>
                     @endif
-                @endforeach
+                @endforeach --}}
             </div>
         </div>
 
@@ -207,8 +233,9 @@
 </div>
 
 <script>
-    function redirectToCreatePage() {
-        window.location.href = resourceUrl;
+    function redirectToCreatePage(actionUrl) {
+        debugger;
+        window.location.href = actionUrl;
     }
     function transformDataCells() {
         var cells = document.querySelectorAll('[data-cell]');
