@@ -1,59 +1,3 @@
-@php
-    $tableButtonGroup = [
-        [
-            'id' => 1,
-            'target' => '#addNewModal',
-            'title' => __('Click here to add a new record'),
-            'icon' => 'fa-solid fa-plus',
-            'label' => __('Add new'),
-            'is_active' => $results['options']['canAdd'],
-        ],
-        [
-            'id' => 2,
-            'target' => '#filterModal',
-            'title' => __('Click here to filter & sort the records'),
-            'icon' => 'fa-solid fa-filter',
-            'label' => __('Filter & sort'),
-            'is_active' => $results['options']['canFilter'],
-        ]
-    ];
-
-    $tableActions = [
-        [
-            'class' => 'btn btn-info',
-            'id' => 1,
-            'target' => '#showModal',
-            'title' => __('Click here to view more details'),
-            'icon' => 'fa-solid fa-eye',
-            'is_active' => $results['options']['canShow'],
-        ],
-        [
-            'class' => 'btn btn-warning',
-            'id' => 2,
-            'target' => '#editModal',
-            'title' => __('Click here to edit this record'),
-            'icon' => 'fa-solid fa-pencil',
-            'is_active' => $results['options']['canUpdate'],
-        ],
-        [
-            'class' => 'btn btn-danger',
-            'id' => 3,
-            'target' => '#deleteModal',
-            'title' => __('Click here to delete this record'),
-            'icon' => 'fa-solid fa-trash',
-            'is_active' => $results['options']['canDelete'],
-        ],
-        [
-            'class' => 'btn btn-dark',
-            'id' => 4,
-            'target' => '#restoreModal',
-            'title' => __('Click here to restore this record'),
-            'icon' => 'fa-solid fa-trash-arrow-up',
-            'is_active' => $results['options']['canRestore'],
-        ],
-    ];
-@endphp
-
 <div class="row admin admin--component">
     <div class="col-xxl-8 col-xl-8 col-lg-8 col-md-12 col-sm-12 col-12 admin__table">
         {{-- <div class="admin__table-search-results">
@@ -71,41 +15,23 @@
                         class="btn btn-primary"
                         href="{{ route($results['actions']['create']) }}"
                         title="{{ __('Click here to add a new record') }}"
-                        type="button"
                     >
-                        <i class="{{ $item['icon'] }}"></i>
-                        {{ $item['label'] }}
-                    </button>
+                        <i class="fa-solid fa-plus"></i>
+                        {{ __('Add new') }}
+                    </a>
                 @endif
                 @if ($results['options']['canFilter'])
                     <button
                         class="btn btn-primary"
-                        data-bs-target="{{ $item['target'] }}"
+                        data-bs-target="#filterModal"
                         data-bs-toggle="modal"
                         title="__('Click here to filter & sort the records')"
                         type="button"
                     >
-                        <i class="{{ $item['icon'] }}"></i>
-                        {{ $item['label'] }}
+                        <i class="fa-solid fa-filter"></i>
+                        {{ __('Filter & sort') }}
                     </button>
                 @endif
-                {{-- @foreach ($tableButtonGroup as $item)
-                    @if ($item['is_active'])
-                        <button
-                            class="btn btn-primary"
-                            data-bs-target="{{ $item['target'] }}"
-                            data-bs-toggle="modal"
-                            title="{{ $item['title'] }}"
-                            type="button"
-                            @if ($item['target'] === '#addNewModal')
-                                onclick="redirectToCreatePage($item['action'])"
-                            @endif
-                        >
-                            <i class="{{ $item['icon'] }}"></i>
-                            {{ $item['label'] }}
-                        </button>
-                    @endif
-                @endforeach --}}
             </div>
         </div>
 
@@ -148,59 +74,70 @@
                             @if ($results['options']['hasActions'])
                                 <td data-cell="actions">
                                     <div class="btn-group" role="action_group" aria-label="Basic example">
-                                        @foreach ($tableActions as $item)
-                                            @if ($item['is_active'])
-                                                <button
-                                                    class="{{ $item['class'] }}"
-                                                    data-bs-target="{{ $item['target'] . '' . $key }}"
-                                                    data-bs-toggle="modal"
-                                                    title="{{ $item['title'] }}"
-                                                    type="button"
-                                                >
-                                                    <i class="{{ $item['icon'] }}"></i>
-                                                </button>
-
-                                                <!-- Show record modal -->
-                                                {{-- @if ($results['options']['canShow'])
-                                                    @include('components.admin-table-show-modal', [
-                                                        'key' => $key,
-                                                        'record' => $row
-                                                    ])
-                                                @endif --}}
-
-                                                <!-- Edit record modal -->
-                                                {{-- @if ($results['options']['canUpdate'])
-                                                    @include('components.admin-table-edit-modal', [
-                                                        'update_form' => $results['forms']['update_form'],
-                                                        'key' => $key,
-                                                        'record' => $row
-                                                    ])
-                                                @endif --}}
-
-                                                <!-- Delete record modal -->
-                                                {{-- @if ($results['options']['canDelete'])
-                                                    @include('components.admin-table-delete-modal', [
-                                                        'delete_form' => $results['forms']['delete_form'],
-                                                        'key' => $key,
-                                                        'record' => $row,
-                                                        'id' => $row->id
-                                                    ])
-                                                @endif --}}
-
-                                                <!-- Restore record modal -->
-                                                {{-- @if ($results['options']['canRestore'])
-                                                    @include('components.admin-table-restore-modal', [
-                                                        'key' => $key,
-                                                        'record' => $row,
-                                                        'id' => $row->id
-                                                    ])
-                                                @endif --}}
-                                            @endif
-                                        @endforeach
+                                        @if ($results['options']['canShow'])
+                                            <a
+                                                class="btn btn-info"
+                                                href="{{ route($results['actions']['show'], $row->id) }}"
+                                                title="{{ __('Click here to view more details') }}"
+                                            >
+                                                <i class="fa-solid fa-eye"></i>
+                                            </a>
+                                        @endif
+                                        @if ($results['options']['canUpdate'])
+                                            <a
+                                                class="btn btn-warning"
+                                                href="{{ route($results['actions']['edit'], $row->id) }}"
+                                                title="{{ __('Click here to edit this record') }}"
+                                            >
+                                                <i class="fa-solid fa-pencil"></i>
+                                            </a>
+                                        @endif
+                                        @if ($results['options']['canDelete'])
+                                            <button
+                                                class="btn btn-danger"
+                                                data-bs-target="#deleteModal{{$key}}"
+                                                data-bs-toggle="modal"
+                                                title="{{ __('Click here to edit this record') }}"
+                                                type="button"
+                                            >
+                                                <i class="fa-solid fa-trash"></i>
+                                            </button>
+                                        @endif
+                                        @if ($results['options']['canRestore'])
+                                            <button
+                                                class="btn btn-dark"
+                                                data-bs-target="#restoreModal{{$key}}"
+                                                data-bs-toggle="modal"
+                                                title="__('Click here to restore this record')"
+                                                type="button"
+                                            >
+                                                <i class="fa-solid fa-trash-arrow-up"></i>
+                                            </button>
+                                        @endif
                                     </div>
                                 </td>
                             @endif
                         </tr>
+
+                        <!-- Delete record modal -->
+                        @if ($results['options']['canDelete'])
+                            @include('components.admin-table-delete-modal', [
+                                'action' => $results['actions']['destroy'],
+                                'key' => $key,
+                                'record' => $row,
+                                'id' => $row->id
+                            ])
+                        @endif
+
+                        <!-- Restore record modal -->
+                        @if ($results['options']['canRestore'])
+                            @include('components.admin-table-restore-modal', [
+                                'action' => $results['actions']['restore'],
+                                'key' => $key,
+                                'record' => $row,
+                                'id' => $row->id
+                            ])
+                        @endif
                     @endforeach
                     @else
                         <tr>
@@ -217,16 +154,10 @@
         </div>
     </div>
 
-    <!-- Add new record modal -->
-    {{-- @if ($results['options']['canAdd'])
-        @include('components.admin-table-add-modal', [
-            'create_form' => $results['forms']['create_form']
-        ])
-    @endif --}}
-
     <!-- Filter record modal -->
     @if ($results['options']['canFilter'])
         @include('components.admin-table-filter-modal', [
+            'action' => $results['actions']['index'],
             'filter_form' => $results['forms']['filter_form']
         ])
     @endif

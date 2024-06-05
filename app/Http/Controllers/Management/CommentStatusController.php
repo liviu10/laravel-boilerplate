@@ -42,6 +42,18 @@ class CommentStatusController extends Controller
                 Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s,
                 when an unknown printer took a galley of type and scrambled it to make a type specimen book.
             '),
+            'actions' => [
+                'index' => 'statuses.index',
+                'create' => 'statuses.create',
+                'show' => 'statuses.show',
+                'edit' => 'statuses.edit',
+                // 'destroy' => 'statuses.destroy',
+                // 'restore' => 'statuses.restore',
+            ],
+            'filter_form' => [
+                'action' => 'statuses.index',
+                'inputs' => $this->handleFormInputs(),
+            ],
             'results' => $this->commentStatus->fetchAllRecords($searchTerms),
         ];
 

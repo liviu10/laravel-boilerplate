@@ -43,10 +43,12 @@ class ContactSubjectController extends Controller
                 when an unknown printer took a galley of type and scrambled it to make a type specimen book.
             '),
             'actions' => [
-                'index' => route('subjects.index'),
-                'create' => route('subjects.store'),
-                'show' => route('subjects.show'),
-                'edit' => route('subjects.update'),
+                'index' => 'subjects.index',
+                'create' => 'subjects.create',
+                'show' => 'subjects.show',
+                'edit' => 'subjects.edit',
+                // 'destroy' => 'subjects.destroy',
+                // 'restore' => 'subjects.restore',
             ],
             'filter_form' => [
                 'action' => 'subjects.index',

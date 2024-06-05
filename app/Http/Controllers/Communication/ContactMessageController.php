@@ -47,6 +47,14 @@ class ContactMessageController extends Controller
                 Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s,
                 when an unknown printer took a galley of type and scrambled it to make a type specimen book.
             '),
+            'actions' => [
+                'index' => 'messages.index',
+                'create' => 'messages.create',
+                'show' => 'messages.show',
+                'edit' => 'messages.edit',
+                // 'destroy' => 'messages.destroy',
+                // 'restore' => 'messages.restore',
+            ],
             'filter_form' => [
                 'action' => 'messages.index',
                 'inputs' => $this->handleFormInputs(),

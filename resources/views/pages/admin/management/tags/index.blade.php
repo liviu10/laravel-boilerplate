@@ -37,6 +37,10 @@
                         'canRestore' => false,
                         'hasPagination' => false,
                     ],
+                    'actions' => $data['actions'],
+                    'forms' => [
+                        'filter_form' => $data['filter_form'],
+                    ],
                     'columns' => [
                         'ID', 'Name', 'Slug', 'Content',
                         'Added by', 'Actions'

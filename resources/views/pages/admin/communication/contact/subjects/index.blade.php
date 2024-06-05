@@ -28,7 +28,6 @@
             @include('components.admin-table', [
                 'results' => [
                     'options' => [
-                        'createRoute' => 'subjects.create',
                         'canAdd' => true,
                         'canFilter' => true,
                         'hasActions' => true,

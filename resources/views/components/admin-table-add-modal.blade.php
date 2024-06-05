@@ -21,7 +21,7 @@
             <form
                 id="createForm"
                 method="POST"
-                action="{{ route($create_form['action']) }}"
+                action="{{ Route::has($action) ? route($action) : '#' }}"
                 enctype="multipart/form-data"
             >
                 @csrf

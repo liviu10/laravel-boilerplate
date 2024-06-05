@@ -21,7 +21,7 @@
             <form
                 id="createForm"
                 method="POST"
-                action="{{ route($update_form['action'], $row->id) }}"
+                action="{{ Route::has($action) ? route($action, $id) : '#' }}"
                 enctype="multipart/form-data"
             >
                 @csrf

@@ -47,10 +47,63 @@ class ReviewController extends Controller
                 Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s,
                 when an unknown printer took a galley of type and scrambled it to make a type specimen book.
             '),
+            'actions' => [
+                'index' => 'subscribers.index',
+                // 'create' => 'subscribers.create',
+                // 'show' => 'subscribers.show',
+                'edit' => 'subscribers.edit',
+                // 'destroy' => 'subscribers.destroy',
+                // 'restore' => 'subscribers.restore',
+            ],
+            'filter_form' => [
+                'action' => 'subscribers.index',
+                'inputs' => $this->handleFormInputs(),
+            ],
             'results' => $this->review->fetchAllRecords($searchTerms),
         ];
 
         return view('pages.admin.communication.reviews.index', compact('data'));
+    }
+
+    private function handleFormInputs(): array
+    {
+        return [
+            [
+                'id' => 1,
+                'key' => 'full_name',
+                'placeholder' => __('Full name'),
+                'type' => 'text',
+                'value' => ''
+            ],
+            [
+                'id' => 2,
+                'key' => 'rating',
+                'placeholder' => __('Rating'),
+                'type' => 'number',
+                'value' => 0,
+                'min' => 1,
+                'max' => 30,
+            ],
+            [
+                'id' => 3,
+                'key' => 'is_active',
+                'placeholder' => __('Is active?'),
+                'type' => 'select',
+                'value' => null,
+                'options' => [
+                    [
+                        'id' => 1,
+                        'value' => 0,
+                        'label' => __('No'),
+                    ],
+                    [
+                        'id' => 2,
+                        'value' => 1,
+                        'label' => __('Yes'),
+                    ]
+                ],
+            ],
+        ];
     }
 
     /**

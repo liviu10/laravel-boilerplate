@@ -21,7 +21,7 @@
             <form
                 id="filterForm"
                 method="GET"
-                action="{{ route($filter_form['action']) }}"
+                action="{{ Route::has($action) ? route($action) : '#' }}"
                 enctype="multipart/form-data"
             >
                 @csrf

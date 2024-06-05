@@ -46,6 +46,14 @@ class NewsletterCampaignController extends Controller
                 Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s,
                 when an unknown printer took a galley of type and scrambled it to make a type specimen book.
             '),
+            'actions' => [
+                'index' => 'campaigns.index',
+                'create' => 'campaigns.create',
+                'show' => 'campaigns.show',
+                'edit' => 'campaigns.edit',
+                // 'destroy' => 'campaigns.destroy',
+                // 'restore' => 'campaigns.restore',
+            ],
             'filter_form' => [
                 'action' => 'campaigns.index',
                 'inputs' => $this->handleFormInputs(),

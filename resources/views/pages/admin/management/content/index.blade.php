@@ -43,6 +43,10 @@
                         'canRestore' => false,
                         'hasPagination' => false,
                     ],
+                    'actions' => $data['actions'],
+                    'forms' => [
+                        'filter_form' => $data['filter_form'],
+                    ],
                     'columns' => [
                         'ID', 'Scheduled on', 'Content url', 'Title',
                         'Content category', 'Content visibility',

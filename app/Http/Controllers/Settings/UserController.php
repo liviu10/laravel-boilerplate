@@ -9,6 +9,7 @@ use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Foundation\Application;
 use Illuminate\Http\Request;
+use Carbon\Carbon;
 
 class UserController extends Controller
 {
@@ -40,10 +41,57 @@ class UserController extends Controller
                 Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s,
                 when an unknown printer took a galley of type and scrambled it to make a type specimen book.
             '),
+            'actions' => [
+                'index' => 'users.index',
+                'create' => 'users.create',
+                'show' => 'users.show',
+                'edit' => 'users.edit',
+                // 'destroy' => 'users.destroy',
+                // 'restore' => 'users.restore',
+            ],
+            'filter_form' => [
+                'action' => 'users.index',
+                'inputs' => $this->handleFormInputs(),
+            ],
             'results' => $this->user->fetchAllRecords($searchTerms),
         ];
 
         return view('pages.admin.settings.users.index', compact('data'));
+    }
+
+    private function handleFormInputs(): array
+    {
+        return [
+            [
+                'id' => 1,
+                'key' => 'full_name',
+                'placeholder' => __('Full name'),
+                'type' => 'text',
+                'value' => '',
+            ],
+            [
+                'id' => 2,
+                'key' => 'nickname',
+                'placeholder' => __('Nickname'),
+                'type' => 'text',
+                'value' => '',
+            ],
+            [
+                'id' => 3,
+                'key' => 'email',
+                'placeholder' => __('Email'),
+                'type' => 'mail',
+                'value' => '',
+            ],
+            [
+                'id' => 4,
+                'key' => 'created_at',
+                'placeholder' => __('Joined at'),
+                'type' => 'datetime-local',
+                'value' => '',
+                'min' => Carbon::now()->startOfYear()->toDateTimeLocalString(),
+            ],
+        ];
     }
 
     /**

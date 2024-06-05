@@ -42,6 +42,18 @@ class MediaTypeController extends Controller
                 Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s,
                 when an unknown printer took a galley of type and scrambled it to make a type specimen book.
             '),
+            'actions' => [
+                'index' => 'types.index',
+                'create' => 'types.create',
+                'show' => 'types.show',
+                'edit' => 'types.edit',
+                // 'destroy' => 'types.destroy',
+                // 'restore' => 'types.restore',
+            ],
+            'filter_form' => [
+                'action' => 'types.index',
+                'inputs' => $this->handleFormInputs(),
+            ],
             'results' => $this->mediaType->fetchAllRecords($searchTerms),
         ];
 

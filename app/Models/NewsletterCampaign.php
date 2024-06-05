@@ -173,7 +173,7 @@ class NewsletterCampaign extends Model
                         $query->select(
                             'id',
                             'newsletter_campaign_id',
-                            'path',
+                            'template',
                         )->where('is_active', true);
                     },
                     'user' => function ($query) {

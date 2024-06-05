@@ -31,6 +31,14 @@
                             <span class="badge text-bg-{{ $value ? 'success' : 'danger' }}">
                                 {{ $value ? __('Yes') : __('No') }}
                             </span>
+                        @elseif (gettype($item) === 'array')
+                            @if (array_key_exists('label', $item))
+                                {{ $item['label'] }}
+                            @elseif (array_key_exists('full_name', $item))
+                                {{ $item['full_name'] }}
+                            @elseif (array_key_exists('name', $item))
+                                {{ $item['name'] }}
+                            @endif
                         @else
                             {{ $item }}
                         @endif
@@ -49,9 +57,11 @@
                 <form
                     id="deleteForm"
                     method="POST"
-                    action="{{ route($delete_form['action'], $id) }}"
+                    action="{{ Route::has($action) ? route($action, $id) : '#' }}"
                     enctype="multipart/form-data"
                 >
+                    @csrf
+                    @method('DELETE')
                     <button type="submit" class="btn btn-danger">
                         {{ __('Delete') }}
                     </button>

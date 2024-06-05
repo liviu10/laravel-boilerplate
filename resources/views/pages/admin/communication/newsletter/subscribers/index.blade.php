@@ -37,6 +37,10 @@
                         'canRestore' => false,
                         'hasPagination' => false,
                     ],
+                    'actions' => $data['actions'],
+                    'forms' => [
+                        'filter_form' => $data['filter_form'],
+                    ],
                     'columns' => [
                         'ID', 'Full name', 'Email', 'Privacy policy',
                         'Terms and conditions', 'Data protection', 'Valid email',

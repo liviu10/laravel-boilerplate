@@ -49,6 +49,18 @@ class MediaController extends Controller
             'shortcuts' => [
                 $this->handleShortcuts()
             ],
+            'actions' => [
+                'index' => 'media.index',
+                'create' => 'media.create',
+                'show' => 'media.show',
+                'edit' => 'media.edit',
+                // 'destroy' => 'media.destroy',
+                // 'restore' => 'media.restore',
+            ],
+            'filter_form' => [
+                'action' => 'media.index',
+                'inputs' => $this->handleFormInputs(),
+            ],
             'results' => $this->media->fetchAllRecords($searchTerms),
         ];
 

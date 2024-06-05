@@ -42,6 +42,18 @@ class ContentCategoryController extends Controller
                 Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s,
                 when an unknown printer took a galley of type and scrambled it to make a type specimen book.
             '),
+            'actions' => [
+                'index' => 'categories.index',
+                'create' => 'categories.create',
+                'show' => 'categories.show',
+                'edit' => 'categories.edit',
+                // 'destroy' => 'categories.destroy',
+                // 'restore' => 'categories.restore',
+            ],
+            'filter_form' => [
+                'action' => 'categories.index',
+                'inputs' => $this->handleFormInputs(),
+            ],
             'results' => $this->contentCategory->fetchAllRecords($searchTerms),
         ];
 

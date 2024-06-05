@@ -59,6 +59,18 @@ class ContentController extends Controller
             'shortcuts' => [
                 $this->handleShortcuts()
             ],
+            'actions' => [
+                'index' => 'content.index',
+                'create' => 'content.create',
+                'show' => 'content.show',
+                'edit' => 'content.edit',
+                // 'destroy' => 'content.destroy',
+                // 'restore' => 'content.restore',
+            ],
+            'filter_form' => [
+                'action' => 'content.index',
+                'inputs' => $this->handleFormInputs(),
+            ],
             'results' => $this->content->fetchAllRecords($searchTerms),
         ];
 

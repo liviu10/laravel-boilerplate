@@ -43,6 +43,18 @@ class TagController extends Controller
                 Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s,
                 when an unknown printer took a galley of type and scrambled it to make a type specimen book.
             '),
+            'actions' => [
+                'index' => 'tags.index',
+                'create' => 'tags.create',
+                'show' => 'tags.show',
+                'edit' => 'tags.edit',
+                // 'destroy' => 'tags.destroy',
+                // 'restore' => 'tags.restore',
+            ],
+            'filter_form' => [
+                'action' => 'tags.index',
+                'inputs' => $this->handleFormInputs(),
+            ],
             'results' => $this->tag->fetchAllRecords($searchTerms),
         ];
 
