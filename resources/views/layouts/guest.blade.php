@@ -5,7 +5,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
         <!-- CSRF TOKEN -->
         <meta name="csrf-token" content="{{ csrf_token() }}">
-        <title>{{ config('app.name') }} | {{ config('app.owner') }}</title>
+        <title>{{ config('app.name') }}</title>
         <!-- FONT AWESOME V6.3.0 IMPORT LINK -->
         <link
             rel="stylesheet"
@@ -90,7 +90,7 @@
                 id="chat_with_us"
                 class="btn btn-primary"
                 title="Scrie-ne!"
-                data-phone-number="+40760961010"
+                data-phone-number="+40747339283"
                 data-message="Buna ziua! Sunt interesat de capsunile dvs.!"
             >
                 <span>

@@ -19,14 +19,7 @@ class GuestSliderLocation extends Component
     public function __construct()
     {
         $this->googleMaps = new GoogleMaps();
-        $records = $this->googleMaps->fetchAllRecords();
-
-        if ($records instanceof Collection && $records->isNotEmpty()) {
-            $this->googleMapsLocation = $records->toArray()[0]['address'];
-        } else {
-            $this->googleMapsLocation = 'Bucuresti';
-        }
-        $this->googleMapsLocation = str_replace(' ', '+', $this->googleMapsLocation);
+        $this->googleMapsLocation = $this->googleMaps->fetchAllRecords()->toArray()[0];
     }
 
     /**

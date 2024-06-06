@@ -179,6 +179,11 @@ body {
     }
     @media only screen and (max-width: 575px) {
         right: rem-convertor(15px);
+        &#chat_with_us {
+            right: 50%;
+            transform: translateX(50%);
+            bottom: rem-convertor(15px);
+        }
     }
 }
 #chat_with_us.btn {

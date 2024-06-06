@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('google_maps', function (Blueprint $table) {
             $table->id()->index('idx_id');
+            $table->string('description')->nullable(false);
             $table->string('address')->nullable(false);
             $table->timestamps();
             $table->softDeletes();

@@ -5,7 +5,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
         <!-- CSRF TOKEN -->
         <meta name="csrf-token" content="{{ csrf_token() }}">
-        <title>Admin {{ config('app.name') }} | {{ config('app.owner') }}</title>
+        <title>Admin {{ config('app.name') }}</title>
         <!-- FONT AWESOME V6.3.0 -->
         <link
             rel="stylesheet"

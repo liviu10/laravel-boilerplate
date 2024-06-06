@@ -21,18 +21,18 @@ class UserSeeder extends Seeder
         $records = [
             [
                 'id' => 1,
-                'full_name' => 'User Webmaster',
-                'first_name' => 'User',
-                'last_name' => 'Webmaster',
-                'nickname' => null,
-                'email' => 'webmaster@' . config('app.domain_name'),
-                'phone' => null,
+                'full_name' => 'Briofresh Admin',
+                'first_name' => 'Briofresh',
+                'last_name' => 'Admin',
+                'nickname' => 'briofresh_land',
+                'email' => 'briofresh_admin@' . config('app.domain_name'),
+                'phone' => '+40747339283',
                 'email_verified_at' => null,
                 'password' => bcrypt('123@UserWebmaster'),
                 'profile_image' => null,
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now(),
-            ]
+            ],
         ];
 
         User::insert($records);

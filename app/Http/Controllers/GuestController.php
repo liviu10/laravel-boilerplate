@@ -8,8 +8,6 @@ use Illuminate\Foundation\Application;
 
 class GuestController extends Controller
 {
-    protected $googleMaps;
-
     /**
      * Create a new controller instance.
      *

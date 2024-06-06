@@ -4,11 +4,13 @@
     <div class="guest guest--page">
         <video
             autoplay
+            controls
             controlslist="nofullscreen nodownload noremoteplayback noplaybackrate foobar"
             disablepictureinpicture
             disablefullscreen
             loop=1
             muted=1
+            playsinline
             width="100%"
         >
             <source src="{{ asset('videos/home_harvest_desktop.mp4') }}" type="video/mp4" />
@@ -179,4 +181,6 @@
             ') !!}
         </x-guest-description>
     </div>
+
+    <script></script>
 @endsection

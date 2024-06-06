@@ -27,13 +27,15 @@
                 padding: 0;
                 box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.25);
                 &-img-top {
-                    margin-bottom: rem-convertor(16px);
+                    margin-bottom: rem-convertor(8px);
                     border-radius: 0;
                 }
                 &-body {
                     margin: 0 rem-convertor(8px);
+                    margin-bottom: rem-convertor(8px);
                     border-right: 0;
                     padding: 0;
+                    height: auto;
                     & p:first-child {
                         height: auto;
                         @include lato-regular();

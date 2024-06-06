@@ -51,7 +51,7 @@ class User extends Authenticatable
     public function fetchAllRecords(array $search = []): Collection|Exception
     {
         try {
-            $query = $this->select('id', 'full_name', 'nickname', 'email', 'created_at');
+            $query = $this->select('id', 'full_name', 'first_name', 'last_name', 'nickname', 'email', 'phone', 'created_at');
 
             if (!empty($search)) {
                 foreach ($search as $field => $value) {

@@ -19,6 +19,7 @@ class GoogleMaps extends Model
     use HasFactory;
 
     protected $fillable = [
+        'description',
         'address',
         'user_id',
     ];
@@ -48,6 +49,7 @@ class GoogleMaps extends Model
         try {
             $query = $this->select(
                 'id',
+                'description',
                 'address',
                 'user_id',
             )
@@ -86,6 +88,7 @@ class GoogleMaps extends Model
     {
         try {
             return $this->create([
+                'description' => $payload['description'],
                 'address' => $payload['address'],
                 'user_id' => $payload['user_id'],
             ]);
@@ -114,6 +117,7 @@ class GoogleMaps extends Model
     {
         try {
             $query = tap($this->find($id))->update([
+                'description' => $payload['description'],
                 'address' => $payload['address'],
                 'user_id' => $payload['user_id'],
             ]);
