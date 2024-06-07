@@ -126,7 +126,18 @@ class FormBuilder implements FormBuilderInterface
 
     private function buildTextInput(): array
     {
-        return [];
+        return [
+            [
+                'id' => 1,
+                'maxlength' => 255,
+                'minlength' => 1,
+                'placeholder' => '',
+                'readonly' => true,
+                'type' => 'text',
+                'name' => '',
+                'value' => '',
+            ]
+        ];
     }
 
     private function buildTimeInput(): array
