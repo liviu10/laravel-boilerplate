@@ -158,7 +158,7 @@
     @if ($results['options']['canFilter'])
         @include('components.admin-table-filter-modal', [
             'action' => $results['actions']['index'],
-            'filter_form' => $results['forms']['filter_form']
+            'form' => $results['forms']['inputs']
         ])
     @endif
 </div>

@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Communication;
 
 use App\Http\Controllers\Controller;
 use App\Models\ContactSubject;
+use App\Utilities\FormBuilder;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
@@ -13,6 +14,7 @@ use Illuminate\Http\Request;
 class ContactSubjectController extends Controller
 {
     protected $contactSubject;
+    protected $formBuilder;
 
     /**
      * Create a new controller instance.
@@ -23,6 +25,7 @@ class ContactSubjectController extends Controller
     {
         $this->middleware('auth');
         $this->contactSubject = new ContactSubject();
+        $this->formBuilder = new FormBuilder();
     }
 
     /**
@@ -50,10 +53,9 @@ class ContactSubjectController extends Controller
                 // 'destroy' => 'subjects.destroy',
                 // 'restore' => 'subjects.restore',
             ],
-            'filter_form' => [
-                'action' => 'subjects.index',
-                'inputs' => $this->handleFormInputs(),
-            ],
+            'forms' => $this->formBuilder->handleFormBuilder(
+                $this->contactSubject->getInputs()
+            ),
             'results' => $this->contactSubject->fetchAllRecords($searchTerms),
         ];
 
@@ -78,12 +80,10 @@ class ContactSubjectController extends Controller
                 'value' => null,
                 'options' => [
                     [
-                        'id' => 1,
                         'value' => 0,
                         'label' => __('No'),
                     ],
                     [
-                        'id' => 2,
                         'value' => 1,
                         'label' => __('Yes'),
                     ]

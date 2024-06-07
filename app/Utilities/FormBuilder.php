@@ -14,6 +14,8 @@ use Illuminate\Support\Facades\Route;
 
 class FormBuilder implements FormBuilderInterface
 {
+    protected $methodMapping;
+
     /**
      * Create a new class instance.
      *
@@ -21,7 +23,31 @@ class FormBuilder implements FormBuilderInterface
      */
     public function __construct()
     {
-        //
+        $this->methodMapping = [
+            // 'button' => 'buildButtonInput',
+            // 'checkbox' => 'buildCheckboxInput',
+            // 'color' => 'buildColorInput',
+            // 'date' => 'buildDateInput',
+            // 'datetime-local' => 'buildDateTimeLocalInput',
+            // 'email' => 'buildEmailInput',
+            // 'file' => 'buildFileInput',
+            // 'hidden' => 'buildHiddenInput',
+            // 'image' => 'buildImageInput',
+            // 'month' => 'buildMonthInput',
+            // 'number' => 'buildNumberInput',
+            // 'password' => 'buildPasswordInput',
+            // 'radio' => 'buildRadioInput',
+            // 'range' => 'buildRangeInput',
+            // 'reset' => 'buildResetInput',
+            // 'search' => 'buildSearchInput',
+            // 'submit' => 'buildSubmitInput',
+            // 'tel' => 'buildTelInput',
+            'text' => 'buildTextInput',
+            // 'time' => 'buildTimeInput',
+            // 'url' => 'buildUrlInput',
+            // 'week' => 'buildWeekInput',
+            'select' => 'buildSelectInput'
+        ];
     }
 
     /**
@@ -31,7 +57,22 @@ class FormBuilder implements FormBuilderInterface
      */
     public function handleFormBuilder(array $inputs): array
     {
-        return [];
+        $builtInputs = [];
+
+        foreach ($inputs as $input) {
+            $type = $input['type'];
+
+            if (isset($this->methodMapping[$type])) {
+                $method = $this->methodMapping[$type];
+                $builtInputs[] = $this->$method($input);
+            } else {
+                throw new Exception("Unknown input type: $type");
+            }
+        }
+
+        return [
+            'inputs' => $builtInputs
+        ];
     }
 
     private function buildButtonInput(): array
@@ -124,19 +165,17 @@ class FormBuilder implements FormBuilderInterface
         return [];
     }
 
-    private function buildTextInput(): array
+    private function buildTextInput(array $input): array
     {
         return [
-            [
-                'id' => 1,
-                'maxlength' => 255,
-                'minlength' => 1,
-                'placeholder' => '',
-                'readonly' => true,
-                'type' => 'text',
-                'name' => '',
-                'value' => '',
-            ]
+            'id' => $input['id'],
+            'key' => $input['key'],
+            'maxlength' => 255,
+            'minlength' => 1,
+            'name' => $input['key'],
+            'placeholder' => $this->handlePlaceholder($input['key']),
+            'type' => 'text',
+            'value' => '',
         ];
     }
 
@@ -153,5 +192,28 @@ class FormBuilder implements FormBuilderInterface
     private function buildWeekInput(): array
     {
         return [];
+    }
+
+    private function buildSelectInput(array $input): array
+    {
+        return [
+            'id' => $input['id'],
+            'key' => $input['key'],
+            'name' => $input['key'],
+            'options' => $this->handleOptions($input['options']),
+            'placeholder' => $this->handlePlaceholder($input['key']),
+            'type' => $input['type'],
+            'value' => null
+        ];
+    }
+
+    private function handleOptions(array $options): array
+    {
+        dd($options);
+    }
+
+    private function handlePlaceholder(string $placeholder): string
+    {
+        return ucfirst(str_replace('_', ' ', $placeholder));
     }
 }

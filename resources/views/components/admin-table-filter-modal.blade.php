@@ -26,7 +26,7 @@
             >
                 @csrf
                 <div class="modal-body">
-                    @foreach ($filter_form['inputs'] as $input)
+                    @foreach ($form as $input)
                         <div class="form-floating mb-3">
                             @if ($input['type'] === 'text' || $input['type'] === 'mail' || $input['type'] === 'tel')
                                 <input
