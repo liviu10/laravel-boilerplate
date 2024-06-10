@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Management;
 
 use App\Http\Controllers\Controller;
 use App\Models\ContentVisibility;
+use App\Utilities\FormBuilder;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
@@ -13,6 +14,7 @@ use Illuminate\Http\Request;
 class ContentVisibilityController extends Controller
 {
     protected $contentVisibility;
+    protected $formBuilder;
 
     /**
      * Create a new controller instance.
@@ -23,6 +25,7 @@ class ContentVisibilityController extends Controller
     {
         $this->middleware('auth');
         $this->contentVisibility = new ContentVisibility();
+        $this->formBuilder = new FormBuilder();
     }
 
     /**
@@ -50,46 +53,13 @@ class ContentVisibilityController extends Controller
                 // 'destroy' => 'visibilities.destroy',
                 // 'restore' => 'visibilities.restore',
             ],
-            'filter_form' => [
-                'action' => 'visibilities.index',
-                'inputs' => $this->handleFormInputs(),
-            ],
+            'forms' => $this->formBuilder->handleFormBuilder(
+                $this->contentVisibility->getInputs()
+            ),
             'results' => $this->contentVisibility->fetchAllRecords($searchTerms),
         ];
 
         return view('pages.admin.management.content.visibilities.index', compact('data'));
-    }
-
-    private function handleFormInputs(): array
-    {
-        return [
-            [
-                'id' => 1,
-                'key' => 'label',
-                'placeholder' => __('Visibility'),
-                'type' => 'text',
-                'value' => ''
-            ],
-            [
-                'id' => 2,
-                'key' => 'is_active',
-                'placeholder' => __('Is active?'),
-                'type' => 'select',
-                'value' => null,
-                'options' => [
-                    [
-                        'id' => 1,
-                        'value' => 0,
-                        'label' => __('No'),
-                    ],
-                    [
-                        'id' => 2,
-                        'value' => 1,
-                        'label' => __('Yes'),
-                    ]
-                ],
-            ],
-        ];
     }
 
     /**
@@ -106,7 +76,9 @@ class ContentVisibilityController extends Controller
                 when an unknown printer took a galley of type and scrambled it to make a type specimen book.
             '),
             'action' => 'visibilities.store',
-            'results' => $this->handleFormInputs(),
+            'results' => $this->formBuilder->handleFormBuilder(
+                $this->contentVisibility->getInputs()
+            ),
         ];
 
         return view('pages.admin.management.content.visibilities.create', compact('data'));
@@ -155,7 +127,9 @@ class ContentVisibilityController extends Controller
             '),
             'action' => 'visibilities.update',
             'rowId' => $id,
-            'results' => $this->handleFormInputs(),
+            'results' => $this->formBuilder->handleFormBuilder(
+                $this->contentVisibility->getInputs()
+            ),
         ];
 
         $selectedRecord = $this->contentVisibility->fetchSingleRecord($id);

@@ -8,6 +8,7 @@ use App\Utilities\FormBuilderMethods;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Exception;
+use Carbon\Carbon;
 use Illuminate\Http\Response;
 use Illuminate\Contracts\Routing\ResponseFactory;
 use Illuminate\Support\Facades\Route;
@@ -28,25 +29,26 @@ class FormBuilder implements FormBuilderInterface
             // 'checkbox' => 'buildCheckboxInput',
             // 'color' => 'buildColorInput',
             // 'date' => 'buildDateInput',
-            // 'datetime-local' => 'buildDateTimeLocalInput',
-            // 'email' => 'buildEmailInput',
+            'datetime-local' => 'buildDateTimeLocalInput',
+            'email' => 'buildEmailInput',
             // 'file' => 'buildFileInput',
             // 'hidden' => 'buildHiddenInput',
             // 'image' => 'buildImageInput',
             // 'month' => 'buildMonthInput',
-            // 'number' => 'buildNumberInput',
+            'number' => 'buildNumberInput',
             // 'password' => 'buildPasswordInput',
             // 'radio' => 'buildRadioInput',
-            // 'range' => 'buildRangeInput',
+            'range' => 'buildRangeInput',
             // 'reset' => 'buildResetInput',
             // 'search' => 'buildSearchInput',
             // 'submit' => 'buildSubmitInput',
-            // 'tel' => 'buildTelInput',
+            'tel' => 'buildTelInput',
             'text' => 'buildTextInput',
-            // 'time' => 'buildTimeInput',
+            'time' => 'buildTimeInput',
             // 'url' => 'buildUrlInput',
             // 'week' => 'buildWeekInput',
-            'select' => 'buildSelectInput'
+            'select' => 'buildSelectInput',
+            'textarea' => 'buildTextareaInput',
         ];
     }
 
@@ -95,14 +97,31 @@ class FormBuilder implements FormBuilderInterface
         return [];
     }
 
-    private function buildDateTimeLocalInput(): array
+    private function buildDateTimeLocalInput(array $input): array
     {
-        return [];
+        return [
+            'id' => $input['id'],
+            'key' => $input['key'],
+            'min' => Carbon::now()->startOfYear()->toDateTimeLocalString(),
+            'name' => $input['key'],
+            'placeholder' => $this->handlePlaceholder($input['key']),
+            'type' => 'datetime-local',
+            'value' => '',
+        ];
     }
 
-    private function buildEmailInput(): array
+    private function buildEmailInput(array $input): array
     {
-        return [];
+        return [
+            'id' => $input['id'],
+            'key' => $input['key'],
+            'maxlength' => 255,
+            'minlength' => 1,
+            'name' => $input['key'],
+            'placeholder' => $this->handlePlaceholder($input['key']),
+            'type' => 'email',
+            'value' => '',
+        ];
     }
 
     private function buildFileInput(): array
@@ -125,9 +144,18 @@ class FormBuilder implements FormBuilderInterface
         return [];
     }
 
-    private function buildNumberInput(): array
+    private function buildNumberInput(array $input): array
     {
-        return [];
+        return [
+            'id' => $input['id'],
+            'key' => $input['key'],
+            'max' => $input['max'],
+            'min' => $input['min'],
+            'name' => $input['key'],
+            'placeholder' => $this->handlePlaceholder($input['key']),
+            'type' => 'number',
+            'value' => null,
+        ];
     }
 
     private function buildPasswordInput(): array
@@ -160,9 +188,18 @@ class FormBuilder implements FormBuilderInterface
         return [];
     }
 
-    private function buildTelInput(): array
+    private function buildTelInput(array $input): array
     {
-        return [];
+        return [
+            'id' => $input['id'],
+            'key' => $input['key'],
+            'maxlength' => 14,
+            'minlength' => 3,
+            'name' => $input['key'],
+            'placeholder' => $this->handlePlaceholder($input['key']),
+            'type' => 'tel',
+            'value' => '',
+        ];
     }
 
     private function buildTextInput(array $input): array
@@ -179,9 +216,18 @@ class FormBuilder implements FormBuilderInterface
         ];
     }
 
-    private function buildTimeInput(): array
+    private function buildTimeInput(array $input): array
     {
-        return [];
+        return [
+            'id' => $input['id'],
+            'key' => $input['key'],
+            'max' => '23:59',
+            'min' => '00:00',
+            'name' => $input['key'],
+            'placeholder' => $this->handlePlaceholder($input['key']),
+            'type' => 'time',
+            'value' => '',
+        ];
     }
 
     private function buildUrlInput(): array
@@ -207,9 +253,21 @@ class FormBuilder implements FormBuilderInterface
         ];
     }
 
+    private function buildTextareaInput(array $input): array
+    {
+        return [
+            'id' => $input['id'],
+            'key' => $input['key'],
+            'name' => $input['key'],
+            'placeholder' => $this->handlePlaceholder($input['key']),
+            'type' => $input['type'],
+            'value' => ''
+        ];
+    }
+
     private function handleOptions(array $options): array
     {
-        dd($options);
+        return $options;
     }
 
     private function handlePlaceholder(string $placeholder): string

@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\ContactMessage;
 use App\Models\ContactResponse;
 use App\Mail\RespondToContactMessage;
+use App\Utilities\FormBuilder;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Contracts\View\Factory;
@@ -17,6 +18,7 @@ class ContactMessageController extends Controller
 {
     protected $contactMessage;
     protected $contactResponse;
+    protected $formBuilder;
 
     /**
      * Create a new controller instance.
@@ -28,6 +30,7 @@ class ContactMessageController extends Controller
         $this->middleware('auth');
         $this->contactMessage = new ContactMessage();
         $this->contactResponse = new ContactResponse();
+        $this->formBuilder = new FormBuilder();
     }
 
     /**
@@ -49,104 +52,19 @@ class ContactMessageController extends Controller
             '),
             'actions' => [
                 'index' => 'messages.index',
-                'create' => 'messages.create',
+                // 'create' => 'messages.create',
                 'show' => 'messages.show',
-                'edit' => 'messages.edit',
+                // 'edit' => 'messages.edit',
                 // 'destroy' => 'messages.destroy',
                 // 'restore' => 'messages.restore',
             ],
-            'filter_form' => [
-                'action' => 'messages.index',
-                'inputs' => $this->handleFormInputs(),
-            ],
+            'forms' => $this->formBuilder->handleFormBuilder(
+                $this->contactMessage->getInputs()
+            ),
             'results' => $this->contactMessage->fetchAllRecords($searchTerms),
         ];
 
         return view('pages.admin.communication.contact.messages.index', compact('data'));
-    }
-
-    private function handleFormInputs(): array
-    {
-        return [
-            [
-                'id' => 1,
-                'key' => 'full_name',
-                'placeholder' => __('Full name'),
-                'type' => 'text',
-                'value' => ''
-            ],
-            [
-                'id' => 2,
-                'key' => 'email',
-                'placeholder' => __('Email'),
-                'type' => 'mail',
-                'value' => ''
-            ],
-            [
-                'id' => 3,
-                'key' => 'phone',
-                'placeholder' => __('Phone'),
-                'type' => 'tel',
-                'value' => ''
-            ],
-            [
-                'id' => 4,
-                'key' => 'privacy_policy',
-                'placeholder' => __('Privacy policy'),
-                'type' => 'select',
-                'value' => null,
-                'options' => [
-                    [
-                        'id' => 1,
-                        'value' => 0,
-                        'label' => __('No'),
-                    ],
-                    [
-                        'id' => 2,
-                        'value' => 1,
-                        'label' => __('Yes'),
-                    ]
-                ],
-            ],
-            [
-                'id' => 5,
-                'key' => 'terms_and_conditions',
-                'placeholder' => __('Terms and conditions'),
-                'type' => 'select',
-                'value' => null,
-                'options' => [
-                    [
-                        'id' => 1,
-                        'value' => 0,
-                        'label' => __('No'),
-                    ],
-                    [
-                        'id' => 2,
-                        'value' => 1,
-                        'label' => __('Yes'),
-                    ]
-                ],
-            ],
-            [
-                'id' => 6,
-                'key' => 'data_protection',
-                'placeholder' => __('Data protection'),
-                'type' => 'select',
-                'value' => null,
-                'options' => [
-                    [
-                        'id' => 1,
-                        'value' => 0,
-                        'label' => __('No'),
-                    ],
-                    [
-                        'id' => 2,
-                        'value' => 1,
-                        'label' => __('Yes'),
-                    ]
-                ],
-            ],
-        ];
     }
 
     /**
@@ -180,15 +98,9 @@ class ContactMessageController extends Controller
                 when an unknown printer took a galley of type and scrambled it to make a type specimen book.
             '),
             'action' => 'messages.messageResponse',
-            'form' => [
-                [
-                    'id' => 1,
-                    'key' => 'message',
-                    'placeholder' => __('Response'),
-                    'type' => 'textarea',
-                    'value' => '',
-                ],
-            ],
+            'form' => $this->formBuilder->handleFormBuilder(
+                $this->contactResponse->getInputs()
+            ),
             'results' => $this->contactMessage->fetchSingleRecord($id),
         ];
 

@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Management;
 
 use App\Http\Controllers\Controller;
 use App\Models\ContentCategory;
+use App\Utilities\FormBuilder;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
@@ -13,6 +14,7 @@ use Illuminate\Http\Request;
 class ContentCategoryController extends Controller
 {
     protected $contentCategory;
+    protected $formBuilder;
 
     /**
      * Create a new controller instance.
@@ -23,6 +25,7 @@ class ContentCategoryController extends Controller
     {
         $this->middleware('auth');
         $this->contentCategory = new ContentCategory();
+        $this->formBuilder = new FormBuilder();
     }
 
     /**
@@ -50,46 +53,13 @@ class ContentCategoryController extends Controller
                 // 'destroy' => 'categories.destroy',
                 // 'restore' => 'categories.restore',
             ],
-            'filter_form' => [
-                'action' => 'categories.index',
-                'inputs' => $this->handleFormInputs(),
-            ],
+            'forms' => $this->formBuilder->handleFormBuilder(
+                $this->contentCategory->getInputs()
+            ),
             'results' => $this->contentCategory->fetchAllRecords($searchTerms),
         ];
 
         return view('pages.admin.management.content.categories.index', compact('data'));
-    }
-
-    private function handleFormInputs(): array
-    {
-        return [
-            [
-                'id' => 1,
-                'key' => 'label',
-                'placeholder' => __('Label'),
-                'type' => 'text',
-                'value' => ''
-            ],
-            [
-                'id' => 2,
-                'key' => 'is_active',
-                'placeholder' => __('Is active?'),
-                'type' => 'select',
-                'value' => null,
-                'options' => [
-                    [
-                        'id' => 1,
-                        'value' => 0,
-                        'label' => __('No'),
-                    ],
-                    [
-                        'id' => 2,
-                        'value' => 1,
-                        'label' => __('Yes'),
-                    ]
-                ],
-            ],
-        ];
     }
 
     /**
@@ -106,7 +76,9 @@ class ContentCategoryController extends Controller
                 when an unknown printer took a galley of type and scrambled it to make a type specimen book.
             '),
             'action' => 'categories.store',
-            'results' => $this->handleFormInputs(),
+            'results' => $this->formBuilder->handleFormBuilder(
+                $this->contentCategory->getInputs()
+            ),
         ];
 
         return view('pages.admin.management.content.categories.create', compact('data'));
@@ -155,7 +127,9 @@ class ContentCategoryController extends Controller
             '),
             'action' => 'categories.update',
             'rowId' => $id,
-            'results' => $this->handleFormInputs(),
+            'results' => $this->formBuilder->handleFormBuilder(
+                $this->contentCategory->getInputs()
+            ),
         ];
 
         $selectedRecord = $this->contentCategory->fetchSingleRecord($id);

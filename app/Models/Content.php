@@ -33,6 +33,54 @@ class Content extends Model
         'user_id',
     ];
 
+    protected $inputs = [
+        [
+            'id' => 1,
+            'key' => 'content_category_id',
+            'type' => 'select',
+        ],
+        [
+            'id' => 2,
+            'key' => 'content_visibility_id',
+            'type' => 'select',
+        ],
+        [
+            'id' => 3,
+            'key' => 'scheduled_on',
+            'type' => 'datetime-local',
+        ],
+        [
+            'id' => 4,
+            'key' => 'title',
+            'type' => 'text',
+        ],
+        [
+            'id' => 5,
+            'key' => 'content_type_id',
+            'type' => 'select',
+        ],
+        [
+            'id' => 6,
+            'key' => 'description',
+            'type' => 'text',
+        ],
+        [
+            'id' => 7,
+            'key' => 'content',
+            'type' => 'textarea',
+        ],
+        [
+            'id' => 8,
+            'key' => 'allow_comments',
+            'type' => 'select',
+        ],
+        [
+            'id' => 9,
+            'key' => 'allow_share',
+            'type' => 'select',
+        ],
+    ];
+
     protected $guarded = [
         'id',
         'created_at',
@@ -302,5 +350,37 @@ class Content extends Model
         } catch (Exception $exception) {
             return $exception;
         }
+    }
+
+    public function getInputs(): array
+    {
+        $inputs = $this->inputs;
+        foreach ($inputs as &$input) {
+            if ($input['key'] === 'content_category_id') {
+                $input['options'] = $this->content_category()->getRelated()->get(['value', 'label'])->toArray();
+            }
+            elseif ($input['key'] === 'content_visibility_id') {
+                $input['options'] = $this->content_visibility()->getRelated()->get(['value', 'label'])->toArray();
+            }
+            elseif ($input['key'] === 'content_type_id') {
+                $input['options'] = $this->content_type()->getRelated()->get(['value', 'label'])->toArray();
+            }
+            elseif ($input['key'] === 'allow_comments' || $input['key'] === 'allow_share') {
+                $input['options'] = [
+                    [
+                        'id' => 1,
+                        'value' => 0,
+                        'label' => __('No'),
+                    ],
+                    [
+                        'id' => 2,
+                        'value' => 1,
+                        'label' => __('Yes'),
+                    ],
+                ];
+            }
+        }
+
+        return $inputs;
     }
 }

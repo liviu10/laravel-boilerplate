@@ -44,9 +44,7 @@
                         'hasPagination' => false,
                     ],
                     'actions' => $data['actions'],
-                    'forms' => [
-                        'filter_form' => $data['filter_form'],
-                    ],
+                    'forms' => $data['forms'],
                     'columns' => [
                         'ID', 'Scheduled on', 'Content url', 'Title',
                         'Content category', 'Content visibility',

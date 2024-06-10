@@ -25,6 +25,19 @@ class ContentType extends Model
         'user_id',
     ];
 
+    protected $inputs = [
+        [
+            'id' => 1,
+            'key' => 'label',
+            'type' => 'text',
+        ],
+        [
+            'id' => 2,
+            'key' => 'is_active',
+            'type' => 'select',
+        ],
+    ];
+
     protected $guarded = [
         'id',
         'created_at',
@@ -143,5 +156,29 @@ class ContentType extends Model
         } catch (Exception $exception) {
             return $exception;
         }
+    }
+
+    public function getInputs(): array
+    {
+        $inputs = $this->inputs;
+        foreach ($inputs as &$input) {
+            if ($input['key'] === 'is_active') {
+                $input['options'] = [
+                    [
+                        'id' => 1,
+                        'value' => 0,
+                        'label' => __('No'),
+                    ],
+                    [
+                        'id' => 2,
+                        'value' => 1,
+                        'label' => __('Yes'),
+                    ],
+                ];
+                break;
+            }
+        }
+
+        return $inputs;
     }
 }

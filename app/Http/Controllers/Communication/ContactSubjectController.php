@@ -62,36 +62,6 @@ class ContactSubjectController extends Controller
         return view('pages.admin.communication.contact.subjects.index', compact('data'));
     }
 
-    private function handleFormInputs(): array
-    {
-        return [
-            [
-                'id' => 1,
-                'key' => 'label',
-                'placeholder' => __('Label'),
-                'type' => 'text',
-                'value' => ''
-            ],
-            [
-                'id' => 2,
-                'key' => 'is_active',
-                'placeholder' => __('Is active?'),
-                'type' => 'select',
-                'value' => null,
-                'options' => [
-                    [
-                        'value' => 0,
-                        'label' => __('No'),
-                    ],
-                    [
-                        'value' => 1,
-                        'label' => __('Yes'),
-                    ]
-                ],
-            ],
-        ];
-    }
-
     /**
      * Show the form for creating a new resource.
      * @return View|Application|Factory
@@ -106,7 +76,9 @@ class ContactSubjectController extends Controller
                 when an unknown printer took a galley of type and scrambled it to make a type specimen book.
             '),
             'action' => 'subjects.store',
-            'results' => $this->handleFormInputs(),
+            'results' => $this->formBuilder->handleFormBuilder(
+                $this->contactSubject->getInputs()
+            ),
         ];
 
         return view('pages.admin.communication.contact.subjects.create', compact('data'));
@@ -166,7 +138,9 @@ class ContactSubjectController extends Controller
             '),
             'action' => 'subjects.update',
             'rowId' => $id,
-            'results' => $this->handleFormInputs(),
+            'results' => $this->formBuilder->handleFormBuilder(
+                $this->contactSubject->getInputs()
+            ),
         ];
 
         $selectedRecord = $this->contactSubject->fetchSingleRecord($id);

@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Management;
 use App\Http\Controllers\Controller;
 use App\Models\Tag;
 use App\Models\Content;
+use App\Utilities\FormBuilder;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
@@ -15,6 +16,7 @@ class TagController extends Controller
 {
     protected $tag;
     protected $content;
+    protected $formBuilder;
 
     /**
      * Create a new controller instance.
@@ -26,6 +28,7 @@ class TagController extends Controller
         $this->middleware('auth');
         $this->tag = new Tag();
         $this->content = new Content();
+        $this->formBuilder = new FormBuilder();
     }
 
     /**
@@ -51,10 +54,9 @@ class TagController extends Controller
                 // 'destroy' => 'tags.destroy',
                 // 'restore' => 'tags.restore',
             ],
-            'filter_form' => [
-                'action' => 'tags.index',
-                'inputs' => $this->handleFormInputs(),
-            ],
+            'forms' => $this->formBuilder->handleFormBuilder(
+                $this->tag->getInputs()
+            ),
             'results' => $this->tag->fetchAllRecords($searchTerms),
         ];
 
@@ -103,7 +105,9 @@ class TagController extends Controller
                 when an unknown printer took a galley of type and scrambled it to make a type specimen book.
             '),
             'action' => 'tags.store',
-            'results' => $this->handleFormInputs(),
+            'results' => $this->formBuilder->handleFormBuilder(
+                $this->tag->getInputs()
+            ),
         ];
 
         return view('pages.admin.management.tags.create', compact('data'));
@@ -152,7 +156,9 @@ class TagController extends Controller
             '),
             'action' => 'tags.update',
             'rowId' => $id,
-            'results' => $this->handleFormInputs(),
+            'results' => $this->formBuilder->handleFormBuilder(
+                $this->tag->getInputs()
+            ),
         ];
 
         $selectedRecord = $this->tag->fetchSingleRecord($id);

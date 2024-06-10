@@ -7,6 +7,7 @@ use App\Models\ContactMessage;
 use App\Models\NewsletterSubscriber;
 use App\Models\Review;
 use App\Mail\SendReviewToUser;
+use App\Utilities\FormBuilder;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Auth;
@@ -18,6 +19,7 @@ use Illuminate\Http\Request;
 class ReviewController extends Controller
 {
     protected $review;
+    protected $formBuilder;
 
     /**
      * Create a new controller instance.
@@ -28,6 +30,7 @@ class ReviewController extends Controller
     {
         $this->middleware('auth');
         $this->review = new Review();
+        $this->formBuilder = new FormBuilder();
     }
 
     /**
@@ -55,55 +58,13 @@ class ReviewController extends Controller
                 // 'destroy' => 'subscribers.destroy',
                 // 'restore' => 'subscribers.restore',
             ],
-            'filter_form' => [
-                'action' => 'subscribers.index',
-                'inputs' => $this->handleFormInputs(),
-            ],
+            'forms' => $this->formBuilder->handleFormBuilder(
+                $this->review->getInputs()
+            ),
             'results' => $this->review->fetchAllRecords($searchTerms),
         ];
 
         return view('pages.admin.communication.reviews.index', compact('data'));
-    }
-
-    private function handleFormInputs(): array
-    {
-        return [
-            [
-                'id' => 1,
-                'key' => 'full_name',
-                'placeholder' => __('Full name'),
-                'type' => 'text',
-                'value' => ''
-            ],
-            [
-                'id' => 2,
-                'key' => 'rating',
-                'placeholder' => __('Rating'),
-                'type' => 'number',
-                'value' => 0,
-                'min' => 1,
-                'max' => 30,
-            ],
-            [
-                'id' => 3,
-                'key' => 'is_active',
-                'placeholder' => __('Is active?'),
-                'type' => 'select',
-                'value' => null,
-                'options' => [
-                    [
-                        'id' => 1,
-                        'value' => 0,
-                        'label' => __('No'),
-                    ],
-                    [
-                        'id' => 2,
-                        'value' => 1,
-                        'label' => __('Yes'),
-                    ]
-                ],
-            ],
-        ];
     }
 
     /**
@@ -147,27 +108,9 @@ class ReviewController extends Controller
             '),
             'action' => 'reviews.update',
             'rowId' => $id,
-            'results' => [
-                [
-                    'id' => 1,
-                    'key' => 'is_active',
-                    'placeholder' => __('Is active?'),
-                    'type' => 'select',
-                    'value' => null,
-                    'options' => [
-                        [
-                            'id' => 1,
-                            'value' => 0,
-                            'label' => __('No'),
-                        ],
-                        [
-                            'id' => 2,
-                            'value' => 1,
-                            'label' => __('Yes'),
-                        ]
-                    ],
-                ],
-            ],
+            'results' => $this->formBuilder->handleFormBuilder(
+                $this->review->getInputs()
+            ),
         ];
 
         $selectedRecord = $this->review->fetchSingleRecord($id);

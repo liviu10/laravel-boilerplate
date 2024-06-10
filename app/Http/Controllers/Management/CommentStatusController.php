@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Management;
 
 use App\Http\Controllers\Controller;
 use App\Models\CommentStatus;
+use App\Utilities\FormBuilder;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
@@ -13,6 +14,7 @@ use Illuminate\Http\Request;
 class CommentStatusController extends Controller
 {
     protected $commentStatus;
+    protected $formBuilder;
 
     /**
      * Create a new controller instance.
@@ -23,6 +25,7 @@ class CommentStatusController extends Controller
     {
         $this->middleware('auth');
         $this->commentStatus = new CommentStatus();
+        $this->formBuilder = new FormBuilder();
     }
 
     /**
@@ -50,46 +53,13 @@ class CommentStatusController extends Controller
                 // 'destroy' => 'statuses.destroy',
                 // 'restore' => 'statuses.restore',
             ],
-            'filter_form' => [
-                'action' => 'statuses.index',
-                'inputs' => $this->handleFormInputs(),
-            ],
+            'forms' => $this->formBuilder->handleFormBuilder(
+                $this->commentStatus->getInputs()
+            ),
             'results' => $this->commentStatus->fetchAllRecords($searchTerms),
         ];
 
         return view('pages.admin.management.content.comments.statuses.index', compact('data'));
-    }
-
-    private function handleFormInputs(): array
-    {
-        return [
-            [
-                'id' => 1,
-                'key' => 'label',
-                'placeholder' => __('Type'),
-                'type' => 'text',
-                'value' => ''
-            ],
-            [
-                'id' => 2,
-                'key' => 'is_active',
-                'placeholder' => __('Is active?'),
-                'type' => 'select',
-                'value' => null,
-                'options' => [
-                    [
-                        'id' => 1,
-                        'value' => 0,
-                        'label' => __('No'),
-                    ],
-                    [
-                        'id' => 2,
-                        'value' => 1,
-                        'label' => __('Yes'),
-                    ]
-                ],
-            ],
-        ];
     }
 
     /**
@@ -105,7 +75,9 @@ class CommentStatusController extends Controller
                 when an unknown printer took a galley of type and scrambled it to make a type specimen book.
             '),
             'action' => 'statuses.store',
-            'results' => $this->handleFormInputs(),
+            'results' => $this->formBuilder->handleFormBuilder(
+                $this->commentStatus->getInputs()
+            ),
         ];
 
         return view('pages.admin.management.content.comments.statuses.create', compact('data'));
@@ -153,7 +125,9 @@ class CommentStatusController extends Controller
             '),
             'action' => 'statuses.update',
             'rowId' => $id,
-            'results' => $this->handleFormInputs(),
+            'results' => $this->formBuilder->handleFormBuilder(
+                $this->commentStatus->getInputs()
+            ),
         ];
 
         $selectedRecord = $this->commentStatus->fetchSingleRecord($id);

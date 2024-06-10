@@ -33,6 +33,95 @@ class NewsletterCampaign extends Model
         'user_id',
     ];
 
+    protected $inputs = [
+        [
+            'id' => 1,
+            'key' => 'name',
+            'type' => 'text',
+            'is_filter' => true,
+            'is_create' => true,
+            'is_edit' => true,
+        ],
+        [
+            'id' => 2,
+            'key' => 'description',
+            'type' => 'text',
+            'is_filter' => false,
+            'is_create' => true,
+            'is_edit' => true,
+        ],
+        [
+            'id' => 3,
+            'key' => 'is_active',
+            'type' => 'select',
+            'is_filter' => true,
+            'is_create' => true,
+            'is_edit' => true,
+        ],
+        [
+            'id' => 4,
+            'key' => 'valid_from',
+            'type' => 'datetime-local',
+            'is_filter' => true,
+            'is_create' => true,
+            'is_edit' => true,
+        ],
+        [
+            'id' => 5,
+            'key' => 'valid_to',
+            'type' => 'datetime-local',
+            'is_filter' => true,
+            'is_create' => true,
+            'is_edit' => true,
+        ],
+        [
+            'id' => 5,
+            'key' => 'occur_times',
+            'type' => 'number',
+            'min' => 1,
+            'max' => 30,
+            'is_filter' => false,
+            'is_create' => true,
+            'is_edit' => true,
+        ],
+        [
+            'id' => 6,
+            'key' => 'occur_week',
+            'type' => 'number',
+            'min' => 1,
+            'max' => 7,
+            'is_filter' => false,
+            'is_create' => true,
+            'is_edit' => true,
+        ],
+        [
+            'id' => 7,
+            'key' => 'occur_day',
+            'type' => 'number',
+            'min' => 1,
+            'max' => 31,
+            'is_filter' => false,
+            'is_create' => true,
+            'is_edit' => true,
+        ],
+        [
+            'id' => 8,
+            'key' => 'occur_hour',
+            'type' => 'time',
+            'is_filter' => false,
+            'is_create' => true,
+            'is_edit' => true,
+        ],
+        [
+            'id' => 9,
+            'key' => 'template',
+            'type' => 'textarea',
+            'is_filter' => false,
+            'is_create' => true,
+            'is_edit' => true,
+        ],
+    ];
+
     protected $guarded = [
         'id',
         'created_at',
@@ -218,5 +307,28 @@ class NewsletterCampaign extends Model
         } catch (Exception $exception) {
             return $exception;
         }
+    }
+
+    public function getInputs(): array
+    {
+        $inputs = $this->inputs;
+        foreach ($inputs as &$input) {
+            if ($input['key'] === 'is_active') {
+                $input['options'] = [
+                    [
+                        'id' => 1,
+                        'value' => 0,
+                        'label' => __('No'),
+                    ],
+                    [
+                        'id' => 2,
+                        'value' => 1,
+                        'label' => __('Yes'),
+                    ],
+                ];
+            }
+        }
+
+        return $inputs;
     }
 }

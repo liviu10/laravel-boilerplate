@@ -26,6 +26,29 @@ class User extends Authenticatable
         'profile_image',
     ];
 
+    protected $inputs = [
+        [
+            'id' => 1,
+            'key' => 'full_name',
+            'type' => 'text',
+        ],
+        [
+            'id' => 2,
+            'key' => 'nickname',
+            'type' => 'text',
+        ],
+        [
+            'id' => 3,
+            'key' => 'email',
+            'type' => 'email',
+        ],
+        [
+            'id' => 4,
+            'key' => 'created_at',
+            'type' => 'datetime-local',
+        ],
+    ];
+
     protected $hidden = [
         'password',
         'remember_token',
@@ -143,5 +166,12 @@ class User extends Authenticatable
             md5(strtolower($input['email'])),
             $fullName ? urlencode('https://ui-avatars.com/api/' . $fullName) : 'mp'
         ]);
+    }
+
+    public function getInputs(): array
+    {
+        $inputs = $this->inputs;
+
+        return $inputs;
     }
 }

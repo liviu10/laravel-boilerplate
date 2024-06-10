@@ -23,6 +23,14 @@ class ContactResponse extends Model
         'user_id',
     ];
 
+    protected $inputs = [
+        [
+            'id' => 1,
+            'key' => 'message',
+            'type' => 'textarea',
+        ],
+    ];
+
     protected $guarded = [
         'id',
         'created_at',
@@ -146,5 +154,12 @@ class ContactResponse extends Model
         } catch (Exception $exception) {
             return $exception;
         }
+    }
+
+    public function getInputs(): array
+    {
+        $inputs = $this->inputs;
+
+        return $inputs;
     }
 }

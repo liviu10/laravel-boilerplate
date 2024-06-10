@@ -8,7 +8,6 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Collection;
 use Exception;
 
-
 /**
  * Class NewsletterSubscriber
  * @package App\Models
@@ -25,6 +24,57 @@ class NewsletterSubscriber extends Model
         'terms_and_conditions',
         'data_protection',
         'valid_email',
+    ];
+
+    protected $inputs = [
+        [
+            'id' => 1,
+            'key' => 'newsletter_campaign_id',
+            'type' => 'select',
+            'is_filter' => true,
+            'is_create' => false,
+            'is_edit' => true,
+        ],
+        [
+            'id' => 2,
+            'key' => 'full_name',
+            'type' => 'text',
+            'is_filter' => true,
+            'is_create' => false,
+            'is_edit' => false,
+        ],
+        [
+            'id' => 3,
+            'key' => 'email',
+            'type' => 'email',
+            'is_filter' => true,
+            'is_create' => false,
+            'is_edit' => false,
+        ],
+        [
+            'id' => 4,
+            'key' => 'privacy_policy',
+            'type' => 'select',
+            'is_filter' => true,
+            'is_create' => false,
+            'is_edit' => false,
+        ],
+        [
+            'id' => 5,
+            'key' => 'terms_and_conditions',
+            'type' => 'select',
+            'is_filter' => true,
+            'is_create' => false,
+            'is_edit' => false,
+        ],
+        [
+            'id' => 5,
+            'key' => 'data_protection',
+            'type' => 'select',
+            'is_filter' => true,
+            'is_create' => false,
+            'is_edit' => false,
+        ],
     ];
 
     protected $guarded = [
@@ -69,7 +119,6 @@ class NewsletterSubscriber extends Model
                 'privacy_policy',
                 'terms_and_conditions',
                 'data_protection',
-                'valid_email',
             )->with([
                 'newsletter_campaign' => function ($query) {
                     $query->select('id', 'name');
@@ -79,7 +128,7 @@ class NewsletterSubscriber extends Model
             if (!empty($search)) {
                 foreach ($search as $field => $value) {
                     if ($field === 'id' || $field === 'newsletter_campaign_id' ||
-                        $field === 'privacy_policy' || $field === 'terms_and_conditions' || $field === 'data_protection' || $field === 'valid_email') {
+                        $field === 'privacy_policy' || $field === 'terms_and_conditions' || $field === 'data_protection') {
                         $query->where($field, '=', $value);
                     } elseif ($field === 'newsletter_campaign_ids') {
                         $query->whereIn('newsletter_campaign_id', $value);
@@ -225,5 +274,44 @@ class NewsletterSubscriber extends Model
         } catch (Exception $exception) {
             return $exception;
         }
+    }
+
+    public function getInputs(): array
+    {
+        $inputs = $this->inputs;
+        foreach ($inputs as &$input) {
+            if ($input['key'] === 'newsletter_campaign_id') {
+                $input['options'] = $this->newsletter_campaign()
+                    ->getRelated()
+                    ->get(['id', 'name'])
+                    ->map(function ($item) {
+                        return [
+                            'value' => $item['id'],
+                            'label' => $item['name']
+                        ];
+                    })
+                    ->toArray();
+            }
+            elseif (
+                $input['key'] === 'privacy_policy' ||
+                $input['key'] === 'terms_and_conditions' ||
+                $input['key'] === 'data_protection'
+            ) {
+                $input['options'] = [
+                    [
+                        'id' => 1,
+                        'value' => 0,
+                        'label' => __('No'),
+                    ],
+                    [
+                        'id' => 2,
+                        'value' => 1,
+                        'label' => __('Yes'),
+                    ],
+                ];
+            }
+        }
+
+        return $inputs;
     }
 }

@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Management;
 
 use App\Http\Controllers\Controller;
 use App\Models\CommentType;
+use App\Utilities\FormBuilder;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
@@ -13,6 +14,7 @@ use Illuminate\Http\Request;
 class CommentTypeController extends Controller
 {
     protected $commentType;
+    protected $formBuilder;
 
     /**
      * Create a new controller instance.
@@ -23,6 +25,7 @@ class CommentTypeController extends Controller
     {
         $this->middleware('auth');
         $this->commentType = new CommentType();
+        $this->formBuilder = new FormBuilder();
     }
 
     /**
@@ -50,46 +53,13 @@ class CommentTypeController extends Controller
                 // 'destroy' => 'types.destroy',
                 // 'restore' => 'types.restore',
             ],
-            'filter_form' => [
-                'action' => 'types.index',
-                'inputs' => $this->handleFormInputs(),
-            ],
+            'forms' => $this->formBuilder->handleFormBuilder(
+                $this->commentType->getInputs()
+            ),
             'results' => $this->commentType->fetchAllRecords($searchTerms),
         ];
 
         return view('pages.admin.management.content.comments.types.index', compact('data'));
-    }
-
-    private function handleFormInputs(): array
-    {
-        return [
-            [
-                'id' => 1,
-                'key' => 'label',
-                'placeholder' => __('Type'),
-                'type' => 'text',
-                'value' => ''
-            ],
-            [
-                'id' => 2,
-                'key' => 'is_active',
-                'placeholder' => __('Is active?'),
-                'type' => 'select',
-                'value' => null,
-                'options' => [
-                    [
-                        'id' => 1,
-                        'value' => 0,
-                        'label' => __('No'),
-                    ],
-                    [
-                        'id' => 2,
-                        'value' => 1,
-                        'label' => __('Yes'),
-                    ]
-                ],
-            ],
-        ];
     }
 
     /**
@@ -105,7 +75,9 @@ class CommentTypeController extends Controller
                 when an unknown printer took a galley of type and scrambled it to make a type specimen book.
             '),
             'action' => 'types.store',
-            'results' => $this->handleFormInputs(),
+            'results' => $this->formBuilder->handleFormBuilder(
+                $this->commentType->getInputs()
+            ),
         ];
 
         return view('pages.admin.management.content.comments.types.create', compact('data'));
@@ -153,7 +125,9 @@ class CommentTypeController extends Controller
             '),
             'action' => 'types.update',
             'rowId' => $id,
-            'results' => $this->handleFormInputs(),
+            'results' => $this->formBuilder->handleFormBuilder(
+                $this->commentType->getInputs()
+            ),
         ];
 
         $selectedRecord = $this->commentType->fetchSingleRecord($id);

@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Management;
 
 use App\Http\Controllers\Controller;
 use App\Models\ContentType;
+use App\Utilities\FormBuilder;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
@@ -13,6 +14,7 @@ use Illuminate\Http\Request;
 class ContentTypeController extends Controller
 {
     protected $contentType;
+    protected $formBuilder;
 
     /**
      * Create a new controller instance.
@@ -23,6 +25,7 @@ class ContentTypeController extends Controller
     {
         $this->middleware('auth');
         $this->contentType = new ContentType();
+        $this->formBuilder = new FormBuilder();
     }
 
     /**
@@ -50,46 +53,13 @@ class ContentTypeController extends Controller
                 // 'destroy' => 'types.destroy',
                 // 'restore' => 'types.restore',
             ],
-            'filter_form' => [
-                'action' => 'types.index',
-                'inputs' => $this->handleFormInputs(),
-            ],
+            'forms' => $this->formBuilder->handleFormBuilder(
+                $this->contentType->getInputs()
+            ),
             'results' => $this->contentType->fetchAllRecords($searchTerms),
         ];
 
         return view('pages.admin.management.content.types.index', compact('data'));
-    }
-
-    private function handleFormInputs(): array
-    {
-        return [
-            [
-                'id' => 1,
-                'key' => 'label',
-                'placeholder' => __('Type'),
-                'type' => 'text',
-                'value' => ''
-            ],
-            [
-                'id' => 2,
-                'key' => 'is_active',
-                'placeholder' => __('Is active?'),
-                'type' => 'select',
-                'value' => null,
-                'options' => [
-                    [
-                        'id' => 1,
-                        'value' => 0,
-                        'label' => __('No'),
-                    ],
-                    [
-                        'id' => 2,
-                        'value' => 1,
-                        'label' => __('Yes'),
-                    ]
-                ],
-            ],
-        ];
     }
 
     /**
@@ -106,7 +76,9 @@ class ContentTypeController extends Controller
                 when an unknown printer took a galley of type and scrambled it to make a type specimen book.
             '),
             'action' => 'types.store',
-            'results' => $this->handleFormInputs(),
+            'results' => $this->formBuilder->handleFormBuilder(
+                $this->contentType->getInputs()
+            ),
         ];
 
         return view('pages.admin.management.content.types.create', compact('data'));
@@ -155,7 +127,9 @@ class ContentTypeController extends Controller
             '),
             'action' => 'types.update',
             'rowId' => $id,
-            'results' => $this->handleFormInputs(),
+            'results' => $this->formBuilder->handleFormBuilder(
+                $this->contentType->getInputs()
+            ),
         ];
 
         $selectedRecord = $this->contentType->fetchSingleRecord($id);

@@ -8,6 +8,7 @@ use App\Models\ContentCategory;
 use App\Models\ContentVisibility;
 use App\Models\ContentType;
 use App\Models\ContentSocialMedia;
+use App\Utilities\FormBuilder;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Contracts\View\Factory;
@@ -23,6 +24,7 @@ class ContentController extends Controller
     protected $contentVisibility;
     protected $contentType;
     protected $contentSocialMedia;
+    protected $formBuilder;
 
     /**
      * Create a new controller instance.
@@ -37,6 +39,7 @@ class ContentController extends Controller
         $this->contentVisibility = new ContentVisibility();
         $this->contentType = new ContentType();
         $this->contentSocialMedia = new ContentSocialMedia();
+        $this->formBuilder = new FormBuilder();
     }
 
     /**
@@ -67,10 +70,9 @@ class ContentController extends Controller
                 // 'destroy' => 'content.destroy',
                 // 'restore' => 'content.restore',
             ],
-            'filter_form' => [
-                'action' => 'content.index',
-                'inputs' => $this->handleFormInputs(),
-            ],
+            'forms' => $this->formBuilder->handleFormBuilder(
+                $this->content->getInputs()
+            ),
             'results' => $this->content->fetchAllRecords($searchTerms),
         ];
 
@@ -113,103 +115,6 @@ class ContentController extends Controller
         ];
     }
 
-    private function handleFormInputs(): array
-    {
-        return [
-            [
-                'id' => 1,
-                'key' => 'content_category_id',
-                'placeholder' => __('Category'),
-                'type' => 'select',
-                'value' => null,
-                'options' => $this->contentCategory->fetchAllRecords()->toArray(),
-            ],
-            [
-                'id' => 2,
-                'key' => 'content_visibility_id',
-                'placeholder' => __('Visibility'),
-                'type' => 'select',
-                'value' => null,
-                'options' => $this->contentVisibility->fetchAllRecords()->toArray(),
-            ],
-            [
-                'id' => 3,
-                'key' => 'scheduled_on',
-                'placeholder' => __('Scheduled on'),
-                'type' => 'datetime-local',
-                'value' => '',
-                'min' => Carbon::now()->startOfYear()->toDateTimeLocalString(),
-            ],
-            [
-                'id' => 4,
-                'key' => 'title',
-                'placeholder' => __('Title'),
-                'type' => 'text',
-                'value' => '',
-            ],
-            [
-                'id' => 5,
-                'key' => 'content_type_id',
-                'placeholder' => __('Type'),
-                'type' => 'select',
-                'value' => null,
-                'options' => $this->contentType->fetchAllRecords()->toArray(),
-            ],
-            [
-                'id' => 6,
-                'key' => 'description',
-                'placeholder' => __('Description'),
-                'type' => 'text',
-                'value' => '',
-            ],
-            [
-                'id' => 7,
-                'key' => 'content',
-                'placeholder' => __('Content'),
-                'type' => 'textarea',
-                'value' => '',
-            ],
-            [
-                'id' => 8,
-                'key' => 'allow_comments',
-                'placeholder' => __('Allow comments'),
-                'type' => 'select',
-                'value' => null,
-                'options' => [
-                    [
-                        'id' => 1,
-                        'value' => 0,
-                        'label' => __('No'),
-                    ],
-                    [
-                        'id' => 2,
-                        'value' => 1,
-                        'label' => __('Yes'),
-                    ]
-                ],
-            ],
-            [
-                'id' => 9,
-                'key' => 'allow_share',
-                'placeholder' => __('Allow share'),
-                'type' => 'select',
-                'value' => null,
-                'options' => [
-                    [
-                        'id' => 1,
-                        'value' => 0,
-                        'label' => __('No'),
-                    ],
-                    [
-                        'id' => 2,
-                        'value' => 1,
-                        'label' => __('Yes'),
-                    ]
-                ],
-            ],
-        ];
-    }
-
     /**
      * Show the form for creating a new resource.
      * @return View|Application|Factory
@@ -224,7 +129,9 @@ class ContentController extends Controller
                 when an unknown printer took a galley of type and scrambled it to make a type specimen book.
             '),
             'action' => 'content.store',
-            'results' => $this->handleFormInputs(),
+            'results' => $this->formBuilder->handleFormBuilder(
+                $this->content->getInputs()
+            ),
         ];
 
         return view('pages.admin.management.content.create', compact('data'));
@@ -327,7 +234,9 @@ class ContentController extends Controller
             '),
             'action' => 'content.update',
             'rowId' => $id,
-            'results' => $this->handleFormInputs(),
+            'results' => $this->formBuilder->handleFormBuilder(
+                $this->content->getInputs()
+            ),
         ];
 
         $selectedRecord = $this->content->fetchSingleRecord($id);

@@ -38,9 +38,7 @@
                         'hasPagination' => false,
                     ],
                     'actions' => $data['actions'],
-                    'forms' => [
-                        'filter_form' => $data['filter_form'],
-                    ],
+                    'forms' => $data['forms'],
                     'columns' => [
                         'ID', 'Full name', 'Email', 'Privacy policy',
                         'Terms and conditions', 'Data protection', 'Valid email',

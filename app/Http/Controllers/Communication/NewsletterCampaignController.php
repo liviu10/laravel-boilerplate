@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Communication;
 use App\Http\Controllers\Controller;
 use App\Models\NewsletterCampaign;
 use App\Models\NewsletterTemplate;
-use Carbon\Carbon;
+use App\Utilities\FormBuilder;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
@@ -16,6 +16,7 @@ class NewsletterCampaignController extends Controller
 {
     protected $newsletterCampaign;
     protected $newsletterTemplate;
+    protected $formBuilder;
 
     /**
      * Create a new controller instance.
@@ -27,6 +28,7 @@ class NewsletterCampaignController extends Controller
         $this->middleware('auth');
         $this->newsletterCampaign = new NewsletterCampaign();
         $this->newsletterTemplate = new NewsletterTemplate();
+        $this->formBuilder = new FormBuilder();
     }
 
     /**
@@ -54,112 +56,13 @@ class NewsletterCampaignController extends Controller
                 // 'destroy' => 'campaigns.destroy',
                 // 'restore' => 'campaigns.restore',
             ],
-            'filter_form' => [
-                'action' => 'campaigns.index',
-                'inputs' => $this->handleFormInputs(),
-            ],
+            'forms' => $this->formBuilder->handleFormBuilder(
+                $this->newsletterCampaign->getInputs()
+            ),
             'results' => $this->newsletterCampaign->fetchAllRecords($searchTerms),
         ];
 
         return view('pages.admin.communication.newsletter.campaigns.index', compact('data'));
-    }
-
-    private function handleFormInputs(): array
-    {
-        return [
-            [
-                'id' => 1,
-                'key' => 'name',
-                'placeholder' => __('Name'),
-                'type' => 'text',
-                'value' => ''
-            ],
-            [
-                'id' => 2,
-                'key' => 'description',
-                'placeholder' => __('Description'),
-                'type' => 'text',
-                'value' => ''
-            ],
-            [
-                'id' => 3,
-                'key' => 'is_active',
-                'placeholder' => __('Is active?'),
-                'type' => 'select',
-                'value' => null,
-                'options' => [
-                    [
-                        'id' => 1,
-                        'value' => 0,
-                        'label' => __('No'),
-                    ],
-                    [
-                        'id' => 2,
-                        'value' => 1,
-                        'label' => __('Yes'),
-                    ]
-                ],
-            ],
-            [
-                'id' => 4,
-                'key' => 'valid_from',
-                'placeholder' => __('Valid from'),
-                'type' => 'datetime-local',
-                'value' => '',
-                'min' => Carbon::now()->startOfYear()->toDateTimeLocalString(),
-            ],
-            [
-                'id' => 5,
-                'key' => 'valid_to',
-                'placeholder' => __('Valid to'),
-                'type' => 'datetime-local',
-                'value' => '',
-                'min' => Carbon::now()->startOfYear()->toDateTimeLocalString(),
-            ],
-            [
-                'id' => 5,
-                'key' => 'occur_times',
-                'placeholder' => __('Occur times'),
-                'type' => 'number',
-                'value' => 0,
-                'min' => 1,
-                'max' => 30,
-            ],
-            [
-                'id' => 6,
-                'key' => 'occur_week',
-                'placeholder' => __('Occur week'),
-                'type' => 'number',
-                'value' => 0,
-                'min' => 1,
-                'max' => 7,
-            ],
-            [
-                'id' => 7,
-                'key' => 'occur_day',
-                'placeholder' => __('Occur day'),
-                'type' => 'number',
-                'value' => 0,
-                'min' => 1,
-                'max' => 31,
-            ],
-            [
-                'id' => 8,
-                'key' => 'occur_hour',
-                'placeholder' => __('Occur hour'),
-                'type' => 'time',
-                'value' => '',
-                'min' => '00:00',
-                'max' => '23:59',
-            ],
-            [
-                'id' => 9,
-                'key' => 'template',
-                'placeholder' => __('Template'),
-                'type' => 'textarea',
-                'value' => '',
-            ],
-        ];
     }
 
     /**
@@ -176,7 +79,9 @@ class NewsletterCampaignController extends Controller
                 when an unknown printer took a galley of type and scrambled it to make a type specimen book.
             '),
             'action' => 'campaigns.store',
-            'results' => $this->handleFormInputs(),
+            'results' => $this->formBuilder->handleFormBuilder(
+                $this->newsletterCampaign->getInputs()
+            ),
         ];
 
         return view('pages.admin.communication.newsletter.campaigns.create', compact('data'));
@@ -246,7 +151,9 @@ class NewsletterCampaignController extends Controller
             '),
             'action' => 'campaigns.update',
             'rowId' => $id,
-            'results' => $this->handleFormInputs(),
+            'results' => $this->formBuilder->handleFormBuilder(
+                $this->newsletterCampaign->getInputs()
+            ),
         ];
 
         $selectedRecord = $this->newsletterCampaign->fetchSingleRecord($id);

@@ -29,6 +29,39 @@ class Media extends Model
         'user_id',
     ];
 
+    protected $inputs = [
+        [
+            'id' => 1,
+            'key' => 'media_type_id',
+            'type' => 'select',
+        ],
+        [
+            'id' => 2,
+            'key' => 'content_id',
+            'type' => 'select',
+        ],
+        [
+            'id' => 3,
+            'key' => 'title',
+            'type' => 'text',
+        ],
+        [
+            'id' => 4,
+            'key' => 'caption',
+            'type' => 'text',
+        ],
+        [
+            'id' => 5,
+            'key' => 'alt_text',
+            'type' => 'text',
+        ],
+        [
+            'id' => 6,
+            'key' => 'description',
+            'type' => 'text',
+        ],
+    ];
+
     protected $guarded = [
         'id',
         'created_at',
@@ -181,5 +214,29 @@ class Media extends Model
         } catch (Exception $exception) {
             return $exception;
         }
+    }
+
+    public function getInputs(): array
+    {
+        $inputs = $this->inputs;
+        foreach ($inputs as &$input) {
+            if ($input['key'] === 'media_type_id') {
+                $input['options'] = $this->media_type()->getRelated()->get(['value', 'label'])->toArray();
+            }
+            elseif ($input['key'] === 'content_id') {
+                $input['options'] = $this->content()
+                    ->getRelated()
+                    ->get(['id', 'title'])
+                    ->map(function ($item) {
+                        return [
+                            'value' => $item['id'],
+                            'label' => $item['name']
+                        ];
+                    })
+                    ->toArray();
+            }
+        }
+
+        return $inputs;
     }
 }

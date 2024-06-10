@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Media;
 use App\Models\MediaType;
 use App\Models\Content;
+use App\Utilities\FormBuilder;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
@@ -17,6 +18,7 @@ class MediaController extends Controller
     protected $media;
     protected $mediaType;
     protected $content;
+    protected $formBuilder;
 
     /**
      * Create a new controller instance.
@@ -29,6 +31,7 @@ class MediaController extends Controller
         $this->media = new Media();
         $this->mediaType = new MediaType();
         $this->content = new Content();
+        $this->formBuilder = new FormBuilder();
     }
 
     /**
@@ -57,10 +60,9 @@ class MediaController extends Controller
                 // 'destroy' => 'media.destroy',
                 // 'restore' => 'media.restore',
             ],
-            'filter_form' => [
-                'action' => 'media.index',
-                'inputs' => $this->handleFormInputs(),
-            ],
+            'forms' => $this->formBuilder->handleFormBuilder(
+                $this->media->getInputs()
+            ),
             'results' => $this->media->fetchAllRecords($searchTerms),
         ];
 
@@ -79,56 +81,6 @@ class MediaController extends Controller
         ];
     }
 
-    private function handleFormInputs(): array
-    {
-        return [
-            [
-                'id' => 1,
-                'key' => 'media_type_id',
-                'placeholder' => __('Type'),
-                'type' => 'select',
-                'value' => null,
-                'options' => $this->mediaType->fetchAllRecords()->toArray(),
-            ],
-            [
-                'id' => 2,
-                'key' => 'content_id',
-                'placeholder' => __('Content'),
-                'type' => 'select',
-                'value' => null,
-                'options' => $this->content->fetchAllRecords()->toArray(),
-            ],
-            [
-                'id' => 3,
-                'key' => 'title',
-                'placeholder' => __('Title'),
-                'type' => 'text',
-                'value' => '',
-            ],
-            [
-                'id' => 4,
-                'key' => 'caption',
-                'placeholder' => __('Caption'),
-                'type' => 'text',
-                'value' => '',
-            ],
-            [
-                'id' => 5,
-                'key' => 'alt_text',
-                'placeholder' => __('Alternative text'),
-                'type' => 'text',
-                'value' => '',
-            ],
-            [
-                'id' => 6,
-                'key' => 'description',
-                'placeholder' => __('Description'),
-                'type' => 'text',
-                'value' => '',
-            ],
-        ];
-    }
-
     /**
      * Show the form for creating a new resource.
      * @return View|Application|Factory
@@ -143,7 +95,9 @@ class MediaController extends Controller
                 when an unknown printer took a galley of type and scrambled it to make a type specimen book.
             '),
             'action' => 'media.store',
-            'results' => $this->handleFormInputs(),
+            'results' => $$this->formBuilder->handleFormBuilder(
+                $this->media->getInputs()
+            ),
         ];
 
         return view('pages.admin.management.media.create', compact('data'));
@@ -196,7 +150,9 @@ class MediaController extends Controller
             '),
             'action' => 'media.update',
             'rowId' => $id,
-            'results' => $this->handleFormInputs(),
+            'results' => $this->formBuilder->handleFormBuilder(
+                $this->media->getInputs()
+            ),
         ];
 
         $selectedRecord = $this->media->fetchSingleRecord($id);

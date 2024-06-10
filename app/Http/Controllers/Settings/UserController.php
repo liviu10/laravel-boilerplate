@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Settings;
 
 use App\Http\Controllers\Controller;
 use App\Models\User;
+use App\Utilities\FormBuilder;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
@@ -14,6 +15,7 @@ use Carbon\Carbon;
 class UserController extends Controller
 {
     protected $user;
+    protected $formBuilder;
 
     /**
      * Create a new controller instance.
@@ -24,6 +26,7 @@ class UserController extends Controller
     {
         $this->middleware('auth');
         $this->user = new User();
+        $this->formBuilder = new FormBuilder();
     }
 
     /**
@@ -49,49 +52,13 @@ class UserController extends Controller
                 // 'destroy' => 'users.destroy',
                 // 'restore' => 'users.restore',
             ],
-            'filter_form' => [
-                'action' => 'users.index',
-                'inputs' => $this->handleFormInputs(),
-            ],
+            'forms' => $this->formBuilder->handleFormBuilder(
+                $this->user->getInputs()
+            ),
             'results' => $this->user->fetchAllRecords($searchTerms),
         ];
 
         return view('pages.admin.settings.users.index', compact('data'));
-    }
-
-    private function handleFormInputs(): array
-    {
-        return [
-            [
-                'id' => 1,
-                'key' => 'full_name',
-                'placeholder' => __('Full name'),
-                'type' => 'text',
-                'value' => '',
-            ],
-            [
-                'id' => 2,
-                'key' => 'nickname',
-                'placeholder' => __('Nickname'),
-                'type' => 'text',
-                'value' => '',
-            ],
-            [
-                'id' => 3,
-                'key' => 'email',
-                'placeholder' => __('Email'),
-                'type' => 'mail',
-                'value' => '',
-            ],
-            [
-                'id' => 4,
-                'key' => 'created_at',
-                'placeholder' => __('Joined at'),
-                'type' => 'datetime-local',
-                'value' => '',
-                'min' => Carbon::now()->startOfYear()->toDateTimeLocalString(),
-            ],
-        ];
     }
 
     /**
@@ -108,29 +75,9 @@ class UserController extends Controller
                 when an unknown printer took a galley of type and scrambled it to make a type specimen book.
             '),
             'action' => 'users.store',
-            'results' => [
-                [
-                    'id' => 1,
-                    'key' => 'first_name',
-                    'placeholder' => __('First name'),
-                    'type' => 'text',
-                    'value' => '',
-                ],
-                [
-                    'id' => 2,
-                    'key' => 'last_name',
-                    'placeholder' => __('Last name'),
-                    'type' => 'text',
-                    'value' => '',
-                ],
-                [
-                    'id' => 3,
-                    'key' => 'email',
-                    'placeholder' => __('Email'),
-                    'type' => 'email',
-                    'value' => '',
-                ],
-            ],
+            'results' => $this->formBuilder->handleFormBuilder(
+                $this->user->getInputs()
+            ),
         ];
 
         return view('pages.admin.settings.users.create', compact('data'));
@@ -190,22 +137,9 @@ class UserController extends Controller
             '),
             'action' => 'users.update',
             'rowId' => $id,
-            'results' => [
-                [
-                    'id' => 1,
-                    'key' => 'first_name',
-                    'placeholder' => __('First name'),
-                    'type' => 'text',
-                    'value' => '',
-                ],
-                [
-                    'id' => 2,
-                    'key' => 'last_name',
-                    'placeholder' => __('Last name'),
-                    'type' => 'text',
-                    'value' => '',
-                ],
-            ],
+            'results' => $this->formBuilder->handleFormBuilder(
+                $this->user->getInputs()
+            ),
         ];
 
         $selectedRecord = $this->user->fetchSingleRecord($id);

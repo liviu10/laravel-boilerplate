@@ -31,6 +31,57 @@ class ContactMessage extends Model
         'user_id',
     ];
 
+    protected $inputs = [
+        [
+            'id' => 1,
+            'key' => 'full_name',
+            'type' => 'text',
+            'is_filter' => true,
+            'is_create' => false,
+            'is_edit' => false,
+        ],
+        [
+            'id' => 2,
+            'key' => 'email',
+            'type' => 'email',
+            'is_filter' => true,
+            'is_create' => false,
+            'is_edit' => false,
+        ],
+        [
+            'id' => 3,
+            'key' => 'phone',
+            'type' => 'tel',
+            'is_filter' => true,
+            'is_create' => false,
+            'is_edit' => false,
+        ],
+        [
+            'id' => 4,
+            'key' => 'privacy_policy',
+            'type' => 'select',
+            'is_filter' => true,
+            'is_create' => false,
+            'is_edit' => false,
+        ],
+        [
+            'id' => 5,
+            'key' => 'terms_and_conditions',
+            'type' => 'select',
+            'is_filter' => true,
+            'is_create' => false,
+            'is_edit' => false,
+        ],
+        [
+            'id' => 6,
+            'key' => 'data_protection',
+            'type' => 'select',
+            'is_filter' => true,
+            'is_create' => false,
+            'is_edit' => false,
+        ],
+    ];
+
     protected $guarded = [
         'id',
         'created_at',
@@ -191,5 +242,32 @@ class ContactMessage extends Model
         } catch (Exception $exception) {
             return $exception;
         }
+    }
+
+    public function getInputs(): array
+    {
+        $inputs = $this->inputs;
+        foreach ($inputs as &$input) {
+            if (
+                $input['key'] === 'privacy_policy' ||
+                $input['key'] === 'terms_and_conditions' ||
+                $input['key'] === 'data_protection'
+            ) {
+                $input['options'] = [
+                    [
+                        'id' => 1,
+                        'value' => 0,
+                        'label' => __('No'),
+                    ],
+                    [
+                        'id' => 2,
+                        'value' => 1,
+                        'label' => __('Yes'),
+                    ],
+                ];
+            }
+        }
+
+        return $inputs;
     }
 }

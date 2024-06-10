@@ -26,4 +26,5 @@ enum FormBuilderInputTypes: string
     case TIME = 'time';
     case URL = 'url';
     case WEEK = 'week';
+    case TEXTAREA = 'textarea';
 }

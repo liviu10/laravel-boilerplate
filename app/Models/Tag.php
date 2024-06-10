@@ -25,6 +25,24 @@ class Tag extends Model
         'user_id',
     ];
 
+    protected $inputs = [
+        [
+            'id' => 1,
+            'key' => 'content_id',
+            'type' => 'select',
+        ],
+        [
+            'id' => 2,
+            'key' => 'name',
+            'type' => 'text',
+        ],
+        [
+            'id' => 3,
+            'key' => 'description',
+            'type' => 'text',
+        ],
+    ];
+
     protected $guarded = [
         'id',
         'created_at',
@@ -152,5 +170,40 @@ class Tag extends Model
         } catch (Exception $exception) {
             return $exception;
         }
+    }
+
+    public function getInputs(): array
+    {
+        $inputs = $this->inputs;
+        foreach ($inputs as &$input) {
+            if ($input['key'] === 'content_id') {
+                $input['options'] = $this->content()
+                    ->getRelated()
+                    ->get(['id', 'title'])
+                    ->map(function ($item) {
+                        return [
+                            'value' => $item['id'],
+                            'label' => $item['name']
+                        ];
+                    })
+                    ->toArray();
+            }
+            elseif ($input['key'] === 'allow_comments' || $input['key'] === 'allow_share') {
+                $input['options'] = [
+                    [
+                        'id' => 1,
+                        'value' => 0,
+                        'label' => __('No'),
+                    ],
+                    [
+                        'id' => 2,
+                        'value' => 1,
+                        'label' => __('Yes'),
+                    ],
+                ];
+            }
+        }
+
+        return $inputs;
     }
 }

@@ -24,6 +24,35 @@ class Review extends Model
         'user_id',
     ];
 
+    protected $inputs = [
+        [
+            'id' => 1,
+            'key' => 'full_name',
+            'type' => 'text',
+            'is_filter' => true,
+            'is_create' => false,
+            'is_edit' => false,
+        ],
+        [
+            'id' => 2,
+            'key' => 'rating',
+            'type' => 'number',
+            'min' => 1,
+            'max' => 30,
+            'is_filter' => true,
+            'is_create' => false,
+            'is_edit' => false,
+        ],
+        [
+            'id' => 3,
+            'key' => 'is_active',
+            'type' => 'select',
+            'is_filter' => true,
+            'is_create' => false,
+            'is_edit' => true,
+        ],
+    ];
+
     protected $guarded = [
         'id',
         'created_at',
@@ -129,5 +158,28 @@ class Review extends Model
         } catch (Exception $exception) {
             return $exception;
         }
+    }
+
+    public function getInputs(): array
+    {
+        $inputs = $this->inputs;
+        foreach ($inputs as &$input) {
+            if ($input['key'] === 'is_active') {
+                $input['options'] = [
+                    [
+                        'id' => 1,
+                        'value' => 0,
+                        'label' => __('No'),
+                    ],
+                    [
+                        'id' => 2,
+                        'value' => 1,
+                        'label' => __('Yes'),
+                    ],
+                ];
+            }
+        }
+
+        return $inputs;
     }
 }

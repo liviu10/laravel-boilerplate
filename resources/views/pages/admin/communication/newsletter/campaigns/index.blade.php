@@ -38,9 +38,7 @@
                         'hasPagination' => false,
                     ],
                     'actions' => $data['actions'],
-                    'forms' => [
-                        'filter_form' => $data['filter_form'],
-                    ],
+                    'forms' => $data['forms'],
                     'columns' => [
                         'ID', 'Name', 'Is active?', 'Valid from',
                         'Valid to', 'Occur times', 'Occur week',

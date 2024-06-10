@@ -6,7 +6,8 @@ use App\Http\Controllers\Controller;
 use App\Models\NewsletterSubscriber;
 use App\Mail\UpdateNewsletterEnrolment;
 use App\Models\NewsletterCampaign;
-use Illuminate\Database\Eloquent\Collection;
+use App\Utilities\FormBuilder;
+use App\Utilities\ValidateEmail;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Contracts\View\Factory;
@@ -18,6 +19,8 @@ class NewsletterSubscriberController extends Controller
 {
     protected $newsletterSubscriber;
     protected $newsletterCampaign;
+    protected $formBuilder;
+    protected $validateEmail;
 
     /**
      * Create a new controller instance.
@@ -29,6 +32,8 @@ class NewsletterSubscriberController extends Controller
         $this->middleware('auth');
         $this->newsletterSubscriber = new NewsletterSubscriber();
         $this->newsletterCampaign = new NewsletterCampaign();
+        $this->formBuilder = new FormBuilder();
+        $this->validateEmail = new ValidateEmail();
     }
 
     /**
@@ -56,126 +61,13 @@ class NewsletterSubscriberController extends Controller
                 // 'destroy' => 'subscribers.destroy',
                 // 'restore' => 'subscribers.restore',
             ],
-            'filter_form' => [
-                'action' => 'subscribers.index',
-                'inputs' => $this->handleFormInputs(),
-            ],
+            'forms' => $this->formBuilder->handleFormBuilder(
+                $this->newsletterSubscriber->getInputs()
+            ),
             'results' => $this->newsletterSubscriber->fetchAllRecords($searchTerms),
         ];
 
         return view('pages.admin.communication.newsletter.subscribers.index', compact('data'));
-    }
-
-    private function handleFormInputs(): array
-    {
-        return [
-            [
-                'id' => 1,
-                'key' => 'newsletter_campaign_id',
-                'placeholder' => __('Newsletter campaign'),
-                'type' => 'select',
-                'value' => null,
-                'options' => $this->newsletterCampaign
-                    ->fetchAllRecords()
-                    ->map(function ($campaign) {
-                        return [
-                            'value' => $campaign->id,
-                            'label' => $campaign->name,
-                        ];
-                    })
-                    ->toArray(),
-            ],
-            [
-                'id' => 2,
-                'key' => 'full_name',
-                'placeholder' => __('Full name'),
-                'type' => 'text',
-                'value' => ''
-            ],
-            [
-                'id' => 3,
-                'key' => 'email',
-                'placeholder' => __('Email'),
-                'type' => 'mail',
-                'value' => ''
-            ],
-            [
-                'id' => 4,
-                'key' => 'privacy_policy',
-                'placeholder' => __('Privacy policy'),
-                'type' => 'select',
-                'value' => null,
-                'options' => [
-                    [
-                        'id' => 1,
-                        'value' => 0,
-                        'label' => __('No'),
-                    ],
-                    [
-                        'id' => 2,
-                        'value' => 1,
-                        'label' => __('Yes'),
-                    ]
-                ],
-            ],
-            [
-                'id' => 5,
-                'key' => 'terms_and_conditions',
-                'placeholder' => __('Terms and conditions'),
-                'type' => 'select',
-                'value' => null,
-                'options' => [
-                    [
-                        'id' => 1,
-                        'value' => 0,
-                        'label' => __('No'),
-                    ],
-                    [
-                        'id' => 2,
-                        'value' => 1,
-                        'label' => __('Yes'),
-                    ]
-                ],
-            ],
-            [
-                'id' => 6,
-                'key' => 'data_protection',
-                'placeholder' => __('Data protection'),
-                'type' => 'select',
-                'value' => null,
-                'options' => [
-                    [
-                        'id' => 1,
-                        'value' => 0,
-                        'label' => __('No'),
-                    ],
-                    [
-                        'id' => 2,
-                        'value' => 1,
-                        'label' => __('Yes'),
-                    ]
-                ],
-            ],
-            [
-                'id' => 7,
-                'key' => 'valid_email',
-                'placeholder' => __('Valid email'),
-                'type' => 'select',
-                'value' => null,
-                'options' => [
-                    [
-                        'id' => 1,
-                        'value' => 0,
-                        'label' => __('No'),
-                    ],
-                    [
-                        'id' => 2,
-                        'value' => 1,
-                        'label' => __('Yes'),
-                    ]
-                ],
-            ],
-        ];
     }
 
     /**
@@ -229,24 +121,9 @@ class NewsletterSubscriberController extends Controller
             '),
             'action' => 'subscribers.update',
             'rowId' => $id,
-            'results' => [
-                [
-                    'id' => 1,
-                    'key' => 'newsletter_campaign_id',
-                    'placeholder' => __('Newsletter campaign'),
-                    'type' => 'select',
-                    'value' => null,
-                    'options' => $this->newsletterCampaign
-                        ->fetchAllRecords()
-                        ->map(function ($campaign) {
-                            return [
-                                'value' => $campaign->id,
-                                'label' => $campaign->name,
-                            ];
-                        })
-                        ->toArray(),
-                ],
-            ],
+            'results' => $this->formBuilder->handleFormBuilder(
+                $this->newsletterSubscriber->getInputs()
+            ),
         ];
 
         $selectedRecord = $this->newsletterSubscriber->fetchSingleRecord($id);
