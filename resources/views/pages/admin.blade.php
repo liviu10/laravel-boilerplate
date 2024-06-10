@@ -4,6 +4,8 @@
     <div class="admin admin--page">
         <x-page-header title="{{ $data['title'] }}" />
 
+        @include('components.input-email')
+
         <div class="admin__body">
             <x-page-description>
                 {{ $data['description'] }}
