@@ -1,15 +1,12 @@
 <div class="form-floating mb-3">
-    <input
+    <textarea
         class="form-control"
         id="test"
-        key="test"
-        min=""
         name="test"
-        placeholder=""
-        type="datetime-local"
-        value=""
+        rows="3"
     >
+    </textarea>
     <label for="test">
-        Date time example
+        Tel example
     </label>
 </div>

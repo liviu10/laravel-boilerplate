@@ -27,63 +27,7 @@
                 @csrf
                 <div class="modal-body">
                     @foreach ($form as $input)
-                        <div class="form-floating mb-3">
-                            @if ($input['type'] === 'text' || $input['type'] === 'mail' || $input['type'] === 'tel')
-                                <input
-                                    class="form-control"
-                                    id="{{ $input['key'] }}"
-                                    name="{{ $input['key'] }}"
-                                    placeholder="{{ $input['placeholder'] }}"
-                                    type="{{ $input['type'] }}"
-                                    value="{{ $input['value'] }}"
-                                >
-                            @elseif ($input['type'] === 'select')
-                                <select
-                                    class="form-select"
-                                    id="{{ $input['key'] }}"
-                                    name="{{ $input['key'] }}"
-                                >
-                                    <option selected>{{ __('-- Choose an option --') }}</option>
-                                    @foreach ($input['options'] as $option)
-                                        <option value="{{ $option['value'] }}">
-                                            {{ $option['label'] }}
-                                        </option>
-                                    @endforeach
-                                </select>
-                            @elseif ($input['type'] === 'datetime-local')
-                                <input
-                                    class="form-control"
-                                    id="{{ $input['key'] }}"
-                                    name="{{ $input['key'] }}"
-                                    type="{{ $input['type'] }}"
-                                    value="{{ $input['value'] }}"
-                                    min="{{ $input['min'] }}"
-                                >
-                            @elseif ($input['type'] === 'number')
-                                <input
-                                    class="form-control"
-                                    id="{{ $input['key'] }}"
-                                    name="{{ $input['key'] }}"
-                                    type="{{ $input['type'] }}"
-                                    value="{{ $input['value'] }}"
-                                    min="{{ $input['min'] }}"
-                                    max="{{ $input['max'] }}"
-                                >
-                            @elseif ($input['type'] === 'time')
-                                <input
-                                    class="form-control"
-                                    id="{{ $input['key'] }}"
-                                    name="{{ $input['key'] }}"
-                                    type="{{ $input['type'] }}"
-                                    value="{{ $input['value'] }}"
-                                    min="{{ $input['min'] }}"
-                                    max="{{ $input['max'] }}"
-                                >
-                            @endif
-                            <label for="{{ $input['key'] }}">
-                                {{ $input['placeholder'] }}
-                            </label>
-                        </div>
+                        @include('components.input-' . $input['type'], ['item' => $input ])
                     @endforeach
                 </div>
                 <div class="modal-footer">

@@ -7,10 +7,10 @@
         minlength=1
         name="test"
         placeholder=""
-        type="email"
+        type="password"
         value=""
     >
     <label for="test">
-        Email address example
+        Password example
     </label>
 </div>

@@ -1,15 +1,14 @@
-<div class="form-floating mb-3">
+<div class="mb-3">
+    <label class="form-label" for="test">
+        File example
+    </label>
     <input
         class="form-control"
         id="test"
         key="test"
-        min=""
         name="test"
         placeholder=""
-        type="datetime-local"
+        type="file"
         value=""
     >
-    <label for="test">
-        Date time example
-    </label>
 </div>

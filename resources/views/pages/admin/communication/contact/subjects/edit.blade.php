@@ -40,34 +40,9 @@
                 @method('PUT')
                 <div class="">
                     @foreach ($data['results'] as $input)
-                        <div class="form-floating mb-3">
-                            @if ($input['type'] === 'text')
-                                <input
-                                    class="form-control"
-                                    id="{{ $input['key'] }}"
-                                    name="{{ $input['key'] }}"
-                                    placeholder="{{ $input['placeholder'] }}"
-                                    type="{{ $input['type'] }}"
-                                    value="{{ $input['value'] }}"
-                                >
-                            @else
-                                <select
-                                    class="form-select"
-                                    id="{{ $input['key'] }}"
-                                    name="{{ $input['key'] }}"
-                                >
-                                    <option value="">{{ __('-- Choose an option --') }}</option>
-                                    @foreach ($input['options'] as $key => $option)
-                                        <option value="{{ $option['value'] }}" @if ($input['value'] !== null && $input['value'] == $key + 1) selected @endif>
-                                            {{ $option['label'] }}
-                                        </option>
-                                    @endforeach
-                                </select>
-                            @endif
-                            <label for="{{ $input['key'] }}">
-                                {{ $input['placeholder'] }}
-                            </label>
-                        </div>
+                        @foreach ($input as $item)
+                            @include('components.input-' . $item['type'], $item)
+                        @endforeach
                     @endforeach
                 </div>
                 <div class="modal-footer">

@@ -3,14 +3,14 @@
         class="form-control"
         id="test"
         key="test"
-        maxlength=255
-        minlength=1
+        maxlength=14
+        minlength=3
         name="test"
         placeholder=""
-        type="email"
+        type="tel"
         value=""
     >
     <label for="test">
-        Email address example
+        Tel example
     </label>
 </div>

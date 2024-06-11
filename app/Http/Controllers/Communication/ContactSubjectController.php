@@ -145,10 +145,11 @@ class ContactSubjectController extends Controller
 
         $selectedRecord = $this->contactSubject->fetchSingleRecord($id);
         foreach ($data['results'] as &$result) {
-            foreach ($selectedRecord->toArray()[0] as $recordKey => $recordValue) {
-                if ($result['key'] === $recordKey) {
-                    $result['value'] = $recordValue;
-                    break;
+            foreach ($result as &$item) {
+                foreach ($selectedRecord->toArray()[0] as $recordKey => $recordValue) {
+                    if ($item['key'] === $recordKey) {
+                        $item['value'] = $recordValue;
+                    }
                 }
             }
         }

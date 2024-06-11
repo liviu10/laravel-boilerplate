@@ -3,14 +3,13 @@
         class="form-control"
         id="test"
         key="test"
-        maxlength=255
-        minlength=1
+        min=""
         name="test"
         placeholder=""
-        type="email"
+        type="month"
         value=""
     >
     <label for="test">
-        Email address example
+        Month example
     </label>
 </div>

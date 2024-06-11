@@ -3,14 +3,14 @@
         class="form-control"
         id="test"
         key="test"
-        maxlength=255
-        minlength=1
+        max="23:59"
+        min="00:00"
         name="test"
         placeholder=""
-        type="email"
+        type="time"
         value=""
     >
     <label for="test">
-        Email address example
+        Time example
     </label>
 </div>

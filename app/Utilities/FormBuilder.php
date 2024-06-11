@@ -25,28 +25,21 @@ class FormBuilder implements FormBuilderInterface
     public function __construct()
     {
         $this->methodMapping = [
-            // 'button' => 'buildButtonInput',
-            // 'checkbox' => 'buildCheckboxInput',
-            // 'color' => 'buildColorInput',
-            // 'date' => 'buildDateInput',
+            'checkbox' => 'buildCheckboxInput',
+            'date' => 'buildDateInput',
             'datetime-local' => 'buildDateTimeLocalInput',
             'email' => 'buildEmailInput',
-            // 'file' => 'buildFileInput',
-            // 'hidden' => 'buildHiddenInput',
-            // 'image' => 'buildImageInput',
-            // 'month' => 'buildMonthInput',
+            'file' => 'buildFileInput',
+            'month' => 'buildMonthInput',
             'number' => 'buildNumberInput',
-            // 'password' => 'buildPasswordInput',
-            // 'radio' => 'buildRadioInput',
-            'range' => 'buildRangeInput',
-            // 'reset' => 'buildResetInput',
-            // 'search' => 'buildSearchInput',
-            // 'submit' => 'buildSubmitInput',
+            'password' => 'buildPasswordInput',
+            'radio' => 'buildRadioInput',
+            'reset' => 'buildResetInput',
+            'submit' => 'buildSubmitInput',
             'tel' => 'buildTelInput',
             'text' => 'buildTextInput',
             'time' => 'buildTimeInput',
-            // 'url' => 'buildUrlInput',
-            // 'week' => 'buildWeekInput',
+            'week' => 'buildWeekInput',
             'select' => 'buildSelectInput',
             'textarea' => 'buildTextareaInput',
         ];
@@ -77,17 +70,32 @@ class FormBuilder implements FormBuilderInterface
         ];
     }
 
-    private function buildButtonInput(): array
+    /**
+     * Handle populate edit inputs.
+     *
+     * @return array
+     */
+    public function handlePopulateEditInput(Collection|Exception $selectedRecord, array $inputs): array
     {
-        return [];
+        $builtInputs = [];
+
+        foreach ($inputs as $input) {
+            $type = $input['type'];
+
+            if (isset($this->methodMapping[$type])) {
+                $method = $this->methodMapping[$type];
+                $builtInputs[] = $this->$method($input);
+            } else {
+                throw new Exception("Unknown input type: $type");
+            }
+        }
+
+        return [
+            'inputs' => $builtInputs
+        ];
     }
 
     private function buildCheckboxInput(): array
-    {
-        return [];
-    }
-
-    private function buildColorInput(): array
     {
         return [];
     }
@@ -129,16 +137,6 @@ class FormBuilder implements FormBuilderInterface
         return [];
     }
 
-    private function buildHiddenInput(): array
-    {
-        return [];
-    }
-
-    private function buildImageInput(): array
-    {
-        return [];
-    }
-
     private function buildMonthInput(): array
     {
         return [];
@@ -168,17 +166,7 @@ class FormBuilder implements FormBuilderInterface
         return [];
     }
 
-    private function buildRangeInput(): array
-    {
-        return [];
-    }
-
     private function buildResetInput(): array
-    {
-        return [];
-    }
-
-    private function buildSearchInput(): array
     {
         return [];
     }
@@ -228,11 +216,6 @@ class FormBuilder implements FormBuilderInterface
             'type' => 'time',
             'value' => '',
         ];
-    }
-
-    private function buildUrlInput(): array
-    {
-        return [];
     }
 
     private function buildWeekInput(): array
