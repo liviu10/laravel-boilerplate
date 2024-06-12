@@ -157,14 +157,7 @@ class NewsletterCampaignController extends Controller
         ];
 
         $selectedRecord = $this->newsletterCampaign->fetchSingleRecord($id);
-        foreach ($data['results'] as &$result) {
-            foreach ($selectedRecord->toArray()[0] as $recordKey => $recordValue) {
-                if ($result['key'] === $recordKey) {
-                    $result['value'] = $recordValue;
-                    break;
-                }
-            }
-        }
+        $data['results'] = $this->formBuilder->handlePopulateInput($selectedRecord, $data['results']);
 
         return view('pages.admin.communication.newsletter.campaigns.edit', compact('data'));
     }

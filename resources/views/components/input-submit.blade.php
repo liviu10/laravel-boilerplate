@@ -1,10 +1,10 @@
 <button
     class="btn btn-success"
-    id="submit"
-    key="submit"
-    name="submit"
-    placeholder=""
+    id="{{ $item['key'] }}"
+    key="{{ $item['key'] }}"
+    name="{{ $item['name'] }}"
+    placeholder="{{ $item['placeholder'] }}"
     type="submit"
 >
-    Submit
+    {{ $item['placeholder'] }}
 </button>

@@ -1,14 +1,14 @@
 <div class="mb-3">
-    <label class="form-label" for="test">
-        File example
+    <label class="form-label" for="{{ $item['key'] }}">
+        {{ $item['placeholder'] }}
     </label>
     <input
         class="form-control"
-        id="test"
-        key="test"
-        name="test"
-        placeholder=""
+        id="{{ $item['key'] }}"
+        key="{{ $item['key'] }}"
+        name="{{ $item['name'] }}"
+        placeholder="{{ $item['placeholder'] }}"
         type="file"
-        value=""
+        value="{{ $item['value'] }}"
     >
 </div>

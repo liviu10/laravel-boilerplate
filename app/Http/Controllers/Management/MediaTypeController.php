@@ -131,14 +131,7 @@ class MediaTypeController extends Controller
         ];
 
         $selectedRecord = $this->mediaType->fetchSingleRecord($id);
-        foreach ($data['results'] as &$result) {
-            foreach ($selectedRecord->toArray()[0] as $recordKey => $recordValue) {
-                if ($result['key'] === $recordKey) {
-                    $result['value'] = $recordValue;
-                    break;
-                }
-            }
-        }
+        $data['results'] = $this->formBuilder->handlePopulateInput($selectedRecord, $data['results']);
 
         return view('pages.admin.management.media.types.edit', compact('data'));
     }

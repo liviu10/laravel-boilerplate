@@ -1,12 +1,12 @@
 <div class="form-floating mb-3">
     <textarea
         class="form-control"
-        id="test"
-        name="test"
+        id="{{ $item['key'] }}"
+        name="{{ $item['name'] }}"
         rows="3"
     >
     </textarea>
-    <label for="test">
-        Tel example
+    <label for="{{ $item['key'] }}">
+        {{ $item['placeholder'] }}
     </label>
 </div>

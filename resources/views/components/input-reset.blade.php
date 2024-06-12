@@ -1,10 +1,10 @@
 <button
     class="btn btn-secondary"
-    id="reset"
-    key="reset"
-    name="reset"
-    placeholder=""
+    id="{{ $item['key'] }}"
+    key="{{ $item['key'] }}"
+    name="{{ $item['name'] }}"
+    placeholder="{{ $item['placeholder'] }}"
     type="reset"
 >
-    Reset
+    {{ $item['placeholder'] }}
 </button>

@@ -1,16 +1,16 @@
 <div class="form-floating mb-3">
     <input
         class="form-control"
-        id="test"
-        key="test"
+        id="{{ $item['key'] }}"
+        key="{{ $item['key'] }}"
         max="23:59"
         min="00:00"
-        name="test"
-        placeholder=""
+        name="{{ $item['name'] }}"
+        placeholder="{{ $item['placeholder'] }}"
         type="time"
-        value=""
+        value="{{ $item['value'] }}"
     >
-    <label for="test">
-        Time example
+    <label for="{{ $item['key'] }}">
+        {{ $item['placeholder'] }}
     </label>
 </div>

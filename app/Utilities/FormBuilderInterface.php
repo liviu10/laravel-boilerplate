@@ -8,5 +8,5 @@ interface FormBuilderInterface
 {
     public function handleFormBuilder(array $inputs): array;
 
-    public function handlePopulateEditInput(Collection|Exception $selectedRecord, array $inputs): array;
+    public function handlePopulateInput(Collection|Exception $selectedRecord, array $inputs): array;
 }

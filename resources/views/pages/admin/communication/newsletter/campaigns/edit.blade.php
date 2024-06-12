@@ -40,67 +40,9 @@
                 @method('PUT')
                 <div class="">
                     @foreach ($data['results'] as $input)
-                        <div class="form-floating mb-3">
-                            @if ($input['type'] === 'text')
-                                <input
-                                    class="form-control"
-                                    id="{{ $input['key'] }}"
-                                    name="{{ $input['key'] }}"
-                                    placeholder="{{ $input['placeholder'] }}"
-                                    type="{{ $input['type'] }}"
-                                    value="{{ $input['value'] }}"
-                                >
-                            @elseif ($input['type'] === 'select')
-                                <select
-                                    class="form-select"
-                                    id="{{ $input['key'] }}"
-                                    name="{{ $input['key'] }}"
-                                >
-                                    <option value="">{{ __('-- Choose an option --') }}</option>
-                                    @foreach ($input['options'] as $key => $option)
-                                        <option value="{{ $option['value'] }}" @if ($input['value'] !== null && $input['value'] == $key + 1) selected @endif>
-                                            {{ $option['label'] }}
-                                        </option>
-                                    @endforeach
-                                </select>
-                            @elseif ($input['type'] === 'datetime-local')
-                                <input
-                                    class="form-control"
-                                    id="{{ $input['key'] }}"
-                                    name="{{ $input['key'] }}"
-                                    type="{{ $input['type'] }}"
-                                    value="{{ $input['value'] }}"
-                                    min="{{ $input['min'] }}"
-                                >
-                            @elseif ($input['type'] === 'number')
-                                <input
-                                    class="form-control"
-                                    id="{{ $input['key'] }}"
-                                    name="{{ $input['key'] }}"
-                                    type="{{ $input['type'] }}"
-                                    value="{{ $input['value'] }}"
-                                    min="{{ $input['min'] }}"
-                                    max="{{ $input['max'] }}"
-                                >
-                            @elseif ($input['type'] === 'time')
-                                <input
-                                    class="form-control"
-                                    id="{{ $input['key'] }}"
-                                    name="{{ $input['key'] }}"
-                                    type="{{ $input['type'] }}"
-                                    value="{{ $input['value'] }}"
-                                    min="{{ $input['min'] }}"
-                                    max="{{ $input['max'] }}"
-                                >
-                            @elseif ($input['type'] === 'textarea')
-                                <textarea class="form-control" id="{{ $input['key'] }}" name="{{ $input['key'] }}" rows="3">
-                                    {{ $input['value'] }}
-                                </textarea>
-                            @endif
-                            <label for="{{ $input['key'] }}">
-                                {{ $input['placeholder'] }}
-                            </label>
-                        </div>
+                        @foreach ($input as $item)
+                            @include('components.input-' . $item['type'], $item)
+                        @endforeach
                     @endforeach
                 </div>
                 <div class="modal-footer">

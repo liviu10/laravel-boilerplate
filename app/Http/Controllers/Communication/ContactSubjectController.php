@@ -144,15 +144,7 @@ class ContactSubjectController extends Controller
         ];
 
         $selectedRecord = $this->contactSubject->fetchSingleRecord($id);
-        foreach ($data['results'] as &$result) {
-            foreach ($result as &$item) {
-                foreach ($selectedRecord->toArray()[0] as $recordKey => $recordValue) {
-                    if ($item['key'] === $recordKey) {
-                        $item['value'] = $recordValue;
-                    }
-                }
-            }
-        }
+        $data['results'] = $this->formBuilder->handlePopulateInput($selectedRecord, $data['results']);
 
         return view('pages.admin.communication.contact.subjects.edit', compact('data'));
     }

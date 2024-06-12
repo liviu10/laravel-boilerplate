@@ -63,34 +63,6 @@ class TagController extends Controller
         return view('pages.admin.management.tags.index', compact('data'));
     }
 
-    private function handleFormInputs(): array
-    {
-        return [
-            [
-                'id' => 1,
-                'key' => 'content_id',
-                'placeholder' => __('Content'),
-                'type' => 'select',
-                'value' => null,
-                'options' => $this->content->fetchAllRecords()->toArray(),
-            ],
-            [
-                'id' => 2,
-                'key' => 'name',
-                'placeholder' => __('Name'),
-                'type' => 'text',
-                'value' => '',
-            ],
-            [
-                'id' => 3,
-                'key' => 'description',
-                'placeholder' => __('Description'),
-                'type' => 'text',
-                'value' => '',
-            ],
-        ];
-    }
-
     /**
      * Show the form for creating a new resource.
      * @return View|Application|Factory
@@ -162,14 +134,7 @@ class TagController extends Controller
         ];
 
         $selectedRecord = $this->tag->fetchSingleRecord($id);
-        foreach ($data['results'] as &$result) {
-            foreach ($selectedRecord->toArray()[0] as $recordKey => $recordValue) {
-                if ($result['key'] === $recordKey) {
-                    $result['value'] = $recordValue;
-                    break;
-                }
-            }
-        }
+        $data['results'] = $this->formBuilder->handlePopulateInput($selectedRecord, $data['results']);
 
         return view('pages.admin.management.tags.edit', compact('data'));
     }

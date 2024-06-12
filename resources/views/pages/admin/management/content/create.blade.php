@@ -39,44 +39,9 @@
                 @csrf
                 <div class="">
                     @foreach ($data['results'] as $input)
-                        <div class="form-floating mb-3">
-                            @if ($input['type'] === 'text')
-                                <input
-                                    class="form-control"
-                                    id="{{ $input['key'] }}"
-                                    name="{{ $input['key'] }}"
-                                    placeholder="{{ $input['placeholder'] }}"
-                                    type="{{ $input['type'] }}"
-                                    value="{{ $input['value'] }}"
-                                >
-                            @elseif ($input['type'] === 'datetime-local')
-                                <input
-                                    class="form-control"
-                                    id="{{ $input['key'] }}"
-                                    name="{{ $input['key'] }}"
-                                    type="{{ $input['type'] }}"
-                                    value="{{ $input['value'] }}"
-                                    min="{{ $input['min'] }}"
-                                >
-                            @elseif ($input['type'] === 'select')
-                                <select class="form-select" id="{{ $input['key'] }}" name="{{ $input['key'] }}">
-                                    <option value="">{{ __('-- Choose an option --') }}</option>
-                                    @foreach ($input['options'] as $option)
-                                        <option
-                                            value="{{ $input['key'] === 'allow_comments' || $input['key'] === 'allow_share' ? $option['value'] : $option['id'] }}"
-                                        >
-                                            {{ $option['label'] }}
-                                        </option>
-                                    @endforeach
-                                </select>
-                            @elseif ($input['type'] === 'textarea')
-                                <textarea class="form-control" id="{{ $input['key'] }}" name="{{ $input['key'] }}" rows="3">
-                                </textarea>
-                            @endif
-                            <label for="{{ $input['key'] }}">
-                                {{ $input['placeholder'] }}
-                            </label>
-                        </div>
+                        @foreach ($input as $item)
+                            @include('components.input-' . $item['type'], $item)
+                        @endforeach
                     @endforeach
                 </div>
                 <div class="modal-footer">

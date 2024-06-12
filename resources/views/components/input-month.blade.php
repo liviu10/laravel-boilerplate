@@ -1,15 +1,15 @@
 <div class="form-floating mb-3">
     <input
         class="form-control"
-        id="test"
-        key="test"
-        min=""
-        name="test"
-        placeholder=""
+        id="{{ $item['key'] }}"
+        key="{{ $item['key'] }}"
+        min="{{ $item['min'] }}"
+        name="{{ $item['name'] }}"
+        placeholder="{{ $item['placeholder'] }}"
         type="month"
-        value=""
+        value="{{ $item['value'] }}"
     >
-    <label for="test">
-        Month example
+    <label for="{{ $item['key'] }}">
+        {{ $item['placeholder'] }}
     </label>
 </div>

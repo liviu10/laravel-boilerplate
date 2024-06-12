@@ -5,12 +5,12 @@
         key="{{ $item['key'] }}"
         maxlength={{ $item['maxlength'] }}
         minlength={{ $item['minlength'] }}
-        name="{{ $item['key'] }}"
+        name="{{ $item['name'] }}"
         placeholder="{{ $item['placeholder'] }}"
         type="text"
         value="{{ $item['value'] }}"
     >
-    <label for="test">
+    <label for="{{ $item['key'] }}">
         {{ $item['placeholder'] }}
     </label>
 </div>

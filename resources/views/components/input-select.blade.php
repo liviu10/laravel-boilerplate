@@ -2,7 +2,7 @@
     <select
         class="form-select"
         id="{{ $item['key'] }}"
-        name="{{ $item['key'] }}"
+        name="{{ $item['name'] }}"
     >
         <option selected>{{ __('-- Choose an option --') }}</option>
         @foreach ($item['options'] as $key => $option)
@@ -14,7 +14,7 @@
             </option>
         @endforeach
     </select>
-    <label for="test">
+    <label for="{{ $item['key'] }}">
         {{ $item['placeholder'] }}
     </label>
 </div>
