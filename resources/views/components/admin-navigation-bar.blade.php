@@ -61,7 +61,7 @@
                         </a>
                         <ul class="dropdown-menu dropdown-menu-end">
                             <li>
-                                <a class="dropdown-item" href="#">
+                                <a class="dropdown-item" href="{{ route('profile.edit', Auth::user()->id) }}">
                                     <i class="fa-solid fa-user"></i>
                                     {{ __('My account') }}
                                 </a>

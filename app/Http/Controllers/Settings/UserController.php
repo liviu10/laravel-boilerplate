@@ -7,7 +7,6 @@ use App\Models\User;
 use App\Utilities\FormBuilder;
 use App\Mail\InviteUser;
 use Illuminate\Support\Facades\Mail;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
@@ -101,7 +100,6 @@ class UserController extends Controller
         $payload['full_name'] = $payload['first_name'] . ' ' . $payload['last_name'];
         $payload['nickname'] = explode('@', $payload['email'])[0];
         $payload['password'] = Hash::make($this->user->generatePassword());
-        $payload['user_id'] = Auth::user()->id;
         $result = $this->user->createRecord($payload);
 
         if ($result instanceof User) {
@@ -170,7 +168,6 @@ class UserController extends Controller
         $request->validate($validateRequest);
         $payload = array_filter($request->all());
         $payload['full_name'] = $payload['first_name'] . ' ' . $payload['last_name'];
-        $payload['user_id'] = Auth::user()->id;
         $selectedRecord = $this->user->fetchSingleRecord($id);
         $result = $this->user->createRecord($payload);
 
