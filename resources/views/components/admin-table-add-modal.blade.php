@@ -26,35 +26,10 @@
             >
                 @csrf
                 <div class="modal-body">
-                    @foreach ($create_form['inputs'] as $input)
-                        <div class="form-floating mb-3">
-                            @if ($input['type'] === 'text')
-                            <input
-                                class="form-control"
-                                id="{{ $input['key'] }}"
-                                name="{{ $input['key'] }}"
-                                placeholder="{{ $input['placeholder'] }}"
-                                type="{{ $input['type'] }}"
-                                value="{{ $input['value'] }}"
-                            >
-                            @else
-                            <select
-                                class="form-select"
-                                id="{{ $input['key'] }}"
-                                name="{{ $input['key'] }}"
-                            >
-                                <option selected>{{ __('-- Choose an option --') }}</option>
-                                @foreach ($input['options'] as $option)
-                                    <option value="{{ $option['value'] }}">
-                                        {{ $option['label'] }}
-                                    </option>
-                                @endforeach
-                            </select>
-                            @endif
-                            <label for="{{ $input['key'] }}">
-                                {{ $input['placeholder'] }}
-                            </label>
-                        </div>
+                    @foreach ($form as $input)
+                        @if($input['is_create'])
+                            @include('components.input-' . $input['type'], ['item' => $input ])
+                        @endif
                     @endforeach
                 </div>
                 <div class="modal-footer">

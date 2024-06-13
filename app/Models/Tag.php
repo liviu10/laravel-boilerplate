@@ -30,16 +30,25 @@ class Tag extends Model
             'id' => 1,
             'key' => 'content_id',
             'type' => 'select',
+            'is_filter' => true,
+            'is_create' => true,
+            'is_edit' => true,
         ],
         [
             'id' => 2,
             'key' => 'name',
             'type' => 'text',
+            'is_filter' => true,
+            'is_create' => true,
+            'is_edit' => true,
         ],
         [
             'id' => 3,
             'key' => 'description',
             'type' => 'text',
+            'is_filter' => false,
+            'is_create' => true,
+            'is_edit' => true,
         ],
     ];
 

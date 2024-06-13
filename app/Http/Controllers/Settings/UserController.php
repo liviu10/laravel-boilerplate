@@ -5,12 +5,14 @@ namespace App\Http\Controllers\Settings;
 use App\Http\Controllers\Controller;
 use App\Models\User;
 use App\Utilities\FormBuilder;
+use App\Mail\InviteUser;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Foundation\Application;
 use Illuminate\Http\Request;
-use Carbon\Carbon;
 
 class UserController extends Controller
 {
@@ -97,8 +99,15 @@ class UserController extends Controller
         $request->validate($validateRequest);
         $payload = array_filter($request->all());
         $payload['full_name'] = $payload['first_name'] . ' ' . $payload['last_name'];
+        $payload['nickname'] = explode('@', $payload['email'])[0];
+        $payload['password'] = Hash::make($this->user->generatePassword());
         $payload['user_id'] = Auth::user()->id;
         $result = $this->user->createRecord($payload);
+
+        if ($result instanceof User) {
+            $user = $this->user->fetchSingleRecord($payload['id'])->toArray();
+            Mail::to($user['email'])->send(new InviteUser($user));
+        }
 
         return redirect()->route('pages.admin.settings.users.index')->with('success', $result);
     }

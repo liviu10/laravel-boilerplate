@@ -27,7 +27,9 @@
                 @csrf
                 <div class="modal-body">
                     @foreach ($form as $input)
-                        @include('components.input-' . $input['type'], ['item' => $input ])
+                        @if($input['is_filter'])
+                            @include('components.input-' . $input['type'], ['item' => $input ])
+                        @endif
                     @endforeach
                 </div>
                 <div class="modal-footer">

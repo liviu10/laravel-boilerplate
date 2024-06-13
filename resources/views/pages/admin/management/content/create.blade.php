@@ -40,7 +40,9 @@
                 <div class="">
                     @foreach ($data['results'] as $input)
                         @foreach ($input as $item)
-                            @include('components.input-' . $item['type'], $item)
+                            @if($item['is_create'])
+                                @include('components.input-' . $item['type'], $item)
+                            @endif
                         @endforeach
                     @endforeach
                 </div>

@@ -31,21 +31,33 @@ class User extends Authenticatable
             'id' => 1,
             'key' => 'full_name',
             'type' => 'text',
+            'is_filter' => true,
+            'is_create' => true,
+            'is_edit' => true,
         ],
         [
             'id' => 2,
             'key' => 'nickname',
             'type' => 'text',
+            'is_filter' => true,
+            'is_create' => false,
+            'is_edit' => false,
         ],
         [
             'id' => 3,
             'key' => 'email',
             'type' => 'email',
+            'is_filter' => true,
+            'is_create' => true,
+            'is_edit' => false,
         ],
         [
             'id' => 4,
             'key' => 'created_at',
             'type' => 'datetime-local',
+            'is_filter' => true,
+            'is_create' => false,
+            'is_edit' => false,
         ],
     ];
 
@@ -173,5 +185,15 @@ class User extends Authenticatable
         $inputs = $this->inputs;
 
         return $inputs;
+    }
+
+    public function generatePassword($length = 12) {
+        $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ!@#$%^&*()';
+        $charactersLength = strlen($characters);
+        $randomString = '';
+        for ($i = 0; $i < $length; $i++) {
+            $randomString .= $characters[rand(0, $charactersLength - 1)];
+        }
+        return $randomString;
     }
 }

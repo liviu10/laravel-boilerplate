@@ -30,11 +30,17 @@ class ContentType extends Model
             'id' => 1,
             'key' => 'label',
             'type' => 'text',
+            'is_filter' => true,
+            'is_create' => true,
+            'is_edit' => true,
         ],
         [
             'id' => 2,
             'key' => 'is_active',
             'type' => 'select',
+            'is_filter' => true,
+            'is_create' => true,
+            'is_edit' => true,
         ],
     ];
 

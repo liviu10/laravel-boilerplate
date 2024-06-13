@@ -31,7 +31,7 @@ class NewsletterSubscriber extends Model
             'id' => 1,
             'key' => 'newsletter_campaign_id',
             'type' => 'select',
-            'is_filter' => true,
+            'is_filter' => false,
             'is_create' => false,
             'is_edit' => true,
         ],
