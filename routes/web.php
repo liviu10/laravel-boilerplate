@@ -19,18 +19,6 @@ use App\Http\Controllers\Communication\NewsletterCampaignController;
 use App\Http\Controllers\Communication\NewsletterSubscriberController;
 use App\Http\Controllers\Communication\ReviewController;
 
-// Management controllers
-use App\Http\Controllers\Management\ManagementController;
-use App\Http\Controllers\Management\CommentStatusController;
-use App\Http\Controllers\Management\CommentTypeController;
-use App\Http\Controllers\Management\ContentController;
-use App\Http\Controllers\Management\ContentCategoryController;
-use App\Http\Controllers\Management\ContentTypeController;
-use App\Http\Controllers\Management\ContentVisibilityController;
-use App\Http\Controllers\Management\MediaController;
-use App\Http\Controllers\Management\MediaTypeController;
-use App\Http\Controllers\Management\TagController;
-
 // Settings controllers
 use App\Http\Controllers\Settings\SettingsController;
 use App\Http\Controllers\Settings\UserProfileController;
@@ -75,26 +63,7 @@ Route::group(['prefix' => '/admin'], function () {
     });
 
     // Management web routes
-    Route::group(['prefix' => '/management'], function () {
-        Route::get('/', [ManagementController::class, 'index'])->name('management.index');
-        Route::group(['prefix' => '/'], function () {
-            Route::group(['prefix' => '/content'], function () {
-                Route::resource('/categories', ContentCategoryController::class)->except('show', 'delete');
-                Route::resource('/types', ContentTypeController::class)->except('show', 'delete');
-                Route::resource('/visibilities', ContentVisibilityController::class)->except('show', 'delete');
-            });
-            Route::group(['prefix' => '/comment'], function () {
-                Route::resource('/types', CommentTypeController::class)->except('show', 'delete');
-                Route::resource('/statuses', CommentStatusController::class)->except('show', 'delete');
-            });
-            Route::resource('/content', ContentController::class)->except('delete');
-        });
-        Route::resource('/tags', TagController::class)->except('show', 'delete');
-        Route::group(['prefix' => '/'], function () {
-            Route::resource('/media/types', MediaTypeController::class)->except('show', 'delete');
-            Route::resource('/media', MediaController::class)->except('show', 'delete');
-        });
-    });
+    require __DIR__ . '/management.php';
 
     // Settings web routes
     Route::group(['prefix' => '/settings'], function () {

@@ -46,10 +46,10 @@ class ContentTypeController extends Controller
                 when an unknown printer took a galley of type and scrambled it to make a type specimen book.
             '),
             'actions' => [
-                'index' => 'types.index',
-                'create' => 'types.create',
-                'show' => 'types.show',
-                'edit' => 'types.edit',
+                'index' => 'contentTypes.index',
+                'create' => 'contentTypes.create',
+                'show' => 'contentTypes.show',
+                'edit' => 'contentTypes.edit',
                 // 'destroy' => 'types.destroy',
                 // 'restore' => 'types.restore',
             ],
@@ -75,7 +75,7 @@ class ContentTypeController extends Controller
                 Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s,
                 when an unknown printer took a galley of type and scrambled it to make a type specimen book.
             '),
-            'action' => 'types.store',
+            'action' => 'contentTypes.store',
             'results' => $this->formBuilder->handleFormBuilder(
                 $this->contentType->getInputs()
             ),
@@ -101,7 +101,7 @@ class ContentTypeController extends Controller
         $payload['user_id'] = Auth::user()->id;
         $result = $this->contentType->createRecord($payload);
 
-        return redirect()->route('types.index')->with('success', $result);
+        return redirect()->route('contentTypes.index')->with('success', $result);
     }
 
     /**
@@ -125,7 +125,7 @@ class ContentTypeController extends Controller
                 Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s,
                 when an unknown printer took a galley of type and scrambled it to make a type specimen book.
             '),
-            'action' => 'types.update',
+            'action' => 'contentTypes.update',
             'rowId' => $id,
             'results' => $this->formBuilder->handleFormBuilder(
                 $this->contentType->getInputs()
@@ -156,7 +156,7 @@ class ContentTypeController extends Controller
         $selectedRecord = $this->contentType->fetchSingleRecord($id);
         $result = $this->contentType->updateRecord($payload, $id);
 
-        return redirect()->route('types.index')->with('success', $result);
+        return redirect()->route('contentTypes.index')->with('success', $result);
     }
 
     /**

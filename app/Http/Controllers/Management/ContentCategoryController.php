@@ -46,10 +46,10 @@ class ContentCategoryController extends Controller
                 when an unknown printer took a galley of type and scrambled it to make a type specimen book.
             '),
             'actions' => [
-                'index' => 'categories.index',
-                'create' => 'categories.create',
-                'show' => 'categories.show',
-                'edit' => 'categories.edit',
+                'index' => 'contentCategories.index',
+                'create' => 'contentCategories.create',
+                'show' => 'contentCategories.show',
+                'edit' => 'contentCategories.edit',
                 // 'destroy' => 'categories.destroy',
                 // 'restore' => 'categories.restore',
             ],
@@ -75,7 +75,7 @@ class ContentCategoryController extends Controller
                 Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s,
                 when an unknown printer took a galley of type and scrambled it to make a type specimen book.
             '),
-            'action' => 'categories.store',
+            'action' => 'contentCategories.store',
             'results' => $this->formBuilder->handleFormBuilder(
                 $this->contentCategory->getInputs()
             ),
@@ -101,7 +101,7 @@ class ContentCategoryController extends Controller
         $payload['user_id'] = Auth::user()->id;
         $result = $this->contentCategory->createRecord($payload);
 
-        return redirect()->route('categories.index')->with('success', $result);
+        return redirect()->route('contentCategories.index')->with('success', $result);
     }
 
     /**
@@ -125,7 +125,7 @@ class ContentCategoryController extends Controller
                 Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s,
                 when an unknown printer took a galley of type and scrambled it to make a type specimen book.
             '),
-            'action' => 'categories.update',
+            'action' => 'contentCategories.update',
             'rowId' => $id,
             'results' => $this->formBuilder->handleFormBuilder(
                 $this->contentCategory->getInputs()
@@ -156,7 +156,7 @@ class ContentCategoryController extends Controller
         $selectedRecord = $this->contentCategory->fetchSingleRecord($id);
         $result = $this->contentCategory->updateRecord($payload, $id);
 
-        return redirect()->route('categories.index')->with('success', $result);
+        return redirect()->route('contentCategories.index')->with('success', $result);
     }
 
     /**

@@ -25,7 +25,7 @@
                         class="btn btn-primary"
                         data-bs-target="#filterModal"
                         data-bs-toggle="modal"
-                        title="__('Click here to filter & sort the records')"
+                        title="{{ __('Click here to filter & sort the records') }}"
                         type="button"
                     >
                         <i class="fa-solid fa-filter"></i>

@@ -46,10 +46,10 @@ class MediaTypeController extends Controller
                 when an unknown printer took a galley of type and scrambled it to make a type specimen book.
             '),
             'actions' => [
-                'index' => 'types.index',
-                'create' => 'types.create',
-                'show' => 'types.show',
-                'edit' => 'types.edit',
+                'index' => 'mediaTypes.index',
+                'create' => 'mediaTypes.create',
+                'show' => 'mediaTypes.show',
+                'edit' => 'mediaTypes.edit',
                 // 'destroy' => 'types.destroy',
                 // 'restore' => 'types.restore',
             ],
@@ -74,7 +74,7 @@ class MediaTypeController extends Controller
                 Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s,
                 when an unknown printer took a galley of type and scrambled it to make a type specimen book.
             '),
-            'action' => 'types.store',
+            'action' => 'mediaTypes.store',
             'results' => $this->formBuilder->handleFormBuilder(
                 $this->mediaType->getInputs()
             ),
@@ -100,7 +100,7 @@ class MediaTypeController extends Controller
         $payload['user_id'] = Auth::user()->id;
         $result = $this->mediaType->createRecord($payload);
 
-        return redirect()->route('types.index')->with('success', $result);
+        return redirect()->route('mediaTypes.index')->with('success', $result);
     }
 
     /**
@@ -123,7 +123,7 @@ class MediaTypeController extends Controller
                 Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s,
                 when an unknown printer took a galley of type and scrambled it to make a type specimen book.
             '),
-            'action' => 'types.update',
+            'action' => 'mediaTypes.update',
             'rowId' => $id,
             'results' => $this->formBuilder->handleFormBuilder(
                 $this->mediaType->getInputs()
@@ -154,7 +154,7 @@ class MediaTypeController extends Controller
         $selectedRecord = $this->mediaType->fetchSingleRecord($id);
         $result = $this->mediaType->updateRecord($payload, $id);
 
-        return redirect()->route('types.index')->with('success', $result);
+        return redirect()->route('mediaTypes.index')->with('success', $result);
     }
 
     /**

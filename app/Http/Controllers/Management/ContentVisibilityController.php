@@ -46,10 +46,10 @@ class ContentVisibilityController extends Controller
                 when an unknown printer took a galley of type and scrambled it to make a type specimen book.
             '),
             'actions' => [
-                'index' => 'visibilities.index',
-                'create' => 'visibilities.create',
-                'show' => 'visibilities.show',
-                'edit' => 'visibilities.edit',
+                'index' => 'contentVisibilities.index',
+                'create' => 'contentVisibilities.create',
+                'show' => 'contentVisibilities.show',
+                'edit' => 'contentVisibilities.edit',
                 // 'destroy' => 'visibilities.destroy',
                 // 'restore' => 'visibilities.restore',
             ],
@@ -75,7 +75,7 @@ class ContentVisibilityController extends Controller
                 Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s,
                 when an unknown printer took a galley of type and scrambled it to make a type specimen book.
             '),
-            'action' => 'visibilities.store',
+            'action' => 'contentVisibilities.store',
             'results' => $this->formBuilder->handleFormBuilder(
                 $this->contentVisibility->getInputs()
             ),
@@ -101,7 +101,7 @@ class ContentVisibilityController extends Controller
         $payload['user_id'] = Auth::user()->id;
         $result = $this->contentVisibility->createRecord($payload);
 
-        return redirect()->route('visibilities.index')->with('success', $result);
+        return redirect()->route('contentVisibilities.index')->with('success', $result);
     }
 
     /**
@@ -125,7 +125,7 @@ class ContentVisibilityController extends Controller
                 Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s,
                 when an unknown printer took a galley of type and scrambled it to make a type specimen book.
             '),
-            'action' => 'visibilities.update',
+            'action' => 'contentVisibilities.update',
             'rowId' => $id,
             'results' => $this->formBuilder->handleFormBuilder(
                 $this->contentVisibility->getInputs()
@@ -156,7 +156,7 @@ class ContentVisibilityController extends Controller
         $selectedRecord = $this->contentVisibility->fetchSingleRecord($id);
         $result = $this->contentVisibility->updateRecord($payload, $id);
 
-        return redirect()->route('visibilities.index')->with('success', $result);
+        return redirect()->route('contentVisibilities.index')->with('success', $result);
     }
 
     /**

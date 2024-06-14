@@ -46,10 +46,10 @@ class CommentTypeController extends Controller
                 when an unknown printer took a galley of type and scrambled it to make a type specimen book.
             '),
             'actions' => [
-                'index' => 'types.index',
-                'create' => 'types.create',
-                'show' => 'types.show',
-                'edit' => 'types.edit',
+                'index' => 'commentTypes.index',
+                'create' => 'commentTypes.create',
+                'show' => 'commentTypes.show',
+                'edit' => 'commentTypes.edit',
                 // 'destroy' => 'types.destroy',
                 // 'restore' => 'types.restore',
             ],
@@ -74,7 +74,7 @@ class CommentTypeController extends Controller
                 Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s,
                 when an unknown printer took a galley of type and scrambled it to make a type specimen book.
             '),
-            'action' => 'types.store',
+            'action' => 'commentTypes.store',
             'results' => $this->formBuilder->handleFormBuilder(
                 $this->commentType->getInputs()
             ),
@@ -100,7 +100,7 @@ class CommentTypeController extends Controller
         $payload['user_id'] = Auth::user()->id;
         $result = $this->commentType->createRecord($payload);
 
-        return redirect()->route('types.index')->with('success', $result);
+        return redirect()->route('commentTypes.index')->with('success', $result);
     }
 
     /**
@@ -123,7 +123,7 @@ class CommentTypeController extends Controller
                 Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s,
                 when an unknown printer took a galley of type and scrambled it to make a type specimen book.
             '),
-            'action' => 'types.update',
+            'action' => 'commentTypes.update',
             'rowId' => $id,
             'results' => $this->formBuilder->handleFormBuilder(
                 $this->commentType->getInputs()
@@ -154,7 +154,7 @@ class CommentTypeController extends Controller
         $selectedRecord = $this->commentType->fetchSingleRecord($id);
         $result = $this->commentType->updateRecord($payload, $id);
 
-        return redirect()->route('types.index')->with('success', $result);
+        return redirect()->route('commentTypes.index')->with('success', $result);
     }
 
     /**

@@ -46,10 +46,10 @@ class CommentStatusController extends Controller
                 when an unknown printer took a galley of type and scrambled it to make a type specimen book.
             '),
             'actions' => [
-                'index' => 'statuses.index',
-                'create' => 'statuses.create',
-                'show' => 'statuses.show',
-                'edit' => 'statuses.edit',
+                'index' => 'commentStatuses.index',
+                'create' => 'commentStatuses.create',
+                'show' => 'commentStatuses.show',
+                'edit' => 'commentStatuses.edit',
                 // 'destroy' => 'statuses.destroy',
                 // 'restore' => 'statuses.restore',
             ],
@@ -74,7 +74,7 @@ class CommentStatusController extends Controller
                 Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s,
                 when an unknown printer took a galley of type and scrambled it to make a type specimen book.
             '),
-            'action' => 'statuses.store',
+            'action' => 'commentStatuses.store',
             'results' => $this->formBuilder->handleFormBuilder(
                 $this->commentStatus->getInputs()
             ),
@@ -100,7 +100,7 @@ class CommentStatusController extends Controller
         $payload['user_id'] = Auth::user()->id;
         $result = $this->commentStatus->createRecord($payload);
 
-        return redirect()->route('statuses.index')->with('success', $result);
+        return redirect()->route('commentStatuses.index')->with('success', $result);
     }
 
     /**
@@ -123,7 +123,7 @@ class CommentStatusController extends Controller
                 Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s,
                 when an unknown printer took a galley of type and scrambled it to make a type specimen book.
             '),
-            'action' => 'statuses.update',
+            'action' => 'commentStatuses.update',
             'rowId' => $id,
             'results' => $this->formBuilder->handleFormBuilder(
                 $this->commentStatus->getInputs()
@@ -154,7 +154,7 @@ class CommentStatusController extends Controller
         $selectedRecord = $this->commentStatus->fetchSingleRecord($id);
         $result = $this->commentStatus->updateRecord($payload, $id);
 
-        return redirect()->route('statuses.index')->with('success', $result);
+        return redirect()->route('commentStatuses.index')->with('success', $result);
     }
 
     /**
