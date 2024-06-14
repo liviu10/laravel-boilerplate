@@ -25,6 +25,7 @@ Route::group(['prefix' => '/management'], function () {
                     'store' => 'contentCategories.store',
                     'show' => 'contentCategories.show',
                     'edit' => 'contentCategories.edit',
+                    'update' => 'contentCategories.update',
                 ]);
             Route::resource('/types', ContentTypeController::class)->except('show', 'delete')
                 ->names([
@@ -33,6 +34,7 @@ Route::group(['prefix' => '/management'], function () {
                     'store' => 'contentTypes.store',
                     'show' => 'contentTypes.show',
                     'edit' => 'contentTypes.edit',
+                    'update' => 'contentTypes.update',
                 ]);
             Route::resource('/visibilities', ContentVisibilityController::class)->except('show', 'delete')
                 ->names([
@@ -41,6 +43,7 @@ Route::group(['prefix' => '/management'], function () {
                     'store' => 'contentVisibilities.store',
                     'show' => 'contentVisibilities.show',
                     'edit' => 'contentVisibilities.edit',
+                    'update' => 'contentVisibilities.update',
                 ]);
         });
         Route::group(['prefix' => '/comment'], function () {
@@ -51,6 +54,7 @@ Route::group(['prefix' => '/management'], function () {
                     'store' => 'commentTypes.store',
                     'show' => 'commentTypes.show',
                     'edit' => 'commentTypes.edit',
+                    'update' => 'commentTypes.update',
                 ]);
             Route::resource('/statuses', CommentStatusController::class)->except('show', 'delete')
                 ->names([
@@ -59,6 +63,7 @@ Route::group(['prefix' => '/management'], function () {
                     'store' => 'commentStatuses.store',
                     'show' => 'commentStatuses.show',
                     'edit' => 'commentStatuses.edit',
+                    'update' => 'commentStatuses.update',
                 ]);
         });
         Route::resource('/content', ContentController::class)->except('delete');
@@ -72,6 +77,7 @@ Route::group(['prefix' => '/management'], function () {
                 'store' => 'mediaTypes.store',
                 'show' => 'mediaTypes.show',
                 'edit' => 'mediaTypes.edit',
+                'update' => 'mediaTypes.update',
             ]);
         Route::resource('/media', MediaController::class)->except('show', 'delete');
     });
