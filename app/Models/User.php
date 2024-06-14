@@ -85,6 +85,14 @@ class User extends Authenticatable
         ],
         [
             'id' => 8,
+            'key' => 'confirm_password',
+            'type' => 'password',
+            'is_filter' => false,
+            'is_create' => false,
+            'is_edit' => false,
+        ],
+        [
+            'id' => 9,
             'key' => 'profile_image',
             'type' => 'file',
             'is_filter' => false,
@@ -92,7 +100,7 @@ class User extends Authenticatable
             'is_edit' => false,
         ],
         [
-            'id' => 9,
+            'id' => 10,
             'key' => 'created_at',
             'type' => 'datetime-local',
             'is_filter' => true,
