@@ -294,7 +294,7 @@ class Content extends Model
                         $query->select(
                             'id',
                             'comment_type_id',
-                            'comment_statuses_id',
+                            'comment_status_id',
                             'content_id',
                             'full_name',
                             'email',

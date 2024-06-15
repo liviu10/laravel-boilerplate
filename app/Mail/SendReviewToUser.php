@@ -41,7 +41,7 @@ class SendReviewToUser extends Mailable
     public function content(): Content
     {
         return new Content(
-            view: 'views.emails.send-review-to-user',
+            view: 'emails.send-review-to-user',
             with: [
                 'data' => $this->emailDetails,
             ],

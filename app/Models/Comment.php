@@ -19,7 +19,7 @@ class Comment extends Model
 
     protected $fillable = [
         'comment_type_id',
-        'comment_statuses_id',
+        'comment_status_id',
         'content_id',
         'full_name',
         'email',
@@ -57,7 +57,7 @@ class Comment extends Model
 
     public function comment_status(): BelongsTo
     {
-        return $this->belongsTo('App\Models\CommentStatus');
+        return $this->belongsTo('App\Models\CommentStatus', 'comment_status_id');
     }
 
     public function content(): BelongsTo
@@ -71,7 +71,7 @@ class Comment extends Model
             $query = $this->select(
                 'id',
                 'comment_type_id',
-                'comment_statuses_id',
+                'comment_status_id',
                 'content_id',
                 'full_name',
                 'user_id',
@@ -90,7 +90,7 @@ class Comment extends Model
 
             if (!empty($search)) {
                 foreach ($search as $field => $value) {
-                    if ($field === 'id' || $field === 'comment_type_id' || $field === 'comment_statuses_id' || $field === 'content_id') {
+                    if ($field === 'id' || $field === 'comment_type_id' || $field === 'comment_status_id' || $field === 'content_id') {
                         $query->where($field, '=', $value);
                     } else {
                         $query->where($field, 'LIKE', '%' . $value . '%');
@@ -109,7 +109,7 @@ class Comment extends Model
         try {
             return $this->create([
                 'comment_type_id' => $payload['comment_type_id'],
-                'comment_statuses_id' => $payload['comment_statuses_id'],
+                'comment_status_id' => $payload['comment_status_id'],
                 'content_id' => $payload['content_id'],
                 'full_name' => $payload['full_name'],
                 'email' => $payload['email'],
@@ -149,7 +149,7 @@ class Comment extends Model
         try {
             $query = tap($this->find($id))->update([
                 'comment_type_id' => $payload['comment_type_id'],
-                'comment_statuses_id' => $payload['comment_statuses_id'],
+                'comment_status_id' => $payload['comment_status_id'],
                 'content_id' => $payload['content_id'],
                 'full_name' => $payload['full_name'],
                 'email' => $payload['email'],

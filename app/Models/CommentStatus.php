@@ -18,6 +18,8 @@ class CommentStatus extends Model
 {
     use HasFactory;
 
+    protected $table = 'comment_status';
+
     protected $fillable = [
         'value',
         'label',

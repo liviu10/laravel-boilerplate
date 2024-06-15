@@ -41,7 +41,7 @@ class InviteUser extends Mailable
     public function content(): Content
     {
         return new Content(
-            view: 'views.emails.invite-user',
+            view: 'emails.invite-user',
             with: [
                 'data' => $this->emailDetails,
             ],

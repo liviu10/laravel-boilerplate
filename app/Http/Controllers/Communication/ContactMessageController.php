@@ -98,11 +98,29 @@ class ContactMessageController extends Controller
                 when an unknown printer took a galley of type and scrambled it to make a type specimen book.
             '),
             'action' => 'messages.messageResponse',
+            'rowId' => $id,
             'form' => $this->formBuilder->handleFormBuilder(
                 $this->contactResponse->getInputs()
             ),
             'results' => $this->contactMessage->fetchSingleRecord($id),
         ];
+
+        $keyMap = [
+            'from' => config('app.contact_email'),
+            'to' => $data['results']->toArray()[0]['email'],
+            'subject' => 'Response to contact subject'
+        ];
+
+        foreach ($data['form'] as &$result) {
+            foreach ($result as &$item) {
+                if (array_key_exists($item['key'], $keyMap)) {
+                    $item['value'] = $keyMap[$item['key']];
+                    $item['is_message_response'] = true;
+                    $item['disabled'] = true;
+                    $item['readonly'] = true;
+                }
+            }
+        }
 
         return view('pages.admin.communication.contact.messages.show', compact('data'));
     }
@@ -142,16 +160,14 @@ class ContactMessageController extends Controller
             'message' => 'required|string',
         ];
 
-        dd(json_decode($request->input('results'), true)[0]);
-
         $request->validate($validateRequest);
         $payload = array_filter($request->all());
         $payload['user_id'] = Auth::user()->id;
         $result = $this->contactResponse->createRecord($payload);
 
         if ($result instanceof ContactResponse) {
-            $contactMessage = $this->contactResponse->fetchSingleRecord($payload['contact_message_id'])->toArray();
-            Mail::to($contactMessage['email'])->send(new RespondToContactMessage($contactMessage));
+            $contactMessage = $this->contactResponse->fetchSingleRecord($result->id)->toArray()[0];
+            Mail::to($contactMessage['contact_message']['email'])->send(new RespondToContactMessage($contactMessage));
         }
 
         return redirect()->route('messages.index')->with('success', $result);

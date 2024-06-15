@@ -41,7 +41,7 @@ class EmailUpdateContentVisibility extends Mailable
     public function content(): Content
     {
         return new Content(
-            view: 'views.emails.email-update-content-visibility',
+            view: 'emails.email-update-content-visibility',
             with: [
                 'data' => $this->emailDetails,
             ],

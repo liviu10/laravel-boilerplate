@@ -30,7 +30,7 @@ class RespondToContactMessage extends Mailable
     {
         return new Envelope(
             from: config('app.contact_email'),
-            to: $this->emailDetails['email_to'],
+            to: $this->emailDetails['contact_message']['email'],
             subject: 'Response to contact message',
         );
     }
@@ -41,7 +41,7 @@ class RespondToContactMessage extends Mailable
     public function content(): Content
     {
         return new Content(
-            view: 'views.emails.respond-to-contact-message',
+            view: 'emails.respond-to-contact-message',
             with: [
                 'data' => $this->emailDetails,
             ],

@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('comment_statuses', function (Blueprint $table) {
+        Schema::create('comment_status', function (Blueprint $table) {
             $table->id()->index('idx_id');
             $table->string('value')->nullable(false);
             $table->string('label')->nullable(false);
@@ -24,7 +24,7 @@ return new class extends Migration
                 ->onUpdate('cascade');
             $table->index(
                 'user_id',
-                'idx_users_comment_statuses_id'
+                'idx_users_comment_status_id'
             );
         });
     }
@@ -34,11 +34,11 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('comment_statuses');
-        Schema::table('comment_statuses', function (Blueprint $table) {
+        Schema::dropIfExists('comment_status');
+        Schema::table('comment_status', function (Blueprint $table) {
             $table->dropForeign(['user_id']);
             $table->dropColumn('user_id');
-            $table->dropIndex('idx_users_comment_statuses_id');
+            $table->dropIndex('idx_users_comment_status_id');
         });
     }
 };

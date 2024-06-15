@@ -49,7 +49,7 @@ namespace App\Models{
  * @package App\Models
  * @property int $id
  * @property int $comment_type_id
- * @property int $comment_statuses_id
+ * @property int $comment_status_id
  * @property int $content_id
  * @property string $full_name
  * @property string $email
@@ -656,7 +656,7 @@ namespace App\Models{
 
 namespace App\Models{
 /**
- * 
+ *
  *
  * @property int $id
  * @property string $full_name

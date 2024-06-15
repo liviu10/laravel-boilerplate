@@ -122,7 +122,7 @@ class ContactSubject extends Model
     public function fetchSingleRecord(int $id): Collection|Exception
     {
         try {
-            return $this->select('*')
+            $query = $this->select('*')
                 ->where('id', '=', $id)
                 ->with([
                     'contact_messages' => function ($query) {
@@ -132,26 +132,21 @@ class ContactSubject extends Model
                             'full_name',
                             'email',
                             'privacy_policy',
-                        )
-                        ->with([
-                            'contact_responses' => function ($query) {
-                                $query->select(
-                                    'id',
-                                    'contact_message_id',
-                                    'message'
-                                )->with([
-                                    'user' => function ($query) {
-                                        $query->select('id', 'full_name');
-                                    }
-                                ]);
-                            }
-                        ]);
+                            'terms_and_conditions',
+                            'data_protection',
+                        );
                     },
                     'user' => function ($query) {
                         $query->select('id', 'full_name');
                     }
-                ])
-                ->get();
+                ]);
+
+                $query = $query->get();
+                $query->each(function ($item) {
+                    $item->makeHidden('user_id');
+                });
+
+                return $query;
         } catch (Exception $exception) {
             return $exception;
         }

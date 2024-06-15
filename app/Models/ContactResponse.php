@@ -26,8 +26,35 @@ class ContactResponse extends Model
     protected $inputs = [
         [
             'id' => 1,
+            'key' => 'from',
+            'type' => 'email',
+            'is_filter' => false,
+            'is_create' => false,
+            'is_edit' => false,
+        ],
+        [
+            'id' => 2,
+            'key' => 'to',
+            'type' => 'email',
+            'is_filter' => false,
+            'is_create' => false,
+            'is_edit' => false,
+        ],
+        [
+            'id' => 3,
+            'key' => 'subject',
+            'type' => 'text',
+            'is_filter' => false,
+            'is_create' => false,
+            'is_edit' => false,
+        ],
+        [
+            'id' => 4,
             'key' => 'message',
             'type' => 'textarea',
+            'is_filter' => false,
+            'is_create' => true,
+            'is_edit' => false,
         ],
     ];
 
@@ -113,7 +140,8 @@ class ContactResponse extends Model
                 ->where('id', '=', $id)
                 ->with([
                     'contact_message' => function ($query) {
-                        $query->select('id', 'full_name', 'email')->with([
+                        $query->select('id', 'full_name', 'email', 'contact_subject_id')
+                        ->with([
                             'contact_subject' => function ($query) {
                                 $query->select('id', 'label')->where('is_active', true);
                             }

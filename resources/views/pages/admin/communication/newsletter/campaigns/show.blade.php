@@ -11,7 +11,7 @@
         </div>
 
         <div class="admin__body">
-            {{ $data['results'] }}
+            <x-page-card :body="$data['results']->toArray()[0]" />
         </div>
     </div>
 @endsection

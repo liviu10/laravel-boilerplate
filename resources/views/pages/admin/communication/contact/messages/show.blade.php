@@ -39,22 +39,16 @@
                 enctype="multipart/form-data"
             >
                 @csrf
-                <input type="hidden" name="results" value="{{ $data['results'] }}">
+                <input type="hidden" name="contact_message_id" value="{{ $data['rowId'] }}">
                 <div class="">
                     @foreach ($data['form'] as $input)
-                        <div class="form-floating mb-3">
-                            <textarea
-                                class="form-control"
-                                id="{{ $input['key'] }}"
-                                name="{{ $input['key'] }}"
-                                placeholder="{{ $input['placeholder'] }}"
-                                type="{{ $input['type'] }}"
-                                value="{{ $input['value'] }}"
-                            ></textarea>
-                            <label for="{{ $input['key'] }}">
-                                {{ $input['placeholder'] }}
-                            </label>
-                        </div>
+                        @foreach ($input as $item)
+                            @if($item['is_create'])
+                                @include('components.input-' . $item['type'], $item)
+                            @elseif(array_key_exists('is_message_response', $item) && $item['is_message_response'])
+                                @include('components.input-' . $item['type'], $item)
+                            @endif
+                        @endforeach
                     @endforeach
                 </div>
                 <div class="modal-footer">
@@ -66,10 +60,23 @@
                         {{ __('Cancel') }}
                     </button>
                     <button type="submit" class="btn btn-success">
-                        {{ _('Save') }}
+                        {{ _('Respond') }}
                     </button>
                 </div>
             </form>
         </div>
     </div>
+    <script>
+        tinymce.init({
+            selector: 'textarea#message',
+            plugins: 'code table lists',
+            toolbar: 'undo redo | blocks | bold italic | alignleft aligncenter alignright | indent outdent | bullist numlist | code | table',
+            max_height: 500,
+            max_width: 500,
+            min_height: 100,
+            min_width: 400,
+            height: 300,
+            menubar: false,
+        });
+    </script>
 @endsection

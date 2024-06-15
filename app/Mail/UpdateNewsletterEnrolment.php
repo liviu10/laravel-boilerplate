@@ -41,7 +41,7 @@ class UpdateNewsletterEnrolment extends Mailable
     public function content(): Content
     {
         return new Content(
-            view: 'views.emails.update-newsletter-enrolment',
+            view: 'emails.update-newsletter-enrolment',
             with: [
                 'data' => $this->emailDetails,
             ],

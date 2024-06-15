@@ -22,14 +22,14 @@ return new class extends Migration
                 'comment_type_id',
                 'idx_comment_types_comment_id'
             );
-            $table->foreignId('comment_statuses_id')
+            $table->foreignId('comment_status_id')
                 ->constrained()
-                ->on('comment_statuses')
+                ->on('comment_status')
                 ->onDelete('cascade')
                 ->onUpdate('cascade');
             $table->index(
-                'comment_statuses_id',
-                'idx_comment_statuses_comment_id'
+                'comment_status_id',
+                'idx_comment_status_comment_id'
             );
             $table->foreignId('content_id')
                 ->constrained()
@@ -60,9 +60,9 @@ return new class extends Migration
             $table->dropForeign(['comment_type_id']);
             $table->dropColumn('comment_type_id');
             $table->dropIndex('idx_comment_types_comment_id');
-            $table->dropForeign(['comment_statuses_id']);
-            $table->dropColumn('comment_statuses_id');
-            $table->dropIndex('idx_comment_statuses_comment_id');
+            $table->dropForeign(['comment_status_id']);
+            $table->dropColumn('comment_status_id');
+            $table->dropIndex('idx_comment_status_comment_id');
             $table->dropForeign(['content_id']);
             $table->dropColumn('content_id');
             $table->dropIndex('idx_contents_comment_id');
