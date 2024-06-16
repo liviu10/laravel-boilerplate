@@ -11,7 +11,49 @@
         </div>
 
         <div class="admin__body">
-            {{ $data['results'] }}
+            <x-page-card>
+                <h5 class="card-title">
+                    {{  __('Subject') }}
+                </h5>
+                @foreach ($data['results']->toArray()[0] as $key => $item)
+                    @foreach ($data['results']->toArray()[0]['contact_subject'] as $key => $item)
+                        @if ($key !== 'id')
+                            <div class="card-text">
+                                {{-- {{ $key }}: --}}
+                                @if (gettype($item) === 'array' && is_array($item))
+                                    {{ $key }}: {{ $item['full_name'] }}
+                                {{-- @else
+                                    {{ $item }} --}}
+                                @endif
+                            </div>
+                        @endif
+                    @endforeach
+                @endforeach
+            </x-page-card>
+            {{ dd($data['results']->toArray()[0]['contact_subject']) }}
+
+            <x-page-card>
+                <h5 class="card-title">
+                    {{  __('Messages') }}
+                </h5>
+                @foreach ($data['results']->toArray()[0] as $key => $item)
+                    @if (!is_array($item))
+                        <div class="card-text">
+                            {{ ucwords(str_replace('_', ' ', $key)) }}:
+                            @if (
+                                in_array($key, ['privacy_policy', 'terms_and_conditions', 'data_protection']) &&
+                                (is_bool($item) || (is_numeric($item) && ($item === 0 || $item === 1)))
+                            )
+                                <span class="badge {{ $item ? 'text-bg-success' : 'text-bg-danger' }}">
+                                    {{ __($item ? 'Yes' : 'No') }}
+                                </span>
+                            @else
+                                {{ $item }}
+                            @endif
+                        </div>
+                    @endif
+                @endforeach
+            </x-page-card>
 
             @if ($errors->any())
                 <div class="alert alert-danger alert-dismissible fade show" role="alert">

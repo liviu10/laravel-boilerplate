@@ -40,7 +40,7 @@
                     'actions' => $data['actions'],
                     'forms' => $data['forms'],
                     'columns' => [
-                        'ID', 'Fullname', 'Email',
+                        'ID', 'Full name', 'Email',
                         'Phone', 'Privacy policy', 'Terms and conditions',
                         'Data protection', 'Contact subject', 'Actions'
                     ],

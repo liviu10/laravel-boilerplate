@@ -48,7 +48,7 @@
                     'columns' => [
                         'ID', 'Scheduled on', 'Content url', 'Title',
                         'Content category', 'Content visibility',
-                        'Content type', 'Added by', 'Actions'
+                        'Content type', 'Actions'
                     ],
                     'rows' => $data['results']
                 ]

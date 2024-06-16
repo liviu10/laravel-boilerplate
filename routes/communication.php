@@ -11,8 +11,11 @@ use App\Http\Controllers\Communication\NewsletterSubscriberController;
 use App\Http\Controllers\Communication\ReviewController;
 
 Route::group(['prefix' => '/communication'], function () {
+    // Communication main page
     Route::get('/', [CommunicationController::class, 'index'])
         ->name('communication.index');
+
+    // Contact group
     Route::group(['prefix' => '/contact'], function () {
         Route::resource('/subjects', ContactSubjectController::class)
             ->except('delete');
@@ -21,12 +24,16 @@ Route::group(['prefix' => '/communication'], function () {
         Route::resource('/messages', ContactMessageController::class)
             ->only('index', 'show');
     });
+
+    // Newsletter group
     Route::group(['prefix' => '/newsletter'], function () {
         Route::resource('/campaigns', NewsletterCampaignController::class)
             ->except('delete');
         Route::resource('/subscribers', NewsletterSubscriberController::class)
             ->only('index', 'show', 'edit', 'update');
     });
+
+    // Review group
     Route::get('/reviews/send-review', [ReviewController::class, 'sendReview']);
     Route::resource('/reviews', ReviewController::class)
         ->only('index', 'edit', 'update');

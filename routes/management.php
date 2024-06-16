@@ -15,7 +15,10 @@ use App\Http\Controllers\Management\MediaTypeController;
 use App\Http\Controllers\Management\TagController;
 
 Route::group(['prefix' => '/management'], function () {
+    // Management main page
     Route::get('/', [ManagementController::class, 'index'])->name('management.index');
+
+    // Content group
     Route::group(['prefix' => '/'], function () {
         Route::group(['prefix' => '/content'], function () {
             Route::resource('/categories', ContentCategoryController::class)->except('show', 'delete')
@@ -68,7 +71,11 @@ Route::group(['prefix' => '/management'], function () {
         });
         Route::resource('/content', ContentController::class)->except('delete');
     });
+
+    // Tag group
     Route::resource('/tags', TagController::class)->except('show', 'delete');
+
+    // Media group
     Route::group(['prefix' => '/'], function () {
         Route::resource('/media/types', MediaTypeController::class)->except('show', 'delete')
             ->names([

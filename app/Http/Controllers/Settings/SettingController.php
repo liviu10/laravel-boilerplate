@@ -6,9 +6,9 @@ use App\Http\Controllers\Controller;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Foundation\Application;
-use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Artisan;
 
-class SettingsController extends Controller
+class SettingController extends Controller
 {
     /**
      * Create a new controller instance.
@@ -54,6 +54,27 @@ class SettingsController extends Controller
                 'short_description' => __('Lorem Ipsum is simply dummy text of the printing and typesetting industry.'),
                 'url' => route('users.index')
             ],
+            [
+                'id' => 2,
+                'title' => __('Application settings'),
+                'short_description' => __('Lorem Ipsum is simply dummy text of the printing and typesetting industry.'),
+                'url' => route('application.index')
+            ],
+            [
+                'id' => 3,
+                'title' => __('Optimize'),
+                'short_description' => __('Lorem Ipsum is simply dummy text of the printing and typesetting industry.'),
+                'url' => route('settings.optimize'),
+                'button_label' => __('Run'),
+                'button_icon' => 'fa-solid fa-terminal'
+            ],
         ];
+    }
+
+    public function optimize(): View|Application|Factory
+    {
+        Artisan::call('optimize:clear');
+
+        return $this->index();
     }
 }

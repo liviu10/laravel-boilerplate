@@ -144,7 +144,10 @@ class ContactMessage extends Model
 
             if (!empty($search)) {
                 foreach ($search as $field => $value) {
-                    if ($field === 'id' || $field === 'contact_subject_id' || $field === 'privacy_policy' || $field === 'terms_and_conditions' || $field === 'data_protection') {
+                    if ($field === 'id' || $field === 'contact_subject_id' ||
+                        $field === 'privacy_policy' || $field === 'terms_and_conditions' ||
+                        $field === 'data_protection'
+                    ) {
                         $query->where($field, '=', $value);
                     } elseif ($field === 'contact_message_ids') {
                         $query->whereIn('id', $value);
@@ -187,25 +190,38 @@ class ContactMessage extends Model
     public function fetchSingleRecord(int $id): Collection|Exception
     {
         try {
-            return $this->select('*')
+            $query = $this->select('*')
                 ->where('id', '=', $id)
                 ->with([
                     'contact_subject' => function ($query) {
-                        $query->select('id', 'label')->where('is_active', true);
+                        $query->select('id', 'label', 'user_id')
+                            ->where('is_active', true)
+                            ->with([
+                                'user' => function ($query) {
+                                    $query->select('id', 'full_name');
+                                }
+                            ]);
                     },
                     'contact_responses' => function ($query) {
                         $query->select(
                             'id',
                             'contact_message_id',
                             'message',
+                            'user_id',
                         )->with([
                             'user' => function ($query) {
                                 $query->select('id', 'full_name');
                             }
                         ]);
                     },
-                ])
-                ->get();
+                ]);
+
+                $query = $query->get();
+                $query->each(function ($item) {
+                    $item->makeHidden('user_id');
+                });
+
+                return $query;
         } catch (Exception $exception) {
             return $exception;
         }

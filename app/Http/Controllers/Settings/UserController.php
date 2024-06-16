@@ -117,7 +117,7 @@ class UserController extends Controller
     public function show(string $id): View|Application|Factory
     {
         $data = [
-            'title' => __('Show a newsletter subscriber'),
+            'title' => __('Show a user'),
             'description' => __('
                 Lorem Ipsum is simply dummy text of the printing and typesetting industry.
                 Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s,

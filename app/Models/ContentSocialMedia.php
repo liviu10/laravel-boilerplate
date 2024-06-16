@@ -53,17 +53,7 @@ class ContentSocialMedia extends Model
     public function fetchAllRecords(array $search = []): Collection|Exception
     {
         try {
-            $query = $this->select(
-                'content_id',
-                'platform_name',
-                'full_share_url',
-                'user_id',
-            )
-                ->with([
-                    'user' => function ($query) {
-                        $query->select('id', 'full_name');
-                    }
-                ]);
+            $query = $this->select('content_id', 'platform_name', 'full_share_url');
 
             if (!empty($search)) {
                 foreach ($search as $field => $value) {

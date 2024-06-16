@@ -85,15 +85,11 @@ class Tag extends Model
                 'content_id',
                 'name',
                 'slug',
-                'user_id',
             )
                 ->with([
                     'content' => function ($query) {
                         $query->select('id', 'title');
                     },
-                    'user' => function ($query) {
-                        $query->select('id', 'full_name');
-                    }
                 ]);
 
             if (!empty($search)) {

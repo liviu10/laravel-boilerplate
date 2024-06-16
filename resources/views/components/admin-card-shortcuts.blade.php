@@ -15,8 +15,15 @@
                     title="{{ __('Click here to navigate to', [ 'buttonLabel' => $shortcut['title'] ]) }}"
                     type="button"
                 >
-                    {{ __('View') }}
-                    <i class="fa-solid fa-arrow-right"></i>
+                    @if (array_key_exists('button_label', $shortcut))
+                        {{ $shortcut['button_label'] }}
+                        @if (array_key_exists('button_icon', $shortcut))
+                            <i class="{{ $shortcut['button_icon'] }}"></i>
+                        @endif
+                    @else
+                        {{ __('View') }}
+                        <i class="fa-solid fa-arrow-right"></i>
+                    @endif
                 </a>
             </div>
         </div>

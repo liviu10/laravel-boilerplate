@@ -77,12 +77,7 @@ class CommentStatus extends Model
     public function fetchAllRecords(array $search = []): Collection|Exception
     {
         try {
-            $query = $this->select('id', 'value', 'label', 'is_active', 'user_id')
-                ->with([
-                    'user' => function ($query) {
-                        $query->select('id', 'full_name');
-                    }
-                ]);
+            $query = $this->select('id', 'value', 'label', 'is_active');
 
             if (!empty($search)) {
                 foreach ($search as $field => $value) {

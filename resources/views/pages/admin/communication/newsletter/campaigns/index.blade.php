@@ -42,7 +42,7 @@
                     'columns' => [
                         'ID', 'Name', 'Is active?', 'Valid from',
                         'Valid to', 'Occur times', 'Occur week',
-                        'Occur day', 'Occur hour', 'Added by', 'Actions'
+                        'Occur day', 'Occur hour', 'Actions'
                     ],
                     'rows' => $data['results']
                 ]

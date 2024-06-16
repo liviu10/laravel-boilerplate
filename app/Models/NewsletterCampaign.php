@@ -176,12 +176,7 @@ class NewsletterCampaign extends Model
                 'occur_week',
                 'occur_day',
                 'occur_hour',
-                'user_id',
-            )->with([
-                'user' => function ($query) {
-                    $query->select('id', 'full_name');
-                }
-            ]);
+            );
 
             if (!empty($search)) {
                 foreach ($search as $field => $value) {

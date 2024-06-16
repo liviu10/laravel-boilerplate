@@ -77,12 +77,7 @@ class ContactSubject extends Model
     public function fetchAllRecords(array $search = []): Collection|LengthAwarePaginator|Exception
     {
         try {
-            $query = $this->select('id', 'value', 'label', 'is_active', 'user_id')
-                ->with([
-                    'user' => function ($query) {
-                        $query->select('id', 'full_name');
-                    }
-                ]);
+            $query = $this->select('id', 'value', 'label', 'is_active');
 
             if (!empty($search)) {
                 foreach ($search as $field => $value) {
@@ -134,7 +129,9 @@ class ContactSubject extends Model
                             'privacy_policy',
                             'terms_and_conditions',
                             'data_protection',
-                        );
+                        )
+                        ->orderBy('created_at', 'desc')
+                        ->limit(3);
                     },
                     'user' => function ($query) {
                         $query->select('id', 'full_name');

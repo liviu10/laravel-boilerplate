@@ -190,7 +190,6 @@ class Content extends Model
                 'title',
                 'content_type_id',
                 'content_category_id',
-                'user_id',
             )
                 ->with([
                     'content_category' => function ($query) {
@@ -202,9 +201,6 @@ class Content extends Model
                     'content_type' => function ($query) {
                         $query->select('id', 'label')->where('is_active', true);
                     },
-                    'user' => function ($query) {
-                        $query->select('id', 'full_name', 'email');
-                    }
                 ]);
 
             if (!empty($search)) {

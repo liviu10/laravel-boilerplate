@@ -123,7 +123,6 @@ class Media extends Model
                 'title',
                 'caption',
                 'alt_text',
-                'user_id',
             )
                 ->with([
                     'media_type' => function ($query) {
@@ -132,9 +131,6 @@ class Media extends Model
                     'content' => function ($query) {
                         $query->select('id', 'title');
                     },
-                    'user' => function ($query) {
-                        $query->select('id', 'full_name');
-                    }
                 ]);
 
             if (!empty($search)) {

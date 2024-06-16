@@ -132,11 +132,6 @@ class User extends Authenticatable
         'updated_at' => 'datetime:d.m.Y H:i',
     ];
 
-    public function contact_subjects(): HasMany
-    {
-        return $this->hasMany('App\Models\ContactSubject');
-    }
-
     public function fetchAllRecords(array $search = []): Collection|Exception
     {
         try {

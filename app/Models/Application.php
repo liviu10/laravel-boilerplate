@@ -10,51 +10,53 @@ use Exception;
 
 
 /**
- * Class ContactResponse
+ * Class Application
  * @package App\Models
  */
-class ContactResponse extends Model
+class Application extends Model
 {
     use HasFactory;
 
     protected $fillable = [
-        'contact_message_id',
-        'message',
+        'value',
+        'label',
+        'description',
+        'is_active',
         'user_id',
     ];
 
     protected $inputs = [
         [
             'id' => 1,
-            'key' => 'from',
-            'type' => 'email',
-            'is_filter' => false,
-            'is_create' => false,
-            'is_edit' => false,
+            'key' => 'value',
+            'type' => 'text',
+            'is_filter' => true,
+            'is_create' => true,
+            'is_edit' => true,
         ],
         [
             'id' => 2,
-            'key' => 'to',
-            'type' => 'email',
-            'is_filter' => false,
-            'is_create' => false,
-            'is_edit' => false,
+            'key' => 'label',
+            'type' => 'text',
+            'is_filter' => true,
+            'is_create' => true,
+            'is_edit' => true,
         ],
         [
             'id' => 3,
-            'key' => 'subject',
+            'key' => 'description',
             'type' => 'text',
-            'is_filter' => false,
-            'is_create' => false,
-            'is_edit' => false,
+            'is_filter' => true,
+            'is_create' => true,
+            'is_edit' => true,
         ],
         [
             'id' => 4,
-            'key' => 'message',
-            'type' => 'textarea',
-            'is_filter' => false,
+            'key' => 'is_active',
+            'type' => 'select',
+            'is_filter' => true,
             'is_create' => true,
-            'is_edit' => false,
+            'is_edit' => true,
         ],
     ];
 
@@ -62,16 +64,18 @@ class ContactResponse extends Model
         'id',
         'created_at',
         'updated_at',
-        'deleted_at',
     ];
 
     protected $casts = [
         'id' => 'integer',
-        'contact_message_id' => 'integer',
+        'is_active' => 'boolean',
         'created_at' => 'datetime:d.m.Y H:i',
         'updated_at' => 'datetime:d.m.Y H:i',
-        'deleted_at' => 'datetime:d.m.Y H:i',
         'user_id' => 'integer',
+    ];
+
+    protected $attributes = [
+        'is_active' => false,
     ];
 
     public function user(): BelongsTo
@@ -79,34 +83,14 @@ class ContactResponse extends Model
         return $this->belongsTo('App\Models\User');
     }
 
-    public function contact_message(): BelongsTo
-    {
-        return $this->belongsTo('App\Models\ContactMessage');
-    }
-
     public function fetchAllRecords(array $search = []): Collection|Exception
     {
         try {
-            $query = $this->select(
-                'id',
-                'contact_message_id',
-                'message',
-            )->with([
-                'contact_message' => function ($query) {
-                    $query->select('id', 'full_name', 'email')->with([
-                        'contact_subject' => function ($query) {
-                            $query->select('id', 'label')->where('is_active', true);
-                        }
-                    ]);
-                },
-                'user' => function ($query) {
-                    $query->select('id', 'full_name');
-                }
-            ]);
+            $query = $this->select('id', 'value', 'label', 'description', 'is_active');
 
             if (!empty($search)) {
                 foreach ($search as $field => $value) {
-                    if ($field === 'id' || $field === 'contact_message_id') {
+                    if ($field === 'id') {
                         $query->where($field, '=', $value);
                     } else {
                         $query->where($field, 'LIKE', '%' . $value . '%');
@@ -114,18 +98,25 @@ class ContactResponse extends Model
                 }
             }
 
-            return $query->get();
+            $query = $query->get();
+            $query->each(function ($item) {
+                $item->makeHidden('user_id');
+            });
+
+            return $query;
         } catch (Exception $exception) {
             return $exception;
         }
     }
 
-    public function createRecord(array $payload): ContactResponse|Exception
+    public function createRecord(array $payload): Application|Exception
     {
         try {
             return $this->create([
-                'contact_message_id' => $payload['contact_message_id'],
-                'message' => $payload['message'],
+                'value' => $payload['value'],
+                'label' => $payload['label'],
+                'description' => $payload['description'],
+                'is_active' => $payload['is_active'],
                 'user_id' => $payload['user_id'],
             ]);
         } catch (Exception $exception) {
@@ -139,14 +130,6 @@ class ContactResponse extends Model
             return $this->select('*')
                 ->where('id', '=', $id)
                 ->with([
-                    'contact_message' => function ($query) {
-                        $query->select('id', 'full_name', 'email', 'contact_subject_id')
-                            ->with([
-                                'contact_subject' => function ($query) {
-                                    $query->select('id', 'label')->where('is_active', true);
-                                }
-                            ]);
-                    },
                     'user' => function ($query) {
                         $query->select('id', 'full_name');
                     }
@@ -157,12 +140,14 @@ class ContactResponse extends Model
         }
     }
 
-    public function updateRecord(array $payload, int $id): ContactResponse|Exception
+    public function updateRecord(array $payload, int $id): Application|Exception
     {
         try {
             $query = tap($this->find($id))->update([
-                'contact_message_id' => $payload['contact_message_id'],
-                'message' => $payload['message'],
+                'value' => $payload['value'],
+                'label' => $payload['label'],
+                'description' => $payload['description'],
+                'is_active' => $payload['is_active'],
                 'user_id' => $payload['user_id'],
             ]);
 
@@ -172,7 +157,7 @@ class ContactResponse extends Model
         }
     }
 
-    public function deleteRecord(string $id): ContactResponse|Exception
+    public function deleteRecord(string $id): Application|Exception
     {
         try {
             $query = $this->find($id);
@@ -187,6 +172,23 @@ class ContactResponse extends Model
     public function getInputs(): array
     {
         $inputs = $this->inputs;
+        foreach ($inputs as &$input) {
+            if ($input['key'] === 'is_active') {
+                $input['options'] = [
+                    [
+                        'id' => 1,
+                        'value' => 0,
+                        'label' => __('No'),
+                    ],
+                    [
+                        'id' => 2,
+                        'value' => 1,
+                        'label' => __('Yes'),
+                    ],
+                ];
+                break;
+            }
+        }
 
         return $inputs;
     }
