@@ -38,36 +38,38 @@
                 <h5 class="card-title">
                     {{ __('Latest messages') }}
                 </h5>
-                @foreach ($data['results']->toArray()[0]['contact_messages'] as $key => $item)
-                    <p class="card-text">
-                        <ul class="list-group">
-                            <li class="list-group-item">
-                                @foreach ($item as $subKey => $subItem)
-                                    <div>
-                                        {{ ucwords(str_replace('_', ' ', $subKey)) }}:
-                                        @if (
-                                            in_array($subKey, ['privacy_policy', 'terms_and_conditions', 'data_protection']) &&
-                                            (is_bool($subItem) || (is_numeric($subItem) && ($subItem === 0 || $subItem === 1)))
-                                        )
-                                            <span class="badge {{ $subItem ? 'text-bg-success' : 'text-bg-danger' }}">
-                                                {{ __($subItem ? 'Yes' : 'No') }}
-                                            </span>
-                                        @else
-                                            {{ $subItem }}
-                                        @endif
-                                    </div>
-                                @endforeach
-                                <a
-                                    class="btn btn-info"
-                                    href="{{ route('messages.show', $item['id']) }}"
-                                    type="button"
-                                >
-                                    {{ __('See message') }}
-                                </a>
-                            </li>
-                        </ul>
-                    </p>
-                @endforeach
+                @if ($data['results']->toArray()[0]['contact_messages'] && count($data['results']->toArray()[0]['contact_messages']) > 0)
+                    @foreach ($data['results']->toArray()[0]['contact_messages'] as $key => $item)
+                        <p class="card-text">
+                            <ul class="list-group">
+                                <li class="list-group-item">
+                                    @foreach ($item as $subKey => $subItem)
+                                        <div>
+                                            {{ ucwords(str_replace('_', ' ', $subKey)) }}:
+                                            @if (
+                                                in_array($subKey, ['privacy_policy', 'terms_and_conditions', 'data_protection']) &&
+                                                (is_bool($subItem) || (is_numeric($subItem) && ($subItem === 0 || $subItem === 1)))
+                                            )
+                                                <span class="badge {{ $subItem ? 'text-bg-success' : 'text-bg-danger' }}">
+                                                    {{ __($subItem ? 'Yes' : 'No') }}
+                                                </span>
+                                            @else
+                                                {{ $subItem }}
+                                            @endif
+                                        </div>
+                                    @endforeach
+                                    <a
+                                        class="btn btn-info"
+                                        href="{{ route('messages.show', $item['id']) }}"
+                                        type="button"
+                                    >
+                                        {{ __('See message') }}
+                                    </a>
+                                </li>
+                            </ul>
+                        </p>
+                    @endforeach
+                @endif
             </x-page-card>
 
             <x-page-card>

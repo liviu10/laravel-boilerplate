@@ -250,8 +250,12 @@ class NewsletterCampaign extends Model
                             'full_name',
                             'email',
                             'privacy_policy',
+                            'terms_and_conditions',
+                            'data_protection',
                             'valid_email',
-                        );
+                        )
+                        ->orderBy('created_at', 'desc')
+                        ->limit(3);
                     },
                     'newsletter_templates' => function ($query) {
                         $query->select(
