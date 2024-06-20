@@ -286,6 +286,7 @@ class NewsletterSubscriber extends Model
                     ->get(['id', 'name'])
                     ->map(function ($item) {
                         return [
+                            'id' => $item['id'],
                             'value' => $item['id'],
                             'label' => $item['name']
                         ];

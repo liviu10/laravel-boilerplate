@@ -7,7 +7,13 @@
         <option selected>{{ __('-- Choose an option --') }}</option>
         @foreach ($item['options'] as $key => $option)
             <option
-                value="{{ $option['value'] }}"
+                @if (
+                    in_array($key, ['is_active', 'allow_comments', 'privacy_policy', 'terms_and_conditions', 'data_protection'])
+                )
+                    value="{{ $option['value'] }}"
+                @else
+                    value="{{ $option['id'] }}"
+                @endif
                 @if ($item['value'] !== null && $item['value'] == $key + 1) selected @endif
             >
                 {{ $option['label'] }}
@@ -18,3 +24,5 @@
         {{ $item['placeholder'] }}
     </label>
 </div>
+
+

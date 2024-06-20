@@ -380,13 +380,22 @@ class Content extends Model
         $inputs = $this->inputs;
         foreach ($inputs as &$input) {
             if ($input['key'] === 'content_category_id') {
-                $input['options'] = $this->content_category()->getRelated()->get(['value', 'label'])->toArray();
+                $input['options'] = $this->content_category()
+                    ->getRelated()
+                    ->get(['id', 'value', 'label'])
+                    ->toArray();
             }
             elseif ($input['key'] === 'content_visibility_id') {
-                $input['options'] = $this->content_visibility()->getRelated()->get(['value', 'label'])->toArray();
+                $input['options'] = $this->content_visibility()
+                    ->getRelated()
+                    ->get(['id', 'value', 'label'])
+                    ->toArray();
             }
             elseif ($input['key'] === 'content_type_id') {
-                $input['options'] = $this->content_type()->getRelated()->get(['value', 'label'])->toArray();
+                $input['options'] = $this->content_type()
+                    ->getRelated()
+                    ->get(['id', 'value', 'label'])
+                    ->toArray();
             }
             elseif ($input['key'] === 'allow_comments' || $input['key'] === 'allow_share') {
                 $input['options'] = [

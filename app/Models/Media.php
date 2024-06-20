@@ -235,7 +235,10 @@ class Media extends Model
         $inputs = $this->inputs;
         foreach ($inputs as &$input) {
             if ($input['key'] === 'media_type_id') {
-                $input['options'] = $this->media_type()->getRelated()->get(['value', 'label'])->toArray();
+                $input['options'] = $this->media_type()
+                    ->getRelated()
+                    ->get(['id', 'value', 'label'])
+                    ->toArray();
             }
             elseif ($input['key'] === 'content_id') {
                 $input['options'] = $this->content()

@@ -57,7 +57,7 @@
                             {{ __('Cancel') }}
                         </button>
                         <button type="submit" class="btn btn-success">
-                            {{ _('Save') }}
+                            {{ _('Update') }}
                         </button>
                     </div>
                 </form>

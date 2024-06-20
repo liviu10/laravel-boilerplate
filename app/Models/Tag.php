@@ -187,6 +187,7 @@ class Tag extends Model
                     ->get(['id', 'title'])
                     ->map(function ($item) {
                         return [
+                            'id' => $item['id'],
                             'value' => $item['id'],
                             'label' => $item['name']
                         ];
