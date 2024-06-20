@@ -156,12 +156,18 @@ class ContentController extends Controller
 
         $request->validate($validateRequest);
         $payload = array_filter($request->all());
+
+        // dd($payload);
+
         $payload['content_url'] = config('app.url') .
             ($payload['content_type_id'] === "2" ? '/blog/article' : '') .
             '/' . str_replace(' ', '-', strtolower($payload['title']));
         $payload['user_id'] = Auth::user()->id;
         $result = $this->content->createRecord($payload);
-        $this->contentSocialMedia->insert($this->handleSocialMediaPayload($result));
+
+        // if (array_key_exists('allow_share', $payload) && $payload['allow_share']) {
+        //     $this->contentSocialMedia->insert($this->handleSocialMediaPayload($result));
+        // }
 
         return redirect()->route('content.index')->with('success', $result);
     }
@@ -269,6 +275,7 @@ class ContentController extends Controller
             '/' . str_replace(' ', '-', strtolower($payload['title']));
         $payload['user_id'] = Auth::user()->id;
         $result = $this->content->updateRecord($payload, $id);
+
         foreach($this->handleSocialMediaPayload($result) as $payload) {
             $this->contentSocialMedia->updateRecord($payload, $id);
         }
