@@ -24,6 +24,7 @@ return new class extends Migration
                 'idx_content_visibility_contents_id'
             );
             $table->string('content_url')->nullable(false);
+            $table->string('content_slug')->nullable(false);
             $table->string('title')->nullable(false);
             $table->foreignId('content_type_id')
                 ->constrained()

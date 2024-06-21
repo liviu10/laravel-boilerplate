@@ -157,17 +157,25 @@ class ContentController extends Controller
         $request->validate($validateRequest);
         $payload = array_filter($request->all());
 
-        // dd($payload);
-
+        if (!array_key_exists('scheduled_on', $payload)) {
+            $payload['scheduled_on'] = null;
+        }
         $payload['content_url'] = config('app.url') .
             ($payload['content_type_id'] === "2" ? '/blog/article' : '') .
             '/' . str_replace(' ', '-', strtolower($payload['title']));
+        $payload['content_slug'] = str_replace(' ', '-', strtolower($payload['title']));
+        if (!array_key_exists('allow_comments', $payload)) {
+            $payload['allow_comments'] = 0;
+        }
+        if (!array_key_exists('allow_share', $payload)) {
+            $payload['allow_share'] = 0;
+        }
         $payload['user_id'] = Auth::user()->id;
         $result = $this->content->createRecord($payload);
 
-        // if (array_key_exists('allow_share', $payload) && $payload['allow_share']) {
-        //     $this->contentSocialMedia->insert($this->handleSocialMediaPayload($result));
-        // }
+        if (array_key_exists('allow_share', $payload) && $payload['allow_share']) {
+            $this->contentSocialMedia->insert($this->handleSocialMediaPayload($result));
+        }
 
         return redirect()->route('content.index')->with('success', $result);
     }
@@ -270,14 +278,27 @@ class ContentController extends Controller
 
         $request->validate($validateRequest);
         $payload = array_filter($request->all());
+
+        if (!array_key_exists('scheduled_on', $payload)) {
+            $payload['scheduled_on'] = null;
+        }
         $payload['content_url'] = config('app.url') .
             ($payload['content_type_id'] === "2" ? '/blog/article' : '') .
             '/' . str_replace(' ', '-', strtolower($payload['title']));
+        $payload['content_slug'] = str_replace(' ', '-', strtolower($payload['title']));
+        if (!array_key_exists('allow_comments', $payload)) {
+            $payload['allow_comments'] = 0;
+        }
+        if (!array_key_exists('allow_share', $payload)) {
+            $payload['allow_share'] = 0;
+        }
         $payload['user_id'] = Auth::user()->id;
         $result = $this->content->updateRecord($payload, $id);
 
-        foreach($this->handleSocialMediaPayload($result) as $payload) {
-            $this->contentSocialMedia->updateRecord($payload, $id);
+        if (array_key_exists('allow_share', $payload) && $payload['allow_share']) {
+            foreach($this->handleSocialMediaPayload($result) as $payload) {
+                $this->contentSocialMedia->updateRecord($payload, $id);
+            }
         }
 
         return redirect()->route('content.index')->with('success', $result);

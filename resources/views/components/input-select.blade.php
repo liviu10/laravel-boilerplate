@@ -8,7 +8,14 @@
         @foreach ($item['options'] as $key => $option)
             <option
                 @if (
-                    in_array($item['key'], ['is_active', 'allow_comments', 'allow_share', 'privacy_policy', 'terms_and_conditions', 'data_protection'])
+                    in_array($item['key'], [
+                        'is_active',
+                        'allow_comments',
+                        'allow_share',
+                        'privacy_policy',
+                        'terms_and_conditions',
+                        'data_protection'
+                    ])
                 )
                     value="{{ $option['value'] }}"
                 @else

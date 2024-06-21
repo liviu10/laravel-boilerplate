@@ -34,7 +34,7 @@ Route::group(['prefix' => '/'], function () {
     Route::get('/data-protection', [GuestController::class, 'dataProtection'])
         ->name('guest.dataProtection');
 
-    Route::get('/{contentUrl}', [GuestController::class, 'renderContentPage'])
+    Route::get('/{contentSlug}', [GuestController::class, 'renderContentPage'])
         ->name('guest.renderContentPage');
 });
 

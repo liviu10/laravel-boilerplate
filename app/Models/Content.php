@@ -23,6 +23,7 @@ class Content extends Model
         'content_visibility_id',
         'scheduled_on',
         'content_url',
+        'content_slug',
         'title',
         'content_type_id',
         'content_category_id',
@@ -236,15 +237,16 @@ class Content extends Model
         try {
             return $this->create([
                 'content_visibility_id' => $payload['content_visibility_id'],
-                'scheduled_on' => null, // $payload['scheduled_on'],
+                'scheduled_on' => $payload['scheduled_on'],
                 'content_url' => $payload['content_url'],
+                'content_slug' => $payload['content_slug'],
                 'title' => $payload['title'],
                 'content_type_id' => $payload['content_type_id'],
                 'content_category_id' => $payload['content_category_id'],
                 'description' => $payload['description'],
                 'content' => $payload['content'],
-                'allow_comments' => 0, // $payload['allow_comments'],
-                'allow_share' => 0, // $payload['allow_share'],
+                'allow_comments' => $payload['allow_comments'],
+                'allow_share' => $payload['allow_share'],
                 'user_id' => $payload['user_id'],
             ]);
         } catch (Exception $exception) {
@@ -333,6 +335,7 @@ class Content extends Model
                 'content_visibility_id' => $payload['content_visibility_id'],
                 'scheduled_on' => $payload['scheduled_on'],
                 'content_url' => $payload['content_url'],
+                'content_slug' => $payload['content_slug'],
                 'title' => $payload['title'],
                 'content_type_id' => $payload['content_type_id'],
                 'content_category_id' => $payload['content_category_id'],
