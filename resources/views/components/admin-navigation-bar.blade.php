@@ -40,7 +40,7 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ route('guest.index') }}" target="_blank">
+                        <a class="nav-link" href="{{ url('/') }}" target="_blank">
                             {{ __('View Website') }}
                             <i class="fa-solid fa-up-right-from-square"></i>
                         </a>

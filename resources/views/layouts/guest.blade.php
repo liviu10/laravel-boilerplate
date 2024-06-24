@@ -39,7 +39,7 @@
         <div id="app">
             <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
                 <div class="container">
-                    <a class="navbar-brand" href="{{ route('guest.index') }}">
+                    <a class="navbar-brand" href="{{ url('/') }}">
                         {{ config('app.name') }}
                     </a>
                     <button
@@ -58,7 +58,10 @@
                         <!-- Left Side Of Navbar -->
                         <ul class="navbar-nav me-auto">
                             <li class="nav-item">
-                                <a class="nav-link" href="#">Link</a>
+                                <a class="nav-link" href="#">{{ __('Services') }}</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="#">{{ __('Contact me') }}</a>
                             </li>
                             @if (Auth::user())
                                 <li class="nav-item">

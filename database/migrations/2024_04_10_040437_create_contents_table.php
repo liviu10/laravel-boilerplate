@@ -40,6 +40,8 @@ return new class extends Migration
             $table->longText('content')->nullable(false);
             $table->boolean('allow_comments')->default(false);
             $table->boolean('allow_share')->default(false);
+            $table->boolean('is_admin')->default(false);
+            $table->boolean('is_guest_home')->default(false);
             $table->timestamps();
             $table->softDeletes();
             $table->foreignId('user_id')

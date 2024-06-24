@@ -31,6 +31,8 @@ class Content extends Model
         'content',
         'allow_comments',
         'allow_share',
+        'is_admin',
+        'is_guest_home',
         'user_id',
     ];
 
@@ -95,7 +97,7 @@ class Content extends Model
             'id' => 8,
             'key' => 'allow_comments',
             'type' => 'select',
-            'is_filter' => true,
+            'is_filter' => false,
             'is_create' => true,
             'is_edit' => true,
         ],
@@ -103,7 +105,23 @@ class Content extends Model
             'id' => 9,
             'key' => 'allow_share',
             'type' => 'select',
-            'is_filter' => true,
+            'is_filter' => false,
+            'is_create' => true,
+            'is_edit' => true,
+        ],
+        [
+            'id' => 10,
+            'key' => 'is_admin',
+            'type' => 'select',
+            'is_filter' => false,
+            'is_create' => true,
+            'is_edit' => true,
+        ],
+        [
+            'id' => 11,
+            'key' => 'is_guest_home',
+            'type' => 'select',
+            'is_filter' => false,
             'is_create' => true,
             'is_edit' => true,
         ],
@@ -124,6 +142,8 @@ class Content extends Model
         'content_category_id' => 'integer',
         'allow_comments' => 'boolean',
         'allow_share' => 'boolean',
+        'is_admin' => 'boolean',
+        'is_guest_home' => 'boolean',
         'created_at' => 'datetime:d.m.Y H:i',
         'updated_at' => 'datetime:d.m.Y H:i',
         'deleted_at' => 'datetime:d.m.Y H:i',
@@ -133,6 +153,8 @@ class Content extends Model
     protected $attributes = [
         'allow_comments' => false,
         'allow_share' => false,
+        'is_admin' => false,
+        'is_guest_home' => false,
     ];
 
     public function user(): BelongsTo
@@ -247,6 +269,8 @@ class Content extends Model
                 'content' => $payload['content'],
                 'allow_comments' => $payload['allow_comments'],
                 'allow_share' => $payload['allow_share'],
+                'is_admin' => $payload['is_admin'],
+                'is_guest_home' => $payload['is_guest_home'],
                 'user_id' => $payload['user_id'],
             ]);
         } catch (Exception $exception) {
@@ -328,6 +352,38 @@ class Content extends Model
         }
     }
 
+    public function fetchGuestPage(string $contentSlug): Collection|Exception
+    {
+        try {
+            return $this->select(
+                    'id', 'content_visibility_id', 'content_url', 'title',
+                    'content_type_id', 'content', 'user_id', 'updated_at', 'is_guest_home'
+                )
+                ->where('content_slug', '=', $contentSlug)
+                ->where('is_admin', false)
+                ->with([
+                    'content_visibility' => function ($query) {
+                        $query->select('id', 'label')->where('is_active', true);
+                    },
+                    'content_type' => function ($query) {
+                        $query->select('id', 'label')->where('is_active', true);
+                    },
+                    'media' => function ($query) {
+                        $query->select(
+                            'id', 'content_id', 'internal_path', 'external_path',
+                            'title', 'caption', 'alt_text'
+                        );
+                    },
+                    'user' => function ($query) {
+                        $query->select('id', 'full_name');
+                    }
+                ])
+                ->get();
+        } catch (Exception $exception) {
+            return $exception;
+        }
+    }
+
     public function updateRecord(array $payload, int $id): Content|Exception
     {
         try {
@@ -343,6 +399,8 @@ class Content extends Model
                 'content' => $payload['content'],
                 'allow_comments' => $payload['allow_comments'],
                 'allow_share' => $payload['allow_share'],
+                'is_admin' => $payload['is_admin'],
+                'is_guest_home' => $payload['is_guest_home'],
                 'user_id' => $payload['user_id'],
             ]);
 
@@ -401,7 +459,12 @@ class Content extends Model
                     ->get(['id', 'value', 'label'])
                     ->toArray();
             }
-            elseif ($input['key'] === 'allow_comments' || $input['key'] === 'allow_share') {
+            elseif (
+                $input['key'] === 'allow_comments' ||
+                $input['key'] === 'allow_share' ||
+                $input['key'] === 'is_admin' ||
+                $input['key'] === 'is_guest_home'
+            ) {
                 $input['options'] = [
                     [
                         'id' => 1,

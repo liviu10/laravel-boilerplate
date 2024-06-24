@@ -19,6 +19,7 @@ class DatabaseSeeder extends Seeder
             CommentTypeSeeder::class,
             ContentCategorySeeder::class,
             ContactSubjectSeeder::class,
+            ContentSeeder::class,
             ContentTypeSeeder::class,
             ContentVisibilitySeeder::class,
             MediaTypeSeeder::class,

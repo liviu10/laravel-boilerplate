@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 
 // Guest controllers
 use App\Http\Controllers\GuestController;
+// use App\Http\Middleware\DynamicRouteHandler;
 
 // Auth controllers
 use Illuminate\Support\Facades\Auth;
@@ -22,20 +23,21 @@ use App\Http\Controllers\AdminController;
 |
 */
 Route::group(['prefix' => '/'], function () {
-    Route::get('/', [GuestController::class, 'index'])
-        ->name('guest.index');
+    // Route::get('/', [GuestController::class, 'index'])
+    //     ->name('guest.index');
 
-    Route::get('/privacy-policy', [GuestController::class, 'privacyPolicy'])
-        ->name('guest.privacyPolicy');
+    // Route::get('/privacy-policy', [GuestController::class, 'privacyPolicy'])
+    //     ->name('guest.privacyPolicy');
 
-    Route::get('/terms-and-conditions', [GuestController::class, 'termsAndConditions'])
-        ->name('guest.termsAndConditions');
+    // Route::get('/terms-and-conditions', [GuestController::class, 'termsAndConditions'])
+    //     ->name('guest.termsAndConditions');
 
-    Route::get('/data-protection', [GuestController::class, 'dataProtection'])
-        ->name('guest.dataProtection');
+    // Route::get('/data-protection', [GuestController::class, 'dataProtection'])
+    //     ->name('guest.dataProtection');
 
-    Route::get('/{contentSlug}', [GuestController::class, 'renderContentPage'])
-        ->name('guest.renderContentPage');
+    Route::get('/{contentSlug}', [GuestController::class, 'renderPage'])
+        ->where('contentSlug', '^(?!login|logout|password|register|sanctum|telescope|admin).*')
+        ->name('guest.renderPage');
 });
 
 Auth::routes();

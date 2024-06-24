@@ -73,6 +73,29 @@
         });
 
         document.addEventListener('DOMContentLoaded', function() {
+            function toggleIsAdminInput() {
+                var contentCategorySelect = document.getElementById('content_category_id');
+                var isAdminInput = document.getElementById('is_admin');
+                var isAdminLabel = document.querySelector('label[for="is_admin"]');
+                var isGuestHomeInput = document.getElementById('is_guest_home');
+                var isGuestHomeLabel = document.querySelector('label[for="is_guest_home"]');
+
+                if (contentCategorySelect && isAdminInput && isAdminLabel && isGuestHomeInput && isGuestHomeLabel) {
+                    // Category is page
+                    if (contentCategorySelect.value == '1') {
+                        isAdminInput.style.display = '';
+                        isAdminLabel.style.display = '';
+                        isGuestHomeInput.style.display = '';
+                        isGuestHomeLabel.style.display = '';
+                    } else {
+                        isAdminInput.style.display = 'none';
+                        isAdminLabel.style.display = 'none';
+                        isGuestHomeInput.style.display = 'none';
+                        isGuestHomeLabel.style.display = 'none';
+                    }
+                }
+            }
+
             function toggleScheduledOnInput() {
                 var contentVisibilitySelect = document.getElementById('content_visibility_id');
                 var scheduledOnInput = document.getElementById('scheduled_on');
@@ -94,6 +117,12 @@
             if (contentVisibilitySelect) {
                 contentVisibilitySelect.addEventListener('change', toggleScheduledOnInput);
                 toggleScheduledOnInput();
+            }
+
+            var contentCategorySelect = document.getElementById('content_category_id');
+            if (contentCategorySelect) {
+                contentCategorySelect.addEventListener('change', toggleIsAdminInput);
+                toggleIsAdminInput();
             }
         });
     </script>

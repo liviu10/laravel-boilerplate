@@ -51,7 +51,7 @@
                     <div class="modal-footer">
                         <button
                             class="btn btn-secondary"
-                            data-bs-dismiss="modal"
+                            onclick="window.history.back();"
                             type="button"
                         >
                             {{ __('Cancel') }}

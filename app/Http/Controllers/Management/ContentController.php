@@ -152,6 +152,8 @@ class ContentController extends Controller
             'content' => 'required|string',
             'allow_comments' => 'required|boolean',
             'allow_share' => 'required|boolean',
+            'is_admin' => 'required|boolean',
+            'is_guest_home' => 'required|boolean',
         ];
 
         $request->validate($validateRequest);
@@ -169,6 +171,12 @@ class ContentController extends Controller
         }
         if (!array_key_exists('allow_share', $payload)) {
             $payload['allow_share'] = 0;
+        }
+        if (!array_key_exists('is_admin', $payload)) {
+            $payload['is_admin'] = 0;
+        }
+        if (!array_key_exists('is_guest_home', $payload)) {
+            $payload['is_guest_home'] = 0;
         }
         $payload['user_id'] = Auth::user()->id;
         $result = $this->content->createRecord($payload);
@@ -272,8 +280,10 @@ class ContentController extends Controller
             'content_type_id' => 'required|integer',
             'description' => 'sometimes|string',
             'content' => 'required|string',
-            'allow_comments' => 'required|boolean',
-            'allow_share' => 'required|boolean',
+            'allow_comments' => 'sometimes|boolean',
+            'allow_share' => 'sometimes|boolean',
+            'is_admin' => 'sometimes|boolean',
+            'is_guest_home' => 'sometimes|boolean',
         ];
 
         $request->validate($validateRequest);
@@ -291,6 +301,12 @@ class ContentController extends Controller
         }
         if (!array_key_exists('allow_share', $payload)) {
             $payload['allow_share'] = 0;
+        }
+        if (!array_key_exists('is_admin', $payload)) {
+            $payload['is_admin'] = 0;
+        }
+        if (!array_key_exists('is_guest_home', $payload)) {
+            $payload['is_guest_home'] = 0;
         }
         $payload['user_id'] = Auth::user()->id;
         $result = $this->content->updateRecord($payload, $id);
