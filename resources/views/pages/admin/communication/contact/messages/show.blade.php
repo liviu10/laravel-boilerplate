@@ -18,7 +18,7 @@
                 @foreach ($data['results']->toArray()[0]['contact_subject'] as $key => $item)
                     @if ($key !== 'id')
                         <div class="card-text">
-                            {{ $key }}:
+                            {{ ucwords(str_replace('_', ' ', $key)) }}:
                             @if (is_array($item))
                                 @foreach ($item as $subKey => $subItem)
                                     @if ($subKey !== 'id')
