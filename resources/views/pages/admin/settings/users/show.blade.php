@@ -11,7 +11,16 @@
         </div>
 
         <div class="admin__body">
-            <x-page-card :body="$data['results']->toArray()[0]" />
+            <x-page-card>
+                @foreach ($data['results']->toArray()[0] as $key => $item)
+                    @if ($key !== 'id')
+                        <div class="card-text">
+                            {{ ucwords(str_replace('_', ' ', $key)) }}:
+                            {{ $item }}
+                        </div>
+                    @endif
+                @endforeach
+            </x-page-card>
         </div>
     </div>
 @endsection

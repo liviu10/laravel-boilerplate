@@ -46,7 +46,7 @@ class Application extends Model
             'id' => 3,
             'key' => 'description',
             'type' => 'text',
-            'is_filter' => true,
+            'is_filter' => false,
             'is_create' => true,
             'is_edit' => true,
         ],

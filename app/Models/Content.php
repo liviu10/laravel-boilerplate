@@ -444,19 +444,19 @@ class Content extends Model
             if ($input['key'] === 'content_category_id') {
                 $input['options'] = $this->content_category()
                     ->getRelated()
-                    ->get(['id', 'value', 'label'])
+                    ->get(['id', 'label'])
                     ->toArray();
             }
             elseif ($input['key'] === 'content_visibility_id') {
                 $input['options'] = $this->content_visibility()
                     ->getRelated()
-                    ->get(['id', 'value', 'label'])
+                    ->get(['id', 'label'])
                     ->toArray();
             }
             elseif ($input['key'] === 'content_type_id') {
                 $input['options'] = $this->content_type()
                     ->getRelated()
-                    ->get(['id', 'value', 'label'])
+                    ->get(['id', 'label'])
                     ->toArray();
             }
             elseif (

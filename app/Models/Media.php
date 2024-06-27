@@ -48,6 +48,14 @@ class Media extends Model
         ],
         [
             'id' => 3,
+            'key' => 'internal_path',
+            'type' => 'file',
+            'is_filter' => false,
+            'is_create' => true,
+            'is_edit' => true,
+        ],
+        [
+            'id' => 4,
             'key' => 'title',
             'type' => 'text',
             'is_filter' => true,
@@ -55,7 +63,7 @@ class Media extends Model
             'is_edit' => true,
         ],
         [
-            'id' => 4,
+            'id' => 5,
             'key' => 'caption',
             'type' => 'text',
             'is_filter' => true,
@@ -63,7 +71,7 @@ class Media extends Model
             'is_edit' => true,
         ],
         [
-            'id' => 5,
+            'id' => 6,
             'key' => 'alt_text',
             'type' => 'text',
             'is_filter' => false,
@@ -71,7 +79,7 @@ class Media extends Model
             'is_edit' => true,
         ],
         [
-            'id' => 6,
+            'id' => 7,
             'key' => 'description',
             'type' => 'text',
             'is_filter' => false,
@@ -237,7 +245,7 @@ class Media extends Model
             if ($input['key'] === 'media_type_id') {
                 $input['options'] = $this->media_type()
                     ->getRelated()
-                    ->get(['id', 'value', 'label'])
+                    ->get(['id', 'label'])
                     ->toArray();
             }
             elseif ($input['key'] === 'content_id') {
@@ -246,8 +254,8 @@ class Media extends Model
                     ->get(['id', 'title'])
                     ->map(function ($item) {
                         return [
-                            'value' => $item['id'],
-                            'label' => $item['name']
+                            'id' => $item['id'],
+                            'label' => $item['title']
                         ];
                     })
                     ->toArray();

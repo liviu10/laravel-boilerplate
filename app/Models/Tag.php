@@ -188,8 +188,7 @@ class Tag extends Model
                     ->map(function ($item) {
                         return [
                             'id' => $item['id'],
-                            'value' => $item['id'],
-                            'label' => $item['name']
+                            'label' => $item['title']
                         ];
                     })
                     ->toArray();

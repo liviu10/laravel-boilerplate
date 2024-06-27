@@ -40,7 +40,7 @@
                     'actions' => $data['actions'],
                     'forms' => $data['forms'],
                     'columns' => [
-                        'ID', 'Value', 'Label', 'Is active?', 'Actions'
+                        'ID', 'Value', 'Label', 'Description', 'Is active?', 'Actions'
                     ],
                     'rows' => $data['results']
                 ]
