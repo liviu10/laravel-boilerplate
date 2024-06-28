@@ -7,6 +7,7 @@
         id="{{ $item['key'] }}"
         key="{{ $item['key'] }}"
         name="{{ $item['name'] }}"
+        multiple
         placeholder="{{ $item['placeholder'] }}"
         type="file"
         value="{{ $item['value'] }}"

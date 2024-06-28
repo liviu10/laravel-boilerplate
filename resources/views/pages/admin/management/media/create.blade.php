@@ -63,4 +63,43 @@
             </x-page-card>
         </div>
     </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            function toggleMediaTypeInput() {
+                var mediaTypeSelect = document.getElementById('media_type_id');
+                var captionInput = document.getElementById('caption');
+                var captionLabel = document.querySelector('label[for="caption"]');
+                var altTextInput = document.getElementById('alt_text');
+                var altTextLabel = document.querySelector('label[for="alt_text"]');
+                var descriptionInput = document.getElementById('description');
+                var descriptionLabel = document.querySelector('label[for="description"]');
+
+                if (mediaTypeSelect && captionInput && captionLabel &&
+                altTextInput && altTextLabel && descriptionInput && descriptionLabel) {
+                    // Media type is documents
+                    if (mediaTypeSelect.value == '1') {
+                        captionInput.style.display = '';
+                        captionLabel.style.display = '';
+                        altTextInput.style.display = '';
+                        altTextLabel.style.display = '';
+                        descriptionInput.style.display = '';
+                        descriptionLabel.style.display = '';
+                    } else {
+                        captionInput.style.display = 'none';
+                        captionLabel.style.display = 'none';
+                        altTextInput.style.display = 'none';
+                        altTextLabel.style.display = 'none';
+                        descriptionInput.style.display = 'none';
+                        descriptionLabel.style.display = 'none';
+                    }
+                }
+            }
+
+            var mediaTypeSelect = document.getElementById('media_type_id');
+            if (mediaTypeSelect) {
+                mediaTypeSelect.addEventListener('change', toggleMediaTypeInput);
+                toggleMediaTypeInput();
+            }
+        });
+    </script>
 @endsection
