@@ -96,7 +96,7 @@ class MediaController extends Controller
                 when an unknown printer took a galley of type and scrambled it to make a type specimen book.
             '),
             'action' => 'media.store',
-            'results' => $$this->formBuilder->handleFormBuilder(
+            'results' => $this->formBuilder->handleFormBuilder(
                 $this->media->getInputs()
             ),
         ];
