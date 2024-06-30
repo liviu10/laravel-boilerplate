@@ -7,6 +7,7 @@ use App\Models\Media;
 use App\Models\MediaType;
 use App\Models\Content;
 use App\Utilities\FormBuilder;
+use App\Utilities\UploadFiles;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Contracts\View\Factory;
@@ -20,6 +21,7 @@ class MediaController extends Controller
     protected $mediaType;
     protected $content;
     protected $formBuilder;
+    protected $uploadFiles;
 
     /**
      * Create a new controller instance.
@@ -33,6 +35,7 @@ class MediaController extends Controller
         $this->mediaType = new MediaType();
         $this->content = new Content();
         $this->formBuilder = new FormBuilder();
+        $this->uploadFiles = new UploadFiles();
     }
 
     /**
@@ -56,7 +59,7 @@ class MediaController extends Controller
             'actions' => [
                 'index' => 'media.index',
                 'create' => 'media.create',
-                'show' => 'media.show',
+                // 'show' => 'media.show',
                 'edit' => 'media.edit',
                 // 'destroy' => 'media.destroy',
                 // 'restore' => 'media.restore',
@@ -113,33 +116,26 @@ class MediaController extends Controller
             'media_type_id' => 'required|integer',
             'content_id' => 'required|integer',
             'internal_path' => 'required|image|mimes:jpeg,jpg,png,gif,webp,bmp,svg,tiff',
-            'external_path' => 'sometimes|string',
-            'title' => 'sometimes|string|min:3|max:255',
-            'caption' => 'sometimes|string|min:3|max:255',
-            'alt_text' => 'sometimes|string|min:3|max:255',
-            'description' => 'sometimes|string|min:3|max:255',
+            // 'external_path' => 'sometimes|string',
+            // 'title' => 'sometimes|string|min:3|max:255',
+            // 'caption' => 'sometimes|string|min:3|max:255',
+            // 'alt_text' => 'sometimes|string|min:3|max:255',
+            // 'description' => 'sometimes|string|min:3|max:255',
         ];
 
         $request->validate($validateRequest);
         $payload = array_filter($request->all());
         $payload['user_id'] = Auth::user()->id;
 
-        if ($request->hasFile('internal_path')) {
-            $mediaType = $this->mediaType->fetchAllRecords([ 'id' => $payload['media_type_id'] ]);
-            $hashFilename = $request->file('internal_path')->hashName();
+        $mediaType = $this->mediaType->fetchAllRecords([ 'id' => $payload['media_type_id'] ]);
+        $payload['internal_path'] = $this->uploadFiles->handleInternalUpload($request, $mediaType);
+        $payload['external_path'] = $this->uploadFiles->handleExternalUpload();
+        $payload['title'] = $this->uploadFiles->handleTitle();
+        $payload['caption'] = $this->uploadFiles->handleCaption();
+        $payload['alt_text'] = $this->uploadFiles->handleAltText();
+        $payload['description'] = $this->uploadFiles->handleDescription();
 
-            if ($mediaType instanceof Collection && $mediaType->isNotEmpty()) {
-                $request->internal_path->storeAs('images', $hashFilename, 'public');
-                $payload['internal_path'] = 'storage/' . $mediaType->toArray()[0]['value'] . '/' . $hashFilename;
-            } else {
-                $request->internal_path->storeAs('others', $hashFilename, 'public');
-                $payload['internal_path'] = 'storage/others/' . $hashFilename;
-            }
-            // $saveRecords['width'] = strval(getimagesize($request->file('image_path'))[0]);
-            // $saveRecords['height'] = strval(getimagesize($request->file('image_path'))[1]);
-        }
-
-        $result = $this->content->createRecord($payload);
+        $result = $this->media->createRecord($payload);
 
         return redirect()->route('media.index')->with('success', $result);
     }
@@ -198,20 +194,13 @@ class MediaController extends Controller
         $payload = array_filter($request->all());
         $payload['user_id'] = Auth::user()->id;
 
-        if ($request->hasFile('internal_path')) {
-            $mediaType = $this->mediaType->fetchAllRecords([ 'id' => $payload['media_type_id'] ]);
-            $hashFilename = $request->file('internal_path')->hashName();
-
-            if ($mediaType instanceof Collection && $mediaType->isNotEmpty()) {
-                $request->internal_path->storeAs('images', $hashFilename, 'public');
-                $payload['internal_path'] = 'storage/' . $mediaType->toArray()[0]['value'] . '/' . $hashFilename;
-            } else {
-                $request->internal_path->storeAs('others', $hashFilename, 'public');
-                $payload['internal_path'] = 'storage/others/' . $hashFilename;
-            }
-            // $saveRecords['width'] = strval(getimagesize($request->file('image_path'))[0]);
-            // $saveRecords['height'] = strval(getimagesize($request->file('image_path'))[1]);
-        }
+        $mediaType = $this->mediaType->fetchAllRecords([ 'id' => $payload['media_type_id'] ]);
+        $payload['internal_path'] = $this->uploadFiles->handleInternalUpload($request, $mediaType);
+        $payload['external_path'] = $this->uploadFiles->handleExternalUpload();
+        $payload['title'] = $this->uploadFiles->handleTitle();
+        $payload['caption'] = $this->uploadFiles->handleCaption();
+        $payload['alt_text'] = $this->uploadFiles->handleAltText();
+        $payload['description'] = $this->uploadFiles->handleDescription();
 
         $result = $this->content->updateRecord($payload, $id);
 

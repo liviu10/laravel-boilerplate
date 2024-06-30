@@ -32,7 +32,7 @@
                     'actions' => $data['actions'],
                     'forms' => $data['forms'],
                     'columns' => [
-                        'ID', 'Path', 'Title', 'Caption', 'Alternate text',
+                        'ID', 'Internal path',
                         'Media type', 'Content', 'Actions'
                     ],
                     'rows' => $data['results']

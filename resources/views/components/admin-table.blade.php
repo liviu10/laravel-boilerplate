@@ -58,6 +58,8 @@
                                     <span class="badge text-bg-{{ $value ? 'success' : 'danger' }}">
                                         {{ $value ? __('Yes') : __('No') }}
                                     </span>
+                                @elseif ($subkey === 'internal_path' || $subkey === 'external_path')
+                                    <a href="{{ config('app.url') . '/' . $value }}" target="_blank">{{ __('See file') }}</a>
                                 @elseif (gettype($value) === 'array')
                                     @if (array_key_exists('label', $value))
                                         {{ $value['label'] }}
@@ -65,6 +67,8 @@
                                         {{ $value['full_name'] }}
                                     @elseif (array_key_exists('name', $value))
                                         {{ $value['name'] }}
+                                    @elseif (array_key_exists('title', $value))
+                                        {{ $value['title'] }}
                                     @endif
                                 @else
                                     {{ $value }}

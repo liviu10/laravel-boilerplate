@@ -54,38 +54,6 @@ class Media extends Model
             'is_create' => true,
             'is_edit' => true,
         ],
-        [
-            'id' => 4,
-            'key' => 'title',
-            'type' => 'text',
-            'is_filter' => true,
-            'is_create' => true,
-            'is_edit' => true,
-        ],
-        [
-            'id' => 5,
-            'key' => 'caption',
-            'type' => 'text',
-            'is_filter' => true,
-            'is_create' => true,
-            'is_edit' => true,
-        ],
-        [
-            'id' => 6,
-            'key' => 'alt_text',
-            'type' => 'text',
-            'is_filter' => false,
-            'is_create' => true,
-            'is_edit' => true,
-        ],
-        [
-            'id' => 7,
-            'key' => 'description',
-            'type' => 'text',
-            'is_filter' => false,
-            'is_create' => true,
-            'is_edit' => true,
-        ],
     ];
 
     protected $guarded = [
@@ -128,9 +96,6 @@ class Media extends Model
                 'media_type_id',
                 'content_id',
                 'internal_path',
-                'title',
-                'caption',
-                'alt_text',
             )
                 ->with([
                     'media_type' => function ($query) {

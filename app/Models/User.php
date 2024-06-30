@@ -167,6 +167,7 @@ class User extends Authenticatable
                 'profile_image' => $this->getProfileImageUrl($payload),
             ]);
         } catch (Exception $exception) {
+            dd($exception);
             return $exception;
         }
     }
@@ -197,6 +198,22 @@ class User extends Authenticatable
             ]);
 
             return $query->fresh();
+        } catch (Exception $exception) {
+            return $exception;
+        }
+    }
+
+    public function partialUpdateRecord(array $payload, int $id): User|Exception
+    {
+        try {
+            $query = $this->findOrFail($id);
+            $query->update([
+                'full_name' => $payload['full_name'],
+                'first_name' => $payload['first_name'],
+                'last_name' => $payload['last_name'],
+            ]);
+
+            return $query->refresh();
         } catch (Exception $exception) {
             return $exception;
         }

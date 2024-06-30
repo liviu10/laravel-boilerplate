@@ -14,7 +14,9 @@
                         'allow_share',
                         'privacy_policy',
                         'terms_and_conditions',
-                        'data_protection'
+                        'data_protection',
+                        'is_admin',
+                        'is_guest_home',
                     ])
                 )
                     value="{{ $option['value'] }}"

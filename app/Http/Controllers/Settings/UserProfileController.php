@@ -4,7 +4,9 @@ namespace App\Http\Controllers\Settings;
 
 use App\Http\Controllers\Controller;
 use App\Models\User;
+use App\Models\MediaType;
 use App\Utilities\FormBuilder;
+use App\Utilities\UploadFiles;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
@@ -14,7 +16,9 @@ use Illuminate\Http\Request;
 class UserProfileController extends Controller
 {
     protected $user;
+    protected $mediaType;
     protected $formBuilder;
+    protected $uploadFiles;
 
     /**
      * Create a new controller instance.
@@ -25,7 +29,9 @@ class UserProfileController extends Controller
     {
         $this->middleware('auth');
         $this->user = new User();
+        $this->mediaType = new MediaType();
         $this->formBuilder = new FormBuilder();
+        $this->uploadFiles = new UploadFiles();
     }
 
     /**
@@ -117,11 +123,11 @@ class UserProfileController extends Controller
         $request->validate($validateRequest);
         $payload = array_filter($request->all());
         $payload['full_name'] = $payload['first_name'] . ' ' . $payload['last_name'];
-        $payload['password'] = Hash::make($this->user->generatePassword());
-        $selectedRecord = $this->user->fetchSingleRecord($id);
+        $mediaType = $this->mediaType->fetchAllRecords([ 'id' => 1 ]); // media type 1 represents images
+        $payload['internal_path'] = $this->uploadFiles->handleInternalUpload($request, $mediaType);
         $result = $this->user->createRecord($payload);
 
-        return redirect()->route('pages.admin.settings.users.profile.edit')->with('success', $result);
+        return redirect()->route('profile.edit')->with('success', $result);
     }
 
     /**

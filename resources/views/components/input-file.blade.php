@@ -7,9 +7,16 @@
         id="{{ $item['key'] }}"
         key="{{ $item['key'] }}"
         name="{{ $item['name'] }}"
-        multiple
         placeholder="{{ $item['placeholder'] }}"
         type="file"
         value="{{ $item['value'] }}"
     >
 </div>
+
+
+{{-- @if (array_key_exists('multiple', $item) && $item['multiple'])
+name="{{ $item['name'] }}[]"
+multiple
+@else
+name="{{ $item['name'] }}"
+@endif --}}

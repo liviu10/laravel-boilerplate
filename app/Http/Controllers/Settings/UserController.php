@@ -100,14 +100,15 @@ class UserController extends Controller
         $payload['full_name'] = $payload['first_name'] . ' ' . $payload['last_name'];
         $payload['nickname'] = explode('@', $payload['email'])[0];
         $payload['password'] = Hash::make($this->user->generatePassword());
+        $payload['phone'] = null;
         $result = $this->user->createRecord($payload);
 
         if ($result instanceof User) {
-            $user = $this->user->fetchSingleRecord($payload['id'])->toArray();
+            $user = $this->user->fetchSingleRecord($results->id)->toArray();
             Mail::to($user['email'])->send(new InviteUser($user));
         }
 
-        return redirect()->route('pages.admin.settings.users.index')->with('success', $result);
+        return redirect()->route('users.index')->with('success', $result);
     }
 
     /**
@@ -168,10 +169,9 @@ class UserController extends Controller
         $request->validate($validateRequest);
         $payload = array_filter($request->all());
         $payload['full_name'] = $payload['first_name'] . ' ' . $payload['last_name'];
-        $selectedRecord = $this->user->fetchSingleRecord($id);
-        $result = $this->user->createRecord($payload);
+        $result = $this->user->partialUpdateRecord($payload, $id);
 
-        return redirect()->route('pages.admin.settings.users.index')->with('success', $result);
+        return redirect()->route('users.index')->with('success', $result);
     }
 
     /**
