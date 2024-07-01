@@ -153,7 +153,6 @@ class ApplicationController extends Controller
         $payload = array_filter($request->all());
         $payload['is_active'] = isset($payload['is_active']) ? $payload['is_active'] : false;
         $payload['user_id'] = Auth::user()->id;
-        $selectedRecord = $this->application->fetchSingleRecord($id);
         $result = $this->application->updateRecord($payload, $id);
 
         return redirect()->route('application.index')->with('success', $result);

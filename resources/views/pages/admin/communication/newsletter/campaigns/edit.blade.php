@@ -11,7 +11,7 @@
         </div>
 
         <div class="admin__body">
-                <x-page-card>
+            <x-page-card>
                 @if ($errors->any())
                     <div class="alert alert-danger alert-dismissible fade show" role="alert">
                         <p class="my-0">

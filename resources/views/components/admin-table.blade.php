@@ -60,6 +60,8 @@
                                     </span>
                                 @elseif ($subkey === 'internal_path' || $subkey === 'external_path')
                                     <a href="{{ config('app.url') . '/' . $value }}" target="_blank">{{ __('See file') }}</a>
+                                @elseif ($subkey === 'content_url')
+                                    <a href="{{ $value }}" target="_blank">{{ __('See page') }}</a>
                                 @elseif (gettype($value) === 'array')
                                     @if (array_key_exists('label', $value))
                                         {{ $value['label'] }}

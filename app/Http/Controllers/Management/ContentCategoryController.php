@@ -153,7 +153,6 @@ class ContentCategoryController extends Controller
         $payload['value'] = strtolower(str_replace(' ', '-', $payload['label']));
         $payload['is_active'] = isset($payload['is_active']) ? $payload['is_active'] : false;
         $payload['user_id'] = Auth::user()->id;
-        $selectedRecord = $this->contentCategory->fetchSingleRecord($id);
         $result = $this->contentCategory->updateRecord($payload, $id);
 
         return redirect()->route('contentCategories.index')->with('success', $result);

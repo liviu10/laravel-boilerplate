@@ -151,7 +151,6 @@ class CommentStatusController extends Controller
         $payload['value'] = strtolower(str_replace(' ', '-', $payload['label']));
         $payload['is_active'] = isset($payload['is_active']) ? $payload['is_active'] : false;
         $payload['user_id'] = Auth::user()->id;
-        $selectedRecord = $this->commentStatus->fetchSingleRecord($id);
         $result = $this->commentStatus->updateRecord($payload, $id);
 
         return redirect()->route('commentStatuses.index')->with('success', $result);

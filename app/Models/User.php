@@ -9,7 +9,6 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 use Illuminate\Database\Eloquent\Collection;
-use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class User extends Authenticatable
 {
@@ -147,7 +146,9 @@ class User extends Authenticatable
                 }
             }
 
-            return $query->get();
+            $query = $query->get();
+
+            return $query;
         } catch (Exception $exception) {
             return $exception;
         }

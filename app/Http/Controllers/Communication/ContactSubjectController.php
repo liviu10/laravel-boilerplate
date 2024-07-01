@@ -164,7 +164,6 @@ class ContactSubjectController extends Controller
         $payload['value'] = strtolower(str_replace(' ', '-', $payload['label']));
         $payload['is_active'] = isset($payload['is_active']) ? $payload['is_active'] : false;
         $payload['user_id'] = Auth::user()->id;
-        $selectedRecord = $this->contactSubject->fetchSingleRecord($id);
         $result = $this->contactSubject->updateRecord($payload, $id);
 
         return redirect()->route('subjects.index')->with('success', $result);

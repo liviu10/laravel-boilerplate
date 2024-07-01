@@ -153,7 +153,6 @@ class ContentTypeController extends Controller
         $payload['value'] = strtolower(str_replace(' ', '-', $payload['label']));
         $payload['is_active'] = isset($payload['is_active']) ? $payload['is_active'] : false;
         $payload['user_id'] = Auth::user()->id;
-        $selectedRecord = $this->contentType->fetchSingleRecord($id);
         $result = $this->contentType->updateRecord($payload, $id);
 
         return redirect()->route('contentTypes.index')->with('success', $result);

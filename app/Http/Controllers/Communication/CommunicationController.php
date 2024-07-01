@@ -6,7 +6,6 @@ use App\Http\Controllers\Controller;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Foundation\Application;
-use Illuminate\Support\Facades\Log;
 
 class CommunicationController extends Controller
 {
@@ -26,8 +25,6 @@ class CommunicationController extends Controller
      */
     public function index(): View|Application|Factory
     {
-        Log::info('Index method in CommunicationController called');
-
         $data = [
             'title' => __('Communication'),
             'description' => __('

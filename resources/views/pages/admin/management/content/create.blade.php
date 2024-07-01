@@ -38,7 +38,7 @@
                     enctype="multipart/form-data"
                 >
                     @csrf
-                    <div class="">
+                    <div class="card-form">
                         @foreach ($data['results'] as $input)
                             @foreach ($input as $item)
                                 @if($item['is_create'])
@@ -47,8 +47,12 @@
                             @endforeach
                         @endforeach
                     </div>
-                    <div class="modal-footer">
-                        <button class="btn btn-secondary" data-bs-dismiss="modal" type="button">
+                    <div class="card-action">
+                        <button
+                            class="btn btn-secondary"
+                            onclick="window.history.back();"
+                            type="button"
+                        >
                             {{ __('Cancel') }}
                         </button>
                         <button type="submit" class="btn btn-success">

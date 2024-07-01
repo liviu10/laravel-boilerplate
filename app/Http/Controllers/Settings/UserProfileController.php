@@ -7,7 +7,6 @@ use App\Models\User;
 use App\Models\MediaType;
 use App\Utilities\FormBuilder;
 use App\Utilities\UploadFiles;
-use Illuminate\Support\Facades\Hash;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Foundation\Application;

@@ -8,7 +8,6 @@ use App\Models\MediaType;
 use App\Models\Content;
 use App\Utilities\FormBuilder;
 use App\Utilities\UploadFiles;
-use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
@@ -116,11 +115,6 @@ class MediaController extends Controller
             'media_type_id' => 'required|integer',
             'content_id' => 'required|integer',
             'internal_path' => 'required|image|mimes:jpeg,jpg,png,gif,webp,bmp,svg,tiff',
-            // 'external_path' => 'sometimes|string',
-            // 'title' => 'sometimes|string|min:3|max:255',
-            // 'caption' => 'sometimes|string|min:3|max:255',
-            // 'alt_text' => 'sometimes|string|min:3|max:255',
-            // 'description' => 'sometimes|string|min:3|max:255',
         ];
 
         $request->validate($validateRequest);
@@ -183,11 +177,6 @@ class MediaController extends Controller
             'media_type_id' => 'sometimes|integer',
             'content_id' => 'sometimes|integer',
             'internal_path' => 'sometimes|image|mimes:jpeg,jpg,png,gif,webp,bmp,svg,tiff',
-            'external_path' => 'sometimes|string',
-            'title' => 'sometimes|string|min:3|max:255',
-            'caption' => 'sometimes|string|min:3|max:255',
-            'alt_text' => 'sometimes|string|min:3|max:255',
-            'description' => 'sometimes|string|min:3|max:255',
         ];
 
         $request->validate($validateRequest);

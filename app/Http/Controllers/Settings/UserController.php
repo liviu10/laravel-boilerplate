@@ -104,7 +104,7 @@ class UserController extends Controller
         $result = $this->user->createRecord($payload);
 
         if ($result instanceof User) {
-            $user = $this->user->fetchSingleRecord($results->id)->toArray();
+            $user = $this->user->fetchSingleRecord($result->id)->toArray();
             Mail::to($user['email'])->send(new InviteUser($user));
         }
 

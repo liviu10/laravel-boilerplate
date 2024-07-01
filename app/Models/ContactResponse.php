@@ -114,7 +114,9 @@ class ContactResponse extends Model
                 }
             }
 
-            return $query->get();
+            $query = $query->get();
+
+            return $query;
         } catch (Exception $exception) {
             return $exception;
         }

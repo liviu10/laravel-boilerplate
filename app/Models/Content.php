@@ -8,7 +8,6 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Collection;
 use Exception;
-use Illuminate\Support\Facades\Log;
 use Carbon\Carbon;
 
 /**
@@ -274,7 +273,6 @@ class Content extends Model
                 'user_id' => $payload['user_id'],
             ]);
         } catch (Exception $exception) {
-            dd($exception);
             return $exception;
         }
     }

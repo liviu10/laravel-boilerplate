@@ -154,7 +154,6 @@ class TagController extends Controller
         $payload = array_filter($request->all());
         $payload['slug'] = str_replace(' ', '-', strtolower($payload['name']));
         $payload['user_id'] = Auth::user()->id;
-        $selectedRecord = $this->tag->fetchSingleRecord($id);
         $result = $this->tag->updateRecord($payload, $id);
 
         return redirect()->route('tags.index')->with('success', $result);
